@@ -3,6 +3,7 @@ package com.funrun.view {
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
+	import away3d.core.render.RendererBase;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
@@ -59,8 +60,7 @@ package com.funrun.view {
 		/**
 		 * Initialise the engine
 		 */
-		private function initEngine():void {
-			// Set up view, scene, camera.
+		private function initEngine():void {			
 			view = new View3D();
 			view.forceMouseMove = true; // Force mouse move-related events even when the mouse hasn't moved.
 			view.width = 800;
@@ -70,9 +70,10 @@ package com.funrun.view {
 			
 			scene = view.scene; // Store local refs.
 			camera = view.camera;
-			camera.pitch( 20 );
-			camera.y = 400;
-			camera.lens = new PerspectiveLens( 90 );
+			camera.y = 200;
+			camera.z = -1000;
+			camera.lens = new PerspectiveLens( 120 );
+			camera.lens.far = 10000;
 			
 			// Add stats.
 			awayStats = new AwayStats( view );
@@ -108,9 +109,14 @@ package com.funrun.view {
 		 * Initialise the scene objects
 		 */
 		private function initObjects():void {
-			var ground:Mesh = new Mesh( new PlaneGeometry( 1000, 2500 ), inactiveMaterial );
+			var w:int = 1200;
+			var h:int = 10000;
+			var ground:Mesh = new Mesh( new PlaneGeometry( w, h ), inactiveMaterial );
 			ground.position = new Vector3D( 0, 0, 100 );
 			scene.addChild( ground );
+			//var ceiling:Mesh = new Mesh( new PlaneGeometry( w, h ), inactiveMaterial );
+			//ceiling.position = new Vector3D( 0, 800, 100 );
+			//scene.addChild( ceiling );
 		}
 		
 		/**
@@ -125,6 +131,7 @@ package com.funrun.view {
 		 */
 		private function onEnterFrame( event:Event ):void {
 			view.render();
+			camera.y = ( stage.stageHeight - stage.mouseY );
 		}
 	}
 	
