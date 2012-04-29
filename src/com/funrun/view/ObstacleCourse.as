@@ -5,6 +5,7 @@ package com.funrun.view {
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
+	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
@@ -29,6 +30,7 @@ package com.funrun.view {
 		private var awayStats:AwayStats;
 		
 		// Lights.
+		private var sun:DirectionalLight;
 		private var pointLight:PointLight;
 		private var lightPicker:StaticLightPicker;
 		
@@ -81,10 +83,13 @@ package com.funrun.view {
 		 * Initialise the lights
 		 */
 		private function initLights():void {
-			// Create a light for the camera.
+			sun = new DirectionalLight( 0, -1, 1 );
+			sun.z = 2000;
+			scene.addChild( sun );
 			pointLight = new PointLight();
+			pointLight.position = new Vector3D( 0, 500, -1000 );
 			scene.addChild( pointLight );
-			lightPicker = new StaticLightPicker( [ pointLight ] );
+			lightPicker = new StaticLightPicker( [ pointLight, sun ] );
 		}
 		
 		/**
@@ -119,7 +124,6 @@ package com.funrun.view {
 		 * Navigation and render loop
 		 */
 		private function onEnterFrame( event:Event ):void {
-			pointLight.position = camera.position;
 			view.render();
 		}
 	}

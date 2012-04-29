@@ -93,11 +93,12 @@ package {
 			for ( var col:int = 0; col < 3; col++ ) {
 				for ( var row:int = 0; row < 5; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
-					mesh.position = ( flip ) ? new Vector3D( ( 2 - col ) * MESH_WIDTH - (MESH_WIDTH * 1), 25, row * 50 ) : new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, row * 50 );
+					mesh.position = ( flip ) ? new Vector3D( ( 2 - col ) * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 ) : new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 );
 					_course.scene.addChild( mesh );
 					obstacle.addGeo( mesh );
 				}
 			}
+			_course.scene.addChild( obstacle );
 			obstacle.move( START_POS );
 			_obstacles.unshift( obstacle );
 		}
