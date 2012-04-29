@@ -29,10 +29,10 @@ package {
 		// Constants.
 		private const START_POS:Number = 1000;
 		private const GEO_SIZE:Number = 50 * 5;
-		private const TRIGGER_POS:Number = START_POS - GEO_SIZE;
-		private const END_POS:Number = -1000;
+		private const TRIGGER_POS:Number = START_POS - GEO_SIZE * 3;
+		private const END_POS:Number = -1200;
 		private const MESH_WIDTH:Number = 300;
-		private var _speed:Number = 12;
+		private var _speed:Number = 18;
 		private var _obstacles:Array;
 		
 		private var _geosModel:GeosModel = new GeosModel();
@@ -89,10 +89,11 @@ package {
 			var data:ObstacleVO = _obstaclesModel.getRandomObstacle();
 			var obstacle:Obstacle = new Obstacle( data.id );
 			var mesh:Mesh;
+			var flip:Boolean = Math.random() < .5;
 			for ( var col:int = 0; col < 3; col++ ) {
 				for ( var row:int = 0; row < 5; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
-					mesh.position = new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, row * 50 );
+					mesh.position = ( flip ) ? new Vector3D( ( 2 - col ) * MESH_WIDTH - (MESH_WIDTH * 1), 25, row * 50 ) : new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, row * 50 );
 					_course.scene.addChild( mesh );
 					obstacle.addGeo( mesh );
 				}

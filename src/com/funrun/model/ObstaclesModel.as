@@ -25,9 +25,9 @@ package com.funrun.model
 					"sideWalls",
 					[
 						[ "empty",	"empty",	"empty" ],
-						[ "empty",	"empty",	"empty" ],
-						[ "wall",	"empty",	"wall" ],
-						[ "empty",	"empty",	"empty" ],
+						[ "wall",	"wall",		"empty" ],
+						[ "wall",	"empty",	"empty" ],
+						[ "empty",	"empty",	"wall" ],
 						[ "empty",	"empty",	"empty" ]
 					]
 				)
@@ -41,6 +41,30 @@ package com.funrun.model
 						[ "beam",	"beam",		"beam" ],
 						[ "empty",	"empty",	"empty" ],
 						[ "empty",	"empty",	"empty" ]
+					]
+				)
+			);
+			add(
+				new ObstacleVO(
+					"centerWall",
+					[
+						[ "empty",	"empty",	"empty" ],
+						[ "empty",	"empty",	"empty" ],
+						[ "beam",	"wall",		"empty" ],
+						[ "empty",	"empty",	"wall" ],
+						[ "empty",	"empty",	"empty" ]
+					]
+				)
+			);
+			add(
+				new ObstacleVO(
+					"corridor",
+					[
+						[ "wall",	"wall",		"empty" ],
+						[ "wall",	"wall",		"empty" ],
+						[ "wall",	"wall",		"empty" ],
+						[ "wall",	"empty",	"empty" ],
+						[ "wall",	"empty",	"empty" ]
 					]
 				)
 			);

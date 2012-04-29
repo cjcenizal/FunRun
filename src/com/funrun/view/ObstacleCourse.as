@@ -1,5 +1,6 @@
 package com.funrun.view {
 	import away3d.cameras.Camera3D;
+	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
@@ -62,12 +63,14 @@ package com.funrun.view {
 			view.forceMouseMove = true; // Force mouse move-related events even when the mouse hasn't moved.
 			view.width = 800;
 			view.height = 600;
+			view.backgroundColor = 0x111111;
 			addChild( view );
 			
 			scene = view.scene; // Store local refs.
 			camera = view.camera;
 			camera.pitch( 20 );
 			camera.y = 400;
+			camera.lens = new PerspectiveLens( 90 );
 			
 			// Add stats.
 			awayStats = new AwayStats( view );
@@ -100,8 +103,8 @@ package com.funrun.view {
 		 * Initialise the scene objects
 		 */
 		private function initObjects():void {
-			var ground:Mesh = new Mesh( new PlaneGeometry( 700, 2000 ), inactiveMaterial );
-			ground.position = new Vector3D( 0, 0, 200 );
+			var ground:Mesh = new Mesh( new PlaneGeometry( 1000, 2500 ), inactiveMaterial );
+			ground.position = new Vector3D( 0, 0, 100 );
 			scene.addChild( ground );
 		}
 		
