@@ -64,14 +64,11 @@ package {
 			var len:int = _obstacles.length;
 			// Update oldest obstacles first, newest ones last.
 			
-			trace("len: " + len);
 			for ( var i:int = len - 1; i >= 0; i-- ) {
 				item = _obstacles[ i ];
-				//trace(i + " " + item);
 				item.move( -_speed );
 			}
 			if ( len > 0 ) {
-				trace(item.prevZ + ", " + item.z + " < " + TRIGGER_POS);
 				if ( item.prevZ >= TRIGGER_POS && item.z < TRIGGER_POS ) {
 					addObstacle();
 				}
@@ -84,7 +81,6 @@ package {
 			}
 			for ( var i:int = 0; i < _obstacles.length; i++ ) {
 				item = _obstacles[ i ];
-			//	trace(i + " " + item.id + " " + item.z);
 			}
 		}
 		
@@ -97,7 +93,6 @@ package {
 				for ( var row:int = 0; row < 5; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
 					mesh.position = new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, row * 50 );
-	//				trace( col + " " + row + " : " + data.geos[row][col]);
 					_course.scene.addChild( mesh );
 					obstacle.addGeo( mesh );
 				}
