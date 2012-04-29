@@ -1,9 +1,9 @@
 package com.funrun.model
 {
-	import com.funrun.model.geo.EmptyGeo;
-	import com.funrun.model.geo.BeamGeo;
-	import com.funrun.model.geo.LedgeGeo;
-	import com.funrun.model.geo.WallGeo;
+	import com.funrun.view.geo.EmptyGeo;
+	import com.funrun.view.geo.BeamGeo;
+	import com.funrun.view.geo.LedgeGeo;
+	import com.funrun.view.geo.WallGeo;
 
 	public class GeosModel
 	{

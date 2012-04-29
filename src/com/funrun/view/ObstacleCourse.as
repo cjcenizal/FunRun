@@ -29,7 +29,7 @@ package com.funrun.view {
 	public class ObstacleCourse extends Sprite {
 		
 		// Engine vars.
-		private var scene:Scene3D;
+		public var scene:Scene3D;
 		private var camera:Camera3D;
 		private var view:View3D;
 		private var awayStats:AwayStats;
@@ -40,13 +40,11 @@ package com.funrun.view {
 		private var lightPicker:StaticLightPicker;
 		
 		// Materials.
-		private var activeMaterial:ColorMaterial;
-		private var offMaterial:ColorMaterial;
-		private var inactiveMaterial:ColorMaterial;
+		public var activeMaterial:ColorMaterial;
+		public var offMaterial:ColorMaterial;
+		public var inactiveMaterial:ColorMaterial;
 		
 		// Scene objects.
-		private var text:TextField;
-		private var dataText:TextField;
 		private var meshIntersectionTracer:Mesh;
 		private var meshes:Vector.<Mesh>;
 		private var mouseHitMethod:uint = MouseHitMethod.MESH_ANY_HIT;
@@ -68,15 +66,13 @@ package com.funrun.view {
 		 * Constructor
 		 */
 		public function ObstacleCourse() {
-			init();
 		}
 		
 		/**
 		 * Global initialise function
 		 */
-		private function init():void {
+		public function init():void {
 			initEngine();
-			initText();
 			initLights();
 			initMaterials();
 			initObjects();
@@ -102,38 +98,6 @@ package com.funrun.view {
 			// Add stats.
 			awayStats = new AwayStats( view );
 			addChild( awayStats );
-		}
-		
-		/**
-		 * Create an instructions overlay
-		 */
-		private function initText():void {
-			text = new TextField();
-			text.defaultTextFormat = new TextFormat( "Verdana", 11, 0xFFFFFF );
-			text.width = 240;
-			text.height = 100;
-			text.selectable = false;
-			text.mouseEnabled = false;
-			text.text = "Click and drag on the stage to rotate camera.\n";
-			text.appendText( "Keyboard arrows and WASD also rotate camera.\n" );
-			text.appendText( "Keyboard Z and X zoom camera.\n" );
-			text.appendText( "- Press SPACE to change picking method. \n" );
-			text.appendText( "- All scene objects are mouseEnabled, except the small sphere under the mouse. \n" );
-			text.appendText( "- Red objects have mouse listeners, gray objects don't. \n" );
-			text.filters = [ new DropShadowFilter( 1, 45, 0x0, 1, 0, 0 ) ];
-			
-			addChild( text );
-			
-			//trace data
-			dataText = new TextField();
-			dataText.defaultTextFormat = new TextFormat( "Verdana", 11, 0xFF0000 );
-			dataText.width = 240;
-			dataText.height = 40;
-			dataText.selectable = false;
-			dataText.mouseEnabled = false;
-			dataText.y = 100;
-			dataText.filters = [ new DropShadowFilter( 1, 45, 0x0, 1, 0, 0 ) ];
-			addChild( dataText );
 		}
 		
 		/**
@@ -163,7 +127,10 @@ package com.funrun.view {
 		/**
 		 * Initialise the scene objects
 		 */
+		private var cube:Mesh;
 		private function initObjects():void {
+			
+			
 			// intersection points
 			meshIntersectionTracer = new Mesh( new SphereGeometry( 2 ), new ColorMaterial( 0x00FF00, 0.5 ) );
 			meshIntersectionTracer.visible = false;
@@ -178,7 +145,7 @@ package com.funrun.view {
 			var len:uint = 201;
 			var cubeGeometry:CubeGeometry = new CubeGeometry( 30 * Math.random() + 20, 30 * Math.random() + 20, 30 * Math.random() + 20, 10, 10, 10 );
 			
-			for ( i = 0; i < len; ++i ) {
+			/*for ( i = 0; i < len; ++i ) {
 				if ( i ) {
 					mesh = new Mesh( cubeGeometry, inactiveMaterial );
 					mesh.rotationX = 360 * Math.random();
@@ -193,13 +160,10 @@ package com.funrun.view {
 					mesh.rotationY = 360 * Math.random();
 					mesh.rotationZ = 360 * Math.random();
 				} else {
-					mesh = new Mesh( new PlaneGeometry( 1000, 1000 ), inactiveMaterial );
 				}
 				
 				if ( i && Math.random() > 0.5 ) { //add listener and update hit method
-					mesh.addEventListener( MouseEvent3D.MOUSE_MOVE, onMeshMouseMove );
-					mesh.addEventListener( MouseEvent3D.MOUSE_OVER, onMeshMouseOver );
-					mesh.addEventListener( MouseEvent3D.MOUSE_OUT, onMeshMouseOut );
+				
 				} else { //leave mesh 
 					mesh.material = offMaterial;
 				}
@@ -211,12 +175,18 @@ package com.funrun.view {
 				
 				meshes.push( mesh );
 				scene.addChild( mesh );
-			}
+			}*/
+			
+			mesh = new Mesh( new PlaneGeometry( 1000, 1000 ), inactiveMaterial );
+			scene.addChild( mesh );
 			
 			// Add our fat-ass cube.
-			mesh = new Mesh( new CubeGeometry( 20, 20, 20 ), activeMaterial );
-			mesh.position = new Vector3D( 0, 100, 0 );
-			scene.addChild( mesh );
+			cube = new Mesh( new CubeGeometry( 20, 20, 20 ), activeMaterial );
+			cube.position = new Vector3D( 0, 0, 0 );
+			//mesh.position = mesh.position.add( new Vector3D( 0, 20000, 0 ) );
+		//	scene.addChild( cube );
+			
+			
 		}
 		
 		/**
@@ -224,11 +194,7 @@ package com.funrun.view {
 		 */
 		private function initListeners():void {
 			addEventListener( Event.ENTER_FRAME, onEnterFrame );
-			view.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
-			view.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			stage.addEventListener( Event.RESIZE, onResize );
-			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
-			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 			onResize();
 		}
 		
@@ -247,172 +213,11 @@ package com.funrun.view {
 			
 			pointLight.position = camera.position;
 			
-			//update data text
-			var modeMsg:String;
-			switch ( mouseHitMethod ) {
-				case MouseHitMethod.BOUNDS_ONLY:  {
-					modeMsg = "bounds only";
-					break;
-				}
-				case MouseHitMethod.MESH_CLOSEST_HIT:  {
-					modeMsg = "mesh closest hit";
-					break;
-				}
-				case MouseHitMethod.MESH_ANY_HIT:  {
-					modeMsg = "mesh any hit";
-					break;
-				}
-				case 99:  {
-					modeMsg = "none";
-					break;
-				}
-			}
-			dataText.text = "Mouse mode: " + modeMsg + "\n";
-			dataText.appendText( "Test time: " + view.mouse3DManager.testTime + "ms" );
-			
 			view.render();
-		}
-		
-		/**
-		 * Key down listener for camera control
-		 */
-		private function onKeyDown( event:KeyboardEvent ):void {
-			switch ( event.keyCode ) {
-				case Keyboard.UP:
-				case Keyboard.W:  {
-					tiltIncrement = tiltSpeed;
-					break;
-				}
-				case Keyboard.DOWN:
-				case Keyboard.S:  {
-					tiltIncrement = -tiltSpeed;
-					break;
-				}
-				case Keyboard.LEFT:
-				case Keyboard.A:  {
-					panIncrement = panSpeed;
-					break;
-				}
-				case Keyboard.RIGHT:
-				case Keyboard.D:  {
-					panIncrement = -panSpeed;
-					break;
-				}
-				case Keyboard.Z:  {
-					distanceIncrement = distanceSpeed;
-					break;
-				}
-				case Keyboard.X:  {
-					distanceIncrement = -distanceSpeed;
-					break;
-				}
-				case Keyboard.SPACE:  {
-					switch ( mouseHitMethod ) {
-						case MouseHitMethod.MESH_ANY_HIT:  {
-							mouseHitMethod = MouseHitMethod.BOUNDS_ONLY;
-							break;
-						}
-						case MouseHitMethod.BOUNDS_ONLY:  {
-							mouseHitMethod = MouseHitMethod.MESH_CLOSEST_HIT;
-							break;
-						}
-						case MouseHitMethod.MESH_CLOSEST_HIT:  {
-							mouseHitMethod = 99;
-							break;
-						}
-						case 99:  {
-							mouseHitMethod = MouseHitMethod.MESH_ANY_HIT;
-							break;
-						}
-					}
-					
-					for each ( var mesh:Mesh in meshes ) {
-						if ( mouseHitMethod == 99 ) {
-							mesh.mouseEnabled = false;
-						} else {
-							mesh.mouseEnabled = true;
-							mesh.mouseHitMethod = mouseHitMethod;
-						}
-					}
-					break;
-				}
-			}
-		}
-		
-		/**
-		 * Key up listener for camera control
-		 */
-		private function onKeyUp( event:KeyboardEvent ):void {
-			switch ( event.keyCode ) {
-				case Keyboard.UP:
-				case Keyboard.W:
-				case Keyboard.DOWN:
-				case Keyboard.S:  {
-					tiltIncrement = 0;
-					break;
-				}
-				case Keyboard.LEFT:
-				case Keyboard.A:
-				case Keyboard.RIGHT:
-				case Keyboard.D:  {
-					panIncrement = 0;
-					break;
-				}
-				case Keyboard.Z:
-				case Keyboard.X:  {
-					distanceIncrement = 0;
-					break;
-				}
-			}
-		}
-		
-		/**
-		 * mesh listener for mouse over interaction
-		 */
-		private function onMeshMouseOver( event:MouseEvent3D ):void {
-			( event.object as Mesh ).material = activeMaterial;
 			
-			meshIntersectionTracer.visible = true;
-			onMeshMouseMove( event );
 		}
 		
-		/**
-		 * mesh listener for mouse out interaction
-		 */
-		private function onMeshMouseOut( event:MouseEvent3D ):void {
-			( event.object as Mesh ).material = inactiveMaterial;
-			
-			meshIntersectionTracer.visible = false;
-			meshIntersectionTracer.position = new Vector3D();
-		}
 		
-		/**
-		 * mesh listener for mouse move interaction
-		 */
-		private function onMeshMouseMove( event:MouseEvent3D ):void {
-			meshIntersectionTracer.visible = true;
-			meshIntersectionTracer.position = new Vector3D( event.sceneX, event.sceneY, event.sceneZ );
-		}
-		
-		/**
-		 * Mouse down listener for navigation
-		 */
-		private function onMouseDown( event:MouseEvent ):void {
-			move = true;
-			lastPanAngle = cameraController.panAngle;
-			lastTiltAngle = cameraController.tiltAngle;
-			lastMouseX = stage.mouseX;
-			lastMouseY = stage.mouseY;
-			stage.addEventListener( Event.MOUSE_LEAVE, onStageMouseLeave );
-		}
-		
-		/**
-		 * Mouse up listener for navigation
-		 */
-		private function onMouseUp( event:MouseEvent ):void {
-			move = false;
-			stage.removeEventListener( Event.MOUSE_LEAVE, onStageMouseLeave );
-		}
 		
 		/**
 		 * Mouse stage leave listener for navigation

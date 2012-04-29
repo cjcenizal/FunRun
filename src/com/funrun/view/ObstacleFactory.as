@@ -10,7 +10,7 @@ package com.funrun.view
 		{
 		}
 		
-		public function make( obstacle:ObstacleVO, startPos:Number ):Obstacle {
+		public function build( obstacle:Obstacle ):void {
 			
 		}
 	}
