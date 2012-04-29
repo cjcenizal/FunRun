@@ -11,7 +11,6 @@ package com.funrun.view
 	{
 		public var id:String;
 		private var _geos:Array;
-	//	private var _z:Number = 0;
 		private var _prevZ:Number = 0;
 		
 		public function Obstacle( id:String )
@@ -42,10 +41,6 @@ package com.funrun.view
 			}
 			_geos = null;
 		}
-		
-	//	public function get z():Number {
-	//		return _z;
-	//	}
 		
 		public function get prevZ():Number {
 			return _prevZ;

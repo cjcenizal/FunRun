@@ -15,6 +15,7 @@ package {
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.geom.Vector3D;
 	
 	[SWF( backgroundColor = "#000000", frameRate = "30", quality = "LOW" )]
@@ -27,12 +28,12 @@ package {
 	public class FunRun extends Sprite {
 		
 		// Constants.
-		private const START_POS:Number = 1000;
+		private const START_POS:Number = 5000;
 		private const GEO_SIZE:Number = 50 * 5;
-		private const TRIGGER_POS:Number = START_POS - GEO_SIZE * 3;
-		private const END_POS:Number = -1200;
+		private const TRIGGER_POS:Number = START_POS - 1200;
+		private const END_POS:Number = -600;
 		private const MESH_WIDTH:Number = 300;
-		private var _speed:Number = 18;
+		private var _speed:Number = 40;
 		private var _obstacles:Array;
 		
 		private var _geosModel:GeosModel = new GeosModel();
@@ -56,6 +57,7 @@ package {
 		
 		private function start():void {
 			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			addObstacle();
 		}
 		
@@ -124,6 +126,11 @@ package {
 			}
 			return mesh;
 		}
+		
+		private function onKeyDown( e:KeyboardEvent ):void {
+			_course.jump();
+		}
+		
 	}
 
 }

@@ -10,6 +10,7 @@ package com.funrun.view {
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
+	import away3d.primitives.CylinderGeometry;
 	import away3d.primitives.PlaneGeometry;
 	
 	import flash.display.Sprite;
@@ -39,6 +40,8 @@ package com.funrun.view {
 		public var activeMaterial:ColorMaterial;
 		public var offMaterial:ColorMaterial;
 		public var inactiveMaterial:ColorMaterial;
+		
+		public var player:Mesh;
 		
 		/**
 		 * Constructor
@@ -72,7 +75,7 @@ package com.funrun.view {
 			camera = view.camera;
 			camera.y = 200;
 			camera.z = -1000;
-			camera.lens = new PerspectiveLens( 120 );
+			camera.lens = new PerspectiveLens( 90 );
 			camera.lens.far = 10000;
 			
 			// Add stats.
@@ -101,7 +104,7 @@ package com.funrun.view {
 			inactiveMaterial.lightPicker = lightPicker;
 			activeMaterial = new ColorMaterial( 0x0000FF );
 			activeMaterial.lightPicker = lightPicker;
-			offMaterial = new ColorMaterial( 0xFFFFFF );
+			offMaterial = new ColorMaterial( 0x00ff00 );
 			offMaterial.lightPicker = lightPicker;
 		}
 		
@@ -112,11 +115,11 @@ package com.funrun.view {
 			var w:int = 1200;
 			var h:int = 10000;
 			var ground:Mesh = new Mesh( new PlaneGeometry( w, h ), inactiveMaterial );
-			ground.position = new Vector3D( 0, 0, 100 );
+			ground.position = new Vector3D( 0, 0, 700 );
 			scene.addChild( ground );
-			//var ceiling:Mesh = new Mesh( new PlaneGeometry( w, h ), inactiveMaterial );
-			//ceiling.position = new Vector3D( 0, 800, 100 );
-			//scene.addChild( ceiling );
+			player = new Mesh( new CylinderGeometry( 50, 50, 50 ), offMaterial );
+			player.position = new Vector3D( 0, 25, 0 );
+			scene.addChild( player );
 		}
 		
 		/**
@@ -131,7 +134,35 @@ package com.funrun.view {
 		 */
 		private function onEnterFrame( event:Event ):void {
 			view.render();
-			camera.y = ( stage.stageHeight - stage.mouseY );
+			camera.y = 800;
+			
+			// Velocity += gravity
+			// Velocity *= friction
+			// Position += velocity
+			
+			_velocity += _gravity;
+			_velocity *= _friction;
+			player.y += _velocity;
+			if ( player.y <= 25 ) {
+				player.y = 25;
+				_velocity = 0;
+			}
+			
+		}
+		
+		private var _friction:Number = 1;//.98;
+		private var _velocity:Number = 0;
+		private var _gravity:Number = -10;
+		public function jump():void {
+			_velocity += 80;
+		}
+		
+		public function moveLeft():void {
+			
+		}
+		
+		public function moveRight():void {
+			
 		}
 	}
 	
