@@ -141,8 +141,9 @@ package com.funrun.view {
 			// Position += velocity
 			
 			_velocity += _gravity;
-			_velocity *= _friction;
+		//	_velocity *= _friction;
 			player.y += _velocity;
+			player.x += _lateralVelocity;
 			if ( player.y <= 25 ) {
 				player.y = 25;
 				_velocity = 0;
@@ -150,20 +151,72 @@ package com.funrun.view {
 			
 		}
 		
-		private var _friction:Number = 1;//.98;
-		private var _velocity:Number = 0;
+		//private var _friction:Number = 1;//.98;
+		private var _jumpSpeed:Number = 80;
+		private var _lateralSpeed:Number = 30;
 		private var _gravity:Number = -10;
+		
+		private var _velocity:Number = 0;
+		private var _lateralVelocity:Number = 0;
+		private var _isJumping:Boolean = false;
+		private var _isMovingLeft:Boolean = false;
+		private var _isMovingRight:Boolean = false;
+		private var _isDucking:Boolean = false;
+		
 		public function jump():void {
-			_velocity += 80;
+			if ( !_isJumping ) {
+				_velocity += _jumpSpeed;
+			}
+			_isJumping = true;
 		}
 		
-		public function moveLeft():void {
-			
+		public function stopJumping():void {
+			_isJumping = false;
 		}
 		
-		public function moveRight():void {
-			
+		public function startMovingLeft():void {
+			if ( !_isMovingLeft ) {
+				_lateralVelocity -= _lateralSpeed;
+			}
+			_isMovingLeft = true;
 		}
+		
+		public function startMovingRight():void {
+			if ( !_isMovingRight ) {
+				_lateralVelocity += _lateralSpeed;
+			}
+			_isMovingRight = true;
+		}
+		
+		public function startDucking():void {
+			_isDucking = true;
+		}
+		
+		public function stopMovingLeft():void {
+			if ( _isMovingLeft ) {
+				_lateralVelocity += _lateralSpeed;
+			}
+			_isMovingLeft = false;
+		}
+		
+		public function stopMovingRight():void {
+			if ( _isMovingRight ) {
+				_lateralVelocity -= _lateralSpeed;
+			}
+			_isMovingRight = false;
+		}
+
+		public function stopDucking():void {
+			_isDucking = false;
+		}
+		/*
+		private function moveLeft():void {
+			player.x -= _speed;
+		}
+		
+		private function moveRight():void {
+			player.x += _speed;
+		}*/
 	}
 	
 }

@@ -33,7 +33,7 @@ package {
 		private const TRIGGER_POS:Number = START_POS - 1200;
 		private const END_POS:Number = -600;
 		private const MESH_WIDTH:Number = 300;
-		private var _speed:Number = 40;
+		private var _speed:Number = 60;
 		private var _obstacles:Array;
 		
 		private var _geosModel:GeosModel = new GeosModel();
@@ -58,6 +58,7 @@ package {
 		private function start():void {
 			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 			addObstacle();
 		}
 		
@@ -127,8 +128,51 @@ package {
 			return mesh;
 		}
 		
+		private const SPACE_BAR:int = 32;
+		private const LEFT_ARROW:int = 37;
+		private const UP_ARROW:int = 38;
+		private const RIGHT_ARROW:int = 39;
+		private const DOWN_ARROW:int = 40;
+		
 		private function onKeyDown( e:KeyboardEvent ):void {
-			_course.jump();
+			switch ( e.keyCode ) {
+				case SPACE_BAR:
+					_course.jump();
+					break;
+				case UP_ARROW:
+					_course.jump();
+					break;
+				case LEFT_ARROW:
+					_course.startMovingLeft();
+					break;
+				case RIGHT_ARROW:
+					_course.startMovingRight();
+					break;
+				case DOWN_ARROW:
+					_course.startDucking();
+					break;
+			}	
+		}
+		
+		private function onKeyUp( e:KeyboardEvent ):void {
+			switch ( e.keyCode ) {
+				case SPACE_BAR:
+					_course.stopJumping();
+					break;
+				case UP_ARROW:
+					_course.stopJumping();
+					break;
+				case LEFT_ARROW:
+					_course.stopMovingLeft();
+					break;
+				case RIGHT_ARROW:
+					_course.stopMovingRight();
+					break;
+				case DOWN_ARROW:
+					_course.stopDucking();
+					break;
+			}
+			
 		}
 		
 	}
