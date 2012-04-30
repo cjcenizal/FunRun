@@ -106,23 +106,28 @@ package {
 			_obstacles.unshift( obstacle );
 		}
 		
+		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
+		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 50, 50 );
+		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 200, 50 );
+		private var BEAM_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 50, 50 );
+		
 		private function getMesh( geo:String ):Mesh {
 			var mesh:Mesh;
 			switch ( geo ) {
 				case "empty":
-					mesh = new Mesh( new PlaneGeometry( 1, 1 ), _course.activeMaterial );
+					mesh = new Mesh( EMPTY_GEO, _course.activeMaterial );
 					break;
 				
 				case "ledge":
-					mesh = new Mesh( new CubeGeometry( MESH_WIDTH, 50, 50 ), _course.activeMaterial );
+					mesh = new Mesh( LEDGE_GEO, _course.activeMaterial );
 					break;
 				
 				case "wall":
-					mesh = new Mesh( new CubeGeometry( MESH_WIDTH, 200, 50 ), _course.activeMaterial );
+					mesh = new Mesh( WALL_GEO, _course.activeMaterial );
 					break;
 				
 				case "beam":
-					mesh = new Mesh( new CubeGeometry( MESH_WIDTH, 50, 50 ), _course.activeMaterial );
+					mesh = new Mesh( BEAM_GEO, _course.activeMaterial );
 					break;
 			}
 			return mesh;

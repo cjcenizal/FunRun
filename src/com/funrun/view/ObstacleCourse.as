@@ -175,6 +175,9 @@ package com.funrun.view {
 		}
 		
 		public function startMovingLeft():void {
+			if ( _isMovingRight ) {
+				stopMovingRight();
+			}
 			if ( !_isMovingLeft ) {
 				_lateralVelocity -= _lateralSpeed;
 			}
@@ -182,6 +185,9 @@ package com.funrun.view {
 		}
 		
 		public function startMovingRight():void {
+			if ( _isMovingLeft ) {
+				stopMovingLeft();
+			}
 			if ( !_isMovingRight ) {
 				_lateralVelocity += _lateralSpeed;
 			}
