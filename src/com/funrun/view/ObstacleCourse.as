@@ -10,6 +10,7 @@ package com.funrun.view {
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
+	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.primitives.CylinderGeometry;
 	import away3d.primitives.PlaneGeometry;
 	
@@ -65,6 +66,7 @@ package com.funrun.view {
 		 */
 		private function initEngine():void {			
 			view = new View3D();
+		//	view.antiAlias = 16;
 			view.forceMouseMove = true; // Force mouse move-related events even when the mouse hasn't moved.
 			view.width = 800;
 			view.height = 600;
@@ -76,7 +78,7 @@ package com.funrun.view {
 			camera.y = 200;
 			camera.z = -1000;
 			camera.lens = new PerspectiveLens( 90 );
-			camera.lens.far = 10000;
+			camera.lens.far = 7000; // the higher the value, the blockier the shadows
 			
 			// Add stats.
 			awayStats = new AwayStats( view );
@@ -87,11 +89,12 @@ package com.funrun.view {
 		 * Initialise the lights
 		 */
 		private function initLights():void {
-			sun = new DirectionalLight( 0, -1, 1 );
+			sun = new DirectionalLight( .5, -1, 0 );
 			sun.z = 2000;
 			scene.addChild( sun );
 			pointLight = new PointLight();
 			pointLight.position = new Vector3D( 0, 500, -1000 );
+			pointLight.castsShadows = true;
 			scene.addChild( pointLight );
 			lightPicker = new StaticLightPicker( [ pointLight, sun ] );
 		}
@@ -100,11 +103,15 @@ package com.funrun.view {
 		 * Initialise the material
 		 */
 		private function initMaterials():void {
+			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sun );
 			inactiveMaterial = new ColorMaterial( 0xFF0000 );
+			inactiveMaterial.shadowMethod = shadowMethod; 
 			inactiveMaterial.lightPicker = lightPicker;
 			activeMaterial = new ColorMaterial( 0x0000FF );
+			activeMaterial.shadowMethod = shadowMethod; 
 			activeMaterial.lightPicker = lightPicker;
 			offMaterial = new ColorMaterial( 0x00ff00 );
+			offMaterial.shadowMethod = shadowMethod; 
 			offMaterial.lightPicker = lightPicker;
 		}
 		
@@ -134,7 +141,6 @@ package com.funrun.view {
 		 */
 		private function onEnterFrame( event:Event ):void {
 			view.render();
-			camera.y = 800;
 			
 			// Velocity += gravity
 			// Velocity *= friction
@@ -148,7 +154,8 @@ package com.funrun.view {
 				player.y = 25;
 				_velocity = 0;
 			}
-			
+			camera.x = player.x;
+			camera.y += ( ( 800 + player.y ) - camera.y ) *.5; // try easing to follow the player instead of being locked
 		}
 		
 		//private var _friction:Number = 1;//.98;

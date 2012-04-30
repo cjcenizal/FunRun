@@ -45,5 +45,15 @@ package com.funrun.view
 		public function get prevZ():Number {
 			return _prevZ;
 		}
+		
+		public function collide( m:Mesh ):Boolean {
+			var len:int = _geos.length;
+			var geo:Mesh;
+			for ( var i:int = 0; i < len; i++ ) {
+				geo = _geos[ i ];
+				return geo.bounds.containsPoint( new Vector3D( 100000, 0, 0 ) );
+			}
+			return false;
+		}
 	}
 }

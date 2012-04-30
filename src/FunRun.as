@@ -70,6 +70,7 @@ package {
 			
 			for ( var i:int = len - 1; i >= 0; i-- ) {
 				item = _obstacles[ i ];
+				trace(item.collide( null ) );
 				item.move( -_speed );
 			}
 			if ( len > 0 ) {
