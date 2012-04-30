@@ -15,6 +15,7 @@ package {
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.ui.Keyboard;
 	import flash.events.KeyboardEvent;
 	import flash.geom.Vector3D;
 	
@@ -107,8 +108,8 @@ package {
 		}
 		
 		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
-		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 50, 50 );
-		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 200, 50 );
+		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 900, 50 );
+		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 100, 50 );
 		private var BEAM_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 50, 50 );
 		
 		private function getMesh( geo:String ):Mesh {
@@ -133,27 +134,19 @@ package {
 			return mesh;
 		}
 		
-		private const SPACE_BAR:int = 32;
-		private const LEFT_ARROW:int = 37;
-		private const UP_ARROW:int = 38;
-		private const RIGHT_ARROW:int = 39;
-		private const DOWN_ARROW:int = 40;
-		
 		private function onKeyDown( e:KeyboardEvent ):void {
 			switch ( e.keyCode ) {
-				case SPACE_BAR:
+				case Keyboard.SPACE:
+				case Keyboard.UP:
 					_course.jump();
 					break;
-				case UP_ARROW:
-					_course.jump();
-					break;
-				case LEFT_ARROW:
+				case Keyboard.LEFT:
 					_course.startMovingLeft();
 					break;
-				case RIGHT_ARROW:
+				case Keyboard.RIGHT:
 					_course.startMovingRight();
 					break;
-				case DOWN_ARROW:
+				case Keyboard.DOWN:
 					_course.startDucking();
 					break;
 			}	
@@ -161,19 +154,17 @@ package {
 		
 		private function onKeyUp( e:KeyboardEvent ):void {
 			switch ( e.keyCode ) {
-				case SPACE_BAR:
+				case Keyboard.SPACE:
+				case Keyboard.UP:
 					_course.stopJumping();
 					break;
-				case UP_ARROW:
-					_course.stopJumping();
-					break;
-				case LEFT_ARROW:
+				case Keyboard.LEFT:
 					_course.stopMovingLeft();
 					break;
-				case RIGHT_ARROW:
+				case Keyboard.RIGHT:
 					_course.stopMovingRight();
 					break;
-				case DOWN_ARROW:
+				case Keyboard.DOWN:
 					_course.stopDucking();
 					break;
 			}

@@ -152,9 +152,9 @@ package com.funrun.view {
 		}
 		
 		//private var _friction:Number = 1;//.98;
-		private var _jumpSpeed:Number = 80;
+		private var _jumpSpeed:Number = 100;
 		private var _lateralSpeed:Number = 30;
-		private var _gravity:Number = -10;
+		private var _gravity:Number = -12;
 		
 		private var _velocity:Number = 0;
 		private var _lateralVelocity:Number = 0;
