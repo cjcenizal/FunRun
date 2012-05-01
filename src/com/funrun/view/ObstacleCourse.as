@@ -58,7 +58,6 @@ package com.funrun.view {
 			initLights();
 			initMaterials();
 			initObjects();
-			initListeners();
 		}
 		
 		/**
@@ -130,16 +129,9 @@ package com.funrun.view {
 		}
 		
 		/**
-		 * Initialise the listeners
-		 */
-		private function initListeners():void {
-			addEventListener( Event.ENTER_FRAME, onEnterFrame );
-		}
-		
-		/**
 		 * Navigation and render loop
 		 */
-		private function onEnterFrame( event:Event ):void {
+		public function update():void {
 			view.render();
 			
 			// Velocity += gravity
@@ -155,7 +147,7 @@ package com.funrun.view {
 				_velocity = 0;
 			}
 			camera.x = player.x;
-			camera.y += ( ( 800 + player.y ) - camera.y ) *.5; // try easing to follow the player instead of being locked
+			camera.y += ( ( 800 + player.y ) - camera.y ) *.35; // try easing to follow the player instead of being locked
 		}
 		
 		//private var _friction:Number = 1;//.98;

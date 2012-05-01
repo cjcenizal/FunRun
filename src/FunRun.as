@@ -15,9 +15,9 @@ package {
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import flash.ui.Keyboard;
 	import flash.events.KeyboardEvent;
 	import flash.geom.Vector3D;
+	import flash.ui.Keyboard;
 	
 	[SWF( backgroundColor = "#000000", frameRate = "30", quality = "LOW" )]
 	
@@ -64,28 +64,32 @@ package {
 		}
 		
 		private function onEnterFrame( e:Event ):void {
-			var item:Obstacle;
+			_course.update();
+			var obstacle:Obstacle;
 			var len:int = _obstacles.length;
 			// Update oldest obstacles first, newest ones last.
 			
 			for ( var i:int = len - 1; i >= 0; i-- ) {
-				item = _obstacles[ i ];
-				trace(item.collide( null ) );
-				item.move( -_speed );
+				obstacle = _obstacles[ i ];
+				var collides:Boolean = obstacle.collide( _course.player );
+				if ( collides ) {
+					stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+				}
+				obstacle.move( -_speed );
 			}
 			if ( len > 0 ) {
-				if ( item.prevZ >= TRIGGER_POS && item.z < TRIGGER_POS ) {
+				if ( obstacle.prevZ >= TRIGGER_POS && obstacle.z < TRIGGER_POS ) {
 					addObstacle();
 				}
-				var item:Obstacle = _obstacles[ len - 1 ];
-				if ( item.z <= END_POS ) {
+				var obstacle:Obstacle = _obstacles[ len - 1 ];
+				if ( obstacle.z <= END_POS ) {
 					// Remove item.
-					item.destroy();
+					obstacle.destroy();
 					_obstacles.splice( len - 1, 1 );
 				}
 			}
 			for ( var i:int = 0; i < _obstacles.length; i++ ) {
-				item = _obstacles[ i ];
+				obstacle = _obstacles[ i ];
 			}
 		}
 		
@@ -98,9 +102,11 @@ package {
 			for ( var col:int = 0; col < 3; col++ ) {
 				for ( var row:int = 0; row < 5; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
-					mesh.position = ( flip ) ? new Vector3D( ( 2 - col ) * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 ) : new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 );
-					_course.scene.addChild( mesh );
-					obstacle.addGeo( mesh );
+					if ( mesh ) {
+						mesh.position = ( flip ) ? new Vector3D( ( 2 - col ) * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 ) : new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 );
+						_course.scene.addChild( mesh );
+						obstacle.addGeo( mesh );
+					}
 				}
 			}
 			_course.scene.addChild( obstacle );
@@ -110,14 +116,14 @@ package {
 		
 		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
 		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 900, 50 );
-		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 100, 50 );
+		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 500, 50 );
 		private var BEAM_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 50, 50 );
 		
 		private function getMesh( geo:String ):Mesh {
 			var mesh:Mesh;
 			switch ( geo ) {
 				case "empty":
-					mesh = new Mesh( EMPTY_GEO, _course.activeMaterial );
+					mesh = null;//new Mesh( EMPTY_GEO, _course.activeMaterial );
 					break;
 				
 				case "ledge":
@@ -154,6 +160,7 @@ package {
 		}
 		
 		private function onKeyUp( e:KeyboardEvent ):void {
+			if ( !stage.hasEventListener( Event.ENTER_FRAME ) ) stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
 			switch ( e.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:

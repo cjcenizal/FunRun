@@ -27,8 +27,8 @@ package com.funrun.model
 						[ "empty",	"empty",	"empty" ],
 						[ "wall",	"wall",		"empty" ],
 						[ "wall",	"empty",	"empty" ],
-						[ "empty",	"empty",	"wall" ],
-						[ "empty",	"empty",	"empty" ]
+						[ "empty",	"empty",	"empty" ],
+						[ "empty",	"empty",	"wall" ]
 					]
 				)
 			);
