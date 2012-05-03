@@ -173,7 +173,8 @@ package com.funrun.view.components {
 				_velocity = 0;
 			}
 			camera.x = player.x;
-			camera.y += ( ( 800 + player.y ) - camera.y ) *.35; // try easing to follow the player instead of being locked
+			var followFactor:Number = ( 800 + player.y < camera.y ) ? .6 : .2;
+			camera.y += ( ( 800 + player.y ) - camera.y ) * followFactor; // try easing to follow the player instead of being locked
 		}
 		
 		//private var _friction:Number = 1;//.98;
