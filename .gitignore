@@ -1,2 +1,3 @@
 # Ignore swfs.
 .swf
+.DS_Store

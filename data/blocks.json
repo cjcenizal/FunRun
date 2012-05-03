@@ -1,0 +1,49 @@
+{
+	"doc" : "These are the blocks that can be used to compose obstacles.",
+	"author" : "CJ Cenizal",
+	"list" : [
+		{
+			"id" : "empty"
+		},
+		{
+			"id" : "wall",
+			"filename" : "wall.dae",
+			"faces" : {
+				"t" : "walk",
+				"b" : "smack",
+				"l" : "slow",
+				"r" : "slow",
+				"f" : "smack",
+				"a" : "smack"
+			}
+		},
+		{
+			"id" : "saw",
+			"filename" : "saw.dae",
+			"faces" : {
+				"all" : "slice"
+			}
+		},
+		{
+			"id" : "lava",
+			"filename" : "lava.dae",
+			"faces" : {
+				"all" : "burn"
+			}
+		},
+		{
+			"id" : "jump",
+			"filename" : "jump.dae",
+			"faces" : {
+				"t" : "jump"
+			}
+		},
+		{
+			"id" : "point",
+			"filename" : "point.dae",
+			"faces" : {
+				"all" : "point"
+			}
+		}
+	]
+}
