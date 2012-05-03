@@ -4,7 +4,9 @@ package com.funrun
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.enum.GameType;
 	import com.funrun.controller.events.StartGameRequestEvent;
+	import com.funrun.view.components.Track;
 	import com.funrun.view.mediators.ApplicationMediator;
+	import com.funrun.view.mediators.TrackMediator;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
@@ -25,7 +27,7 @@ package com.funrun
 			
 			// Misc essential injections.
 			injector.mapValue( Stage, contextView.stage );
-			
+			mediatorMap.mapView( Track, TrackMediator );
 			
 			// Controller.
 			commandMap.mapEvent( StartGameRequestEvent.START_GAME_REQUESTED, StartGameCommand, StartGameRequestEvent, true );

@@ -11,6 +11,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void {
 			// Build dependencies, game, and configure game.
+			
 			switch ( gameType.type ) {
 				case GameType.Local.type:
 					commandMap.execute( StartLocalGameCommand );

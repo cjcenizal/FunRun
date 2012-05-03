@@ -1,4 +1,4 @@
-package com.funrun.view {
+package com.funrun.view.components {
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.Scene3D;
@@ -11,12 +11,21 @@ package com.funrun.view {
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FilteredShadowMapMethod;
+	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.CylinderGeometry;
 	import away3d.primitives.PlaneGeometry;
 	
+	import com.funrun.model.GeosModel;
+	import com.funrun.model.ObstacleVO;
+	import com.funrun.model.ObstaclesModel;
+	import com.funrun.view.Obstacle;
+	import com.funrun.view.ObstacleFactory;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.geom.Vector3D;
+	import flash.ui.Keyboard;
 	
 	
 	/**
@@ -24,7 +33,22 @@ package com.funrun.view {
 	 * - Compile with -swf-version=13
 	 * - Add wmode: 'direct' param to html template
 	 */
-	public class ObstacleCourse extends Sprite {
+	public class Track extends Sprite {
+		
+		// Constants.
+		private const START_POS:Number = 5000;
+		private const GEO_SIZE:Number = 50 * 5;
+		private const TRIGGER_POS:Number = START_POS - 1200;
+		private const END_POS:Number = -600;
+		private const MESH_WIDTH:Number = 300;
+		private var _speed:Number = 60;
+		private var _obstacles:Array;
+		
+		private var _geosModel:GeosModel = new GeosModel();
+		private var _obstaclesModel:ObstaclesModel = new ObstaclesModel();
+		private var _factory:ObstacleFactory = new ObstacleFactory();
+		//private var _course:ObstacleCourse;
+		
 		
 		// Engine vars.
 		public var scene:Scene3D;
@@ -47,17 +71,19 @@ package com.funrun.view {
 		/**
 		 * Constructor
 		 */
-		public function ObstacleCourse() {
+		public function Track() {
 		}
 		
 		/**
 		 * Global initialise function
 		 */
 		public function init():void {
+			_obstacles = [];
 			initEngine();
 			initLights();
 			initMaterials();
 			initObjects();
+			start();
 		}
 		
 		/**
@@ -222,6 +248,132 @@ package com.funrun.view {
 		private function moveRight():void {
 			player.x += _speed;
 		}*/
+		
+		
+		
+		private function start():void {
+			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+			addObstacle();
+		}
+		
+		private function onEnterFrame( e:Event ):void {
+			update();
+			var obstacle:Obstacle;
+			var len:int = _obstacles.length;
+			// Update oldest obstacles first, newest ones last.
+			
+			for ( var i:int = len - 1; i >= 0; i-- ) {
+				obstacle = _obstacles[ i ];
+				var collides:Boolean = obstacle.collide( player );
+				if ( collides ) {
+					stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+				}
+				obstacle.move( -_speed );
+			}
+			if ( len > 0 ) {
+				if ( obstacle.prevZ >= TRIGGER_POS && obstacle.z < TRIGGER_POS ) {
+					addObstacle();
+				}
+				var obstacle:Obstacle = _obstacles[ len - 1 ];
+				if ( obstacle.z <= END_POS ) {
+					// Remove item.
+					obstacle.destroy();
+					_obstacles.splice( len - 1, 1 );
+				}
+			}
+			for ( var i:int = 0; i < _obstacles.length; i++ ) {
+				obstacle = _obstacles[ i ];
+			}
+		}
+		
+		private function addObstacle():void {
+			// New obstacles go in front.
+			var data:ObstacleVO = _obstaclesModel.getRandomObstacle();
+			var obstacle:Obstacle = new Obstacle( data.id );
+			var mesh:Mesh;
+			var flip:Boolean = Math.random() < .5;
+			for ( var col:int = 0; col < 3; col++ ) {
+				for ( var row:int = 0; row < 5; row++ ) {
+					mesh = getMesh( data.geos[ row ][ col ] );
+					if ( mesh ) {
+						mesh.position = ( flip ) ? new Vector3D( ( 2 - col ) * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 ) : new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 );
+						scene.addChild( mesh );
+						obstacle.addGeo( mesh );
+					}
+				}
+			}
+			scene.addChild( obstacle );
+			obstacle.move( START_POS );
+			_obstacles.unshift( obstacle );
+		}
+		
+		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
+		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 900, 50 );
+		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 500, 50 );
+		private var BEAM_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 50, 50 );
+		
+		private function getMesh( geo:String ):Mesh {
+			var mesh:Mesh;
+			switch ( geo ) {
+				case "empty":
+					mesh = null;//new Mesh( EMPTY_GEO, activeMaterial );
+					break;
+				
+				case "ledge":
+					mesh = new Mesh( LEDGE_GEO, activeMaterial );
+					break;
+				
+				case "wall":
+					mesh = new Mesh( WALL_GEO, activeMaterial );
+					break;
+				
+				case "beam":
+					mesh = new Mesh( BEAM_GEO, activeMaterial );
+					break;
+			}
+			return mesh;
+		}
+		
+		private function onKeyDown( e:KeyboardEvent ):void {
+			switch ( e.keyCode ) {
+				case Keyboard.SPACE:
+				case Keyboard.UP:
+					jump();
+					break;
+				case Keyboard.LEFT:
+					startMovingLeft();
+					break;
+				case Keyboard.RIGHT:
+					startMovingRight();
+					break;
+				case Keyboard.DOWN:
+					startDucking();
+					break;
+			}	
+		}
+		
+		private function onKeyUp( e:KeyboardEvent ):void {
+			if ( !stage.hasEventListener( Event.ENTER_FRAME ) ) stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+			switch ( e.keyCode ) {
+				case Keyboard.SPACE:
+				case Keyboard.UP:
+					stopJumping();
+					break;
+				case Keyboard.LEFT:
+					stopMovingLeft();
+					break;
+				case Keyboard.RIGHT:
+					stopMovingRight();
+					break;
+				case Keyboard.DOWN:
+					stopDucking();
+					break;
+			}
+			
+		}
+		
 	}
 	
 }
