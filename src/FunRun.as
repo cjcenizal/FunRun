@@ -4,6 +4,7 @@ package {
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.PlaneGeometry;
 	
+	import com.funrun.GameContext;
 	import com.funrun.model.GeosModel;
 	import com.funrun.model.ObstacleVO;
 	import com.funrun.model.ObstaclesModel;
@@ -42,11 +43,40 @@ package {
 		private var _factory:ObstacleFactory = new ObstacleFactory();
 		private var _course:ObstacleCourse;
 		
+		
+		private var _context:GameContext;
+		
 		public function FunRun() {
-			init();
-			start();
+			super();
+			addEventListener( Event.ADDED_TO_STAGE, init );
 		}
 		
+		private function init( e:Event = null ):void {
+			removeEventListener( Event.ADDED_TO_STAGE, init );
+			_context = new GameContext( this, false );
+			_context.startup();
+		}
+		
+		public function createChildren():void {
+			setupStage();
+			addUiLayer();
+			addPopupsLayer();
+		}
+		
+		private function setupStage():void {
+			stage.frameRate = 30;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+		}
+		
+		private function addUiLayer():void {
+			
+		}
+		
+		private function addPopupsLayer():void {
+			
+		}
+		/*
 		private function init():void {
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
@@ -54,7 +84,7 @@ package {
 			_course = new ObstacleCourse();
 			addChild( _course );
 			_course.init();
-		}
+		}*/
 		
 		private function start():void {
 			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
