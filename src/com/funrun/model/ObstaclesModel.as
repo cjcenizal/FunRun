@@ -8,7 +8,7 @@ package com.funrun.model
 		public function ObstaclesModel()
 		{
 			_obstacles = [];
-			add(
+			/*add(
 				new ObstacleVO(
 					"leftWall",
 					[
@@ -31,7 +31,7 @@ package com.funrun.model
 						[ "empty",	"empty",	"wall" ]
 					]
 				)
-			);
+			);*/
 			add(
 				new ObstacleVO(
 					"wideBeam",
@@ -44,6 +44,7 @@ package com.funrun.model
 					]
 				)
 			);
+			/*
 			add(
 				new ObstacleVO(
 					"centerWall",
@@ -67,7 +68,7 @@ package com.funrun.model
 						[ "wall",	"empty",	"empty" ]
 					]
 				)
-			);
+			);*/
 		}
 		
 		public function add( obstacle:ObstacleVO ):void {

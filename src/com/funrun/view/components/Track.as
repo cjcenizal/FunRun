@@ -3,7 +3,6 @@ package com.funrun.view.components {
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
-	import away3d.core.render.RendererBase;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
@@ -35,20 +34,31 @@ package com.funrun.view.components {
 	 */
 	public class Track extends Sprite {
 		
+		// Block size.
+		private const BLOCK_WIDTH:Number = 100;
+		
+		// Track speed (can vary over time).
+		private const MAX_TRACK_SPEED:Number = BLOCK_WIDTH * .5;
+		private var _trackSpeed:Number = MAX_TRACK_SPEED;
+		
+		// Camera position.
+		private const CAM_HEIGHT:Number = 400;
+		
+		// Player movement constants.
+		private const PLAYER_JUMP_SPEED:Number = 40;
+		private const PLAYER_LATERAL_SPEED:Number = BLOCK_WIDTH * .2;
+		private const PLAYER_JUMP_GRAVITY:Number = -5;
+		
 		// Constants.
-		private const START_POS:Number = 500;
-		private const GEO_SIZE:Number = 10 * 5;
-		private const TRIGGER_POS:Number = START_POS - 100;
-		private const END_POS:Number = -600;
-		private const MESH_WIDTH:Number = 100;
-		private var _speed:Number = 10;
+		private const START_POS:Number = 50 * BLOCK_WIDTH;
+		private const TRIGGER_POS:Number = START_POS - 10 * BLOCK_WIDTH;
+		private const END_POS:Number = -10 * BLOCK_WIDTH;
 		private var _obstacles:Array;
 		
+		// Data.
 		private var _geosModel:GeosModel = new GeosModel();
 		private var _obstaclesModel:ObstaclesModel = new ObstaclesModel();
 		private var _factory:ObstacleFactory = new ObstacleFactory();
-		//private var _course:ObstacleCourse;
-		
 		
 		// Engine vars.
 		public var scene:Scene3D;
@@ -66,7 +76,23 @@ package com.funrun.view.components {
 		public var offMaterial:ColorMaterial;
 		public var inactiveMaterial:ColorMaterial;
 		
+		// Player geometry.
 		public var player:Mesh;
+		
+		// Player state.
+		private var _velocity:Number = 0;
+		private var _lateralVelocity:Number = 0;
+		private var _isJumping:Boolean = false;
+		private var _isMovingLeft:Boolean = false;
+		private var _isMovingRight:Boolean = false;
+		private var _isDucking:Boolean = false;
+		
+		// Obstacle geometry.
+		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
+		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 5 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
+		private var WALL_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 2 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
+		private var BEAM_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 1 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
+		
 		
 		/**
 		 * Constructor
@@ -83,7 +109,6 @@ package com.funrun.view.components {
 			initLights();
 			initMaterials();
 			initObjects();
-			start();
 		}
 		
 		/**
@@ -91,7 +116,7 @@ package com.funrun.view.components {
 		 */
 		private function initEngine():void {			
 			view = new View3D();
-		//	view.antiAlias = 16;
+		//	view.antiAlias = 16; // 2, 4, or 16
 			view.forceMouseMove = true; // Force mouse move-related events even when the mouse hasn't moved.
 			view.width = 800;
 			view.height = 600;
@@ -102,9 +127,11 @@ package com.funrun.view.components {
 			camera = view.camera;
 			camera.y = 200;
 			camera.z = -1000;
-			camera.lens = new PerspectiveLens( 90 );
+			camera.lens = new PerspectiveLens( 60 );
 			camera.lens.far = 7000; // the higher the value, the blockier the shadows
-			
+		}
+		
+		public function addStats():void {
 			// Add stats.
 			awayStats = new AwayStats( view );
 			addChild( awayStats );
@@ -154,44 +181,12 @@ package com.funrun.view.components {
 			scene.addChild( player );
 		}
 		
-		/**
-		 * Navigation and render loop
-		 */
-		public function update():void {
-			view.render();
-			
-			// Velocity += gravity
-			// Velocity *= friction
-			// Position += velocity
-			
-			_velocity += _gravity;
-		//	_velocity *= _friction;
-			player.y += _velocity;
-			player.x += _lateralVelocity;
-			if ( player.y <= 25 ) {
-				player.y = 25;
-				_velocity = 0;
-			}
-			camera.x = player.x;
-			var followFactor:Number = ( 800 + player.y < camera.y ) ? .6 : .2;
-			camera.y += ( ( 800 + player.y ) - camera.y ) * followFactor; // try easing to follow the player instead of being locked
-		}
 		
-		//private var _friction:Number = 1;//.98;
-		private var _jumpSpeed:Number = 20;
-		private var _lateralSpeed:Number = 3;
-		private var _gravity:Number = -5;
 		
-		private var _velocity:Number = 0;
-		private var _lateralVelocity:Number = 0;
-		private var _isJumping:Boolean = false;
-		private var _isMovingLeft:Boolean = false;
-		private var _isMovingRight:Boolean = false;
-		private var _isDucking:Boolean = false;
 		
 		public function jump():void {
 			if ( !_isJumping ) {
-				_velocity += _jumpSpeed;
+				_velocity += PLAYER_JUMP_SPEED;
 			}
 			_isJumping = true;
 		}
@@ -205,7 +200,7 @@ package com.funrun.view.components {
 				stopMovingRight();
 			}
 			if ( !_isMovingLeft ) {
-				_lateralVelocity -= _lateralSpeed;
+				_lateralVelocity -= PLAYER_LATERAL_SPEED;
 			}
 			_isMovingLeft = true;
 		}
@@ -215,7 +210,7 @@ package com.funrun.view.components {
 				stopMovingLeft();
 			}
 			if ( !_isMovingRight ) {
-				_lateralVelocity += _lateralSpeed;
+				_lateralVelocity += PLAYER_LATERAL_SPEED;
 			}
 			_isMovingRight = true;
 		}
@@ -226,14 +221,14 @@ package com.funrun.view.components {
 		
 		public function stopMovingLeft():void {
 			if ( _isMovingLeft ) {
-				_lateralVelocity += _lateralSpeed;
+				_lateralVelocity += PLAYER_LATERAL_SPEED;
 			}
 			_isMovingLeft = false;
 		}
 		
 		public function stopMovingRight():void {
 			if ( _isMovingRight ) {
-				_lateralVelocity -= _lateralSpeed;
+				_lateralVelocity -= PLAYER_LATERAL_SPEED;
 			}
 			_isMovingRight = false;
 		}
@@ -241,37 +236,47 @@ package com.funrun.view.components {
 		public function stopDucking():void {
 			_isDucking = false;
 		}
-		/*
-		private function moveLeft():void {
-			player.x -= _speed;
-		}
 		
-		private function moveRight():void {
-			player.x += _speed;
-		}*/
-		
-		
-		
-		private function start():void {
-			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
-			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
-			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+		public function start():void {
 			addObstacle();
 		}
 		
-		private function onEnterFrame( e:Event ):void {
-			update();
+		public function update():void {
+			updatePlayer();
+			updateCamera();
+			updateObstacles();
+			view.render();
+		}
+		
+		private function updatePlayer():void {
+			_velocity += PLAYER_JUMP_GRAVITY;
+			//	_velocity *= _friction;
+			player.y += _velocity;
+			player.x += _lateralVelocity;
+			if ( player.y <= 25 ) {
+				player.y = 25;
+				_velocity = 0;
+			}
+		}
+		
+		private function updateCamera():void {
+			camera.x = player.x;
+			var followFactor:Number = ( CAM_HEIGHT + player.y < camera.y ) ? .6 : .2;
+			camera.y += ( ( CAM_HEIGHT + player.y ) - camera.y ) * followFactor; // try easing to follow the player instead of being locked
+		}
+		
+		private function updateObstacles():void {
 			var obstacle:Obstacle;
 			var len:int = _obstacles.length;
 			// Update oldest obstacles first, newest ones last.
 			
 			for ( var i:int = len - 1; i >= 0; i-- ) {
 				obstacle = _obstacles[ i ];
+				obstacle.move( -_trackSpeed );
 				var collides:Boolean = obstacle.collide( player );
 				if ( collides ) {
-					stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+					//stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 				}
-				obstacle.move( -_speed );
 			}
 			if ( len > 0 ) {
 				if ( obstacle.prevZ >= TRIGGER_POS && obstacle.z < TRIGGER_POS ) {
@@ -299,7 +304,12 @@ package com.funrun.view.components {
 				for ( var row:int = 0; row < 5; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
 					if ( mesh ) {
-						mesh.position = ( flip ) ? new Vector3D( ( 2 - col ) * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 ) : new Vector3D( col * MESH_WIDTH - (MESH_WIDTH * 1), 25, ( 4 - row ) * 50 );
+						var meshX:Number = ( flip )
+							? ( 2 - col ) * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 )
+							: col * BLOCK_WIDTH - ( BLOCK_WIDTH * 1);
+						var meshY:Number = mesh.bounds.max.y * .5;
+						var meshZ:Number = ( 4 - row ) * BLOCK_WIDTH;
+						mesh.position = new Vector3D( meshX, meshY, meshZ );
 						scene.addChild( mesh );
 						obstacle.addGeo( mesh );
 					}
@@ -309,11 +319,6 @@ package com.funrun.view.components {
 			obstacle.move( START_POS );
 			_obstacles.unshift( obstacle );
 		}
-		
-		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
-		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 200, 10 );
-		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 100, 10 );
-		private var BEAM_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 10, 10 );
 		
 		private function getMesh( geo:String ):Mesh {
 			var mesh:Mesh;
@@ -335,44 +340,6 @@ package com.funrun.view.components {
 					break;
 			}
 			return mesh;
-		}
-		
-		private function onKeyDown( e:KeyboardEvent ):void {
-			switch ( e.keyCode ) {
-				case Keyboard.SPACE:
-				case Keyboard.UP:
-					jump();
-					break;
-				case Keyboard.LEFT:
-					startMovingLeft();
-					break;
-				case Keyboard.RIGHT:
-					startMovingRight();
-					break;
-				case Keyboard.DOWN:
-					startDucking();
-					break;
-			}	
-		}
-		
-		private function onKeyUp( e:KeyboardEvent ):void {
-			if ( !stage.hasEventListener( Event.ENTER_FRAME ) ) stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
-			switch ( e.keyCode ) {
-				case Keyboard.SPACE:
-				case Keyboard.UP:
-					stopJumping();
-					break;
-				case Keyboard.LEFT:
-					stopMovingLeft();
-					break;
-				case Keyboard.RIGHT:
-					stopMovingRight();
-					break;
-				case Keyboard.DOWN:
-					stopDucking();
-					break;
-			}
-			
 		}
 		
 	}
