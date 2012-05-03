@@ -36,12 +36,12 @@ package com.funrun.view.components {
 	public class Track extends Sprite {
 		
 		// Constants.
-		private const START_POS:Number = 5000;
-		private const GEO_SIZE:Number = 50 * 5;
-		private const TRIGGER_POS:Number = START_POS - 1200;
+		private const START_POS:Number = 500;
+		private const GEO_SIZE:Number = 10 * 5;
+		private const TRIGGER_POS:Number = START_POS - 100;
 		private const END_POS:Number = -600;
-		private const MESH_WIDTH:Number = 300;
-		private var _speed:Number = 60;
+		private const MESH_WIDTH:Number = 100;
+		private var _speed:Number = 10;
 		private var _obstacles:Array;
 		
 		private var _geosModel:GeosModel = new GeosModel();
@@ -178,9 +178,9 @@ package com.funrun.view.components {
 		}
 		
 		//private var _friction:Number = 1;//.98;
-		private var _jumpSpeed:Number = 100;
-		private var _lateralSpeed:Number = 30;
-		private var _gravity:Number = -12;
+		private var _jumpSpeed:Number = 20;
+		private var _lateralSpeed:Number = 3;
+		private var _gravity:Number = -5;
 		
 		private var _velocity:Number = 0;
 		private var _lateralVelocity:Number = 0;
@@ -311,9 +311,9 @@ package com.funrun.view.components {
 		}
 		
 		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
-		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 900, 50 );
-		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 500, 50 );
-		private var BEAM_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 50, 50 );
+		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 200, 10 );
+		private var WALL_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 100, 10 );
+		private var BEAM_GEO:CubeGeometry = new CubeGeometry( MESH_WIDTH, 10, 10 );
 		
 		private function getMesh( geo:String ):Mesh {
 			var mesh:Mesh;
