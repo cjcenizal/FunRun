@@ -38,21 +38,25 @@ package com.funrun.view.components {
 		private const BLOCK_WIDTH:Number = 100;
 		
 		// Track speed (can vary over time).
-		private const MAX_TRACK_SPEED:Number = BLOCK_WIDTH * .5;
+		private const MAX_TRACK_SPEED:Number = BLOCK_WIDTH * .7;
 		private var _trackSpeed:Number = MAX_TRACK_SPEED;
 		
-		// Camera position.
+		// Camera.
+		private const CAM_DEPTH:Number = -1000;
 		private const CAM_HEIGHT:Number = 400;
+		private const CAM_FOV:Number = 60;
+		private const CAM_FRUSTUM_DISTANCE:Number = 6000; // the higher the value, the blockier the shadows
 		
 		// Player movement constants.
-		private const PLAYER_JUMP_SPEED:Number = 40;
+		private const PLAYER_JUMP_SPEED:Number = 60;
 		private const PLAYER_LATERAL_SPEED:Number = BLOCK_WIDTH * .2;
-		private const PLAYER_JUMP_GRAVITY:Number = -5;
+		private const PLAYER_JUMP_GRAVITY:Number = -10;
 		
 		// Constants.
 		private const START_POS:Number = 50 * BLOCK_WIDTH;
-		private const TRIGGER_POS:Number = START_POS - 10 * BLOCK_WIDTH;
-		private const END_POS:Number = -10 * BLOCK_WIDTH;
+		private const OBSTACLE_INTERVAL:Number = 15 * BLOCK_WIDTH;
+		private const ADD_OBSTACLE_POSITION:Number = START_POS - OBSTACLE_INTERVAL;
+		private const REMOVE_OBSTACLE_POSITION:Number = -10 * BLOCK_WIDTH;
 		private var _obstacles:Array;
 		
 		// Data.
@@ -125,10 +129,10 @@ package com.funrun.view.components {
 			
 			scene = view.scene; // Store local refs.
 			camera = view.camera;
-			camera.y = 200;
-			camera.z = -1000;
-			camera.lens = new PerspectiveLens( 60 );
-			camera.lens.far = 7000; // the higher the value, the blockier the shadows
+			camera.y = CAM_HEIGHT;
+			camera.z = CAM_DEPTH;
+			camera.lens = new PerspectiveLens( CAM_FOV );
+			camera.lens.far = CAM_FRUSTUM_DISTANCE;
 		}
 		
 		public function addStats():void {
@@ -279,11 +283,11 @@ package com.funrun.view.components {
 				}
 			}
 			if ( len > 0 ) {
-				if ( obstacle.prevZ >= TRIGGER_POS && obstacle.z < TRIGGER_POS ) {
+				if ( obstacle.prevZ >= ADD_OBSTACLE_POSITION && obstacle.z < ADD_OBSTACLE_POSITION ) {
 					addObstacle();
 				}
 				var obstacle:Obstacle = _obstacles[ len - 1 ];
-				if ( obstacle.z <= END_POS ) {
+				if ( obstacle.z <= REMOVE_OBSTACLE_POSITION ) {
 					// Remove item.
 					obstacle.destroy();
 					_obstacles.splice( len - 1, 1 );
@@ -294,21 +298,24 @@ package com.funrun.view.components {
 			}
 		}
 		
+		// WE NEED TO FIX THIS SO THAT OBSTACLES ARE CENTERED AROUND THE Z AXIS.
 		private function addObstacle():void {
 			// New obstacles go in front.
 			var data:ObstacleVO = _obstaclesModel.getRandomObstacle();
 			var obstacle:Obstacle = new Obstacle( data.id );
 			var mesh:Mesh;
 			var flip:Boolean = Math.random() < .5;
-			for ( var col:int = 0; col < 3; col++ ) {
-				for ( var row:int = 0; row < 5; row++ ) {
+			var colLen:int = ( data.geos[ 0 ] as Array ).length;
+			var rowLen:int =  data.geos.length;
+			for ( var col:int = 0; col < colLen; col++ ) {
+				for ( var row:int = 0; row < rowLen; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
 					if ( mesh ) {
 						var meshX:Number = ( flip )
-							? ( 2 - col ) * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 )
+							? ( colLen - 1 - col ) * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 )
 							: col * BLOCK_WIDTH - ( BLOCK_WIDTH * 1);
 						var meshY:Number = mesh.bounds.max.y * .5;
-						var meshZ:Number = ( 4 - row ) * BLOCK_WIDTH;
+						var meshZ:Number = ( rowLen - 1 - row ) * BLOCK_WIDTH;
 						mesh.position = new Vector3D( meshX, meshY, meshZ );
 						scene.addChild( mesh );
 						obstacle.addGeo( mesh );

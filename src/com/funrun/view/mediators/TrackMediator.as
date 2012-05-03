@@ -6,6 +6,7 @@ package com.funrun.view.mediators
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	import flash.utils.Timer;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;

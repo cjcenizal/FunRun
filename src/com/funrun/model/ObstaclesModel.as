@@ -8,18 +8,19 @@ package com.funrun.model
 		public function ObstaclesModel()
 		{
 			_obstacles = [];
-			/*add(
+			add(
 				new ObstacleVO(
 					"leftWall",
 					[
-						[ "empty",	"empty",	"empty" ],
-						[ "empty",	"empty",	"empty" ],
-						[ "wall",	"empty",	"empty" ],
-						[ "empty",	"empty",	"empty" ],
-						[ "empty",	"empty",	"empty" ]
+						[ "empty",	"empty",	"empty",	"empty",	"empty",	"empty" ],
+						[ "empty",	"empty",	"empty",	"empty",	"empty",	"empty" ],
+						[ "wall",	"empty",	"empty",	"empty",	"empty",	"empty" ],
+						[ "empty",	"empty",	"empty",	"empty",	"empty",	"empty" ],
+						[ "empty",	"empty",	"empty",	"empty",	"empty",	"empty" ]
 					]
 				)
 			);
+			/*
 			add(
 				new ObstacleVO(
 					"sideWalls",
@@ -31,7 +32,7 @@ package com.funrun.model
 						[ "empty",	"empty",	"wall" ]
 					]
 				)
-			);*/
+			);
 			add(
 				new ObstacleVO(
 					"wideBeam",
@@ -44,7 +45,6 @@ package com.funrun.model
 					]
 				)
 			);
-			/*
 			add(
 				new ObstacleVO(
 					"centerWall",
