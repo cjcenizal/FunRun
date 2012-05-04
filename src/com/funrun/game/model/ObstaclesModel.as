@@ -10,6 +10,15 @@ package com.funrun.game.model
 			_obstacles = [];
 			add(
 				new ObstacleVO(
+					"fullWall",
+					[
+						[ "wall",	"wall",	"wall",	"wall",	"wall" ]
+					]
+				)
+			);
+			/*
+			add(
+				new ObstacleVO(
 					"leftWall",
 					[
 						[ "empty",	"empty",	"empty",	"empty",	"empty",	"empty" ],
@@ -19,7 +28,7 @@ package com.funrun.game.model
 						[ "empty",	"empty",	"empty",	"empty",	"empty",	"empty" ]
 					]
 				)
-			);
+			);*/
 			/*
 			add(
 				new ObstacleVO(

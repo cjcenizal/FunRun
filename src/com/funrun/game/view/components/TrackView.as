@@ -312,11 +312,14 @@ package com.funrun.game.view.components {
 			var flip:Boolean = Math.random() < .5;
 			var colLen:int = ( data.geos[ 0 ] as Array ).length;
 			var rowLen:int = data.geos.length;
+			var xAdjustment:Number = ( ( colLen - 1 ) * BLOCK_WIDTH ) * .5;
 			for ( var col:int = 0; col < colLen; col++ ) {
 				for ( var row:int = 0; row < rowLen; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
 					if ( mesh ) {
-						var meshX:Number = ( flip ) ? ( colLen - 1 - col ) * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 ) : col * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 );
+						var meshX:Number = ( flip ) ? ( colLen - 1 - col ) : col;
+						meshX *= BLOCK_WIDTH;
+						meshX -= xAdjustment;
 						var meshY:Number = mesh.bounds.max.y * .5;
 						var meshZ:Number = ( rowLen - 1 - row ) * BLOCK_WIDTH;
 						mesh.position = new Vector3D( meshX, meshY, meshZ );
