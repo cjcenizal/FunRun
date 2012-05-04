@@ -33,6 +33,13 @@ package com.funrun.game.view.components {
 	 */
 	public class TrackView extends Sprite {
 		
+		// Model references.
+		//[Inject]
+		//public var geosModel:GeosModel;
+		
+		//[Inject]
+		//public var obstaclesModel:ObstaclesModel;
+		
 		// Engine vars.
 		private var _view:View3D;
 		private var _scene:Scene3D;
@@ -47,10 +54,6 @@ package com.funrun.game.view.components {
 		
 		// Player geometry (will be stored in the model?).
 		private var player:Mesh;
-		
-		// Model references (inject these).
-		private var _geosModel:GeosModel = new GeosModel();
-		private var _obstaclesModel:ObstaclesModel = new ObstaclesModel();
 		
 		// Materials (put these into a model? or maybe they will be imported w/ the Blender model?).
 		public var playerMaterial:ColorMaterial;
@@ -234,10 +237,6 @@ package com.funrun.game.view.components {
 			_isDucking = false;
 		}
 		
-		public function start():void {
-			addObstacle();
-		}
-		
 		public function update():void {
 			updatePlayer();
 			updateCamera();
@@ -275,7 +274,7 @@ package com.funrun.game.view.components {
 			}
 			if ( len > 0 ) {
 				if ( obstacle.prevZ >= Constants.ADD_OBSTACLE_DEPTH && obstacle.z < Constants.ADD_OBSTACLE_DEPTH ) {
-					addObstacle();
+					//addObstacle();
 				}
 				var obstacle:Obstacle = _obstacles[ len - 1 ];
 				if ( obstacle.z <= Constants.REMOVE_OBSTACLE_DEPTH ) {
@@ -289,18 +288,17 @@ package com.funrun.game.view.components {
 			}
 		}
 		
-		private function addObstacle():void {
+		public function addObstacle( obstacleData:ObstacleVO ):void {
 			// New obstacles go in front.
-			var data:ObstacleVO = _obstaclesModel.getRandomObstacle();
-			var obstacle:Obstacle = new Obstacle( data.id );
+			var obstacle:Obstacle = new Obstacle( obstacleData.id );
 			var mesh:Mesh;
 			var flip:Boolean = Math.random() < .5;
-			var colLen:int = ( data.geos[ 0 ] as Array ).length;
-			var rowLen:int = data.geos.length;
+			var colLen:int = ( obstacleData.geos[ 0 ] as Array ).length;
+			var rowLen:int = obstacleData.geos.length;
 			var xAdjustment:Number = ( ( colLen - 1 ) * Constants.BLOCK_SIZE ) * .5;
 			for ( var col:int = 0; col < colLen; col++ ) {
 				for ( var row:int = 0; row < rowLen; row++ ) {
-					mesh = getMesh( data.geos[ row ][ col ] );
+					mesh = getMesh( obstacleData.geos[ row ][ col ] );
 					if ( mesh ) {
 						var meshX:Number = ( flip ) ? ( colLen - 1 - col ) : col;
 						meshX *= Constants.BLOCK_SIZE;
@@ -319,6 +317,10 @@ package com.funrun.game.view.components {
 		}
 		
 		private function getMesh( geo:String ):Mesh {
+			return null; // stub, move the real thing into the command.
+		}
+		/*
+		private function getMesh( geo:String ):Mesh {
 			var mesh:Mesh;
 			switch ( geo ) {
 				case "empty":  {
@@ -326,19 +328,20 @@ package com.funrun.game.view.components {
 					break;
 				}
 				case "ledge":  {
-					mesh = new Mesh( _geosModel.getGeo( _geosModel.LEDGE_GEO ), obstacleMaterial );
+					mesh = new Mesh( geosModel.getGeo( geosModel.LEDGE_GEO ), obstacleMaterial );
 					break;
 				}
 				case "wall":  {
-					mesh = new Mesh( _geosModel.getGeo( _geosModel.WALL_GEO ), obstacleMaterial );
+					mesh = new Mesh( geosModel.getGeo( geosModel.WALL_GEO ), obstacleMaterial );
 					break;
 				}
 				case "beam":  {
-					mesh = new Mesh( _geosModel.getGeo( _geosModel.BEAM_GEO ), obstacleMaterial );
+					mesh = new Mesh( geosModel.getGeo( geosModel.BEAM_GEO ), obstacleMaterial );
 					break;
 				}
 			}
 			return mesh;
 		}
+		*/
 	}
 }

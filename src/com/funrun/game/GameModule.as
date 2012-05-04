@@ -14,7 +14,7 @@ package com.funrun.game
 			context = new GameContext( this );
 		}
 		
-		public function createChildren():void {
+		public function init():void {
 			addTrack();
 			addUiLayer();
 			addPopupsLayer();

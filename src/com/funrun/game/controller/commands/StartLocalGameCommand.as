@@ -10,10 +10,9 @@ package com.funrun.game.controller.commands
 	 * with fake data.
 	 */
 	public class StartLocalGameCommand extends Command
-	{	
+	{
+		
 		override public function execute():void {
-			trace(this, "start game");
-			
 		}
 	}
 }

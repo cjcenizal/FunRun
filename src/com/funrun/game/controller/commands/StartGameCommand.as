@@ -7,7 +7,7 @@ package com.funrun.game.controller.commands
 	public class StartGameCommand extends Command
 	{
 		[Inject( name = "gameType" )]
-		public var gameType:GameType
+		public var gameType:GameType;
 		
 		override public function execute():void {
 			// Build dependencies, game, and configure game.

@@ -1,6 +1,9 @@
 package com.funrun.game.view.mediators
 {
+	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.view.components.TrackView;
+	import com.funrun.game.controller.events.AddObstacleRequest;
+	import com.funrun.game.controller.events.AddObstacleFulfilled;
 	
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -14,20 +17,26 @@ package com.funrun.game.view.mediators
 	{
 		[Inject]
 		public var view:TrackView;
+		
 		private var stage:Stage;
 		
 		override public function onRegister():void {
 			view.init();
 			view.debug();
-			start();
-		}
-		
-		private function start():void {
-			view.start();
 			stage = view.stage;
 			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+			
+			// Listen for AddObstacleRequest
+			eventMap.mapListener( eventDispatcher, AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, onAddObstacleFulfilled );
+			// Dispatch an AddObstacleRequest
+			eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+		}
+		
+		private function onAddObstacleFulfilled( e:AddObstacleFulfilled ):void {
+			trace("onAddObstacleFulfilled");
+			view.addObstacle( e.data );
 		}
 		
 		private function onEnterFrame( e:Event ):void {
