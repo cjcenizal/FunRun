@@ -35,7 +35,7 @@ package com.funrun.game.view.components {
 		private var _obstacles:Array;
 		
 		// Player geometry (will be stored in the model?).
-		private var player:Mesh;
+		private var _player:Mesh;
 		
 		// Player state (store in model?).
 		private var _forwardVelocity:Number = Constants.MAX_PLAYER_FORWARD_VELOCITY; // This may vary over time as you get slowed.
@@ -100,18 +100,18 @@ package com.funrun.game.view.components {
 		
 		private function updatePlayer():void {
 			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
-			player.y += _jumpVelocity;
-			player.x += _lateralVelocity;
-			if ( player.y <= 25 ) {
-				player.y = 25;
+			_player.y += _jumpVelocity;
+			_player.x += _lateralVelocity;
+			if ( _player.y <= 25 ) {
+				_player.y = 25;
 				_jumpVelocity = 0;
 			}
 		}
 		
 		private function updateCamera():void {
-			_camera.x = player.x;
-			var followFactor:Number = ( Constants.CAM_Y + player.y < _camera.y ) ? .6 : .2;
-			_camera.y += ( ( Constants.CAM_Y + player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
+			_camera.x = _player.x;
+			var followFactor:Number = ( Constants.CAM_Y + _player.y < _camera.y ) ? .6 : .2;
+			_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
 		}
 		
 		private function updateObstacles():void {
@@ -121,7 +121,7 @@ package com.funrun.game.view.components {
 			for ( var i:int = len - 1; i >= 0; i-- ) {
 				obstacle = _obstacles[ i ];
 				obstacle.move( -_forwardVelocity );
-				var collides:Boolean = obstacle.collide( player );
+				var collides:Boolean = obstacle.collide( _player );
 				if ( collides ) {
 					//stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 				}
@@ -153,7 +153,7 @@ package com.funrun.game.view.components {
 		 * Adding player to the scene.
 		 */
 		public function addPlayer( player:Mesh ):void {
-			this.player = player;
+			this._player = player;
 			_scene.addChild( player );
 		}
 		
@@ -162,9 +162,9 @@ package com.funrun.game.view.components {
 		 */
 		public function addObstacle( obstacle:Obstacle ):void {
 			// New obstacles go in front.
+			/*_scene.addChild( obstacle.getGeo() );
 			
 			
-			/*
 			var obstacle:Obstacle = new Obstacle( obstacleData.id );
 			var mesh:Mesh;
 			var flip:Boolean = Math.random() < .5;
@@ -172,24 +172,24 @@ package com.funrun.game.view.components {
 			var rowLen:int = obstacleData.geos.length;
 			var xAdjustment:Number = ( ( colLen - 1 ) * Constants.BLOCK_SIZE ) * .5;
 			for ( var col:int = 0; col < colLen; col++ ) {
-			for ( var row:int = 0; row < rowLen; row++ ) {
-			mesh = getMesh( obstacleData.geos[ row ][ col ] );
-			if ( mesh ) {
-			var meshX:Number = ( flip ) ? ( colLen - 1 - col ) : col;
-			meshX *= Constants.BLOCK_SIZE;
-			meshX -= xAdjustment;
-			var meshY:Number = mesh.bounds.max.y * .5;
-			var meshZ:Number = ( rowLen - 1 - row ) * Constants.BLOCK_SIZE;
-			mesh.position = new Vector3D( meshX, meshY, meshZ );
-			_scene.addChild( mesh );
-			obstacle.addGeo( mesh );
-			}
-			}
-			}
+				for ( var row:int = 0; row < rowLen; row++ ) {
+					mesh = getMesh( obstacleData.geos[ row ][ col ] );
+					if ( mesh ) {
+						var meshX:Number = ( flip ) ? ( colLen - 1 - col ) : col;
+						meshX *= Constants.BLOCK_SIZE;
+						meshX -= xAdjustment;
+						var meshY:Number = mesh.bounds.max.y * .5;
+						var meshZ:Number = ( rowLen - 1 - row ) * Constants.BLOCK_SIZE;
+						mesh.position = new Vector3D( meshX, meshY, meshZ );
+						_scene.addChild( mesh );
+						obstacle.addGeo( mesh );
+					}
+				}
+			}*/
 			_scene.addChild( obstacle );
 			obstacle.move( Constants.OBSTACLE_START_DEPTH );
 			_obstacles.unshift( obstacle );
-			*/
+			
 		}
 		
 		//private function getMesh( geo:String ):Mesh {

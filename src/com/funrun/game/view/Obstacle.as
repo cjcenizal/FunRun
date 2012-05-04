@@ -29,6 +29,10 @@ package com.funrun.game.view {
 			addChild( geo );
 		}
 		
+		public function getGeo():Mesh {
+			return _geos[ 0 ]; // test
+		}
+		
 		public function destroy():void {
 			this.parent.removeChild( this );
 			var len:int = _geos.length;

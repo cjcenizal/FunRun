@@ -39,7 +39,6 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onStartGameFulfilled( e:StartGameFulfilled ):void {
-			trace(this, "onStartGameFulfilled");
 			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
