@@ -21,7 +21,6 @@ package com.funrun.game.view.components {
 	import com.funrun.game.model.ObstacleVO;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.view.Obstacle;
-	import com.funrun.game.view.ObstacleFactory;
 	
 	import flash.display.Sprite;
 	import flash.geom.Vector3D;
@@ -33,72 +32,67 @@ package com.funrun.game.view.components {
 	 */
 	public class TrackView extends Sprite {
 		
-		// Block size.
-		private const BLOCK_WIDTH:Number = 100;
-		
-		// Track speed (can vary over time).
-		private const MAX_TRACK_SPEED:Number = BLOCK_WIDTH * .7;
-		private var _trackSpeed:Number = MAX_TRACK_SPEED;
-		
-		// Track size;
-		private var trackWidth:int = 1200;
-		private var trackLength:int = 5000;
+		// Sizes.
+		private const BLOCK_SIZE:Number = 100;
+		private const TRACK_WIDTH:int = 1200;
+		private const TRACK_LENGTH:int = 5000;
 		
 		// Camera.
-		private const CAM_DEPTH:Number = -1000;
-		private const CAM_HEIGHT:Number = 400;
+		private const CAM_Z:Number = -1000;
+		private const CAM_Y:Number = 400;
 		private const CAM_FOV:Number = 60;
 		private const CAM_FRUSTUM_DISTANCE:Number = 6000; // the higher the value, the blockier the shadows
 		
 		// Player movement constants.
 		private const PLAYER_JUMP_SPEED:Number = 60;
-		private const PLAYER_LATERAL_SPEED:Number = BLOCK_WIDTH * .2;
+		private const PLAYER_LATERAL_SPEED:Number = BLOCK_SIZE * .2;
 		private const PLAYER_JUMP_GRAVITY:Number = -10;
+		private const MAX_PLAYER_FORWARD_VELOCITY:Number = BLOCK_SIZE * .7;
 		
-		// Constants.
-		private const START_POS:Number = 50 * BLOCK_WIDTH;
-		private const OBSTACLE_INTERVAL:Number = 15 * BLOCK_WIDTH;
-		private const ADD_OBSTACLE_POSITION:Number = START_POS - OBSTACLE_INTERVAL;
-		private const REMOVE_OBSTACLE_POSITION:Number = -10 * BLOCK_WIDTH;
-		private var _obstacles:Array;
-		
-		// Data.
-		private var _geosModel:GeosModel = new GeosModel();
-		private var _obstaclesModel:ObstaclesModel = new ObstaclesModel();
-		private var _factory:ObstacleFactory = new ObstacleFactory();
+		// Obstacle creation constants.
+		private const OBSTACLE_START_DEPTH:Number = 50 * BLOCK_SIZE;
+		private const OBSTACLE_CREATION_INTERVAL:Number = 15 * BLOCK_SIZE;
+		private const ADD_OBSTACLE_DEPTH:Number = OBSTACLE_START_DEPTH - OBSTACLE_CREATION_INTERVAL;
+		private const REMOVE_OBSTACLE_DEPTH:Number = -10 * BLOCK_SIZE;
 		
 		// Engine vars.
-		public var scene:Scene3D;
-		private var camera:Camera3D;
-		private var view:View3D;
-		private var awayStats:AwayStats;
+		private var _view:View3D;
+		private var _scene:Scene3D;
+		private var _camera:Camera3D;
 		
 		// Lights.
-		private var sun:DirectionalLight;
-		//private var pointLight:PointLight;
-		private var lightPicker:StaticLightPicker;
+		private var _sunLight:DirectionalLight;
+		private var _lightPicker:StaticLightPicker;
 		
-		// Materials.
+		// Obstacle management (perhaps store this in the model?).
+		private var _obstacles:Array;
+		
+		// Player geometry (will be stored in the model?).
+		private var player:Mesh;
+		
+		// Model references (inject these).
+		private var _geosModel:GeosModel = new GeosModel();
+		private var _obstaclesModel:ObstaclesModel = new ObstaclesModel();
+		
+		// Materials (put these into a model? or maybe they will be imported w/ the Blender model?).
 		public var playerMaterial:ColorMaterial;
 		public var groundMaterial:ColorMaterial;
 		public var obstacleMaterial:ColorMaterial;
 		
-		// Player geometry.
-		public var player:Mesh;
-		
-		// Player state.
-		private var _velocity:Number = 0;
+		// Player state (store in model?).
+		private var _forwardVelocity:Number = MAX_PLAYER_FORWARD_VELOCITY; // This may vary over time as you get slowed.
+		private var _jumpVelocity:Number = 0;
 		private var _lateralVelocity:Number = 0;
 		private var _isJumping:Boolean = false;
 		private var _isMovingLeft:Boolean = false;
 		private var _isMovingRight:Boolean = false;
 		private var _isDucking:Boolean = false;
 		
-		// Obstacle geometry.
+		// Obstacle geometry (store in a model).
 		private var EMPTY_GEO:PlaneGeometry = new PlaneGeometry( 1, 1 );
-		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 5 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
-		private var WALL_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 2 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
-		private var BEAM_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 1 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
+		private var LEDGE_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_SIZE, 5 * BLOCK_SIZE, 1 * BLOCK_SIZE );
+		private var WALL_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_SIZE, 2 * BLOCK_SIZE, 1 * BLOCK_SIZE );
+		private var BEAM_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_SIZE, 1 * BLOCK_SIZE, 1 * BLOCK_SIZE );
 		
 		/**
 		 * Constructor
@@ -121,32 +115,31 @@ package com.funrun.game.view.components {
 		 * Initialise the engine
 		 */
 		private function initEngine():void {
-			view = new View3D();
-			view.antiAlias = 2; // 2, 4, or 16
-			view.forceMouseMove = true; // Force mouse move-related events even when the mouse hasn't moved.
-			view.width = 800;
-			view.height = 600;
-			view.backgroundColor = 0x111111;
-			addChild( view );
+			_view = new View3D();
+			_view.antiAlias = 2; // 2, 4, or 16
+			_view.width = 800;
+			_view.height = 600;
+			_view.backgroundColor = 0x111111;
+			addChild( _view );
 			
-			scene = view.scene; // Store local refs.
-			camera = view.camera;
-			camera.y = CAM_HEIGHT;
-			camera.z = CAM_DEPTH;
-			camera.lens = new PerspectiveLens( CAM_FOV );
-			camera.lens.far = CAM_FRUSTUM_DISTANCE;
+			_scene = _view.scene; // Store local refs.
+			_camera = _view.camera;
+			_camera.y = CAM_Y;
+			_camera.z = CAM_Z;
+			_camera.lens = new PerspectiveLens( CAM_FOV );
+			_camera.lens.far = CAM_FRUSTUM_DISTANCE;
 		}
 		
 		public function debug():void {
 			// Add stats.
-			awayStats = new AwayStats( view );
+			var awayStats:AwayStats = new AwayStats( _view );
 			addChild( awayStats );
 			// Add grid.
-			var grid:WireframeGrid = new WireframeGrid( trackWidth / BLOCK_WIDTH, trackWidth, 2, 0xFFFFFF, WireframeGrid.PLANE_XZ );
+			var grid:WireframeGrid = new WireframeGrid( TRACK_WIDTH / BLOCK_SIZE, TRACK_WIDTH, 2, 0xFFFFFF, WireframeGrid.PLANE_XZ );
 			var gridScale:Number = 4;
 			grid.scaleZ = gridScale;
-			grid.z = trackWidth * gridScale * .5 - 300;
-			scene.addChild( grid );
+			grid.z = TRACK_WIDTH * gridScale * .5 - 300;
+			_scene.addChild( grid );
 			grid.y = 1;
 		}
 		
@@ -154,12 +147,12 @@ package com.funrun.game.view.components {
 		 * Initialise the lights
 		 */
 		var mainLight:PointLight;
+		
 		private function initLights():void {
-			
-			sun = new DirectionalLight( .5, -1, 0 );
-			sun.ambient = .1;
-			sun.z = 2000;
-			scene.addChild( sun );
+			_sunLight = new DirectionalLight( .5, -1, 0 );
+			_sunLight.ambient = .1;
+			_sunLight.z = 2000;
+			_scene.addChild( _sunLight );
 			mainLight = new PointLight();
 			mainLight.castsShadows = true;
 			mainLight.shadowMapper.depthMapSize = 1024;
@@ -171,34 +164,34 @@ package com.funrun.game.view.components {
 			mainLight.fallOff = 1000;
 			mainLight.ambient = 0xa0a0c0;
 			mainLight.ambient = .5;
-			scene.addChild(mainLight);
-			lightPicker = new StaticLightPicker( [ mainLight, sun ] );
+			_scene.addChild( mainLight );
+			_lightPicker = new StaticLightPicker( [ mainLight, _sunLight ] );
 		}
 		
 		/**
 		 * Initialise the material
 		 */
 		private function initMaterials():void {
-			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sun );
+			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( _sunLight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			
 			playerMaterial = new ColorMaterial( 0x00FF00 );
-			playerMaterial.lightPicker = lightPicker;
+			playerMaterial.lightPicker = _lightPicker;
 			playerMaterial.shadowMethod = shadowMethod;
 			playerMaterial.specular = .25;
 			playerMaterial.gloss = 20;
 			playerMaterial.specularMethod = specularMethod;
 			
 			groundMaterial = new ColorMaterial( 0xFF0000 );
+			groundMaterial.lightPicker = _lightPicker;
 			groundMaterial.shadowMethod = shadowMethod;
-			groundMaterial.lightPicker = lightPicker;
 			groundMaterial.specular = .25;
 			groundMaterial.gloss = 20;
 			groundMaterial.specularMethod = specularMethod;
 			
 			obstacleMaterial = new ColorMaterial( 0x0000FF );
+			obstacleMaterial.lightPicker = _lightPicker;
 			obstacleMaterial.shadowMethod = shadowMethod;
-			obstacleMaterial.lightPicker = lightPicker;
 			obstacleMaterial.specular = .25;
 			obstacleMaterial.gloss = 20;
 			obstacleMaterial.specularMethod = specularMethod;
@@ -208,17 +201,17 @@ package com.funrun.game.view.components {
 		 * Initialise the scene objects
 		 */
 		private function initObjects():void {
-			var ground:Mesh = new Mesh( new PlaneGeometry( trackWidth, trackLength ), groundMaterial );
-			ground.position = new Vector3D( 0, 0, trackLength * .5 - 300 );
-			scene.addChild( ground );
+			var ground:Mesh = new Mesh( new PlaneGeometry( TRACK_WIDTH, TRACK_LENGTH ), groundMaterial );
+			ground.position = new Vector3D( 0, 0, TRACK_LENGTH * .5 - 300 );
+			_scene.addChild( ground );
 			player = new Mesh( new CylinderGeometry( 50, 50, 50 ), playerMaterial );
 			player.position = new Vector3D( 0, 25, 0 );
-			scene.addChild( player );
+			_scene.addChild( player );
 		}
 		
 		public function jump():void {
 			if ( !_isJumping ) {
-				_velocity += PLAYER_JUMP_SPEED;
+				_jumpVelocity += PLAYER_JUMP_SPEED;
 			}
 			_isJumping = true;
 		}
@@ -277,45 +270,43 @@ package com.funrun.game.view.components {
 			updatePlayer();
 			updateCamera();
 			updateObstacles();
-			view.render();
+			_view.render();
 		}
 		
 		private function updatePlayer():void {
-			_velocity += PLAYER_JUMP_GRAVITY;
-			//	_velocity *= _friction;
-			player.y += _velocity;
+			_jumpVelocity += PLAYER_JUMP_GRAVITY;
+			player.y += _jumpVelocity;
 			player.x += _lateralVelocity;
 			if ( player.y <= 25 ) {
 				player.y = 25;
-				_velocity = 0;
+				_jumpVelocity = 0;
 			}
 		}
 		
 		private function updateCamera():void {
-			camera.x = player.x;
-			var followFactor:Number = ( CAM_HEIGHT + player.y < camera.y ) ? .6 : .2;
-			camera.y += ( ( CAM_HEIGHT + player.y ) - camera.y ) * followFactor; // try easing to follow the player instead of being locked
+			_camera.x = player.x;
+			var followFactor:Number = ( CAM_Y + player.y < _camera.y ) ? .6 : .2;
+			_camera.y += ( ( CAM_Y + player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
 		}
 		
 		private function updateObstacles():void {
 			var obstacle:Obstacle;
 			var len:int = _obstacles.length;
 			// Update oldest obstacles first, newest ones last.
-			
 			for ( var i:int = len - 1; i >= 0; i-- ) {
 				obstacle = _obstacles[ i ];
-				obstacle.move( -_trackSpeed );
+				obstacle.move( -_forwardVelocity );
 				var collides:Boolean = obstacle.collide( player );
 				if ( collides ) {
 					//stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 				}
 			}
 			if ( len > 0 ) {
-				if ( obstacle.prevZ >= ADD_OBSTACLE_POSITION && obstacle.z < ADD_OBSTACLE_POSITION ) {
+				if ( obstacle.prevZ >= ADD_OBSTACLE_DEPTH && obstacle.z < ADD_OBSTACLE_DEPTH ) {
 					addObstacle();
 				}
 				var obstacle:Obstacle = _obstacles[ len - 1 ];
-				if ( obstacle.z <= REMOVE_OBSTACLE_POSITION ) {
+				if ( obstacle.z <= REMOVE_OBSTACLE_DEPTH ) {
 					// Remove item.
 					obstacle.destroy();
 					_obstacles.splice( len - 1, 1 );
@@ -326,7 +317,6 @@ package com.funrun.game.view.components {
 			}
 		}
 		
-		// WE NEED TO FIX THIS SO THAT OBSTACLES ARE CENTERED AROUND THE Z AXIS.
 		private function addObstacle():void {
 			// New obstacles go in front.
 			var data:ObstacleVO = _obstaclesModel.getRandomObstacle();
@@ -335,24 +325,24 @@ package com.funrun.game.view.components {
 			var flip:Boolean = Math.random() < .5;
 			var colLen:int = ( data.geos[ 0 ] as Array ).length;
 			var rowLen:int = data.geos.length;
-			var xAdjustment:Number = ( ( colLen - 1 ) * BLOCK_WIDTH ) * .5;
+			var xAdjustment:Number = ( ( colLen - 1 ) * BLOCK_SIZE ) * .5;
 			for ( var col:int = 0; col < colLen; col++ ) {
 				for ( var row:int = 0; row < rowLen; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
 					if ( mesh ) {
 						var meshX:Number = ( flip ) ? ( colLen - 1 - col ) : col;
-						meshX *= BLOCK_WIDTH;
+						meshX *= BLOCK_SIZE;
 						meshX -= xAdjustment;
 						var meshY:Number = mesh.bounds.max.y * .5;
-						var meshZ:Number = ( rowLen - 1 - row ) * BLOCK_WIDTH;
+						var meshZ:Number = ( rowLen - 1 - row ) * BLOCK_SIZE;
 						mesh.position = new Vector3D( meshX, meshY, meshZ );
-						scene.addChild( mesh );
+						_scene.addChild( mesh );
 						obstacle.addGeo( mesh );
 					}
 				}
 			}
-			scene.addChild( obstacle );
-			obstacle.move( START_POS );
+			_scene.addChild( obstacle );
+			obstacle.move( OBSTACLE_START_DEPTH );
 			_obstacles.unshift( obstacle );
 		}
 		
@@ -363,17 +353,14 @@ package com.funrun.game.view.components {
 					mesh = null;
 					break;
 				}
-				
 				case "ledge":  {
 					mesh = new Mesh( LEDGE_GEO, obstacleMaterial );
 					break;
 				}
-				
 				case "wall":  {
 					mesh = new Mesh( WALL_GEO, obstacleMaterial );
 					break;
 				}
-				
 				case "beam":  {
 					mesh = new Mesh( BEAM_GEO, obstacleMaterial );
 					break;
@@ -381,7 +368,5 @@ package com.funrun.game.view.components {
 			}
 			return mesh;
 		}
-	
 	}
-
 }
