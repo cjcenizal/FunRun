@@ -4,6 +4,9 @@ package com.funrun.game.view.mediators
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.AddPlayerFulfilled;
 	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
+	import com.funrun.game.controller.events.BuildGameRequest;
+	import com.funrun.game.controller.events.StartGameFulfilled;
+	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.view.components.TrackView;
 	
 	import flash.display.Stage;
@@ -22,20 +25,25 @@ package com.funrun.game.view.mediators
 		private var stage:Stage;
 		
 		override public function onRegister():void {
-			trace(this, "register");
 			view.init();
 			view.debug();
 			stage = view.stage;
-			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
-			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
-			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 			
-			// Listen for AddObstacleRequest
 			eventMap.mapListener( eventDispatcher, AddPlayerFulfilled.ADD_PLAYER_FULFILLED, onAddPlayerFulfilled );
 			eventMap.mapListener( eventDispatcher, AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, onAddObstacleFulfilled );
 			eventMap.mapListener( eventDispatcher, AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, onAddSceneObjectFulfilled );
+			eventMap.mapListener( eventDispatcher, StartGameFulfilled.START_GAME_FULFILLED, onStartGameFulfilled );
 			
-			// Dispatch an AddObstacleRequest
+			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) ); // this probably doesn't belong here, but track needs to exist before the game is built
+			eventDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
+		}
+		
+		private function onStartGameFulfilled( e:StartGameFulfilled ):void {
+			trace(this, "onStartGameFulfilled");
+			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+			// Request first obstacle.
 			eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 		}
 		
@@ -48,7 +56,6 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onAddSceneObjectFulfilled( e:AddSceneObjectFulfilled ):void {
-			trace("onAddSceneObjectFulfilled");
 			view.addObject( e.object );
 		}
 		

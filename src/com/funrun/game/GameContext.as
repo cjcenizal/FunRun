@@ -9,11 +9,13 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.AddMaterialCommand;
 	import com.funrun.game.controller.commands.AddObstacleCommand;
 	import com.funrun.game.controller.commands.BuildGameCommand;
+	import com.funrun.game.controller.commands.StartGameCommand;
 	import com.funrun.game.controller.enum.GameType;
 	import com.funrun.game.controller.events.AddLightRequest;
 	import com.funrun.game.controller.events.AddMaterialRequest;
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.BuildGameRequest;
+	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.model.GeosModel;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
@@ -50,6 +52,7 @@ package com.funrun.game
 			commandMap.mapEvent( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, AddObstacleCommand, AddObstacleRequest );
 			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, AddLightCommand, AddLightRequest );
 			commandMap.mapEvent( AddMaterialRequest.ADD_MATERIAL_REQUESTED, AddMaterialCommand, AddMaterialRequest );
+			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, StartGameCommand, StartGameRequest );
 			
 			// View.
 			mediatorMap.mapView( GameModule, GameMediator );
@@ -78,9 +81,6 @@ package com.funrun.game
 			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) ) );
 			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.GROUND_MATERIAL, new ColorMaterial( 0xFF0000 ) ) );
 			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.OBSTACLE_MATERIAL, new ColorMaterial( 0x0000FF ) ) );
-			
-			// Assign materials to track.
-			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
 			
 		}
 	}

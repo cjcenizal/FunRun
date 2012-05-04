@@ -8,7 +8,6 @@ package com.funrun.game {
 		public var view:GameModule;
 		
 		override public function onRegister():void {
-			trace(this);
 			view.build();
 			// Listen for both outer-module and inner-module events.
 			// EXAMPLE: moduleCommandMap.mapEvent(LessonNavEvent.PAUSE_LESSON, PauseLessonCommand, LessonNavEvent);

@@ -92,9 +92,9 @@ package com.funrun.game.view.components {
 		 * Updating.
 		 */
 		public function update():void {
-			/*updatePlayer();
+			updatePlayer();
 			updateCamera();
-			updateObstacles();*/
+			updateObstacles();
 			_view.render();
 		}
 		
@@ -146,7 +146,6 @@ package com.funrun.game.view.components {
 		 * Adding 3D objects to the scene.
 		 */
 		public function addObject( child:ObjectContainer3D ):void {
-			trace("add object " + child);
 			_scene.addChild( child );
 		}
 		
@@ -154,7 +153,7 @@ package com.funrun.game.view.components {
 		 * Adding player to the scene.
 		 */
 		public function addPlayer( player:Mesh ):void {
-			player = player;
+			this.player = player;
 			_scene.addChild( player );
 		}
 		
