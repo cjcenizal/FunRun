@@ -1,12 +1,11 @@
 package com.funrun.game.view.mediators
 {
-	import com.funrun.game.view.components.Track;
+	import com.funrun.game.view.components.TrackView;
 	
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	import flash.utils.Timer;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
@@ -14,12 +13,12 @@ package com.funrun.game.view.mediators
 	public class TrackMediator extends Mediator implements IMediator
 	{
 		[Inject]
-		public var view:Track;
+		public var view:TrackView;
 		private var stage:Stage;
 		
 		override public function onRegister():void {
 			view.init();
-			view.addStats();
+			view.debug();
 			start();
 		}
 		

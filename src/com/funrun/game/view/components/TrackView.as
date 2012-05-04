@@ -1,10 +1,12 @@
 package com.funrun.game.view.components {
+	
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
+	import away3d.entities.SegmentSet;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
@@ -13,6 +15,8 @@ package com.funrun.game.view.components {
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.CylinderGeometry;
 	import away3d.primitives.PlaneGeometry;
+	import away3d.primitives.WireframeAxesGrid;
+	import away3d.primitives.WireframeGrid;
 	
 	import com.funrun.game.model.GeosModel;
 	import com.funrun.game.model.ObstacleVO;
@@ -21,18 +25,14 @@ package com.funrun.game.view.components {
 	import com.funrun.game.view.ObstacleFactory;
 	
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.KeyboardEvent;
 	import flash.geom.Vector3D;
-	import flash.ui.Keyboard;
-	
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
 	 * - Compile with -swf-version=13
 	 * - Add wmode: 'direct' param to html template
 	 */
-	public class Track extends Sprite {
+	public class TrackView extends Sprite {
 		
 		// Block size.
 		private const BLOCK_WIDTH:Number = 100;
@@ -40,6 +40,10 @@ package com.funrun.game.view.components {
 		// Track speed (can vary over time).
 		private const MAX_TRACK_SPEED:Number = BLOCK_WIDTH * .7;
 		private var _trackSpeed:Number = MAX_TRACK_SPEED;
+		
+		// Track size;
+		private var trackWidth:int = 1200;
+		private var trackLength:int = 5000;
 		
 		// Camera.
 		private const CAM_DEPTH:Number = -1000;
@@ -97,11 +101,10 @@ package com.funrun.game.view.components {
 		private var WALL_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 2 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
 		private var BEAM_GEO:CubeGeometry = new CubeGeometry( 1 * BLOCK_WIDTH, 1 * BLOCK_WIDTH, 1 * BLOCK_WIDTH );
 		
-		
 		/**
 		 * Constructor
 		 */
-		public function Track() {
+		public function TrackView() {
 		}
 		
 		/**
@@ -118,9 +121,9 @@ package com.funrun.game.view.components {
 		/**
 		 * Initialise the engine
 		 */
-		private function initEngine():void {			
+		private function initEngine():void {
 			view = new View3D();
-		//	view.antiAlias = 16; // 2, 4, or 16
+			view.antiAlias = 2; // 2, 4, or 16
 			view.forceMouseMove = true; // Force mouse move-related events even when the mouse hasn't moved.
 			view.width = 800;
 			view.height = 600;
@@ -135,10 +138,17 @@ package com.funrun.game.view.components {
 			camera.lens.far = CAM_FRUSTUM_DISTANCE;
 		}
 		
-		public function addStats():void {
+		public function debug():void {
 			// Add stats.
 			awayStats = new AwayStats( view );
 			addChild( awayStats );
+			// Add grid.
+			var grid:WireframeGrid = new WireframeGrid( trackWidth / BLOCK_WIDTH, trackWidth, 2, 0xFFFFFF, WireframeGrid.PLANE_XZ );
+			var gridScale:Number = 4;
+			grid.scaleZ = gridScale;
+			grid.z = trackWidth * gridScale * .5 - 300;
+			scene.addChild( grid );
+			grid.y = 1;
 		}
 		
 		/**
@@ -161,13 +171,13 @@ package com.funrun.game.view.components {
 		private function initMaterials():void {
 			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sun );
 			inactiveMaterial = new ColorMaterial( 0xFF0000 );
-			inactiveMaterial.shadowMethod = shadowMethod; 
+			inactiveMaterial.shadowMethod = shadowMethod;
 			inactiveMaterial.lightPicker = lightPicker;
 			activeMaterial = new ColorMaterial( 0x0000FF );
-			activeMaterial.shadowMethod = shadowMethod; 
+			activeMaterial.shadowMethod = shadowMethod;
 			activeMaterial.lightPicker = lightPicker;
 			offMaterial = new ColorMaterial( 0x00ff00 );
-			offMaterial.shadowMethod = shadowMethod; 
+			offMaterial.shadowMethod = shadowMethod;
 			offMaterial.lightPicker = lightPicker;
 		}
 		
@@ -175,18 +185,13 @@ package com.funrun.game.view.components {
 		 * Initialise the scene objects
 		 */
 		private function initObjects():void {
-			var w:int = 1200;
-			var h:int = 10000;
-			var ground:Mesh = new Mesh( new PlaneGeometry( w, h ), inactiveMaterial );
-			ground.position = new Vector3D( 0, 0, 700 );
+			var ground:Mesh = new Mesh( new PlaneGeometry( trackWidth, trackLength ), inactiveMaterial );
+			ground.position = new Vector3D( 0, 0, trackLength * .5 - 300 );
 			scene.addChild( ground );
 			player = new Mesh( new CylinderGeometry( 50, 50, 50 ), offMaterial );
 			player.position = new Vector3D( 0, 25, 0 );
 			scene.addChild( player );
 		}
-		
-		
-		
 		
 		public function jump():void {
 			if ( !_isJumping ) {
@@ -236,7 +241,7 @@ package com.funrun.game.view.components {
 			}
 			_isMovingRight = false;
 		}
-
+		
 		public function stopDucking():void {
 			_isDucking = false;
 		}
@@ -306,14 +311,12 @@ package com.funrun.game.view.components {
 			var mesh:Mesh;
 			var flip:Boolean = Math.random() < .5;
 			var colLen:int = ( data.geos[ 0 ] as Array ).length;
-			var rowLen:int =  data.geos.length;
+			var rowLen:int = data.geos.length;
 			for ( var col:int = 0; col < colLen; col++ ) {
 				for ( var row:int = 0; row < rowLen; row++ ) {
 					mesh = getMesh( data.geos[ row ][ col ] );
 					if ( mesh ) {
-						var meshX:Number = ( flip )
-							? ( colLen - 1 - col ) * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 )
-							: col * BLOCK_WIDTH - ( BLOCK_WIDTH * 1);
+						var meshX:Number = ( flip ) ? ( colLen - 1 - col ) * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 ) : col * BLOCK_WIDTH - ( BLOCK_WIDTH * 1 );
 						var meshY:Number = mesh.bounds.max.y * .5;
 						var meshZ:Number = ( rowLen - 1 - row ) * BLOCK_WIDTH;
 						mesh.position = new Vector3D( meshX, meshY, meshZ );
@@ -330,25 +333,29 @@ package com.funrun.game.view.components {
 		private function getMesh( geo:String ):Mesh {
 			var mesh:Mesh;
 			switch ( geo ) {
-				case "empty":
-					mesh = null;//new Mesh( EMPTY_GEO, activeMaterial );
+				case "empty":  {
+					mesh = null; //new Mesh( EMPTY_GEO, activeMaterial );
 					break;
+				}
 				
-				case "ledge":
+				case "ledge":  {
 					mesh = new Mesh( LEDGE_GEO, activeMaterial );
 					break;
+				}
 				
-				case "wall":
+				case "wall":  {
 					mesh = new Mesh( WALL_GEO, activeMaterial );
 					break;
+				}
 				
-				case "beam":
+				case "beam":  {
 					mesh = new Mesh( BEAM_GEO, activeMaterial );
 					break;
+				}
 			}
 			return mesh;
 		}
-		
-	}
 	
+	}
+
 }
