@@ -1,12 +1,14 @@
 package {
 	
-	import com.funrun.GameContext;
-	import com.funrun.view.components.Track;
+	import com.funrun.game.GameModule;
+	import com.funrun.modulemanager.ModuleManager;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	
+	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
 	[SWF( backgroundColor = "#000000", frameRate = "30", quality = "LOW" )]
 	
@@ -17,9 +19,6 @@ package {
 	 */
 	public class FunRun extends Sprite {
 		
-		private var _context:GameContext;
-		private var _track:Track;
-		
 		public function FunRun() {
 			super();
 			addEventListener( Event.ADDED_TO_STAGE, init );
@@ -27,33 +26,23 @@ package {
 		
 		private function init( e:Event = null ):void {
 			removeEventListener( Event.ADDED_TO_STAGE, init );
-			_context = new GameContext( this, false );
-			_context.startup();
-		}
-		
-		public function createChildren():void {
 			setupStage();
-			addTrack();
-			addUiLayer();
-			addPopupsLayer();
+			
+			var moduleManager:ModuleManager = new ModuleManager();
+			addChild(moduleManager);
+			
+			var gameModule:GameModule = new GameModule();
+			var moduleVector:Vector.<ModuleContextView> = new Vector.<ModuleContextView>();
+			moduleVector[ moduleVector.length ] = gameModule;
+			
+			// Position or configure modules as required here.
+			
+			moduleManager.integrateModules( moduleVector );
 		}
 		
 		private function setupStage():void {
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
-		}
-		
-		private function addTrack():void {
-			_track = new Track();
-			addChild( _track );
-		}
-		
-		private function addUiLayer():void {
-			
-		}
-		
-		private function addPopupsLayer():void {
-			
 		}
 	}
 
