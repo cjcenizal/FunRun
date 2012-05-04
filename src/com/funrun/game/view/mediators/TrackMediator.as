@@ -35,8 +35,7 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onAddObstacleFulfilled( e:AddObstacleFulfilled ):void {
-			trace("onAddObstacleFulfilled");
-			view.addObstacle( e.data );
+			view.addObstacle( e.obstacle );
 		}
 		
 		private function onEnterFrame( e:Event ):void {

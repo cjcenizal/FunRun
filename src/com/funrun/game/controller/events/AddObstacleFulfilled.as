@@ -1,6 +1,7 @@
 package com.funrun.game.controller.events
 {
 	import com.funrun.game.model.ObstacleVO;
+	import com.funrun.game.view.Obstacle;
 	
 	import flash.events.Event;
 	
@@ -8,11 +9,11 @@ package com.funrun.game.controller.events
 	{
 		public static const ADD_OBSTACLE_FULFILLED:String = "AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED";
 		
-		public var data:ObstacleVO;
+		public var obstacle:Obstacle;
 		
-		public function AddObstacleFulfilled( type:String, data:ObstacleVO ) {
+		public function AddObstacleFulfilled( type:String, obstacle:Obstacle ) {
 			super( type );
-			this.data = data;
+			this.obstacle = obstacle;
 		}
 	}
 }

@@ -33,21 +33,14 @@ package com.funrun.game.view.components {
 	 */
 	public class TrackView extends Sprite {
 		
-		// Model references.
-		//[Inject]
-		//public var geosModel:GeosModel;
-		
-		//[Inject]
-		//public var obstaclesModel:ObstaclesModel;
-		
 		// Engine vars.
 		private var _view:View3D;
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
 		
 		// Lights.
-		private var _sunLight:DirectionalLight;
-		private var _lightPicker:StaticLightPicker;
+	//	private var _sunLight:DirectionalLight;
+	//	public var _lightPicker:StaticLightPicker;
 		
 		// Obstacle management (perhaps store this in the model?).
 		private var _obstacles:Array;
@@ -124,33 +117,20 @@ package com.funrun.game.view.components {
 		var mainLight:PointLight;
 		
 		private function initLights():void {
-			_sunLight = new DirectionalLight( .5, -1, 0 );
-			_sunLight.ambient = .1;
-			_sunLight.z = 2000;
-			_scene.addChild( _sunLight );
-			mainLight = new PointLight();
-			mainLight.castsShadows = true;
-			mainLight.shadowMapper.depthMapSize = 1024;
-			mainLight.y = 120;
-			mainLight.color = 0xffffff;
-			mainLight.diffuse = 1;
-			mainLight.specular = 1;
-			mainLight.radius = 400;
-			mainLight.fallOff = 1000;
-			mainLight.ambient = 0xa0a0c0;
-			mainLight.ambient = .5;
-			_scene.addChild( mainLight );
-			_lightPicker = new StaticLightPicker( [ mainLight, _sunLight ] );
+			
+		//	_scene.addChild( _sunLight );
+		//	_scene.addChild( mainLight );
+		//	_lightPicker = new StaticLightPicker( [ mainLight, _sunLight ] );
 		}
 		
 		/**
 		 * Initialise the material
 		 */
 		private function initMaterials():void {
+			/*
 			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( _sunLight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			
-			playerMaterial = new ColorMaterial( 0x00FF00 );
 			playerMaterial.lightPicker = _lightPicker;
 			playerMaterial.shadowMethod = shadowMethod;
 			playerMaterial.specular = .25;
@@ -170,6 +150,7 @@ package com.funrun.game.view.components {
 			obstacleMaterial.specular = .25;
 			obstacleMaterial.gloss = 20;
 			obstacleMaterial.specularMethod = specularMethod;
+			*/
 		}
 		
 		/**
@@ -288,8 +269,11 @@ package com.funrun.game.view.components {
 			}
 		}
 		
-		public function addObstacle( obstacleData:ObstacleVO ):void {
+		public function addObstacle( obstacle:Obstacle ):void {
 			// New obstacles go in front.
+			
+			
+			/*
 			var obstacle:Obstacle = new Obstacle( obstacleData.id );
 			var mesh:Mesh;
 			var flip:Boolean = Math.random() < .5;
@@ -314,34 +298,14 @@ package com.funrun.game.view.components {
 			_scene.addChild( obstacle );
 			obstacle.move( Constants.OBSTACLE_START_DEPTH );
 			_obstacles.unshift( obstacle );
+			*/
 		}
 		
-		private function getMesh( geo:String ):Mesh {
-			return null; // stub, move the real thing into the command.
-		}
+		//private function getMesh( geo:String ):Mesh {
+			//return null; // stub, move the real thing into the command.
+		//}
 		/*
-		private function getMesh( geo:String ):Mesh {
-			var mesh:Mesh;
-			switch ( geo ) {
-				case "empty":  {
-					mesh = null;
-					break;
-				}
-				case "ledge":  {
-					mesh = new Mesh( geosModel.getGeo( geosModel.LEDGE_GEO ), obstacleMaterial );
-					break;
-				}
-				case "wall":  {
-					mesh = new Mesh( geosModel.getGeo( geosModel.WALL_GEO ), obstacleMaterial );
-					break;
-				}
-				case "beam":  {
-					mesh = new Mesh( geosModel.getGeo( geosModel.BEAM_GEO ), obstacleMaterial );
-					break;
-				}
-			}
-			return mesh;
-		}
+		
 		*/
 	}
 }
