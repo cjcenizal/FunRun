@@ -12,7 +12,7 @@ package com.funrun.game.model
 				new ObstacleVO(
 					"fullWall",
 					[
-						[ "wall",	"wall",	"wall",	"wall",	"wall" ]
+						[ "wall",	"wall",	"wall",	"wall",	"wall", "wall", "wall", "wall" ]
 					]
 				)
 			);

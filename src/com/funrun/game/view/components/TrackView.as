@@ -6,16 +6,15 @@ package com.funrun.game.view.components {
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
-	import away3d.entities.SegmentSet;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FilteredShadowMapMethod;
+	import away3d.materials.methods.FresnelSpecularMethod;
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.CylinderGeometry;
 	import away3d.primitives.PlaneGeometry;
-	import away3d.primitives.WireframeAxesGrid;
 	import away3d.primitives.WireframeGrid;
 	
 	import com.funrun.game.model.GeosModel;
@@ -76,13 +75,13 @@ package com.funrun.game.view.components {
 		
 		// Lights.
 		private var sun:DirectionalLight;
-		private var pointLight:PointLight;
+		//private var pointLight:PointLight;
 		private var lightPicker:StaticLightPicker;
 		
 		// Materials.
-		public var activeMaterial:ColorMaterial;
-		public var offMaterial:ColorMaterial;
-		public var inactiveMaterial:ColorMaterial;
+		public var playerMaterial:ColorMaterial;
+		public var groundMaterial:ColorMaterial;
+		public var obstacleMaterial:ColorMaterial;
 		
 		// Player geometry.
 		public var player:Mesh;
@@ -154,15 +153,26 @@ package com.funrun.game.view.components {
 		/**
 		 * Initialise the lights
 		 */
+		var mainLight:PointLight;
 		private function initLights():void {
+			
 			sun = new DirectionalLight( .5, -1, 0 );
+			sun.ambient = .1;
 			sun.z = 2000;
 			scene.addChild( sun );
-			pointLight = new PointLight();
-			pointLight.position = new Vector3D( 0, 500, -1000 );
-			pointLight.castsShadows = true;
-			scene.addChild( pointLight );
-			lightPicker = new StaticLightPicker( [ pointLight, sun ] );
+			mainLight = new PointLight();
+			mainLight.castsShadows = true;
+			mainLight.shadowMapper.depthMapSize = 1024;
+			mainLight.y = 120;
+			mainLight.color = 0xffffff;
+			mainLight.diffuse = 1;
+			mainLight.specular = 1;
+			mainLight.radius = 400;
+			mainLight.fallOff = 1000;
+			mainLight.ambient = 0xa0a0c0;
+			mainLight.ambient = .5;
+			scene.addChild(mainLight);
+			lightPicker = new StaticLightPicker( [ mainLight, sun ] );
 		}
 		
 		/**
@@ -170,25 +180,38 @@ package com.funrun.game.view.components {
 		 */
 		private function initMaterials():void {
 			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sun );
-			inactiveMaterial = new ColorMaterial( 0xFF0000 );
-			inactiveMaterial.shadowMethod = shadowMethod;
-			inactiveMaterial.lightPicker = lightPicker;
-			activeMaterial = new ColorMaterial( 0x0000FF );
-			activeMaterial.shadowMethod = shadowMethod;
-			activeMaterial.lightPicker = lightPicker;
-			offMaterial = new ColorMaterial( 0x00ff00 );
-			offMaterial.shadowMethod = shadowMethod;
-			offMaterial.lightPicker = lightPicker;
+			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
+			
+			playerMaterial = new ColorMaterial( 0x00FF00 );
+			playerMaterial.lightPicker = lightPicker;
+			playerMaterial.shadowMethod = shadowMethod;
+			playerMaterial.specular = .25;
+			playerMaterial.gloss = 20;
+			playerMaterial.specularMethod = specularMethod;
+			
+			groundMaterial = new ColorMaterial( 0xFF0000 );
+			groundMaterial.shadowMethod = shadowMethod;
+			groundMaterial.lightPicker = lightPicker;
+			groundMaterial.specular = .25;
+			groundMaterial.gloss = 20;
+			groundMaterial.specularMethod = specularMethod;
+			
+			obstacleMaterial = new ColorMaterial( 0x0000FF );
+			obstacleMaterial.shadowMethod = shadowMethod;
+			obstacleMaterial.lightPicker = lightPicker;
+			obstacleMaterial.specular = .25;
+			obstacleMaterial.gloss = 20;
+			obstacleMaterial.specularMethod = specularMethod;
 		}
 		
 		/**
 		 * Initialise the scene objects
 		 */
 		private function initObjects():void {
-			var ground:Mesh = new Mesh( new PlaneGeometry( trackWidth, trackLength ), inactiveMaterial );
+			var ground:Mesh = new Mesh( new PlaneGeometry( trackWidth, trackLength ), groundMaterial );
 			ground.position = new Vector3D( 0, 0, trackLength * .5 - 300 );
 			scene.addChild( ground );
-			player = new Mesh( new CylinderGeometry( 50, 50, 50 ), offMaterial );
+			player = new Mesh( new CylinderGeometry( 50, 50, 50 ), playerMaterial );
 			player.position = new Vector3D( 0, 25, 0 );
 			scene.addChild( player );
 		}
@@ -337,22 +360,22 @@ package com.funrun.game.view.components {
 			var mesh:Mesh;
 			switch ( geo ) {
 				case "empty":  {
-					mesh = null; //new Mesh( EMPTY_GEO, activeMaterial );
+					mesh = null;
 					break;
 				}
 				
 				case "ledge":  {
-					mesh = new Mesh( LEDGE_GEO, activeMaterial );
+					mesh = new Mesh( LEDGE_GEO, obstacleMaterial );
 					break;
 				}
 				
 				case "wall":  {
-					mesh = new Mesh( WALL_GEO, activeMaterial );
+					mesh = new Mesh( WALL_GEO, obstacleMaterial );
 					break;
 				}
 				
 				case "beam":  {
-					mesh = new Mesh( BEAM_GEO, activeMaterial );
+					mesh = new Mesh( BEAM_GEO, obstacleMaterial );
 					break;
 				}
 			}
