@@ -1,10 +1,6 @@
 package com.funrun.game.model {
 	
 	import away3d.lights.LightBase;
-	import away3d.materials.ColorMaterial;
-	import away3d.primitives.CubeGeometry;
-	import away3d.primitives.PlaneGeometry;
-	import away3d.primitives.PrimitiveBase;
 	
 	public class LightsModel {
 		

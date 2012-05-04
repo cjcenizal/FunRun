@@ -1,9 +1,10 @@
 package com.funrun.game.view.mediators
 {
-	import com.funrun.game.model.ObstaclesModel;
-	import com.funrun.game.view.components.TrackView;
-	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.AddObstacleFulfilled;
+	import com.funrun.game.controller.events.AddObstacleRequest;
+	import com.funrun.game.controller.events.AddPlayerFulfilled;
+	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
+	import com.funrun.game.view.components.TrackView;
 	
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -21,6 +22,7 @@ package com.funrun.game.view.mediators
 		private var stage:Stage;
 		
 		override public function onRegister():void {
+			trace(this, "register");
 			view.init();
 			view.debug();
 			stage = view.stage;
@@ -29,13 +31,25 @@ package com.funrun.game.view.mediators
 			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 			
 			// Listen for AddObstacleRequest
+			eventMap.mapListener( eventDispatcher, AddPlayerFulfilled.ADD_PLAYER_FULFILLED, onAddPlayerFulfilled );
 			eventMap.mapListener( eventDispatcher, AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, onAddObstacleFulfilled );
+			eventMap.mapListener( eventDispatcher, AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, onAddSceneObjectFulfilled );
+			
 			// Dispatch an AddObstacleRequest
 			eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 		}
 		
+		private function onAddPlayerFulfilled( e:AddPlayerFulfilled ):void {
+			view.addPlayer( e.player );
+		}
+		
 		private function onAddObstacleFulfilled( e:AddObstacleFulfilled ):void {
 			view.addObstacle( e.obstacle );
+		}
+		
+		private function onAddSceneObjectFulfilled( e:AddSceneObjectFulfilled ):void {
+			trace("onAddSceneObjectFulfilled");
+			view.addObject( e.object );
 		}
 		
 		private function onEnterFrame( e:Event ):void {
