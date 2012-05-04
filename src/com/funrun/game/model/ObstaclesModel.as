@@ -16,7 +16,17 @@ package com.funrun.game.model
 					]
 				)
 			);
+			add(
+				new ObstacleVO(
+					"leftWall",
+					[
+						[ "wall",	"empty",	"wall",	"empty",	"wall", "empty", "empty", "empty" ]
+					]
+				)
+			);
 			/*
+			/*
+			
 			add(
 				new ObstacleVO(
 					"leftWall",
