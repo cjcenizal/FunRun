@@ -15,7 +15,6 @@ package com.funrun.game
 		}
 		
 		public function build():void {
-			trace(this, "build");
 			addTrack();
 			addUiLayer();
 			addPopupsLayer();

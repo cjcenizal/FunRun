@@ -7,10 +7,6 @@ package com.funrun.game.view.components {
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
-	import away3d.lights.LightBase;
-	import away3d.materials.ColorMaterial;
-	import away3d.primitives.CylinderGeometry;
-	import away3d.primitives.PlaneGeometry;
 	import away3d.primitives.WireframeGrid;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
@@ -19,7 +15,6 @@ package com.funrun.game.view.components {
 	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
-	import flash.geom.Vector3D;
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html

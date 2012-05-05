@@ -6,8 +6,8 @@
 			"id" : "empty"
 		},
 		{
-			"id" : "wall",
-			"filename" : "wall.dae",
+			"id" : "block",
+			"filename" : "block.dae",
 			"faces" : {
 				"t" : "walk",
 				"b" : "smack",

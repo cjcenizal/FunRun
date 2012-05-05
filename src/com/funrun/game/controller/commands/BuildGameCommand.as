@@ -1,5 +1,6 @@
 package com.funrun.game.controller.commands
 {
+	import away3d.containers.ObjectContainer3D;
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
@@ -32,7 +33,6 @@ package com.funrun.game.controller.commands
 		public var materialsModel:MaterialsModel;
 		
 		override public function execute():void {
-			trace(this, "execute");
 			// Assign properties to materials.
 			var sunlight:DirectionalLight = lightsModel.getLight( LightsModel.SUN ) as DirectionalLight; // Casting doesn't feel too clean here
 			var spotlight:PointLight = lightsModel.getLight( LightsModel.SPOTLIGHT ) as PointLight; // Casting doesn't feel too clean here

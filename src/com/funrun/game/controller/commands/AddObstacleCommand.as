@@ -6,7 +6,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.enum.GameType;
 	import com.funrun.game.controller.events.AddObstacleFulfilled;
 	import com.funrun.game.model.Constants;
-	import com.funrun.game.model.GeosModel;
+	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstacleVO;
 	import com.funrun.game.model.ObstaclesModel;
@@ -21,7 +21,7 @@ package com.funrun.game.controller.commands {
 		public var obstaclesModel:ObstaclesModel;
 
 		[Inject]
-		public var geosModel:GeosModel;
+		public var blocksModel:BlocksModel;
 
 		[Inject]
 		public var materialsModel:MaterialsModel;
@@ -64,16 +64,8 @@ package com.funrun.game.controller.commands {
 					mesh = null;
 					break;
 				}
-				case "ledge":  {
-					mesh = new Mesh( geosModel.getGeo( geosModel.LEDGE_GEO ), material );
-					break;
-				}
-				case "wall":  {
-					mesh = new Mesh( geosModel.getGeo( geosModel.WALL_GEO ), material );
-					break;
-				}
-				case "beam":  {
-					mesh = new Mesh( geosModel.getGeo( geosModel.BEAM_GEO ), material );
+				case "block":  {
+					mesh = new Mesh( blocksModel.getBlock( blocksModel.BLOCK ), material );
 					break;
 				}
 			}
