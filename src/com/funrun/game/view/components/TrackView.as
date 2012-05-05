@@ -13,8 +13,10 @@ package com.funrun.game.view.components {
 	import away3d.primitives.PlaneGeometry;
 	import away3d.primitives.WireframeGrid;
 	
+	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.view.Obstacle;
+	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
 	import flash.geom.Vector3D;
@@ -123,12 +125,13 @@ package com.funrun.game.view.components {
 				obstacle.move( -_forwardVelocity );
 				var collides:Boolean = obstacle.collide( _player );
 				if ( collides ) {
-					//stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+					dispatchEvent( new CollisionEvent( CollisionEvent.COLLISION ) );
 				}
 			}
+			// Check last obstacle for removal and addition of new obstacle.
 			if ( len > 0 ) {
 				if ( obstacle.prevZ >= Constants.ADD_OBSTACLE_DEPTH && obstacle.z < Constants.ADD_OBSTACLE_DEPTH ) {
-					//addObstacle();
+					dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 				}
 				var obstacle:Obstacle = _obstacles[ len - 1 ];
 				if ( obstacle.z <= Constants.REMOVE_OBSTACLE_DEPTH ) {
@@ -162,55 +165,14 @@ package com.funrun.game.view.components {
 		 */
 		public function addObstacle( obstacle:Obstacle ):void {
 			// New obstacles go in front.
-			/*_scene.addChild( obstacle.getGeo() );
-			
-			
-			var obstacle:Obstacle = new Obstacle( obstacleData.id );
-			var mesh:Mesh;
-			var flip:Boolean = Math.random() < .5;
-			var colLen:int = ( obstacleData.geos[ 0 ] as Array ).length;
-			var rowLen:int = obstacleData.geos.length;
-			var xAdjustment:Number = ( ( colLen - 1 ) * Constants.BLOCK_SIZE ) * .5;
-			for ( var col:int = 0; col < colLen; col++ ) {
-				for ( var row:int = 0; row < rowLen; row++ ) {
-					mesh = getMesh( obstacleData.geos[ row ][ col ] );
-					if ( mesh ) {
-						var meshX:Number = ( flip ) ? ( colLen - 1 - col ) : col;
-						meshX *= Constants.BLOCK_SIZE;
-						meshX -= xAdjustment;
-						var meshY:Number = mesh.bounds.max.y * .5;
-						var meshZ:Number = ( rowLen - 1 - row ) * Constants.BLOCK_SIZE;
-						mesh.position = new Vector3D( meshX, meshY, meshZ );
-						_scene.addChild( mesh );
-						obstacle.addGeo( mesh );
-					}
-				}
-			}*/
+			_obstacles.unshift( obstacle );
 			_scene.addChild( obstacle );
 			obstacle.move( Constants.OBSTACLE_START_DEPTH );
-			_obstacles.unshift( obstacle );
-			
 		}
 		
-		//private function getMesh( geo:String ):Mesh {
-		//return null; // stub, move the real thing into the command.
-		//}
-		/*
-		
-		*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		/**
+		 * Control the player.
+		 */
 		public function jump():void {
 			if ( !_isJumping ) {
 				_jumpVelocity += Constants.PLAYER_JUMP_SPEED;
@@ -263,7 +225,5 @@ package com.funrun.game.view.components {
 		public function stopDucking():void {
 			_isDucking = false;
 		}
-		
-		
 	}
 }
