@@ -7,12 +7,29 @@ package com.funrun.game.services {
 		
 		[ Embed( source = "data/blocks.json", mimeType = "application/octet-stream" ) ]
 		private const JsonData:Class;
-
+		
+		// Standard data format.
+		private const DOCS:String = "doc";
+		private const AUTHOR:String = "author";
+		private const LIST:String = "list";
+		
 		public var data:Object;
 		
 		public function BlocksJsonService() {
 			var ba:ByteArray = new JsonData() as ByteArray;
-			var data:Object = JSON.decode( ba.readUTFBytes( ba.length ) );
+			data = JSON.decode( ba.readUTFBytes( ba.length ) );
+		}
+		
+		public function getList():Array {
+			return data[ LIST ];
+		}
+		
+		public function getAuthor():Array {
+			return data[ AUTHOR ];
+		}
+		
+		public function getDocs():Array {
+			return data[ DOCS ];
 		}
 	}
 }
