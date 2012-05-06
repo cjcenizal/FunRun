@@ -77,7 +77,9 @@ package com.funrun.game.view.mediators
 			switch ( e.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:
-					view.jump();
+					if ( !view.isAirborne ) {
+						view.jump();
+					}
 					break;
 				case Keyboard.LEFT:
 					view.startMovingLeft();

@@ -42,6 +42,7 @@ package com.funrun.game.view.components {
 		private var _isMovingLeft:Boolean = false;
 		private var _isMovingRight:Boolean = false;
 		private var _isDucking:Boolean = false;
+		private var _isAirborne:Boolean = false;
 		
 		/**
 		 * Constructor
@@ -99,10 +100,11 @@ package com.funrun.game.view.components {
 			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
 			_player.y += _jumpVelocity;
 			_player.x += _lateralVelocity;
-			if ( _player.y <= 25 ) {
-				_player.y = 25;
+			if ( _player.y <= 25 ) { // Temp hack for landing on ground, fix later
+				_player.y = 25; // 25 is half the player FPO object's height
 				_jumpVelocity = 0;
 			}
+			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );
 		}
 		
 		private function updateCamera():void {
@@ -219,6 +221,14 @@ package com.funrun.game.view.components {
 		
 		public function stopDucking():void {
 			_isDucking = false;
+		}
+		
+		public function get isJumping():Boolean {
+			return _isJumping;
+		}
+		
+		public function get isAirborne():Boolean {
+			return _isAirborne;
 		}
 	}
 }
