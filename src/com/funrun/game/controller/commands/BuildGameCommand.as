@@ -49,14 +49,12 @@ package com.funrun.game.controller.commands
 			playerMaterial.gloss = 20;
 			playerMaterial.specularMethod = specularMethod;
 			
-			groundMaterial = new ColorMaterial( 0xFF0000 );
 			groundMaterial.lightPicker = lightPicker;
 			groundMaterial.shadowMethod = shadowMethod;
 			groundMaterial.specular = .25;
 			groundMaterial.gloss = 20;
 			groundMaterial.specularMethod = specularMethod;
 			
-			obstacleMaterial = new ColorMaterial( 0x0000FF );
 			obstacleMaterial.lightPicker = lightPicker;
 			obstacleMaterial.shadowMethod = shadowMethod;
 			obstacleMaterial.specular = .25;

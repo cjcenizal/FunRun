@@ -11,7 +11,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.ObstacleVO;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.parsers.ObstacleParser;
-	import com.funrun.game.view.Obstacle;
+	import com.funrun.game.view.components.Obstacle;
 	
 	import org.robotlegs.mvcs.Command;
 

@@ -1,7 +1,7 @@
 package com.funrun.game.controller.events
 {
 	import com.funrun.game.model.ObstacleVO;
-	import com.funrun.game.view.Obstacle;
+	import com.funrun.game.view.components.Obstacle;
 	
 	import flash.events.Event;
 	

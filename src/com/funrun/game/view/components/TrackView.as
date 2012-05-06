@@ -11,7 +11,6 @@ package com.funrun.game.view.components {
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.model.Constants;
-	import com.funrun.game.view.Obstacle;
 	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
@@ -153,7 +152,7 @@ package com.funrun.game.view.components {
 		 * Adding player to the scene.
 		 */
 		public function addPlayer( player:Mesh ):void {
-			this._player = player;
+			_player = player;
 			_scene.addChild( player );
 		}
 		

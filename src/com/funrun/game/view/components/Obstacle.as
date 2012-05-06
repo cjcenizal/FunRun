@@ -1,4 +1,4 @@
-package com.funrun.game.view {
+package com.funrun.game.view.components {
 	
 	import away3d.bounds.BoundingVolumeBase;
 	import away3d.containers.ObjectContainer3D;

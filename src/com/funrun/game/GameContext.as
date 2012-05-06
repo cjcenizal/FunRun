@@ -80,18 +80,20 @@ package com.funrun.game
 			
 			// Add lights.
 			var sun:DirectionalLight = new DirectionalLight( .25, -1, -1 );
-			sun.ambient = .1;
+			sun.castsShadows = true;
+			sun.ambient = .05; // Higher = "brighter"
+			sun.diffuse = .1; // Higher = "brighter"
 			sun.z = 2000;
 			var spotlight:PointLight = new PointLight();
 			spotlight.castsShadows = true;
 			spotlight.shadowMapper.depthMapSize = 1024;
-			spotlight.y = 120;
+			spotlight.y = 700;
 			spotlight.color = 0xffffff;
 			spotlight.diffuse = 1;
 			spotlight.specular = 1;
-			spotlight.radius = 400;
-			spotlight.fallOff = 1000;
-			spotlight.ambient = 0xa0a0c0;
+			spotlight.radius = 800;
+			spotlight.fallOff = 2000;
+			spotlight.ambientColor = 0xa0a0c0;
 			spotlight.ambient = .5;
 			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SUN, sun ) );
 			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SPOTLIGHT, spotlight ) );
