@@ -8,9 +8,10 @@ package com.funrun.game.model
 		public static const TRACK_LENGTH:int = 5000;
 		
 		// Camera.
+		public static const CAM_Y:Number = 800;
 		public static const CAM_Z:Number = -1000;
-		public static const CAM_Y:Number = 400;
 		public static const CAM_FOV:Number = 60;
+		public static const CAM_TILT:Number = 20;
 		public static const CAM_FRUSTUM_DISTANCE:Number = 6000; // the higher the value, the blockier the shadows
 		
 		// Player movement constants.

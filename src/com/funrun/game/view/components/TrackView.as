@@ -65,6 +65,7 @@ package com.funrun.game.view.components {
 			_camera = _view.camera;
 			_camera.y = Constants.CAM_Y;
 			_camera.z = Constants.CAM_Z;
+			_camera.rotationX = Constants.CAM_TILT;
 			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
 			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
 		}
