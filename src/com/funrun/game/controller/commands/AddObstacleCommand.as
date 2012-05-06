@@ -69,7 +69,7 @@ package com.funrun.game.controller.commands {
 					break;
 				}
 				case "block":  {
-					mesh = new Mesh( blocksModel.getBlock( blocksModel.BLOCK ), material );
+					mesh = new Mesh( blocksModel.getBlock( blocksModel.BLOCK ).geo, material );
 					break;
 				}
 			}

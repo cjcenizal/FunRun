@@ -1,9 +1,10 @@
-package com.funrun.game.services
+package com.funrun.game.model.parsers
 {
-	public class BlocksJson
+	import away3d.primitives.PrimitiveBase;
+
+	public class BlockParser extends AbstractParser
 	{
-		private const ID:String = "id";
-		private const FILENAME:String = "filename";
+		
 		private const FACES:String = "faces";
 		private const TOP:String = "t";
 		private const BOTTOM:String = "b";
@@ -18,11 +19,14 @@ package com.funrun.game.services
 		private var _faces:Object;
 		private var _numFaces:int = 0;
 		
-		public function BlocksJson( leaf:Object )
+		public var geo:PrimitiveBase;
+		
+		public function BlockParser( data:Object )
 		{
-			_id = leaf[ ID ];
-			_filename = leaf[ FILENAME ];
-			_faces = leaf[ FACES ] || {};
+			super( data );
+			_id = new IdParser( data ).id;
+			_filename = new FilenameParser( data ).filename;
+			_faces = data[ FACES ] || {};
 			for ( var key:String in _faces ) {
 				_numFaces++;
 			}

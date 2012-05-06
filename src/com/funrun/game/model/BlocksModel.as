@@ -1,8 +1,8 @@
 package com.funrun.game.model {
 	
-	import away3d.primitives.CubeGeometry;
-	import away3d.primitives.PlaneGeometry;
 	import away3d.primitives.PrimitiveBase;
+	
+	import com.funrun.game.model.parsers.BlockParser;
 	
 	public class BlocksModel {
 		
@@ -12,15 +12,13 @@ package com.funrun.game.model {
 		
 		public function BlocksModel() {
 			_blocks = {};
-			_blocks[ EMPTY ] = new PlaneGeometry( 1, 1 );
-			_blocks[ BLOCK ] = new CubeGeometry( 1 * Constants.BLOCK_SIZE, 1 * Constants.BLOCK_SIZE, 1 * Constants.BLOCK_SIZE );
 		}
 		
-		public function addBlock( id:String, block:PrimitiveBase ):void {
-			_blocks[ id ] = block;
+		public function addBlock( block:BlockParser ):void {
+			_blocks[ block.id ] = block;
 		}
 		
-		public function getBlock( id:String ):PrimitiveBase {
+		public function getBlock( id:String ):BlockParser {
 			return _blocks[ id ];
 		}
 	}
