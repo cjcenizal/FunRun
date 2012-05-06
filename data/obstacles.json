@@ -36,6 +36,95 @@
 			]
 		},
 		{
+			"id" : "overpass",
+			"blocks" : [
+				{
+					"id" : "block",
+					"pos" : [ 0, 2, 0 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 1, 2, 0 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 2, 2, 0 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 3, 2, 0 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 4, 2, 0 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 5, 2, 0 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 6, 2, 0 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 0, 2, 1 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 1, 2, 1 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 2, 2, 1 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 3, 2, 1 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 4, 2, 1 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 5, 2, 1 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 6, 2, 1 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 0, 2, 2 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 1, 2, 2 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 2, 2, 2 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 3, 2, 2 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 4, 2, 2 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 5, 2, 2 ]
+				},
+				{
+					"id" : "block",
+					"pos" : [ 6, 2, 2 ]
+				}
+			]
+		},
+		{
 			"id" : "jumpableSawWall",
 			"blocks" : [
 				{

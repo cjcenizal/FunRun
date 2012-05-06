@@ -45,6 +45,7 @@ package com.funrun.game.controller.commands {
 						mesh.x = blockData.x * Constants.BLOCK_SIZE;
 						mesh.y = blockData.y * Constants.BLOCK_SIZE;
 						mesh.z = blockData.z * Constants.BLOCK_SIZE;
+						trace("add geo");
 						obstacle.addGeo( mesh );
 					}
 				}
@@ -78,6 +79,9 @@ package com.funrun.game.controller.commands {
 	
 		private function getMesh( geo:String, material:ColorMaterial ):Mesh {
 			var mesh:Mesh;
+			
+			mesh = new Mesh( blocksModel.getBlock( BlockTypes.BLOCK ).geo, material );
+			return mesh;
 			switch ( geo ) {
 				case BlockTypes.EMPTY:  {
 					mesh = null;

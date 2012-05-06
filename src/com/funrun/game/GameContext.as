@@ -79,7 +79,7 @@ package com.funrun.game
 			eventDispatcher.dispatchEvent( new LoadObstaclesRequest( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED ) );
 			
 			// Add lights.
-			var sun:DirectionalLight = new DirectionalLight( .5, -1, 0 );
+			var sun:DirectionalLight = new DirectionalLight( .25, -1, -1 );
 			sun.ambient = .1;
 			sun.z = 2000;
 			var spotlight:PointLight = new PointLight();
