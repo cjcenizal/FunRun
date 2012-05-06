@@ -3,7 +3,7 @@ package com.funrun.game.model
 	public class Constants
 	{
 		// Sizes.
-		public static const BLOCK_SIZE:Number = 50;
+		public static const BLOCK_SIZE:Number = 100;
 		public static const TRACK_WIDTH:int = 1200;
 		public static const TRACK_LENGTH:int = 5000;
 		

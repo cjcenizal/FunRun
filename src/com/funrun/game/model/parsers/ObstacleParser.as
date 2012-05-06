@@ -1,5 +1,7 @@
 package com.funrun.game.model.parsers
 {
+	import com.funrun.game.model.ObstacleVO;
+
 	public class ObstacleParser extends AbstractParser
 	{
 		
@@ -7,16 +9,29 @@ package com.funrun.game.model.parsers
 		
 		private var _id:String;
 		private var _blocks:Array;
+		private var _width:int = 0;
+		private var _height:int = 0;
+		private var _depth:int = 0;
 		
 		public function ObstacleParser( data:Object )
 		{
 			super( data );
 			_id = new IdParser( data ).id;
 			_blocks = [];
-			var blocks:Array = data[ BLOCKS ];
-			var len:int = blocks.length;
-			for ( var i:int = 0; i < len; i++ ) {
-				_blocks.push( new ObstacleBlockParser( blocks[ i ] ) );
+			var blocksDeep:Array = data[ BLOCKS ];
+			var blocksWide:Array;
+			var blocksHigh:Array;
+			_depth = blocksDeep.length;
+			for ( var z:int = 0; z < _depth; z++ ) {
+				blocksWide = blocksDeep[ z ];
+				_width = Math.max( _width, blocksWide.length );
+				for ( var x:int = 0; x < _width; x++ ) {
+					blocksHigh = blocksWide[ x ];
+					_height = Math.max( _height, blocksHigh.length );
+					for ( var y:int = 0; y < _height; y++ ) {
+						_blocks.push( new ObstacleVO( blocksHigh[ y ], x, y, z ) );
+					}
+				}
 			}
 		}
 		
@@ -28,7 +43,7 @@ package com.funrun.game.model.parsers
 			return _blocks.length;
 		}
 		
-		public function getBlockAt( index:int ):ObstacleBlockParser {
+		public function getBlockAt( index:int ):ObstacleVO {
 			return _blocks[ index ];
 		}
 	}

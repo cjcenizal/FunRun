@@ -21,8 +21,8 @@ package com.funrun.game
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.model.BlocksModel;
-	import com.funrun.game.model.IGeosModel;
 	import com.funrun.game.model.DummyGeosModel;
+	import com.funrun.game.model.IGeosModel;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
