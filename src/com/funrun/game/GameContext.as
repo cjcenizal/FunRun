@@ -1,10 +1,6 @@
 package com.funrun.game
 {
 	
-	import away3d.lights.DirectionalLight;
-	import away3d.lights.PointLight;
-	import away3d.materials.ColorMaterial;
-	
 	import com.funrun.game.controller.commands.AddLightCommand;
 	import com.funrun.game.controller.commands.AddMaterialCommand;
 	import com.funrun.game.controller.commands.AddObstacleCommand;
@@ -73,35 +69,6 @@ package com.funrun.game
 			mediatorMap.mapView( GameModule, GameMediator );
 			
 			super.startup();
-			
-			// Load stuff.
-			eventDispatcher.dispatchEvent( new LoadBlocksRequest( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED ) );
-			eventDispatcher.dispatchEvent( new LoadObstaclesRequest( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED ) );
-			
-			// Add lights.
-			var sun:DirectionalLight = new DirectionalLight( .25, -1, -1 );
-			sun.castsShadows = true;
-			sun.ambient = .05; // Higher = "brighter"
-			sun.diffuse = .1; // Higher = "brighter"
-			sun.z = 2000;
-			var spotlight:PointLight = new PointLight();
-			spotlight.castsShadows = true;
-			spotlight.shadowMapper.depthMapSize = 1024;
-			spotlight.y = 700;
-			spotlight.color = 0xffffff;
-			spotlight.diffuse = 1;
-			spotlight.specular = 1;
-			spotlight.radius = 800;
-			spotlight.fallOff = 2000;
-			spotlight.ambientColor = 0xa0a0c0;
-			spotlight.ambient = .5;
-			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SUN, sun ) );
-			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SPOTLIGHT, spotlight ) );
-			
-			// Add materials.
-			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) ) );
-			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.GROUND_MATERIAL, new ColorMaterial( 0xFF0000 ) ) );
-			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.OBSTACLE_MATERIAL, new ColorMaterial( 0x0000FF ) ) );
 		}
 	}
 }

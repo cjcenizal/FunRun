@@ -1,6 +1,5 @@
 package com.funrun.game.controller.commands
 {
-	import away3d.containers.ObjectContainer3D;
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
@@ -11,8 +10,12 @@ package com.funrun.game.controller.commands
 	import away3d.primitives.CylinderGeometry;
 	import away3d.primitives.PlaneGeometry;
 	
+	import com.funrun.game.controller.events.AddLightRequest;
+	import com.funrun.game.controller.events.AddMaterialRequest;
 	import com.funrun.game.controller.events.AddPlayerFulfilled;
 	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
+	import com.funrun.game.controller.events.LoadBlocksRequest;
+	import com.funrun.game.controller.events.LoadObstaclesRequest;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
@@ -33,6 +36,35 @@ package com.funrun.game.controller.commands
 		public var materialsModel:MaterialsModel;
 		
 		override public function execute():void {
+			// Load stuff.
+			eventDispatcher.dispatchEvent( new LoadBlocksRequest( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED ) );
+			eventDispatcher.dispatchEvent( new LoadObstaclesRequest( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED ) );
+			
+			// Add lights.
+			var sun:DirectionalLight = new DirectionalLight( .25, -1, -1 );
+			sun.castsShadows = true;
+			sun.ambient = .05; // Higher = "brighter"
+			sun.diffuse = .1; // Higher = "brighter"
+			sun.z = 2000;
+			var spotlight:PointLight = new PointLight();
+			spotlight.castsShadows = true;
+			spotlight.shadowMapper.depthMapSize = 1024;
+			spotlight.y = 700;
+			spotlight.color = 0xffffff;
+			spotlight.diffuse = 1;
+			spotlight.specular = 1;
+			spotlight.radius = 800;
+			spotlight.fallOff = 2000;
+			spotlight.ambientColor = 0xa0a0c0;
+			spotlight.ambient = .5;
+			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SUN, sun ) );
+			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SPOTLIGHT, spotlight ) );
+			
+			// Add materials.
+			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) ) );
+			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.GROUND_MATERIAL, new ColorMaterial( 0xFF0000 ) ) );
+			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.OBSTACLE_MATERIAL, new ColorMaterial( 0x0000FF ) ) );
+			
 			// Assign properties to materials.
 			var sunlight:DirectionalLight = lightsModel.getLight( LightsModel.SUN ) as DirectionalLight; // Casting doesn't feel too clean here
 			var spotlight:PointLight = lightsModel.getLight( LightsModel.SPOTLIGHT ) as PointLight; // Casting doesn't feel too clean here
