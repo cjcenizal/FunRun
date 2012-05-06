@@ -6,8 +6,6 @@ package com.funrun.game.model {
 	
 	public class BlocksModel {
 		
-		public const EMPTY:String = "EMPTY";
-		public const BLOCK:String = "BLOCK";
 		private var _blocks:Object;
 		
 		public function BlocksModel() {

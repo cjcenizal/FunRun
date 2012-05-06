@@ -27,6 +27,7 @@ package com.funrun.game
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.services.BlocksJsonService;
+	import com.funrun.game.services.ObstaclesJsonService;
 	import com.funrun.game.view.components.TrackView;
 	import com.funrun.game.view.mediators.TrackMediator;
 	
@@ -48,6 +49,7 @@ package com.funrun.game
 			
 			// This stuff might jsut be temp.
 			injector.mapSingletonOf( BlocksJsonService, BlocksJsonService );
+			injector.mapSingletonOf( ObstaclesJsonService, ObstaclesJsonService );
 			
 			// Misc essential injections.
 			injector.mapValue( Stage, contextView.stage );
