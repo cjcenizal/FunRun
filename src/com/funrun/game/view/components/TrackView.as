@@ -7,6 +7,8 @@ package com.funrun.game.view.components {
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
+	import away3d.extrusions.LinearExtrude;
+	import away3d.materials.ColorMaterial;
 	import away3d.primitives.WireframeGrid;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
@@ -14,6 +16,7 @@ package com.funrun.game.view.components {
 	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
+	import flash.geom.Vector3D;
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
@@ -68,6 +71,12 @@ package com.funrun.game.view.components {
 			_camera.rotationX = Constants.CAM_TILT;
 			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
 			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
+			
+			
+			var path:Vector.<Vector3D> = Vector.<Vector3D>([	new Vector3D(-250, 0, -250), new Vector3D(250, 0, -250)]);
+			var mat:ColorMaterial = new ColorMaterial( 0xffffff );
+			var linearExtrude:LinearExtrude = new LinearExtrude(mat, path, LinearExtrude.Z_AXIS, 250, 3, false, 1, 3, null, false, false, "", false);
+			_scene.addChild(linearExtrude);
 		}
 		
 		/**
@@ -90,21 +99,11 @@ package com.funrun.game.view.components {
 		 * Updating.
 		 */
 		public function update():void {
+			updateObstacles();
+			updateFloor();
 			updatePlayer();
 			updateCamera();
-			updateObstacles();
 			_view.render();
-		}
-		
-		private function updatePlayer():void {
-			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
-			_player.y += _jumpVelocity;
-			_player.x += _lateralVelocity;
-			if ( _player.y <= 25 ) { // Temp hack for landing on ground, fix later
-				_player.y = 25; // 25 is half the player FPO object's height
-				_jumpVelocity = 0;
-			}
-			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );
 		}
 		
 		private function updateCamera():void {
@@ -120,10 +119,6 @@ package com.funrun.game.view.components {
 			for ( var i:int = len - 1; i >= 0; i-- ) {
 				obstacle = _obstacles[ i ];
 				obstacle.move( -_forwardVelocity );
-				var collides:Boolean = obstacle.collide( _player );
-				if ( collides ) {
-					dispatchEvent( new CollisionEvent( CollisionEvent.COLLISION ) );
-				}
 			}
 			// Check last obstacle for removal and addition of new obstacle.
 			if ( len > 0 ) {
@@ -137,9 +132,31 @@ package com.funrun.game.view.components {
 					_obstacles.splice( len - 1, 1 );
 				}
 			}
-			for ( var i:int = 0; i < _obstacles.length; i++ ) {
-				obstacle = _obstacles[ i ];
+		}
+		
+		private function updatePlayer():void {
+			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
+			_player.y += _jumpVelocity;
+			_player.x += _lateralVelocity;
+			if ( _player.y <= 25 ) { // Temp hack for landing on ground, fix later
+				_player.y = 25; // 25 is half the player FPO object's height
+				_jumpVelocity = 0;
 			}
+			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );
+			var obstacle:Obstacle;
+			var len:int = _obstacles.length;
+			// Update oldest obstacles first, newest ones last.
+			for ( var i:int = len - 1; i >= 0; i-- ) {
+				obstacle = _obstacles[ i ];
+				var collides:Boolean = obstacle.collide( _player );
+				if ( collides ) {
+					dispatchEvent( new CollisionEvent( CollisionEvent.COLLISION ) );
+				}
+			}
+		}
+		
+		private function updateFloor():void {
+			
 		}
 		
 		/**

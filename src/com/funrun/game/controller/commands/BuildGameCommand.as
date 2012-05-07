@@ -100,7 +100,7 @@ package com.funrun.game.controller.commands
 			// Add ground to track.
 			var ground:Mesh = new Mesh( new PlaneGeometry( Constants.TRACK_WIDTH, Constants.TRACK_LENGTH ), groundMaterial );
 			ground.position = new Vector3D( 0, 0, Constants.TRACK_LENGTH * .5 - 300 );
-			eventDispatcher.dispatchEvent( new AddSceneObjectFulfilled( AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, ground ) );
+		//	eventDispatcher.dispatchEvent( new AddSceneObjectFulfilled( AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, ground ) );
 			
 			// Add player to track.
 			var player:Mesh = new Mesh( new CylinderGeometry( 50, 50, 50 ), playerMaterial );
