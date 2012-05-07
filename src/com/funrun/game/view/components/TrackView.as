@@ -5,6 +5,7 @@ package com.funrun.game.view.components {
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
+	import away3d.core.base.SubGeometry;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
@@ -16,6 +17,7 @@ package com.funrun.game.view.components {
 	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
+	import flash.geom.Vector3D;
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
@@ -151,24 +153,43 @@ package com.funrun.game.view.components {
 		private var _floorPanels:Array = [];
 		
 		private function updateFloor():void {
+			var xAdjust:Number = Constants.TRACK_WIDTH * .5 - Constants.BLOCK_SIZE * .5;
+			var zAdjust:Number = Constants.TRACK_LENGTH * .5 - 300;
 			var material:ColorMaterial = new ColorMaterial( 0xffffff );
+			var geo:SubGeometry;
 			var panel:Mesh;
+			var currZ:Number;
 			var count:int = 0;
+			// For each column.
 			for ( var x:int = 0; x < Constants.TRACK_WIDTH; x += Constants.BLOCK_SIZE ) {
-				if ( count < _floorPanels.length ) {
-					// Use existing panel if possible.
-					panel = _floorPanels[ count ];
-					panel.visible = true;
-				} else {
-					// Add new one if none are available.
-					panel = new Mesh( new PlaneGeometry( Constants.BLOCK_SIZE, Constants.TRACK_LENGTH ), material );
-					_floorPanels.push( panel );
-					_scene.addChild( panel );
+				currZ = Constants.TRACK_LENGTH;
+				// For entire length of column.
+				while ( currZ > 0 ) {
+					// Get geo in column by looking through all obstacles (could be optimized).
+					for ( var i:int = 0; i < _obstacles.length; i++ ) {
+						// Get each geo in obstacle, check to see if it's in column.
+						// Then check if its z is equal to currZ.
+						// If it isn't, get a panel and place it, and update currZ.
+						
+						if ( false ) {
+							if ( count < _floorPanels.length ) {
+								// Use existing panel if possible.
+								panel = _floorPanels[ count ];
+								panel.visible = true;
+							} else {
+								// Add new one if none are available.
+								panel = new Mesh( new PlaneGeometry( Constants.BLOCK_SIZE, Constants.TRACK_LENGTH ), material );
+								_floorPanels.push( panel );
+								_scene.addChild( panel );
+							}
+							// Adjust position and size.
+							geo = panel.geometry.subGeometries[ 0 ];
+							trace(geo.vertexData);
+							panel.position = new Vector3D( x - xAdjust, 0, zAdjust );
+							count++;
+						}
+					}
 				}
-				// Adjust position and size.
-				panel.position.x = x;
-				panel.position.z = Constants.TRACK_LENGTH * .5;
-				count++;
 			}
 			// Turn off remaining panels.
 			for ( var i:int = count; i < _floorPanels.length; i++ ) {
