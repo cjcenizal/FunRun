@@ -7,20 +7,6 @@
 			"blocks" : [
 				[ [ null, "block" ] ]
 			]
-		},
-		{
-			"id" : "beam",
-			"blocks" : [
-				[ [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ] ],
-				[ [ null, "block" ], [ null, "block" ], [ null, null ], [ null,  null ] ]
-			]
-		},
-		{
-			"id" : "jumpableSawWall",
-			"blocks" : [
-				[ [ "block", "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ] ],
-				[ [ "block", "block" ], [ null, "block" ], [ null, null ], [ null, null ] ]
-			]
 		}
 	]
 }

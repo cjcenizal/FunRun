@@ -162,7 +162,7 @@ package com.funrun.game.view.components {
 			var currZ:Number;
 			var count:int = 0;
 			// For each column.
-			for ( var x:int = 0; x < Constants.TRACK_WIDTH; x += Constants.BLOCK_SIZE ) {
+			for ( var x:int = 0; x < Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE ) { // TEMPORARY! Turn back to Constants.TRACK_WIDTH
 				currZ = Constants.TRACK_LENGTH;
 				// For entire length of column.
 				while ( currZ > 0 ) {
@@ -178,7 +178,7 @@ package com.funrun.game.view.components {
 								// First see if we've even moved at all.
 								if ( getNormalizedBlockZ( pos.z ) < currZ ) {
 									// Get a panel and place it, and update currZ.
-									if ( count < _floorPanels.length ) {
+									if ( count < _floorPanels.length - 1 ) {
 										// Use existing panel if possible.
 										panel = _floorPanels[ count ];
 										panel.visible = true;
@@ -188,22 +188,51 @@ package com.funrun.game.view.components {
 										_floorPanels.push( panel );
 										_scene.addChild( panel );
 									}
+									panel.visible = false;
 									// Adjust position and size.
 									geo = panel.geometry.subGeometries[ 0 ];
-									trace("b4: " + geo.vertexData);
 									var vertexData:Vector.<Number> = geo.vertexData.concat();
-									vertexData[ 2 ] = vertexData[ 5 ] = Constants.TRACK_LENGTH * .5 - currZ;
-									vertexData[ 8 ] = vertexData[ 11 ] = getNormalizedBlockZ( pos.z ) - Constants.TRACK_LENGTH * .5;
+									trace("currZ " + currZ);
+						//			trace("a: " + vertexData);
+									// 2-5 must be less than 8-11. Higher numbers are near the end of the track.
+								//	vertexData[ 2 ] = vertexData[ 5 ] = ( Constants.TRACK_LENGTH * .5 - getNormalizedBlockZ( pos.z ) ) * -1;
+								//	vertexData[ 8 ] = vertexData[ 11 ] = ( currZ * .5 );
+						//			trace("b: " + vertexData);
 									panel.geometry.subGeometries[ 0 ].updateVertexData( vertexData );
-									trace("aftr" + geo.vertexData);
 									panel.position = new Vector3D( x - xAdjust, 0, zAdjust );
 									count++;
-									currZ += Constants.BLOCK_SIZE;
+									currZ = getNormalizedBlockZ( pos.z ) - Constants.BLOCK_SIZE;
+									trace("end currZ: " + currZ);
 								}
 							}
 						}
 					}
-					currZ = -10; // temp hack
+					
+					if ( currZ > 0 ) {
+						trace("do extra " + currZ);
+						// Get a panel and place it, and update currZ.
+						if ( count < _floorPanels.length - 1 ) {
+							// Use existing panel if possible.
+							panel = _floorPanels[ count ];
+							panel.visible = true;
+						} else {
+							// Add new one if none are available.
+							panel = new Mesh( new PlaneGeometry( Constants.BLOCK_SIZE, Constants.TRACK_LENGTH ), material );
+							_floorPanels.push( panel );
+							_scene.addChild( panel );
+						}
+						// Adjust position and size.
+						geo = panel.geometry.subGeometries[ 0 ];
+						var vertexData:Vector.<Number> = geo.vertexData.concat();
+						trace("    c: " + vertexData);
+						// 2-5 must be less than 8-11. Higher numbers are near the end of the track.
+						vertexData[ 2 ] = vertexData[ 5 ] = -2500;//Constants.TRACK_LENGTH * -.5;
+						vertexData[ 8 ] = vertexData[ 11 ] = currZ * .5;//( Constants.TRACK_LENGTH * .5 - currZ );
+						trace("    d: " + vertexData);
+						panel.geometry.subGeometries[ 0 ].updateVertexData( vertexData );
+						panel.position = new Vector3D( x - xAdjust, 0, zAdjust );
+						currZ = 0;
+					}
 				}
 			}
 			// Turn off remaining panels.
@@ -217,7 +246,7 @@ package com.funrun.game.view.components {
 		}
 		
 		private function getNormalizedBlockZ( z:Number ):int {
-			return z - Constants.BLOCK_SIZE * .5;
+			return z + Constants.BLOCK_SIZE * 3.5;// + Constants.BLOCK_SIZE * .5;
 		}
 		
 		/**
