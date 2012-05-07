@@ -21,9 +21,8 @@ package com.funrun.game.model
 		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 40;
 		
 		// Obstacle creation constants.
-		public static const OBSTACLE_START_DEPTH:Number = 50 * BLOCK_SIZE;
 		public static const OBSTACLE_CREATION_INTERVAL:Number = 15 * BLOCK_SIZE;
-		public static const ADD_OBSTACLE_DEPTH:Number = OBSTACLE_START_DEPTH - OBSTACLE_CREATION_INTERVAL;
+		public static const ADD_OBSTACLE_DEPTH:Number = TRACK_LENGTH - OBSTACLE_CREATION_INTERVAL;
 		public static const REMOVE_OBSTACLE_DEPTH:Number = -10 * BLOCK_SIZE;
 	}
 }

@@ -7,8 +7,8 @@ package com.funrun.game.view.components {
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
-	import away3d.extrusions.LinearExtrude;
 	import away3d.materials.ColorMaterial;
+	import away3d.primitives.PlaneGeometry;
 	import away3d.primitives.WireframeGrid;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
@@ -16,7 +16,6 @@ package com.funrun.game.view.components {
 	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
-	import flash.geom.Vector3D;
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
@@ -71,12 +70,6 @@ package com.funrun.game.view.components {
 			_camera.rotationX = Constants.CAM_TILT;
 			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
 			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
-			
-			
-			var path:Vector.<Vector3D> = Vector.<Vector3D>([	new Vector3D(-250, 0, -250), new Vector3D(250, 0, -250)]);
-			var mat:ColorMaterial = new ColorMaterial( 0xffffff );
-			var linearExtrude:LinearExtrude = new LinearExtrude(mat, path, LinearExtrude.Z_AXIS, 250, 3, false, 1, 3, null, false, false, "", false);
-			_scene.addChild(linearExtrude);
 		}
 		
 		/**
@@ -155,8 +148,32 @@ package com.funrun.game.view.components {
 			}
 		}
 		
+		private var _floorPanels:Array = [];
+		
 		private function updateFloor():void {
-			
+			var material:ColorMaterial = new ColorMaterial( 0xffffff );
+			var panel:Mesh;
+			var count:int = 0;
+			for ( var x:int = 0; x < Constants.TRACK_WIDTH; x += Constants.BLOCK_SIZE ) {
+				if ( count < _floorPanels.length ) {
+					// Use existing panel if possible.
+					panel = _floorPanels[ count ];
+					panel.visible = true;
+				} else {
+					// Add new one if none are available.
+					panel = new Mesh( new PlaneGeometry( Constants.BLOCK_SIZE, Constants.TRACK_LENGTH ), material );
+					_floorPanels.push( panel );
+					_scene.addChild( panel );
+				}
+				// Adjust position and size.
+				panel.position.x = x;
+				panel.position.z = Constants.TRACK_LENGTH * .5;
+				count++;
+			}
+			// Turn off remaining panels.
+			for ( var i:int = count; i < _floorPanels.length; i++ ) {
+				( _floorPanels[ count ] as Mesh ).visible = false;
+			}
 		}
 		
 		/**
@@ -181,7 +198,7 @@ package com.funrun.game.view.components {
 			// New obstacles go in front.
 			_obstacles.unshift( obstacle );
 			_scene.addChild( obstacle );
-			obstacle.move( Constants.OBSTACLE_START_DEPTH );
+			obstacle.move( Constants.TRACK_LENGTH );
 		}
 		
 		/**
