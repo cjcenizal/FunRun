@@ -3,6 +3,7 @@ package com.funrun.game.view.components {
 	import away3d.bounds.BoundingVolumeBase;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.entities.Mesh;
+	import away3d.primitives.PrimitiveBase;
 	
 	import flash.geom.Vector3D;
 	
@@ -47,14 +48,13 @@ package com.funrun.game.view.components {
 		
 		public function collide( object:Mesh ):Boolean {
 			if ( Math.abs( this.z - object.z ) < 300 ) {
-				var pos:Vector3D;// = this.inverseSceneTransform.transformVector( object.position );
 				var len:int = _geos.length;
 				var collides:Boolean = false;
 				var geo:Mesh;
 				for ( var i:int = 0; i < len; i++ ) {
 					geo = _geos[ i ];
-					pos = geo.inverseSceneTransform.transformVector( object.position );
-					collides = aabbTest( pos, object.bounds, geo.bounds );
+					// Get world space of geo.
+					collides = aabbTest( getGeoPosition( geo, object.position ), object.bounds, geo.bounds );
 					if ( collides ) {
 						return true;
 					}
@@ -74,6 +74,18 @@ package com.funrun.game.view.components {
 				return false;
 			}
 			return true;
+		}
+		
+		public function getGeoAt( index:int ):Mesh {
+			return _geos[ index ];
+		}
+		
+		public function getGeoPosition( geo:Mesh, relativeTo:Vector3D ):Vector3D {
+			return geo.inverseSceneTransform.transformVector( relativeTo );
+		}
+		
+		public function get numGeos():int {
+			return _geos.length;
 		}
 	}
 }

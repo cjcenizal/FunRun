@@ -3,6 +3,12 @@
 	"author" : "CJ Cenizal",
 	"list" : [
 		{
+			"id" : "test",
+			"blocks" : [
+				[ [ null, "block" ] ]
+			]
+		},
+		{
 			"id" : "beam",
 			"blocks" : [
 				[ [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ] ],

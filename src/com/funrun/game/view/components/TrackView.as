@@ -10,6 +10,7 @@ package com.funrun.game.view.components {
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.PlaneGeometry;
+	import away3d.primitives.PrimitiveBase;
 	import away3d.primitives.WireframeGrid;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
@@ -118,7 +119,7 @@ package com.funrun.game.view.components {
 			// Check last obstacle for removal and addition of new obstacle.
 			if ( len > 0 ) {
 				if ( obstacle.prevZ >= Constants.ADD_OBSTACLE_DEPTH && obstacle.z < Constants.ADD_OBSTACLE_DEPTH ) {
-					dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+		//			dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 				}
 				var obstacle:Obstacle = _obstacles[ len - 1 ];
 				if ( obstacle.z <= Constants.REMOVE_OBSTACLE_DEPTH ) {
@@ -165,36 +166,58 @@ package com.funrun.game.view.components {
 				currZ = Constants.TRACK_LENGTH;
 				// For entire length of column.
 				while ( currZ > 0 ) {
-					// Get geo in column by looking through all obstacles (could be optimized).
+					// Get geo in column by looking through all obstacles (can be optimized with column sorting).
 					for ( var i:int = 0; i < _obstacles.length; i++ ) {
+						var obstacle:Obstacle = _obstacles[ i ];
 						// Get each geo in obstacle, check to see if it's in column.
-						// Then check if its z is equal to currZ.
-						// If it isn't, get a panel and place it, and update currZ.
-						
-						if ( false ) {
-							if ( count < _floorPanels.length ) {
-								// Use existing panel if possible.
-								panel = _floorPanels[ count ];
-								panel.visible = true;
-							} else {
-								// Add new one if none are available.
-								panel = new Mesh( new PlaneGeometry( Constants.BLOCK_SIZE, Constants.TRACK_LENGTH ), material );
-								_floorPanels.push( panel );
-								_scene.addChild( panel );
+						for ( var j:int = 0; j < obstacle.numGeos; j++ ) {
+							var block:Mesh = obstacle.getGeoAt( j );
+							var pos:Vector3D = block.position.add( obstacle.position );
+							if ( getNormalizedBlockX( pos.x ) == x ) {
+								// This block is in our column, so let's place a panel leading up to it.
+								// First see if we've even moved at all.
+								if ( getNormalizedBlockZ( pos.z ) < currZ ) {
+									// Get a panel and place it, and update currZ.
+									if ( count < _floorPanels.length ) {
+										// Use existing panel if possible.
+										panel = _floorPanels[ count ];
+										panel.visible = true;
+									} else {
+										// Add new one if none are available.
+										panel = new Mesh( new PlaneGeometry( Constants.BLOCK_SIZE, Constants.TRACK_LENGTH ), material );
+										_floorPanels.push( panel );
+										_scene.addChild( panel );
+									}
+									// Adjust position and size.
+									geo = panel.geometry.subGeometries[ 0 ];
+									trace("b4: " + geo.vertexData);
+									var vertexData:Vector.<Number> = geo.vertexData.concat();
+									vertexData[ 2 ] = vertexData[ 5 ] = Constants.TRACK_LENGTH * .5 - currZ;
+									vertexData[ 8 ] = vertexData[ 11 ] = getNormalizedBlockZ( pos.z ) - Constants.TRACK_LENGTH * .5;
+									panel.geometry.subGeometries[ 0 ].updateVertexData( vertexData );
+									trace("aftr" + geo.vertexData);
+									panel.position = new Vector3D( x - xAdjust, 0, zAdjust );
+									count++;
+									currZ += Constants.BLOCK_SIZE;
+								}
 							}
-							// Adjust position and size.
-							geo = panel.geometry.subGeometries[ 0 ];
-							trace(geo.vertexData);
-							panel.position = new Vector3D( x - xAdjust, 0, zAdjust );
-							count++;
 						}
 					}
+					currZ = -10; // temp hack
 				}
 			}
 			// Turn off remaining panels.
 			for ( var i:int = count; i < _floorPanels.length; i++ ) {
 				( _floorPanels[ count ] as Mesh ).visible = false;
 			}
+		}
+		
+		private function getNormalizedBlockX( x:Number ):int {
+			return x - Constants.BLOCK_SIZE * .5 + Constants.TRACK_WIDTH * .5;
+		}
+		
+		private function getNormalizedBlockZ( z:Number ):int {
+			return z - Constants.BLOCK_SIZE * .5;
 		}
 		
 		/**
