@@ -8,15 +8,24 @@ package com.funrun.game.view.components {
 	import away3d.core.base.SubGeometry;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
+	import away3d.extrusions.DelaunayMesh;
+	import away3d.materials.BitmapMaterial;
 	import away3d.materials.ColorMaterial;
+	import away3d.materials.SegmentMaterial;
+	import away3d.materials.TextureMaterial;
+	import away3d.materials.utils.WireframeMapGenerator;
 	import away3d.primitives.PlaneGeometry;
 	import away3d.primitives.PrimitiveBase;
 	import away3d.primitives.WireframeGrid;
+	import away3d.textures.Texture2DBase;
+	import away3d.tools.commands.Merge;
+	import away3d.tools.helpers.FaceHelper;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.view.events.CollisionEvent;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Vector3D;
 	
@@ -152,8 +161,68 @@ package com.funrun.game.view.components {
 		}
 		
 		private var _floorPanels:Array = [];
-		
+		private var _floorMesh:Mesh;
+		var floorGeo:PlaneGeometry = new PlaneGeometry( Constants.BLOCK_SIZE, Constants.BLOCK_SIZE );
+		var material:ColorMaterial = new ColorMaterial( 0xffffff );
 		private function updateFloor():void {
+			
+			// The simplest fucking way to do this is to add panels between each obstacle.
+			
+			
+			
+			
+			
+			/*
+			// Add a delaunay mesh and delete faces.
+			var vectors:Vector.<Vector3D> = new Vector.<Vector3D>();
+			for(var i:uint = 0; i< 100; ++i){
+				vectors[i] = new Vector3D( Math.random() * Constants.TRACK_WIDTH, 0, Math.random() * Constants.TRACK_LENGTH );
+			}
+			
+			var delaunayMesh:DelaunayMesh = new DelaunayMesh( null, vectors, DelaunayMesh.PLANE_XZ, false, false, true );
+			delaunayMesh.material = new ColorMaterial( 0xffffff );
+			
+			trace( ( delaunayMesh.geometry.subGeometries[ 0 ] as SubGeometry ).indexData.length );
+			_scene.addChild(delaunayMesh);
+			FaceHelper.removeFace( delaunayMesh, 0, 0 );
+			*/
+			
+			
+			// Add a bunch of meshes and merge them.
+			//for ( var i:int = 0; i < _floorPanels.length; i++ ) {
+			//	_scene.removeChild( _floorPanels[ i ] as Mesh );
+			//}
+			//_floorPanels = [];
+			/*
+			if ( _floorMesh ) {
+				_scene.removeChild( _floorMesh );
+			}
+			
+			var dest:Mesh;
+			var src:Vector.<Mesh> = new Vector.<Mesh>;
+			for ( var x:int = 0; x < Constants.TRACK_WIDTH; x += Constants.BLOCK_SIZE ) {
+				for ( var z:int = 0; z < Constants.TRACK_LENGTH; z += Constants.BLOCK_SIZE ) {
+					var block:Mesh = new Mesh( floorGeo.clone(), material );
+					block.x = x;
+					block.z = z;
+					if ( !dest ) {
+						dest = block;
+					} else {
+						src.push( block );
+					}
+				}
+			}	
+			if ( src.length > 0 ) {
+				var command:Merge = new Merge( false, true );
+				_floorMesh = command.applyToMeshes( dest, src )
+			} else if ( dest ) {
+				_floorMesh = dest;
+			}
+			_scene.addChild( _floorMesh );
+			*/
+			
+			/*
+			// Automatically scale panels to fit between obstacles.
 			var xAdjust:Number = Constants.TRACK_WIDTH * .5 - Constants.BLOCK_SIZE * .5;
 			var zAdjust:Number = Constants.TRACK_LENGTH * .5 - 300;
 			var material:ColorMaterial = new ColorMaterial( 0xffffff );
@@ -180,6 +249,7 @@ package com.funrun.game.view.components {
 									// Get a panel and place it, and update currZ.
 									if ( count < _floorPanels.length - 1 ) {
 										// Use existing panel if possible.
+										trace("use panel " + count);
 										panel = _floorPanels[ count ];
 										panel.visible = true;
 									} else {
@@ -213,6 +283,7 @@ package com.funrun.game.view.components {
 						// Get a panel and place it, and update currZ.
 						if ( count < _floorPanels.length - 1 ) {
 							// Use existing panel if possible.
+							trace("    use panel " + count);
 							panel = _floorPanels[ count ];
 							panel.visible = true;
 						} else {
@@ -227,7 +298,7 @@ package com.funrun.game.view.components {
 						trace("    c: " + vertexData);
 						// 2-5 must be less than 8-11. Higher numbers are near the end of the track.
 						vertexData[ 2 ] = vertexData[ 5 ] = -2500;//Constants.TRACK_LENGTH * -.5;
-						vertexData[ 8 ] = vertexData[ 11 ] = currZ * .5;//( Constants.TRACK_LENGTH * .5 - currZ );
+						vertexData[ 8 ] = vertexData[ 11 ] = 1700;//currZ * .5;//( Constants.TRACK_LENGTH * .5 - currZ );
 						trace("    d: " + vertexData);
 						panel.geometry.subGeometries[ 0 ].updateVertexData( vertexData );
 						panel.position = new Vector3D( x - xAdjust, 0, zAdjust );
@@ -239,6 +310,17 @@ package com.funrun.game.view.components {
 			for ( var i:int = count; i < _floorPanels.length; i++ ) {
 				( _floorPanels[ count ] as Mesh ).visible = false;
 			}
+			*/
+		}
+		
+		/**
+		 * Adding obstacles to the scene.
+		 */
+		public function addObstacle( obstacle:Obstacle ):void {
+			// New obstacles go in front.
+			_obstacles.unshift( obstacle );
+			_scene.addChild( obstacle );
+			obstacle.move( Constants.TRACK_LENGTH );
 		}
 		
 		private function getNormalizedBlockX( x:Number ):int {
@@ -262,16 +344,6 @@ package com.funrun.game.view.components {
 		public function addPlayer( player:Mesh ):void {
 			_player = player;
 			_scene.addChild( player );
-		}
-		
-		/**
-		 * Adding obstacles to the scene.
-		 */
-		public function addObstacle( obstacle:Obstacle ):void {
-			// New obstacles go in front.
-			_obstacles.unshift( obstacle );
-			_scene.addChild( obstacle );
-			obstacle.move( Constants.TRACK_LENGTH );
 		}
 		
 		/**
