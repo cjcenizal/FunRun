@@ -68,25 +68,31 @@ package com.funrun.game.view.components {
 			_camera.rotationX = Constants.CAM_TILT;
 			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
 			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
-			
-			/*
-			_track = new Mesh( new CubeGeometry( 0, 0, 0 ), new ColorMaterial( 0, 0 ) );
-			_track.z = 4000;
-			var merge:Merge = new Merge( true );
-			var geo:CubeGeometry = new CubeGeometry( 20, 20, 20 );
-			var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
-			var mesh:Mesh;
-			for ( var i:int = 0; i < 10; i++ ) {
-				mesh = new Mesh( geo, mat );
-				mesh.z = 2000 + Math.random() * 1000;
-				mesh.x = Math.random() * 1000 - 500;
-				mesh.y = Math.random() * 1000 - 500;
-				merge.apply( _track, mesh );
-			}
-			_scene.addChild( _track );
-			_tracks.push( _track );*/
+
+			prepTestObstacle();
 		}
 		private var _tracks:Array = [];
+		
+		var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
+		var size:Number = 20;// Constants.BLOCK_SIZE;
+		var merge:Merge = new Merge( true );
+		private var _testObstacle:Mesh;
+		private function prepTestObstacle():void {
+			_testObstacle = new Mesh( new CubeGeometry( size, size, size ), mat );
+			//base.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + Constants.BLOCK_SIZE : Constants.TRACK_LENGTH;
+			var mesh:Mesh;
+			var x:int = 0;
+			var lim:int = 300;//Constants.TRACK_WIDTH
+			var inc:int = 1;//Constants.BLOCK_SIZE
+			for ( var i:int = 0; i < lim; i += inc ) {
+				mesh = new Mesh( new CubeGeometry( size, size, size ), mat );
+				mesh.x = Math.random() * 1000 - 500;//x * Constants.BLOCK_SIZE - Constants.TRACK_WIDTH * .5;
+				mesh.y = Constants.BLOCK_SIZE * .5 + Math.random() * 300;
+				mesh.z = 0;
+				merge.apply( _testObstacle, mesh );
+				x++;
+			}
+		}
 		
 		/**
 		 * Add debugging UI.
@@ -126,11 +132,14 @@ package com.funrun.game.view.components {
 			for ( var i:int = 0; i < _tracks.length; i++ ) {
 				( _tracks[ i ] as Mesh ).z -= _forwardVelocity;
 			}
-			if ( t % 40 == 0 ) {
-				if ( t > 400 ) {
-					_scene.removeChild( _tracks[ 0 ] );
-					( _tracks[ 0 ] as Mesh ).geometry.dispose();
-					_tracks.splice( 0, 1 );
+			if ( t % Constants.OBSTACLE_CREATION_INTERVAL == 0 ) {
+				if ( _tracks.length > 0 ) {
+					var mesh:Mesh = _tracks[ 0 ] as Mesh;
+					if ( mesh.z < -200 ) {
+						_scene.removeChild( mesh );
+						//mesh.geometry.dispose();
+						_tracks.splice( 0, 1 );
+					}
 				}
 				dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
@@ -150,39 +159,11 @@ package com.funrun.game.view.components {
 		/**
 		 * Adding obstacles to the scene.
 		 */
-		private var _track:Mesh;
 		public function addObstacle( obstacle:Obstacle ):void {
-			var merge:Merge = new Merge();
-			var base:Mesh = new Mesh( new CubeGeometry(), new ColorMaterial( 0x0000ff ) );
-			/*mesh.z = 1000 - _track.z;
-			merge.apply( _track, mesh );*/
-			/*var geo:CubeGeometry = new CubeGeometry( 20, 20, 20 );
-			var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
-			var mesh:Mesh;
-			for ( var i:int = 0; i < 100; i++ ) {
-				mesh = new Mesh( geo, mat );
-				mesh.z = 2000 + Math.random() * 4000 - _track.z;
-				mesh.x = Math.random() * 1000 - 500;
-				mesh.y = Math.random() * 1000 - 500;
-				merge.apply( base, mesh );
-			}
-			
-			merge.apply( _track, base );*/
-			var merge:Merge = new Merge( true );
-			var geo:CubeGeometry = new CubeGeometry( 20, 20, 20 );
-			var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
-			var base:Mesh = new Mesh( geo, mat );
-			base.z = 4000;
-			var mesh:Mesh;
-			for ( var i:int = 0; i < 40; i++ ) {
-				mesh = new Mesh( new CubeGeometry( 20, 20, 20 ), mat );
-				mesh.z = Math.random() * 100;
-				mesh.x = Math.random() * 1000 - 500;
-				mesh.y = Math.random() * 1000 - 500;
-				merge.apply( base, mesh );
-			}
-			_tracks.push( base );
-			_scene.addChild( base );
+			var obj:Mesh = _testObstacle.clone() as Mesh;
+			obj.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + Constants.BLOCK_SIZE : Constants.TRACK_LENGTH;
+			_tracks.push( obj );
+			_scene.addChild( obj );
 		}
 		
 		/**
