@@ -1,14 +1,13 @@
-package com.funrun.game.model
-{
+package com.funrun.game.model {
+	
 	import com.funrun.game.model.parsers.ObstacleParser;
-
-	public class ObstaclesModel
-	{
+	
+	public class ObstaclesModel {
+		
 		private var _obstacles:Array;
 		private var _length:int = 0;
 		
-		public function ObstaclesModel()
-		{
+		public function ObstaclesModel() {
 			_obstacles = [];
 		}
 		

@@ -8,11 +8,6 @@
 			"blocks" : [
 				[ [ null, "block" ] ]
 			]
-		},
-		{
-			"id" : "test",
-			"type" : "pit",
-			"length" : 4
 		}
 	]
 }

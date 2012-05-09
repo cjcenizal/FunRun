@@ -8,15 +8,14 @@ package com.funrun.game.view.components {
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
-	import away3d.primitives.PlaneGeometry;
+	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.WireframeGrid;
+	import away3d.tools.commands.Merge;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.model.Constants;
-	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
-	import flash.geom.Vector3D;
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
@@ -29,9 +28,6 @@ package com.funrun.game.view.components {
 		private var _view:View3D;
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
-		
-		// Obstacle management (perhaps store this in the model?).
-		private var _obstacles:Array;
 		
 		// Player geometry (will be stored in the model?).
 		private var _player:Mesh;
@@ -50,7 +46,6 @@ package com.funrun.game.view.components {
 		 * Constructor
 		 */
 		public function TrackView() {
-			_obstacles = [];
 		}
 		
 		/**
@@ -71,6 +66,10 @@ package com.funrun.game.view.components {
 			_camera.rotationX = Constants.CAM_TILT;
 			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
 			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
+			
+			_track = new Mesh( new CubeGeometry(), new ColorMaterial( 0x0000ff ) );
+			_track.z = 1000;
+			_scene.addChild( _track );
 		}
 		
 		/**
@@ -105,25 +104,13 @@ package com.funrun.game.view.components {
 			_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
 		}
 		
+		var t:int = 0;
 		private function updateObstacles():void {
-			var obstacle:Obstacle;
-			var len:int = _obstacles.length;
-			// Update oldest obstacles first, newest ones last.
-			for ( var i:int = len - 1; i >= 0; i-- ) {
-				obstacle = _obstacles[ i ];
-				obstacle.move( -_forwardVelocity );
-			}
-			// Check last obstacle for removal and addition of new obstacle.
-			if ( len > 0 ) {
-				if ( obstacle.prevZ >= Constants.ADD_OBSTACLE_DEPTH && obstacle.z < Constants.ADD_OBSTACLE_DEPTH ) {
-					dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
-				}
-				var obstacle:Obstacle = _obstacles[ len - 1 ];
-				if ( obstacle.z <= Constants.REMOVE_OBSTACLE_DEPTH ) {
-					// Remove item.
-					obstacle.destroy();
-					_obstacles.splice( len - 1, 1 );
-				}
+			t ++;
+			_track.z -= _forwardVelocity;
+			trace( t);
+			if ( t % 30 == 0 ) {
+				dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
 		}
 		
@@ -136,34 +123,17 @@ package com.funrun.game.view.components {
 				_jumpVelocity = 0;
 			}
 			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );
-			var obstacle:Obstacle;
-			var len:int = _obstacles.length;
-			// Update oldest obstacles first, newest ones last.
-			for ( var i:int = len - 1; i >= 0; i-- ) {
-				obstacle = _obstacles[ i ];
-				var collides:Boolean = obstacle.collide( _player );
-				if ( collides ) {
-					dispatchEvent( new CollisionEvent( CollisionEvent.COLLISION ) );
-				}
-			}
 		}
 		
 		/**
 		 * Adding obstacles to the scene.
 		 */
+		private var _track:Mesh;
 		public function addObstacle( obstacle:Obstacle ):void {
-			// New obstacles go in front.
-			_obstacles.unshift( obstacle );
-			_scene.addChild( obstacle );
-			obstacle.move( Constants.TRACK_LENGTH );
-		}
-		
-		private function getNormalizedBlockX( x:Number ):int {
-			return x - Constants.BLOCK_SIZE * .5 + Constants.TRACK_WIDTH * .5;
-		}
-		
-		private function getNormalizedBlockZ( z:Number ):int {
-			return z + Constants.BLOCK_SIZE * 3.5;// + Constants.BLOCK_SIZE * .5;
+			var merge:Merge = new Merge();
+			var mesh:Mesh = new Mesh( new CubeGeometry(), new ColorMaterial( 0x0000ff ) );
+			mesh.z = 1000 - _track.z;
+			merge.apply( _track, mesh );
 		}
 		
 		/**
