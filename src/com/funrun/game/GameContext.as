@@ -5,6 +5,7 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.AddMaterialCommand;
 	import com.funrun.game.controller.commands.AddObstacleCommand;
 	import com.funrun.game.controller.commands.BuildGameCommand;
+	import com.funrun.game.controller.commands.BuildTimeCommand;
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
 	import com.funrun.game.controller.commands.StartGameCommand;
@@ -13,6 +14,7 @@ package com.funrun.game
 	import com.funrun.game.controller.events.AddMaterialRequest;
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.BuildGameRequest;
+	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
@@ -22,6 +24,7 @@ package com.funrun.game
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
+	import com.funrun.game.model.TimeModel;
 	import com.funrun.game.services.BlocksJsonService;
 	import com.funrun.game.services.ObstaclesJsonService;
 	import com.funrun.game.view.components.TrackView;
@@ -54,9 +57,10 @@ package com.funrun.game
 			injector.mapSingletonOf( MaterialsModel, MaterialsModel );
 			injector.mapSingletonOf( LightsModel, LightsModel );
 			injector.mapSingletonOf( IGeosModel, DummyGeosModel );
-			mediatorMap.mapView( TrackView, TrackMediator );
+			injector.mapSingletonOf( TimeModel, TimeModel );
 			
 			// Controller.
+			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, 		BuildTimeCommand, 		BuildTimeRequest, true );
 			commandMap.mapEvent( BuildGameRequest.BUILD_GAME_REQUESTED, 		BuildGameCommand, 		BuildGameRequest, true );
 			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, 		LoadBlocksCommand, 		LoadBlocksRequest, true );
 			commandMap.mapEvent( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED, LoadObstaclesCommand, 	LoadObstaclesRequest, true );
@@ -66,6 +70,7 @@ package com.funrun.game
 			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 		StartGameCommand, 		StartGameRequest );
 			
 			// View.
+			mediatorMap.mapView( TrackView, TrackMediator );
 			mediatorMap.mapView( GameModule, GameMediator );
 			
 			super.startup();

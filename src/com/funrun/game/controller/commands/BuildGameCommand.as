@@ -8,7 +8,6 @@ package com.funrun.game.controller.commands
 	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	import away3d.primitives.CylinderGeometry;
-	import away3d.primitives.PlaneGeometry;
 	
 	import com.funrun.game.controller.events.AddLightRequest;
 	import com.funrun.game.controller.events.AddMaterialRequest;
@@ -16,7 +15,6 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
-	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
 	
@@ -96,11 +94,6 @@ package com.funrun.game.controller.commands
 			// Add lights to track.
 			eventDispatcher.dispatchEvent( new AddSceneObjectFulfilled( AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, sunlight ) );
 			eventDispatcher.dispatchEvent( new AddSceneObjectFulfilled( AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, spotlight ) );
-			
-			// Add ground to track.
-		//	var ground:Mesh = new Mesh( new PlaneGeometry( Constants.TRACK_WIDTH, Constants.TRACK_LENGTH ), groundMaterial );
-		//	ground.position = new Vector3D( 0, 0, Constants.TRACK_LENGTH * .5 - 300 );
-		//	eventDispatcher.dispatchEvent( new AddSceneObjectFulfilled( AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, ground ) );
 			
 			// Add player to track.
 			var player:Mesh = new Mesh( new CylinderGeometry( 50, 50, 50 ), playerMaterial );

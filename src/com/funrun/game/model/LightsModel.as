@@ -2,7 +2,9 @@ package com.funrun.game.model {
 	
 	import away3d.lights.LightBase;
 	
-	public class LightsModel {
+	import org.robotlegs.mvcs.Actor;
+	
+	public class LightsModel extends Actor {
 		
 		public static const SUN:String = "SUN";
 		public static const SPOTLIGHT:String = "SPOTLIGHT";

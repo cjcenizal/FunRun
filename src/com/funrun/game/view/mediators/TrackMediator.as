@@ -4,6 +4,7 @@ package com.funrun.game.view.mediators
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.AddPlayerFulfilled;
 	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
+	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.BuildGameRequest;
 	import com.funrun.game.controller.events.StartGameFulfilled;
 	import com.funrun.game.controller.events.StartGameRequest;
@@ -36,8 +37,10 @@ package com.funrun.game.view.mediators
 			eventMap.mapListener( eventDispatcher, AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, onAddObstacleFulfilled );
 			eventMap.mapListener( eventDispatcher, AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, onAddSceneObjectFulfilled );
 			eventMap.mapListener( eventDispatcher, StartGameFulfilled.START_GAME_FULFILLED, onStartGameFulfilled );
-			
-			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) ); // this probably doesn't belong here, but track needs to exist before the game is built
+
+			// this probably doesn't belong here, but track needs to exist before the game is built
+			eventDispatcher.dispatchEvent( new BuildTimeRequest( BuildTimeRequest.BUILD_TIME_REQUESTED ) );
+			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
 			eventDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
 		}
 		
@@ -58,7 +61,7 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onAddObstacleFulfilled( e:AddObstacleFulfilled ):void {
-			view.addObstacle( e.obstacle );
+		//	view.addObstacle( e.obstacle );
 		}
 		
 		private function onCollision( e:CollisionEvent ):void {

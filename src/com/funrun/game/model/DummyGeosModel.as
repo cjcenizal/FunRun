@@ -6,7 +6,9 @@ package com.funrun.game.model {
 	
 	import com.funrun.game.model.BlockTypes;
 	
-	public class DummyGeosModel implements IGeosModel {
+	import org.robotlegs.mvcs.Actor;
+	
+	public class DummyGeosModel extends Actor implements IGeosModel {
 		
 		private var _geos:Object;
 		

@@ -2,7 +2,9 @@ package com.funrun.game.model {
 	
 	import away3d.materials.ColorMaterial;
 	
-	public class MaterialsModel {
+	import org.robotlegs.mvcs.Actor;
+	
+	public class MaterialsModel extends Actor {
 		
 		public static const OBSTACLE_MATERIAL:String = "OBSTACLE_MATERIAL";
 		public static const PLAYER_MATERIAL:String = "PLAYER_MATERIAL";

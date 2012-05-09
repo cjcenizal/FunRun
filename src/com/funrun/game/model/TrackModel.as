@@ -5,7 +5,9 @@ package com.funrun.game.model {
 	
 	import com.funrun.game.view.components.Obstacle;
 	
-	public class TrackModel {
+	import org.robotlegs.mvcs.Actor;
+	
+	public class TrackModel extends Actor {
 		
 		private var _obstacles:Array;
 		private var _trackGeo:Mesh;

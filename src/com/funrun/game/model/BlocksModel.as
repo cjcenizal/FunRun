@@ -4,7 +4,9 @@ package com.funrun.game.model {
 	
 	import com.funrun.game.model.parsers.BlockParser;
 	
-	public class BlocksModel {
+	import org.robotlegs.mvcs.Actor;
+	
+	public class BlocksModel extends Actor {
 		
 		private var _blocks:Object;
 		

@@ -1,6 +1,5 @@
 package com.funrun.game.controller.commands
 {
-	import com.funrun.game.controller.enum.GameType;
 	import com.funrun.game.controller.events.AddLightRequest;
 	import com.funrun.game.model.LightsModel;
 	

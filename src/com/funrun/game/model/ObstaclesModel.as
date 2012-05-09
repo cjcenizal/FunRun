@@ -8,7 +8,9 @@ package com.funrun.game.model {
 	import com.funrun.game.model.parsers.BlockVO;
 	import com.funrun.game.model.parsers.ObstacleParser;
 	
-	public class ObstaclesModel {
+	import org.robotlegs.mvcs.Actor;
+	
+	public class ObstaclesModel extends Actor {
 		
 		private var _obstacles:Array;
 		private var _length:int = 0;
