@@ -5,12 +5,10 @@ package com.funrun.game.view.components {
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
-	import away3d.core.base.Geometry;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
-	import away3d.primitives.PrimitiveBase;
 	import away3d.primitives.WireframeGrid;
 	import away3d.tools.commands.Merge;
 	
@@ -79,10 +77,9 @@ package com.funrun.game.view.components {
 		private var _testObstacle:Mesh;
 		private function prepTestObstacle():void {
 			_testObstacle = new Mesh( new CubeGeometry( size, size, size ), mat );
-			//base.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + Constants.BLOCK_SIZE : Constants.TRACK_LENGTH;
 			var mesh:Mesh;
 			var x:int = 0;
-			var lim:int = 300;//Constants.TRACK_WIDTH
+			var lim:int = 1000;//Constants.TRACK_WIDTH
 			var inc:int = 1;//Constants.BLOCK_SIZE
 			for ( var i:int = 0; i < lim; i += inc ) {
 				mesh = new Mesh( new CubeGeometry( size, size, size ), mat );
@@ -136,14 +133,18 @@ package com.funrun.game.view.components {
 				if ( _tracks.length > 0 ) {
 					var mesh:Mesh = _tracks[ 0 ] as Mesh;
 					if ( mesh.z < -200 ) {
-						_scene.removeChild( mesh );
 						//mesh.geometry.dispose();
+						_scene.removeChild( mesh );
 						_tracks.splice( 0, 1 );
 					}
 				}
-				dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+				_addZ = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z : _addZ;
+				while ( _addZ < Constants.TRACK_LENGTH + Constants.BLOCK_SIZE ) {
+					dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+				}
 			}
 		}
+		private var _addZ:int = Constants.TRACK_LENGTH;
 		
 		private function updatePlayer():void {
 			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
@@ -162,6 +163,7 @@ package com.funrun.game.view.components {
 		public function addObstacle( obstacle:Obstacle ):void {
 			var obj:Mesh = _testObstacle.clone() as Mesh;
 			obj.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + Constants.BLOCK_SIZE : Constants.TRACK_LENGTH;
+			_addZ = obj.z;
 			_tracks.push( obj );
 			_scene.addChild( obj );
 		}

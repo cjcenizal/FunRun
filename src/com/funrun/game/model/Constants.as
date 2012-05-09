@@ -18,7 +18,7 @@ package com.funrun.game.model
 		public static const PLAYER_JUMP_SPEED:Number = 72;
 		public static const PLAYER_LATERAL_SPEED:Number = BLOCK_SIZE * .2;
 		public static const PLAYER_JUMP_GRAVITY:Number = -8;
-		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 25;
+		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 40;
 		
 		// Obstacle creation constants.
 		public static const OBSTACLE_CREATION_INTERVAL:Number = 3;
