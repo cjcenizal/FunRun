@@ -8,8 +8,8 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.MaterialsModel;
-	import com.funrun.game.model.ObstacleVO;
 	import com.funrun.game.model.ObstaclesModel;
+	import com.funrun.game.model.parsers.BlockVO;
 	import com.funrun.game.model.parsers.ObstacleParser;
 	import com.funrun.game.view.components.Obstacle;
 	
@@ -27,13 +27,16 @@ package com.funrun.game.controller.commands {
 
 		override public function execute():void {
 			// Build an obstacle and send it to the track.
-			var data:ObstacleParser = obstaclesModel.getRandomObstacle();
+			var data:Mesh = obstaclesModel.getRandomObstacle();
+			var event:AddObstacleFulfilled = new AddObstacleFulfilled( AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, data );
+			eventDispatcher.dispatchEvent( event );
+			/*
 			try {
 				var obstacle:Obstacle = new Obstacle( data.id );
 				var material:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 				// Add geometry to obstacle based on data.
 				var len:int = data.numBlocks;
-				var blockData:ObstacleVO;
+				var blockData:BlockVO;
 				var mesh:Mesh;
 				var flip:Boolean = Math.random() < .5;
 				var xAdjustment:Number = -Constants.TRACK_WIDTH * .5;
@@ -53,7 +56,7 @@ package com.funrun.game.controller.commands {
 				eventDispatcher.dispatchEvent( event );
 			} catch( e:Error ) {
 				trace( this, e, e.getStackTrace() );
-			}
+			}*/
 		}
 	
 		private function getMesh( geo:String, material:ColorMaterial ):Mesh {

@@ -32,6 +32,9 @@ package com.funrun.game.view.components {
 		// Player geometry (will be stored in the model?).
 		private var _player:Mesh;
 		
+		// Merged geo vertex buffers.
+		private var _tracks:Array = [];
+		
 		// Player state (store in model?).
 		private var _forwardVelocity:Number = Constants.MAX_PLAYER_FORWARD_VELOCITY; // This may vary over time as you get slowed.
 		private var _jumpVelocity:Number = 0;
@@ -66,29 +69,6 @@ package com.funrun.game.view.components {
 			_camera.rotationX = Constants.CAM_TILT;
 			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
 			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
-
-			prepTestObstacle();
-		}
-		private var _tracks:Array = [];
-		
-		var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
-		var size:Number = 20;// Constants.BLOCK_SIZE;
-		var merge:Merge = new Merge( true );
-		private var _testObstacle:Mesh;
-		private function prepTestObstacle():void {
-			_testObstacle = new Mesh( new CubeGeometry( size, size, size ), mat );
-			var mesh:Mesh;
-			var x:int = 0;
-			var lim:int = 1000;//Constants.TRACK_WIDTH
-			var inc:int = 1;//Constants.BLOCK_SIZE
-			for ( var i:int = 0; i < lim; i += inc ) {
-				mesh = new Mesh( new CubeGeometry( size, size, size ), mat );
-				mesh.x = Math.random() * 1000 - 500;//x * Constants.BLOCK_SIZE - Constants.TRACK_WIDTH * .5;
-				mesh.y = Constants.BLOCK_SIZE * .5 + Math.random() * 300;
-				mesh.z = 0;
-				merge.apply( _testObstacle, mesh );
-				x++;
-			}
 		}
 		
 		/**
@@ -132,7 +112,7 @@ package com.funrun.game.view.components {
 			if ( t % Constants.OBSTACLE_CREATION_INTERVAL == 0 ) {
 				if ( _tracks.length > 0 ) {
 					var mesh:Mesh = _tracks[ 0 ] as Mesh;
-					if ( mesh.z < -200 ) {
+					if ( mesh.z < -600 ) {
 						//mesh.geometry.dispose();
 						_scene.removeChild( mesh );
 						_tracks.splice( 0, 1 );
@@ -160,9 +140,9 @@ package com.funrun.game.view.components {
 		/**
 		 * Adding obstacles to the scene.
 		 */
-		public function addObstacle( obstacle:Obstacle ):void {
-			var obj:Mesh = _testObstacle.clone() as Mesh;
-			obj.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + Constants.BLOCK_SIZE : Constants.TRACK_LENGTH;
+		public function addObstacle( obstacle:Mesh ):void {
+			var obj:Mesh = obstacle.clone() as Mesh;
+			obj.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + ( _tracks[ _tracks.length - 1 ] as Mesh ).bounds.max.z * 2 + 500 : Constants.TRACK_LENGTH;
 			_addZ = obj.z;
 			_tracks.push( obj );
 			_scene.addChild( obj );

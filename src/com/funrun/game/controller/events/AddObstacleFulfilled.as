@@ -1,7 +1,6 @@
 package com.funrun.game.controller.events
 {
-	import com.funrun.game.model.ObstacleVO;
-	import com.funrun.game.view.components.Obstacle;
+	import away3d.entities.Mesh;
 	
 	import flash.events.Event;
 	
@@ -9,9 +8,9 @@ package com.funrun.game.controller.events
 	{
 		public static const ADD_OBSTACLE_FULFILLED:String = "AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED";
 		
-		public var obstacle:Obstacle;
+		public var obstacle:Mesh;
 		
-		public function AddObstacleFulfilled( type:String, obstacle:Obstacle ) {
+		public function AddObstacleFulfilled( type:String, obstacle:Mesh ) {
 			super( type );
 			this.obstacle = obstacle;
 		}

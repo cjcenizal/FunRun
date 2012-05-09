@@ -1,5 +1,11 @@
 package com.funrun.game.model {
 	
+	import away3d.core.base.Geometry;
+	import away3d.entities.Mesh;
+	import away3d.materials.ColorMaterial;
+	import away3d.tools.commands.Merge;
+	
+	import com.funrun.game.model.parsers.BlockVO;
 	import com.funrun.game.model.parsers.ObstacleParser;
 	
 	public class ObstaclesModel {
@@ -11,12 +17,15 @@ package com.funrun.game.model {
 			_obstacles = [];
 		}
 		
-		public function addObstacle( obstacle:ObstacleParser ):void {
-			_length++;
+		/**
+		 * 
+		 */
+		public function addObstacle( obstacle:Mesh ):void {
 			_obstacles.push( obstacle );
+			_length++;
 		}
 		
-		public function getRandomObstacle():ObstacleParser {
+		public function getRandomObstacle():Mesh {
 			return _obstacles[ Math.floor( Math.random() * _length ) ];
 		}
 	}
