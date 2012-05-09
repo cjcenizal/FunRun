@@ -5,10 +5,12 @@ package com.funrun.game.view.components {
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
+	import away3d.core.base.Geometry;
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
+	import away3d.primitives.PrimitiveBase;
 	import away3d.primitives.WireframeGrid;
 	import away3d.tools.commands.Merge;
 	
@@ -67,10 +69,24 @@ package com.funrun.game.view.components {
 			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
 			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
 			
-			_track = new Mesh( new CubeGeometry(), new ColorMaterial( 0x0000ff ) );
-			_track.z = 1000;
+			/*
+			_track = new Mesh( new CubeGeometry( 0, 0, 0 ), new ColorMaterial( 0, 0 ) );
+			_track.z = 4000;
+			var merge:Merge = new Merge( true );
+			var geo:CubeGeometry = new CubeGeometry( 20, 20, 20 );
+			var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
+			var mesh:Mesh;
+			for ( var i:int = 0; i < 10; i++ ) {
+				mesh = new Mesh( geo, mat );
+				mesh.z = 2000 + Math.random() * 1000;
+				mesh.x = Math.random() * 1000 - 500;
+				mesh.y = Math.random() * 1000 - 500;
+				merge.apply( _track, mesh );
+			}
 			_scene.addChild( _track );
+			_tracks.push( _track );*/
 		}
+		private var _tracks:Array = [];
 		
 		/**
 		 * Add debugging UI.
@@ -107,9 +123,15 @@ package com.funrun.game.view.components {
 		var t:int = 0;
 		private function updateObstacles():void {
 			t ++;
-			_track.z -= _forwardVelocity;
-			trace( t);
-			if ( t % 30 == 0 ) {
+			for ( var i:int = 0; i < _tracks.length; i++ ) {
+				( _tracks[ i ] as Mesh ).z -= _forwardVelocity;
+			}
+			if ( t % 40 == 0 ) {
+				if ( t > 400 ) {
+					_scene.removeChild( _tracks[ 0 ] );
+					( _tracks[ 0 ] as Mesh ).geometry.dispose();
+					_tracks.splice( 0, 1 );
+				}
 				dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
 		}
@@ -131,9 +153,36 @@ package com.funrun.game.view.components {
 		private var _track:Mesh;
 		public function addObstacle( obstacle:Obstacle ):void {
 			var merge:Merge = new Merge();
-			var mesh:Mesh = new Mesh( new CubeGeometry(), new ColorMaterial( 0x0000ff ) );
-			mesh.z = 1000 - _track.z;
-			merge.apply( _track, mesh );
+			var base:Mesh = new Mesh( new CubeGeometry(), new ColorMaterial( 0x0000ff ) );
+			/*mesh.z = 1000 - _track.z;
+			merge.apply( _track, mesh );*/
+			/*var geo:CubeGeometry = new CubeGeometry( 20, 20, 20 );
+			var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
+			var mesh:Mesh;
+			for ( var i:int = 0; i < 100; i++ ) {
+				mesh = new Mesh( geo, mat );
+				mesh.z = 2000 + Math.random() * 4000 - _track.z;
+				mesh.x = Math.random() * 1000 - 500;
+				mesh.y = Math.random() * 1000 - 500;
+				merge.apply( base, mesh );
+			}
+			
+			merge.apply( _track, base );*/
+			var merge:Merge = new Merge( true );
+			var geo:CubeGeometry = new CubeGeometry( 20, 20, 20 );
+			var mat:ColorMaterial = new ColorMaterial( 0x0000ff );
+			var base:Mesh = new Mesh( geo, mat );
+			base.z = 4000;
+			var mesh:Mesh;
+			for ( var i:int = 0; i < 40; i++ ) {
+				mesh = new Mesh( new CubeGeometry( 20, 20, 20 ), mat );
+				mesh.z = Math.random() * 100;
+				mesh.x = Math.random() * 1000 - 500;
+				mesh.y = Math.random() * 1000 - 500;
+				merge.apply( base, mesh );
+			}
+			_tracks.push( base );
+			_scene.addChild( base );
 		}
 		
 		/**

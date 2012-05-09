@@ -46,7 +46,7 @@ package com.funrun.game.view.mediators
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 			// Request first obstacle.
-			onAddObstacleRequested();
+		//	onAddObstacleRequested();
 		}
 		
 		private function onAddPlayerFulfilled( e:AddPlayerFulfilled ):void {
