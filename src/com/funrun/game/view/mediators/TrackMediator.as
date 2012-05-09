@@ -61,7 +61,7 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onAddObstacleFulfilled( e:AddObstacleFulfilled ):void {
-		//	view.addObstacle( e.obstacle );
+			view.addObstacle( e.obstacle );
 		}
 		
 		private function onCollision( e:CollisionEvent ):void {

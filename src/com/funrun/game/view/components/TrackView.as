@@ -8,15 +8,14 @@ package com.funrun.game.view.components {
 	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
-	import away3d.primitives.PlaneGeometry;
+	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.WireframeGrid;
+	import away3d.tools.commands.Merge;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.model.Constants;
-	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Sprite;
-	import flash.geom.Vector3D;
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
@@ -30,11 +29,11 @@ package com.funrun.game.view.components {
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
 		
-		// Obstacle management (perhaps store this in the model?).
-		private var _obstacles:Array;
-		
 		// Player geometry (will be stored in the model?).
 		private var _player:Mesh;
+		
+		// Merged geo vertex buffers.
+		private var _tracks:Array = [];
 		
 		// Player state (store in model?).
 		private var _forwardVelocity:Number = Constants.MAX_PLAYER_FORWARD_VELOCITY; // This may vary over time as you get slowed.
@@ -50,7 +49,6 @@ package com.funrun.game.view.components {
 		 * Constructor
 		 */
 		public function TrackView() {
-			_obstacles = [];
 		}
 		
 		/**
@@ -105,27 +103,28 @@ package com.funrun.game.view.components {
 			_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
 		}
 		
+		var t:int = 0;
 		private function updateObstacles():void {
-			var obstacle:Obstacle;
-			var len:int = _obstacles.length;
-			// Update oldest obstacles first, newest ones last.
-			for ( var i:int = len - 1; i >= 0; i-- ) {
-				obstacle = _obstacles[ i ];
-				obstacle.move( -_forwardVelocity );
+			t ++;
+			for ( var i:int = 0; i < _tracks.length; i++ ) {
+				( _tracks[ i ] as Mesh ).z -= _forwardVelocity;
 			}
-			// Check last obstacle for removal and addition of new obstacle.
-			if ( len > 0 ) {
-				if ( obstacle.prevZ >= Constants.ADD_OBSTACLE_DEPTH && obstacle.z < Constants.ADD_OBSTACLE_DEPTH ) {
-					dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+			if ( t % Constants.OBSTACLE_CREATION_INTERVAL == 0 ) {
+				if ( _tracks.length > 0 ) {
+					var mesh:Mesh = _tracks[ 0 ] as Mesh;
+					if ( mesh.z < -600 ) {
+						//mesh.geometry.dispose();
+						_scene.removeChild( mesh );
+						_tracks.splice( 0, 1 );
+					}
 				}
-				var obstacle:Obstacle = _obstacles[ len - 1 ];
-				if ( obstacle.z <= Constants.REMOVE_OBSTACLE_DEPTH ) {
-					// Remove item.
-					obstacle.destroy();
-					_obstacles.splice( len - 1, 1 );
+				_addZ = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z : _addZ;
+				while ( _addZ < Constants.TRACK_LENGTH + Constants.BLOCK_SIZE ) {
+					dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 				}
 			}
 		}
+		private var _addZ:int = Constants.TRACK_LENGTH;
 		
 		private function updatePlayer():void {
 			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
@@ -136,34 +135,17 @@ package com.funrun.game.view.components {
 				_jumpVelocity = 0;
 			}
 			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );
-			var obstacle:Obstacle;
-			var len:int = _obstacles.length;
-			// Update oldest obstacles first, newest ones last.
-			for ( var i:int = len - 1; i >= 0; i-- ) {
-				obstacle = _obstacles[ i ];
-				var collides:Boolean = obstacle.collide( _player );
-				if ( collides ) {
-					dispatchEvent( new CollisionEvent( CollisionEvent.COLLISION ) );
-				}
-			}
 		}
 		
 		/**
 		 * Adding obstacles to the scene.
 		 */
-		public function addObstacle( obstacle:Obstacle ):void {
-			// New obstacles go in front.
-			_obstacles.unshift( obstacle );
-			_scene.addChild( obstacle );
-			obstacle.move( Constants.TRACK_LENGTH );
-		}
-		
-		private function getNormalizedBlockX( x:Number ):int {
-			return x - Constants.BLOCK_SIZE * .5 + Constants.TRACK_WIDTH * .5;
-		}
-		
-		private function getNormalizedBlockZ( z:Number ):int {
-			return z + Constants.BLOCK_SIZE * 3.5;// + Constants.BLOCK_SIZE * .5;
+		public function addObstacle( obstacle:Mesh ):void {
+			var obj:Mesh = obstacle.clone() as Mesh;
+			obj.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + ( _tracks[ _tracks.length - 1 ] as Mesh ).bounds.max.z * 2 + 500 : Constants.TRACK_LENGTH;
+			_addZ = obj.z;
+			_tracks.push( obj );
+			_scene.addChild( obj );
 		}
 		
 		/**
