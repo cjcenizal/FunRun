@@ -1,17 +1,16 @@
 package com.funrun.game.view.mediators
 {
+	import com.funrun.game.controller.events.AddCameraFulfilled;
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
-	import com.funrun.game.controller.events.BuildGameRequest;
+	import com.funrun.game.controller.events.AddTrackFulfilled;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
-	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.view.components.TrackView;
 	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
@@ -33,10 +32,11 @@ package com.funrun.game.view.mediators
 			eventMap.mapListener( eventDispatcher, RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObjectFromSceneRequested );
 			eventMap.mapListener( eventDispatcher, RenderSceneRequest.RENDER_SCENE_REQUESTED, onRenderSceneRequested );
 			eventMap.mapListener( eventDispatcher, EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED, onEnablePlayerInputRequested );
-
-			// this probably doesn't belong here, but track needs to exist before the game is built
-			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
-			eventDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
+			
+			// Expose access to the camera.
+			eventDispatcher.dispatchEvent( new AddCameraFulfilled( AddCameraFulfilled.ADD_CAMERA_FULFILLED, view.camera ) );
+			// Let everyone know we're present and accounted for.
+			eventDispatcher.dispatchEvent( new AddTrackFulfilled( AddTrackFulfilled.ADD_TRACK_FULFILLED ) );
 		}
 		
 		private function onEnablePlayerInputRequested( e:EnablePlayerInputRequest ):void {

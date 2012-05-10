@@ -5,6 +5,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
+	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
@@ -18,6 +19,9 @@ package com.funrun.game.controller.commands
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var cameraModel:CameraModel;
 		
 		override public function execute():void {
 			// Update obstacles.
@@ -54,7 +58,10 @@ package com.funrun.game.controller.commands
 			playerModel.isAirborne = ( Math.abs( playerModel.player.y - 25 ) > 1 );
 			
 			// Update camera.
-			
+			cameraModel.camera.x = playerModel.player.x;
+			var followFactor:Number = ( Constants.CAM_Y + playerModel.player.y < cameraModel.camera.y ) ? .6 : .2;
+			// We'll try easing to follow the player instead of being locked.
+			cameraModel.camera.y += ( ( Constants.CAM_Y + playerModel.player.y ) - cameraModel.camera.y ) * followFactor; 
 			
 			// Render.
 			eventDispatcher.dispatchEvent( new RenderSceneRequest( RenderSceneRequest.RENDER_SCENE_REQUESTED ) );

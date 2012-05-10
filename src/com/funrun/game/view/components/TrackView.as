@@ -73,12 +73,6 @@ package com.funrun.game.view.components {
 			_view.render();
 		}
 		
-		private function updateCamera():void {
-		//	_camera.x = _player.x;
-		//	var followFactor:Number = ( Constants.CAM_Y + _player.y < _camera.y ) ? .6 : .2;
-		//	_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
-		}
-		
 		/**
 		 * Adding 3D objects to the scene.
 		 */
@@ -91,6 +85,10 @@ package com.funrun.game.view.components {
 		 */
 		public function removeFromScene( object:ObjectContainer3D ):void {
 			_scene.removeChild( object );
+		}
+		
+		public function get camera():Camera3D {
+			return _camera;
 		}
 	}
 }
