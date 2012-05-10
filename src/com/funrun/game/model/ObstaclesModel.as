@@ -16,8 +16,8 @@ package com.funrun.game.model {
 			_obstacles.push( obstacle );
 		}
 		
-		public function getRandomObstacle():Mesh {
-			return _obstacles[ Math.floor( Math.random() * _obstacles.length ) ];
+		public function getRandomObstacleClone():Mesh {
+			return ( _obstacles[ Math.floor( Math.random() * _obstacles.length ) ] as Mesh ).clone() as Mesh;
 		}
 	}
 }

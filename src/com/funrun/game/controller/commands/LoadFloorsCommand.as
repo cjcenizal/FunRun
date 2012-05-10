@@ -9,6 +9,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.BlockTypes;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.Constants;
+	import com.funrun.game.model.FloorTypes;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.MaterialsModel;
 	
@@ -37,7 +38,7 @@ package com.funrun.game.controller.commands {
 				mesh.y = Constants.BLOCK_SIZE * -.5;
 				merge.apply( floor, mesh );
 			}
-			floorsModel.addFloor( "floor", floor );
+			floorsModel.addFloor( FloorTypes.FLOOR, floor );
 		}
 	}
 }

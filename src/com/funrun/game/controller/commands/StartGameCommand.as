@@ -1,7 +1,14 @@
 package com.funrun.game.controller.commands
 {
+	import away3d.entities.Mesh;
+	
+	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
+	import com.funrun.game.model.Constants;
+	import com.funrun.game.model.FloorTypes;
+	import com.funrun.game.model.FloorsModel;
+	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.events.TimeEvent;
 	
 	import flash.events.KeyboardEvent;
@@ -13,7 +20,24 @@ package com.funrun.game.controller.commands
 	 */
 	public class StartGameCommand extends Command {
 		
+		[Inject]
+		public var floorsModel:FloorsModel;
+		
+		[Inject]
+		public var trackModel:TrackModel;
+		
 		override public function execute():void {
+			// Add initial floor.=
+			var floorPos:Number = 0;
+			while ( floorPos < Constants.TRACK_LENGTH ) {
+				var floor:Mesh = floorsModel.getFloorClone( FloorTypes.FLOOR );
+				floor.z = floorPos + Constants.BLOCK_SIZE * .5;
+				trackModel.addObstacle( floor );
+				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor );
+				eventDispatcher.dispatchEvent( event );
+				floorPos += Constants.BLOCK_SIZE;
+			}
+			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			// Respond to input.

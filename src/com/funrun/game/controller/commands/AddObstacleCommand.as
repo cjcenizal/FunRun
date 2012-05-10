@@ -7,6 +7,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.TrackModel;
+	import com.funrun.game.model.FloorTypes;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -23,7 +24,7 @@ package com.funrun.game.controller.commands {
 
 		override public function execute():void {
 			// Get an obstacle.
-			var obstacle:Mesh = obstaclesModel.getRandomObstacle().clone() as Mesh;
+			var obstacle:Mesh = obstaclesModel.getRandomObstacleClone();
 			// Add it to the model.
 			var numObstacles:int = trackModel.numObstacles;
 			if ( numObstacles > 0 ) {
@@ -38,8 +39,8 @@ package com.funrun.game.controller.commands {
 			
 			// Add floor after obstacle.
 			var floorPos:Number = obstacle.z + obstacle.bounds.max.z;
-			while ( floorPos <= obstacle.z + obstacle.bounds.max.z + Constants.OBSTACLE_GAP ) {
-				var floor:Mesh = floorsModel.getFloor( "floor" ).clone() as Mesh;
+			while ( floorPos < obstacle.z + obstacle.bounds.max.z + Constants.OBSTACLE_GAP ) {
+				var floor:Mesh = floorsModel.getFloorClone( FloorTypes.FLOOR );
 				floor.z = floorPos + Constants.BLOCK_SIZE * .5;
 				trackModel.addObstacle( floor );
 				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor );

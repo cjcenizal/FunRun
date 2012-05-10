@@ -16,8 +16,8 @@ package com.funrun.game.model {
 			_floors[ id ] = floor;
 		}
 		
-		public function getFloor( id:String ):Mesh {
-			return _floors[ id ];
+		public function getFloorClone( id:String ):Mesh {
+			return ( _floors[ id ] as Mesh ).clone() as Mesh;
 		}
 	}
 }
