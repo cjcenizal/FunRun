@@ -44,6 +44,13 @@
 			"faces" : {
 				"all" : "point"
 			}
+		},
+		{
+			"id" : "floor",
+			"filename" : "floor.dae",
+			"faces" : {
+				"t" : "walk"
+			}
 		}
 	]
 }

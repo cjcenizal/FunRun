@@ -4,5 +4,6 @@ package com.funrun.game.model
 	{
 		public static const EMPTY:String = "empty";
 		public static const BLOCK:String = "block";
+		public static const FLOOR:String = "floor";
 	}
 }

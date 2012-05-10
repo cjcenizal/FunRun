@@ -30,7 +30,7 @@ package com.funrun.game.controller.commands
 			// Remove obstacles from end of track.
 			if ( trackModel.numObstacles > 0 ) {
 				var mesh:Mesh = trackModel.getObstacleAt( 0 );
-				while ( mesh.z < -600 ) {
+				while ( mesh.z < Constants.REMOVE_OBSTACLE_DEPTH ) {
 					eventDispatcher.dispatchEvent( new RemoveObjectFromSceneRequest( RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, mesh ) );
 					trackModel.removeObstacleAt( 0 );
 					mesh = trackModel.getObstacleAt( 0 );
