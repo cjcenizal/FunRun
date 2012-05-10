@@ -61,42 +61,11 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onKeyDown( e:KeyboardEvent ):void {
-			switch ( e.keyCode ) {
-				case Keyboard.SPACE:
-				case Keyboard.UP:
-					if ( !view.isAirborne ) {
-						view.jump();
-					}
-					break;
-				case Keyboard.LEFT:
-					view.startMovingLeft();
-					break;
-				case Keyboard.RIGHT:
-					view.startMovingRight();
-					break;
-				case Keyboard.DOWN:
-					view.startDucking();
-					break;
-			}	
+			eventDispatcher.dispatchEvent( e );
 		}
 		
 		private function onKeyUp( e:KeyboardEvent ):void {
-			switch ( e.keyCode ) {
-				case Keyboard.SPACE:
-				case Keyboard.UP:
-					view.stopJumping();
-					break;
-				case Keyboard.LEFT:
-					view.stopMovingLeft();
-					break;
-				case Keyboard.RIGHT:
-					view.stopMovingRight();
-					break;
-				case Keyboard.DOWN:
-					view.stopDucking();
-					break;
-			}
-			
+			eventDispatcher.dispatchEvent( e );
 		}
 	}
 }

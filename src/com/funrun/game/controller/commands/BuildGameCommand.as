@@ -93,7 +93,6 @@ package com.funrun.game.controller.commands
 			
 			// Add player to track.
 			eventDispatcher.dispatchEvent( new AddPlayerRequest( AddPlayerRequest.ADD_PLAYER_REQUESTED ) );
-			
 		}
 	}
 }

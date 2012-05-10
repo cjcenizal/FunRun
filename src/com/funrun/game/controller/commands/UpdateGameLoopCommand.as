@@ -6,6 +6,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.model.Constants;
+	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
 	
 	import org.robotlegs.mvcs.Command;
@@ -14,6 +15,9 @@ package com.funrun.game.controller.commands
 	{
 		[Inject]
 		public var trackModel:TrackModel;
+		
+		[Inject]
+		public var playerModel:PlayerModel;
 		
 		override public function execute():void {
 			// Update obstacles.
@@ -40,7 +44,14 @@ package com.funrun.game.controller.commands
 			}
 			
 			// Update player.
-			
+			playerModel.jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
+			playerModel.player.y += playerModel.jumpVelocity;
+			playerModel.player.x += playerModel.lateralVelocity;
+			if ( playerModel.player.y <= 25 ) { // Temp hack for landing on ground, fix later
+				playerModel.player.y = 25; // 25 is half the player FPO object's height
+				playerModel.jumpVelocity = 0;
+			}
+			playerModel.isAirborne = ( Math.abs( playerModel.player.y - 25 ) > 1 );
 			
 			// Update camera.
 			

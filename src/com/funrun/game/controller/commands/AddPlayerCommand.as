@@ -22,6 +22,7 @@ package com.funrun.game.controller.commands {
 		override public function execute():void {
 			var player:Mesh = new Mesh( new CylinderGeometry( 50, 50, 50 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
 			player.position = new Vector3D( 0, 25, 0 );
+			playerModel.player = player;
 			eventDispatcher.dispatchEvent( new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, player ) );
 		}
 	}

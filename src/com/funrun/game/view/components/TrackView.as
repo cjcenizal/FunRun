@@ -24,16 +24,6 @@ package com.funrun.game.view.components {
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
 		
-		// Player state (store in model?).
-		private var _forwardVelocity:Number = Constants.MAX_PLAYER_FORWARD_VELOCITY; // This may vary over time as you get slowed.
-		private var _jumpVelocity:Number = 0;
-		private var _lateralVelocity:Number = 0;
-		private var _isJumping:Boolean = false;
-		private var _isMovingLeft:Boolean = false;
-		private var _isMovingRight:Boolean = false;
-		private var _isDucking:Boolean = false;
-		private var _isAirborne:Boolean = false;
-		
 		/**
 		 * Constructor
 		 */
@@ -80,9 +70,6 @@ package com.funrun.game.view.components {
 		 * Updating.
 		 */
 		public function render():void {
-			//updateObstacles();
-			updatePlayer();
-			updateCamera();
 			_view.render();
 		}
 		
@@ -90,17 +77,6 @@ package com.funrun.game.view.components {
 		//	_camera.x = _player.x;
 		//	var followFactor:Number = ( Constants.CAM_Y + _player.y < _camera.y ) ? .6 : .2;
 		//	_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
-		}
-		
-		private function updatePlayer():void {
-		/*	_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
-			_player.y += _jumpVelocity;
-			_player.x += _lateralVelocity;
-			if ( _player.y <= 25 ) { // Temp hack for landing on ground, fix later
-				_player.y = 25; // 25 is half the player FPO object's height
-				_jumpVelocity = 0;
-			}
-			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );*/
 		}
 		
 		/**
@@ -115,70 +91,6 @@ package com.funrun.game.view.components {
 		 */
 		public function removeFromScene( object:ObjectContainer3D ):void {
 			_scene.removeChild( object );
-		}
-		
-		/**
-		 * Control the player.
-		 */
-		public function jump():void {
-			if ( !_isJumping ) {
-				_jumpVelocity += Constants.PLAYER_JUMP_SPEED;
-			}
-			_isJumping = true;
-		}
-		
-		public function stopJumping():void {
-			_isJumping = false;
-		}
-		
-		public function startMovingLeft():void {
-			if ( _isMovingRight ) {
-				stopMovingRight();
-			}
-			if ( !_isMovingLeft ) {
-				_lateralVelocity -= Constants.PLAYER_LATERAL_SPEED;
-			}
-			_isMovingLeft = true;
-		}
-		
-		public function startMovingRight():void {
-			if ( _isMovingLeft ) {
-				stopMovingLeft();
-			}
-			if ( !_isMovingRight ) {
-				_lateralVelocity += Constants.PLAYER_LATERAL_SPEED;
-			}
-			_isMovingRight = true;
-		}
-		
-		public function startDucking():void {
-			_isDucking = true;
-		}
-		
-		public function stopMovingLeft():void {
-			if ( _isMovingLeft ) {
-				_lateralVelocity += Constants.PLAYER_LATERAL_SPEED;
-			}
-			_isMovingLeft = false;
-		}
-		
-		public function stopMovingRight():void {
-			if ( _isMovingRight ) {
-				_lateralVelocity -= Constants.PLAYER_LATERAL_SPEED;
-			}
-			_isMovingRight = false;
-		}
-		
-		public function stopDucking():void {
-			_isDucking = false;
-		}
-		
-		public function get isJumping():Boolean {
-			return _isJumping;
-		}
-		
-		public function get isAirborne():Boolean {
-			return _isAirborne;
 		}
 	}
 }
