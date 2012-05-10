@@ -2,7 +2,7 @@ package com.funrun.game.view.mediators
 {
 	import com.funrun.game.controller.events.AddCameraFulfilled;
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
-	import com.funrun.game.controller.events.AddTrackFulfilled;
+	import com.funrun.game.controller.events.AddTrackViewFulfilled;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
@@ -35,7 +35,7 @@ package com.funrun.game.view.mediators
 			// Expose access to the camera.
 			eventDispatcher.dispatchEvent( new AddCameraFulfilled( AddCameraFulfilled.ADD_CAMERA_FULFILLED, view.camera ) );
 			// Let everyone know we're present and accounted for.
-			eventDispatcher.dispatchEvent( new AddTrackFulfilled( AddTrackFulfilled.ADD_TRACK_FULFILLED ) );
+			eventDispatcher.dispatchEvent( new AddTrackViewFulfilled( AddTrackViewFulfilled.ADD_TRACK_FULFILLED ) );
 		}
 		
 		/**

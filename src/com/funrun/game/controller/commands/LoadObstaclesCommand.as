@@ -36,10 +36,10 @@ package com.funrun.game.controller.commands
 		public var obstaclesService:ObstaclesJsonService;
 		
 		override public function execute():void {
-			var obstacles:ObstaclesParser = new ObstaclesParser( obstaclesService.data );
-			var len:int = obstacles.length;
 			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial, pitMap:Object, minX:int, minZ:int, maxX:int, maxZ:int;
 			var merge:Merge = new Merge( true );
+			var obstacles:ObstaclesParser = new ObstaclesParser( obstaclesService.data );
+			var len:int = obstacles.length;
 			for ( var i:int = 0; i < len; i++ ) {
 				material = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 				var obstacle:ObstacleParser = obstacles.getAt( i );
@@ -87,11 +87,7 @@ package com.funrun.game.controller.commands
 						}
 					}
 				}
-				
-				// Traverse the floorplan of the obstacle.
-				
-				// If there is no block at or less than 0, add a floor block.
-				
+				// Store this sucker.
 				obstaclesModel.addObstacle( obs );
 			}
 		}

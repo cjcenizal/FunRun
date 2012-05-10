@@ -12,6 +12,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.controller.events.AddPlayerRequest;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
+	import com.funrun.game.controller.events.LoadFloorsRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
@@ -38,6 +39,7 @@ package com.funrun.game.controller.commands
 			// Load stuff.
 			eventDispatcher.dispatchEvent( new LoadBlocksRequest( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED ) );
 			eventDispatcher.dispatchEvent( new LoadObstaclesRequest( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED ) );
+			eventDispatcher.dispatchEvent( new LoadFloorsRequest( LoadFloorsRequest.LOAD_FLOORS_REQUESTED ) );
 			
 			// Add lights.
 			var sun:DirectionalLight = new DirectionalLight( .25, -1, -1 );

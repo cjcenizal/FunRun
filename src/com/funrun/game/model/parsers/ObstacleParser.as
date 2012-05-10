@@ -54,7 +54,7 @@ package com.funrun.game.model.parsers
 						_height = Math.max( _height, blocksHigh.length );
 						for ( y = 0; y < _height; y++ ) {
 							var posY:int = _height - y;
-							var block:BlockVO = new BlockVO( blocksHigh[ y ], x, -posY - 1, z ); // Make sure to invert y to place underground.
+							var block:BlockVO = new BlockVO( blocksHigh[ y ], x, -posY, z ); // Make sure to invert y to place underground.
 							if ( block.id ) {
 								_blocks.push( block );
 							}

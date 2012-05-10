@@ -9,6 +9,7 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.BuildGameCommand;
 	import com.funrun.game.controller.commands.BuildTimeCommand;
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
+	import com.funrun.game.controller.commands.LoadFloorsCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
 	import com.funrun.game.controller.commands.StartGameCommand;
 	import com.funrun.game.controller.enum.GameType;
@@ -17,15 +18,17 @@ package com.funrun.game
 	import com.funrun.game.controller.events.AddMaterialRequest;
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.AddPlayerRequest;
-	import com.funrun.game.controller.events.AddTrackFulfilled;
+	import com.funrun.game.controller.events.AddTrackViewFulfilled;
 	import com.funrun.game.controller.events.BuildGameRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
+	import com.funrun.game.controller.events.LoadFloorsRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DummyGeosModel;
+	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.IGeosModel;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
@@ -39,7 +42,6 @@ package com.funrun.game
 	import com.funrun.game.view.mediators.TrackMediator;
 	
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Stage;
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleContext;
 	
@@ -51,15 +53,14 @@ package com.funrun.game
 		}
 		
 		override public function startup():void {
-			// Launch configuration.
+			// Set our launch configuration.
 			injector.mapValue( GameType, GameType.Local, "gameType" );
 			
-			// This stuff might jsut be temp.
+			// Map services.
 			injector.mapSingletonOf( BlocksJsonService, BlocksJsonService );
 			injector.mapSingletonOf( ObstaclesJsonService, ObstaclesJsonService );
 			
-			// Misc essential injections.
-			injector.mapValue( Stage, contextView.stage );
+			// Map models.
 			injector.mapSingletonOf( BlocksModel, BlocksModel );
 			injector.mapSingletonOf( ObstaclesModel, ObstaclesModel );
 			injector.mapSingletonOf( MaterialsModel, MaterialsModel );
@@ -69,30 +70,32 @@ package com.funrun.game
 			injector.mapSingletonOf( TrackModel, TrackModel );
 			injector.mapSingletonOf( PlayerModel, PlayerModel );
 			injector.mapSingletonOf( CameraModel, CameraModel );
+			injector.mapSingletonOf( FloorsModel, FloorsModel );
 			
-			// Controller.
+			// Map events to commands.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, 		BuildTimeCommand, 		BuildTimeRequest, true );
 			commandMap.mapEvent( BuildGameRequest.BUILD_GAME_REQUESTED, 		BuildGameCommand, 		BuildGameRequest, true );
-			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, 		LoadBlocksCommand, 		LoadBlocksRequest, true );
-			commandMap.mapEvent( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED, LoadObstaclesCommand, 	LoadObstaclesRequest, true );
+			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, 		LoadBlocksCommand, 		LoadBlocksRequest );
+			commandMap.mapEvent( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED, LoadObstaclesCommand, 	LoadObstaclesRequest );
+			commandMap.mapEvent( LoadFloorsRequest.LOAD_FLOORS_REQUESTED,		LoadFloorsCommand,		LoadFloorsRequest );
 			commandMap.mapEvent( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, 	AddObstacleCommand, 	AddObstacleRequest );
 			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, 			AddLightCommand, 		AddLightRequest );
 			commandMap.mapEvent( AddMaterialRequest.ADD_MATERIAL_REQUESTED, 	AddMaterialCommand, 	AddMaterialRequest );
-			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 		StartGameCommand, 		StartGameRequest );
 			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, 		AddPlayerCommand, 		AddPlayerRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
+			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 		StartGameCommand, 		StartGameRequest );
 			
-			// View.
+			// Map views to mediators.
 			mediatorMap.mapView( TrackView, TrackMediator );
 			mediatorMap.mapView( GameModule, GameMediator );
 			
-			// Let's have some logic in this baby.
-			eventDispatcher.addEventListener( AddTrackFulfilled.ADD_TRACK_FULFILLED, onAddTrackFulfilled );
+			// Let's throw some logic into this baby.
+			eventDispatcher.addEventListener( AddTrackViewFulfilled.ADD_TRACK_FULFILLED, onAddTrackFulfilled );
 			
 			super.startup();
 		}
 		
-		private function onAddTrackFulfilled( e:AddTrackFulfilled ):void {
+		private function onAddTrackFulfilled( e:AddTrackViewFulfilled ):void {
 			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
 			eventDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
 		}
