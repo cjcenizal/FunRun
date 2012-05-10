@@ -1,6 +1,6 @@
-package com.funrun.game.model
+package com.funrun.game.model.constants
 {
-	public class Constants
+	public class TrackConstants
 	{
 		// Sizes.
 		public static const BLOCK_SIZE:Number = 100;

@@ -6,18 +6,17 @@ package com.funrun.game.controller.commands
 	import away3d.primitives.PrimitiveBase;
 	import away3d.tools.commands.Merge;
 	
-	import com.funrun.game.model.BlockTypes;
 	import com.funrun.game.model.BlocksModel;
-	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
+	import com.funrun.game.model.constants.BlockTypes;
+	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.data.BlockData;
+	import com.funrun.game.model.data.ObstacleData;
 	import com.funrun.game.model.parsers.BlockParser;
-	import com.funrun.game.model.parsers.BlockVO;
 	import com.funrun.game.model.parsers.ObstacleParser;
 	import com.funrun.game.model.parsers.ObstaclesParser;
 	import com.funrun.game.services.ObstaclesJsonService;
-	
-	import flash.geom.Point;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -43,7 +42,8 @@ package com.funrun.game.controller.commands
 			for ( var i:int = 0; i < len; i++ ) {
 				material = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 				var obstacle:ObstacleParser = obstacles.getAt( i );
-				var obs:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
+				var obstacleMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
+				var boundingBoxes:Array = [];
 				pitMap = {};
 				minX = 0;
 				minZ = 0;
@@ -51,14 +51,14 @@ package com.funrun.game.controller.commands
 				maxZ = 0;
 				// Add obstacle geometry.
 				for ( var j:int = 0; j < obstacle.numBlocks; j++ ) {
-					var data:BlockVO = obstacle.getBlockAt( j );
+					var data:BlockData = obstacle.getBlockAt( j );
 					var geoData:BlockParser = blocksModel.getBlock( data.id );
 					geo = geoData.geo;
 					mesh = new Mesh( geo, material );
-					mesh.x = data.x * Constants.BLOCK_SIZE - Constants.TRACK_WIDTH * .5 + Constants.BLOCK_SIZE * .5;
-					mesh.y = data.y * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
-					mesh.z = data.z * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
-					merge.apply( obs, mesh );
+					mesh.x = data.x * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
+					mesh.y = data.y * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
+					mesh.z = data.z * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
+					merge.apply( obstacleMesh, mesh );
 					// Store pit location.
 					if ( !pitMap[ data.x ] ) {
 						pitMap[ data.x ] = {};
@@ -80,15 +80,15 @@ package com.funrun.game.controller.commands
 					for ( var z:int = minZ; z <= maxZ; z ++ ) {
 						if ( !pitMap[ x ][ z ] ) {
 							mesh = new Mesh( geo, material );
-							mesh.x = x * Constants.BLOCK_SIZE - Constants.TRACK_WIDTH * .5 + Constants.BLOCK_SIZE * .5;
-							mesh.y = Constants.BLOCK_SIZE * -.5;
-							mesh.z = z * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
-							merge.apply( obs, mesh );
+							mesh.x = x * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
+							mesh.y = TrackConstants.BLOCK_SIZE * -.5;
+							mesh.z = z * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
+							merge.apply( obstacleMesh, mesh );
 						}
 					}
 				}
 				// Store this sucker.
-				obstaclesModel.addObstacle( obs );
+				obstaclesModel.addObstacle( new ObstacleData( obstacleMesh, boundingBoxes ) );
 			}
 		}
 	}

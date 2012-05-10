@@ -6,10 +6,10 @@ package com.funrun.game.controller.commands {
 	import away3d.primitives.PrimitiveBase;
 	import away3d.tools.commands.Merge;
 	
-	import com.funrun.game.model.BlockTypes;
+	import com.funrun.game.model.constants.BlockTypes;
 	import com.funrun.game.model.BlocksModel;
-	import com.funrun.game.model.Constants;
-	import com.funrun.game.model.FloorTypes;
+	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.MaterialsModel;
 	
@@ -32,10 +32,10 @@ package com.funrun.game.controller.commands {
 			geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
 			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
 			var floor:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
-			for ( var x:int = 0; x < Constants.TRACK_WIDTH; x += Constants.BLOCK_SIZE ) {
+			for ( var x:int = 0; x < TrackConstants.TRACK_WIDTH; x += TrackConstants.BLOCK_SIZE ) {
 				mesh = new Mesh( geo, material );
-				mesh.x = x - Constants.TRACK_WIDTH * .5 + Constants.BLOCK_SIZE * .5;
-				mesh.y = Constants.BLOCK_SIZE * -.5;
+				mesh.x = x - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
+				mesh.y = TrackConstants.BLOCK_SIZE * -.5;
 				merge.apply( floor, mesh );
 			}
 			floorsModel.addFloor( FloorTypes.FLOOR, floor );

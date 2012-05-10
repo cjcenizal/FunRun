@@ -1,5 +1,6 @@
 package com.funrun.game.model.parsers
 {
+	import com.funrun.game.model.data.BlockData;
 
 	public class ObstacleParser extends AbstractParser
 	{
@@ -33,7 +34,7 @@ package com.funrun.game.model.parsers
 						blocksHigh = blocksWide[ x ];
 						_height = Math.max( _height, blocksHigh.length );
 						for ( y = 0; y < _height; y++ ) {
-							var block:BlockVO = new BlockVO( blocksHigh[ y ], x, y, z );
+							var block:BlockData = new BlockData( blocksHigh[ y ], x, y, z );
 							if ( block.id ) {
 								_blocks.push( block );
 							}
@@ -54,7 +55,7 @@ package com.funrun.game.model.parsers
 						_height = Math.max( _height, blocksHigh.length );
 						for ( y = 0; y < _height; y++ ) {
 							var posY:int = _height - y;
-							var block:BlockVO = new BlockVO( blocksHigh[ y ], x, -posY, z ); // Make sure to invert y to place underground.
+							var block:BlockData = new BlockData( blocksHigh[ y ], x, -posY, z ); // Make sure to invert y to place underground.
 							if ( block.id ) {
 								_blocks.push( block );
 							}
@@ -72,7 +73,7 @@ package com.funrun.game.model.parsers
 			return _blocks.length;
 		}
 		
-		public function getBlockAt( index:int ):BlockVO {
+		public function getBlockAt( index:int ):BlockData {
 			return _blocks[ index ];
 		}
 	}

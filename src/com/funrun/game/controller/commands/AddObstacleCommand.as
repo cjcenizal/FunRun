@@ -3,11 +3,11 @@ package com.funrun.game.controller.commands {
 	import away3d.entities.Mesh;
 	
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
-	import com.funrun.game.model.Constants;
+	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.TrackModel;
-	import com.funrun.game.model.FloorTypes;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -24,13 +24,13 @@ package com.funrun.game.controller.commands {
 
 		override public function execute():void {
 			// Get an obstacle.
-			var obstacle:Mesh = obstaclesModel.getRandomObstacleClone();
+			var obstacle:Mesh = obstaclesModel.getRandomObstacle().mesh;
 			// Add it to the model.
 			var numObstacles:int = trackModel.numObstacles;
 			if ( numObstacles > 0 ) {
 				obstacle.z = trackModel.depthOfLastObstacle;
 			} else {
-				obstacle.z = Constants.TRACK_LENGTH;
+				obstacle.z = TrackConstants.TRACK_LENGTH;
 			}
 			trackModel.addObstacle( obstacle );
 			// Add to view.
@@ -39,13 +39,13 @@ package com.funrun.game.controller.commands {
 			
 			// Add floor after obstacle.
 			var floorPos:Number = obstacle.z + obstacle.bounds.max.z;
-			while ( floorPos < obstacle.z + obstacle.bounds.max.z + Constants.OBSTACLE_GAP ) {
+			while ( floorPos < obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP ) {
 				var floor:Mesh = floorsModel.getFloorClone( FloorTypes.FLOOR );
-				floor.z = floorPos + Constants.BLOCK_SIZE * .5;
+				floor.z = floorPos + TrackConstants.BLOCK_SIZE * .5;
 				trackModel.addObstacle( floor );
 				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor );
 				eventDispatcher.dispatchEvent( event );
-				floorPos += Constants.BLOCK_SIZE;
+				floorPos += TrackConstants.BLOCK_SIZE;
 			}
 		}
 	}

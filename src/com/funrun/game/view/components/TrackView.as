@@ -6,9 +6,8 @@ package com.funrun.game.view.components {
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
-	import away3d.primitives.WireframeGrid;
 	
-	import com.funrun.game.model.Constants;
+	import com.funrun.game.model.constants.TrackConstants;
 	
 	import flash.display.Sprite;
 	
@@ -43,11 +42,11 @@ package com.funrun.game.view.components {
 			
 			_scene = _view.scene; // Store local refs.
 			_camera = _view.camera;
-			_camera.y = Constants.CAM_Y;
-			_camera.z = Constants.CAM_Z;
-			_camera.rotationX = Constants.CAM_TILT;
-			_camera.lens = new PerspectiveLens( Constants.CAM_FOV );
-			_camera.lens.far = Constants.CAM_FRUSTUM_DISTANCE;
+			_camera.y = TrackConstants.CAM_Y;
+			_camera.z = TrackConstants.CAM_Z;
+			_camera.rotationX = TrackConstants.CAM_TILT;
+			_camera.lens = new PerspectiveLens( TrackConstants.CAM_FOV );
+			_camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
 		}
 		
 		/**
@@ -57,13 +56,6 @@ package com.funrun.game.view.components {
 			// Add stats.
 			var awayStats:AwayStats = new AwayStats( _view );
 			addChild( awayStats );
-			// Add grid.
-			var grid:WireframeGrid = new WireframeGrid( Constants.TRACK_WIDTH / Constants.BLOCK_SIZE, Constants.TRACK_WIDTH, 2, 0xFFFFFF, WireframeGrid.PLANE_XZ );
-			var gridScale:Number = 4;
-			grid.scaleZ = gridScale;
-			grid.z = Constants.TRACK_WIDTH * gridScale * .5 - 300;
-			//_scene.addChild( grid );
-			grid.y = 1;
 		}
 		
 		/**

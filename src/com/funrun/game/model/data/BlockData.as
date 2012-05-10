@@ -1,13 +1,13 @@
-package com.funrun.game.model.parsers
+package com.funrun.game.model.data
 {
-	public class BlockVO
+	public class BlockData
 	{
 		public var id:String;
 		public var x:int;
 		public var y:int;
 		public var z:int;
 		
-		public function BlockVO( id:String, x:int, y:int, z:int )
+		public function BlockData( id:String, x:int, y:int, z:int )
 		{
 			this.id = id;
 			this.x = x;

@@ -4,6 +4,7 @@ package com.funrun.game.model {
 	import away3d.entities.Mesh;
 	
 	import org.robotlegs.mvcs.Actor;
+	import com.funrun.game.model.constants.TrackConstants;
 	
 	public class TrackModel extends Actor {
 		
@@ -55,7 +56,7 @@ package com.funrun.game.model {
 			if ( _obstacles.length > 0 ) {
 				return ( _obstacles[ _obstacles.length - 1 ] as Mesh ).z;
 			}
-			return Constants.TRACK_LENGTH;
+			return TrackConstants.TRACK_LENGTH;
 		}
 	}
 }

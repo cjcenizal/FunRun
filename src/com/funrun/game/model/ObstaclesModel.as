@@ -2,6 +2,8 @@ package com.funrun.game.model {
 	
 	import away3d.entities.Mesh;
 	
+	import com.funrun.game.model.data.ObstacleData;
+	
 	import org.robotlegs.mvcs.Actor;
 	
 	public class ObstaclesModel extends Actor {
@@ -12,12 +14,12 @@ package com.funrun.game.model {
 			_obstacles = [];
 		}
 		
-		public function addObstacle( obstacle:Mesh ):void {
+		public function addObstacle( obstacle:ObstacleData ):void {
 			_obstacles.push( obstacle );
 		}
 		
-		public function getRandomObstacleClone():Mesh {
-			return ( _obstacles[ Math.floor( Math.random() * _obstacles.length ) ] as Mesh ).clone() as Mesh;
+		public function getRandomObstacle():ObstacleData {
+			return _obstacles[ Math.floor( Math.random() * _obstacles.length ) ];
 		}
 	}
 }

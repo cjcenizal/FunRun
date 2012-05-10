@@ -1,7 +1,7 @@
 package com.funrun.game.controller.commands {
 	
 	import com.funrun.game.model.PlayerModel;
-	import com.funrun.game.model.Constants;
+	import com.funrun.game.model.constants.TrackConstants;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
@@ -23,10 +23,10 @@ package com.funrun.game.controller.commands {
 					playerModel.stopJumping();
 					break;
 				case Keyboard.LEFT:
-					playerModel.stopMovingLeft( Constants.PLAYER_LATERAL_SPEED );
+					playerModel.stopMovingLeft( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.RIGHT:
-					playerModel.stopMovingRight( Constants.PLAYER_LATERAL_SPEED );
+					playerModel.stopMovingRight( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.DOWN:
 					playerModel.stopDucking();

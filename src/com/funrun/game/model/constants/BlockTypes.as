@@ -1,4 +1,4 @@
-package com.funrun.game.model
+package com.funrun.game.model.constants
 {
 	public class BlockTypes
 	{

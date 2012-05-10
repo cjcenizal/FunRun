@@ -4,9 +4,11 @@ package com.funrun.game.model {
 	import away3d.primitives.PlaneGeometry;
 	import away3d.primitives.PrimitiveBase;
 	
-	import com.funrun.game.model.BlockTypes;
+	import com.funrun.game.model.constants.BlockTypes;
 	
 	import org.robotlegs.mvcs.Actor;
+	import com.funrun.game.model.constants.BlockTypes;
+	import com.funrun.game.model.constants.TrackConstants;
 	
 	public class DummyGeosModel extends Actor implements IGeosModel {
 		
@@ -15,8 +17,8 @@ package com.funrun.game.model {
 		public function DummyGeosModel() {
 			_geos = {};
 			_geos[ BlockTypes.EMPTY ] = new PlaneGeometry( 1, 1 );
-			_geos[ BlockTypes.BLOCK ] = new CubeGeometry( 1 * Constants.BLOCK_SIZE, 1 * Constants.BLOCK_SIZE, 1 * Constants.BLOCK_SIZE );
-			_geos[ BlockTypes.FLOOR ] = new CubeGeometry( 1 * Constants.BLOCK_SIZE, 1 * Constants.BLOCK_SIZE, 1 * Constants.BLOCK_SIZE );
+			_geos[ BlockTypes.BLOCK ] = new CubeGeometry( 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE );
+			_geos[ BlockTypes.FLOOR ] = new CubeGeometry( 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE );
 		}
 		
 		public function getGeo( id:String ):PrimitiveBase {

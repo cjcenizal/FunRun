@@ -5,8 +5,8 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
-	import com.funrun.game.model.Constants;
-	import com.funrun.game.model.FloorTypes;
+	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.events.TimeEvent;
@@ -27,15 +27,15 @@ package com.funrun.game.controller.commands
 		public var trackModel:TrackModel;
 		
 		override public function execute():void {
-			// Add initial floor.=
+			// Add initial floor.
 			var floorPos:Number = 0;
-			while ( floorPos < Constants.TRACK_LENGTH ) {
+			while ( floorPos < TrackConstants.TRACK_LENGTH ) {
 				var floor:Mesh = floorsModel.getFloorClone( FloorTypes.FLOOR );
-				floor.z = floorPos + Constants.BLOCK_SIZE * .5;
+				floor.z = floorPos + TrackConstants.BLOCK_SIZE * .5;
 				trackModel.addObstacle( floor );
 				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor );
 				eventDispatcher.dispatchEvent( event );
-				floorPos += Constants.BLOCK_SIZE;
+				floorPos += TrackConstants.BLOCK_SIZE;
 			}
 			
 			// Respond to time.

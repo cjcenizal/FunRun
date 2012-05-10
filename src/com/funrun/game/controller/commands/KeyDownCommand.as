@@ -1,7 +1,7 @@
 package com.funrun.game.controller.commands {
 	
 	import com.funrun.game.model.PlayerModel;
-	import com.funrun.game.model.Constants;
+	import com.funrun.game.model.constants.TrackConstants;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
@@ -21,14 +21,14 @@ package com.funrun.game.controller.commands {
 				case Keyboard.SPACE:
 				case Keyboard.UP:
 					if ( !playerModel.isAirborne ) {
-						playerModel.jump( Constants.PLAYER_JUMP_SPEED );
+						playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
 					}
 					break;
 				case Keyboard.LEFT:
-					playerModel.startMovingLeft( Constants.PLAYER_LATERAL_SPEED );
+					playerModel.startMovingLeft( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.RIGHT:
-					playerModel.startMovingRight( Constants.PLAYER_LATERAL_SPEED );
+					playerModel.startMovingRight( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.DOWN:
 					playerModel.startDucking();
