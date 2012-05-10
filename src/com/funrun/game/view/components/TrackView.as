@@ -6,13 +6,8 @@ package com.funrun.game.view.components {
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
-	import away3d.entities.Mesh;
-	import away3d.materials.ColorMaterial;
-	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.WireframeGrid;
-	import away3d.tools.commands.Merge;
 	
-	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.model.Constants;
 	
 	import flash.display.Sprite;
@@ -28,12 +23,6 @@ package com.funrun.game.view.components {
 		private var _view:View3D;
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
-		
-		// Player geometry (will be stored in the model?).
-		private var _player:Mesh;
-		
-		// Merged geo vertex buffers.
-		private var _tracks:Array = [];
 		
 		// Player state (store in model?).
 		private var _forwardVelocity:Number = Constants.MAX_PLAYER_FORWARD_VELOCITY; // This may vary over time as you get slowed.
@@ -98,54 +87,34 @@ package com.funrun.game.view.components {
 		}
 		
 		private function updateCamera():void {
-			_camera.x = _player.x;
-			var followFactor:Number = ( Constants.CAM_Y + _player.y < _camera.y ) ? .6 : .2;
-			_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
+		//	_camera.x = _player.x;
+		//	var followFactor:Number = ( Constants.CAM_Y + _player.y < _camera.y ) ? .6 : .2;
+		//	_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
 		}
 		
-		//private function updateObstacles():void {
-			// Move obstacles.
-			
-		//}
-		
 		private function updatePlayer():void {
-			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
+		/*	_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
 			_player.y += _jumpVelocity;
 			_player.x += _lateralVelocity;
 			if ( _player.y <= 25 ) { // Temp hack for landing on ground, fix later
 				_player.y = 25; // 25 is half the player FPO object's height
 				_jumpVelocity = 0;
 			}
-			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );
-		}
-		
-		/**
-		 * Adding obstacles to the scene.
-		 */
-		public function addObstacle( obstacle:Mesh ):void {
-			_scene.addChild( obstacle );
-		}
-		
-		/**
-		 * Removing obstacles from the scene.
-		 */
-		public function removeObstacle( obstacle:Mesh ):void {
-			_scene.removeChild( obstacle );
+			_isAirborne = ( Math.abs( _player.y - 25 ) > 1 );*/
 		}
 		
 		/**
 		 * Adding 3D objects to the scene.
 		 */
-		public function addObject( child:ObjectContainer3D ):void {
-			_scene.addChild( child );
+		public function addToScene( object:ObjectContainer3D ):void {
+			_scene.addChild( object );
 		}
 		
 		/**
-		 * Adding player to the scene.
+		 * Removing 3D objects to the scene.
 		 */
-		public function addPlayer( player:Mesh ):void {
-			_player = player;
-			_scene.addChild( player );
+		public function removeFromScene( object:ObjectContainer3D ):void {
+			_scene.removeChild( object );
 		}
 		
 		/**

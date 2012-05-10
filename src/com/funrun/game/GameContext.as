@@ -4,6 +4,7 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.AddLightCommand;
 	import com.funrun.game.controller.commands.AddMaterialCommand;
 	import com.funrun.game.controller.commands.AddObstacleCommand;
+	import com.funrun.game.controller.commands.AddPlayerCommand;
 	import com.funrun.game.controller.commands.BuildGameCommand;
 	import com.funrun.game.controller.commands.BuildTimeCommand;
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
@@ -13,6 +14,7 @@ package com.funrun.game
 	import com.funrun.game.controller.events.AddLightRequest;
 	import com.funrun.game.controller.events.AddMaterialRequest;
 	import com.funrun.game.controller.events.AddObstacleRequest;
+	import com.funrun.game.controller.events.AddPlayerRequest;
 	import com.funrun.game.controller.events.BuildGameRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
@@ -24,6 +26,7 @@ package com.funrun.game
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
+	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TimeModel;
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.services.BlocksJsonService;
@@ -60,6 +63,7 @@ package com.funrun.game
 			injector.mapSingletonOf( IGeosModel, DummyGeosModel );
 			injector.mapSingletonOf( TimeModel, TimeModel );
 			injector.mapSingletonOf( TrackModel, TrackModel );
+			injector.mapSingletonOf( PlayerModel, PlayerModel );
 			
 			// Controller.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, 		BuildTimeCommand, 		BuildTimeRequest, true );
@@ -70,6 +74,7 @@ package com.funrun.game
 			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, 			AddLightCommand, 		AddLightRequest );
 			commandMap.mapEvent( AddMaterialRequest.ADD_MATERIAL_REQUESTED, 	AddMaterialCommand, 	AddMaterialRequest );
 			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 		StartGameCommand, 		StartGameRequest );
+			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, 		AddPlayerCommand, 		AddPlayerRequest );
 			
 			// View.
 			mediatorMap.mapView( TrackView, TrackMediator );

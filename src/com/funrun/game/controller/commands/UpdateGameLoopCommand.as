@@ -3,7 +3,7 @@ package com.funrun.game.controller.commands
 	import away3d.entities.Mesh;
 	
 	import com.funrun.game.controller.events.AddObstacleRequest;
-	import com.funrun.game.controller.events.RemoveObstacleFromSceneRequest;
+	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.TrackModel;
@@ -16,7 +16,6 @@ package com.funrun.game.controller.commands
 		public var trackModel:TrackModel;
 		
 		override public function execute():void {
-			
 			// Update obstacles.
 			trackModel.move( -Constants.MAX_PLAYER_FORWARD_VELOCITY );
 			
@@ -24,7 +23,7 @@ package com.funrun.game.controller.commands
 			if ( trackModel.numObstacles > 0 ) {
 				var mesh:Mesh = trackModel.getObstacleAt( 0 );
 				while ( mesh.z < -600 ) {
-					eventDispatcher.dispatchEvent( new RemoveObstacleFromSceneRequest( RemoveObstacleFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, mesh ) );
+					eventDispatcher.dispatchEvent( new RemoveObjectFromSceneRequest( RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, mesh ) );
 					trackModel.removeObstacleAt( 0 );
 					mesh = trackModel.getObstacleAt( 0 );
 				}
@@ -40,8 +39,8 @@ package com.funrun.game.controller.commands
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
 			
-			
 			// Update player.
+			
 			
 			// Update camera.
 			

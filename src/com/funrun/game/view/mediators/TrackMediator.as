@@ -1,12 +1,9 @@
 package com.funrun.game.view.mediators
 {
-	import com.funrun.game.controller.events.AddObstacleToSceneRequest;
-	import com.funrun.game.controller.events.AddPlayerFulfilled;
-	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
+	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.controller.events.BuildGameRequest;
-	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
-	import com.funrun.game.controller.events.RemoveObstacleFromSceneRequest;
+	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.view.components.TrackView;
@@ -32,15 +29,12 @@ package com.funrun.game.view.mediators
 			view.debug();
 			view.addEventListener( CollisionEvent.COLLISION, onCollision );
 			
-			eventMap.mapListener( eventDispatcher, AddPlayerFulfilled.ADD_PLAYER_FULFILLED, onAddPlayerFulfilled );
-			eventMap.mapListener( eventDispatcher, AddObstacleToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, onAddObstacleToSceneRequested );
-			eventMap.mapListener( eventDispatcher, RemoveObstacleFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObstacleFromSceneRequested );
-			eventMap.mapListener( eventDispatcher, AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, onAddSceneObjectFulfilled );
+			eventMap.mapListener( eventDispatcher, AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, onAddObjectToSceneRequested );
+			eventMap.mapListener( eventDispatcher, RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObjectFromSceneRequested );
 			eventMap.mapListener( eventDispatcher, RenderSceneRequest.RENDER_SCENE_REQUESTED, onRenderSceneRequested );
 			eventMap.mapListener( eventDispatcher, EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED, onEnablePlayerInputRequested );
 
 			// this probably doesn't belong here, but track needs to exist before the game is built
-			eventDispatcher.dispatchEvent( new BuildTimeRequest( BuildTimeRequest.BUILD_TIME_REQUESTED ) );
 			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
 			eventDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
 		}
@@ -50,24 +44,16 @@ package com.funrun.game.view.mediators
 			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 		}
 		
-		private function onAddPlayerFulfilled( e:AddPlayerFulfilled ):void {
-			view.addPlayer( e.player );
+		private function onAddObjectToSceneRequested( e:AddObjectToSceneRequest ):void {
+			view.addToScene( e.object );
 		}
 		
-		private function onAddObstacleToSceneRequested( e:AddObstacleToSceneRequest ):void {
-			view.addObstacle( e.obstacle );
-		}
-		
-		private function onRemoveObstacleFromSceneRequested( e:RemoveObstacleFromSceneRequest ):void {
-			view.removeObstacle( e.obstacle );
+		private function onRemoveObjectFromSceneRequested( e:RemoveObjectFromSceneRequest ):void {
+			view.removeFromScene( e.object );
 		}
 		
 		private function onCollision( e:CollisionEvent ):void {
 			// collision
-		}
-		
-		private function onAddSceneObjectFulfilled( e:AddSceneObjectFulfilled ):void {
-			view.addObject( e.object );
 		}
 		
 		private function onRenderSceneRequested( e:RenderSceneRequest ):void {

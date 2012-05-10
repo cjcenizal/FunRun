@@ -1,24 +1,20 @@
 package com.funrun.game.controller.commands
 {
-	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
-	import away3d.primitives.CylinderGeometry;
 	
 	import com.funrun.game.controller.events.AddLightRequest;
 	import com.funrun.game.controller.events.AddMaterialRequest;
-	import com.funrun.game.controller.events.AddPlayerFulfilled;
-	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
+	import com.funrun.game.controller.events.AddObjectToSceneRequest;
+	import com.funrun.game.controller.events.AddPlayerRequest;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
-	
-	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -92,13 +88,11 @@ package com.funrun.game.controller.commands
 			obstacleMaterial.specularMethod = specularMethod;
 			
 			// Add lights to track.
-			eventDispatcher.dispatchEvent( new AddSceneObjectFulfilled( AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, sunlight ) );
-			eventDispatcher.dispatchEvent( new AddSceneObjectFulfilled( AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, spotlight ) );
+			eventDispatcher.dispatchEvent( new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, sunlight ) );
+			eventDispatcher.dispatchEvent( new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, spotlight ) );
 			
 			// Add player to track.
-			var player:Mesh = new Mesh( new CylinderGeometry( 50, 50, 50 ), playerMaterial );
-			player.position = new Vector3D( 0, 25, 0 );
-			eventDispatcher.dispatchEvent( new AddPlayerFulfilled( AddPlayerFulfilled.ADD_PLAYER_FULFILLED, player ) );
+			eventDispatcher.dispatchEvent( new AddPlayerRequest( AddPlayerRequest.ADD_PLAYER_REQUESTED ) );
 			
 		}
 	}

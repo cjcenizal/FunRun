@@ -2,7 +2,7 @@ package com.funrun.game.controller.commands {
 	
 	import away3d.entities.Mesh;
 	
-	import com.funrun.game.controller.events.AddObstacleToSceneRequest;
+	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.TrackModel;
@@ -31,7 +31,7 @@ package com.funrun.game.controller.commands {
 			trackModel.addZ = obstacle.z;
 			trackModel.addObstacle( obstacle );
 			// Add to view.
-			var event:AddObstacleToSceneRequest = new AddObstacleToSceneRequest( AddObstacleToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, obstacle );
+			var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, obstacle );
 			eventDispatcher.dispatchEvent( event );
 		}
 	}
