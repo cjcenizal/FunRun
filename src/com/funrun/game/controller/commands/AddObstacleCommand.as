@@ -1,12 +1,8 @@
 package com.funrun.game.controller.commands {
 	
 	import away3d.entities.Mesh;
-	import away3d.materials.ColorMaterial;
 	
-	import com.funrun.game.controller.events.AddObstacleFulfilled;
-	import com.funrun.game.model.BlockTypes;
-	import com.funrun.game.model.BlocksModel;
-	import com.funrun.game.model.MaterialsModel;
+	import com.funrun.game.controller.events.AddObstacleToSceneRequest;
 	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.TrackModel;
@@ -17,12 +13,6 @@ package com.funrun.game.controller.commands {
 		
 		[Inject]
 		public var obstaclesModel:ObstaclesModel;
-
-		[Inject]
-		public var blocksModel:BlocksModel;
-
-		[Inject]
-		public var materialsModel:MaterialsModel;
 		
 		[Inject]
 		public var trackModel:TrackModel;
@@ -36,30 +26,13 @@ package com.funrun.game.controller.commands {
 				var lastObstacle:Mesh = trackModel.getObstacleAt( numObstacles - 1 );
 				obstacle.z = lastObstacle.z + lastObstacle.bounds.max.z * 2 + 500;
 			} else {
-				obstacle.z = Constants.TRACK_LENGTH
+				obstacle.z = Constants.TRACK_LENGTH;
 			}
 			trackModel.addZ = obstacle.z;
 			trackModel.addObstacle( obstacle );
 			// Add to view.
-			// Change this to dispatch AddObstacleToSceneRequest
-			var event:AddObstacleFulfilled = new AddObstacleFulfilled( AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, obstacle );
+			var event:AddObstacleToSceneRequest = new AddObstacleToSceneRequest( AddObstacleToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, obstacle );
 			eventDispatcher.dispatchEvent( event );
 		}
-	
-		private function getMesh( geo:String, material:ColorMaterial ):Mesh {
-			var mesh:Mesh;
-			switch ( geo ) {
-				case BlockTypes.EMPTY:  {
-					mesh = null;
-					break;
-				}
-				case BlockTypes.BLOCK:  {
-					mesh = new Mesh( blocksModel.getBlock( BlockTypes.BLOCK ).geo, material );
-					break;
-				}
-			}
-			return mesh;
-		}
-		
 	}
 }

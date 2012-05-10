@@ -25,6 +25,7 @@ package com.funrun.game
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.TimeModel;
+	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.services.BlocksJsonService;
 	import com.funrun.game.services.ObstaclesJsonService;
 	import com.funrun.game.view.components.TrackView;
@@ -58,6 +59,7 @@ package com.funrun.game
 			injector.mapSingletonOf( LightsModel, LightsModel );
 			injector.mapSingletonOf( IGeosModel, DummyGeosModel );
 			injector.mapSingletonOf( TimeModel, TimeModel );
+			injector.mapSingletonOf( TrackModel, TrackModel );
 			
 			// Controller.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, 		BuildTimeCommand, 		BuildTimeRequest, true );

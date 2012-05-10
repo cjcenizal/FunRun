@@ -123,8 +123,14 @@ package com.funrun.game.view.components {
 		 * Adding obstacles to the scene.
 		 */
 		public function addObstacle( obstacle:Mesh ):void {
-			
 			_scene.addChild( obstacle );
+		}
+		
+		/**
+		 * Removing obstacles from the scene.
+		 */
+		public function removeObstacle( obstacle:Mesh ):void {
+			_scene.removeChild( obstacle );
 		}
 		
 		/**

@@ -1,18 +1,18 @@
 package com.funrun.game.view.mediators
 {
-	import com.funrun.game.controller.events.AddObstacleFulfilled;
-	import com.funrun.game.controller.events.AddObstacleRequest;
+	import com.funrun.game.controller.events.AddObstacleToSceneRequest;
 	import com.funrun.game.controller.events.AddPlayerFulfilled;
 	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
 	import com.funrun.game.controller.events.BuildGameRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
-	import com.funrun.game.controller.events.StartGameFulfilled;
+	import com.funrun.game.controller.events.EnablePlayerInputRequest;
+	import com.funrun.game.controller.events.RemoveObstacleFromSceneRequest;
+	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.view.components.TrackView;
 	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
@@ -30,13 +30,14 @@ package com.funrun.game.view.mediators
 			stage = view.stage;
 			view.init();
 			view.debug();
-			view.addEventListener( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, onAddObstacleRequested );
 			view.addEventListener( CollisionEvent.COLLISION, onCollision );
 			
 			eventMap.mapListener( eventDispatcher, AddPlayerFulfilled.ADD_PLAYER_FULFILLED, onAddPlayerFulfilled );
-			eventMap.mapListener( eventDispatcher, AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, onAddObstacleFulfilled );
+			eventMap.mapListener( eventDispatcher, AddObstacleToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, onAddObstacleToSceneRequested );
+			eventMap.mapListener( eventDispatcher, RemoveObstacleFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObstacleFromSceneRequested );
 			eventMap.mapListener( eventDispatcher, AddSceneObjectFulfilled.ADD_SCENE_OBJECT_FULFILLED, onAddSceneObjectFulfilled );
-			eventMap.mapListener( eventDispatcher, StartGameFulfilled.START_GAME_FULFILLED, onStartGameFulfilled );
+			eventMap.mapListener( eventDispatcher, RenderSceneRequest.RENDER_SCENE_REQUESTED, onRenderSceneRequested );
+			eventMap.mapListener( eventDispatcher, EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED, onEnablePlayerInputRequested );
 
 			// this probably doesn't belong here, but track needs to exist before the game is built
 			eventDispatcher.dispatchEvent( new BuildTimeRequest( BuildTimeRequest.BUILD_TIME_REQUESTED ) );
@@ -44,35 +45,32 @@ package com.funrun.game.view.mediators
 			eventDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
 		}
 		
-		private function onStartGameFulfilled( e:StartGameFulfilled ):void {
-			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+		private function onEnablePlayerInputRequested( e:EnablePlayerInputRequest ):void {
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
-			// Request first obstacle.
-		//	onAddObstacleRequested();
 		}
 		
 		private function onAddPlayerFulfilled( e:AddPlayerFulfilled ):void {
 			view.addPlayer( e.player );
 		}
 		
-		private function onAddObstacleRequested( e:AddObstacleRequest = null ):void {
-			eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
-		}
-		
-		private function onAddObstacleFulfilled( e:AddObstacleFulfilled ):void {
+		private function onAddObstacleToSceneRequested( e:AddObstacleToSceneRequest ):void {
 			view.addObstacle( e.obstacle );
 		}
 		
+		private function onRemoveObstacleFromSceneRequested( e:RemoveObstacleFromSceneRequest ):void {
+			view.removeObstacle( e.obstacle );
+		}
+		
 		private function onCollision( e:CollisionEvent ):void {
-		//	stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+			// collision
 		}
 		
 		private function onAddSceneObjectFulfilled( e:AddSceneObjectFulfilled ):void {
 			view.addObject( e.object );
 		}
 		
-		private function onEnterFrame( e:Event ):void {
+		private function onRenderSceneRequested( e:RenderSceneRequest ):void {
 			view.render();
 		}
 		
@@ -97,9 +95,6 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onKeyUp( e:KeyboardEvent ):void {
-			//if ( !stage.hasEventListener( Event.ENTER_FRAME ) ) {
-			//	stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
-			//}
 			switch ( e.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:
