@@ -8,7 +8,6 @@ package com.funrun.game.model {
 	public class TrackModel extends Actor {
 		
 		private var _obstacles:Array;
-		public var addZ:int = Constants.TRACK_LENGTH;
 		
 		public function TrackModel() {
 			_obstacles = [];
@@ -52,5 +51,11 @@ package com.funrun.game.model {
 			return _obstacles.length;
 		}
 		
+		public function get depthOfLastObstacle():Number {
+			if ( _obstacles.length > 0 ) {
+				return ( _obstacles[ _obstacles.length - 1 ] as Mesh ).z;
+			}
+			return Constants.TRACK_LENGTH;
+		}
 	}
 }

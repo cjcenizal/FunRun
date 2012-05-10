@@ -62,7 +62,7 @@ package com.funrun.game.view.components {
 			var gridScale:Number = 4;
 			grid.scaleZ = gridScale;
 			grid.z = Constants.TRACK_WIDTH * gridScale * .5 - 300;
-			_scene.addChild( grid );
+			//_scene.addChild( grid );
 			grid.y = 1;
 		}
 		

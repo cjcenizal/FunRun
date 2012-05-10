@@ -35,7 +35,6 @@ package com.funrun.game.controller.commands {
 				mesh = new Mesh( geo, material );
 				mesh.x = x - Constants.TRACK_WIDTH * .5 + Constants.BLOCK_SIZE * .5;
 				mesh.y = Constants.BLOCK_SIZE * -.5;
-				trace("add at " + mesh.x + ", " + mesh.y);
 				merge.apply( floor, mesh );
 			}
 			floorsModel.addFloor( "floor", floor );

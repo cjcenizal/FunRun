@@ -27,12 +27,10 @@ package com.funrun.game.controller.commands {
 			// Add it to the model.
 			var numObstacles:int = trackModel.numObstacles;
 			if ( numObstacles > 0 ) {
-				var lastObstacle:Mesh = trackModel.getObstacleAt( numObstacles - 1 );
-				obstacle.z = lastObstacle.z + lastObstacle.bounds.max.z + Constants.OBSTACLE_GAP;
+				obstacle.z = trackModel.depthOfLastObstacle;
 			} else {
 				obstacle.z = Constants.TRACK_LENGTH;
 			}
-			trackModel.addZ = obstacle.z;
 			trackModel.addObstacle( obstacle );
 			// Add to view.
 			var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, obstacle );
@@ -40,17 +38,13 @@ package com.funrun.game.controller.commands {
 			
 			// Add floor after obstacle.
 			var floorPos:Number = obstacle.z + obstacle.bounds.max.z;
-			trace("floorPos: " + floorPos);
-			trace("limit: " + (obstacle.z + obstacle.bounds.max.z + Constants.OBSTACLE_GAP));
 			while ( floorPos <= obstacle.z + obstacle.bounds.max.z + Constants.OBSTACLE_GAP ) {
 				var floor:Mesh = floorsModel.getFloor( "floor" ).clone() as Mesh;
 				floor.z = floorPos + Constants.BLOCK_SIZE * .5;
 				trackModel.addObstacle( floor );
-				trace("    floor: " + floor);
 				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor );
 				eventDispatcher.dispatchEvent( event );
 				floorPos += Constants.BLOCK_SIZE;
-				trace("    " + floorPos);
 			}
 		}
 	}

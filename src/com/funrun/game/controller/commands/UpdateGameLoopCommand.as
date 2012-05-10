@@ -37,12 +37,8 @@ package com.funrun.game.controller.commands
 				}
 			}
 			
-			// Update position at which to add new obstacles.
-			if ( trackModel.numObstacles > 0 ) {
-				trackModel.addZ = trackModel.getObstacleAt( trackModel.numObstacles - 1 ).z;
-			}
 			// Add new obstacles.
-			while ( trackModel.addZ < Constants.TRACK_LENGTH + Constants.BLOCK_SIZE ) {
+			while ( trackModel.depthOfLastObstacle < Constants.TRACK_LENGTH + Constants.BLOCK_SIZE ) {
 				// Add obstacles to fill up track.
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
