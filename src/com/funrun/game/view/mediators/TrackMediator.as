@@ -4,8 +4,8 @@ package com.funrun.game.view.mediators
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.AddPlayerFulfilled;
 	import com.funrun.game.controller.events.AddSceneObjectFulfilled;
-	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.BuildGameRequest;
+	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.StartGameFulfilled;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.view.components.TrackView;
@@ -65,7 +65,7 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onCollision( e:CollisionEvent ):void {
-			stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+		//	stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 		}
 		
 		private function onAddSceneObjectFulfilled( e:AddSceneObjectFulfilled ):void {
@@ -73,7 +73,7 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onEnterFrame( e:Event ):void {
-			view.update();
+			view.render();
 		}
 		
 		private function onKeyDown( e:KeyboardEvent ):void {
@@ -97,9 +97,9 @@ package com.funrun.game.view.mediators
 		}
 		
 		private function onKeyUp( e:KeyboardEvent ):void {
-			if ( !stage.hasEventListener( Event.ENTER_FRAME ) ) {
-				stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
-			}
+			//if ( !stage.hasEventListener( Event.ENTER_FRAME ) ) {
+			//	stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+			//}
 			switch ( e.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:

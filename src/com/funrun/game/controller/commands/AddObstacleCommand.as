@@ -6,16 +6,15 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.AddObstacleFulfilled;
 	import com.funrun.game.model.BlockTypes;
 	import com.funrun.game.model.BlocksModel;
-	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.MaterialsModel;
+	import com.funrun.game.model.Constants;
 	import com.funrun.game.model.ObstaclesModel;
-	import com.funrun.game.model.parsers.BlockVO;
-	import com.funrun.game.model.parsers.ObstacleParser;
-	import com.funrun.game.view.components.Obstacle;
+	import com.funrun.game.model.TrackModel;
 	
 	import org.robotlegs.mvcs.Command;
 
 	public class AddObstacleCommand extends Command {
+		
 		[Inject]
 		public var obstaclesModel:ObstaclesModel;
 
@@ -24,39 +23,27 @@ package com.funrun.game.controller.commands {
 
 		[Inject]
 		public var materialsModel:MaterialsModel;
+		
+		[Inject]
+		public var trackModel:TrackModel;
 
 		override public function execute():void {
-			// Build an obstacle and send it to the track.
-			var data:Mesh = obstaclesModel.getRandomObstacle();
-			var event:AddObstacleFulfilled = new AddObstacleFulfilled( AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, data );
+			// Get an obstacle.
+			var obstacle:Mesh = obstaclesModel.getRandomObstacle().clone() as Mesh;
+			// Add it to the model.
+			var numObstacles:int = trackModel.numObstacles;
+			if ( numObstacles > 0 ) {
+				var lastObstacle:Mesh = trackModel.getObstacleAt( numObstacles - 1 );
+				obstacle.z = lastObstacle.z + lastObstacle.bounds.max.z * 2 + 500;
+			} else {
+				obstacle.z = Constants.TRACK_LENGTH
+			}
+			trackModel.addZ = obstacle.z;
+			trackModel.addObstacle( obstacle );
+			// Add to view.
+			// Change this to dispatch AddObstacleToSceneRequest
+			var event:AddObstacleFulfilled = new AddObstacleFulfilled( AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, obstacle );
 			eventDispatcher.dispatchEvent( event );
-			/*
-			try {
-				var obstacle:Obstacle = new Obstacle( data.id );
-				var material:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
-				// Add geometry to obstacle based on data.
-				var len:int = data.numBlocks;
-				var blockData:BlockVO;
-				var mesh:Mesh;
-				var flip:Boolean = Math.random() < .5;
-				var xAdjustment:Number = -Constants.TRACK_WIDTH * .5;
-				var halfBlock:Number = Constants.BLOCK_SIZE * .5;
-				for ( var i:int = 0; i < len; i++ ) {
-					blockData = data.getBlockAt( i );
-					mesh = getMesh( blockData.id, material );
-					if ( mesh ) {
-						mesh.x = blockData.x * Constants.BLOCK_SIZE + halfBlock;
-						mesh.x += xAdjustment;
-						mesh.y = blockData.y * Constants.BLOCK_SIZE + halfBlock;
-						mesh.z = -blockData.z * Constants.BLOCK_SIZE + halfBlock;
-						obstacle.addGeo( mesh );
-					}
-				}
-				var event:AddObstacleFulfilled = new AddObstacleFulfilled( AddObstacleFulfilled.ADD_OBSTACLE_FULFILLED, obstacle );
-				eventDispatcher.dispatchEvent( event );
-			} catch( e:Error ) {
-				trace( this, e, e.getStackTrace() );
-			}*/
 		}
 	
 		private function getMesh( geo:String, material:ColorMaterial ):Mesh {

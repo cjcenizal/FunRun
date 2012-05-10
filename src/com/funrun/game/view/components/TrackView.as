@@ -90,8 +90,8 @@ package com.funrun.game.view.components {
 		/**
 		 * Updating.
 		 */
-		public function update():void {
-			updateObstacles();
+		public function render():void {
+			//updateObstacles();
 			updatePlayer();
 			updateCamera();
 			_view.render();
@@ -103,28 +103,10 @@ package com.funrun.game.view.components {
 			_camera.y += ( ( Constants.CAM_Y + _player.y ) - _camera.y ) * followFactor; // try easing to follow the player instead of being locked
 		}
 		
-		var t:int = 0;
-		private function updateObstacles():void {
-			t ++;
-			for ( var i:int = 0; i < _tracks.length; i++ ) {
-				( _tracks[ i ] as Mesh ).z -= _forwardVelocity;
-			}
-			if ( t % Constants.OBSTACLE_CREATION_INTERVAL == 0 ) {
-				if ( _tracks.length > 0 ) {
-					var mesh:Mesh = _tracks[ 0 ] as Mesh;
-					if ( mesh.z < -600 ) {
-						//mesh.geometry.dispose();
-						_scene.removeChild( mesh );
-						_tracks.splice( 0, 1 );
-					}
-				}
-				_addZ = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z : _addZ;
-				while ( _addZ < Constants.TRACK_LENGTH + Constants.BLOCK_SIZE ) {
-					dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
-				}
-			}
-		}
-		private var _addZ:int = Constants.TRACK_LENGTH;
+		//private function updateObstacles():void {
+			// Move obstacles.
+			
+		//}
 		
 		private function updatePlayer():void {
 			_jumpVelocity += Constants.PLAYER_JUMP_GRAVITY;
@@ -141,11 +123,8 @@ package com.funrun.game.view.components {
 		 * Adding obstacles to the scene.
 		 */
 		public function addObstacle( obstacle:Mesh ):void {
-			var obj:Mesh = obstacle.clone() as Mesh;
-			obj.z = ( _tracks.length > 0 ) ? ( _tracks[ _tracks.length - 1 ] as Mesh ).z + ( _tracks[ _tracks.length - 1 ] as Mesh ).bounds.max.z * 2 + 500 : Constants.TRACK_LENGTH;
-			_addZ = obj.z;
-			_tracks.push( obj );
-			_scene.addChild( obj );
+			
+			_scene.addChild( obstacle );
 		}
 		
 		/**
