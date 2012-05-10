@@ -52,6 +52,10 @@ package com.funrun.game.controller.commands
 					mesh.z = data.z * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
 					merge.apply( obs, mesh );
 				}
+				
+				// This is where we need to traverse the floorplan of the obstacle.
+				// If there is no block at or less than 0, add a floor block.
+				
 				model.addObstacle( obs );
 			}
 		}

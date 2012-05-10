@@ -26,7 +26,6 @@ package com.funrun.game.view.mediators
 			stage = view.stage;
 			view.init();
 			view.debug();
-			view.addEventListener( CollisionEvent.COLLISION, onCollision );
 			
 			eventMap.mapListener( eventDispatcher, AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, onAddObjectToSceneRequested );
 			eventMap.mapListener( eventDispatcher, RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObjectFromSceneRequested );
@@ -39,23 +38,30 @@ package com.funrun.game.view.mediators
 			eventDispatcher.dispatchEvent( new AddTrackFulfilled( AddTrackFulfilled.ADD_TRACK_FULFILLED ) );
 		}
 		
+		/**
+		 * Turn on player keyboard input.
+		 */
 		private function onEnablePlayerInputRequested( e:EnablePlayerInputRequest ):void {
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 		}
-		
+		/**
+		 * Add an object to the scene.
+		 */
 		private function onAddObjectToSceneRequested( e:AddObjectToSceneRequest ):void {
 			view.addToScene( e.object );
 		}
 		
+		/**
+		 * Remove an object from the scene.
+		 */
 		private function onRemoveObjectFromSceneRequested( e:RemoveObjectFromSceneRequest ):void {
 			view.removeFromScene( e.object );
 		}
 		
-		private function onCollision( e:CollisionEvent ):void {
-			// collision
-		}
-		
+		/**
+		 * Render the scene.
+		 */
 		private function onRenderSceneRequested( e:RenderSceneRequest ):void {
 			view.render();
 		}

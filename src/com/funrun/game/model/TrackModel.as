@@ -3,8 +3,6 @@ package com.funrun.game.model {
 	import away3d.bounds.BoundingVolumeBase;
 	import away3d.entities.Mesh;
 	
-	import com.funrun.game.view.components.Obstacle;
-	
 	import org.robotlegs.mvcs.Actor;
 	
 	public class TrackModel extends Actor {

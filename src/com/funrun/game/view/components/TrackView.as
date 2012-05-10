@@ -31,7 +31,7 @@ package com.funrun.game.view.components {
 		}
 		
 		/**
-		 * Global initialise function
+		 * Initialize our view, scene, and camera.
 		 */
 		public function init():void {
 			_view = new View3D();
@@ -67,7 +67,7 @@ package com.funrun.game.view.components {
 		}
 		
 		/**
-		 * Updating.
+		 * Rendering.
 		 */
 		public function render():void {
 			_view.render();
@@ -81,7 +81,7 @@ package com.funrun.game.view.components {
 		}
 		
 		/**
-		 * Removing 3D objects to the scene.
+		 * Removing 3D objects from the scene.
 		 */
 		public function removeFromScene( object:ObjectContainer3D ):void {
 			_scene.removeChild( object );

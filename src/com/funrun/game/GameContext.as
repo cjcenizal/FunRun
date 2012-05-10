@@ -86,7 +86,7 @@ package com.funrun.game
 			mediatorMap.mapView( TrackView, TrackMediator );
 			mediatorMap.mapView( GameModule, GameMediator );
 			
-			// Let's have some logic in the baby.
+			// Let's have some logic in this baby.
 			eventDispatcher.addEventListener( AddTrackFulfilled.ADD_TRACK_FULFILLED, onAddTrackFulfilled );
 			
 			super.startup();
