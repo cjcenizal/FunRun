@@ -38,12 +38,13 @@ package com.funrun.game.controller.commands
 		override public function execute():void {
 			var obstacles:ObstaclesParser = new ObstaclesParser( obstaclesService.data );
 			var len:int = obstacles.length;
-			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial, minX:int, minZ:int, maxX:int, maxZ:int;
+			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial, pitMap:Object, minX:int, minZ:int, maxX:int, maxZ:int;
 			var merge:Merge = new Merge( true );
 			for ( var i:int = 0; i < len; i++ ) {
 				material = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 				var obstacle:ObstacleParser = obstacles.getAt( i );
 				var obs:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
+				pitMap = {};
 				minX = 0;
 				minZ = 0;
 				maxX = 0;
@@ -58,22 +59,32 @@ package com.funrun.game.controller.commands
 					mesh.y = data.y * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
 					mesh.z = data.z * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
 					merge.apply( obs, mesh );
-					// Store bounds of obstacle.
+					// Store pit location.
+					if ( !pitMap[ data.x ] ) {
+						pitMap[ data.x ] = {};
+					}
+					if ( data.y < 0 ) {
+						// We only want to store positives, not negative.
+						pitMap[ data.x ][ data.z ] = true;
+					}
+					// Update bounds of obstacle.
 					minX = Math.min( data.x, minX );
 					minZ = Math.min( data.z, minZ );
 					maxX = Math.max( data.x, maxX );
 					maxZ = Math.max( data.z, maxZ );
 				}
-				// Fill in floor geometry.
+				// Fill in floor geometry wherever no pits exist.
 				geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
 				material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
 				for ( var x:int = minX; x <= maxX; x ++ ) {
 					for ( var z:int = minZ; z <= maxZ; z ++ ) {
-						mesh = new Mesh( geo, material );
-						mesh.x = x * Constants.BLOCK_SIZE - Constants.TRACK_WIDTH * .5 + Constants.BLOCK_SIZE * .5;
-						mesh.y = Constants.BLOCK_SIZE * -.5;
-						mesh.z = z * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
-						merge.apply( obs, mesh );
+						if ( !pitMap[ x ][ z ] ) {
+							mesh = new Mesh( geo, material );
+							mesh.x = x * Constants.BLOCK_SIZE - Constants.TRACK_WIDTH * .5 + Constants.BLOCK_SIZE * .5;
+							mesh.y = Constants.BLOCK_SIZE * -.5;
+							mesh.z = z * Constants.BLOCK_SIZE + Constants.BLOCK_SIZE * .5;
+							merge.apply( obs, mesh );
+						}
 					}
 				}
 				
