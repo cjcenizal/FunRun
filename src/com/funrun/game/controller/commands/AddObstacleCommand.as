@@ -24,7 +24,7 @@ package com.funrun.game.controller.commands {
 			var numObstacles:int = trackModel.numObstacles;
 			if ( numObstacles > 0 ) {
 				var lastObstacle:Mesh = trackModel.getObstacleAt( numObstacles - 1 );
-				obstacle.z = lastObstacle.z + lastObstacle.bounds.max.z;// * 2;
+				obstacle.z = lastObstacle.z + lastObstacle.bounds.max.z + Constants.OBSTACLE_GAP;
 			} else {
 				obstacle.z = Constants.TRACK_LENGTH;
 			}

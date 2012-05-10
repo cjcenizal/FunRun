@@ -5,7 +5,7 @@
 		{
 			"id" : "beam",
 			"blocks" : [
-				[ [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ] ]
+				[ [ "block", "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ "block", "block" ] ]
 			]
 		},
 		{
@@ -29,6 +29,16 @@
 			[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ],
 			[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ],
 			[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ]
+			]
+		},
+		{
+			"id" : "trench",
+			"pits" : [
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
 			]
 		}
 	]

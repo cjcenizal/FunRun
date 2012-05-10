@@ -24,33 +24,34 @@ package com.funrun.game.controller.commands
 	public class LoadObstaclesCommand extends Command
 	{	
 		[Inject]
-		public var model:ObstaclesModel;
+		public var obstaclesModel:ObstaclesModel;
 		
 		[Inject]
-		public var blocks:BlocksModel;
+		public var blocksModel:BlocksModel;
 		
 		[Inject]
-		public var materials:MaterialsModel;
+		public var materialsModel:MaterialsModel;
 		
 		[Inject]
-		public var service:ObstaclesJsonService;
+		public var obstaclesService:ObstaclesJsonService;
 		
 		override public function execute():void {
-			var obstacles:ObstaclesParser = new ObstaclesParser( service.data );
+			var obstacles:ObstaclesParser = new ObstaclesParser( obstaclesService.data );
 			var len:int = obstacles.length;
-			var geo:PrimitiveBase, mesh:Mesh, minX:int, minZ:int, maxX:int, maxZ:int;
+			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial, minX:int, minZ:int, maxX:int, maxZ:int;
 			var merge:Merge = new Merge( true );
-			var material:ColorMaterial = materials.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 			for ( var i:int = 0; i < len; i++ ) {
+				material = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 				var obstacle:ObstacleParser = obstacles.getAt( i );
 				var obs:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
 				minX = 0;
 				minZ = 0;
 				maxX = 0;
 				maxZ = 0;
+				// Add obstacle geometry.
 				for ( var j:int = 0; j < obstacle.numBlocks; j++ ) {
 					var data:BlockVO = obstacle.getBlockAt( j );
-					var geoData:BlockParser = blocks.getBlock( data.id );
+					var geoData:BlockParser = blocksModel.getBlock( data.id );
 					geo = geoData.geo;
 					mesh = new Mesh( geo, material );
 					mesh.x = data.x * Constants.BLOCK_SIZE - Constants.TRACK_WIDTH * .5 + Constants.BLOCK_SIZE * .5;
@@ -63,8 +64,9 @@ package com.funrun.game.controller.commands
 					maxX = Math.max( data.x, maxX );
 					maxZ = Math.max( data.z, maxZ );
 				}
-				
-				geo = blocks.getBlock( BlockTypes.FLOOR ).geo;
+				// Fill in floor geometry.
+				geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
+				material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
 				for ( var x:int = minX; x <= maxX; x ++ ) {
 					for ( var z:int = minZ; z <= maxZ; z ++ ) {
 						mesh = new Mesh( geo, material );
@@ -79,7 +81,7 @@ package com.funrun.game.controller.commands
 				
 				// If there is no block at or less than 0, add a floor block.
 				
-				model.addObstacle( obs );
+				obstaclesModel.addObstacle( obs );
 			}
 		}
 	}

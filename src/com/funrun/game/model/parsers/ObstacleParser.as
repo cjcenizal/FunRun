@@ -5,6 +5,7 @@ package com.funrun.game.model.parsers
 	{
 		
 		private const BLOCKS:String = "blocks";
+		private const PITS:String = "pits";
 		
 		private var _id:String;
 		private var _blocks:Array;
@@ -17,20 +18,46 @@ package com.funrun.game.model.parsers
 			super( data );
 			_id = new IdParser( data ).id;
 			_blocks = [];
-			var blocksDeep:Array = data[ BLOCKS ];
-			var blocksWide:Array;
-			var blocksHigh:Array;
-			_depth = blocksDeep.length;
-			for ( var z:int = 0; z < _depth; z++ ) {
-				blocksWide = blocksDeep[ z ];
-				_width = Math.max( _width, blocksWide.length );
-				for ( var x:int = 0; x < _width; x++ ) {
-					blocksHigh = blocksWide[ x ];
-					_height = Math.max( _height, blocksHigh.length );
-					for ( var y:int = 0; y < _height; y++ ) {
-						var block:BlockVO = new BlockVO( blocksHigh[ y ], x, y, z );
-						if ( block.id ) {
-							_blocks.push( block );
+			
+			var blocksDeep:Array, blocksWide:Array, blocksHigh:Array;
+			var z:int, x:int, y:int;
+			
+			// Parse above-ground blocks.
+			blocksDeep = data[ BLOCKS ];
+			if ( blocksDeep ) {
+				_depth = blocksDeep.length;
+				for ( z = 0; z < _depth; z++ ) {
+					blocksWide = blocksDeep[ z ];
+					_width = Math.max( _width, blocksWide.length );
+					for ( x = 0; x < _width; x++ ) {
+						blocksHigh = blocksWide[ x ];
+						_height = Math.max( _height, blocksHigh.length );
+						for ( y = 0; y < _height; y++ ) {
+							var block:BlockVO = new BlockVO( blocksHigh[ y ], x, y, z );
+							if ( block.id ) {
+								_blocks.push( block );
+							}
+						}
+					}
+				}
+			}
+			
+			// Parse below-ground blocks (pits).
+			blocksDeep = data[ PITS ];
+			if ( blocksDeep ) {
+				_depth = blocksDeep.length;
+				for ( z = 0; z < _depth; z++ ) {
+					blocksWide = blocksDeep[ z ];
+					_width = Math.max( _width, blocksWide.length );
+					for ( x = 0; x < _width; x++ ) {
+						blocksHigh = blocksWide[ x ];
+						_height = Math.max( _height, blocksHigh.length );
+						for ( y = 0; y < _height; y++ ) {
+							var posY:int = _height - y;
+							var block:BlockVO = new BlockVO( blocksHigh[ y ], x, -posY - 1, z ); // Make sure to invert y to place underground.
+							if ( block.id ) {
+								_blocks.push( block );
+							}
 						}
 					}
 				}

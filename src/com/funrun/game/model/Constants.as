@@ -15,8 +15,8 @@ package com.funrun.game.model
 		public static const CAM_FRUSTUM_DISTANCE:Number = 6000; // the higher the value, the blockier the shadows
 		
 		// Player movement constants.
-		public static const PLAYER_JUMP_SPEED:Number = 72;
-		public static const PLAYER_LATERAL_SPEED:Number = BLOCK_SIZE * .2;
+		public static const PLAYER_JUMP_SPEED:Number = 84;
+		public static const PLAYER_LATERAL_SPEED:Number = 30;//BLOCK_SIZE * .2;
 		public static const PLAYER_JUMP_GRAVITY:Number = -8;
 		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 40;
 		
