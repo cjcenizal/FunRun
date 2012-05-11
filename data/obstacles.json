@@ -40,6 +40,16 @@
 				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
 				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
 			]
+		},
+		{
+			"id" : "wallPit",
+			"pits" : [
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
+				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
+			]
 		}
 	]
 }

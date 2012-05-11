@@ -23,6 +23,7 @@ package com.funrun.game.controller.commands {
 		public var trackModel:TrackModel;
 
 		override public function execute():void {
+			trace("ok");
 			// Get an obstacle.
 			var obstacle:Mesh = obstaclesModel.getRandomObstacle().mesh;
 			// Add it to the model.

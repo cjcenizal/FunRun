@@ -47,7 +47,7 @@ package com.funrun.game.controller.commands
 				pitMap = {};
 				minX = 0;
 				minZ = 0;
-				maxX = 0;
+				maxX = TrackConstants.TRACK_WIDTH_BLOCKS - 1;
 				maxZ = 0;
 				// Add obstacle geometry.
 				for ( var j:int = 0; j < obstacle.numBlocks; j++ ) {
@@ -78,7 +78,7 @@ package com.funrun.game.controller.commands
 				material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
 				for ( var x:int = minX; x <= maxX; x ++ ) {
 					for ( var z:int = minZ; z <= maxZ; z ++ ) {
-						if ( !pitMap[ x ][ z ] ) {
+						if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
 							mesh = new Mesh( geo, material );
 							mesh.x = x * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
 							mesh.y = TrackConstants.BLOCK_SIZE * -.5;

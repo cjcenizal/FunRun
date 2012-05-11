@@ -6,6 +6,8 @@ package com.funrun.game.model.constants
 		public static const BLOCK_SIZE:Number = 100;
 		public static const TRACK_WIDTH:int = 1200;
 		public static const TRACK_LENGTH:int = 5000;
+		public static const TRACK_WIDTH_BLOCKS:int = TRACK_WIDTH / BLOCK_SIZE;
+		public static const TRACK_LENGTH_BLOCKS:int = TRACK_LENGTH / BLOCK_SIZE;
 		
 		// Camera.
 		public static const CAM_Y:Number = 800;
