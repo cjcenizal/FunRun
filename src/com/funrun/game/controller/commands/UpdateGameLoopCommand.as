@@ -68,11 +68,20 @@ package com.funrun.game.controller.commands
 			playerModel.jumpVelocity += TrackConstants.PLAYER_JUMP_GRAVITY;
 			playerModel.player.y += playerModel.jumpVelocity;
 			playerModel.player.x += playerModel.lateralVelocity;
-			if ( playerModel.player.y <= 25 ) { // Temp hack for landing on ground, fix later
-				playerModel.player.y = 25; // 25 is half the player FPO object's height
-				playerModel.jumpVelocity = 0;
+			if ( playerModel.player.y <= 25 ) {
+				playerModel.isAirborne = false
 			}
-			playerModel.isAirborne = ( Math.abs( playerModel.player.y - 25 ) > 1 );
+			if ( playerModel.player.y < 25 ) { // Temp hack for landing on ground, fix later
+				playerModel.player.y = 25; // 25 is half the player FPO object's height
+				playerModel.jumpVelocity *= -.4;
+			}
+			
+			// TO-DO: Make ducking cooler.
+			if ( playerModel.isDucking ) {
+				playerModel.player.scaleY = .5;
+			} else {
+				playerModel.player.scaleY = 1;
+			}
 			
 			// Update camera.
 			cameraModel.camera.x = playerModel.player.x;

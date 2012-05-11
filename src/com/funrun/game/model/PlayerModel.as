@@ -33,7 +33,7 @@ package com.funrun.game.model
 		
 		public function jump( speed:Number ):void {
 			if ( !_isJumping ) {
-				_jumpVelocity += speed;
+				_jumpVelocity = speed;
 			}
 			_isJumping = true;
 		}
@@ -90,6 +90,10 @@ package com.funrun.game.model
 		
 		public function get isAirborne():Boolean {
 			return _isAirborne;
+		}
+		
+		public function get isDucking():Boolean {
+			return _isDucking;
 		}
 		
 		public function get lateralVelocity():Number {

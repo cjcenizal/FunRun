@@ -22,6 +22,7 @@ package com.funrun.game.controller.commands {
 				case Keyboard.UP:
 					if ( !playerModel.isAirborne ) {
 						playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
+						playerModel.isAirborne = true;
 					}
 					break;
 				case Keyboard.LEFT:
