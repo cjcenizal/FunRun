@@ -79,7 +79,7 @@ package com.funrun.game.controller.commands {
 				mesh.z = data.z * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
 				merge.apply( obstacleMesh, mesh );
 				
-				// Add a bounding box.
+				// Add a bounding box so we can collide with the obstacle.
 				var boundingBox:BoundingBoxData = new BoundingBoxData(
 					blocksModel.getBlock( data.id ),
 					mesh.x - TrackConstants.BLOCK_SIZE_HALF,
@@ -105,7 +105,8 @@ package com.funrun.game.controller.commands {
 				maxZ = Math.max( data.z, maxZ );
 			}
 			// Fill in floor geometry wherever no pits exist.
-			geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
+			var floorType:String = BlockTypes.FLOOR;
+			geo = blocksModel.getBlock( floorType ).geo;
 			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
 			for ( var x:int = minX; x <= maxX; x++ ) {
 				for ( var z:int = minZ; z <= maxZ; z++ ) {
@@ -116,7 +117,16 @@ package com.funrun.game.controller.commands {
 						mesh.z = z * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
 						merge.apply( obstacleMesh, mesh );
 						
-						// Add a bounding box.
+						// Add a bounding box so we can collide with the floor.
+						var boundingBox:BoundingBoxData = new BoundingBoxData(
+							blocksModel.getBlock( floorType ),
+							mesh.x - TrackConstants.BLOCK_SIZE_HALF,
+							mesh.y - TrackConstants.BLOCK_SIZE_HALF,
+							mesh.z - TrackConstants.BLOCK_SIZE_HALF,
+							mesh.x + TrackConstants.BLOCK_SIZE_HALF,
+							mesh.y + TrackConstants.BLOCK_SIZE_HALF,
+							mesh.z + TrackConstants.BLOCK_SIZE_HALF
+						);
 					}
 				}
 			}
