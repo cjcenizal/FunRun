@@ -12,6 +12,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.constants.BlockTypes;
 	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.data.BoundingBoxData;
 	import com.funrun.game.model.data.ObstacleData;
 	
 	import org.robotlegs.mvcs.Command;
@@ -39,6 +40,17 @@ package com.funrun.game.controller.commands {
 				mesh.x = x - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
 				mesh.y = TrackConstants.BLOCK_SIZE * -.5;
 				merge.apply( floorMesh, mesh );
+				
+				// Add a bounding box so we can collide with the floor.
+				boundingBoxes.push( new BoundingBoxData(
+					blocksModel.getBlock( BlockTypes.FLOOR ),
+					mesh.x - TrackConstants.BLOCK_SIZE_HALF,
+					mesh.y - TrackConstants.BLOCK_SIZE_HALF,
+					mesh.z - TrackConstants.BLOCK_SIZE_HALF,
+					mesh.x + TrackConstants.BLOCK_SIZE_HALF,
+					mesh.y + TrackConstants.BLOCK_SIZE_HALF,
+					mesh.z + TrackConstants.BLOCK_SIZE_HALF
+				) );
 			}
 			floorsModel.addFloor( FloorTypes.FLOOR, new ObstacleData( floorMesh, boundingBoxes ) );
 		}

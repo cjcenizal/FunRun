@@ -2,6 +2,7 @@ package com.funrun.game
 {
 	
 	import com.funrun.game.controller.commands.AddCameraCommand;
+	import com.funrun.game.controller.commands.AddFloorsCommand;
 	import com.funrun.game.controller.commands.AddLightCommand;
 	import com.funrun.game.controller.commands.AddMaterialCommand;
 	import com.funrun.game.controller.commands.AddObstacleCommand;
@@ -14,6 +15,7 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.StartGameCommand;
 	import com.funrun.game.controller.enum.GameType;
 	import com.funrun.game.controller.events.AddCameraFulfilled;
+	import com.funrun.game.controller.events.AddFloorsRequest;
 	import com.funrun.game.controller.events.AddLightRequest;
 	import com.funrun.game.controller.events.AddMaterialRequest;
 	import com.funrun.game.controller.events.AddObstacleRequest;
@@ -82,6 +84,7 @@ package com.funrun.game
 			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, 			AddLightCommand, 		AddLightRequest );
 			commandMap.mapEvent( AddMaterialRequest.ADD_MATERIAL_REQUESTED, 	AddMaterialCommand, 	AddMaterialRequest );
 			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, 		AddPlayerCommand, 		AddPlayerRequest );
+			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED,			AddFloorsCommand, 		AddFloorsRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
 			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 		StartGameCommand, 		StartGameRequest );
 			

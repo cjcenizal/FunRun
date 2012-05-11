@@ -26,11 +26,6 @@ package com.funrun.game.controller.commands {
 		public var obstaclesService:ObstaclesJsonService;
 		
 		override public function execute():void {
-			
-			// TO-DO:
-			// We need to be able to specify here that some blocks on top of pit edges
-			// need to be walkable and not obstacle.
-			
 			var material:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 			var obstacles:ObstaclesParser = new ObstaclesParser( obstaclesService.data );
 			var len:int = obstacles.length;

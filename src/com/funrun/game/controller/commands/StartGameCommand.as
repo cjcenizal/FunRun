@@ -2,6 +2,7 @@ package com.funrun.game.controller.commands
 {
 	import away3d.entities.Mesh;
 	
+	import com.funrun.game.controller.events.AddFloorsRequest;
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
@@ -29,16 +30,7 @@ package com.funrun.game.controller.commands
 		
 		override public function execute():void {
 			// Add initial floor.
-			var floorPos:Number = 0;
-			while ( floorPos < TrackConstants.TRACK_LENGTH ) {
-				var floor:ObstacleData = floorsModel.getFloorClone( FloorTypes.FLOOR );
-				floor.z = floorPos + TrackConstants.BLOCK_SIZE * .5;
-				trackModel.addObstacle( floor );
-				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor.mesh );
-				eventDispatcher.dispatchEvent( event );
-				floorPos += TrackConstants.BLOCK_SIZE;
-			}
-			
+			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, 0, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			// Respond to input.

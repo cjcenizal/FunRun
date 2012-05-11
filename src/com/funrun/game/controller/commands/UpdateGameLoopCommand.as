@@ -9,6 +9,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.data.BoundingBoxData;
 	import com.funrun.game.model.data.ObstacleData;
 	
 	import org.robotlegs.mvcs.Command;
@@ -38,10 +39,29 @@ package com.funrun.game.controller.commands
 				}
 			}
 			
-			// Add new obstacles.
+			// Add new obstacles until track is full again.
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
 				// Add obstacles to fill up track.
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+			}
+			
+			// Collisions.
+			var len:int = trackModel.numObstacles;
+			var obstacle:ObstacleData;
+			var playerX:Number = playerModel.player.x;
+			var playerY:Number = playerModel.player.y;
+			var playerZ:Number = playerModel.player.z;
+			var minX:Number = playerModel.player.bounds.min.x;
+			var maxX:Number = playerModel.player.bounds.max.x;
+			var minY:Number = playerModel.player.bounds.min.y;
+			var maxY:Number = playerModel.player.bounds.max.y;
+			var minZ:Number = playerModel.player.bounds.min.z;
+			var maxZ:Number = playerModel.player.bounds.max.z;
+			trace("=====================================");
+			for ( var i:int = 0; i < len; i++ ) {
+				//trace(i);
+				obstacle = trackModel.getObstacleAt( i );
+				obstacle.getCollisions( playerX, playerY, playerZ, minX, maxX, minY, maxY, minZ, maxZ );
 			}
 			
 			// Update player.

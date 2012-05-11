@@ -2,6 +2,7 @@ package com.funrun.game.controller.commands {
 	
 	import away3d.entities.Mesh;
 	
+	import com.funrun.game.controller.events.AddFloorsRequest;
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.ObstaclesModel;
@@ -38,16 +39,10 @@ package com.funrun.game.controller.commands {
 			var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, obstacle.mesh );
 			eventDispatcher.dispatchEvent( event );
 			
-			// Add floor after obstacle.
-			var floorPos:Number = obstacle.z + obstacle.bounds.max.z;
-			while ( floorPos < obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP ) {
-				var floor:ObstacleData = floorsModel.getFloorClone( FloorTypes.FLOOR );
-				floor.z = floorPos + TrackConstants.BLOCK_SIZE * .5;
-				trackModel.addObstacle( floor );
-				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor.mesh );
-				eventDispatcher.dispatchEvent( event );
-				floorPos += TrackConstants.BLOCK_SIZE;
-			}
+			// Add floors.
+			var startPos:Number = obstacle.z + obstacle.bounds.max.z;
+			var endPos:Number = obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP;
+			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, startPos, endPos, TrackConstants.BLOCK_SIZE ) );
 		}
 	}
 }

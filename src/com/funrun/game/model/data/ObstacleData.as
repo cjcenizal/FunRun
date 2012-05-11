@@ -13,6 +13,8 @@ package com.funrun.game.model.data {
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.parsers.BlockParser;
 	import com.funrun.game.model.parsers.ObstacleParser;
+	
+	import flash.geom.Vector3D;
 
 	public class ObstacleData {
 
@@ -39,6 +41,40 @@ package com.funrun.game.model.data {
 			return _mesh;
 		}
 		
+		public function getCollisions( posX:Number, posY:Number, posZ:Number, minX:Number, maxX:Number, minY:Number, maxY:Number, minZ:Number, maxZ:Number ):void {
+			var box:BoundingBoxData;
+		//	trace("  " + _numBoundingBoxes);
+			for ( var i:int = 0; i < _numBoundingBoxes; i++ ) {
+				box = getBoundingBoxAt( i );
+				if ( doCollide(
+					posX + minX, posX + maxX,
+					posY + minY, posY + maxY,
+					posZ + minZ, posZ + maxZ,
+					_mesh.x + box.minX, _mesh.x + box.maxX,
+					_mesh.y + box.minY, _mesh.y + box.maxY,
+					_mesh.z + box.minZ, _mesh.z + box.maxZ
+				) ) {
+					//trace("      " + i + " collision");
+				}
+			}
+		}
+
+		private function doCollide(
+			aMinX:Number, aMaxX:Number, aMinY:Number, aMaxY:Number, aMinZ:Number, aMaxZ:Number,
+			bMinX:Number, bMaxX:Number, bMinY:Number, bMaxY:Number, bMinZ:Number, bMaxZ:Number
+		):Boolean {
+			if ( aMinX > aMaxX || aMinX > aMaxX ) {
+				return false;
+			}
+			if ( aMinY > aMaxY || aMinY > aMaxY ) {
+				return false;
+			}
+			if ( aMinZ > aMaxZ || aMinZ > aMaxZ ) {
+				return false;
+			}
+			return true;
+		}
+		
 		public function get numBoundingBoxes():int {
 			return _numBoundingBoxes;
 		}
@@ -59,12 +95,23 @@ package com.funrun.game.model.data {
 			return _mesh.bounds;
 		}
 		
-		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, obstacle:ObstacleParser, flip:Boolean = false ):ObstacleData {
+		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, parser:ObstacleParser, flip:Boolean = false ):ObstacleData {
+			
+			// TO-DO:
+			// We need to be able to specify here that some blocks on top of pit edges
+			// need to be walkable and not obstacle.
+			
 			var boundingBoxes:Array = [];
 			var geo:PrimitiveBase, mesh:Mesh, pitMap:Object, minX:int, minZ:int, maxX:int, maxZ:int;
-			var material:MaterialBase = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL ); // TO-DO: Customize this
+			
+			// TO-DO: Customize this
+			var material:MaterialBase = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
+			
 			var merge:Merge = new Merge( true );
-			var obstacleMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material ); // TO-DO: Customize this geo
+			
+			// TO-DO: Customize this geo
+			var obstacleMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
+			
 			var boundingBoxes:Array = [];
 			pitMap = {};
 			minX = 0;
@@ -72,8 +119,8 @@ package com.funrun.game.model.data {
 			maxX = TrackConstants.TRACK_WIDTH_BLOCKS - 1;
 			maxZ = 0;
 			// Add obstacle geometry.
-			for ( var j:int = 0; j < obstacle.numBlocks; j++ ) {
-				var data:BlockData = obstacle.getBlockAt( j );
+			for ( var j:int = 0; j < parser.numBlocks; j++ ) {
+				var data:BlockData = parser.getBlockAt( j );
 				var geoData:BlockParser = blocksModel.getBlock( data.id );
 				geo = geoData.geo;
 				mesh = new Mesh( geo, material );
@@ -84,7 +131,7 @@ package com.funrun.game.model.data {
 				merge.apply( obstacleMesh, mesh );
 				
 				// Add a bounding box so we can collide with the obstacle.
-				var boundingBox:BoundingBoxData = new BoundingBoxData(
+				boundingBoxes.push( new BoundingBoxData(
 					blocksModel.getBlock( data.id ),
 					mesh.x - TrackConstants.BLOCK_SIZE_HALF,
 					mesh.y - TrackConstants.BLOCK_SIZE_HALF,
@@ -92,7 +139,7 @@ package com.funrun.game.model.data {
 					mesh.x + TrackConstants.BLOCK_SIZE_HALF,
 					mesh.y + TrackConstants.BLOCK_SIZE_HALF,
 					mesh.z + TrackConstants.BLOCK_SIZE_HALF
-				);
+				) );
 				
 				// Store pit location.
 				if ( !pitMap[ posX ] ) {
@@ -110,8 +157,13 @@ package com.funrun.game.model.data {
 			}
 			// Fill in floor geometry wherever no pits exist.
 			var floorType:String = BlockTypes.FLOOR;
-			geo = blocksModel.getBlock( floorType ).geo; // TO-DO: Customize this geo
-			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL ); // TO-DO: Customize this
+			
+			// TO-DO: Customize this geo
+			geo = blocksModel.getBlock( floorType ).geo;
+			
+			// TO-DO: Customize this
+			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
+			
 			for ( var x:int = minX; x <= maxX; x++ ) {
 				for ( var z:int = minZ; z <= maxZ; z++ ) {
 					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
@@ -122,7 +174,7 @@ package com.funrun.game.model.data {
 						merge.apply( obstacleMesh, mesh );
 						
 						// Add a bounding box so we can collide with the floor.
-						var boundingBox:BoundingBoxData = new BoundingBoxData(
+						boundingBoxes.push( new BoundingBoxData(
 							blocksModel.getBlock( floorType ),
 							mesh.x - TrackConstants.BLOCK_SIZE_HALF,
 							mesh.y - TrackConstants.BLOCK_SIZE_HALF,
@@ -130,7 +182,7 @@ package com.funrun.game.model.data {
 							mesh.x + TrackConstants.BLOCK_SIZE_HALF,
 							mesh.y + TrackConstants.BLOCK_SIZE_HALF,
 							mesh.z + TrackConstants.BLOCK_SIZE_HALF
-						);
+						) );
 					}
 				}
 			}
