@@ -4,13 +4,21 @@ package com.funrun.game.model.data
 
 	public class BoundingBoxData
 	{
-		public var min:Point;
-		public var max:Point;
+		public var minX:Number;
+		public var minY:Number;
+		public var minZ:Number;
+		public var maxX:Number;
+		public var maxY:Number;
+		public var maxZ:Number;
 		
-		public function BoundingBoxData()
+		public function BoundingBoxData( minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
 		{
-			min = new Point();
-			max = new Point();
+			this.minX = minX;
+			this.minY = minY;
+			this.minZ = minZ;
+			this.maxX = maxX;
+			this.maxY = maxY;
+			this.maxZ = maxZ;
 		}
 	}
 }
