@@ -18,8 +18,12 @@ package com.funrun.game.model {
 			_obstacles.push( obstacle );
 		}
 		
+		/**
+		 * Get obstacle data at random.
+		 * @return A clone of the original, since we need to duplicate obstacle mesh.
+		 */
 		public function getRandomObstacle():ObstacleData {
-			return _obstacles[ Math.floor( Math.random() * _obstacles.length ) ];
+			return ( _obstacles[ Math.floor( Math.random() * _obstacles.length ) ] as ObstacleData ).clone();
 		}
 	}
 }

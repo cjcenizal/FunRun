@@ -6,9 +6,10 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.model.CameraModel;
-	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
+	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.data.ObstacleData;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -29,11 +30,11 @@ package com.funrun.game.controller.commands
 			
 			// Remove obstacles from end of track.
 			if ( trackModel.numObstacles > 0 ) {
-				var mesh:Mesh = trackModel.getObstacleAt( 0 );
-				while ( mesh.z < TrackConstants.REMOVE_OBSTACLE_DEPTH ) {
-					eventDispatcher.dispatchEvent( new RemoveObjectFromSceneRequest( RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, mesh ) );
+				var obstacle:ObstacleData = trackModel.getObstacleAt( 0 );
+				while ( obstacle.z < TrackConstants.REMOVE_OBSTACLE_DEPTH ) {
+					eventDispatcher.dispatchEvent( new RemoveObjectFromSceneRequest( RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, obstacle.mesh ) );
 					trackModel.removeObstacleAt( 0 );
-					mesh = trackModel.getObstacleAt( 0 );
+					obstacle = trackModel.getObstacleAt( 0 );
 				}
 			}
 			

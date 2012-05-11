@@ -36,6 +36,7 @@ package com.funrun.game.controller.commands {
 		public var obstaclesService:ObstaclesJsonService;
 		
 		override public function execute():void {
+			
 			// TO DO
 			// We need to be able to specify here that some blocks on top of pit edges
 			// need to be walkable and not obstacle.

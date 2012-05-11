@@ -1,10 +1,11 @@
 package com.funrun.game.model {
 	
 	import away3d.bounds.BoundingVolumeBase;
-	import away3d.entities.Mesh;
+	
+	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.data.ObstacleData;
 	
 	import org.robotlegs.mvcs.Actor;
-	import com.funrun.game.model.constants.TrackConstants;
 	
 	public class TrackModel extends Actor {
 		
@@ -14,14 +15,14 @@ package com.funrun.game.model {
 			_obstacles = [];
 		}
 		
-		public function addObstacle( obstacle:Mesh ):void {
+		public function addObstacle( obstacle:ObstacleData ):void {
 			// Add bounding boxes, ids, behaviors
 			// Add geo (animations?)
 			// Maintain links to geo in bounding boxes
 			_obstacles.push( obstacle );
 		}
 		
-		public function removeObstacle( obstacle:Mesh ):void {
+		public function removeObstacle( obstacle:ObstacleData ):void {
 			// Remove from geo somehow.
 			// Remove obstacle from array.
 		}
@@ -31,7 +32,7 @@ package com.funrun.game.model {
 			// Move geo transform.
 			var len:int = _obstacles.length;
 			for ( var i:int = 0; i < len; i++ ) {
-				( _obstacles[ i ] as Mesh ).z += amount;
+				( _obstacles[ i ] as ObstacleData ).z += amount;
 			}
 		}
 		
@@ -44,7 +45,7 @@ package com.funrun.game.model {
 			_obstacles.splice( index, 1 );
 		}
 		
-		public function getObstacleAt( index:int ):Mesh {
+		public function getObstacleAt( index:int ):ObstacleData {
 			return _obstacles[ index ];
 		}
 		
@@ -54,7 +55,7 @@ package com.funrun.game.model {
 		
 		public function get depthOfLastObstacle():Number {
 			if ( _obstacles.length > 0 ) {
-				return ( _obstacles[ _obstacles.length - 1 ] as Mesh ).z;
+				return ( _obstacles[ _obstacles.length - 1 ] as ObstacleData ).z;
 			}
 			return TrackConstants.TRACK_LENGTH;
 		}

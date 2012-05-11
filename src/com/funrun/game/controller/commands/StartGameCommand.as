@@ -5,10 +5,11 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
-	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.TrackModel;
+	import com.funrun.game.model.constants.FloorTypes;
+	import com.funrun.game.model.constants.TrackConstants;
+	import com.funrun.game.model.data.ObstacleData;
 	import com.funrun.game.model.events.TimeEvent;
 	
 	import flash.events.KeyboardEvent;
@@ -30,10 +31,10 @@ package com.funrun.game.controller.commands
 			// Add initial floor.
 			var floorPos:Number = 0;
 			while ( floorPos < TrackConstants.TRACK_LENGTH ) {
-				var floor:Mesh = floorsModel.getFloorClone( FloorTypes.FLOOR );
+				var floor:ObstacleData = floorsModel.getFloorClone( FloorTypes.FLOOR );
 				floor.z = floorPos + TrackConstants.BLOCK_SIZE * .5;
 				trackModel.addObstacle( floor );
-				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor );
+				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor.mesh );
 				eventDispatcher.dispatchEvent( event );
 				floorPos += TrackConstants.BLOCK_SIZE;
 			}
