@@ -3,11 +3,11 @@ package com.funrun.game.controller.commands {
 	import away3d.entities.Mesh;
 	
 	import com.funrun.game.controller.events.AddObjectToSceneRequest;
-	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.TrackModel;
+	import com.funrun.game.model.constants.FloorTypes;
+	import com.funrun.game.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -23,7 +23,6 @@ package com.funrun.game.controller.commands {
 		public var trackModel:TrackModel;
 
 		override public function execute():void {
-			trace("ok");
 			// Get an obstacle.
 			var obstacle:Mesh = obstaclesModel.getRandomObstacle().mesh;
 			// Add it to the model.

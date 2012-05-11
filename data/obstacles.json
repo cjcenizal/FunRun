@@ -43,12 +43,17 @@
 		},
 		{
 			"id" : "wallPit",
+			"flip" : true,
 			"pits" : [
 				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
 				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
 				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
 				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
 				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
+			],
+			"blocks" : [
+				[],[],[],[],[],[],
+				[ [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ]
 			]
 		}
 	]

@@ -2,6 +2,7 @@ package com.funrun.game.controller.commands
 {
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
+	import away3d.materials.MaterialBase;
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.PrimitiveBase;
 	import away3d.tools.commands.Merge;
@@ -35,13 +36,25 @@ package com.funrun.game.controller.commands
 		public var obstaclesService:ObstaclesJsonService;
 		
 		override public function execute():void {
-			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial, pitMap:Object, minX:int, minZ:int, maxX:int, maxZ:int;
-			var merge:Merge = new Merge( true );
+			var material:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 			var obstacles:ObstaclesParser = new ObstaclesParser( obstaclesService.data );
 			var len:int = obstacles.length;
 			for ( var i:int = 0; i < len; i++ ) {
-				material = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 				var obstacle:ObstacleParser = obstacles.getAt( i );
+				// Store this sucker.
+				var boundingBoxes:Array = [];
+				obstaclesModel.addObstacle( new ObstacleData( makeObstacle( obstacle, material ), boundingBoxes ) );
+				if ( obstacle.flip ) {
+					var boundingBoxes:Array = [];
+					obstaclesModel.addObstacle( new ObstacleData( makeObstacle( obstacle, material, true ), boundingBoxes) );
+				}
+			}
+		}
+		
+		private function makeObstacle( obstacle:ObstacleParser, material:MaterialBase, flip:Boolean = false ):Mesh {
+			var geo:PrimitiveBase, mesh:Mesh, pitMap:Object, minX:int, minZ:int, maxX:int, maxZ:int;
+			var merge:Merge = new Merge( true );
+			
 				var obstacleMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
 				var boundingBoxes:Array = [];
 				pitMap = {};
@@ -55,22 +68,23 @@ package com.funrun.game.controller.commands
 					var geoData:BlockParser = blocksModel.getBlock( data.id );
 					geo = geoData.geo;
 					mesh = new Mesh( geo, material );
-					mesh.x = data.x * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
+					var posX:int = ( flip ) ? ( TrackConstants.TRACK_WIDTH_BLOCKS - data.x - 1 ) : data.x;
+					mesh.x = posX * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
 					mesh.y = data.y * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
 					mesh.z = data.z * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
 					merge.apply( obstacleMesh, mesh );
 					// Store pit location.
-					if ( !pitMap[ data.x ] ) {
-						pitMap[ data.x ] = {};
+					if ( !pitMap[ posX ] ) {
+						pitMap[ posX ] = {};
 					}
 					if ( data.y < 0 ) {
 						// We only want to store positives, not negative.
-						pitMap[ data.x ][ data.z ] = true;
+						pitMap[ posX ][ data.z ] = true;
 					}
 					// Update bounds of obstacle.
-					minX = Math.min( data.x, minX );
+					minX = Math.min( posX, minX );
 					minZ = Math.min( data.z, minZ );
-					maxX = Math.max( data.x, maxX );
+					maxX = Math.max( posX, maxX );
 					maxZ = Math.max( data.z, maxZ );
 				}
 				// Fill in floor geometry wherever no pits exist.
@@ -87,9 +101,7 @@ package com.funrun.game.controller.commands
 						}
 					}
 				}
-				// Store this sucker.
-				obstaclesModel.addObstacle( new ObstacleData( obstacleMesh, boundingBoxes ) );
-			}
+				return obstacleMesh;
 		}
 	}
 }
