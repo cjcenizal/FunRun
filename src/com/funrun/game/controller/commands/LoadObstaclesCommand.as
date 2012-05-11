@@ -80,7 +80,15 @@ package com.funrun.game.controller.commands {
 				merge.apply( obstacleMesh, mesh );
 				
 				// Add a bounding box.
-				//var boundingBox:BoundingBoxData = new BoundingBoxData();
+				var boundingBox:BoundingBoxData = new BoundingBoxData(
+					blocksModel.getBlock( data.id ),
+					mesh.x - TrackConstants.BLOCK_SIZE_HALF,
+					mesh.y - TrackConstants.BLOCK_SIZE_HALF,
+					mesh.z - TrackConstants.BLOCK_SIZE_HALF,
+					mesh.x + TrackConstants.BLOCK_SIZE_HALF,
+					mesh.y + TrackConstants.BLOCK_SIZE_HALF,
+					mesh.z + TrackConstants.BLOCK_SIZE_HALF
+				);
 				
 				// Store pit location.
 				if ( !pitMap[ posX ] ) {

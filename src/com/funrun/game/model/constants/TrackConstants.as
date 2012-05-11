@@ -4,6 +4,7 @@ package com.funrun.game.model.constants
 	{
 		// Sizes.
 		public static const BLOCK_SIZE:Number = 100;
+		public static const BLOCK_SIZE_HALF:Number = BLOCK_SIZE * .5;
 		public static const TRACK_WIDTH:int = 1200;
 		public static const TRACK_LENGTH:int = 5000;
 		public static const TRACK_WIDTH_BLOCKS:int = TRACK_WIDTH / BLOCK_SIZE;
