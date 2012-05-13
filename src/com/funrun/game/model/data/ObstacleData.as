@@ -41,9 +41,9 @@ package com.funrun.game.model.data {
 			return _mesh;
 		}
 		
-		public function getCollisions( posX:Number, posY:Number, posZ:Number, minX:Number, maxX:Number, minY:Number, maxY:Number, minZ:Number, maxZ:Number ):void {
+		public function getCollisions( posX:Number, posY:Number, posZ:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ):Array {
+			var collisions:Array = [];
 			var box:BoundingBoxData;
-		//	trace("  " + _numBoundingBoxes);
 			for ( var i:int = 0; i < _numBoundingBoxes; i++ ) {
 				box = getBoundingBoxAt( i );
 				if ( doCollide(
@@ -54,22 +54,23 @@ package com.funrun.game.model.data {
 					_mesh.y + box.minY, _mesh.y + box.maxY,
 					_mesh.z + box.minZ, _mesh.z + box.maxZ
 				) ) {
-					//trace("      " + i + " collision");
+					collisions.push( box );
 				}
 			}
+			return collisions;
 		}
 
 		private function doCollide(
 			aMinX:Number, aMaxX:Number, aMinY:Number, aMaxY:Number, aMinZ:Number, aMaxZ:Number,
 			bMinX:Number, bMaxX:Number, bMinY:Number, bMaxY:Number, bMinZ:Number, bMaxZ:Number
 		):Boolean {
-			if ( aMinX > aMaxX || aMinX > aMaxX ) {
+			if ( aMinX > bMaxX || bMinX > aMaxX ) {
 				return false;
 			}
-			if ( aMinY > aMaxY || aMinY > aMaxY ) {
+			if ( aMinY > bMaxY || bMinY > aMaxY ) {
 				return false;
 			}
-			if ( aMinZ > aMaxZ || aMinZ > aMaxZ ) {
+			if ( aMinZ > bMaxZ || bMinZ > aMaxZ ) {
 				return false;
 			}
 			return true;

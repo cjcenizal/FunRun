@@ -43,6 +43,7 @@ package com.funrun.game.controller.commands
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
 				// Add obstacles to fill up track.
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+			
 			}
 			
 			// Collisions.
@@ -61,7 +62,10 @@ package com.funrun.game.controller.commands
 			for ( var i:int = 0; i < len; i++ ) {
 				//trace(i);
 				obstacle = trackModel.getObstacleAt( i );
-				obstacle.getCollisions( playerX, playerY, playerZ, minX, maxX, minY, maxY, minZ, maxZ );
+				var collisions:Array = obstacle.getCollisions( playerX, playerY, playerZ, minX, minY, minZ, maxX, maxY, maxZ );
+				for ( var j:int = 0; j < collisions.length; j++ ) {
+					trace( ( collisions[ j ] as BoundingBoxData ).block.id );
+				}
 			}
 			
 			// Update player.
@@ -71,6 +75,8 @@ package com.funrun.game.controller.commands
 			if ( playerModel.player.y <= 25 ) {
 				playerModel.isAirborne = false
 			}
+			
+			//playerModel.player.y = 0;
 			if ( playerModel.player.y < 25 ) { // Temp hack for landing on ground, fix later
 				playerModel.player.y = 25; // 25 is half the player FPO object's height
 				playerModel.jumpVelocity *= -.4;
