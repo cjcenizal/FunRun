@@ -73,8 +73,10 @@ package com.funrun.game.controller.commands
 				// Get all collisions.
 				var collisions:CollisionData = CollisionData.make( obstacle, playerX + minX, playerX + maxX, playerY + minY, playerY + maxY, playerZ + minZ, playerZ + maxZ );
 				for ( var j:int = 0; j < collisions.numCollisions; j++ ) {
-					//switch (
-					trace( ( collisions.getBoxAt( j ) ).block.id + " " + collisions.getFaceAt( j ) );
+					// Resolve collisions by placing player on top of any boxes we collide with.
+					if ( collisions.getFaceAt( j ) == "t" && ( collisions.getBoxAt( j ) ).block.topFace == "walk" ) {
+						playerModel.player.y = ( collisions.getBoxAt( j ) ).y + ( collisions.getBoxAt( j ) ).maxY + 25;
+					}
 				}
 			}
 			

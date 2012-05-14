@@ -5,6 +5,9 @@ package com.funrun.game.model.data
 	public class BoundingBoxData
 	{
 		public var block:BlockParser;
+		public var x:Number;
+		public var y:Number;
+		public var z:Number;
 		public var minX:Number;
 		public var minY:Number;
 		public var minZ:Number;
@@ -12,9 +15,12 @@ package com.funrun.game.model.data
 		public var maxY:Number;
 		public var maxZ:Number;
 		
-		public function BoundingBoxData( block:BlockParser, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
+		public function BoundingBoxData( block:BlockParser, x:Number, y:Number, z:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
 		{
 			this.block = block;
+			this.x = x;
+			this.y = y;
+			this.z = z;
 			this.minX = minX;
 			this.minY = minY;
 			this.minZ = minZ;

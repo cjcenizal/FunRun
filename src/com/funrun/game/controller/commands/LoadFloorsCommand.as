@@ -44,6 +44,7 @@ package com.funrun.game.controller.commands {
 				// Add a bounding box so we can collide with the floor.
 				boundingBoxes.push( new BoundingBoxData(
 					blocksModel.getBlock( BlockTypes.FLOOR ),
+					mesh.x, mesh.y, mesh.z,
 					mesh.x - TrackConstants.BLOCK_SIZE_HALF,
 					mesh.y - TrackConstants.BLOCK_SIZE_HALF,
 					mesh.z - TrackConstants.BLOCK_SIZE_HALF,
