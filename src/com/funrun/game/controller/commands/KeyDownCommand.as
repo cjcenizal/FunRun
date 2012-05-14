@@ -20,10 +20,7 @@ package com.funrun.game.controller.commands {
 			switch ( event.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:
-					trace("jump: " + playerModel.isAirborne);
-					if ( !playerModel.isAirborne ) {
-						playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
-					}
+					playerModel.isJumping = true;
 					break;
 				case Keyboard.LEFT:
 					playerModel.startMovingLeft( TrackConstants.PLAYER_LATERAL_SPEED );

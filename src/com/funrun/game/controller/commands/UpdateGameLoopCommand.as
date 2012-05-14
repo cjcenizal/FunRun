@@ -44,6 +44,9 @@ package com.funrun.game.controller.commands
 			}
 			
 			// Update player.
+			if ( playerModel.isJumping && !playerModel.isAirborne ) {
+				playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
+			}
 			playerModel.jumpVelocity += TrackConstants.PLAYER_JUMP_GRAVITY;
 			playerModel.player.x += playerModel.lateralVelocity;
 			playerModel.player.y += playerModel.jumpVelocity;
@@ -106,7 +109,7 @@ package com.funrun.game.controller.commands
 				// The player is airborne if he's not colliding with a floor.
 				playerModel.isAirborne = true;
 			}
-		
+			
 			// TO-DO: Resolve additional collisions (hitting sides and front).
 			
 			// TO-DO: Apply additional events based on collisions.

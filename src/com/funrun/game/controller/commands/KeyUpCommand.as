@@ -20,7 +20,7 @@ package com.funrun.game.controller.commands {
 			switch ( event.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:
-					playerModel.stopJumping();
+					playerModel.isJumping = false;
 					break;
 				case Keyboard.LEFT:
 					playerModel.stopMovingLeft( TrackConstants.PLAYER_LATERAL_SPEED );
