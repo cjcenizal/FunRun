@@ -10,6 +10,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.data.BoundingBoxData;
+	import com.funrun.game.model.data.CollisionData;
 	import com.funrun.game.model.data.ObstacleData;
 	
 	import org.robotlegs.mvcs.Command;
@@ -60,12 +61,17 @@ package com.funrun.game.controller.commands
 			var maxZ:Number = playerModel.player.bounds.max.z;
 			trace("=====================================");
 			for ( var i:int = 0; i < len; i++ ) {
-				//trace(i);
+				// Get obstacle.
 				obstacle = trackModel.getObstacleAt( i );
-				var collisions:Array = obstacle.getCollisions( playerX, playerY, playerZ, minX, minY, minZ, maxX, maxY, maxZ );
-				for ( var j:int = 0; j < collisions.length; j++ ) {
-					trace( ( collisions[ j ] as BoundingBoxData ).block.id );
-				}
+				
+				// TO-DO: Do general collision first.
+				
+				// Get all collisions.
+				var collisions:CollisionData = CollisionData.make( obstacle, playerX + minX, playerX + maxX, playerY + minY, playerY + maxY, playerZ + minZ, playerZ + maxZ );
+				//for ( var j:int = 0; j < collisions.length; j++ ) {
+					//switch (
+				//	trace( ( collisions[ j ] as BoundingBoxData ).block.id );
+				//}
 			}
 			
 			// Update player.

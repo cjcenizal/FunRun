@@ -41,47 +41,20 @@ package com.funrun.game.model.data {
 			return _mesh;
 		}
 		
-		public function getCollisions( posX:Number, posY:Number, posZ:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ):Array {
-			var collisions:Array = [];
-			var box:BoundingBoxData;
-			for ( var i:int = 0; i < _numBoundingBoxes; i++ ) {
-				box = getBoundingBoxAt( i );
-				if ( doCollide(
-					posX + minX, posX + maxX,
-					posY + minY, posY + maxY,
-					posZ + minZ, posZ + maxZ,
-					_mesh.x + box.minX, _mesh.x + box.maxX,
-					_mesh.y + box.minY, _mesh.y + box.maxY,
-					_mesh.z + box.minZ, _mesh.z + box.maxZ
-				) ) {
-					collisions.push( box );
-				}
-			}
-			return collisions;
-		}
-
-		private function doCollide(
-			aMinX:Number, aMaxX:Number, aMinY:Number, aMaxY:Number, aMinZ:Number, aMaxZ:Number,
-			bMinX:Number, bMaxX:Number, bMinY:Number, bMaxY:Number, bMinZ:Number, bMaxZ:Number
-		):Boolean {
-			if ( aMinX > bMaxX || bMinX > aMaxX ) {
-				return false;
-			}
-			if ( aMinY > bMaxY || bMinY > aMaxY ) {
-				return false;
-			}
-			if ( aMinZ > bMaxZ || bMinZ > aMaxZ ) {
-				return false;
-			}
-			return true;
-		}
-		
 		public function get numBoundingBoxes():int {
 			return _numBoundingBoxes;
 		}
 		
 		public function getBoundingBoxAt( index:int ):BoundingBoxData {
 			return _boundingBoxes[ index ];
+		}
+
+		public function get x():Number {
+			return _mesh.x;
+		}
+		
+		public function get y():Number {
+			return _mesh.y;
 		}
 		
 		public function set z( val:Number ):void {
@@ -105,12 +78,12 @@ package com.funrun.game.model.data {
 			var boundingBoxes:Array = [];
 			var geo:PrimitiveBase, mesh:Mesh, pitMap:Object, minX:int, minZ:int, maxX:int, maxZ:int;
 			
-			// TO-DO: Customize this
+			// TO-DO: Customize this with a material specific to the block.
 			var material:MaterialBase = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 			
 			var merge:Merge = new Merge( true );
 			
-			// TO-DO: Customize this geo
+			// TO-DO: Customize this geo to be specific to the block.
 			var obstacleMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
 			
 			var boundingBoxes:Array = [];
@@ -159,10 +132,10 @@ package com.funrun.game.model.data {
 			// Fill in floor geometry wherever no pits exist.
 			var floorType:String = BlockTypes.FLOOR;
 			
-			// TO-DO: Customize this geo
+			// TO-DO: Customize this geo to be specific to the block.
 			geo = blocksModel.getBlock( floorType ).geo;
 			
-			// TO-DO: Customize this
+			// TO-DO: Customize this to be specific to the block.
 			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
 			
 			for ( var x:int = minX; x <= maxX; x++ ) {
