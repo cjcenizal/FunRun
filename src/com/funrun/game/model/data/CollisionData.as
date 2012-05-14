@@ -43,28 +43,34 @@ package com.funrun.game.model.data
 		}
 		
 		public static function make( obstacle:ObstacleData, minX:Number, maxX:Number, minY:Number, maxY:Number, minZ:Number, maxZ:Number ):CollisionData {
-			// Get the faces we collide with for each box.
-			var collisions:CollisionData = new CollisionData();
-			var box:BoundingBoxData;
-			var len:int = obstacle.numBoundingBoxes;
-			var obsX:Number = obstacle.x;
-			var obsY:Number = obstacle.y;
-			var obsZ:Number = obstacle.z;
-			for ( var i:int = 0; i < len; i++ ) {
-				box = obstacle.getBoundingBoxAt( i );
-				var faces:Array = getFaceCollisionsWithObstacle(
-					obsX + box.minX, obsX + box.maxX,
-					obsY + box.minY, obsY + box.maxY,
-					obsZ + box.minZ, obsZ + box.maxZ,
-					minX, maxX, minY, maxY, minZ, maxZ
-				);
-				if ( faces ) {
-					for ( var j:int = 0; j < faces.length; j++ ) {
-						collisions.addCollision( box, faces[ j ] );
+			/*if ( doCollide(
+				obstacle.x + obstacle.minX, obstacle.x + obstacle.maxX, obstacle.y + obstacle.minY, obstacle.y + obstacle.maxY, obstacle.z + obstacle.minZ, obstacle.z + obstacle.maxZ,
+				minX, maxX, minY, maxY, minZ, maxZ
+			) ) {*/
+				// Get the faces we collide with for each box.
+				var collisions:CollisionData = new CollisionData();
+				var box:BoundingBoxData;
+				var len:int = obstacle.numBoundingBoxes;
+				var obsX:Number = obstacle.x;
+				var obsY:Number = obstacle.y;
+				var obsZ:Number = obstacle.z;
+				for ( var i:int = 0; i < len; i++ ) {
+					box = obstacle.getBoundingBoxAt( i );
+					var faces:Array = getFaceCollisionsWithObstacle(
+						obsX + box.minX, obsX + box.maxX,
+						obsY + box.minY, obsY + box.maxY,
+						obsZ + box.minZ, obsZ + box.maxZ,
+						minX, maxX, minY, maxY, minZ, maxZ
+					);
+					if ( faces ) {
+						for ( var j:int = 0; j < faces.length; j++ ) {
+							collisions.addCollision( box, faces[ j ] );
+						}
 					}
 				}
-			}
-			return collisions;
+				return collisions;
+			//}
+			return null;
 		}
 		
 		/**

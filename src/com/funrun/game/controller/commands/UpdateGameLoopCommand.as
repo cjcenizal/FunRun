@@ -1,7 +1,5 @@
 package com.funrun.game.controller.commands
 {
-	import away3d.entities.Mesh;
-	
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
@@ -9,7 +7,6 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.data.BoundingBoxData;
 	import com.funrun.game.model.data.CollisionData;
 	import com.funrun.game.model.data.ObstacleData;
 	
@@ -50,15 +47,6 @@ package com.funrun.game.controller.commands
 			playerModel.jumpVelocity += TrackConstants.PLAYER_JUMP_GRAVITY;
 			playerModel.player.x += playerModel.lateralVelocity;
 			playerModel.player.y += playerModel.jumpVelocity;
-			//	if ( playerModel.player.y <= 25 ) {
-			//		playerModel.isAirborne = false;
-			//	}
-			
-			//playerModel.player.y = 0;
-			//	if ( playerModel.player.y < 25 ) { // Temp hack for landing on ground, fix later
-			//		playerModel.player.y = 25; // 25 is half the player FPO object's height
-			//		playerModel.jumpVelocity *= -.4;
-			//	}
 			
 			// TO-DO: Make ducking cooler.
 			if ( playerModel.isDucking ) {
@@ -83,29 +71,47 @@ package com.funrun.game.controller.commands
 			var minZ:Number = playerModel.player.bounds.min.z;
 			var maxZ:Number = playerModel.player.bounds.max.z;
 			
-			trace("=====================================");
-			
+			// Collect all collisions.
+			var collisions:Array = [];
 			for ( var i:int = 0; i < len; i++ ) {
-				// Get obstacle.
 				obstacle = trackModel.getObstacleAt( i );
-				
-				// TO-DO: Do general collision first.
-				
-				// Get all collisions.
-				var collisions:CollisionData = CollisionData.make( obstacle, playerX + minX, playerX + maxX, playerY + minY, playerY + maxY, playerZ + minZ, playerZ + maxZ );
-				var walkHeight:int = TrackConstants.CULL_FLOOR;
-				for ( var j:int = 0; j < collisions.numCollisions; j++ ) {
-					// Resolve collisions by placing player on top of any boxes we collide with.
-					if ( collisions.getFaceAt( j ) == "t" && ( collisions.getBoxAt( j ) ).block.topFace == "walk" ) {
-						walkHeight = Math.max( walkHeight, collisions.getBoxAt( j ).maxY );
-					}
-				}
-				if ( walkHeight > TrackConstants.CULL_FLOOR ) {
-					playerModel.player.y = walkHeight + 25;
-					playerModel.jumpVelocity = 0;
-					playerModel.isAirborne = false;
+				var collisionData:CollisionData = CollisionData.make( obstacle, playerX + minX, playerX + maxX, playerY + minY, playerY + maxY, playerZ + minZ, playerZ + maxZ );
+				if ( collisionData ) {
+					collisions.push( collisionData );
 				}
 			}
+			
+			// Figure out at which height to resolve collisions.
+			var walkHeight:int = TrackConstants.CULL_FLOOR;
+			for ( var i:int = 0; i < collisions.length; i++ ) {
+				var collisionData:CollisionData = collisions[ i ];
+				for ( var j:int = 0; j < collisionData.numCollisions; j++ ) {
+					// Resolve collisions by placing player on top of any boxes we collide with.
+					if ( collisionData.getFaceAt( j ) == "t" && ( collisionData.getBoxAt( j ) ).block.topFace == "walk" ) {
+						// Of all the faces we've collided with, find the highest one.
+						walkHeight = Math.max( walkHeight, collisionData.getBoxAt( j ).maxY );
+					}
+				}
+			}
+			
+			// Reposition the player if we need to resolve a collision.
+			if ( walkHeight > TrackConstants.CULL_FLOOR ) {
+				playerModel.player.y = walkHeight + 25;
+				playerModel.jumpVelocity = 0;
+				playerModel.isAirborne = false;
+				
+				// TO-DO: Remove invalidated collisions.
+				//collisions.resolveWithNewPosition( playerModel.player.x
+			} else {
+				// The player is airborne if he's not colliding with a floor.
+				playerModel.isAirborne = true;
+			}
+		
+			// TO-DO: Resolve additional collisions (hitting sides and front).
+			
+			// TO-DO: Apply additional events based on collisions.
+			// Apply logic for removing redundant events.
+			
 			
 			
 			

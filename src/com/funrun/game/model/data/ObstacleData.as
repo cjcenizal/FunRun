@@ -13,8 +13,6 @@ package com.funrun.game.model.data {
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.parsers.BlockParser;
 	import com.funrun.game.model.parsers.ObstacleParser;
-	
-	import flash.geom.Vector3D;
 
 	public class ObstacleData {
 
@@ -22,15 +20,27 @@ package com.funrun.game.model.data {
 		private var _boundingBoxes:Array;
 		private var _numBoundingBoxes:int;
 		private var _z:Number = 0;
+		private var _minX:Number;
+		private var _minY:Number;
+		private var _minZ:Number;
+		private var _maxX:Number;
+		private var _maxY:Number;
+		private var _maxZ:Number;
 
-		public function ObstacleData( mesh:Mesh, boundingBoxes:Array ) {
+		public function ObstacleData( mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
 			_mesh = mesh;
 			_boundingBoxes = boundingBoxes;
 			_numBoundingBoxes = ( _boundingBoxes ) ? _boundingBoxes.length : 0;
+			_minX = minX;
+			_minY = minY;
+			_minZ = minZ;
+			_maxX = maxX;
+			_maxY = maxY;
+			_maxZ = maxZ;
 		}
 		
 		public function clone():ObstacleData {
-			return new ObstacleData( _mesh.clone() as Mesh, _boundingBoxes );
+			return new ObstacleData( _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
 		}
 		
 		/**
@@ -69,6 +79,30 @@ package com.funrun.game.model.data {
 			return _mesh.bounds;
 		}
 		
+		public function get minX():Number {
+			return _minX;
+		}
+		
+		public function get minY():Number {
+			return _minY;
+		}
+		
+		public function get minZ():Number {
+			return _minZ;
+		}
+		
+		public function get maxX():Number {
+			return _maxX;
+		}
+		
+		public function get maxY():Number {
+			return _maxY;
+		}
+		
+		public function get maxZ():Number {
+			return _maxZ;
+		}
+		
 		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, parser:ObstacleParser, flip:Boolean = false ):ObstacleData {
 			
 			// TO-DO:
@@ -76,7 +110,7 @@ package com.funrun.game.model.data {
 			// need to be walkable and not obstacle.
 			
 			var boundingBoxes:Array = [];
-			var geo:PrimitiveBase, mesh:Mesh, pitMap:Object, minX:int, minZ:int, maxX:int, maxZ:int;
+			var geo:PrimitiveBase, mesh:Mesh, pitMap:Object, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number;
 			
 			// TO-DO: Customize this with a material specific to the block.
 			var material:MaterialBase = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
@@ -89,8 +123,10 @@ package com.funrun.game.model.data {
 			var boundingBoxes:Array = [];
 			pitMap = {};
 			minX = 0;
+			minY = 0;
 			minZ = 0;
 			maxX = TrackConstants.TRACK_WIDTH_BLOCKS - 1;
+			maxY = 0;
 			maxZ = 0;
 			// Add obstacle geometry.
 			for ( var j:int = 0; j < parser.numBlocks; j++ ) {
@@ -139,6 +175,7 @@ package com.funrun.game.model.data {
 			// TO-DO: Customize this to be specific to the block.
 			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
 			
+			// Fill in gaps with floors.
 			for ( var x:int = minX; x <= maxX; x++ ) {
 				for ( var z:int = minZ; z <= maxZ; z++ ) {
 					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
@@ -162,7 +199,16 @@ package com.funrun.game.model.data {
 					}
 				}
 			}
-			return new ObstacleData( obstacleMesh, boundingBoxes );
+			
+			// Store bounds. Adjust values to be absolute instead of relative.
+			minX *= TrackConstants.BLOCK_SIZE;
+			maxX *= TrackConstants.BLOCK_SIZE;
+			minY *= TrackConstants.BLOCK_SIZE;
+			maxY *= TrackConstants.BLOCK_SIZE;
+			minZ *= TrackConstants.BLOCK_SIZE;
+			maxZ *= TrackConstants.BLOCK_SIZE;
+			
+			return new ObstacleData( obstacleMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ );
 		}
 	}
 }
