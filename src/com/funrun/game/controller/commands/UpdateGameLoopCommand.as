@@ -46,6 +46,27 @@ package com.funrun.game.controller.commands
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
 			
+			// Update player.
+			playerModel.jumpVelocity += TrackConstants.PLAYER_JUMP_GRAVITY;
+			playerModel.player.x += playerModel.lateralVelocity;
+			playerModel.player.y += playerModel.jumpVelocity;
+			//	if ( playerModel.player.y <= 25 ) {
+			//		playerModel.isAirborne = false;
+			//	}
+			
+			//playerModel.player.y = 0;
+			//	if ( playerModel.player.y < 25 ) { // Temp hack for landing on ground, fix later
+			//		playerModel.player.y = 25; // 25 is half the player FPO object's height
+			//		playerModel.jumpVelocity *= -.4;
+			//	}
+			
+			// TO-DO: Make ducking cooler.
+			if ( playerModel.isDucking ) {
+				playerModel.player.scaleY = .5;
+			} else {
+				playerModel.player.scaleY = 1;
+			}
+			
 			// Collisions.
 			
 			// TO-DO: Do interpolation here.
@@ -72,34 +93,21 @@ package com.funrun.game.controller.commands
 				
 				// Get all collisions.
 				var collisions:CollisionData = CollisionData.make( obstacle, playerX + minX, playerX + maxX, playerY + minY, playerY + maxY, playerZ + minZ, playerZ + maxZ );
+				var walkHeight:int = TrackConstants.CULL_FLOOR;
 				for ( var j:int = 0; j < collisions.numCollisions; j++ ) {
 					// Resolve collisions by placing player on top of any boxes we collide with.
 					if ( collisions.getFaceAt( j ) == "t" && ( collisions.getBoxAt( j ) ).block.topFace == "walk" ) {
-						playerModel.player.y = ( collisions.getBoxAt( j ) ).y + ( collisions.getBoxAt( j ) ).maxY + 25;
+						walkHeight = Math.max( walkHeight, collisions.getBoxAt( j ).maxY );
 					}
+				}
+				if ( walkHeight > TrackConstants.CULL_FLOOR ) {
+					playerModel.player.y = walkHeight + 25;
+					playerModel.jumpVelocity = 0;
+					playerModel.isAirborne = false;
 				}
 			}
 			
-			// Update player.
-			playerModel.jumpVelocity += TrackConstants.PLAYER_JUMP_GRAVITY;
-			playerModel.player.y += playerModel.jumpVelocity;
-			playerModel.player.x += playerModel.lateralVelocity;
-			if ( playerModel.player.y <= 25 ) {
-				playerModel.isAirborne = false
-			}
 			
-			//playerModel.player.y = 0;
-			if ( playerModel.player.y < 25 ) { // Temp hack for landing on ground, fix later
-				playerModel.player.y = 25; // 25 is half the player FPO object's height
-				playerModel.jumpVelocity *= -.4;
-			}
-			
-			// TO-DO: Make ducking cooler.
-			if ( playerModel.isDucking ) {
-				playerModel.player.scaleY = .5;
-			} else {
-				playerModel.player.scaleY = 1;
-			}
 			
 			// Update camera.
 			cameraModel.camera.x = playerModel.player.x;

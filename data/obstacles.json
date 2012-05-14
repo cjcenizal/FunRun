@@ -3,57 +3,22 @@
 	"author" : "CJ Cenizal",
 	"list" : [
 		{
-			"id" : "beam",
+			"id" : "dais",
 			"blocks" : [
-				[ [ "block", "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ "block", "block" ] ]
-			]
-		},
-		{
-			"id" : "teeth",
-			"blocks" : [
-				[ [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ] ],
-				[ [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ] ]
-			]
-		},
-		{
-			"id" : "wall",
-			"blocks" : [
-				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
-			]
-		},
-		{
-			"id" : "underpass",
-			"blocks" : [
-				[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ],
-			[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ],
-			[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ],
-			[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ],
-			[ [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ], [ null, null, null, "block" ] ]
-			]
-		},
-		{
-			"id" : "trench",
-			"pits" : [
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
-			]
-		},
-		{
-			"id" : "wallPit",
-			"flip" : true,
-			"pits" : [
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
-			],
-			"blocks" : [
-				[],[],[],[],[],[],
-				[ [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ]
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ],
+				[ [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ], [ "block" ] ]
 			]
 		}
 	]

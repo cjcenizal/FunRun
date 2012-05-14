@@ -28,5 +28,8 @@ package com.funrun.game.model.constants
 		private static const OBSTACLES_PER_NAIVE_GAP:Number = Math.round( NAIVE_OBSTACLE_GAP / BLOCK_SIZE );
 		public static const OBSTACLE_GAP:Number = OBSTACLES_PER_NAIVE_GAP * BLOCK_SIZE;
 		public static const REMOVE_OBSTACLE_DEPTH:Number = -1600;
+		
+		// Culling.
+		public static const CULL_FLOOR:int = -100000;
 	}
 }
