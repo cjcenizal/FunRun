@@ -44,10 +44,12 @@ package com.funrun.game.controller.commands
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
 				// Add obstacles to fill up track.
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
-			
 			}
 			
 			// Collisions.
+			
+			// TO-DO: Do interpolation here.
+			
 			var len:int = trackModel.numObstacles;
 			var obstacle:ObstacleData;
 			var playerX:Number = playerModel.player.x;
@@ -59,7 +61,9 @@ package com.funrun.game.controller.commands
 			var maxY:Number = playerModel.player.bounds.max.y;
 			var minZ:Number = playerModel.player.bounds.min.z;
 			var maxZ:Number = playerModel.player.bounds.max.z;
+			
 			trace("=====================================");
+			
 			for ( var i:int = 0; i < len; i++ ) {
 				// Get obstacle.
 				obstacle = trackModel.getObstacleAt( i );
@@ -68,10 +72,10 @@ package com.funrun.game.controller.commands
 				
 				// Get all collisions.
 				var collisions:CollisionData = CollisionData.make( obstacle, playerX + minX, playerX + maxX, playerY + minY, playerY + maxY, playerZ + minZ, playerZ + maxZ );
-				//for ( var j:int = 0; j < collisions.length; j++ ) {
+				for ( var j:int = 0; j < collisions.numCollisions; j++ ) {
 					//switch (
-				//	trace( ( collisions[ j ] as BoundingBoxData ).block.id );
-				//}
+					trace( ( collisions.getBoxAt( j ) ).block.id + " " + collisions.getFaceAt( j ) );
+				}
 			}
 			
 			// Update player.

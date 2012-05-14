@@ -13,6 +13,9 @@ package com.funrun.game.model.data
 	 */
 	public class CollisionData
 	{
+		private static const BOX:String = "box";
+		private static const FACE:String = "face";
+		
 		private var _collisions:Array;
 		
 		public function CollisionData()
@@ -20,19 +23,23 @@ package com.funrun.game.model.data
 			_collisions = [];
 		}
 		
-		public function addCollision( box:BoundingBoxData, collisions:Array ):void {
-			_collisions.push( {
-				"box" : box,
-				"collisions" : collisions
-			} );
+		public function addCollision( box:BoundingBoxData, face:String ):void {
+			var obj:Object = {};
+			obj[ BOX ] = box;
+			obj[ FACE ] = face;
+			_collisions.push( obj );
+		}
+		
+		public function get numCollisions():int {
+			return _collisions.length;
 		}
 		
 		public function getBoxAt( index:int ):BoundingBoxData {
-			return _collisions[ index ][ "box" ];
+			return _collisions[ index ][ BOX ];
 		}
 		
-		public function getFacesAt( index:int ):Array {
-			return _collisions[ index ][ "collisions" ];
+		public function getFaceAt( index:int ):String {
+			return _collisions[ index ][ FACE ];
 		}
 		
 		public static function make( obstacle:ObstacleData, minX:Number, maxX:Number, minY:Number, maxY:Number, minZ:Number, maxZ:Number ):CollisionData {
@@ -52,7 +59,9 @@ package com.funrun.game.model.data
 					minX, maxX, minY, maxY, minZ, maxZ
 				);
 				if ( faces ) {
-					collisions.addCollision( box, faces );
+					for ( var j:int = 0; j < faces.length; j++ ) {
+						collisions.addCollision( box, faces[ j ] );
+					}
 				}
 			}
 			return collisions;
@@ -79,12 +88,12 @@ package com.funrun.game.model.data
 					arr.push( FaceTypes.LEFT );
 				}
 				if ( aMinY <= bMinY && aMaxY >= bMinY ) {
-					// A is above B, but A's max overlaps B's min: bottom.
-					arr.push( FaceTypes.BOTTOM );
+					// A is below B, but A's max overlaps B's min: bottom.
+					arr.push( FaceTypes.TOP );
 				}
 				if ( bMinY <= aMinY && bMaxY >= aMinY ) {
-					// B is above A, but B's max overlaps A's min: top.
-					arr.push( FaceTypes.TOP );
+					// B is below A, but B's max overlaps A's min: top.
+					arr.push( FaceTypes.BOTTOM );
 				}
 				if ( aMinZ <= bMinZ && aMaxZ >= bMinZ ) {
 					// A is in front of B, but A's max overlaps B's min: aft.
