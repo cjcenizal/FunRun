@@ -47,9 +47,14 @@ package com.funrun.game.controller.commands
 			
 			// Update forward speed.
 			if ( playerModel.isDead ) {
+				playerModel.lateralVelocity = 0;
 				playerModel.speed *= .7;
 			} else {
-				if ( playerModel.speed < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
+				if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
+					if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
+						playerModel.speed--;
+					}
+				} else if ( playerModel.speed < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
 					playerModel.speed += TrackConstants.PLAYER_FOWARD_ACCELERATION;
 				}
 				// Update jumping.
@@ -68,7 +73,8 @@ package com.funrun.game.controller.commands
 			
 			// TO-DO: Make ducking cooler.
 			if ( playerModel.isDucking ) {
-				playerModel.player.scaleY = .5;
+				// TO-DO: Reduce collision bounds here.
+				playerModel.player.scaleY = .25;
 			} else {
 				playerModel.player.scaleY = 1;
 			}
@@ -111,7 +117,7 @@ package com.funrun.game.controller.commands
 							if ( collisionData.getFaceAt( j ) == FaceTypes.BOTTOM
 								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.BOTTOM ) ) ) {
 								playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
-								playerModel.player.y = collisionData.getBoxAt( j ).minY - 25;
+								playerModel.player.y = collisionData.getBoxAt( j ).minY - TrackConstants.PLAYER_HALF_SIZE;
 							}
 							playerModel.isAirborne = true;
 						} else {
@@ -119,7 +125,7 @@ package com.funrun.game.controller.commands
 							if ( collisionData.getFaceAt( j ) == FaceTypes.TOP
 								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.TOP ) ) ) {
 								if ( collisionData.getBoxAt( j ).maxY > TrackConstants.CULL_FLOOR ) {
-									playerModel.player.y = collisionData.getBoxAt( j ).maxY + 25;
+									playerModel.player.y = collisionData.getBoxAt( j ).maxY + TrackConstants.PLAYER_HALF_SIZE;
 									playerModel.jumpVelocity = 0;
 									playerModel.isAirborne = false;
 								} else {
@@ -144,7 +150,7 @@ package com.funrun.game.controller.commands
 						// Always hit the front sides of things.
 						if ( collisionData.getFaceAt( j ) == FaceTypes.FRONT
 							&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.FRONT ) ) ) {
-							playerModel.player.z = collisionData.getBoxAt( j ).minZ - 25;
+							playerModel.player.z = collisionData.getBoxAt( j ).minZ - TrackConstants.PLAYER_HALF_SIZE;
 							if ( collisionData.getBoxAt( j ).block.getEventAtFace( FaceTypes.FRONT ) == CollisionTypes.SMACK ) {
 								playerModel.isDead = true;
 								playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;

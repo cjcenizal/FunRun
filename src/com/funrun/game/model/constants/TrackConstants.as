@@ -9,6 +9,7 @@ package com.funrun.game.model.constants
 		public static const TRACK_LENGTH:int = 5000;
 		public static const TRACK_WIDTH_BLOCKS:int = TRACK_WIDTH / BLOCK_SIZE;
 		public static const TRACK_LENGTH_BLOCKS:int = TRACK_LENGTH / BLOCK_SIZE;
+		public static const PLAYER_HALF_SIZE:int = 55;
 		
 		// Camera.
 		public static const CAM_Y:Number = 800;
@@ -19,10 +20,11 @@ package com.funrun.game.model.constants
 		
 		// Player movement constants.
 		public static const PLAYER_FOWARD_ACCELERATION:Number = 1;
-		public static const PLAYER_JUMP_SPEED:Number = 84;
+		public static const PLAYER_JUMP_SPEED:Number = 100;//84;
 		public static const PLAYER_LATERAL_SPEED:Number = 30;
 		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 50;
 		public static const PLAYER_GRAVITY:Number = -8;
+		public static const SLOWED_DIAGONAL_SPEED:Number = 42;
 		
 		// Obstacle creation constants.
 		private static const NAIVE_OBSTACLE_GAP:Number = 900;

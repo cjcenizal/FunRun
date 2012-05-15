@@ -99,6 +99,10 @@ package com.funrun.game.model
 			return _lateralVelocity;
 		}
 		
+		public function set lateralVelocity( val:Number ) {
+			_lateralVelocity = val;
+		}
+		
 		public function get jumpVelocity():Number {
 			return _jumpVelocity;
 		}

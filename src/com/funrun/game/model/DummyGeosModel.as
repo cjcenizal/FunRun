@@ -19,6 +19,7 @@ package com.funrun.game.model {
 			_geos[ BlockTypes.EMPTY ] = new PlaneGeometry( 1, 1 );
 			_geos[ BlockTypes.BLOCK ] = new CubeGeometry( 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE );
 			_geos[ BlockTypes.FLOOR ] = new CubeGeometry( 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE );
+			_geos[ BlockTypes.CEILING ] = new CubeGeometry( 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE );
 		}
 		
 		public function getGeo( id:String ):PrimitiveBase {

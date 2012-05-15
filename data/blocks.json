@@ -76,6 +76,17 @@
 			"faces" : {
 				"t" : "walk"
 			}
+		},
+		{
+			"id" : "ceil",
+			"filename" : "ceil.dae",
+			"hit" : [
+				"t",
+				"b"
+			],
+			"faces" : {
+				"t" : "walk"
+			}
 		}
 	]
 }

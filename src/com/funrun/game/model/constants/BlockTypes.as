@@ -5,5 +5,6 @@ package com.funrun.game.model.constants
 		public static const EMPTY:String = "empty";
 		public static const BLOCK:String = "block";
 		public static const FLOOR:String = "floor";
+		public static const CEILING:String = "ceil";
 	}
 }
