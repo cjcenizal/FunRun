@@ -1,5 +1,6 @@
 package com.funrun.game.model.data
 {
+	import com.funrun.game.model.IObstacleProvider;
 	import com.funrun.game.model.constants.FaceTypes;
 	
 	/**
@@ -11,15 +12,14 @@ package com.funrun.game.model.data
 	 * 
 	 * @author CJ Cenizal
 	 */
-	public class CollisionData
-	{
+	public class CollisionData {
+		
 		private static const BOX:String = "box";
 		private static const FACE:String = "face";
 		
 		private var _collisions:Array;
 		
-		public function CollisionData()
-		{
+		public function CollisionData() {
 			_collisions = [];
 		}
 		
@@ -42,34 +42,43 @@ package com.funrun.game.model.data
 			return _collisions[ index ][ FACE ];
 		}
 		
-		public static function make( obstacle:ObstacleData, minX:Number, maxX:Number, minY:Number, maxY:Number, minZ:Number, maxZ:Number ):CollisionData {
-			/*if ( doCollide(
-				obstacle.x + obstacle.minX, obstacle.x + obstacle.maxX, obstacle.y + obstacle.minY, obstacle.y + obstacle.maxY, obstacle.z + obstacle.minZ, obstacle.z + obstacle.maxZ,
-				minX, maxX, minY, maxY, minZ, maxZ
-			) ) {*/
-				// Get the faces we collide with for each box.
-				var collisions:CollisionData = new CollisionData();
-				var box:BoundingBoxData;
-				var len:int = obstacle.numBoundingBoxes;
-				var obsX:Number = obstacle.x;
-				var obsY:Number = obstacle.y;
-				var obsZ:Number = obstacle.z;
-				for ( var i:int = 0; i < len; i++ ) {
-					box = obstacle.getBoundingBoxAt( i );
-					var faces:Array = getFaceCollisionsWithObstacle(
-						obsX + box.minX, obsX + box.maxX,
-						obsY + box.minY, obsY + box.maxY,
-						obsZ + box.minZ, obsZ + box.maxZ,
-						minX, maxX, minY, maxY, minZ, maxZ
-					);
-					if ( faces ) {
-						for ( var j:int = 0; j < faces.length; j++ ) {
-							collisions.addCollision( box, faces[ j ] );
+		public static function make( obstacles:IObstacleProvider, minX:Number, maxX:Number, minY:Number, maxY:Number, minZ:Number, maxZ:Number ):CollisionData {
+			var collisions:CollisionData = new CollisionData();
+			var numObstacles:int = obstacles.numObstacles;
+			var obstacle:ObstacleData;
+			for ( var i:int = 0; i < numObstacles; i++ ) {
+				obstacle = obstacles.getObstacleAt( i );
+				// TO-DO: Optimize by checking against obstacle bounds first.
+				/*if ( doCollide(
+					obstacle.x + obstacle.minX, obstacle.x + obstacle.maxX, obstacle.y + obstacle.minY, obstacle.y + obstacle.maxY, obstacle.z + obstacle.minZ, obstacle.z + obstacle.maxZ,
+					minX, maxX, minY, maxY, minZ, maxZ
+				) ) {*/
+					// Get the faces we collide with for each box.
+					var box:BoundingBoxData;
+					var numBlocks:int = obstacle.numBoundingBoxes;
+					var obsX:Number = obstacle.x;
+					var obsY:Number = obstacle.y;
+					var obsZ:Number = obstacle.z;
+					for ( var j:int = 0; j < numBlocks; j++ ) {
+						box = obstacle.getBoundingBoxAt( j );
+						var faces:Array = getFaceCollisionsWithObstacle(
+							obsX + box.minX, obsX + box.maxX,
+							obsY + box.minY, obsY + box.maxY,
+							obsZ + box.minZ, obsZ + box.maxZ,
+							minX, maxX, minY, maxY, minZ, maxZ
+						);
+						if ( faces ) {
+							var numFaces:int = faces.length;
+							for ( var k:int = 0; k < numFaces; k++ ) {
+								collisions.addCollision( box, faces[ k ] );
+							}
 						}
 					}
-				}
+				//}
+			}
+			if ( collisions.numCollisions > 0 ) {
 				return collisions;
-			//}
+			}
 			return null;
 		}
 		

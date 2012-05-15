@@ -7,7 +7,7 @@ package com.funrun.game.model {
 	
 	import org.robotlegs.mvcs.Actor;
 	
-	public class TrackModel extends Actor {
+	public class TrackModel extends Actor implements IObstacleProvider {
 		
 		private var _obstacles:Array;
 		

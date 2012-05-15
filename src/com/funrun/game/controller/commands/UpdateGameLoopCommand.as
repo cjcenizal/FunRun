@@ -81,8 +81,6 @@ package com.funrun.game.controller.commands
 			
 			// TO-DO: Do interpolation here.
 			
-			var len:int = trackModel.numObstacles;
-			var obstacle:ObstacleData;
 			var playerX:Number = playerModel.player.x;
 			var playerY:Number = playerModel.player.y;
 			var playerZ:Number = playerModel.player.z;
@@ -94,73 +92,64 @@ package com.funrun.game.controller.commands
 			var maxZ:Number = playerModel.player.bounds.max.z;
 			
 			// Collect all collisions.
-			var collisions:Array = [];
-			for ( var i:int = 0; i < len; i++ ) {
-				obstacle = trackModel.getObstacleAt( i );
-				var collisionData:CollisionData = CollisionData.make( obstacle, playerX + minX, playerX + maxX, playerY + minY, playerY + maxY, playerZ + minZ, playerZ + maxZ );
-				if ( collisionData ) {
-					collisions.push( collisionData );
-				}
-			}
+			var collisions:CollisionData = CollisionData.make(
+				trackModel,
+				playerX + minX, playerX + maxX,
+				playerY + minY, playerY + maxY,
+				playerZ + minZ, playerZ + maxZ );
 			
-			// TO-DO: This is an erroneous length when we're falling off the track.
 			// TO-DO: We can optimize this by only storing collisions where doesFaceCollide evaluates to true
 			// inside of CollisionData.
-			trace(collisions.length);
 			// Resolve collisions.
-			if ( collisions.length > 0 ) {
-				for ( var i:int = 0; i < collisions.length; i++ ) {
-					var collisionData:CollisionData = collisions[ i ];
-					for ( var j:int = 0; j < collisionData.numCollisions; j++ ) {
-						// If the player is moving up, hit the bottom sides of things.
-						if ( playerModel.jumpVelocity > 0 ) {
-							if ( collisionData.getFaceAt( j ) == FaceTypes.BOTTOM
-								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.BOTTOM ) ) ) {
-								playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
-								playerModel.player.y = collisionData.getBoxAt( j ).minY - TrackConstants.PLAYER_HALF_SIZE;
-							}
-							playerModel.isAirborne = true;
-						} else {
-							// Else hit the top sides of things.
-							if ( collisionData.getFaceAt( j ) == FaceTypes.TOP
-								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.TOP ) ) ) {
-								if ( collisionData.getBoxAt( j ).maxY > TrackConstants.CULL_FLOOR ) {
-									playerModel.player.y = collisionData.getBoxAt( j ).maxY + TrackConstants.PLAYER_HALF_SIZE;
-									playerModel.jumpVelocity = 0;
-									playerModel.isAirborne = false;
-								} else {
-									// The player is airborne if he's not colliding with a floor.
-									playerModel.isAirborne = true;
-								}
-							}
+			if ( collisions ) {
+				for ( var j:int = 0; j < collisions.numCollisions; j++ ) {
+					// If the player is moving up, hit the bottom sides of things.
+					if ( playerModel.jumpVelocity > 0 ) {
+						if ( collisions.getFaceAt( j ) == FaceTypes.BOTTOM
+							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.BOTTOM ) ) ) {
+							playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
+							playerModel.player.y = collisions.getBoxAt( j ).minY - TrackConstants.PLAYER_HALF_SIZE;
 						}
-						// If we're moving left, hit the right sides of things.
-						if ( playerModel.lateralVelocity < 0 ) {
-							if ( collisionData.getFaceAt( j ) == FaceTypes.RIGHT
-								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.RIGHT ) ) ) {
-								
-							}
-						} else if ( playerModel.lateralVelocity > 0 ) {
-							// Else if we're moving right, hit the left sides of things.
-							if ( collisionData.getFaceAt( j ) == FaceTypes.LEFT
-								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.LEFT ) ) ) {
-								
-							}
-						}
-						// Always hit the front sides of things.
-						if ( collisionData.getFaceAt( j ) == FaceTypes.FRONT
-							&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.FRONT ) ) ) {
-							//playerModel.player.z = collisionData.getBoxAt( j ).minZ - TrackConstants.PLAYER_HALF_SIZE;
-							if ( collisionData.getBoxAt( j ).block.getEventAtFace( FaceTypes.FRONT ) == CollisionTypes.SMACK ) {
-								playerModel.isDead = true;
-								playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
+						playerModel.isAirborne = true;
+					} else {
+						// Else hit the top sides of things.
+						if ( collisions.getFaceAt( j ) == FaceTypes.TOP
+							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.TOP ) ) ) {
+							if ( collisions.getBoxAt( j ).maxY > TrackConstants.CULL_FLOOR ) {
+								playerModel.player.y = collisions.getBoxAt( j ).maxY + TrackConstants.PLAYER_HALF_SIZE;
+								playerModel.jumpVelocity = 0;
+								playerModel.isAirborne = false;
+							} else {
+								// The player is airborne if he's not colliding with a floor.
+								playerModel.isAirborne = true;
 							}
 						}
 					}
+					// If we're moving left, hit the right sides of things.
+					if ( playerModel.lateralVelocity < 0 ) {
+						if ( collisions.getFaceAt( j ) == FaceTypes.RIGHT
+							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.RIGHT ) ) ) {
+							
+						}
+					} else if ( playerModel.lateralVelocity > 0 ) {
+						// Else if we're moving right, hit the left sides of things.
+						if ( collisions.getFaceAt( j ) == FaceTypes.LEFT
+							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.LEFT ) ) ) {
+							
+						}
+					}
+					// Always hit the front sides of things.
+					if ( collisions.getFaceAt( j ) == FaceTypes.FRONT
+						&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.FRONT ) ) ) {
+						// TO-DO: We can't resolve this collision by moving the player.
+						// We need to do it by moving the world.
+						if ( collisions.getBoxAt( j ).block.getEventAtFace( FaceTypes.FRONT ) == CollisionTypes.SMACK ) {
+							playerModel.isDead = true;
+							playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
+						}
+					}
 				}
-				var t:Boolean;
 			} else {
-				trace("airborne");
 				playerModel.isAirborne = true;
 			}
 			

@@ -19,15 +19,15 @@ package com.funrun.game.model.constants
 		public static const CAM_FRUSTUM_DISTANCE:Number = 6000; // the higher the value, the blockier the shadows
 		
 		// Player movement constants.
+		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 60;
+		public static const SLOWED_DIAGONAL_SPEED:Number = 45;
 		public static const PLAYER_FOWARD_ACCELERATION:Number = 1;
 		public static const PLAYER_JUMP_SPEED:Number = 100;//84;
 		public static const PLAYER_LATERAL_SPEED:Number = 30;
-		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 50;
 		public static const PLAYER_GRAVITY:Number = -8;
-		public static const SLOWED_DIAGONAL_SPEED:Number = 42;
 		
 		// Obstacle creation constants.
-		private static const NAIVE_OBSTACLE_GAP:Number = 900;
+		private static const NAIVE_OBSTACLE_GAP:Number = 1200;
 		private static const OBSTACLES_PER_NAIVE_GAP:Number = Math.round( NAIVE_OBSTACLE_GAP / BLOCK_SIZE );
 		public static const OBSTACLE_GAP:Number = OBSTACLES_PER_NAIVE_GAP * BLOCK_SIZE;
 		public static const REMOVE_OBSTACLE_DEPTH:Number = -1600;
