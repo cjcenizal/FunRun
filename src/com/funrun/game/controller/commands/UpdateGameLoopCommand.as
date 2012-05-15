@@ -6,6 +6,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
+	import com.funrun.game.model.constants.FaceTypes;
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.data.CollisionData;
 	import com.funrun.game.model.data.ObstacleData;
@@ -90,7 +91,9 @@ package com.funrun.game.controller.commands
 				var collisionData:CollisionData = collisions[ i ];
 				for ( var j:int = 0; j < collisionData.numCollisions; j++ ) {
 					// Resolve collisions by placing player on top of any boxes we collide with.
-					if ( collisionData.getFaceAt( j ) == "t" && ( collisionData.getBoxAt( j ) ).block.topFace == "walk" ) {
+					if ( collisionData.getFaceAt( j ) == FaceTypes.TOP
+						&& ( collisionData.getBoxAt( j ) ).block.doesFaceCollide( FaceTypes.TOP ) ) {
+					//	&& ( collisionData.getBoxAt( j ) ).block.getEventAtFace( FaceTypes.TOP ) == "walk" ) {
 						// Of all the faces we've collided with, find the highest one.
 						walkHeight = Math.max( walkHeight, collisionData.getBoxAt( j ).maxY );
 					}

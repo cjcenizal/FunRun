@@ -7,7 +7,7 @@ package com.funrun.game.model.constants
 		public static const LEFT:String = "l";
 		public static const RIGHT:String = "r";
 		public static const FRONT:String = "f";
-		public static const AFT:String = "a";
+		public static const BACK:String = "a"; // a is for ass... or aft.
 		public static const ALL:String = "all";
 	}
 }

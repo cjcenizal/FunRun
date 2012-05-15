@@ -1,31 +1,42 @@
 package com.funrun.game.model.parsers
 {
 	import away3d.primitives.PrimitiveBase;
+	
+	import com.funrun.game.model.constants.FaceTypes;
 
-	public class BlockParser extends AbstractParser
-	{
+	public class BlockParser extends AbstractParser {
 		
+		private const COLLISIONS:String = "hit";
 		private const FACES:String = "faces";
-		private const TOP:String = "t";
-		private const BOTTOM:String = "b";
-		private const LEFT:String = "l";
-		private const RIGHT:String = "r";
-		private const FRONT:String = "f";
-		private const BACK:String = "a"; // a is for ass... or aft.
-		private const ALL:String = "all";
 		
 		private var _id:String;
 		private var _filename:String;
+		private var _collisions:Array;
 		private var _faces:Object;
 		private var _numFaces:int = 0;
 		
 		public var geo:PrimitiveBase;
 		
-		public function BlockParser( data:Object )
-		{
+		public function BlockParser( data:Object ) {
 			super( data );
 			_id = new IdParser( data ).id;
 			_filename = new FilenameParser( data ).filename;
+			_collisions = [];
+			var collisions:Array = data[ COLLISIONS ];
+			if ( collisions ) {
+				for ( var i:int = 0; i < collisions.length; i++ ) {
+					if ( collisions[ i ] == FaceTypes.ALL ) {
+						_collisions[ FaceTypes.TOP ] = true;
+						_collisions[ FaceTypes.BOTTOM ] = true;
+						_collisions[ FaceTypes.LEFT ] = true;
+						_collisions[ FaceTypes.RIGHT ] = true;
+						_collisions[ FaceTypes.FRONT ] = true;
+						_collisions[ FaceTypes.BACK ] = true;
+					} else {
+						_collisions[ collisions[ i ] ] = true;
+					}
+				}
+			}
 			_faces = data[ FACES ] || {};
 			for ( var key:String in _faces ) {
 				_numFaces++;
@@ -44,56 +55,12 @@ package com.funrun.game.model.parsers
 			return _numFaces;
 		}
 		
-		public function get hasFrontFace():Boolean {
-			return frontFace;
+		public function getEventAtFace( face:String ):String {
+			return _faces[ face ] || _faces[ FaceTypes.ALL ];
 		}
 		
-		public function get frontFace():String {
-			return _faces[ ALL ] || _faces[ FRONT ];
-		}
-		
-		public function get hasBackFace():Boolean {
-			return backFace;
-		}
-		
-		public function get backFace():String {
-			return _faces[ ALL ] || _faces[ BACK ];
-		}
-
-		public function get hasTopFace():Boolean {
-			return topFace;
-		}
-		
-		public function get topFace():String {
-			return _faces[ ALL ] || _faces[ TOP ];
-		}
-		
-		public function get hasBottomFace():Boolean {
-			return bottomFace;
-		}
-		
-		public function get bottomFace():String {
-			return _faces[ ALL ] || _faces[ BOTTOM ];
-		}
-		
-		public function get hasLeftFace():Boolean {
-			return leftFace;
-		}
-		
-		public function get leftFace():String {
-			return _faces[ ALL ] || _faces[ LEFT ];
-		}
-		
-		public function get hasRightFace():Boolean {
-			return rightFace;
-		}
-		
-		public function get rightFace():String {
-			return _faces[ ALL ] || _faces[ RIGHT ];
-		}
-		
-		private function get allFaces():String {
-			return _faces[ ALL ];
+		public function doesFaceCollide( face:String ):Boolean {
+			return _collisions[ face ];
 		}
 	}
 }

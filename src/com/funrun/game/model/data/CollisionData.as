@@ -103,7 +103,7 @@ package com.funrun.game.model.data
 				}
 				if ( aMinZ <= bMinZ && aMaxZ >= bMinZ ) {
 					// A is in front of B, but A's max overlaps B's min: aft.
-					arr.push( FaceTypes.AFT );
+					arr.push( FaceTypes.BACK );
 				}
 				if ( bMinZ <= aMinZ && bMaxZ >= aMinZ ) {
 					// B is in front of A, but B's max overlaps A's min: front.

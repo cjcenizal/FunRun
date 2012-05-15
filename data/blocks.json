@@ -8,6 +8,9 @@
 		{
 			"id" : "block",
 			"filename" : "block.dae",
+			"hit" : [
+				"all"
+			],
 			"faces" : {
 				"t" : "walk",
 				"b" : "smack",
@@ -20,6 +23,9 @@
 		{
 			"id" : "saw",
 			"filename" : "saw.dae",
+			"hit" : [
+				"all"
+			],
 			"faces" : {
 				"all" : "slice"
 			}
@@ -27,13 +33,29 @@
 		{
 			"id" : "lava",
 			"filename" : "lava.dae",
+			"hit" : [
+				"all"
+			],
 			"faces" : {
 				"all" : "burn"
 			}
 		},
 		{
-			"id" : "jump",
+			"id" : "jumpPad",
 			"filename" : "jump.dae",
+			"hit" : [
+				"all"
+			],
+			"faces" : {
+				"t" : "jump"
+			}
+		},
+		{
+			"id" : "jumpField",
+			"filename" : "jump.dae",
+			"hit" : [
+				"top"
+			],
 			"faces" : {
 				"t" : "jump"
 			}
@@ -48,6 +70,9 @@
 		{
 			"id" : "floor",
 			"filename" : "floor.dae",
+			"hit" : [
+				"all"
+			],
 			"faces" : {
 				"t" : "walk"
 			}
