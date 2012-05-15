@@ -29,6 +29,9 @@ package com.funrun.game.model.constants
 		public static const OBSTACLE_GAP:Number = OBSTACLES_PER_NAIVE_GAP * BLOCK_SIZE;
 		public static const REMOVE_OBSTACLE_DEPTH:Number = -1600;
 		
+		// Collision constants.
+		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;
+		
 		// Culling.
 		public static const CULL_FLOOR:int = -100000;
 	}

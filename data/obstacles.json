@@ -33,23 +33,37 @@
 		},
 		{
 			"id" : "trench",
+			"flip" : true,
 			"pits" : [
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
+				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ]
 			]
 		},
 		{
 			"id" : "wallPit",
 			"flip" : true,
 			"pits" : [
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ], [ "block", null, null ] ],
-				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],
+				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ]
 			],
 			"blocks" : [
 				[],[],[],[],[],[],
