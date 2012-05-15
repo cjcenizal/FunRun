@@ -10,6 +10,7 @@ package com.funrun.game.model
 		private var _player:Mesh;
 		
 		// State.
+		private var _speed:Number = 0;
 		private var _jumpVelocity:Number = 0;
 		private var _lateralVelocity:Number = 0;
 		private var _isJumping:Boolean = false;
@@ -17,6 +18,7 @@ package com.funrun.game.model
 		private var _isMovingRight:Boolean = false;
 		private var _isDucking:Boolean = false;
 		private var _isAirborne:Boolean = false;
+		private var _isDead:Boolean = false;
 		
 		public function PlayerModel()
 		{
@@ -107,6 +109,22 @@ package com.funrun.game.model
 		
 		public function set isAirborne( val:Boolean ):void {
 			_isAirborne = val;
+		}
+		
+		public function get speed():Number {
+			return _speed;
+		}
+		
+		public function set speed( val:Number ):void {
+			_speed = val;
+		}
+		
+		public function get isDead():Boolean {
+			return _isDead;
+		}
+		
+		public function set isDead( val:Boolean ):void {
+			_isDead = val;
 		}
 	}
 }

@@ -71,7 +71,7 @@
 			"id" : "floor",
 			"filename" : "floor.dae",
 			"hit" : [
-				"all"
+				"t"
 			],
 			"faces" : {
 				"t" : "walk"

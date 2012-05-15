@@ -7,6 +7,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.constants.FaceTypes;
+	import com.funrun.game.model.constants.CollisionTypes;
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.data.CollisionData;
 	import com.funrun.game.model.data.ObstacleData;
@@ -26,7 +27,7 @@ package com.funrun.game.controller.commands
 		
 		override public function execute():void {
 			// Update obstacles.
-			trackModel.move( -TrackConstants.MAX_PLAYER_FORWARD_VELOCITY );
+			trackModel.move( -playerModel.speed );
 			
 			// Remove obstacles from end of track.
 			if ( trackModel.numObstacles > 0 ) {
@@ -44,15 +45,26 @@ package com.funrun.game.controller.commands
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
 			
-			// Update player.
-			if ( playerModel.isJumping && !playerModel.isAirborne ) {
-				playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
-				playerModel.isAirborne = true;
+			// Update forward speed.
+			if ( playerModel.isDead ) {
+				playerModel.speed *= .7;
+			} else {
+				if ( playerModel.speed < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
+					playerModel.speed += TrackConstants.PLAYER_FOWARD_ACCELERATION;
+				}
+				// Update jumping.
+				if ( playerModel.isJumping && !playerModel.isAirborne ) {
+					playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
+					playerModel.isAirborne = true;
+				}
+				playerModel.player.x += playerModel.lateralVelocity;
 			}
-			
+			// Update gravity.
 			playerModel.jumpVelocity += TrackConstants.PLAYER_GRAVITY;
-			playerModel.player.x += playerModel.lateralVelocity;
 			playerModel.player.y += playerModel.jumpVelocity;
+			
+			
+			
 			
 			// TO-DO: Make ducking cooler.
 			if ( playerModel.isDucking ) {
@@ -60,8 +72,6 @@ package com.funrun.game.controller.commands
 			} else {
 				playerModel.player.scaleY = 1;
 			}
-			
-			// Collisions.
 			
 			// TO-DO: Do interpolation here.
 			
@@ -88,6 +98,8 @@ package com.funrun.game.controller.commands
 			}
 			
 			// TO-DO: This is an erroneous length when we're falling off the track.
+			// TO-DO: We can optimize this by only storing collisions where doesFaceCollide evaluates to true
+			// inside of CollisionData.
 			trace(collisions.length);
 			// Resolve collisions.
 			if ( collisions.length > 0 ) {
@@ -97,7 +109,7 @@ package com.funrun.game.controller.commands
 						// If the player is moving up, hit the bottom sides of things.
 						if ( playerModel.jumpVelocity > 0 ) {
 							if ( collisionData.getFaceAt( j ) == FaceTypes.BOTTOM
-								&& ( collisionData.getBoxAt( j ) ).block.doesFaceCollide( FaceTypes.BOTTOM ) ) {
+								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.BOTTOM ) ) ) {
 								playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
 								playerModel.player.y = collisionData.getBoxAt( j ).minY - 25;
 							}
@@ -105,7 +117,7 @@ package com.funrun.game.controller.commands
 						} else {
 							// Else hit the top sides of things.
 							if ( collisionData.getFaceAt( j ) == FaceTypes.TOP
-								&& ( collisionData.getBoxAt( j ) ).block.doesFaceCollide( FaceTypes.TOP ) ) {
+								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.TOP ) ) ) {
 								if ( collisionData.getBoxAt( j ).maxY > TrackConstants.CULL_FLOOR ) {
 									playerModel.player.y = collisionData.getBoxAt( j ).maxY + 25;
 									playerModel.jumpVelocity = 0;
@@ -119,20 +131,28 @@ package com.funrun.game.controller.commands
 						// If we're moving left, hit the right sides of things.
 						if ( playerModel.lateralVelocity < 0 ) {
 							if ( collisionData.getFaceAt( j ) == FaceTypes.RIGHT
-								&& ( collisionData.getBoxAt( j ) ).block.doesFaceCollide( FaceTypes.RIGHT ) ) {
+								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.RIGHT ) ) ) {
 								
 							}
 						} else if ( playerModel.lateralVelocity > 0 ) {
 							// Else if we're moving right, hit the left sides of things.
 							if ( collisionData.getFaceAt( j ) == FaceTypes.LEFT
-								&& ( collisionData.getBoxAt( j ) ).block.doesFaceCollide( FaceTypes.LEFT ) ) {
+								&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.LEFT ) ) ) {
 								
 							}
 						}
 						// Always hit the front sides of things.
-						
+						if ( collisionData.getFaceAt( j ) == FaceTypes.FRONT
+							&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.FRONT ) ) ) {
+							playerModel.player.z = collisionData.getBoxAt( j ).minZ - 25;
+							if ( collisionData.getBoxAt( j ).block.getEventAtFace( FaceTypes.FRONT ) == CollisionTypes.SMACK ) {
+								playerModel.isDead = true;
+								playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
+							}
+						}
 					}
 				}
+				var t:Boolean;
 			} else {
 				trace("airborne");
 				playerModel.isAirborne = true;
