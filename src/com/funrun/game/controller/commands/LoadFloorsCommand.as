@@ -56,12 +56,12 @@ package com.funrun.game.controller.commands {
 			// Store bounds.
 			var minX:Number = TrackConstants.TRACK_WIDTH * -.5;
 			var maxX:Number = TrackConstants.TRACK_WIDTH * .5;
-			var minY:Number = TrackConstants.TRACK_WIDTH * -.5;
-			var maxY:Number = TrackConstants.TRACK_WIDTH * .5;
-			var minZ:Number = TrackConstants.TRACK_WIDTH * -.5;
-			var maxZ:Number = TrackConstants.TRACK_WIDTH * .5;
+			var minY:Number = -TrackConstants.BLOCK_SIZE_HALF;
+			var maxY:Number = TrackConstants.BLOCK_SIZE_HALF;
+			var minZ:Number = -TrackConstants.BLOCK_SIZE_HALF;
+			var maxZ:Number = TrackConstants.BLOCK_SIZE_HALF;
 			
-			floorsModel.addFloor( FloorTypes.FLOOR, new ObstacleData( floorMesh, boundingBoxes, minX, maxX, minY, maxY, minZ, maxZ ) );
+			floorsModel.addFloor( FloorTypes.FLOOR, new ObstacleData( floorMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ ) );
 		}
 	}
 }

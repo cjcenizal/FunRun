@@ -49,10 +49,16 @@ package com.funrun.game.model.data
 			for ( var i:int = 0; i < numObstacles; i++ ) {
 				obstacle = obstacles.getObstacleAt( i );
 				// TO-DO: Optimize by checking against obstacle bounds first.
-				/*if ( doCollide(
-					obstacle.x + obstacle.minX, obstacle.x + obstacle.maxX, obstacle.y + obstacle.minY, obstacle.y + obstacle.maxY, obstacle.z + obstacle.minZ, obstacle.z + obstacle.maxZ,
+				trace( "x:",(obstacle.x + obstacle.minX),(obstacle.x + obstacle.maxX),
+					"y:",(obstacle.y + obstacle.minY),(obstacle.y + obstacle.maxY),
+					"z:", (obstacle.z + obstacle.minZ),(obstacle.z + obstacle.maxZ));
+				trace("    x:",minX, maxX, "y:",minY, maxY, "z:",minZ, maxZ);
+				if ( doCollide(
+					obstacle.x + obstacle.minX, obstacle.x + obstacle.maxX,
+					obstacle.y + obstacle.minY, obstacle.y + obstacle.maxY,
+					obstacle.z + obstacle.minZ, obstacle.z + obstacle.maxZ,
 					minX, maxX, minY, maxY, minZ, maxZ
-				) ) {*/
+				) ) {
 					// Get the faces we collide with for each box.
 					var box:BoundingBoxData;
 					var numBlocks:int = obstacle.numBoundingBoxes;
@@ -80,7 +86,7 @@ package com.funrun.game.model.data
 							}
 						}
 					}
-				//}
+				}
 			}
 			if ( collisions.numCollisions > 0 ) {
 				return collisions;

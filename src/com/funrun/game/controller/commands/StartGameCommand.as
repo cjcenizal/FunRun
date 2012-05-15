@@ -30,7 +30,7 @@ package com.funrun.game.controller.commands
 		
 		override public function execute():void {
 			// Add initial floor.
-			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, 0, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
+			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			// Respond to input.

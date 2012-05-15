@@ -201,8 +201,8 @@ package com.funrun.game.model.data {
 			}
 			
 			// Store bounds. Adjust values to be absolute instead of relative.
-			minX *= TrackConstants.BLOCK_SIZE;
-			maxX *= TrackConstants.BLOCK_SIZE;
+			minX = TrackConstants.TRACK_WIDTH * -.5;
+			maxX = TrackConstants.TRACK_WIDTH * .5;
 			minY *= TrackConstants.BLOCK_SIZE;
 			maxY *= TrackConstants.BLOCK_SIZE;
 			minZ *= TrackConstants.BLOCK_SIZE;
