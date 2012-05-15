@@ -20,8 +20,8 @@ package com.funrun.game.model.constants
 		// Player movement constants.
 		public static const PLAYER_JUMP_SPEED:Number = 84;
 		public static const PLAYER_LATERAL_SPEED:Number = 30;
-		public static const PLAYER_JUMP_GRAVITY:Number = -8;
 		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 50;
+		public static const PLAYER_GRAVITY:Number = -8;
 		
 		// Obstacle creation constants.
 		private static const NAIVE_OBSTACLE_GAP:Number = 900;

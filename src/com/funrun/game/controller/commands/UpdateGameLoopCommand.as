@@ -48,7 +48,8 @@ package com.funrun.game.controller.commands
 			if ( playerModel.isJumping && !playerModel.isAirborne ) {
 				playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
 			}
-			playerModel.jumpVelocity += TrackConstants.PLAYER_JUMP_GRAVITY;
+			
+			playerModel.jumpVelocity += TrackConstants.PLAYER_GRAVITY;
 			playerModel.player.x += playerModel.lateralVelocity;
 			playerModel.player.y += playerModel.jumpVelocity;
 			

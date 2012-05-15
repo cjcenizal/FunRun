@@ -32,7 +32,7 @@ package com.funrun.game.model
 		}
 		
 		public function jump( speed:Number ):void {
-			_jumpVelocity = speed;
+			_jumpVelocity += speed;
 		}
 		
 		public function startMovingLeft( speed:Number ):void {
