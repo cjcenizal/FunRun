@@ -72,9 +72,6 @@ package com.funrun.game.controller.commands
 			playerModel.jumpVelocity += TrackConstants.PLAYER_GRAVITY;
 			playerModel.player.y += playerModel.jumpVelocity;
 			
-			
-			
-			
 			// TO-DO: Make ducking cooler.
 			if ( playerModel.isDucking ) {
 				// TO-DO: Reduce collision bounds here.
@@ -83,42 +80,30 @@ package com.funrun.game.controller.commands
 				playerModel.player.scaleY = 1;
 			}
 			
-			// TO-DO: Do interpolation here.
-			
-			var playerX:Number = playerModel.player.x;
-			var playerY:Number = playerModel.player.y;
-			var playerZ:Number = playerModel.player.z;
-			var minX:Number = playerModel.player.bounds.min.x;
-			var maxX:Number = playerModel.player.bounds.max.x;
-			var minY:Number = playerModel.player.bounds.min.y;
-			var maxY:Number = playerModel.player.bounds.max.y;
-			var minZ:Number = playerModel.player.bounds.min.z;
-			var maxZ:Number = playerModel.player.bounds.max.z;
-			
 			// Collect all collisions.
 			var collisions:CollisionData = CollisionData.make(
 				trackModel,
-				playerX + minX, playerX + maxX,
-				playerY + minY, playerY + maxY,
-				playerZ + minZ, playerZ + maxZ );
+				playerModel.player.x + playerModel.player.bounds.min.x, playerModel.player.x + playerModel.player.bounds.max.x,
+				playerModel.player.y + playerModel.player.bounds.min.y, playerModel.player.y + playerModel.player.bounds.max.y,
+				playerModel.player.z + playerModel.player.bounds.min.z, playerModel.player.z + playerModel.player.bounds.max.z );
 			
-			// TO-DO: We can optimize this by only storing collisions where doesFaceCollide evaluates to true
-			// inside of CollisionData.
+			// TO-DO: We can optimize our collision detection by only testing against sides
+			// that oppose the direction in which we're moving.
+			// This will reduce our testing calculations by about 50%.
+			
 			// Resolve collisions.
 			if ( collisions ) {
 				for ( var j:int = 0; j < collisions.numCollisions; j++ ) {
 					// If the player is moving up, hit the bottom sides of things.
 					if ( playerModel.jumpVelocity > 0 ) {
-						if ( collisions.getFaceAt( j ) == FaceTypes.BOTTOM
-							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.BOTTOM ) ) ) {
+						if ( collisions.getFaceAt( j ) == FaceTypes.BOTTOM ) {
 							playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
 							playerModel.player.y = collisions.getBoxAt( j ).minY - TrackConstants.PLAYER_HALF_SIZE;
 						}
 						playerModel.isAirborne = true;
 					} else {
 						// Else hit the top sides of things.
-						if ( collisions.getFaceAt( j ) == FaceTypes.TOP
-							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.TOP ) ) ) {
+						if ( collisions.getFaceAt( j ) == FaceTypes.TOP ) {
 							if ( collisions.getBoxAt( j ).maxY > TrackConstants.CULL_FLOOR ) {
 								playerModel.player.y = collisions.getBoxAt( j ).maxY + TrackConstants.PLAYER_HALF_SIZE;
 								playerModel.jumpVelocity = 0;
@@ -131,20 +116,17 @@ package com.funrun.game.controller.commands
 					}
 					// If we're moving left, hit the right sides of things.
 					if ( playerModel.lateralVelocity < 0 ) {
-						if ( collisions.getFaceAt( j ) == FaceTypes.RIGHT
-							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.RIGHT ) ) ) {
+						if ( collisions.getFaceAt( j ) == FaceTypes.RIGHT ) {
 							
 						}
 					} else if ( playerModel.lateralVelocity > 0 ) {
 						// Else if we're moving right, hit the left sides of things.
-						if ( collisions.getFaceAt( j ) == FaceTypes.LEFT
-							&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.LEFT ) ) ) {
+						if ( collisions.getFaceAt( j ) == FaceTypes.LEFT ) {
 							
 						}
 					}
 					// Always hit the front sides of things.
-					if ( collisions.getFaceAt( j ) == FaceTypes.FRONT
-						&& ( collisions.getBoxAt( j ).block.doesFaceCollide( FaceTypes.FRONT ) ) ) {
+					if ( collisions.getFaceAt( j ) == FaceTypes.FRONT ) {
 						// TO-DO: We can't resolve this collision by moving the player.
 						// We need to do it by moving the world.
 						if ( collisions.getBoxAt( j ).block.getEventAtFace( FaceTypes.FRONT ) == CollisionTypes.SMACK ) {
@@ -156,12 +138,6 @@ package com.funrun.game.controller.commands
 			} else {
 				playerModel.isAirborne = true;
 			}
-			
-			// TO-DO: Apply additional events based on collisions.
-			// Apply logic for removing redundant events.
-			
-			
-			
 			
 			// Update camera.
 			cameraModel.x = playerModel.player.x;

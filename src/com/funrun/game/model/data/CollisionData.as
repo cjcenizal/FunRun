@@ -61,6 +61,9 @@ package com.funrun.game.model.data
 					var obsZ:Number = obstacle.z;
 					for ( var j:int = 0; j < numBlocks; j++ ) {
 						box = obstacle.getBoundingBoxAt( j );
+						// TO-DO: We can optimize further here by checking
+						// for each face that accepts collisions,
+						// and only test against those.
 						var faces:Array = getFaceCollisionsWithObstacle(
 							obsX + box.minX, obsX + box.maxX,
 							obsY + box.minY, obsY + box.maxY,
@@ -70,7 +73,10 @@ package com.funrun.game.model.data
 						if ( faces ) {
 							var numFaces:int = faces.length;
 							for ( var k:int = 0; k < numFaces; k++ ) {
-								collisions.addCollision( box, faces[ k ] );
+								// Only store faces where collisions are valid.
+								if ( box.block.doesFaceCollide( faces[ k ] ) ) {
+									collisions.addCollision( box, faces[ k ] );
+								}
 							}
 						}
 					}
