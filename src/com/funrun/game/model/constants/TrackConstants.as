@@ -22,7 +22,7 @@ package com.funrun.game.model.constants
 		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 60;
 		public static const SLOWED_DIAGONAL_SPEED:Number = 45;
 		public static const PLAYER_FOWARD_ACCELERATION:Number = 1;
-		public static const PLAYER_JUMP_SPEED:Number = 100;//84;
+		public static const PLAYER_JUMP_SPEED:Number = 90;//84;
 		public static const PLAYER_LATERAL_SPEED:Number = 30;
 		public static const PLAYER_GRAVITY:Number = -8;
 		

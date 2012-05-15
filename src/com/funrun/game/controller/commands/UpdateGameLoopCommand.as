@@ -5,9 +5,10 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.PlayerModel;
+	import com.funrun.game.model.TimeModel;
 	import com.funrun.game.model.TrackModel;
-	import com.funrun.game.model.constants.FaceTypes;
 	import com.funrun.game.model.constants.CollisionTypes;
+	import com.funrun.game.model.constants.FaceTypes;
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.data.CollisionData;
 	import com.funrun.game.model.data.ObstacleData;
@@ -24,6 +25,9 @@ package com.funrun.game.controller.commands
 		
 		[Inject]
 		public var cameraModel:CameraModel;
+		
+		[Inject]
+		public var timeModel:TimeModel;
 		
 		override public function execute():void {
 			// Update obstacles.
@@ -160,10 +164,15 @@ package com.funrun.game.controller.commands
 			
 			
 			// Update camera.
-			cameraModel.camera.x = playerModel.player.x;
-			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.player.y < cameraModel.camera.y ) ? .6 : .2;
+			cameraModel.x = playerModel.player.x;
+			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.player.y < cameraModel.y ) ? .3 : .1;
 			// We'll try easing to follow the player instead of being locked.
-			cameraModel.camera.y += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - cameraModel.camera.y ) * followFactor; 
+			cameraModel.y += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - cameraModel.y ) * followFactor;
+			cameraModel.z = -1000;
+			if ( !playerModel.isDead ) {
+				cameraModel.offsetY = Math.sin( timeModel.ticks * .4 ) * 6;
+			}
+			cameraModel.update();
 			
 			// Render.
 			eventDispatcher.dispatchEvent( new RenderSceneRequest( RenderSceneRequest.RENDER_SCENE_REQUESTED ) );

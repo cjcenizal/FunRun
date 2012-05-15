@@ -7,7 +7,6 @@ package com.funrun.game.view.mediators
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.view.components.TrackView;
-	import com.funrun.game.view.events.CollisionEvent;
 	
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;

@@ -22,7 +22,7 @@ package com.funrun.game.controller.commands {
 		public var cameraModel:CameraModel;
 		
 		override public function execute():void {
-			cameraModel.camera = event.camera;
+			cameraModel.setCamera( event.camera );
 		}
 	}
 }
