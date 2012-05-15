@@ -150,7 +150,7 @@ package com.funrun.game.controller.commands
 						// Always hit the front sides of things.
 						if ( collisionData.getFaceAt( j ) == FaceTypes.FRONT
 							&& ( collisionData.getBoxAt( j ).block.doesFaceCollide( FaceTypes.FRONT ) ) ) {
-							playerModel.player.z = collisionData.getBoxAt( j ).minZ - TrackConstants.PLAYER_HALF_SIZE;
+							//playerModel.player.z = collisionData.getBoxAt( j ).minZ - TrackConstants.PLAYER_HALF_SIZE;
 							if ( collisionData.getBoxAt( j ).block.getEventAtFace( FaceTypes.FRONT ) == CollisionTypes.SMACK ) {
 								playerModel.isDead = true;
 								playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
