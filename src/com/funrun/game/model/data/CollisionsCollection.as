@@ -39,7 +39,7 @@ package com.funrun.game.model.data
 		}
 		
 		public function reduce( minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
-			
+			// Do collision detection again on all stored faces, and remove any that don't collide.
 		}
 		
 		public function collectCollisions( obstacles:IObstacleProvider,
