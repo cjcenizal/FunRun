@@ -10,7 +10,8 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.constants.CollisionTypes;
 	import com.funrun.game.model.constants.FaceTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.data.CollisionData;
+	import com.funrun.game.model.data.CollisionsCollection;
+	import com.funrun.game.model.data.FaceCollision;
 	import com.funrun.game.model.data.ObstacleData;
 	
 	import org.robotlegs.mvcs.Command;
@@ -80,31 +81,34 @@ package com.funrun.game.controller.commands
 			}
 			
 			// Collect all collisions.
-			var collisions:CollisionData = CollisionData.make(
+			var collisions:CollisionsCollection = new CollisionsCollection();
+			collisions.collectCollisions(
 				trackModel,
-				playerModel.player.x + playerModel.player.bounds.min.x, playerModel.player.x + playerModel.player.bounds.max.x,
-				playerModel.player.y + playerModel.player.bounds.min.y, playerModel.player.y + playerModel.player.bounds.max.y,
-				playerModel.player.z + playerModel.player.bounds.min.z, playerModel.player.z + playerModel.player.bounds.max.z );
+				playerModel.player.x + playerModel.player.bounds.min.x, playerModel.player.y + playerModel.player.bounds.min.y, playerModel.player.z + playerModel.player.bounds.min.z,
+				playerModel.player.x + playerModel.player.bounds.max.x, playerModel.player.y + playerModel.player.bounds.max.y, playerModel.player.z + playerModel.player.bounds.max.z );
 			
 			// TO-DO: We can optimize our collision detection by only testing against sides
 			// that oppose the direction in which we're moving.
 			// This will reduce our testing calculations by about 50%.
 			
 			// Resolve collisions.
-			if ( collisions ) {
-				for ( var j:int = 0; j < collisions.numCollisions; j++ ) {
+			var numCollisions = collisions.numCollisions;
+			var face:FaceCollision;
+			if ( numCollisions > 0 ) {
+				for ( var i:int = 0; i < numCollisions; i++ ) {
+					face = collisions.getAt( i );
 					// If the player is moving up, hit the bottom sides of things.
 					if ( playerModel.jumpVelocity > 0 ) {
-						if ( collisions.getFaceAt( j ) == FaceTypes.BOTTOM ) {
+						if ( face.type == FaceTypes.BOTTOM ) {
 							playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
-							playerModel.player.y = collisions.getBoxAt( j ).minY - TrackConstants.PLAYER_HALF_SIZE;
+							playerModel.player.y = face.minY - TrackConstants.PLAYER_HALF_SIZE;
 						}
 						playerModel.isAirborne = true;
 					} else {
 						// Else hit the top sides of things.
-						if ( collisions.getFaceAt( j ) == FaceTypes.TOP ) {
-							if ( collisions.getBoxAt( j ).maxY > TrackConstants.CULL_FLOOR ) {
-								playerModel.player.y = collisions.getBoxAt( j ).maxY + TrackConstants.PLAYER_HALF_SIZE;
+						if ( face.type == FaceTypes.TOP ) {
+							if ( face.maxY > TrackConstants.CULL_FLOOR ) {
+								playerModel.player.y = face.maxY + TrackConstants.PLAYER_HALF_SIZE;
 								playerModel.jumpVelocity = 0;
 								playerModel.isAirborne = false;
 							} else {
@@ -115,26 +119,27 @@ package com.funrun.game.controller.commands
 					}
 					// If we're moving left, hit the right sides of things.
 					if ( playerModel.lateralVelocity < 0 ) {
-						if ( collisions.getFaceAt( j ) == FaceTypes.RIGHT ) {
+						if ( face.type == FaceTypes.RIGHT ) {
 							
 						}
 					} else if ( playerModel.lateralVelocity > 0 ) {
 						// Else if we're moving right, hit the left sides of things.
-						if ( collisions.getFaceAt( j ) == FaceTypes.LEFT ) {
+						if ( face.type == FaceTypes.LEFT ) {
 							
 						}
 					}
 					// Always hit the front sides of things.
-					if ( collisions.getFaceAt( j ) == FaceTypes.FRONT ) {
+					if ( face.type == FaceTypes.FRONT ) {
 						// TO-DO: We can't resolve this collision by moving the player.
 						// We need to do it by moving the world.
-						if ( collisions.getBoxAt( j ).block.getEventAtFace( FaceTypes.FRONT ) == CollisionTypes.SMACK ) {
+						if ( face.event == CollisionTypes.SMACK ) {
 							playerModel.isDead = true;
 							playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
 						}
 					}
 				}
 			} else {
+				// If we're not hitting something, we're airborne.
 				playerModel.isAirborne = true;
 			}
 			
