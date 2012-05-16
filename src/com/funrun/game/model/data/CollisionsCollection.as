@@ -54,10 +54,9 @@ package com.funrun.game.model.data
 				var obsZ:Number = obstacle.z;
 				// Optimize by checking against obstacle bounds first.
 				if ( doCollide(
-					obsX + obstacle.minX, obsX + obstacle.maxX,
-					obsY + obstacle.minY, obsY + obstacle.maxY,
-					obsZ + obstacle.minZ, obsZ + obstacle.maxZ,
-					minX, maxX, minY, maxY, minZ, maxZ
+					obsX + obstacle.minX, obsY + obstacle.minY, obsZ + obstacle.minZ,
+					obsX + obstacle.maxX, obsY + obstacle.maxY, obsZ + obstacle.maxZ,
+					minX, minY, minZ, maxX, maxY, maxZ
 				) ) {
 					// Get the faces we collide with for each box.
 					var box:BoundingBoxData;
@@ -69,10 +68,9 @@ package com.funrun.game.model.data
 						// and only test against those.
 						addCollisions( getFaceCollisions(
 							box.block,
-							obsX + box.minX, obsX + box.maxX,
-							obsY + box.minY, obsY + box.maxY,
-							obsZ + box.minZ, obsZ + box.maxZ,
-							minX, maxX, minY, maxY, minZ, maxZ
+							obsX + box.minX, obsY + box.minY, obsZ + box.minZ,
+							obsX + box.maxX, obsY + box.maxY, obsZ + box.maxZ,
+							minX, minY, minZ, maxX, maxY, maxZ
 						) );
 					}
 				}
@@ -89,11 +87,12 @@ package com.funrun.game.model.data
 		 */
 		private static function getFaceCollisions(
 			block:BlockParser,
-			aMinX:Number, aMaxX:Number, aMinY:Number, aMaxY:Number, aMinZ:Number, aMaxZ:Number,
-			bMinX:Number, bMaxX:Number, bMinY:Number, bMaxY:Number, bMinZ:Number, bMaxZ:Number
+			aMinX:Number, aMinY:Number, aMinZ:Number, aMaxX:Number, aMaxY:Number, aMaxZ:Number,
+			bMinX:Number, bMinY:Number, bMinZ:Number, bMaxX:Number, bMaxY:Number, bMaxZ:Number
 		):Array {
 			var arr:Array = [];
-			if ( doCollide( aMinX, aMaxX, aMinY, aMaxY, aMinZ, aMaxZ, bMinX, bMaxX, bMinY, bMaxY, bMinZ, bMaxZ ) ) {
+			if ( doCollide( aMinX, aMinY, aMinZ, aMaxX, aMaxY, aMaxZ,
+				bMinX, bMinY, bMinZ, bMaxX, bMaxY, bMaxZ ) ) {
 				if ( aMinX <= bMinX && aMaxX >= bMinX && block.doesFaceCollide( FaceTypes.RIGHT ) ) {
 					// A is left of B, but A's max overlaps B's min: right.
 					arr.push( new FaceCollision(
@@ -154,8 +153,8 @@ package com.funrun.game.model.data
 		}
 		
 		private static function doCollide(
-			aMinX:Number, aMaxX:Number, aMinY:Number, aMaxY:Number, aMinZ:Number, aMaxZ:Number,
-			bMinX:Number, bMaxX:Number, bMinY:Number, bMaxY:Number, bMinZ:Number, bMaxZ:Number
+			aMinX:Number, aMinY:Number, aMinZ:Number, aMaxX:Number, aMaxY:Number, aMaxZ:Number,
+			bMinX:Number, bMinY:Number, bMinZ:Number, bMaxX:Number, bMaxY:Number, bMaxZ:Number
 		):Boolean {
 			if ( aMinX > bMaxX || bMinX > aMaxX ) {
 				return false;
