@@ -48,11 +48,7 @@ package com.funrun.game.model.data
 			var obstacle:ObstacleData;
 			for ( var i:int = 0; i < numObstacles; i++ ) {
 				obstacle = obstacles.getObstacleAt( i );
-				// TO-DO: Optimize by checking against obstacle bounds first.
-				trace( "x:",(obstacle.x + obstacle.minX),(obstacle.x + obstacle.maxX),
-					"y:",(obstacle.y + obstacle.minY),(obstacle.y + obstacle.maxY),
-					"z:", (obstacle.z + obstacle.minZ),(obstacle.z + obstacle.maxZ));
-				trace("    x:",minX, maxX, "y:",minY, maxY, "z:",minZ, maxZ);
+				// Optimize by checking against obstacle bounds first.
 				if ( doCollide(
 					obstacle.x + obstacle.minX, obstacle.x + obstacle.maxX,
 					obstacle.y + obstacle.minY, obstacle.y + obstacle.maxY,

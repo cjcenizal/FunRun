@@ -200,15 +200,9 @@ package com.funrun.game.model.data {
 				}
 			}
 			
-			// Store bounds. Adjust values to be absolute instead of relative.
-			minX = TrackConstants.TRACK_WIDTH * -.5;
-			maxX = TrackConstants.TRACK_WIDTH * .5;
-			minY *= TrackConstants.BLOCK_SIZE;
-			maxY *= TrackConstants.BLOCK_SIZE;
-			minZ *= TrackConstants.BLOCK_SIZE;
-			maxZ *= TrackConstants.BLOCK_SIZE;
-			
-			return new ObstacleData( obstacleMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ );
+			return new ObstacleData( obstacleMesh, boundingBoxes,
+				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
+				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 		}
 	}
 }

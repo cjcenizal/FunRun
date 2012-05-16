@@ -31,7 +31,7 @@ package com.funrun.game.controller.commands
 		
 		override public function execute():void {
 			// Update obstacles.
-		//	trackModel.move( -playerModel.speed );
+			trackModel.move( -playerModel.speed );
 			
 			// Remove obstacles from end of track.
 			if ( trackModel.numObstacles > 0 ) {
@@ -44,9 +44,9 @@ package com.funrun.game.controller.commands
 			}
 			
 			// Add new obstacles until track is full again.
-		//	while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
-		//		eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
-		//	}
+			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
+				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+			}
 			
 			// Update forward speed.
 			if ( playerModel.isDead ) {
@@ -78,8 +78,6 @@ package com.funrun.game.controller.commands
 			} else {
 				playerModel.player.scaleY = 1;
 			}
-			
-			trace("-----------------------");
 			
 			// Collect all collisions.
 			var collisions:CollisionData = CollisionData.make(
