@@ -19,6 +19,7 @@ package com.funrun.game.model.collision
 		private static const FACE:String = "face";
 		
 		private var _collisions:Array;
+		private var _numCollisions:int = 0;
 		
 		public function CollisionsCollection() {
 			_collisions = [];
@@ -27,19 +28,39 @@ package com.funrun.game.model.collision
 		public function addCollisions( collisions:Array ):void {
 			if ( collisions ) {
 				_collisions = _collisions.concat( collisions );
+				_numCollisions = _collisions.length;
 			}
 		}
 		
 		public function get numCollisions():int {
-			return _collisions.length;
+			return _numCollisions;
 		}
 		
 		public function getAt( index:int ):FaceCollision {
 			return _collisions[ index ];
 		}
 		
-		public function reduce( minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
-			// Do collision detection again on all stored faces, and remove any that don't collide.
+		/**
+		 * Detect collisions against stored faces, and remove any that don't collide.
+		 * 
+		 * @param minX Min x of player bounds.
+		 * @param minY Min y of player bounds.
+		 * @param minZ Min z of player bounds.
+		 * @param maxX Max x of player bounds.
+		 * @param maxY Max y of player bounds.
+		 * @param maxZ Max z of player bounds.
+		 */
+		public function recollideAgainst( minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ):void {
+			var keptCollisions:Array = [];
+			var face:FaceCollision;
+			for ( var i:int = 0; i < _numCollisions; i++ ) {
+				face = _collisions[ i ] as FaceCollision;
+				if ( doCollide( minX, minY, minZ, maxX, maxY, maxZ,
+					face.minX, face.minY, face.minZ, face.maxX, face.maxY, face.maxZ ) ) {
+					keptCollisions.push( face );
+				}
+			}
+			_collisions = keptCollisions;
 		}
 		
 		public function collectCollisions( obstacles:IObstacleProvider,
@@ -63,9 +84,6 @@ package com.funrun.game.model.collision
 					var numBlocks:int = obstacle.numBoundingBoxes;
 					for ( var j:int = 0; j < numBlocks; j++ ) {
 						box = obstacle.getBoundingBoxAt( j );
-						// TO-DO: We can optimize further here by checking
-						// for each face that accepts collisions,
-						// and only test against those.
 						addCollisions( getFaceCollisions(
 							box.block,
 							obsX + box.minX, obsY + box.minY, obsZ + box.minZ,

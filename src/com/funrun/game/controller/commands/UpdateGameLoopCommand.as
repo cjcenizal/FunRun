@@ -117,6 +117,7 @@ package com.funrun.game.controller.commands
 							}
 						}
 					}
+					
 					// If we're moving left, hit the right sides of things.
 					if ( playerModel.lateralVelocity < 0 ) {
 						if ( face.type == FaceTypes.RIGHT ) {
