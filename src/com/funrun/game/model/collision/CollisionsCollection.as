@@ -1,4 +1,4 @@
-package com.funrun.game.model.data
+package com.funrun.game.model.collision
 {
 	import com.funrun.game.model.IObstacleProvider;
 	import com.funrun.game.model.constants.FaceTypes;

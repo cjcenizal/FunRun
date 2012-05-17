@@ -1,4 +1,4 @@
-package com.funrun.game.model.data
+package com.funrun.game.model.collision
 {
 	public class BlockData
 	{

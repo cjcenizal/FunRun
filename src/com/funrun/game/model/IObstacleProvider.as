@@ -1,6 +1,6 @@
 package com.funrun.game.model
 {
-	import com.funrun.game.model.data.ObstacleData;
+	import com.funrun.game.model.collision.ObstacleData;
 
 	public interface IObstacleProvider
 	{

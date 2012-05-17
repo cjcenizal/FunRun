@@ -10,7 +10,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.data.ObstacleData;
+	import com.funrun.game.model.collision.ObstacleData;
 	import com.funrun.game.model.events.TimeEvent;
 	
 	import flash.events.KeyboardEvent;

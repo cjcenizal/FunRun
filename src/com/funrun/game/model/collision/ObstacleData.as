@@ -1,4 +1,4 @@
-package com.funrun.game.model.data {
+package com.funrun.game.model.collision {
 	
 	import away3d.bounds.BoundingVolumeBase;
 	import away3d.entities.Mesh;

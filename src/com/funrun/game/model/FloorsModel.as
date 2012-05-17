@@ -2,7 +2,7 @@ package com.funrun.game.model {
 	
 	import away3d.entities.Mesh;
 	
-	import com.funrun.game.model.data.ObstacleData;
+	import com.funrun.game.model.collision.ObstacleData;
 	
 	import org.robotlegs.mvcs.Actor;
 	

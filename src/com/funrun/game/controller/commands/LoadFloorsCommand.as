@@ -12,8 +12,8 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.constants.BlockTypes;
 	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.data.BoundingBoxData;
-	import com.funrun.game.model.data.ObstacleData;
+	import com.funrun.game.model.collision.BoundingBoxData;
+	import com.funrun.game.model.collision.ObstacleData;
 	
 	import org.robotlegs.mvcs.Command;
 

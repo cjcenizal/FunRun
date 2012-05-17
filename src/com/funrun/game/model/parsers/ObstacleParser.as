@@ -1,6 +1,6 @@
 package com.funrun.game.model.parsers {
 	
-	import com.funrun.game.model.data.BlockData;
+	import com.funrun.game.model.collision.BlockData;
 	
 	public class ObstacleParser extends AbstractParser {
 		

@@ -3,7 +3,7 @@ package com.funrun.game.model {
 	import away3d.bounds.BoundingVolumeBase;
 	
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.data.ObstacleData;
+	import com.funrun.game.model.collision.ObstacleData;
 	
 	import org.robotlegs.mvcs.Actor;
 	

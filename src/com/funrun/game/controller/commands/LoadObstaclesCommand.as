@@ -5,7 +5,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
-	import com.funrun.game.model.data.ObstacleData;
+	import com.funrun.game.model.collision.ObstacleData;
 	import com.funrun.game.model.parsers.ObstacleParser;
 	import com.funrun.game.model.parsers.ObstaclesParser;
 	import com.funrun.game.services.ObstaclesJsonService;

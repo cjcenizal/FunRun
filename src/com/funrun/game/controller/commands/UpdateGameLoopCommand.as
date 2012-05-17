@@ -10,9 +10,9 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.constants.CollisionTypes;
 	import com.funrun.game.model.constants.FaceTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.data.CollisionsCollection;
-	import com.funrun.game.model.data.FaceCollision;
-	import com.funrun.game.model.data.ObstacleData;
+	import com.funrun.game.model.collision.CollisionsCollection;
+	import com.funrun.game.model.collision.FaceCollision;
+	import com.funrun.game.model.collision.ObstacleData;
 	
 	import org.robotlegs.mvcs.Command;
 	
