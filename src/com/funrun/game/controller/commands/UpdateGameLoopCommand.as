@@ -74,9 +74,10 @@ package com.funrun.game.controller.commands
 			
 			// TO-DO: Make ducking cooler.
 			if ( playerModel.isDucking ) {
-				// TO-DO: Reduce collision bounds here.
+				// TO-DO: Adjust collision bounds for a smaller dude.
 				playerModel.player.scaleY = .25;
 			} else {
+				// TO-DO: Adjust collision bounds for a normal dude.
 				playerModel.player.scaleY = 1;
 			}
 			
