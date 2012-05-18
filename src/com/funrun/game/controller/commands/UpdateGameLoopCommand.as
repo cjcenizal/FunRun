@@ -7,12 +7,12 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TimeModel;
 	import com.funrun.game.model.TrackModel;
-	import com.funrun.game.model.constants.CollisionTypes;
-	import com.funrun.game.model.constants.FaceTypes;
-	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.collision.CollisionsCollection;
 	import com.funrun.game.model.collision.FaceCollision;
 	import com.funrun.game.model.collision.ObstacleData;
+	import com.funrun.game.model.constants.CollisionTypes;
+	import com.funrun.game.model.constants.FaceTypes;
+	import com.funrun.game.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
 	

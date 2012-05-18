@@ -1,12 +1,13 @@
 package {
 	
 	import com.funrun.game.GameModule;
+	import com.funrun.mainmenu.MainMenuModule;
 	import com.funrun.modulemanager.ModuleManager;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
 	import flash.display.StageQuality;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
@@ -32,11 +33,24 @@ package {
 			var moduleManager:ModuleManager = new ModuleManager();
 			addChild(moduleManager);
 			
-			var gameModule:GameModule = new GameModule();
+			// Store modules. Position or configure them as required.
 			var moduleVector:Vector.<ModuleContextView> = new Vector.<ModuleContextView>();
+			
+			// Main menu.
+			var mainMenuModule:MainMenuModule = new MainMenuModule();
+			mainMenuModule.x = mainMenuModule.y = 300;
+			moduleVector[ moduleVector.length ] = mainMenuModule;
+			
+			// Game.
+			var gameModule:GameModule = new GameModule();
 			moduleVector[ moduleVector.length ] = gameModule;
 			
-			// Position or configure modules as required here.
+			
+			// Game UI?
+			
+			// Game popups?
+			
+			// Editor.
 			
 			moduleManager.integrateModules( moduleVector );
 		}
@@ -47,5 +61,4 @@ package {
 			stage.quality = StageQuality.LOW;
 		}
 	}
-
 }
