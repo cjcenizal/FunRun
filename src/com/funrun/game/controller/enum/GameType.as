@@ -1,7 +1,7 @@
 package com.funrun.game.controller.enum
 {
-	import com.cenizal.game.patterns.enum.AbstractType;
-	import com.cenizal.game.patterns.enum.EnumUtils;
+	import com.cenizal.patterns.enum.AbstractType;
+	import com.cenizal.patterns.enum.EnumUtils;
 
 	public class GameType extends AbstractType
 	{

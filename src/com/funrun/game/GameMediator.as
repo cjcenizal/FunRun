@@ -12,6 +12,7 @@ package com.funrun.game {
 			// Listen for both outer-module and inner-module events.
 			// EXAMPLE: moduleCommandMap.mapEvent(LessonNavEvent.PAUSE_LESSON, PauseLessonCommand, LessonNavEvent);
 			// EXAMPLE: eventMap.mapListener( eventDispatcher, BuildGameRequest.START_GAME_REQUESTED, onStartGameRequested );
+			//moduleCommandMap.mapEvent(
 		}
 		
 	}

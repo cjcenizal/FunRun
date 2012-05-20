@@ -16,11 +16,18 @@ package com.funrun.mainmenu {
 		}
 		
 		public function build():void {
-			trace(this, "build");
 			var g:Graphics = this.graphics;
 			g.beginFill( 0xff0000 );
 			g.drawCircle( 0, 0, 200 );
 			g.endFill();
+		}
+		
+		public function show():void {
+			this.visible = true;
+		}
+		
+		public function hide():void {
+			this.visible = false;
 		}
 	}
 }

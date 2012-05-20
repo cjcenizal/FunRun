@@ -51,7 +51,6 @@ package {
 			// Game popups?
 			
 			// Editor.
-			
 			moduleManager.integrateModules( moduleVector );
 		}
 		

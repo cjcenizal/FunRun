@@ -9,12 +9,9 @@ package com.funrun.mainmenu {
 		
 		public function MainMenuContext( contextView:DisplayObjectContainer ) {
 			super( contextView );
-			trace(this);
 		}
 		
 		override public function startup():void {
-			trace(this, "startup");
-			
 			// Map views to mediators.
 			mediatorMap.mapView( MainMenuModule, MainMenuMediator );
 			

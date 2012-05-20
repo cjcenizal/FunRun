@@ -1,4 +1,4 @@
-package com.cenizal.game.patterns.enum
+package com.cenizal.patterns.enum
 {
 
 	import flash.utils.describeType;

@@ -1,4 +1,4 @@
-package com.cenizal.game.patterns
+package com.cenizal.patterns
 {
 
 	/**

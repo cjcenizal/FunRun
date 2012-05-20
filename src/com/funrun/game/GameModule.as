@@ -14,6 +14,14 @@ package com.funrun.game
 			context = new GameContext( this );
 		}
 		
+		public function show():void {
+			this.visible = true;
+		}
+		
+		public function hide():void {
+			this.visible = false;
+		}
+		
 		public function build():void {
 			addTrack();
 			addUiLayer();
