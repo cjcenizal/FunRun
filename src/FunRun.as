@@ -45,7 +45,6 @@ package {
 			var gameModule:GameModule = new GameModule();
 			moduleVector[ moduleVector.length ] = gameModule;
 			
-			
 			// Game UI?
 			
 			// Game popups?
