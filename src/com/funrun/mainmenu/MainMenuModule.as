@@ -1,6 +1,5 @@
 package com.funrun.mainmenu {
 	
-	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.ui.DummyButton;
 	import com.cenizal.util.Center;
 	import com.funrun.game.view.components.TrackView;
@@ -11,6 +10,7 @@ package com.funrun.mainmenu {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import org.osflash.signals.Signal;
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
 	public class MainMenuModule extends ModuleContextView {
@@ -22,10 +22,13 @@ package com.funrun.mainmenu {
 		private var _track:TrackView;
 		private var _startGameButton:DummyButton;
 		
+		public var onStartGameButtonClick:Signal;
+		
 		public function MainMenuModule() {
 			super();
 			context = new MainMenuContext( this );
 			visible = false;
+			onStartGameButtonClick = new Signal();
 		}
 		
 		public function build():void {
@@ -48,7 +51,7 @@ package com.funrun.mainmenu {
 		}
 		
 		private function onClick( e:MouseEvent ):void {
-			dispatchEvent( new Event( "CLICK" ) );
+			onStartGameButtonClick.dispatch();
 		}
 		
 		public function startRunning():void {

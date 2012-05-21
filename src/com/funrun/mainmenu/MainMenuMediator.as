@@ -24,7 +24,7 @@ package com.funrun.mainmenu {
 			eventDispatcher.addEventListener( StopRunningMainMenuRequest.STOP_RUNNING_MAIN_MENU_REQUESTED, onStopMainMenuRequested );
 			
 			// Listen for view events.
-			view.addEventListener( "CLICK", onClick );
+			view.onStartGameButtonClick.add( onStartGameButtonClick );
 			
 			// Show our view a frame after it's added.
 			view.addEventListener( Event.ENTER_FRAME, onEnter );
@@ -35,7 +35,7 @@ package com.funrun.mainmenu {
 			view.startRunning();
 		}
 		
-		private function onClick( e:Event ):void {
+		private function onStartGameButtonClick():void {
 			moduleDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
 		}
 		
