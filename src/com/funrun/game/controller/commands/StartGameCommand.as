@@ -5,7 +5,6 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.controller.events.ResetPlayerRequest;
-	import com.funrun.game.controller.events.StartRunningGameRequest;
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.events.TimeEvent;
 	
@@ -34,8 +33,6 @@ package com.funrun.game.controller.commands {
 			eventDispatcher.dispatchEvent( new EnablePlayerInputRequest( EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED ) );
 			// Render to clear the view.
 			eventDispatcher.dispatchEvent( new RenderSceneRequest( RenderSceneRequest.RENDER_SCENE_REQUESTED ) );
-			// Start running.
-			eventDispatcher.dispatchEvent( new StartRunningGameRequest( StartRunningGameRequest.START_RUNNING_GAME_REQUESTED ) );
 		}
 
 	}

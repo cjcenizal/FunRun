@@ -9,12 +9,14 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.AddPlayerCommand;
 	import com.funrun.game.controller.commands.BuildGameCommand;
 	import com.funrun.game.controller.commands.BuildTimeCommand;
-	import com.funrun.game.controller.commands.ExitGameCommand;
+	import com.funrun.game.controller.commands.InternalShowMainMenuCommand;
 	import com.funrun.game.controller.commands.KillPlayerCommand;
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
 	import com.funrun.game.controller.commands.LoadFloorsCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
 	import com.funrun.game.controller.commands.ResetPlayerCommand;
+	import com.funrun.game.controller.commands.StartGameCommand;
+	import com.funrun.game.controller.commands.StopGameCommand;
 	import com.funrun.game.controller.enum.GameType;
 	import com.funrun.game.controller.events.AddCameraFulfilled;
 	import com.funrun.game.controller.events.AddFloorsRequest;
@@ -25,12 +27,14 @@ package com.funrun.game
 	import com.funrun.game.controller.events.AddTrackViewFulfilled;
 	import com.funrun.game.controller.events.BuildGameRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
-	import com.funrun.game.controller.events.ExitGameRequest;
+	import com.funrun.game.controller.events.InternalShowMainMenuRequest;
 	import com.funrun.game.controller.events.KillPlayerRequest;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadFloorsRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
 	import com.funrun.game.controller.events.ResetPlayerRequest;
+	import com.funrun.game.controller.events.StartGameRequest;
+	import com.funrun.game.controller.events.StopGameRequest;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DummyGeosModel;
@@ -91,8 +95,10 @@ package com.funrun.game
 			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED,			AddFloorsCommand, 		AddFloorsRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED,		KillPlayerCommand,		KillPlayerRequest );
-			commandMap.mapEvent( ExitGameRequest.EXIT_GAME_REQUESTED,			ExitGameCommand,		ExitGameRequest );
 			commandMap.mapEvent( ResetPlayerRequest.RESET_PLAYER_REQUESTED,		ResetPlayerCommand,		ResetPlayerRequest );
+			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED,			StartGameCommand,		StartGameRequest );
+			commandMap.mapEvent( StopGameRequest.STOP_GAME_REQUESTED,			StopGameCommand,		StopGameRequest );
+			commandMap.mapEvent( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED,			InternalShowMainMenuCommand,		InternalShowMainMenuRequest );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( TrackView, TrackMediator );

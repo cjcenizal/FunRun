@@ -4,7 +4,7 @@ package com.funrun.mainmenu.controller.commands {
 	
 	import org.robotlegs.mvcs.Command;
 
-	public class StartGameCommand extends Command {
+	public class ExternalShowGameModuleCommand extends Command {
 		
 		override public function execute():void {
 			// Stop the main menu.

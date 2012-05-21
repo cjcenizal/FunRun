@@ -1,11 +1,11 @@
 package com.funrun.mainmenu {
 	
-	import com.funrun.mainmenu.controller.commands.ReturnToMainMenuCommand;
-	import com.funrun.mainmenu.controller.commands.StartGameCommand;
+	import com.funrun.mainmenu.controller.commands.ExternalShowMainMenuCommand;
+	import com.funrun.mainmenu.controller.commands.ExternalShowGameModuleCommand;
 	import com.funrun.mainmenu.controller.events.StartRunningMainMenuRequest;
 	import com.funrun.mainmenu.controller.events.StopRunningMainMenuRequest;
-	import com.funrun.modulemanager.events.ReturnToMainMenuRequest;
-	import com.funrun.modulemanager.events.StartGameRequest;
+	import com.funrun.modulemanager.events.ExternalShowGameModuleRequest;
+	import com.funrun.modulemanager.events.ExternalShowMainMenuModuleRequest;
 	
 	import flash.events.Event;
 	
@@ -21,11 +21,11 @@ package com.funrun.mainmenu {
 			view.build();
 			
 			// Listen for inter-module events.
-			moduleCommandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 						StartGameCommand, 					StartGameRequest );
-			moduleCommandMap.mapEvent( ReturnToMainMenuRequest.RETURN_TO_MAIN_MENU_REQUESTED,		ReturnToMainMenuCommand, 		ReturnToMainMenuRequest );
+			moduleCommandMap.mapEvent( ExternalShowGameModuleRequest.EXTERNAL_SHOW_GAME_MODULE_REQUESTED, 				ExternalShowGameModuleCommand, 					ExternalShowGameModuleRequest );
+			moduleCommandMap.mapEvent( ExternalShowMainMenuModuleRequest.EXTERNAL_SHOW_MAIN_MENU_MODULE_REQUESTED,		ExternalShowMainMenuCommand, 		ExternalShowMainMenuModuleRequest );
 			
 			// Listen for intra-module events.
-			eventDispatcher.addEventListener( StopRunningMainMenuRequest.STOP_RUNNING_MAIN_MENU_REQUESTED, onStopMainMenuRequested );
+			eventDispatcher.addEventListener( StopRunningMainMenuRequest.STOP_RUNNING_MAIN_MENU_REQUESTED, onStopRunningMainMenuRequested );
 			eventDispatcher.addEventListener( StartRunningMainMenuRequest.START_RUNNING_MAIN_MENU_REQUESTED, onStartRunningMainMenuRequested );
 			
 			// Listen for view events.
@@ -44,12 +44,12 @@ package com.funrun.mainmenu {
 			view.startRunning();
 		}
 		
-		private function onStartGameButtonClick():void {
-			moduleDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
+		private function onStopRunningMainMenuRequested( e:StopRunningMainMenuRequest ):void {
+			view.stopRunning();
 		}
 		
-		private function onStopMainMenuRequested( e:StopRunningMainMenuRequest ):void {
-			view.stopRunning();
+		private function onStartGameButtonClick():void {
+			moduleDispatcher.dispatchEvent( new ExternalShowGameModuleRequest( ExternalShowGameModuleRequest.EXTERNAL_SHOW_GAME_MODULE_REQUESTED ) );
 		}
 		
 	}

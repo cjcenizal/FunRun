@@ -1,6 +1,6 @@
 package com.funrun.game.controller.commands {
 	
-	import com.funrun.game.controller.events.ExitGameRequest;
+	import com.funrun.game.controller.events.StopGameRequest;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.model.events.TimeEvent;
@@ -8,12 +8,11 @@ package com.funrun.game.controller.commands {
 	import flash.events.KeyboardEvent;
 	
 	import org.robotlegs.mvcs.Command;
-
-
-	public class ExitGameCommand extends Command {
+	
+	public class StopGameCommand extends Command {
 
 		[Inject]
-		public var event:ExitGameRequest;
+		public var event:StopGameRequest;
 		
 		[Inject]
 		public var trackModel:TrackModel;

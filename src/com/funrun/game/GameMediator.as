@@ -1,10 +1,11 @@
 package com.funrun.game {
 	
-	import com.funrun.game.controller.commands.StartGameCommand;
-	import com.funrun.game.controller.events.ExitGameRequest;
+	import com.funrun.game.controller.commands.ExternalShowGameModuleCommand;
+	import com.funrun.game.controller.events.InternalShowMainMenuRequest;
 	import com.funrun.game.controller.events.StartRunningGameRequest;
-	import com.funrun.modulemanager.events.ReturnToMainMenuRequest;
-	import com.funrun.modulemanager.events.StartGameRequest;
+	import com.funrun.game.controller.events.StopRunningGameRequest;
+	import com.funrun.modulemanager.events.ExternalShowGameModuleRequest;
+	import com.funrun.modulemanager.events.ExternalShowMainMenuModuleRequest;
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleMediator;
 	
@@ -15,18 +16,26 @@ package com.funrun.game {
 		
 		override public function onRegister():void {
 			view.build();
-			moduleCommandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, StartGameCommand, StartGameRequest );
+			
+			// Listen for external module events.
+			moduleCommandMap.mapEvent( ExternalShowGameModuleRequest.EXTERNAL_SHOW_GAME_MODULE_REQUESTED, ExternalShowGameModuleCommand, ExternalShowGameModuleRequest );
+			
+			// Internal event listeners.
 			eventDispatcher.addEventListener( StartRunningGameRequest.START_RUNNING_GAME_REQUESTED, onStartRunningGameRequested );
-			eventDispatcher.addEventListener( ExitGameRequest.EXIT_GAME_REQUESTED, onExitGameRequested );
+			eventDispatcher.addEventListener( StopRunningGameRequest.STOP_RUNNING_GAME_REQUEST, onStopRunningGameRequested );
+			eventDispatcher.addEventListener( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED, onInternalShowMainMenuRequested );
 		}
 		
 		private function onStartRunningGameRequested( e:StartRunningGameRequest ):void {
 			view.startRunning();
 		}
 		
-		private function onExitGameRequested( e:ExitGameRequest ):void {
+		private function onStopRunningGameRequested( e:StopRunningGameRequest ):void {
 			view.stopRunning();
-			moduleDispatcher.dispatchEvent( new ReturnToMainMenuRequest( ReturnToMainMenuRequest.RETURN_TO_MAIN_MENU_REQUESTED ) );
+		}
+		
+		private function onInternalShowMainMenuRequested( e:InternalShowMainMenuRequest ):void {
+			moduleDispatcher.dispatchEvent( new ExternalShowMainMenuModuleRequest( ExternalShowMainMenuModuleRequest.EXTERNAL_SHOW_MAIN_MENU_MODULE_REQUESTED ) );
 		}
 	}
 }

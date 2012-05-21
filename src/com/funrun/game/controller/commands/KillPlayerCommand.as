@@ -1,7 +1,7 @@
 package com.funrun.game.controller.commands {
 	
 	import com.funrun.game.controller.events.KillPlayerRequest;
-	import com.funrun.game.controller.events.ExitGameRequest;
+	import com.funrun.game.controller.events.InternalShowMainMenuRequest;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.constants.CollisionTypes;
 	import com.funrun.game.model.constants.TrackConstants;
@@ -39,7 +39,7 @@ package com.funrun.game.controller.commands {
 			_timer.removeEventListener( TimerEvent.TIMER_COMPLETE, onTimer );
 			_timer.stop();
 			_timer = null;
-			eventDispatcher.dispatchEvent( new ExitGameRequest( ExitGameRequest.EXIT_GAME_REQUESTED ) );
+			eventDispatcher.dispatchEvent( new InternalShowMainMenuRequest( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED ) );
 		}
 	}
 }
