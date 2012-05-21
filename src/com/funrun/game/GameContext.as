@@ -14,6 +14,7 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
 	import com.funrun.game.controller.commands.LoadFloorsCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
+	import com.funrun.game.controller.commands.ResetPlayerCommand;
 	import com.funrun.game.controller.enum.GameType;
 	import com.funrun.game.controller.events.AddCameraFulfilled;
 	import com.funrun.game.controller.events.AddFloorsRequest;
@@ -29,6 +30,7 @@ package com.funrun.game
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadFloorsRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
+	import com.funrun.game.controller.events.ResetPlayerRequest;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DummyGeosModel;
@@ -90,6 +92,7 @@ package com.funrun.game
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED,		KillPlayerCommand,		KillPlayerRequest );
 			commandMap.mapEvent( ExitGameRequest.EXIT_GAME_REQUESTED,			ExitGameCommand,		ExitGameRequest );
+			commandMap.mapEvent( ResetPlayerRequest.RESET_PLAYER_REQUESTED,		ResetPlayerCommand,		ResetPlayerRequest );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( TrackView, TrackMediator );
