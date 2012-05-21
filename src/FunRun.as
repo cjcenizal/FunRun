@@ -12,7 +12,7 @@ package {
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
-	[SWF( backgroundColor = "#000000", frameRate = "30" )]
+	[SWF( backgroundColor = "#000000", frameRate = "30", width="800" , height="600" )]
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html

@@ -6,7 +6,7 @@ package com.funrun.game.model.constants
 		public static const BLOCK_SIZE:Number = 100;
 		public static const BLOCK_SIZE_HALF:Number = BLOCK_SIZE * .5;
 		public static const TRACK_WIDTH:int = 1200;
-		public static const TRACK_LENGTH:int = 5000;
+		public static const TRACK_LENGTH:int = 8000;
 		public static const TRACK_WIDTH_BLOCKS:int = TRACK_WIDTH / BLOCK_SIZE;
 		public static const TRACK_LENGTH_BLOCKS:int = TRACK_LENGTH / BLOCK_SIZE;
 		public static const PLAYER_HALF_SIZE:int = 55;
@@ -16,7 +16,7 @@ package com.funrun.game.model.constants
 		public static const CAM_Z:Number = -1000;
 		public static const CAM_FOV:Number = 60;
 		public static const CAM_TILT:Number = 20;
-		public static const CAM_FRUSTUM_DISTANCE:Number = 6000; // the higher the value, the blockier the shadows
+		public static const CAM_FRUSTUM_DISTANCE:Number = 8000; // the higher the value, the blockier the shadows
 		
 		// Player movement constants.
 		public static const MAX_PLAYER_FORWARD_VELOCITY:Number = 60;

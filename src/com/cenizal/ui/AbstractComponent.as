@@ -24,13 +24,6 @@ package com.cenizal.ui {
 			if ( parent ) {
 				parent.addChild( this );
 			}
-		}
-		
-		/**
-		 * Initilizes the component.
-		 */
-		protected function init():void {
-			addChildren();
 			invalidate();
 		}
 		
@@ -42,13 +35,6 @@ package com.cenizal.ui {
 			if ( parent ) {
 				parent.removeChild( this );
 			}
-		}
-		
-		/**
-		 * Overriden in subclasses to create child display objects.
-		 */
-		protected function addChildren():void {
-		
 		}
 		
 		/**

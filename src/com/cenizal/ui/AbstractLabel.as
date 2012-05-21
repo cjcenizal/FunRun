@@ -24,7 +24,7 @@ package com.cenizal.ui {
 			super( parent, x, y );
 			_fontSize = fontSize;
 			_fontColor = fontColor;
-
+			
 			_tf = new TextField();
 			_tf.height = height;
 			_tf.multiline = true;
@@ -38,8 +38,6 @@ package com.cenizal.ui {
 			if ( text ) {
 				this.text = text;
 			}
-			
-			invalidate();
 		}
 
 		override public function destroy():void {

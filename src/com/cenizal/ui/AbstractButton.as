@@ -22,22 +22,8 @@ package com.cenizal.ui {
 			if ( defaultHandler != null ) {
 				addEventListener( MouseEvent.CLICK, defaultHandler );
 			}
-		}
-		
-		/**
-		 * Initializes the component.
-		 */
-		override protected function init():void {
-			super.init();
 			buttonMode = true;
 			useHandCursor = true;
-			setSize( 100, 20 );
-		}
-		
-		/**
-		 * Creates and adds the child display objects of this component.
-		 */
-		override protected function addChildren():void {
 			addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 			addEventListener( MouseEvent.ROLL_OVER, onMouseOver );
 		}

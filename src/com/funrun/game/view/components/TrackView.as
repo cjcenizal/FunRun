@@ -35,8 +35,8 @@ package com.funrun.game.view.components {
 		public function init():void {
 			_view = new View3D();
 			_view.antiAlias = 2; // 2, 4, or 16
-			_view.width = 800;
-			_view.height = 600;
+			_view.width = stage.stageWidth;
+			_view.height = stage.stageHeight;
 			_view.backgroundColor = 0xffffff;
 			addChild( _view );
 			
