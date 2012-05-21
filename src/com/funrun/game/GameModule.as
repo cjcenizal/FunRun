@@ -1,15 +1,17 @@
 package com.funrun.game
 {
+	import com.funrun.game.view.components.DistanceView;
 	import com.funrun.game.view.components.TrackView;
 	
-	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
-	
 	import flash.display.StageQuality;
+	
+	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
 	public class GameModule extends ModuleContextView
 	{
 		private var _isRunning:Boolean = false;
 		private var _track:TrackView;
+		private var _distance:DistanceView;
 		
 		public function GameModule()
 		{
@@ -25,12 +27,11 @@ package com.funrun.game
 		}
 		
 		private function addTrack():void {
-			_track = new TrackView();
-			addChild( _track );
+			_track = new TrackView( this );
 		}
 		
 		private function addUiLayer():void {
-			
+			_distance = new DistanceView( this );
 		}
 		
 		private function addPopupsLayer():void {

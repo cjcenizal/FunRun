@@ -7,8 +7,10 @@ package com.funrun.game.view.components {
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	
+	import com.cenizal.ui.AbstractComponent;
 	import com.funrun.game.model.constants.TrackConstants;
 	
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	
 	/**
@@ -16,7 +18,7 @@ package com.funrun.game.view.components {
 	 * - Compile with -swf-version=13
 	 * - Add wmode: 'direct' param to html template
 	 */
-	public class TrackView extends Sprite {
+	public class TrackView extends AbstractComponent {
 		
 		// Engine vars.
 		private var _view:View3D;
@@ -26,7 +28,8 @@ package com.funrun.game.view.components {
 		/**
 		 * Constructor
 		 */
-		public function TrackView() {
+		public function TrackView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
+			super( parent, x, y );
 		}
 		
 		/**

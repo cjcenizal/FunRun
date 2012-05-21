@@ -61,7 +61,6 @@ package com.funrun.game.controller.commands
 			} else {
 				// Store distance.
 				distanceModel.add( playerModel.speed );
-				trace( Math.round( distanceModel.distance * .5 ) * .1 );
 				// Update speed when you're alive.
 				if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
 					if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
