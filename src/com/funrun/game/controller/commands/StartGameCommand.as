@@ -4,7 +4,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
-	import com.funrun.game.controller.events.ResetPlayerRequest;
+	import com.funrun.game.controller.events.ResetGameRequest;
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.events.TimeEvent;
 	
@@ -24,7 +24,7 @@ package com.funrun.game.controller.commands {
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
 			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
 			// Reset player.
-			eventDispatcher.dispatchEvent( new ResetPlayerRequest( ResetPlayerRequest.RESET_PLAYER_REQUESTED ) );
+			eventDispatcher.dispatchEvent( new ResetGameRequest( ResetGameRequest.RESET_GAME_REQUESTED ) );
 			// Add initial floor.
 			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
 			// Start time.

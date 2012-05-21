@@ -14,7 +14,7 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
 	import com.funrun.game.controller.commands.LoadFloorsCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
-	import com.funrun.game.controller.commands.ResetPlayerCommand;
+	import com.funrun.game.controller.commands.ResetGameCommand;
 	import com.funrun.game.controller.commands.StartGameCommand;
 	import com.funrun.game.controller.commands.StopGameCommand;
 	import com.funrun.game.controller.enum.GameType;
@@ -32,11 +32,12 @@ package com.funrun.game
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadFloorsRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
-	import com.funrun.game.controller.events.ResetPlayerRequest;
+	import com.funrun.game.controller.events.ResetGameRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.controller.events.StopGameRequest;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
+	import com.funrun.game.model.DistanceModel;
 	import com.funrun.game.model.DummyGeosModel;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.IGeosModel;
@@ -81,6 +82,7 @@ package com.funrun.game
 			injector.mapSingletonOf( PlayerModel, PlayerModel );
 			injector.mapSingletonOf( CameraModel, CameraModel );
 			injector.mapSingletonOf( FloorsModel, FloorsModel );
+			injector.mapSingletonOf( DistanceModel, DistanceModel);
 			
 			// Map events to commands.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, 		BuildTimeCommand, 		BuildTimeRequest, true );
@@ -95,7 +97,7 @@ package com.funrun.game
 			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED,			AddFloorsCommand, 		AddFloorsRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED,		KillPlayerCommand,		KillPlayerRequest );
-			commandMap.mapEvent( ResetPlayerRequest.RESET_PLAYER_REQUESTED,		ResetPlayerCommand,		ResetPlayerRequest );
+			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED,		ResetGameCommand,		ResetGameRequest );
 			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED,			StartGameCommand,		StartGameRequest );
 			commandMap.mapEvent( StopGameRequest.STOP_GAME_REQUESTED,			StopGameCommand,		StopGameRequest );
 			commandMap.mapEvent( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED,			InternalShowMainMenuCommand,		InternalShowMainMenuRequest );

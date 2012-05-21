@@ -5,6 +5,7 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.model.CameraModel;
+	import com.funrun.game.model.DistanceModel;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TimeModel;
 	import com.funrun.game.model.TrackModel;
@@ -31,6 +32,9 @@ package com.funrun.game.controller.commands
 		[Inject]
 		public var timeModel:TimeModel;
 		
+		[Inject]
+		public var distanceModel:DistanceModel;
+		
 		override public function execute():void {
 			// Update obstacles.
 			trackModel.move( -playerModel.speed );
@@ -50,11 +54,15 @@ package com.funrun.game.controller.commands
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
 			
-			// Update forward speed.
 			if ( playerModel.isDead ) {
+				// Update speed when you're dead.
 				playerModel.lateralVelocity = 0;
 				playerModel.speed *= .7;
 			} else {
+				// Store distance.
+				distanceModel.add( playerModel.speed );
+				trace( Math.round( distanceModel.distance * .5 ) * .1 );
+				// Update speed when you're alive.
 				if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
 					if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
 						playerModel.speed--;
@@ -67,8 +75,10 @@ package com.funrun.game.controller.commands
 					playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
 					playerModel.isAirborne = true;
 				}
+				// Update lateral position.
 				playerModel.player.x += playerModel.lateralVelocity;
 			}
+			
 			// Update gravity.
 			playerModel.jumpVelocity += TrackConstants.PLAYER_GRAVITY;
 			playerModel.player.y += playerModel.jumpVelocity;
@@ -119,7 +129,6 @@ package com.funrun.game.controller.commands
 							}
 						}
 					}
-					
 					// If we're moving left, hit the right sides of things.
 					if ( playerModel.lateralVelocity < 0 ) {
 						if ( face.type == FaceTypes.RIGHT ) {
