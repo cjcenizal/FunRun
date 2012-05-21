@@ -1,7 +1,10 @@
 package com.funrun.mainmenu {
 	
+	import com.funrun.mainmenu.controller.commands.ReturnToMainMenuCommand;
 	import com.funrun.mainmenu.controller.commands.StartGameCommand;
+	import com.funrun.mainmenu.controller.events.StartRunningMainMenuRequest;
 	import com.funrun.mainmenu.controller.events.StopRunningMainMenuRequest;
+	import com.funrun.modulemanager.events.ReturnToMainMenuRequest;
 	import com.funrun.modulemanager.events.StartGameRequest;
 	
 	import flash.events.Event;
@@ -18,10 +21,12 @@ package com.funrun.mainmenu {
 			view.build();
 			
 			// Listen for inter-module events.
-			moduleCommandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, StartGameCommand, StartGameRequest );
+			moduleCommandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 						StartGameCommand, 					StartGameRequest );
+			moduleCommandMap.mapEvent( ReturnToMainMenuRequest.RETURN_TO_MAIN_MENU_REQUESTED,		ReturnToMainMenuCommand, 		ReturnToMainMenuRequest );
 			
 			// Listen for intra-module events.
 			eventDispatcher.addEventListener( StopRunningMainMenuRequest.STOP_RUNNING_MAIN_MENU_REQUESTED, onStopMainMenuRequested );
+			eventDispatcher.addEventListener( StartRunningMainMenuRequest.START_RUNNING_MAIN_MENU_REQUESTED, onStartRunningMainMenuRequested );
 			
 			// Listen for view events.
 			view.onStartGameButtonClick.add( onStartGameButtonClick );
@@ -32,6 +37,10 @@ package com.funrun.mainmenu {
 		
 		private function onEnter( e:Event ):void {
 			view.removeEventListener( Event.ENTER_FRAME, onEnter );
+			view.startRunning();
+		}
+		
+		private function onStartRunningMainMenuRequested( e:StartRunningMainMenuRequest ):void {
 			view.startRunning();
 		}
 		

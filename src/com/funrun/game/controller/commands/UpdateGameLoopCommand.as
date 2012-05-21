@@ -1,6 +1,7 @@
 package com.funrun.game.controller.commands
 {
 	import com.funrun.game.controller.events.AddObstacleRequest;
+	import com.funrun.game.controller.events.KillPlayerRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.model.CameraModel;
@@ -135,8 +136,7 @@ package com.funrun.game.controller.commands
 						// TO-DO: We can't resolve this collision by moving the player.
 						// We need to do it by moving the world.
 						if ( face.event == CollisionTypes.SMACK ) {
-							playerModel.isDead = true;
-							playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
+							eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.SMACK ) );
 						}
 					}
 				}

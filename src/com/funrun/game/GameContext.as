@@ -9,6 +9,8 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.AddPlayerCommand;
 	import com.funrun.game.controller.commands.BuildGameCommand;
 	import com.funrun.game.controller.commands.BuildTimeCommand;
+	import com.funrun.game.controller.commands.ExitGameCommand;
+	import com.funrun.game.controller.commands.KillPlayerCommand;
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
 	import com.funrun.game.controller.commands.LoadFloorsCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
@@ -22,6 +24,8 @@ package com.funrun.game
 	import com.funrun.game.controller.events.AddTrackViewFulfilled;
 	import com.funrun.game.controller.events.BuildGameRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
+	import com.funrun.game.controller.events.ExitGameRequest;
+	import com.funrun.game.controller.events.KillPlayerRequest;
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadFloorsRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
@@ -84,6 +88,8 @@ package com.funrun.game
 			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, 		AddPlayerCommand, 		AddPlayerRequest );
 			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED,			AddFloorsCommand, 		AddFloorsRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
+			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED,		KillPlayerCommand,		KillPlayerRequest );
+			commandMap.mapEvent( ExitGameRequest.EXIT_GAME_REQUESTED,			ExitGameCommand,		ExitGameRequest );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( TrackView, TrackMediator );
@@ -96,6 +102,7 @@ package com.funrun.game
 		}
 		
 		private function onAddTrackFulfilled( e:AddTrackViewFulfilled ):void {
+			// TO-DO: Can this be moved inside of GameMediator, or TrackMediator?
 			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
 		}
 	}
