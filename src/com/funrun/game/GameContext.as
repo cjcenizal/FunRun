@@ -49,7 +49,9 @@ package com.funrun.game
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.services.BlocksJsonService;
 	import com.funrun.game.services.ObstaclesJsonService;
+	import com.funrun.game.view.components.DistanceView;
 	import com.funrun.game.view.components.TrackView;
+	import com.funrun.game.view.mediators.DistanceMediator;
 	import com.funrun.game.view.mediators.TrackMediator;
 	
 	import flash.display.DisplayObjectContainer;
@@ -103,8 +105,9 @@ package com.funrun.game
 			commandMap.mapEvent( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED,			InternalShowMainMenuCommand,		InternalShowMainMenuRequest );
 			
 			// Map views to mediators.
-			mediatorMap.mapView( TrackView, TrackMediator );
 			mediatorMap.mapView( GameModule, GameMediator );
+			mediatorMap.mapView( TrackView, TrackMediator );
+			mediatorMap.mapView( DistanceView, DistanceMediator );
 			
 			// Let's throw some logic into this baby.
 			eventDispatcher.addEventListener( AddTrackViewFulfilled.ADD_TRACK_FULFILLED, onAddTrackFulfilled );
