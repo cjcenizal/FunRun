@@ -4,6 +4,8 @@ package com.funrun.game
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
+	import flash.display.StageQuality;
+	
 	public class GameModule extends ModuleContextView
 	{
 		private var _isRunning:Boolean = false;
@@ -39,6 +41,7 @@ package com.funrun.game
 			if ( !_isRunning ) {
 				this.visible = true;
 				_isRunning = true;
+				stage.quality = StageQuality.LOW;
 			}
 		}
 		

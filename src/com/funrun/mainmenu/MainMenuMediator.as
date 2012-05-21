@@ -26,7 +26,12 @@ package com.funrun.mainmenu {
 			// Listen for view events.
 			view.addEventListener( "CLICK", onClick );
 			
-			// Show our view.
+			// Show our view a frame after it's added.
+			view.addEventListener( Event.ENTER_FRAME, onEnter );
+		}
+		
+		private function onEnter( e:Event ):void {
+			view.removeEventListener( Event.ENTER_FRAME, onEnter );
 			view.startRunning();
 		}
 		

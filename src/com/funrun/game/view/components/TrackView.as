@@ -37,7 +37,7 @@ package com.funrun.game.view.components {
 			_view.antiAlias = 2; // 2, 4, or 16
 			_view.width = 800;
 			_view.height = 600;
-			_view.backgroundColor = 0x111111;
+			_view.backgroundColor = 0xffffff;
 			addChild( _view );
 			
 			_scene = _view.scene; // Store local refs.

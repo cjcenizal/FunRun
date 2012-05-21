@@ -12,7 +12,7 @@ package {
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
-	[SWF( backgroundColor = "#000000", frameRate = "30", quality = "LOW" )]
+	[SWF( backgroundColor = "#000000", frameRate = "30" )]
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
@@ -36,27 +36,25 @@ package {
 			// Store modules. Position or configure them as required.
 			var moduleVector:Vector.<ModuleContextView> = new Vector.<ModuleContextView>();
 			
-			// Main menu.
+			// Add main menu.
 			var mainMenuModule:MainMenuModule = new MainMenuModule();
-			mainMenuModule.x = mainMenuModule.y = 300;
 			moduleVector[ moduleVector.length ] = mainMenuModule;
 			
-			// Game.
+			// Add game.
 			var gameModule:GameModule = new GameModule();
 			moduleVector[ moduleVector.length ] = gameModule;
 			
-			// Game UI?
+			// Should game UI go here instead of in the game package?  How about game popups, like a results screen?
 			
-			// Game popups?
+			// Add editor.
 			
-			// Editor.
 			moduleManager.integrateModules( moduleVector );
 		}
 		
 		private function setupStage():void {
+			stage.color = 0xffffff;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
-			stage.quality = StageQuality.LOW;
 		}
 	}
 }

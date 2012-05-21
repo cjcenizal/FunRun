@@ -4,7 +4,7 @@ package com.funrun.game.model.events
 	
 	public class TimeEvent extends Event
 	{
-		public static const TICK:String = "TICK";
+		public static const TICK:String = "TimeEvent.TICK";
 		
 		public var ticks:int;
 		public var delta:int;

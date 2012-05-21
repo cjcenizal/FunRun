@@ -1,8 +1,11 @@
 package com.funrun.mainmenu {
 	
+	import com.cenizal.ui.AbstractLabel;
+	import com.cenizal.ui.DummyButton;
 	import com.funrun.game.view.components.TrackView;
 	
 	import flash.display.Graphics;
+	import flash.display.StageQuality;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -12,6 +15,7 @@ package com.funrun.mainmenu {
 		
 		private var _isRunning:Boolean = false;
 		private var _track:TrackView;
+		private var _startGameButton:DummyButton;
 		
 		public function MainMenuModule() {
 			super();
@@ -20,10 +24,7 @@ package com.funrun.mainmenu {
 		}
 		
 		public function build():void {
-			var g:Graphics = this.graphics;
-			g.beginFill( 0xff0000 );
-			g.drawCircle( 0, 0, 200 );
-			g.endFill();
+			_startGameButton = new DummyButton( this, 0, 0, onClick, "Start game", 0xaaaaaa );
 		}
 		
 		private function onClick( e:MouseEvent ):void {
@@ -34,7 +35,7 @@ package com.funrun.mainmenu {
 			if ( !_isRunning ) {
 				this.visible = true;
 				_isRunning = true;
-				addEventListener( MouseEvent.CLICK, onClick );
+				stage.quality = StageQuality.BEST;
 			}
 		}
 		

@@ -2,7 +2,6 @@ package com.cenizal.ui {
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
-	import flash.display.Stage;
 	import flash.events.Event;
 	
 	public class AbstractComponent extends Sprite {
@@ -36,6 +35,16 @@ package com.cenizal.ui {
 		}
 		
 		/**
+		 * Destroys the component.
+		 */
+		public function destroy():void {
+			removeEventListener( Event.ENTER_FRAME, onInvalidate );
+			if ( parent ) {
+				parent.removeChild( this );
+			}
+		}
+		
+		/**
 		 * Overriden in subclasses to create child display objects.
 		 */
 		protected function addChildren():void {
@@ -46,9 +55,7 @@ package com.cenizal.ui {
 		 * Marks the component to be redrawn on the next frame.
 		 */
 		protected function invalidate():void {
-			if ( stage ) {
-				stage.addEventListener( Event.ENTER_FRAME, onInvalidate );
-			}
+			addEventListener( Event.ENTER_FRAME, onInvalidate );
 		}
 		
 		/**
@@ -77,15 +84,9 @@ package com.cenizal.ui {
 		 * Abstract draw function.
 		 */
 		public function draw():void {
-			if ( stage ) {
-				stage.removeEventListener( Event.ENTER_FRAME, onInvalidate );
-			}
+			removeEventListener( Event.ENTER_FRAME, onInvalidate );
 			dispatchEvent( new Event( EVENT_DRAW ) );
 		}
-		
-		///////////////////////////////////
-		// event handlers
-		///////////////////////////////////
 		
 		/**
 		 * Called one frame after invalidate is called.
@@ -93,10 +94,6 @@ package com.cenizal.ui {
 		protected function onInvalidate( event:Event ):void {
 			draw();
 		}
-		
-		///////////////////////////////////
-		// getter/setters
-		///////////////////////////////////
 		
 		/**
 		 * Sets/gets the width of the component.

@@ -1,7 +1,6 @@
 package com.cenizal.ui {
 	
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	public class AbstractButton extends AbstractComponent {
@@ -18,7 +17,7 @@ package com.cenizal.ui {
 		 * @param label The string to use for the initial label of this component.
 		 * @param defaultHandler The event handling function to handle the default event for this component (click in this case).
 		 */
-		public function PushButton( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0, defaultHandler:Function = null ) {
+		public function AbstractButton( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0, defaultHandler:Function = null ) {
 			super( parent, x, y );
 			if ( defaultHandler != null ) {
 				addEventListener( MouseEvent.CLICK, defaultHandler );
@@ -39,13 +38,9 @@ package com.cenizal.ui {
 		 * Creates and adds the child display objects of this component.
 		 */
 		override protected function addChildren():void {
-			addEventListener( MouseEvent.MOUSE_DOWN, onMouseGoDown );
+			addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 			addEventListener( MouseEvent.ROLL_OVER, onMouseOver );
 		}
-		
-		///////////////////////////////////
-		// public methods
-		///////////////////////////////////
 		
 		/**
 		 * Draws the visual ui of the component.
@@ -54,48 +49,11 @@ package com.cenizal.ui {
 			super.draw();
 		}
 		
-		/*protected function drawFace():void {
-			_face.graphics.clear();
-			if ( _down ) {
-				_face.graphics.beginFill( Style.BUTTON_DOWN );
-			} else {
-				_face.graphics.beginFill( Style.BUTTON_FACE );
-			}
-			_face.graphics.drawRect( 0, 0, _width - 2, _height - 2 );
-			_face.graphics.endFill();
-		}
-		
-		override public function draw():void {
-			super.draw();
-			_back.graphics.clear();
-			_back.graphics.beginFill( Style.BACKGROUND );
-			_back.graphics.drawRect( 0, 0, _width, _height );
-			_back.graphics.endFill();
-			
-			drawFace();
-			
-			_label.text = _labelText;
-			_label.autoSize = true;
-			_label.draw();
-			if ( _label.width > _width - 4 ) {
-				_label.autoSize = false;
-				_label.width = _width - 4;
-			} else {
-				_label.autoSize = true;
-			}
-			_label.draw();
-			_label.move( _width / 2 - _label.width / 2, _height / 2 - _label.height / 2 );
-		}*/
-		
-		///////////////////////////////////
-		// event handlers
-		///////////////////////////////////
-		
 		/**
 		 * Internal mouseOver handler.
 		 * @param event The MouseEvent passed by the system.
 		 */
-		protected function onMouseOver( event:MouseEvent ):void {
+		protected function onMouseOver( e:MouseEvent ):void {
 			_over = true;
 			addEventListener( MouseEvent.ROLL_OUT, onMouseOut );
 		}
@@ -104,11 +62,8 @@ package com.cenizal.ui {
 		 * Internal mouseOut handler.
 		 * @param event The MouseEvent passed by the system.
 		 */
-		protected function onMouseOut( event:MouseEvent ):void {
+		protected function onMouseOut( e:MouseEvent ):void {
 			_over = false;
-			if ( !_down ) {
-				//_face.filters = [ getShadow( 1 ) ];
-			}
 			removeEventListener( MouseEvent.ROLL_OUT, onMouseOut );
 		}
 		
@@ -116,30 +71,22 @@ package com.cenizal.ui {
 		 * Internal mouseOut handler.
 		 * @param event The MouseEvent passed by the system.
 		 */
-		protected function onMouseGoDown( event:MouseEvent ):void {
+		protected function onMouseDown( e:MouseEvent ):void {
 			_down = true;
-			//drawFace();
-			//_face.filters = [ getShadow( 1, true ) ];
-			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseGoUp );
+			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 		}
 		
 		/**
 		 * Internal mouseUp handler.
 		 * @param event The MouseEvent passed by the system.
 		 */
-		protected function onMouseGoUp( event:MouseEvent ):void {
+		protected function onMouseUp( e:MouseEvent ):void {
 			if ( _toggle && _over ) {
 				_selected = !_selected;
 			}
 			_down = _selected;
-			//drawFace();
-			//_face.filters = [ getShadow( 1, _selected ) ];
-			stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseGoUp );
+			stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 		}
-		
-		///////////////////////////////////
-		// getter/setters
-		///////////////////////////////////
 		
 		public function set selected( value:Boolean ):void {
 			if ( !_toggle ) {
@@ -148,8 +95,6 @@ package com.cenizal.ui {
 			
 			_selected = value;
 			_down = _selected;
-			//_face.filters = [ getShadow( 1, _selected ) ];
-			//drawFace();
 		}
 		
 		public function get selected():Boolean {

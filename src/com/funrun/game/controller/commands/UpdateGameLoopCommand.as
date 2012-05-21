@@ -151,9 +151,6 @@ package com.funrun.game.controller.commands
 			// We'll try easing to follow the player instead of being locked.
 			cameraModel.y += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - cameraModel.y ) * followFactor;
 			cameraModel.z = -1000;
-			if ( !playerModel.isDead ) {
-				cameraModel.offsetY = Math.sin( timeModel.ticks * .4 ) * 6;
-			}
 			cameraModel.update();
 			
 			// Render.
