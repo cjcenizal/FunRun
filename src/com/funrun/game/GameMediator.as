@@ -1,5 +1,9 @@
 package com.funrun.game {
 	
+	import com.funrun.game.controller.commands.StartGameCommand;
+	import com.funrun.game.controller.events.StartRunningGameRequest;
+	import com.funrun.modulemanager.events.StartGameRequest;
+	
 	import org.robotlegs.utilities.modular.mvcs.ModuleMediator;
 	
 	public class GameMediator extends ModuleMediator {
@@ -9,10 +13,12 @@ package com.funrun.game {
 		
 		override public function onRegister():void {
 			view.build();
-			// Listen for both outer-module and inner-module events.
-			// EXAMPLE: moduleCommandMap.mapEvent(LessonNavEvent.PAUSE_LESSON, PauseLessonCommand, LessonNavEvent);
-			// EXAMPLE: eventMap.mapListener( eventDispatcher, BuildGameRequest.START_GAME_REQUESTED, onStartGameRequested );
-			//moduleCommandMap.mapEvent(
+			moduleCommandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, StartGameCommand, StartGameRequest );
+			eventDispatcher.addEventListener( StartRunningGameRequest.START_RUNNING_GAME_REQUESTED, onStartRunningGameRequested );
+		}
+		
+		private function onStartRunningGameRequested( e:StartRunningGameRequest ):void {
+			view.startRunning();
 		}
 		
 	}

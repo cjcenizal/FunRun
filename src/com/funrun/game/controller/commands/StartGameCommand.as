@@ -1,36 +1,32 @@
-package com.funrun.game.controller.commands
-{
-	import away3d.entities.Mesh;
+package com.funrun.game.controller.commands {
 	
 	import com.funrun.game.controller.events.AddFloorsRequest;
-	import com.funrun.game.controller.events.AddObjectToSceneRequest;
 	import com.funrun.game.controller.events.BuildTimeRequest;
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
+	import com.funrun.game.controller.events.StartRunningGameRequest;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.TrackModel;
-	import com.funrun.game.model.constants.FloorTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.collision.ObstacleData;
 	import com.funrun.game.model.events.TimeEvent;
 	
 	import flash.events.KeyboardEvent;
 	
 	import org.robotlegs.mvcs.Command;
-	
+
 	/**
 	 * StartGameCommand starts the main game loop.
 	 */
 	public class StartGameCommand extends Command {
-		
+
 		[Inject]
 		public var floorsModel:FloorsModel;
-		
+
 		[Inject]
 		public var trackModel:TrackModel;
-		
+
 		override public function execute():void {
 			// Add initial floor.
-			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
+			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ));
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			// Respond to input.
@@ -40,7 +36,9 @@ package com.funrun.game.controller.commands
 			eventDispatcher.dispatchEvent( new BuildTimeRequest( BuildTimeRequest.BUILD_TIME_REQUESTED ) );
 			// Start input.
 			eventDispatcher.dispatchEvent( new EnablePlayerInputRequest( EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED ) );
+			// Start running.
+			eventDispatcher.dispatchEvent( new StartRunningGameRequest( StartRunningGameRequest.START_RUNNING_GAME_REQUESTED ) );
 		}
-		
+
 	}
 }

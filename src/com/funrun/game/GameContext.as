@@ -12,7 +12,6 @@ package com.funrun.game
 	import com.funrun.game.controller.commands.LoadBlocksCommand;
 	import com.funrun.game.controller.commands.LoadFloorsCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
-	import com.funrun.game.controller.commands.StartGameCommand;
 	import com.funrun.game.controller.enum.GameType;
 	import com.funrun.game.controller.events.AddCameraFulfilled;
 	import com.funrun.game.controller.events.AddFloorsRequest;
@@ -26,7 +25,6 @@ package com.funrun.game
 	import com.funrun.game.controller.events.LoadBlocksRequest;
 	import com.funrun.game.controller.events.LoadFloorsRequest;
 	import com.funrun.game.controller.events.LoadObstaclesRequest;
-	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DummyGeosModel;
@@ -86,7 +84,6 @@ package com.funrun.game
 			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, 		AddPlayerCommand, 		AddPlayerRequest );
 			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED,			AddFloorsCommand, 		AddFloorsRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
-			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, 		StartGameCommand, 		StartGameRequest );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( TrackView, TrackMediator );
@@ -99,7 +96,7 @@ package com.funrun.game
 		}
 		
 		private function onAddTrackFulfilled( e:AddTrackViewFulfilled ):void {
-			//eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
+			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );
 			//eventDispatcher.dispatchEvent( new StartGameRequest( StartGameRequest.START_GAME_REQUESTED ) );
 		}
 	}
