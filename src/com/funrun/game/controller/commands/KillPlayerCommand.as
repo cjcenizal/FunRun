@@ -28,6 +28,9 @@ package com.funrun.game.controller.commands {
 					case CollisionTypes.SMACK:
 						playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
 						break;
+					case CollisionTypes.FALL:
+						trace(this, "Fell to death");
+						break;
 				}
 				_timer = new Timer( 1500, 1 );
 				_timer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimer );

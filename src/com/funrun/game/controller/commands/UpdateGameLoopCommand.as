@@ -143,6 +143,9 @@ package com.funrun.game.controller.commands
 			} else {
 				// If we're not hitting something, we're airborne.
 				playerModel.isAirborne = true;
+				if ( playerModel.player.y < TrackConstants.FALL_DEATH_HEIGHT ) {
+					eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.FALL ) );
+				}
 			}
 			
 			// Update camera.

@@ -35,6 +35,7 @@ package com.funrun.game.model.constants
 		// Collision constants.
 		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;
 		public static const HEAD_ON_SMACK_SPEED:Number = -160;
+		public static const FALL_DEATH_HEIGHT:Number = -1500;
 		
 		// Culling.
 		public static const CULL_FLOOR:int = -100000;

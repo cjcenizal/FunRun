@@ -4,6 +4,9 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TrackModel;
+	import com.funrun.game.model.constants.TrackConstants;
+	
+	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -22,8 +25,10 @@ package com.funrun.game.controller.commands {
 			// Resurrect plater.
 			playerModel.isDead = false;
 			// Reset player and camera position.
-			playerModel.player.x = cameraModel.x = 0;
-			cameraModel.y = 0;
+			playerModel.speed = playerModel.jumpVelocity = playerModel.lateralVelocity = 0;
+			playerModel.player.position = new Vector3D( 0, TrackConstants.PLAYER_HALF_SIZE, 0 );
+			cameraModel.x = 0;
+			cameraModel.y = 100;
 			cameraModel.update();
 			// Remove any old obstacles.
 			while ( trackModel.numObstacles > 0 ) {
