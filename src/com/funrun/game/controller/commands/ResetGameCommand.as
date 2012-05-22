@@ -1,5 +1,6 @@
 package com.funrun.game.controller.commands {
 	
+	import com.funrun.game.controller.events.DisplayDistanceRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DistanceModel;
@@ -28,6 +29,7 @@ package com.funrun.game.controller.commands {
 		override public function execute():void {
 			// Reset distance.
 			distanceModel.distance = 0;
+			eventDispatcher.dispatchEvent( new DisplayDistanceRequest( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, distanceModel.distance ) );
 			// Reset player.
 			playerModel.isDead = false;
 			playerModel.speed = playerModel.jumpVelocity = playerModel.lateralVelocity = 0;

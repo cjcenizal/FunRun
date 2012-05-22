@@ -1,5 +1,6 @@
 package com.funrun.game.view.mediators {
 	
+	import com.cenizal.util.Numbers;
 	import com.funrun.game.controller.events.DisplayDistanceRequest;
 	import com.funrun.game.view.components.DistanceView;
 	
@@ -23,7 +24,7 @@ package com.funrun.game.view.mediators {
 		}
 		
 		private function onDisplayDistanceRequested( e:DisplayDistanceRequest ):void {
-			view.showDistance( ( Math.round( e.distance * .05 ) ).toString() );
+			view.showDistance( Numbers.addCommas( ( Math.round( e.distance * .05 ) ).toString() ) );
 		}
 	
 	}
