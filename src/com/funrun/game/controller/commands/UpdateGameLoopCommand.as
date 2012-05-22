@@ -1,6 +1,8 @@
 package com.funrun.game.controller.commands
 {
+	import com.adobe.utils.StringUtil;
 	import com.funrun.game.controller.events.AddObstacleRequest;
+	import com.funrun.game.controller.events.DisplayDistanceRequest;
 	import com.funrun.game.controller.events.KillPlayerRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
@@ -61,6 +63,7 @@ package com.funrun.game.controller.commands
 			} else {
 				// Store distance.
 				distanceModel.add( playerModel.speed );
+				eventDispatcher.dispatchEvent( new DisplayDistanceRequest( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, distanceModel.distance ) );
 				// Update speed when you're alive.
 				if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
 					if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {

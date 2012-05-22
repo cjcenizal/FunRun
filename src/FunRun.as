@@ -55,6 +55,7 @@ package {
 			stage.color = 0xffffff;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			stage.quality = StageQuality.BEST;
 		}
 	}
 }

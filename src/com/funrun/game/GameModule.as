@@ -3,8 +3,6 @@ package com.funrun.game
 	import com.funrun.game.view.components.DistanceView;
 	import com.funrun.game.view.components.TrackView;
 	
-	import flash.display.StageQuality;
-	
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
 	public class GameModule extends ModuleContextView
@@ -42,7 +40,6 @@ package com.funrun.game
 			if ( !_isRunning ) {
 				this.visible = true;
 				_isRunning = true;
-				stage.quality = StageQuality.LOW;
 			}
 		}
 		

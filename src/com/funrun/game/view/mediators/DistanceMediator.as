@@ -1,5 +1,6 @@
 package com.funrun.game.view.mediators {
 	
+	import com.funrun.game.controller.events.DisplayDistanceRequest;
 	import com.funrun.game.view.components.DistanceView;
 	
 	import flash.display.Stage;
@@ -16,7 +17,13 @@ package com.funrun.game.view.mediators {
 		
 		override public function onRegister():void {
 			stage = view.stage;
-			//view.init();
+			view.init();
+			
+			eventDispatcher.addEventListener( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, onDisplayDistanceRequested );
+		}
+		
+		private function onDisplayDistanceRequested( e:DisplayDistanceRequest ):void {
+			view.showDistance( ( Math.round( e.distance * .05 ) ).toString() );
 		}
 	
 	}

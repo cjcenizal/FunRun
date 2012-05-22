@@ -6,7 +6,6 @@ package com.funrun.mainmenu {
 	
 	import flash.display.Bitmap;
 	import flash.display.Graphics;
-	import flash.display.StageQuality;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -58,7 +57,6 @@ package com.funrun.mainmenu {
 			if ( !_isRunning ) {
 				this.visible = true;
 				_isRunning = true;
-				stage.quality = StageQuality.BEST;
 			}
 		}
 		
