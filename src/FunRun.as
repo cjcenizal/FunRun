@@ -1,5 +1,8 @@
 package {
 	
+	import away3d.containers.View3D;
+	import away3d.debug.AwayStats;
+	
 	import com.funrun.game.GameModule;
 	import com.funrun.mainmenu.MainMenuModule;
 	import com.funrun.modulemanager.ModuleManager;
@@ -9,6 +12,7 @@ package {
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.external.ExternalInterface;
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	
@@ -49,6 +53,8 @@ package {
 			// Add editor.
 			
 			moduleManager.integrateModules( moduleVector );
+			
+			ExternalInterface.call( "onSwfLoaded" );
 		}
 		
 		private function setupStage():void {
