@@ -1,6 +1,7 @@
 package com.funrun.modulemanager {
 	
 	import com.funrun.modulemanager.controller.events.ExternalShowMainMenuModuleRequest;
+	import com.funrun.modulemanager.controller.events.ExternalToggleMainMenuOptionsRequest;
 	
 	import flash.events.Event;
 	
@@ -51,6 +52,7 @@ package com.funrun.modulemanager {
 		private function onEnterFrame( e:Event ):void {
 			this.contextView.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 			this._moduleEventDispatcher.dispatchEvent( new ExternalShowMainMenuModuleRequest( ExternalShowMainMenuModuleRequest.EXTERNAL_SHOW_MAIN_MENU_MODULE_REQUESTED ) );
+			this._moduleEventDispatcher.dispatchEvent( new ExternalToggleMainMenuOptionsRequest( ExternalToggleMainMenuOptionsRequest.EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED, false ) );
 		}
 		
 		public function integrateModules( modulesList:Vector.<ModuleContextView> ):void {

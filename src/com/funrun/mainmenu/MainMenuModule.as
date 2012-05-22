@@ -65,6 +65,14 @@ package com.funrun.mainmenu {
 			_isRunning = false;
 		}
 		
+		public function set optionsEnabled( enabled:Boolean ):void {
+			if ( enabled ) {
+				_startGameButton.visible = true;
+			} else {
+				_startGameButton.visible = false;
+			}
+		}
+		
 		public function get isRunning():Boolean {
 			return _isRunning;
 		}
