@@ -1,6 +1,5 @@
-package com.funrun.game.controller.commands
-{
-	import com.adobe.utils.StringUtil;
+package com.funrun.game.controller.commands {
+	
 	import com.funrun.game.controller.events.AddObstacleRequest;
 	import com.funrun.game.controller.events.DisplayDistanceRequest;
 	import com.funrun.game.controller.events.KillPlayerRequest;
@@ -17,30 +16,30 @@ package com.funrun.game.controller.commands
 	import com.funrun.game.model.constants.CollisionTypes;
 	import com.funrun.game.model.constants.FaceTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-	
+
 	import org.robotlegs.mvcs.Command;
-	
-	public class UpdateGameLoopCommand extends Command
-	{
+
+	public class UpdateGameLoopCommand extends Command {
+		
 		[Inject]
 		public var trackModel:TrackModel;
-		
+
 		[Inject]
 		public var playerModel:PlayerModel;
-		
+
 		[Inject]
 		public var cameraModel:CameraModel;
-		
+
 		[Inject]
 		public var timeModel:TimeModel;
-		
+
 		[Inject]
 		public var distanceModel:DistanceModel;
-		
+
 		override public function execute():void {
 			// Update obstacles.
 			trackModel.move( -playerModel.speed );
-			
+
 			// Remove obstacles from end of track.
 			if ( trackModel.numObstacles > 0 ) {
 				var obstacle:ObstacleData = trackModel.getObstacleAt( 0 );
@@ -50,12 +49,12 @@ package com.funrun.game.controller.commands
 					obstacle = trackModel.getObstacleAt( 0 );
 				}
 			}
-			
+
 			// Add new obstacles until track is full again.
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
 				eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
 			}
-			
+
 			if ( playerModel.isDead ) {
 				// Update speed when you're dead.
 				playerModel.lateralVelocity = 0;
@@ -80,31 +79,34 @@ package com.funrun.game.controller.commands
 				// Update lateral position.
 				playerModel.player.x += playerModel.lateralVelocity;
 			}
-			
+
 			// Update gravity.
 			playerModel.jumpVelocity += TrackConstants.PLAYER_GRAVITY;
 			playerModel.player.y += playerModel.jumpVelocity;
 			
-			// TO-DO: Make ducking cooler.
+			// Apply ducking state.
 			if ( playerModel.isDucking ) {
-				// TO-DO: Adjust collision bounds for a smaller dude.
-				playerModel.player.scaleY = .25;
+				if ( playerModel.player.scaleY != .25 ) {
+					playerModel.player.scaleY = .25;
+					playerModel.player.bounds.min.y *= .25;
+					playerModel.player.bounds.max.y *= .25;
+				}
 			} else {
-				// TO-DO: Adjust collision bounds for a normal dude.
-				playerModel.player.scaleY = 1;
+				if ( playerModel.player.scaleY != 1 ) {
+					playerModel.player.scaleY = 1;
+					playerModel.player.bounds.min.y /= .25;
+					playerModel.player.bounds.max.y /= .25;
+				}
 			}
 			
 			// Collect all collisions.
 			var collisions:CollisionsCollection = new CollisionsCollection();
-			collisions.collectCollisions(
-				trackModel,
-				playerModel.player.x + playerModel.player.bounds.min.x, playerModel.player.y + playerModel.player.bounds.min.y, playerModel.player.z + playerModel.player.bounds.min.z,
-				playerModel.player.x + playerModel.player.bounds.max.x, playerModel.player.y + playerModel.player.bounds.max.y, playerModel.player.z + playerModel.player.bounds.max.z );
-			
+			collisions.collectCollisions( trackModel, playerModel.player.x + playerModel.player.bounds.min.x, playerModel.player.y + playerModel.player.bounds.min.y, playerModel.player.z + playerModel.player.bounds.min.z, playerModel.player.x + playerModel.player.bounds.max.x, playerModel.player.y + playerModel.player.bounds.max.y, playerModel.player.z + playerModel.player.bounds.max.z );
+
 			// TO-DO: We can optimize our collision detection by only testing against sides
 			// that oppose the direction in which we're moving.
 			// This will reduce our testing calculations by about 50%.
-			
+
 			// Resolve collisions.
 			var numCollisions = collisions.numCollisions;
 			var face:FaceCollision;
@@ -115,14 +117,14 @@ package com.funrun.game.controller.commands
 					if ( playerModel.jumpVelocity > 0 ) {
 						if ( face.type == FaceTypes.BOTTOM ) {
 							playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
-							playerModel.player.y = face.minY - TrackConstants.PLAYER_HALF_SIZE;
+							playerModel.player.y = ( playerModel.isDucking ) ? face.minY - TrackConstants.PLAYER_HALF_SIZE * .25 : face.minY - TrackConstants.PLAYER_HALF_SIZE;
 						}
 						playerModel.isAirborne = true;
 					} else {
 						// Else hit the top sides of things.
 						if ( face.type == FaceTypes.TOP ) {
 							if ( face.maxY > TrackConstants.CULL_FLOOR ) {
-								playerModel.player.y = face.maxY + TrackConstants.PLAYER_HALF_SIZE;
+								playerModel.player.y = ( playerModel.isDucking ) ? face.maxY + TrackConstants.PLAYER_HALF_SIZE * .25 : face.maxY + TrackConstants.PLAYER_HALF_SIZE;
 								playerModel.jumpVelocity = 0;
 								playerModel.isAirborne = false;
 							} else {
@@ -134,12 +136,12 @@ package com.funrun.game.controller.commands
 					// If we're moving left, hit the right sides of things.
 					if ( playerModel.lateralVelocity < 0 ) {
 						if ( face.type == FaceTypes.RIGHT ) {
-							
+
 						}
 					} else if ( playerModel.lateralVelocity > 0 ) {
 						// Else if we're moving right, hit the left sides of things.
 						if ( face.type == FaceTypes.LEFT ) {
-							
+
 						}
 					}
 					// Always hit the front sides of things.
@@ -158,7 +160,7 @@ package com.funrun.game.controller.commands
 					eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.FALL ) );
 				}
 			}
-			
+
 			// Update camera.
 			cameraModel.x = playerModel.player.x;
 			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.player.y < cameraModel.y ) ? .3 : .1;
@@ -166,7 +168,7 @@ package com.funrun.game.controller.commands
 			cameraModel.y += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - cameraModel.y ) * followFactor;
 			cameraModel.z = -1000;
 			cameraModel.update();
-			
+
 			// Render.
 			eventDispatcher.dispatchEvent( new RenderSceneRequest( RenderSceneRequest.RENDER_SCENE_REQUESTED ) );
 		}

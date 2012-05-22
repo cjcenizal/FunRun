@@ -1,8 +1,5 @@
 package {
 	
-	import away3d.containers.View3D;
-	import away3d.debug.AwayStats;
-	
 	import com.funrun.game.GameModule;
 	import com.funrun.mainmenu.MainMenuModule;
 	import com.funrun.modulemanager.ModuleManager;
