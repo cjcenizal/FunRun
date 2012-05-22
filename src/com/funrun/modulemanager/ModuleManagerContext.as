@@ -1,26 +1,17 @@
 package com.funrun.modulemanager {
 	
-	import flash.display.DisplayObjectContainer;
+	import com.funrun.modulemanager.events.ExternalShowMainMenuModuleRequest;
 	
-	import org.robotlegs.mvcs.Context;
+	import flash.events.Event;
 	
-	import org.robotlegs.utilities.modular.mvcs.ModuleContext;
 	import org.robotlegs.utilities.modular.base.ModuleEventDispatcher;
+	import org.robotlegs.utilities.modular.mvcs.ModuleContext;
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
-	
-	import __AS3__.vec.Vector;
 	
 	public class ModuleManagerContext extends ModuleContext {
 		
-		//private var _modulesList:Vector.<Context>;
-		
 		private var _moduleEventDispatcher:ModuleEventDispatcher;
 		
-		//--------------------------------------------------------------------------
-		//
-		//  Initialization
-		//
-		//--------------------------------------------------------------------------
 		/**
 		 * Factory method. Provide the Context with the necessary objects to do its work.
 		 * Note that the both the injector and reflector are programmed to interfaces
@@ -34,7 +25,6 @@ package com.funrun.modulemanager {
 		 */
 		
 		public function ModuleManagerContext( contextView:ModuleContextView ) {
-			
 			super( contextView );
 			
 			var moduleEventDispatcher:ModuleEventDispatcher = new ModuleEventDispatcher();
@@ -42,14 +32,8 @@ package com.funrun.modulemanager {
 			_moduleEventDispatcher = moduleEventDispatcher;
 			
 			startup();
-		
 		}
 		
-		//--------------------------------------------------------------------------
-		//
-		//  Overridden API
-		//
-		//--------------------------------------------------------------------------
 		/**
 		 * Gets called by the framework if autoStartup is true. Here we need to provide
 		 * the framework with the basic actors. The proxies/services we want to use in
@@ -59,24 +43,14 @@ package com.funrun.modulemanager {
 		 *
 		 */
 		override public function startup():void {
-			// Map some Commands to Events
-			// commandMap.mapEvent(MyCommand, MyEvent.EVENT_NAME, MyEvent, isOneShot);
-			
-			// Dependency injection for models, services and values
-			// injector.mapSingleton(whenAskedFor:Class, named:String = null);
-			// injector.mapClass(whenAskedFor:Class, instantiateClass:Class, named:String = null);
-			// injector.mapValue(whenAskedFor:Class, useValue:Object, named:String = null);
-			// injector.mapSingletonOf(whenAskedFor:Class, useSingletonOf:Class, named:String = null);
-			
-			// Bind Mediators to Views
-			// The mediators are created automatically when the view is added to stage (within contextView)
-			// mediatorMap.mapView(ModuleContextBase, ModuleMediator);
-			// or - if your view is already on stage
-			// mediatorMap.createMediator(viewObject);
-			
-			// and we're done
+			// Kick everything off one frame later.
+			this.contextView.addEventListener( Event.ENTER_FRAME, onEnterFrame );
 			super.startup();
+		}
 		
+		private function onEnterFrame( e:Event ):void {
+			this.contextView.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+			this._moduleEventDispatcher.dispatchEvent( new ExternalShowMainMenuModuleRequest( ExternalShowMainMenuModuleRequest.EXTERNAL_SHOW_MAIN_MENU_MODULE_REQUESTED ) );
 		}
 		
 		public function integrateModules( modulesList:Vector.<ModuleContextView> ):void {

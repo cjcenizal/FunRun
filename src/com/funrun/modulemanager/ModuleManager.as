@@ -9,11 +9,6 @@ package com.funrun.modulemanager {
 		public function ModuleManager():void {
 			moduleManagerContext = new ModuleManagerContext( this );
 			context = moduleManagerContext;
-			init();
-		}
-		
-		private function init():void {
-		
 		}
 		
 		public function integrateModules( modulesList:Vector.<ModuleContextView> ):void {

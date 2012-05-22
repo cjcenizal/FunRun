@@ -1,13 +1,11 @@
 package com.funrun.mainmenu {
 	
-	import com.funrun.mainmenu.controller.commands.ExternalShowMainMenuCommand;
 	import com.funrun.mainmenu.controller.commands.ExternalShowGameModuleCommand;
+	import com.funrun.mainmenu.controller.commands.ExternalShowMainMenuCommand;
 	import com.funrun.mainmenu.controller.events.StartRunningMainMenuRequest;
 	import com.funrun.mainmenu.controller.events.StopRunningMainMenuRequest;
 	import com.funrun.modulemanager.events.ExternalShowGameModuleRequest;
 	import com.funrun.modulemanager.events.ExternalShowMainMenuModuleRequest;
-	
-	import flash.events.Event;
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleMediator;
 	
@@ -30,14 +28,6 @@ package com.funrun.mainmenu {
 			
 			// Listen for view events.
 			view.onStartGameButtonClick.add( onStartGameButtonClick );
-			
-			// Show our view a frame after it's added.
-			view.addEventListener( Event.ENTER_FRAME, onEnter );
-		}
-		
-		private function onEnter( e:Event ):void {
-			view.removeEventListener( Event.ENTER_FRAME, onEnter );
-			view.startRunning();
 		}
 		
 		private function onStartRunningMainMenuRequested( e:StartRunningMainMenuRequest ):void {
