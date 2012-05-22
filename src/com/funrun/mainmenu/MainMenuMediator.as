@@ -4,8 +4,8 @@ package com.funrun.mainmenu {
 	import com.funrun.mainmenu.controller.commands.ExternalShowMainMenuCommand;
 	import com.funrun.mainmenu.controller.events.StartRunningMainMenuRequest;
 	import com.funrun.mainmenu.controller.events.StopRunningMainMenuRequest;
-	import com.funrun.modulemanager.events.ExternalShowGameModuleRequest;
-	import com.funrun.modulemanager.events.ExternalShowMainMenuModuleRequest;
+	import com.funrun.modulemanager.controller.events.ExternalShowGameModuleRequest;
+	import com.funrun.modulemanager.controller.events.ExternalShowMainMenuModuleRequest;
 	
 	import org.robotlegs.utilities.modular.mvcs.ModuleMediator;
 	

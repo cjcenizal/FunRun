@@ -1,6 +1,6 @@
 package com.funrun.modulemanager {
 	
-	import com.funrun.modulemanager.events.ExternalShowMainMenuModuleRequest;
+	import com.funrun.modulemanager.controller.events.ExternalShowMainMenuModuleRequest;
 	
 	import flash.events.Event;
 	

@@ -1,4 +1,4 @@
-package com.funrun.modulemanager.events {
+package com.funrun.modulemanager.controller.events {
 	
 	import flash.events.Event;
 
