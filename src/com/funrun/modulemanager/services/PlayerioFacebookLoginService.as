@@ -21,7 +21,7 @@ package com.funrun.modulemanager.services {
 			_onErrorSignal = new Signal();
 		}
 
-		public function connect( stage:Stage, fbAccessToken:Object, gameId:String, partnerId:String ):void {			
+		public function connect( stage:Stage, fbAccessToken:String, gameId:String, partnerId:String ):void {			
 			// If we are already logged into Facebook, then we can move a little more quickly.
 			if ( fbAccessToken ) {
 				PlayerIO.quickConnect.facebookOAuthConnect(
@@ -105,6 +105,10 @@ package com.funrun.modulemanager.services {
 		
 		public function get error():PlayerIOError {
 			return _error;
+		}
+		
+		public function get client():Client {
+			return null;
 		}
 	}
 }

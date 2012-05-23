@@ -1,5 +1,7 @@
 package com.funrun.modulemanager.services {
 	
+	import flash.display.Stage;
+	
 	import org.osflash.signals.Signal;
 	
 	import playerio.Client;
@@ -7,7 +9,7 @@ package com.funrun.modulemanager.services {
 
 	public interface IPlayerioLoginService {
 		
-		function connect():void;
+		function connect( stage:Stage, fbAccessToken:String, gameId:String, partnerId:String ):void;
 		function get client():Client;
 		function get userId():String;
 		function get isConnected():Boolean;

@@ -13,8 +13,8 @@ package com.funrun.modulemanager.controller.commands {
 		[Inject]
 		public var configurationModel:ConfigurationModel;
 		
-		override public function execute() {
-			
+		override public function execute():void {
+			trace("login");
 			/*
 			//If played on facebook
 			if(parameters.fb_access_token){

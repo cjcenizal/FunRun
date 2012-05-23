@@ -17,6 +17,7 @@ package com.funrun.mainmenu {
 		[Embed (source="embed/logo.jpg" )]
 		private var Logo:Class;
 		
+		private var _logo:Bitmap;
 		private var _isRunning:Boolean = false;
 		private var _track:TrackView;
 		private var _startGameButton:DummyButton;
@@ -40,11 +41,11 @@ package com.funrun.mainmenu {
 			g.beginFill( 0xffffff );
 			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
 			g.endFill();
-			var logo:Bitmap = new Logo();
-			addChild( logo );
-			Center.horizontal( logo, this );
-			logo.y = 20;
-			_startGameButton = new DummyButton( this, 0, logo.y + logo.height + 40, onClick, "Start game", 0xaaaaaa );
+			_logo = new Logo();
+			addChild( _logo );
+			Center.horizontal( _logo, this );
+			_logo.y = 20;
+			_startGameButton = new DummyButton( this, 0, _logo.y + _logo.height + 40, onClick, "Start game", 0xaaaaaa );
 			_startGameButton.draw();
 			Center.horizontal( _startGameButton, this );
 		}
@@ -67,8 +68,10 @@ package com.funrun.mainmenu {
 		
 		public function set optionsEnabled( enabled:Boolean ):void {
 			if ( enabled ) {
+				_logo.alpha = 1;
 				_startGameButton.visible = true;
 			} else {
+				_logo.alpha = .2;
 				_startGameButton.visible = false;
 			}
 		}
