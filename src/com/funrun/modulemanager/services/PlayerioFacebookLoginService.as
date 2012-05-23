@@ -8,46 +8,38 @@ package com.funrun.modulemanager.services {
 	import playerio.PlayerIO;
 	import playerio.PlayerIOError;
 	
-	public class PlayerioFacebookConnectionService implements IPlayerioConnectionService {
+	public class PlayerioFacebookLoginService implements IPlayerioLoginService {
 
 		private var _error:PlayerIOError;
 		private var _onConnectedSignal:Signal;
 		private var _onErrorSignal:Signal;
-		private var _stage:Stage;
-		private var _fbAccessToken:Object;
-		private var _gameId:String;
-		private var _partnerId:String;
 		private var _client:Client;
 		private var _userId:String;
 		
-		public function PlayerioFacebookConnectionService( stage:Stage, fbAccessToken:Object, gameId:String, partnerId:String ) {
-			_stage = stage;
-			_fbAccessToken = fbAccessToken;
-			_gameId = gameId;
-			_partnerId = partnerId;
+		public function PlayerioFacebookLoginService(  ) {
 			_onConnectedSignal = new Signal();
 			_onErrorSignal = new Signal();
 		}
 
-		public function connect():void {
+		public function connect( stage:Stage, fbAccessToken:Object, gameId:String, partnerId:String ):void {			
 			// If we are already logged into Facebook, then we can move a little more quickly.
-			if ( _fbAccessToken ) {
+			if ( fbAccessToken ) {
 				PlayerIO.quickConnect.facebookOAuthConnect(
-					_stage,
-					_gameId,
-					_fbAccessToken,
-					_partnerId,
+					stage,
+					gameId,
+					fbAccessToken,
+					partnerId,
 					onFacebookOAuthConnectSuccess,
 					onError
 				);
 			} else {
 				// If not, then we need to get the user to log into FB first.
 				PlayerIO.quickConnect.facebookOAuthConnectPopup(
-					_stage,
-					_gameId,
+					stage,
+					gameId,
 					"_blank",
 					[],
-					_partnerId,
+					partnerId,
 					onFacebookOAuthConnectPopupSuccess,
 					onError
 				);
@@ -62,7 +54,6 @@ package com.funrun.modulemanager.services {
 		
 		private function onFacebookOAuthConnectPopupSuccess( client:Client, fbAccessToken:String, userId:String = "" ):void {
 			_client = client;
-			_fbAccessToken = fbAccessToken;
 			_userId = userId;
 			_onConnectedSignal.dispatch();
 			

@@ -14,7 +14,6 @@ package com.funrun.mainmenu {
 		override public function startup():void {
 			// Map views to mediators.
 			mediatorMap.mapView( MainMenuModule, MainMenuMediator );
-			
 			super.startup();
 		}
 	}

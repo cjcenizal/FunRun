@@ -1,7 +1,10 @@
 package com.funrun.modulemanager {
 	
+	import com.funrun.modulemanager.controller.commands.LoadConfigurationCommand;
 	import com.funrun.modulemanager.controller.events.ExternalShowMainMenuModuleRequest;
 	import com.funrun.modulemanager.controller.events.ExternalToggleMainMenuOptionsRequest;
+	import com.funrun.modulemanager.controller.events.LoadConfigurationRequest;
+	import com.funrun.modulemanager.model.ConfigurationModel;
 	
 	import flash.events.Event;
 	
@@ -44,6 +47,10 @@ package com.funrun.modulemanager {
 		 *
 		 */
 		override public function startup():void {
+			commandMap.mapEvent( LoadConfigurationRequest.LOAD_CONFIGURATION_REQUESTED, LoadConfigurationCommand, LoadConfigurationRequest );
+			
+			injector.mapSingletonOf( ConfigurationModel, ConfigurationModel );
+			
 			// Kick everything off one frame later.
 			this.contextView.addEventListener( Event.ENTER_FRAME, onEnterFrame );
 			super.startup();
@@ -51,6 +58,7 @@ package com.funrun.modulemanager {
 		
 		private function onEnterFrame( e:Event ):void {
 			this.contextView.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
+			eventDispatcher.dispatchEvent( new LoadConfigurationRequest( LoadConfigurationRequest.LOAD_CONFIGURATION_REQUESTED ) );
 			this._moduleEventDispatcher.dispatchEvent( new ExternalShowMainMenuModuleRequest( ExternalShowMainMenuModuleRequest.EXTERNAL_SHOW_MAIN_MENU_MODULE_REQUESTED ) );
 			this._moduleEventDispatcher.dispatchEvent( new ExternalToggleMainMenuOptionsRequest( ExternalToggleMainMenuOptionsRequest.EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED, false ) );
 		}

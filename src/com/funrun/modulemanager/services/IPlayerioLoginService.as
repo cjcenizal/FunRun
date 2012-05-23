@@ -5,7 +5,7 @@ package com.funrun.modulemanager.services {
 	import playerio.Client;
 	import playerio.PlayerIOError;
 
-	public interface IPlayerioConnectionService {
+	public interface IPlayerioLoginService {
 		
 		function connect():void;
 		function get client():Client;
