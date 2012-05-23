@@ -4,6 +4,7 @@ package com.funrun.modulemanager.controller.commands {
 	
 	import com.funrun.modulemanager.controller.signals.LoginFailed;
 	import com.funrun.modulemanager.controller.signals.LoginFulfilled;
+	import com.funrun.modulemanager.controller.signals.WhitelistFailed;
 	import com.funrun.modulemanager.model.ConfigurationModel;
 	import com.funrun.modulemanager.model.UserModel;
 	import com.funrun.modulemanager.services.IWhitelistService;
@@ -31,6 +32,9 @@ package com.funrun.modulemanager.controller.commands {
 		[Inject]
 		public var whitelistService:IWhitelistService;
 		
+		[Inject]
+		public var whitelistFailed:WhitelistFailed;
+		
 		override public function execute():void {
 			loginService.onConnectedSignal.add( onConnected );
 			loginService.onErrorSignal.add( onError );
@@ -49,7 +53,7 @@ package com.funrun.modulemanager.controller.commands {
 				if ( whitelistService.passes( userModel.userId ) ) {
 					loginFulfilled.dispatch();
 				} else {
-					// whitelistFailed.dispatch();
+					whitelistFailed.dispatch();
 				}
 			} );
 		}

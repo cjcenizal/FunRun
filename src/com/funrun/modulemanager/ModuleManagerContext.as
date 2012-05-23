@@ -7,12 +7,14 @@ package com.funrun.modulemanager {
 	import com.funrun.modulemanager.controller.commands.LoginFulfilledCommand;
 	import com.funrun.modulemanager.controller.commands.ShowMainMenuCommand;
 	import com.funrun.modulemanager.controller.commands.ToggleMainMenuCommand;
+	import com.funrun.modulemanager.controller.commands.WhitelistFailedCommand;
 	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequest;
 	import com.funrun.modulemanager.controller.signals.LoginFailed;
 	import com.funrun.modulemanager.controller.signals.LoginFulfilled;
 	import com.funrun.modulemanager.controller.signals.LoginRequest;
 	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
 	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequest;
+	import com.funrun.modulemanager.controller.signals.WhitelistFailed;
 	import com.funrun.modulemanager.model.ConfigurationModel;
 	import com.funrun.modulemanager.model.UserModel;
 	import com.funrun.modulemanager.services.IWhitelistService;
@@ -69,11 +71,12 @@ package com.funrun.modulemanager {
 		 *
 		 */
 		override public function startup():void {
-			// Map signals to commands
+			// Map signals.
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );
+			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
 			signalCommandMap.mapSignalClass( ShowMainModuleRequest, 				ShowMainMenuCommand );
 			signalCommandMap.mapSignalClass( ToggleMainMenuOptionsRequest, 			ToggleMainMenuCommand );
 			

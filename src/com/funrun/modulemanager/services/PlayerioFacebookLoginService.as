@@ -25,7 +25,6 @@ package com.funrun.modulemanager.services {
 		public function connect( stage:Stage, fbAccessToken:String, gameId:String, partnerId:String ):void {			
 			// If we are already logged into Facebook, then we can move a little more quickly.
 			if ( fbAccessToken ) {
-				trace("connect with access token: " + fbAccessToken);
 				_fbAccessToken = fbAccessToken;
 				PlayerIO.quickConnect.facebookOAuthConnect(
 					stage,
