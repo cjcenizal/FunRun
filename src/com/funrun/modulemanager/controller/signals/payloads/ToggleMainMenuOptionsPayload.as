@@ -1,10 +1,10 @@
 package com.funrun.modulemanager.controller.signals.payloads {
 
-	public class ToggleMainMenuOptionsRequestPayload {
+	public class ToggleMainMenuOptionsPayload {
 
 		public var enabled:Boolean;
 
-		public function ToggleMainMenuOptionsRequestPayload( enabled:Boolean ) {
+		public function ToggleMainMenuOptionsPayload( enabled:Boolean ) {
 			this.enabled = enabled;
 		}
 	}

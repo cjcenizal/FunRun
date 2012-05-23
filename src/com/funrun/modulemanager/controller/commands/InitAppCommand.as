@@ -4,7 +4,7 @@ package com.funrun.modulemanager.controller.commands {
 	import com.funrun.modulemanager.controller.signals.LoginRequest;
 	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
 	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequest;
-	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsRequestPayload;
+	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsPayload;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -26,7 +26,7 @@ package com.funrun.modulemanager.controller.commands {
 			loadConfigurationRequest.dispatch();
 			loginRequest.dispatch();
 			showMainModuleRequest.dispatch();
-			toggleMainModuleRequest.dispatch( new ToggleMainMenuOptionsRequestPayload( true ) );
+			toggleMainModuleRequest.dispatch( new ToggleMainMenuOptionsPayload( true ) );
 		}
 	}
 }

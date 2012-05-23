@@ -1,6 +1,6 @@
 package com.funrun.modulemanager.controller.signals
 {
-	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsRequestPayload;
+	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsPayload;
 	
 	import org.osflash.signals.Signal;
 	
@@ -8,7 +8,7 @@ package com.funrun.modulemanager.controller.signals
 	{
 		public function ToggleMainMenuOptionsRequest()
 		{
-			super( ToggleMainMenuOptionsRequestPayload );
+			super( ToggleMainMenuOptionsPayload );
 		}
 	}
 }

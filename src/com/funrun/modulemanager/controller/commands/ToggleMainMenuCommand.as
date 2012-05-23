@@ -1,7 +1,7 @@
 package com.funrun.modulemanager.controller.commands {
 
 	import com.funrun.modulemanager.controller.events.ExternalToggleMainMenuOptionsRequest;
-	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsRequestPayload;
+	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsPayload;
 	
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.modular.core.IModuleEventDispatcher;
@@ -9,7 +9,7 @@ package com.funrun.modulemanager.controller.commands {
 	public class ToggleMainMenuCommand extends Command {
 		
 		[Inject]
-		public var payload:ToggleMainMenuOptionsRequestPayload;
+		public var payload:ToggleMainMenuOptionsPayload;
 		
 		[Inject]
 		public var moduleDispatcher:IModuleEventDispatcher;

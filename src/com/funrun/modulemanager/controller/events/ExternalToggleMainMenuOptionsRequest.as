@@ -1,6 +1,6 @@
 package com.funrun.modulemanager.controller.events {
 	
-	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsRequestPayload;
+	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsPayload;
 	
 	import flash.events.Event;
 
@@ -8,9 +8,9 @@ package com.funrun.modulemanager.controller.events {
 		
 		public static const EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED:String = "ExternalToggleMainMenuOptionsRequest.EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED";
 		
-		public var payload:ToggleMainMenuOptionsRequestPayload;
+		public var payload:ToggleMainMenuOptionsPayload;
 		
-		public function ExternalToggleMainMenuOptionsRequest( type:String, payload:ToggleMainMenuOptionsRequestPayload ) {
+		public function ExternalToggleMainMenuOptionsRequest( type:String, payload:ToggleMainMenuOptionsPayload ) {
 			super( type );
 			this.payload = payload;
 		}
