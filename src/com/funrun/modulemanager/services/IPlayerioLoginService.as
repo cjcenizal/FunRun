@@ -16,5 +16,6 @@ package com.funrun.modulemanager.services {
 		function get onConnectedSignal():Signal;
 		function get onErrorSignal():Signal;
 		function get error():PlayerIOError;
+		function get fbAccessToken():String;
 	}
 }

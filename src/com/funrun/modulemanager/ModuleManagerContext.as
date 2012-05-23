@@ -3,14 +3,21 @@ package com.funrun.modulemanager {
 	import com.funrun.modulemanager.controller.commands.InitAppCommand;
 	import com.funrun.modulemanager.controller.commands.LoadConfigurationCommand;
 	import com.funrun.modulemanager.controller.commands.LoginCommand;
+	import com.funrun.modulemanager.controller.commands.LoginFailedCommand;
+	import com.funrun.modulemanager.controller.commands.LoginFulfilledCommand;
 	import com.funrun.modulemanager.controller.commands.ShowMainMenuCommand;
 	import com.funrun.modulemanager.controller.commands.ToggleMainMenuCommand;
 	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequest;
+	import com.funrun.modulemanager.controller.signals.LoginFailed;
+	import com.funrun.modulemanager.controller.signals.LoginFulfilled;
 	import com.funrun.modulemanager.controller.signals.LoginRequest;
 	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
 	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequest;
 	import com.funrun.modulemanager.model.ConfigurationModel;
+	import com.funrun.modulemanager.model.UserModel;
+	import com.funrun.modulemanager.services.IWhitelistService;
 	import com.funrun.modulemanager.services.PlayerioFacebookLoginService;
+	import com.funrun.modulemanager.services.WhitelistService;
 	
 	import flash.events.Event;
 	
@@ -62,17 +69,21 @@ package com.funrun.modulemanager {
 		 *
 		 */
 		override public function startup():void {
+			// Map signals to commands
+			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
+			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
+			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
+			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );
+			signalCommandMap.mapSignalClass( ShowMainModuleRequest, 				ShowMainMenuCommand );
+			signalCommandMap.mapSignalClass( ToggleMainMenuOptionsRequest, 			ToggleMainMenuCommand );
+			
 			// Map models.
-			injector.mapSingletonOf( ConfigurationModel, ConfigurationModel );
+			injector.mapSingleton( ConfigurationModel );
+			injector.mapSingleton( UserModel );
 			
 			// Map services.
-			injector.mapSingletonOf( PlayerioFacebookLoginService, PlayerioFacebookLoginService );
-			
-			// Map signals to commands
-			signalCommandMap.mapSignalClass( LoadConfigurationRequest, LoadConfigurationCommand );
-			signalCommandMap.mapSignalClass( LoginRequest, LoginCommand );
-			signalCommandMap.mapSignalClass( ShowMainModuleRequest, ShowMainMenuCommand );
-			signalCommandMap.mapSignalClass( ToggleMainMenuOptionsRequest, ToggleMainMenuCommand );
+			injector.mapSingleton( PlayerioFacebookLoginService );
+			injector.mapSingletonOf( IWhitelistService, WhitelistService ); // TO-DO: Use a variable to toggle between open and regular.
 			
 			// Kick everything off one frame later.
 			this.contextView.addEventListener( Event.ENTER_FRAME, onEnterFrame );

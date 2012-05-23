@@ -1,7 +1,12 @@
 package com.funrun.modulemanager.controller.commands {
 	
-	import com.facebook.graph.Facebook;
+	import Facebook.*;
+	
+	import com.funrun.modulemanager.controller.signals.LoginFailed;
+	import com.funrun.modulemanager.controller.signals.LoginFulfilled;
 	import com.funrun.modulemanager.model.ConfigurationModel;
+	import com.funrun.modulemanager.model.UserModel;
+	import com.funrun.modulemanager.services.IWhitelistService;
 	import com.funrun.modulemanager.services.PlayerioFacebookLoginService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -12,65 +17,45 @@ package com.funrun.modulemanager.controller.commands {
 		public var configurationModel:ConfigurationModel;
 		
 		[Inject]
+		public var userModel:UserModel;
+		
+		[Inject]
 		public var loginService:PlayerioFacebookLoginService;
+		
+		[Inject]
+		public var loginFulfilled:LoginFulfilled;
+		
+		[Inject]
+		public var loginFailed:LoginFailed;
+		
+		[Inject]
+		public var whitelistService:IWhitelistService;
 		
 		override public function execute():void {
 			loginService.onConnectedSignal.add( onConnected );
 			loginService.onErrorSignal.add( onError );
 			loginService.connect( this.contextView.stage, configurationModel.fbAccessToken, configurationModel.playerioGameId, configurationModel.playerioPartnerId );
-			
-			/*
-			//If played on facebook
-			if(parameters.fb_access_token){
-				//Connect in the background
-				PlayerIO.quickConnect.facebookOAuthConnect(stage, gameid, parameters.fb_access_token, null, function(c:Client, id:String=""):void{
-					handleConnect(c, parameters.fb_access_token, id)
-				}, handleError);
-			}else{
-				//Else we are in development, connect with a facebook popup
-				PlayerIO.quickConnect.facebookOAuthConnectPopup(
-					stage,
-					gameid,
-					"_blank",
-					[],
-					null,						//Current PartnerPay partner.
-					handleConnect, 
-					handleError
-				);
-			}
-			*/
-			// Get FB access token.
-			// Connect to playerIO with token.
-			// Initialize user account if new.
-				// Get FB graph data.
-			//loginService.connect( stage,
 		}
 		
 		private function onConnected():void {
-			trace(this, "connected");
-			Facebook.init( configurationModel.fbAppId, this.onFacebookInit, null, configurationModel.fbAccessToken );
-		}
-		
-		private function onFacebookInit(success:Object, fail:Object):void {
-			trace("init");
-			/*
-			// Init the AS3 Facebook Graph API.
+			// If we've received a new token, store it in the model.
+			configurationModel.fbAccessToken = loginService.fbAccessToken;
 			FB.init( { access_token: configurationModel.fbAccessToken, app_id: configurationModel.fbAppId, debug: true } );
-			
-			FB.subscribe('auth.login', function() {
-				// Get user data.
-				FB.api( '/me', function( response:* ):void {
-					//_me = response;
-					//_gender = _me[ "gender" ];
-					//_name = _me[ "name" ];
-					//_firstName = _me[ "first_name" ];
-					trace(response);
-				} );
-			} );*/
+			FB.api( '/me', function( response:* ):void {
+				// Get user info from Facebook Graph, like their name.
+				userModel.name = response.name;
+				userModel.userId = response.id;
+				// Check user id against whitelist.
+				if ( whitelistService.passes( userModel.userId ) ) {
+					loginFulfilled.dispatch();
+				} else {
+					// whitelistFailed.dispatch();
+				}
+			} );
 		}
 		
 		private function onError():void {
-			trace(this, "error");
+			loginFailed.dispatch();
 		}
 	}
 }

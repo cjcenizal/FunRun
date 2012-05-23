@@ -15,6 +15,7 @@ package com.funrun.modulemanager.services {
 		private var _onErrorSignal:Signal;
 		private var _client:Client;
 		private var _userId:String;
+		private var _fbAccessToken:String;
 		
 		public function PlayerioFacebookLoginService(  ) {
 			_onConnectedSignal = new Signal();
@@ -24,6 +25,8 @@ package com.funrun.modulemanager.services {
 		public function connect( stage:Stage, fbAccessToken:String, gameId:String, partnerId:String ):void {			
 			// If we are already logged into Facebook, then we can move a little more quickly.
 			if ( fbAccessToken ) {
+				trace("connect with access token: " + fbAccessToken);
+				_fbAccessToken = fbAccessToken;
 				PlayerIO.quickConnect.facebookOAuthConnect(
 					stage,
 					gameId,
@@ -54,32 +57,9 @@ package com.funrun.modulemanager.services {
 		
 		private function onFacebookOAuthConnectPopupSuccess( client:Client, fbAccessToken:String, userId:String = "" ):void {
 			_client = client;
+			_fbAccessToken = fbAccessToken;
 			_userId = userId;
 			_onConnectedSignal.dispatch();
-			
-			/*
-			if ( !_whitelist || _whitelist.has( mId ) ) {
-				_playerIOClient = mClient;
-				_fbid = ( _useHardCodedId && _hardCodedId ) ? _hardCodedId : mId;
-				Tracking.identifyUser( _fbid );
-				
-				// Init the AS3 Facebook Graph API.
-				FB.init( { access_token: mAccesToken, app_id: APP_ID, debug: true } );
-				
-				// Get user data.
-				FB.api( '/me', function( response:* ):void {
-					_me = response;
-					_gender = _me[ "gender" ];
-					_name = _me[ "name" ];
-					_firstName = _me[ "first_name" ];
-					// Do a Facebook FQL query for those of my friends whom have the application installed.
-					//getFriends( mClient );
-					onComplete();
-				} );
-			} else {
-				// Not a beta tester.
-			}
-			*/
 		}
 		
 		private function onError( error:PlayerIOError ):void {
@@ -108,7 +88,11 @@ package com.funrun.modulemanager.services {
 		}
 		
 		public function get client():Client {
-			return null;
+			return _client;
+		}
+		
+		public function get fbAccessToken():String {
+			return _fbAccessToken;
 		}
 	}
 }

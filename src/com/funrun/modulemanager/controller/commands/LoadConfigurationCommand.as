@@ -12,6 +12,7 @@ package com.funrun.modulemanager.controller.commands {
 		public var configurationModel:ConfigurationModel;
 		
 		override public function execute():void {
+			// TO-DO: Pass this information in via PHP.
 			var parameters:Object = LoaderInfo( this.contextView.root.loaderInfo ).parameters;
 			configurationModel.playerioGameId = "funrun-wzswxfkte6ikptb5fqehw";//parameters.sitebox_gameid;
 			configurationModel.fbAppId = "392243894148756";//parameters.fb_application_id;
