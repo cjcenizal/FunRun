@@ -12,6 +12,7 @@ package com.funrun.modulemanager.controller.commands {
 		public var configurationModel:ConfigurationModel;
 		
 		override public function execute():void {
+			trace("config");
 			var parameters:Object = LoaderInfo( this.contextView.root.loaderInfo ).parameters;
 			configurationModel.playerioGameId = parameters.sitebox_gameid;
 			configurationModel.fbAppId = parameters.fb_application_id;

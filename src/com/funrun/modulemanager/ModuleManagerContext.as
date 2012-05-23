@@ -1,21 +1,25 @@
 package com.funrun.modulemanager {
 	
+	import com.funrun.modulemanager.controller.commands.InitAppCommand;
 	import com.funrun.modulemanager.controller.commands.LoadConfigurationCommand;
 	import com.funrun.modulemanager.controller.commands.LoginCommand;
-	import com.funrun.modulemanager.controller.events.ExternalShowMainMenuModuleRequest;
-	import com.funrun.modulemanager.controller.events.ExternalToggleMainMenuOptionsRequest;
-	import com.funrun.modulemanager.controller.events.LoadConfigurationRequest;
-	import com.funrun.modulemanager.controller.events.LoginRequest;
+	import com.funrun.modulemanager.controller.commands.ShowMainMenuCommand;
+	import com.funrun.modulemanager.controller.commands.ToggleMainMenuCommand;
+	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequestSignal;
+	import com.funrun.modulemanager.controller.signals.LoginRequestSignal;
+	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequestSignal;
+	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequestSignal;
 	import com.funrun.modulemanager.model.ConfigurationModel;
 	import com.funrun.modulemanager.services.PlayerioFacebookLoginService;
 	
 	import flash.events.Event;
 	
 	import org.robotlegs.utilities.modular.base.ModuleEventDispatcher;
-	import org.robotlegs.utilities.modular.mvcs.ModuleContext;
 	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
+	import org.robotlegs.utilities.modularsignals.ModularSignalContext;
+	import org.robotlegs.utilities.modularsignals.ModularSignalContextView;
 	
-	public class ModuleManagerContext extends ModuleContext {
+	public class ModuleManagerContext extends ModularSignalContext {
 		
 		private var _moduleEventDispatcher:ModuleEventDispatcher;
 		
@@ -31,7 +35,7 @@ package com.funrun.modulemanager {
 		 *
 		 */
 		
-		public function ModuleManagerContext( contextView:ModuleContextView ) {
+		public function ModuleManagerContext( contextView:ModularSignalContextView ) {
 			super( contextView );
 			
 			var moduleEventDispatcher:ModuleEventDispatcher = new ModuleEventDispatcher();
@@ -39,6 +43,14 @@ package com.funrun.modulemanager {
 			_moduleEventDispatcher = moduleEventDispatcher;
 			
 			startup();
+		}
+		
+		public function integrateModules( modulesList:Vector.<ModuleContextView> ):void {
+			for each ( var nextModule:ModuleContextView in modulesList ) {
+				nextModule.setModuleDispatcher( _moduleEventDispatcher );
+				nextModule.startup();
+				this.contextView.addChild( nextModule );
+			}
 		}
 		
 		/**
@@ -56,30 +68,21 @@ package com.funrun.modulemanager {
 			// Map services.
 			injector.mapSingletonOf( PlayerioFacebookLoginService, PlayerioFacebookLoginService );
 			
-			// Map events to commands.
-			commandMap.mapEvent( LoadConfigurationRequest.LOAD_CONFIGURATION_REQUESTED, LoadConfigurationCommand, LoadConfigurationRequest );
-			commandMap.mapEvent( LoginRequest.LOGIN_REQUESTED, LoginCommand, LoginRequest );
+			// Map signals to commands
+			signalCommandMap.mapSignalClass( LoadConfigurationRequestSignal, LoadConfigurationCommand );
+			signalCommandMap.mapSignalClass( LoginRequestSignal, LoginCommand );
+			signalCommandMap.mapSignalClass( ShowMainModuleRequestSignal, ShowMainMenuCommand );
+			signalCommandMap.mapSignalClass( ToggleMainMenuOptionsRequestSignal, ToggleMainMenuCommand );
 			
 			// Kick everything off one frame later.
 			this.contextView.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+			
 			super.startup();
 		}
 		
 		private function onEnterFrame( e:Event ):void {
 			this.contextView.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
-			eventDispatcher.dispatchEvent( new LoadConfigurationRequest( LoadConfigurationRequest.LOAD_CONFIGURATION_REQUESTED ) );
-			eventDispatcher.dispatchEvent( new LoginRequest( LoginRequest.LOGIN_REQUESTED ) );
-			this._moduleEventDispatcher.dispatchEvent( new ExternalShowMainMenuModuleRequest( ExternalShowMainMenuModuleRequest.EXTERNAL_SHOW_MAIN_MENU_MODULE_REQUESTED ) );
-			this._moduleEventDispatcher.dispatchEvent( new ExternalToggleMainMenuOptionsRequest( ExternalToggleMainMenuOptionsRequest.EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED, false ) );
+			commandMap.execute( InitAppCommand );
 		}
-		
-		public function integrateModules( modulesList:Vector.<ModuleContextView> ):void {
-			for each ( var nextModule:ModuleContextView in modulesList ) {
-				nextModule.setModuleDispatcher( _moduleEventDispatcher );
-				nextModule.startup();
-				this.contextView.addChild( nextModule );
-			}
-		}
-	
 	}
 }
