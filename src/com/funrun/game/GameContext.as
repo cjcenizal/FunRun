@@ -34,6 +34,7 @@ package com.funrun.game {
 	import com.funrun.game.controller.events.ResetGameRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.controller.events.StopGameRequest;
+	import com.funrun.game.controller.signals.ToggleCountdownRequest;
 	import com.funrun.game.controller.signals.UpdateCountdownRequest;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
@@ -93,6 +94,7 @@ package com.funrun.game {
 
 			// Map signals.
 			injector.mapSingleton( UpdateCountdownRequest );
+			injector.mapSingleton( ToggleCountdownRequest );
 			
 			// Map events to commands.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, BuildTimeCommand, BuildTimeRequest, true );

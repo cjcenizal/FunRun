@@ -5,6 +5,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.KillPlayerRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
+	import com.funrun.game.controller.signals.ToggleCountdownRequest;
 	import com.funrun.game.controller.signals.UpdateCountdownRequest;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.CountdownModel;
@@ -52,14 +53,18 @@ package com.funrun.game.controller.commands {
 		
 		[Inject]
 		public var updateCountdownRequest:UpdateCountdownRequest;
-
+		
+		[Inject]
+		public var toggleCountdownRequest:ToggleCountdownRequest;
+		
 		override public function execute():void {
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 				if ( countdownModel.getSecondsRemaining( TrackConstants.WAIT_SECONDS ) > 0 ) {
 					updateCountdownRequest.dispatch( countdownModel.getSecondsRemaining( TrackConstants.WAIT_SECONDS ).toString() );
 				} else {
-					updateCountdownRequest.dispatch( "" ); // TO-DO: This is hacky, we should hide the countdown instead.
+					updateCountdownRequest.dispatch( "" );
+					toggleCountdownRequest.dispatch( false );
 					gameModel.gameState = GameState.RUNNING;
 				}
 			}

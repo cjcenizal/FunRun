@@ -5,7 +5,6 @@ package com.funrun.game.view.components {
 	import com.cenizal.util.Center;
 	
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 	
 	public class CountdownView extends AbstractComponent {
 		
@@ -17,13 +16,20 @@ package com.funrun.game.view.components {
 		}
 		
 		public function init():void {
-			
 		}
 		
 		public function set countdown( message:String ):void {
 			_countdownLabel.text = message;
 			_countdownLabel.draw();
 			Center.all( _countdownLabel, stage );
+		}
+		
+		public function enableCountdown():void {
+			_countdownLabel.visible = true;
+		}
+		
+		public function disableCountdown():void {
+			_countdownLabel.visible = false;
 		}
 	}
 }
