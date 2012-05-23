@@ -36,6 +36,7 @@ package com.funrun.game {
 	import com.funrun.game.controller.events.StopGameRequest;
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
+	import com.funrun.game.model.CountdownModel;
 	import com.funrun.game.model.DistanceModel;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.GameModel;
@@ -49,8 +50,10 @@ package com.funrun.game {
 	import com.funrun.game.model.TrackModel;
 	import com.funrun.game.services.BlocksJsonService;
 	import com.funrun.game.services.ObstaclesJsonService;
+	import com.funrun.game.view.components.CountdownView;
 	import com.funrun.game.view.components.DistanceView;
 	import com.funrun.game.view.components.TrackView;
+	import com.funrun.game.view.mediators.CountdownMediator;
 	import com.funrun.game.view.mediators.DistanceMediator;
 	import com.funrun.game.view.mediators.TrackMediator;
 	
@@ -85,6 +88,7 @@ package com.funrun.game {
 			injector.mapSingleton( FloorsModel );
 			injector.mapSingleton( DistanceModel );
 			injector.mapSingleton( GameModel );
+			injector.mapSingleton( CountdownModel );
 
 			// Map events to commands.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, BuildTimeCommand, BuildTimeRequest, true );
@@ -108,6 +112,7 @@ package com.funrun.game {
 			mediatorMap.mapView( GameModule, GameMediator );
 			mediatorMap.mapView( TrackView, TrackMediator );
 			mediatorMap.mapView( DistanceView, DistanceMediator );
+			mediatorMap.mapView( CountdownView, CountdownMediator );
 
 			// Let's throw some logic into this baby.
 			eventDispatcher.addEventListener( AddTrackViewFulfilled.ADD_TRACK_FULFILLED, onAddTrackFulfilled );

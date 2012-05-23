@@ -1,8 +1,9 @@
 package com.funrun.game {
 
+	import com.funrun.game.view.components.CountdownView;
 	import com.funrun.game.view.components.DistanceView;
 	import com.funrun.game.view.components.TrackView;
-
+	
 	import org.robotlegs.utilities.modularsignals.ModularSignalContextView;
 
 	public class GameModule extends ModularSignalContextView {
@@ -10,6 +11,7 @@ package com.funrun.game {
 		private var _isRunning:Boolean = false;
 		private var _track:TrackView;
 		private var _distance:DistanceView;
+		private var _countdown:CountdownView;
 
 		public function GameModule() {
 			super();
@@ -18,23 +20,11 @@ package com.funrun.game {
 		}
 
 		public function build():void {
-			addTrack();
-			addUiLayer();
-			addPopupsLayer();
-		}
-
-		private function addTrack():void {
 			_track = new TrackView( this );
-		}
-
-		private function addUiLayer():void {
 			_distance = new DistanceView( this );
+			_countdown = new CountdownView( this );
 		}
-
-		private function addPopupsLayer():void {
-
-		}
-
+		
 		public function startRunning():void {
 			if ( !_isRunning ) {
 				this.visible = true;
