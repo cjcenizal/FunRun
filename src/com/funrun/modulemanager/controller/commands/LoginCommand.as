@@ -1,6 +1,6 @@
 package com.funrun.modulemanager.controller.commands {
 	
-	import Facebook.*;
+	import Facebook.FB;
 	
 	import com.funrun.modulemanager.controller.signals.LoginFailed;
 	import com.funrun.modulemanager.controller.signals.LoginFulfilled;

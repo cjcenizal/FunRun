@@ -38,6 +38,7 @@ package com.funrun.game {
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DistanceModel;
 	import com.funrun.game.model.FloorsModel;
+	import com.funrun.game.model.GameModel;
 	import com.funrun.game.model.GeosMockModel;
 	import com.funrun.game.model.IGeosModel;
 	import com.funrun.game.model.LightsModel;
@@ -52,9 +53,9 @@ package com.funrun.game {
 	import com.funrun.game.view.components.TrackView;
 	import com.funrun.game.view.mediators.DistanceMediator;
 	import com.funrun.game.view.mediators.TrackMediator;
-
+	
 	import flash.display.DisplayObjectContainer;
-
+	
 	import org.robotlegs.utilities.modularsignals.ModularSignalContext;
 
 	public class GameContext extends ModularSignalContext {
@@ -68,21 +69,22 @@ package com.funrun.game {
 			injector.mapValue( GameType, GameType.Local, "gameType" );
 
 			// Map services.
-			injector.mapSingletonOf( BlocksJsonService, BlocksJsonService );
-			injector.mapSingletonOf( ObstaclesJsonService, ObstaclesJsonService );
+			injector.mapSingleton( BlocksJsonService );
+			injector.mapSingleton( ObstaclesJsonService );
 
 			// Map models.
-			injector.mapSingletonOf( BlocksModel, BlocksModel );
-			injector.mapSingletonOf( ObstaclesModel, ObstaclesModel );
-			injector.mapSingletonOf( MaterialsModel, MaterialsModel );
-			injector.mapSingletonOf( LightsModel, LightsModel );
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
-			injector.mapSingletonOf( TimeModel, TimeModel );
-			injector.mapSingletonOf( TrackModel, TrackModel );
-			injector.mapSingletonOf( PlayerModel, PlayerModel );
-			injector.mapSingletonOf( CameraModel, CameraModel );
-			injector.mapSingletonOf( FloorsModel, FloorsModel );
-			injector.mapSingletonOf( DistanceModel, DistanceModel );
+			injector.mapSingleton( BlocksModel );
+			injector.mapSingleton( ObstaclesModel );
+			injector.mapSingleton( MaterialsModel );
+			injector.mapSingleton( LightsModel );
+			injector.mapSingleton( TimeModel );
+			injector.mapSingleton( TrackModel );
+			injector.mapSingleton( PlayerModel );
+			injector.mapSingleton( CameraModel );
+			injector.mapSingleton( FloorsModel );
+			injector.mapSingleton( DistanceModel );
+			injector.mapSingleton( GameModel );
 
 			// Map events to commands.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, BuildTimeCommand, BuildTimeRequest, true );

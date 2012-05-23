@@ -7,6 +7,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DistanceModel;
+	import com.funrun.game.model.GameModel;
 	import com.funrun.game.model.PlayerModel;
 	import com.funrun.game.model.TimeModel;
 	import com.funrun.game.model.TrackModel;
@@ -16,7 +17,8 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.constants.CollisionTypes;
 	import com.funrun.game.model.constants.FaceTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-
+	import com.funrun.game.model.state.GameState;
+	
 	import org.robotlegs.mvcs.Command;
 
 	public class UpdateGameLoopCommand extends Command {
@@ -35,10 +37,15 @@ package com.funrun.game.controller.commands {
 
 		[Inject]
 		public var distanceModel:DistanceModel;
+		
+		[Inject]
+		public var gameModel:GameModel;
 
 		override public function execute():void {
 			// Update obstacles.
-			trackModel.move( -playerModel.speed );
+			if ( gameModel.gameState == GameState.RUNNING ) {
+				trackModel.move( -playerModel.speed );
+			}
 
 			// Remove obstacles from end of track.
 			if ( trackModel.numObstacles > 0 ) {
