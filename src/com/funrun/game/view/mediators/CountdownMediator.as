@@ -1,5 +1,6 @@
 package com.funrun.game.view.mediators {
 	
+	import com.funrun.game.controller.signals.UpdateCountdownRequest;
 	import com.funrun.game.view.components.CountdownView;
 	
 	import flash.display.Stage;
@@ -12,11 +13,20 @@ package com.funrun.game.view.mediators {
 		[Inject]
 		public var view:CountdownView;
 		
+		[Inject]
+		public var updateCountdownRequest:UpdateCountdownRequest;
+		
 		private var stage:Stage;
 		
 		override public function onRegister():void {
 			stage = view.stage;
 			view.init();
+			
+			updateCountdownRequest.add( onUpdateCountdown );
+		}
+		
+		private function onUpdateCountdown( message:String ):void {
+			view.countdown = message;
 		}
 	}
 }

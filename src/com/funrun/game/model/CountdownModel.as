@@ -17,8 +17,8 @@ package com.funrun.game.model {
 			return ( new Date().getTime() ) - _startTime;
 		}
 		
-		public function getTimeRemaining( maxTime:int ):int {
-			return maxTime - timeElapsed;
+		public function getSecondsRemaining( maxSeconds:int ):int {
+			return Math.ceil( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
 		}
 	}
 }

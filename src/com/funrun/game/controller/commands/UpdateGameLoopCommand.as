@@ -5,7 +5,9 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.KillPlayerRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
+	import com.funrun.game.controller.signals.UpdateCountdownRequest;
 	import com.funrun.game.model.CameraModel;
+	import com.funrun.game.model.CountdownModel;
 	import com.funrun.game.model.DistanceModel;
 	import com.funrun.game.model.GameModel;
 	import com.funrun.game.model.PlayerModel;
@@ -44,18 +46,30 @@ package com.funrun.game.controller.commands {
 		
 		[Inject]
 		public var gameModel:GameModel;
+		
+		[Inject]
+		public var countdownModel:CountdownModel;
+		
+		[Inject]
+		public var updateCountdownRequest:UpdateCountdownRequest;
 
 		override public function execute():void {
-			var framesElapsed:int = Math.round( .03 * timeEvent.delta ); // Target 30 frames per second.
+			// Update countdown if necessary.
+			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
+				if ( countdownModel.getSecondsRemaining( TrackConstants.WAIT_SECONDS ) > 0 ) {
+					updateCountdownRequest.dispatch( countdownModel.getSecondsRemaining( TrackConstants.WAIT_SECONDS ).toString() );
+				} else {
+					updateCountdownRequest.dispatch( "" ); // TO-DO: This is hacky, we should hide the countdown instead.
+					gameModel.gameState = GameState.RUNNING;
+				}
+			}
+			
+			// Target 30 frames per second.
+			var framesElapsed:int = Math.round( .03 * timeEvent.delta );
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
-				switch ( gameModel.gameState ) {
-					case GameState.RUNNING:
-						// Update obstacles.
-						trackModel.move( -playerModel.speed );
-						break;
-					case GameState.WAITING_FOR_PLAYERS:
-						
-						break;
+				if ( gameModel.gameState == GameState.RUNNING ) {
+					// Update obstacles.
+					trackModel.move( -playerModel.speed );
 				}
 	
 				// Remove obstacles from end of track.

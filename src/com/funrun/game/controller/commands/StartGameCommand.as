@@ -5,6 +5,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.EnablePlayerInputRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
 	import com.funrun.game.controller.events.ResetGameRequest;
+	import com.funrun.game.model.CountdownModel;
 	import com.funrun.game.model.GameModel;
 	import com.funrun.game.model.constants.TrackConstants;
 	import com.funrun.game.model.events.TimeEvent;
@@ -22,9 +23,14 @@ package com.funrun.game.controller.commands {
 		[Inject]
 		public var gameModel:GameModel;
 		
+		[Inject]
+		public var countdownModel:CountdownModel;
+		
 		override public function execute():void {
 			// Set game state.
 			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
+			// Start countdown.
+			countdownModel.start();
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			// Respond to input.
