@@ -1,8 +1,7 @@
 package com.funrun.modulemanager.controller.commands {
 	
+	import com.funrun.modulemanager.model.ConfigurationModel;
 	import com.funrun.modulemanager.services.PlayerioFacebookLoginService;
-	
-	import flash.display.Stage;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -12,7 +11,7 @@ package com.funrun.modulemanager.controller.commands {
 		public var loginService:PlayerioFacebookLoginService;
 		
 		[Inject]
-		public var stage:Stage;
+		public var configurationModel:ConfigurationModel;
 		
 		override public function execute() {
 			

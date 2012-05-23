@@ -38,7 +38,7 @@ package com.funrun.game
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DistanceModel;
-	import com.funrun.game.model.DummyGeosModel;
+	import com.funrun.game.model.GeosMockModel;
 	import com.funrun.game.model.FloorsModel;
 	import com.funrun.game.model.IGeosModel;
 	import com.funrun.game.model.LightsModel;
@@ -78,7 +78,7 @@ package com.funrun.game
 			injector.mapSingletonOf( ObstaclesModel, ObstaclesModel );
 			injector.mapSingletonOf( MaterialsModel, MaterialsModel );
 			injector.mapSingletonOf( LightsModel, LightsModel );
-			injector.mapSingletonOf( IGeosModel, DummyGeosModel );
+			injector.mapSingletonOf( IGeosModel, GeosMockModel );
 			injector.mapSingletonOf( TimeModel, TimeModel );
 			injector.mapSingletonOf( TrackModel, TrackModel );
 			injector.mapSingletonOf( PlayerModel, PlayerModel );

@@ -10,11 +10,11 @@ package com.funrun.game.model {
 	import com.funrun.game.model.constants.BlockTypes;
 	import com.funrun.game.model.constants.TrackConstants;
 	
-	public class DummyGeosModel extends Actor implements IGeosModel {
+	public class GeosMockModel extends Actor implements IGeosModel {
 		
 		private var _geos:Object;
 		
-		public function DummyGeosModel() {
+		public function GeosMockModel() {
 			_geos = {};
 			_geos[ BlockTypes.EMPTY ] = new PlaneGeometry( 1, 1 );
 			_geos[ BlockTypes.BLOCK ] = new CubeGeometry( 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE );
