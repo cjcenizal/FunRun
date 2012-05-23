@@ -1,10 +1,10 @@
 package com.funrun.game.model.collision
 {
-	import com.funrun.game.model.parsers.BlockParser;
+	import com.funrun.game.model.vo.BlockVO;
 	
 	public class BoundingBoxData
 	{
-		public var block:BlockParser;
+		public var block:BlockVO;
 		public var x:Number;
 		public var y:Number;
 		public var z:Number;
@@ -15,7 +15,7 @@ package com.funrun.game.model.collision
 		public var maxY:Number;
 		public var maxZ:Number;
 		
-		public function BoundingBoxData( block:BlockParser, x:Number, y:Number, z:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
+		public function BoundingBoxData( block:BlockVO, x:Number, y:Number, z:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
 		{
 			this.block = block;
 			this.x = x;

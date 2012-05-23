@@ -1,6 +1,6 @@
 package com.funrun.game.model.collision {
 	
-	import com.funrun.game.model.parsers.BlockParser;
+	import com.funrun.game.services.parsers.BlockParser;
 
 	public class FaceCollision {
 		

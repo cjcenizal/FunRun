@@ -1,4 +1,5 @@
-package com.funrun.game.model.parsers {
+package com.funrun.game.services.parsers {
+	import com.funrun.game.model.vo.BlockVO;
 	
 	public class BlocksParser extends AbstractParser {
 		
@@ -8,8 +9,8 @@ package com.funrun.game.model.parsers {
 			super( data );
 		}
 		
-		public function getAt( index:int ):BlockParser {
-			return new BlockParser( data[ LIST ][ index ] );
+		public function getAt( index:int ):BlockVO {
+			return new BlockParser().parse( data[ LIST ][ index ] );
 		}
 		
 		public function get length():int {

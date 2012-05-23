@@ -2,7 +2,7 @@ package com.funrun.game.model.collision
 {
 	import com.funrun.game.model.IObstacleProvider;
 	import com.funrun.game.model.constants.FaceTypes;
-	import com.funrun.game.model.parsers.BlockParser;
+	import com.funrun.game.model.vo.BlockVO;
 	
 	/**
 	 * CollisionData provides information
@@ -104,7 +104,7 @@ package com.funrun.game.model.collision
 		 * @return An array of FaceCollision objects.
 		 */
 		private static function getFaceCollisions(
-			block:BlockParser,
+			block:BlockVO,
 			aMinX:Number, aMinY:Number, aMinZ:Number, aMaxX:Number, aMaxY:Number, aMaxZ:Number,
 			bMinX:Number, bMinY:Number, bMinZ:Number, bMaxX:Number, bMaxY:Number, bMaxZ:Number
 		):Array {

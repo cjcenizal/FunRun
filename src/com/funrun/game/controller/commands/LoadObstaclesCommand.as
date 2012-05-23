@@ -6,8 +6,8 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.ObstaclesModel;
 	import com.funrun.game.model.collision.ObstacleData;
-	import com.funrun.game.model.parsers.ObstacleParser;
-	import com.funrun.game.model.parsers.ObstaclesParser;
+	import com.funrun.game.services.parsers.ObstacleParser;
+	import com.funrun.game.services.parsers.ObstaclesParser;
 	import com.funrun.game.services.ObstaclesJsonService;
 	
 	import org.robotlegs.mvcs.Command;

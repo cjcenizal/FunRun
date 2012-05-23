@@ -1,5 +1,6 @@
 package com.funrun.modulemanager {
 	
+	import com.funrun.modulemanager.controller.commands.BuildWhitelistCommand;
 	import com.funrun.modulemanager.controller.commands.InitAppCommand;
 	import com.funrun.modulemanager.controller.commands.LoadConfigurationCommand;
 	import com.funrun.modulemanager.controller.commands.LoginCommand;
@@ -8,6 +9,7 @@ package com.funrun.modulemanager {
 	import com.funrun.modulemanager.controller.commands.ShowMainMenuCommand;
 	import com.funrun.modulemanager.controller.commands.ToggleMainMenuCommand;
 	import com.funrun.modulemanager.controller.commands.WhitelistFailedCommand;
+	import com.funrun.modulemanager.controller.signals.BuildWhitelistRequest;
 	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequest;
 	import com.funrun.modulemanager.controller.signals.LoginFailed;
 	import com.funrun.modulemanager.controller.signals.LoginFulfilled;
@@ -24,7 +26,6 @@ package com.funrun.modulemanager {
 	import flash.events.Event;
 	
 	import org.robotlegs.utilities.modular.base.ModuleEventDispatcher;
-	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	import org.robotlegs.utilities.modularsignals.ModularSignalContext;
 	import org.robotlegs.utilities.modularsignals.ModularSignalContextView;
 	
@@ -72,6 +73,7 @@ package com.funrun.modulemanager {
 		 */
 		override public function startup():void {
 			// Map signals.
+			signalCommandMap.mapSignalClass( BuildWhitelistRequest,					BuildWhitelistCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );

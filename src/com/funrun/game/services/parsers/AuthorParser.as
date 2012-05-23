@@ -1,4 +1,4 @@
-package com.funrun.game.model.parsers {
+package com.funrun.game.services.parsers {
 	
 	public class AuthorParser extends AbstractParser {
 		

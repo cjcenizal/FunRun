@@ -1,8 +1,6 @@
 package com.funrun.game.model {
 	
-	import away3d.primitives.PrimitiveBase;
-	
-	import com.funrun.game.model.parsers.BlockParser;
+	import com.funrun.game.model.vo.BlockVO;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -14,11 +12,11 @@ package com.funrun.game.model {
 			_blocks = {};
 		}
 		
-		public function addBlock( block:BlockParser ):void {
+		public function addBlock( block:BlockVO ):void {
 			_blocks[ block.id ] = block;
 		}
 		
-		public function getBlock( id:String ):BlockParser {
+		public function getBlock( id:String ):BlockVO {
 			return _blocks[ id ];
 		}
 	}

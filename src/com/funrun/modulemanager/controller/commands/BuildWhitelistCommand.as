@@ -10,6 +10,7 @@ package com.funrun.modulemanager.controller.commands {
 		public var whitelistService:IWhitelistService;
 
 		override public function execute():void {
+			whitelistService.add( "2511953" ); // CJ
 		}
 	}
 }

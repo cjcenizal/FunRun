@@ -1,5 +1,6 @@
 package com.funrun.modulemanager.controller.commands {
 
+	import com.funrun.modulemanager.controller.signals.BuildWhitelistRequest;
 	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequest;
 	import com.funrun.modulemanager.controller.signals.LoginRequest;
 	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
@@ -10,6 +11,9 @@ package com.funrun.modulemanager.controller.commands {
 
 	public class InitAppCommand extends Command {
 
+		[Inject]
+		public var buildWhitelistRequest:BuildWhitelistRequest;
+		
 		[Inject]
 		public var loadConfigurationRequest:LoadConfigurationRequest;
 		
@@ -23,6 +27,7 @@ package com.funrun.modulemanager.controller.commands {
 		public var toggleMainModuleRequest:ToggleMainMenuOptionsRequest;
 		
 		override public function execute():void {
+			buildWhitelistRequest.dispatch();
 			loadConfigurationRequest.dispatch();
 			loginRequest.dispatch();
 			showMainModuleRequest.dispatch();

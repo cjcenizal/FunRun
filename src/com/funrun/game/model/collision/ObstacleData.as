@@ -11,8 +11,8 @@ package com.funrun.game.model.collision {
 	import com.funrun.game.model.MaterialsModel;
 	import com.funrun.game.model.constants.BlockTypes;
 	import com.funrun.game.model.constants.TrackConstants;
-	import com.funrun.game.model.parsers.BlockParser;
-	import com.funrun.game.model.parsers.ObstacleParser;
+	import com.funrun.game.model.vo.BlockVO;
+	import com.funrun.game.services.parsers.ObstacleParser;
 
 	public class ObstacleData {
 
@@ -131,7 +131,7 @@ package com.funrun.game.model.collision {
 			// Add obstacle geometry.
 			for ( var j:int = 0; j < parser.numBlocks; j++ ) {
 				var data:BlockData = parser.getBlockAt( j );
-				var geoData:BlockParser = blocksModel.getBlock( data.id );
+				var geoData:BlockVO = blocksModel.getBlock( data.id );
 				geo = geoData.geo;
 				mesh = new Mesh( geo, material );
 				var posX:int = ( flip ) ? ( TrackConstants.TRACK_WIDTH_BLOCKS - data.x - 1 ) : data.x;
