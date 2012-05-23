@@ -32,6 +32,9 @@ package com.funrun.game.controller.commands {
 			eventDispatcher.dispatchEvent( new DisplayDistanceRequest( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, distanceModel.distance ) );
 			// Reset player.
 			playerModel.isDead = false;
+			playerModel.isAirborne = false;
+			playerModel.isDucking = false;
+			playerModel.isJumping = false;
 			playerModel.speed = playerModel.jumpVelocity = playerModel.lateralVelocity = 0;
 			playerModel.player.position = new Vector3D( 0, TrackConstants.PLAYER_HALF_SIZE, 0 );
 			// Reset camera.

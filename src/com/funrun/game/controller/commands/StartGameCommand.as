@@ -24,7 +24,7 @@ package com.funrun.game.controller.commands {
 		
 		override public function execute():void {
 			// Set game state.
-			gameModel.gameState = GameState.RUNNING;
+			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			// Respond to input.

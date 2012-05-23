@@ -48,9 +48,14 @@ package com.funrun.game.controller.commands {
 		override public function execute():void {
 			var framesElapsed:int = Math.round( .03 * timeEvent.delta ); // Target 30 frames per second.
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
-				// Update obstacles.
-				if ( gameModel.gameState == GameState.RUNNING ) {
-					trackModel.move( -playerModel.speed );
+				switch ( gameModel.gameState ) {
+					case GameState.RUNNING:
+						// Update obstacles.
+						trackModel.move( -playerModel.speed );
+						break;
+					case GameState.WAITING_FOR_PLAYERS:
+						
+						break;
 				}
 	
 				// Remove obstacles from end of track.
@@ -69,20 +74,22 @@ package com.funrun.game.controller.commands {
 				}
 	
 				if ( playerModel.isDead ) {
-					// Update speed when you're dead.
-					playerModel.lateralVelocity = 0;
+					// Slow down when you're dead.
+					playerModel.lateralVelocity *= .6;
 					playerModel.speed *= .7;
 				} else {
-					// Store distance.
-					distanceModel.add( playerModel.speed );
-					eventDispatcher.dispatchEvent( new DisplayDistanceRequest( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, distanceModel.distance ) );
-					// Update speed when you're alive.
-					if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
-						if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
-							playerModel.speed--;
+					if ( gameModel.gameState == GameState.RUNNING ) {
+						// Store distance.
+						distanceModel.add( playerModel.speed );
+						eventDispatcher.dispatchEvent( new DisplayDistanceRequest( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, distanceModel.distance ) );
+						// Update speed when you're alive.
+						if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
+							if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
+								playerModel.speed--;
+							}
+						} else if ( playerModel.speed < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
+							playerModel.speed += TrackConstants.PLAYER_FOWARD_ACCELERATION;
 						}
-					} else if ( playerModel.speed < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
-						playerModel.speed += TrackConstants.PLAYER_FOWARD_ACCELERATION;
 					}
 					// Update jumping.
 					if ( playerModel.isJumping && !playerModel.isAirborne ) {

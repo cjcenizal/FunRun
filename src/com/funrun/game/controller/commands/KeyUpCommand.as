@@ -29,7 +29,7 @@ package com.funrun.game.controller.commands {
 					playerModel.stopMovingRight( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.DOWN:
-					playerModel.stopDucking();
+					playerModel.isDucking = false;;
 					break;
 			}
 		}
