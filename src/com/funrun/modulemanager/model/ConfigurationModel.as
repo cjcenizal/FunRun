@@ -15,6 +15,7 @@ package com.funrun.modulemanager.model {
 		public var fbAccessToken:String;
 		public var fbAppId:String;
 		public var playerioGameId:String;
+		public var playerioPartnerId:String;
 		
 		public function ConfigurationModel() {
 			super();

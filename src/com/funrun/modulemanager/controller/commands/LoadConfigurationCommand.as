@@ -12,10 +12,9 @@ package com.funrun.modulemanager.controller.commands {
 		public var configurationModel:ConfigurationModel;
 		
 		override public function execute():void {
-			trace("config");
 			var parameters:Object = LoaderInfo( this.contextView.root.loaderInfo ).parameters;
-			configurationModel.playerioGameId = parameters.sitebox_gameid;
-			configurationModel.fbAppId = parameters.fb_application_id;
+			configurationModel.playerioGameId = "funrun-wzswxfkte6ikptb5fqehw";//parameters.sitebox_gameid;
+			configurationModel.fbAppId = "392243894148756";//parameters.fb_application_id;
 			configurationModel.fbAccessToken = parameters.fb_access_token;
 		}
 	}
