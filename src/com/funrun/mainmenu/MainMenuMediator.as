@@ -3,9 +3,10 @@ package com.funrun.mainmenu {
 	import com.funrun.mainmenu.controller.commands.ExternalShowGameModuleCommand;
 	import com.funrun.mainmenu.controller.commands.ExternalShowMainMenuCommand;
 	import com.funrun.mainmenu.controller.commands.ExternalToggleMainMenuOptionsCommand;
-	import com.funrun.mainmenu.controller.events.StartRunningMainMenuRequest;
-	import com.funrun.mainmenu.controller.events.StopRunningMainMenuRequest;
-	import com.funrun.mainmenu.controller.events.ToggleMainMenuOptionsRequest;
+	import com.funrun.mainmenu.controller.signals.DisableMainMenuOptionsRequest;
+	import com.funrun.mainmenu.controller.signals.EnableMainMenuOptionsRequest;
+	import com.funrun.mainmenu.controller.signals.StartRunningMainMenuRequest;
+	import com.funrun.mainmenu.controller.signals.StopRunningMainMenuRequest;
 	import com.funrun.modulemanager.controller.events.ExternalShowGameModuleRequest;
 	import com.funrun.modulemanager.controller.events.ExternalShowMainMenuModuleRequest;
 	import com.funrun.modulemanager.controller.events.ExternalToggleMainMenuOptionsRequest;
@@ -17,6 +18,18 @@ package com.funrun.mainmenu {
 		[Inject]
 		public var view:MainMenuModule;
 		
+		[Inject]
+		public var stopRunningMainMenu:StopRunningMainMenuRequest;
+		
+		[Inject]
+		public var startRunningMainMenu:StartRunningMainMenuRequest;
+		
+		[Inject]
+		public var enableMainMenuOptions:EnableMainMenuOptionsRequest
+		
+		[Inject]
+		public var disableMainMenuOptions:DisableMainMenuOptionsRequest;
+		
 		override public function onRegister():void {
 			// Build our view.
 			view.build();
@@ -27,24 +40,29 @@ package com.funrun.mainmenu {
 			moduleCommandMap.mapEvent( ExternalToggleMainMenuOptionsRequest.EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED,	ExternalToggleMainMenuOptionsCommand, 		ExternalToggleMainMenuOptionsRequest );
 			
 			// Listen for intra-module events.
-			eventDispatcher.addEventListener( StopRunningMainMenuRequest.STOP_RUNNING_MAIN_MENU_REQUESTED, onStopRunningMainMenuRequested );
-			eventDispatcher.addEventListener( StartRunningMainMenuRequest.START_RUNNING_MAIN_MENU_REQUESTED, onStartRunningMainMenuRequested );
-			eventDispatcher.addEventListener( ToggleMainMenuOptionsRequest.TOGGLE_MAIN_MENU_OPTIONS_REQUESTED, onToggleMainMenuOptionsRequested );
+			stopRunningMainMenu.add( onStopRunningMainMenuRequested );
+			startRunningMainMenu.add( onStartRunningMainMenuRequested );
+			enableMainMenuOptions.add( onEnableMainMenuOptionsRequested );
+			disableMainMenuOptions.add( onDisableMainMenuOptionsRequested );
 			
 			// Listen for view events.
 			view.onStartGameButtonClick.add( onStartGameButtonClick );
 		}
 		
-		private function onStartRunningMainMenuRequested( e:StartRunningMainMenuRequest ):void {
+		private function onStartRunningMainMenuRequested():void {
 			view.startRunning();
 		}
 		
-		private function onStopRunningMainMenuRequested( e:StopRunningMainMenuRequest ):void {
+		private function onStopRunningMainMenuRequested():void {
 			view.stopRunning();
 		}
 		
-		private function onToggleMainMenuOptionsRequested( e:ToggleMainMenuOptionsRequest ):void {
-			view.optionsEnabled = e.enabled;
+		private function onEnableMainMenuOptionsRequested():void {
+			view.optionsEnabled = true;
+		}
+		
+		private function onDisableMainMenuOptionsRequested():void {
+			view.optionsEnabled = false;
 		}
 		
 		private function onStartGameButtonClick():void {

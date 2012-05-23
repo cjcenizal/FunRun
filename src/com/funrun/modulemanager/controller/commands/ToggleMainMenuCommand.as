@@ -15,7 +15,7 @@ package com.funrun.modulemanager.controller.commands {
 		public var moduleDispatcher:IModuleEventDispatcher;
 		
 		override public function execute():void {
-			moduleDispatcher.dispatchEvent( new ExternalToggleMainMenuOptionsRequest( ExternalToggleMainMenuOptionsRequest.EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED, payload.enabled ) );
+			moduleDispatcher.dispatchEvent( new ExternalToggleMainMenuOptionsRequest( ExternalToggleMainMenuOptionsRequest.EXTERNAL_TOGGLE_MAIN_MENU_OPTIONS_REQUESTED, payload ) );
 		}
 	}
 }

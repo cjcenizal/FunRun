@@ -1,9 +1,9 @@
 package com.funrun.modulemanager.controller.commands {
 
-	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequestSignal;
-	import com.funrun.modulemanager.controller.signals.LoginRequestSignal;
-	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequestSignal;
-	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequestSignal;
+	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequest;
+	import com.funrun.modulemanager.controller.signals.LoginRequest;
+	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
+	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequest;
 	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsRequestPayload;
 	
 	import org.robotlegs.mvcs.Command;
@@ -11,22 +11,22 @@ package com.funrun.modulemanager.controller.commands {
 	public class InitAppCommand extends Command {
 
 		[Inject]
-		public var loadConfigurationRequest:LoadConfigurationRequestSignal;
+		public var loadConfigurationRequest:LoadConfigurationRequest;
 		
 		[Inject]
-		public var loginRequest:LoginRequestSignal;
+		public var loginRequest:LoginRequest;
 		
 		[Inject]
-		public var showMainModuleRequest:ShowMainModuleRequestSignal;
+		public var showMainModuleRequest:ShowMainModuleRequest;
 		
 		[Inject]
-		public var toggleMainModuleRequest:ToggleMainMenuOptionsRequestSignal;
+		public var toggleMainModuleRequest:ToggleMainMenuOptionsRequest;
 		
 		override public function execute():void {
 			loadConfigurationRequest.dispatch();
 			loginRequest.dispatch();
 			showMainModuleRequest.dispatch();
-			toggleMainModuleRequest.dispatch( new ToggleMainMenuOptionsRequestPayload( false ) );
+			toggleMainModuleRequest.dispatch( new ToggleMainMenuOptionsRequestPayload( true ) );
 		}
 	}
 }

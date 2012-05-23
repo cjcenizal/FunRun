@@ -1,6 +1,5 @@
-package com.funrun.game
-{
-	
+package com.funrun.game {
+
 	import com.funrun.game.controller.commands.AddCameraCommand;
 	import com.funrun.game.controller.commands.AddFloorsCommand;
 	import com.funrun.game.controller.commands.AddLightCommand;
@@ -38,8 +37,8 @@ package com.funrun.game
 	import com.funrun.game.model.BlocksModel;
 	import com.funrun.game.model.CameraModel;
 	import com.funrun.game.model.DistanceModel;
-	import com.funrun.game.model.GeosMockModel;
 	import com.funrun.game.model.FloorsModel;
+	import com.funrun.game.model.GeosMockModel;
 	import com.funrun.game.model.IGeosModel;
 	import com.funrun.game.model.LightsModel;
 	import com.funrun.game.model.MaterialsModel;
@@ -53,26 +52,25 @@ package com.funrun.game
 	import com.funrun.game.view.components.TrackView;
 	import com.funrun.game.view.mediators.DistanceMediator;
 	import com.funrun.game.view.mediators.TrackMediator;
-	
+
 	import flash.display.DisplayObjectContainer;
-	
-	import org.robotlegs.utilities.modular.mvcs.ModuleContext;
-	
-	public class GameContext extends ModuleContext
-	{
-		
+
+	import org.robotlegs.utilities.modularsignals.ModularSignalContext;
+
+	public class GameContext extends ModularSignalContext {
+
 		public function GameContext( contextView:DisplayObjectContainer ) {
 			super( contextView );
 		}
-		
+
 		override public function startup():void {
 			// Set our launch configuration.
 			injector.mapValue( GameType, GameType.Local, "gameType" );
-			
+
 			// Map services.
 			injector.mapSingletonOf( BlocksJsonService, BlocksJsonService );
 			injector.mapSingletonOf( ObstaclesJsonService, ObstaclesJsonService );
-			
+
 			// Map models.
 			injector.mapSingletonOf( BlocksModel, BlocksModel );
 			injector.mapSingletonOf( ObstaclesModel, ObstaclesModel );
@@ -84,37 +82,37 @@ package com.funrun.game
 			injector.mapSingletonOf( PlayerModel, PlayerModel );
 			injector.mapSingletonOf( CameraModel, CameraModel );
 			injector.mapSingletonOf( FloorsModel, FloorsModel );
-			injector.mapSingletonOf( DistanceModel, DistanceModel);
-			
+			injector.mapSingletonOf( DistanceModel, DistanceModel );
+
 			// Map events to commands.
-			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, 		BuildTimeCommand, 		BuildTimeRequest, true );
-			commandMap.mapEvent( BuildGameRequest.BUILD_GAME_REQUESTED, 		BuildGameCommand, 		BuildGameRequest, true );
-			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, 		LoadBlocksCommand, 		LoadBlocksRequest );
-			commandMap.mapEvent( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED, LoadObstaclesCommand, 	LoadObstaclesRequest );
-			commandMap.mapEvent( LoadFloorsRequest.LOAD_FLOORS_REQUESTED,		LoadFloorsCommand,		LoadFloorsRequest );
-			commandMap.mapEvent( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, 	AddObstacleCommand, 	AddObstacleRequest );
-			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, 			AddLightCommand, 		AddLightRequest );
-			commandMap.mapEvent( AddMaterialRequest.ADD_MATERIAL_REQUESTED, 	AddMaterialCommand, 	AddMaterialRequest );
-			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, 		AddPlayerCommand, 		AddPlayerRequest );
-			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED,			AddFloorsCommand, 		AddFloorsRequest );
-			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED,		AddCameraCommand,		AddCameraFulfilled );
-			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED,		KillPlayerCommand,		KillPlayerRequest );
-			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED,		ResetGameCommand,		ResetGameRequest );
-			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED,			StartGameCommand,		StartGameRequest );
-			commandMap.mapEvent( StopGameRequest.STOP_GAME_REQUESTED,			StopGameCommand,		StopGameRequest );
-			commandMap.mapEvent( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED,			InternalShowMainMenuCommand,		InternalShowMainMenuRequest );
-			
+			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, BuildTimeCommand, BuildTimeRequest, true );
+			commandMap.mapEvent( BuildGameRequest.BUILD_GAME_REQUESTED, BuildGameCommand, BuildGameRequest, true );
+			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, LoadBlocksCommand, LoadBlocksRequest );
+			commandMap.mapEvent( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED, LoadObstaclesCommand, LoadObstaclesRequest );
+			commandMap.mapEvent( LoadFloorsRequest.LOAD_FLOORS_REQUESTED, LoadFloorsCommand, LoadFloorsRequest );
+			commandMap.mapEvent( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, AddObstacleCommand, AddObstacleRequest );
+			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, AddLightCommand, AddLightRequest );
+			commandMap.mapEvent( AddMaterialRequest.ADD_MATERIAL_REQUESTED, AddMaterialCommand, AddMaterialRequest );
+			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, AddPlayerCommand, AddPlayerRequest );
+			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED, AddFloorsCommand, AddFloorsRequest );
+			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED, AddCameraCommand, AddCameraFulfilled );
+			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED, KillPlayerCommand, KillPlayerRequest );
+			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED, ResetGameCommand, ResetGameRequest );
+			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, StartGameCommand, StartGameRequest );
+			commandMap.mapEvent( StopGameRequest.STOP_GAME_REQUESTED, StopGameCommand, StopGameRequest );
+			commandMap.mapEvent( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED, InternalShowMainMenuCommand, InternalShowMainMenuRequest );
+
 			// Map views to mediators.
 			mediatorMap.mapView( GameModule, GameMediator );
 			mediatorMap.mapView( TrackView, TrackMediator );
 			mediatorMap.mapView( DistanceView, DistanceMediator );
-			
+
 			// Let's throw some logic into this baby.
 			eventDispatcher.addEventListener( AddTrackViewFulfilled.ADD_TRACK_FULFILLED, onAddTrackFulfilled );
-			
+
 			super.startup();
 		}
-		
+
 		private function onAddTrackFulfilled( e:AddTrackViewFulfilled ):void {
 			// TO-DO: Can this be moved inside of GameMediator, or TrackMediator?
 			eventDispatcher.dispatchEvent( new BuildGameRequest( BuildGameRequest.BUILD_GAME_REQUESTED ) );

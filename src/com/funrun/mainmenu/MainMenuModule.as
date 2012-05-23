@@ -10,9 +10,9 @@ package com.funrun.mainmenu {
 	import flash.events.MouseEvent;
 	
 	import org.osflash.signals.Signal;
-	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
+	import org.robotlegs.utilities.modularsignals.ModularSignalContextView;
 	
-	public class MainMenuModule extends ModuleContextView {
+	public class MainMenuModule extends ModularSignalContextView {
 		
 		[Embed (source="embed/logo.jpg" )]
 		private var Logo:Class;

@@ -4,9 +4,9 @@ package com.funrun.modulemanager.controller.signals
 	
 	import org.osflash.signals.Signal;
 	
-	public class ToggleMainMenuOptionsRequestSignal extends Signal
+	public class ToggleMainMenuOptionsRequest extends Signal
 	{
-		public function ToggleMainMenuOptionsRequestSignal()
+		public function ToggleMainMenuOptionsRequest()
 		{
 			super( ToggleMainMenuOptionsRequestPayload );
 		}

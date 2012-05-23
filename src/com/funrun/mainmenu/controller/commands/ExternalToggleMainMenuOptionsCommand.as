@@ -1,6 +1,7 @@
 package com.funrun.mainmenu.controller.commands {
 
-	import com.funrun.mainmenu.controller.events.ToggleMainMenuOptionsRequest;
+	import com.funrun.mainmenu.controller.signals.DisableMainMenuOptionsRequest;
+	import com.funrun.mainmenu.controller.signals.EnableMainMenuOptionsRequest;
 	import com.funrun.modulemanager.controller.events.ExternalToggleMainMenuOptionsRequest;
 	
 	import org.robotlegs.mvcs.Command;
@@ -10,8 +11,18 @@ package com.funrun.mainmenu.controller.commands {
 		[Inject]
 		public var event:ExternalToggleMainMenuOptionsRequest;
 		
+		[Inject]
+		public var enableMainMenuOptionsRequest:EnableMainMenuOptionsRequest;
+		
+		[Inject]
+		public var disableMainMenuOptionsRequest:DisableMainMenuOptionsRequest;
+		
 		override public function execute():void {
-			eventDispatcher.dispatchEvent( new ToggleMainMenuOptionsRequest( ToggleMainMenuOptionsRequest.TOGGLE_MAIN_MENU_OPTIONS_REQUESTED, event.enabled ) );
+			if ( event.payload.enabled ) {
+				enableMainMenuOptionsRequest.dispatch();
+			} else {
+				disableMainMenuOptionsRequest.dispatch();
+			}
 		}
 	}
 }

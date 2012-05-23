@@ -1,6 +1,5 @@
 package com.funrun.modulemanager {
 	
-	import org.robotlegs.utilities.modular.mvcs.ModuleContextView;
 	import org.robotlegs.utilities.modularsignals.ModularSignalContextView;
 	
 	public class ModuleManager extends ModularSignalContextView {
@@ -12,7 +11,7 @@ package com.funrun.modulemanager {
 			context = moduleManagerContext;
 		}
 		
-		public function integrateModules( modulesList:Vector.<ModuleContextView> ):void {
+		public function integrateModules( modulesList:Vector.<ModularSignalContextView> ):void {
 			moduleManagerContext.integrateModules( modulesList );
 		}
 	

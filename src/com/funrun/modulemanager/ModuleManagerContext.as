@@ -5,10 +5,10 @@ package com.funrun.modulemanager {
 	import com.funrun.modulemanager.controller.commands.LoginCommand;
 	import com.funrun.modulemanager.controller.commands.ShowMainMenuCommand;
 	import com.funrun.modulemanager.controller.commands.ToggleMainMenuCommand;
-	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequestSignal;
-	import com.funrun.modulemanager.controller.signals.LoginRequestSignal;
-	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequestSignal;
-	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequestSignal;
+	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequest;
+	import com.funrun.modulemanager.controller.signals.LoginRequest;
+	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
+	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequest;
 	import com.funrun.modulemanager.model.ConfigurationModel;
 	import com.funrun.modulemanager.services.PlayerioFacebookLoginService;
 	
@@ -45,8 +45,8 @@ package com.funrun.modulemanager {
 			startup();
 		}
 		
-		public function integrateModules( modulesList:Vector.<ModuleContextView> ):void {
-			for each ( var nextModule:ModuleContextView in modulesList ) {
+		public function integrateModules( modulesList:Vector.<ModularSignalContextView> ):void {
+			for each ( var nextModule:ModularSignalContextView in modulesList ) {
 				nextModule.setModuleDispatcher( _moduleEventDispatcher );
 				nextModule.startup();
 				this.contextView.addChild( nextModule );
@@ -69,10 +69,10 @@ package com.funrun.modulemanager {
 			injector.mapSingletonOf( PlayerioFacebookLoginService, PlayerioFacebookLoginService );
 			
 			// Map signals to commands
-			signalCommandMap.mapSignalClass( LoadConfigurationRequestSignal, LoadConfigurationCommand );
-			signalCommandMap.mapSignalClass( LoginRequestSignal, LoginCommand );
-			signalCommandMap.mapSignalClass( ShowMainModuleRequestSignal, ShowMainMenuCommand );
-			signalCommandMap.mapSignalClass( ToggleMainMenuOptionsRequestSignal, ToggleMainMenuCommand );
+			signalCommandMap.mapSignalClass( LoadConfigurationRequest, LoadConfigurationCommand );
+			signalCommandMap.mapSignalClass( LoginRequest, LoginCommand );
+			signalCommandMap.mapSignalClass( ShowMainModuleRequest, ShowMainMenuCommand );
+			signalCommandMap.mapSignalClass( ToggleMainMenuOptionsRequest, ToggleMainMenuCommand );
 			
 			// Kick everything off one frame later.
 			this.contextView.addEventListener( Event.ENTER_FRAME, onEnterFrame );
