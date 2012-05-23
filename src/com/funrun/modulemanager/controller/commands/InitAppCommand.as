@@ -31,7 +31,7 @@ package com.funrun.modulemanager.controller.commands {
 			loadConfigurationRequest.dispatch();
 			loginRequest.dispatch();
 			showMainModuleRequest.dispatch();
-			toggleMainModuleRequest.dispatch( new ToggleMainMenuOptionsPayload( true ) );
+			toggleMainModuleRequest.dispatch( new ToggleMainMenuOptionsPayload( false ) );
 		}
 	}
 }
