@@ -9,6 +9,7 @@ package com.funrun.game.model.constants
 		public static const TRACK_LENGTH:int = 8000;
 		public static const TRACK_WIDTH_BLOCKS:int = TRACK_WIDTH / BLOCK_SIZE;
 		public static const TRACK_LENGTH_BLOCKS:int = TRACK_LENGTH / BLOCK_SIZE;
+		public static const PLAYER_RADIUS:int = 50;
 		public static const PLAYER_HALF_SIZE:int = 55;
 		
 		// Camera.

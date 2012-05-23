@@ -19,7 +19,7 @@ package com.funrun.game.controller.commands {
 		public var materialsModel:MaterialsModel;
 		
 		override public function execute():void {
-			var player:Mesh = new Mesh( new CylinderGeometry( 40, 50, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
+			var player:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
 			playerModel.player = player;
 			eventDispatcher.dispatchEvent( new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, player ) );
 		}

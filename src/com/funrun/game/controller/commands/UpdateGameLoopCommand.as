@@ -159,8 +159,8 @@ package com.funrun.game.controller.commands {
 						}
 						// Always hit the front sides of things.
 						if ( face.type == FaceTypes.FRONT ) {
-							// TO-DO: We can't resolve this collision by moving the player.
-							// We need to do it by moving the world.
+							// Resolve this collision by moving the world.
+							trackModel.move( face.minZ );
 							if ( face.event == CollisionTypes.SMACK ) {
 								eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.SMACK ) );
 							}
