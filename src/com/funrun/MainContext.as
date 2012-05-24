@@ -32,6 +32,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
+	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
@@ -47,6 +48,7 @@ package com.funrun {
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
@@ -147,6 +149,8 @@ package com.funrun {
 			injector.mapSingleton( RenderSceneRequest );
 			injector.mapSingleton( DisplayDistanceRequest );
 			injector.mapSingleton( AddCameraRequest );
+			injector.mapSingleton( AddPopupRequest );
+			injector.mapSingleton( RemovePopupRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
 			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );

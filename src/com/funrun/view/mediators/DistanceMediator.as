@@ -1,6 +1,6 @@
 package com.funrun.view.mediators {
 	
-	import com.cenizal.util.Numbers;
+	import com.cenizal.utils.Numbers;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.view.components.DistanceView;
 	
@@ -21,7 +21,7 @@ package com.funrun.view.mediators {
 		}
 		
 		private function onDisplayDistanceRequested( distance:Number ):void {
-			view.showDistance( Numbers.addCommas( ( Math.round( distance * .05 ) ).toString() ) );
+			view.showDistance( Numbers.addCommasTo( ( Math.round( distance * .05 ) ).toString() ) );
 		}
 	
 	}

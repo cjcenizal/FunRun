@@ -1,5 +1,9 @@
 package com.funrun.view.mediators {
 	
+	import com.cenizal.ui.AbstractComponent;
+	import com.funrun.controller.signals.AddPopupRequest;
+	import com.funrun.controller.signals.RemovePopupRequest;
+	import com.funrun.view.components.Popup;
 	import com.funrun.view.components.PopupsView;
 	
 	import org.robotlegs.core.IMediator;
@@ -10,8 +14,24 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var view:PopupsView;
 		
+		[Inject]
+		public var addPopupRequest:AddPopupRequest;
+		
+		[Inject]
+		public var removePopupRequest:RemovePopupRequest;
+		
 		override public function onRegister():void {
 			view.init();
+			addPopupRequest.add( onAddPopupRequested );
+			removePopupRequest.add( onRemovePopupRequested );
+		}
+		
+		private function onAddPopupRequested( popup:Popup ):void {
+			view.add( popup );
+		}
+		
+		private function onRemovePopupRequested( popup:Popup ):void {
+			view.remove( popup );
 		}
 	}
 }

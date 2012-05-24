@@ -2,7 +2,7 @@ package com.funrun.view.components {
 	
 	import com.cenizal.ui.AbstractComponent;
 	import com.cenizal.ui.AbstractLabel;
-	import com.cenizal.util.Center;
+	import com.cenizal.utils.Center;
 	
 	import flash.display.DisplayObjectContainer;
 	
@@ -21,7 +21,7 @@ package com.funrun.view.components {
 		public function set countdown( message:String ):void {
 			_countdownLabel.text = message;
 			_countdownLabel.draw();
-			Center.all( _countdownLabel, stage );
+			Center.both( _countdownLabel, stage );
 		}
 		
 		public function enableCountdown():void {

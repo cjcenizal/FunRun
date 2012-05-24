@@ -1,10 +1,10 @@
-package com.cenizal.util
+package com.cenizal.utils
 {
 	import flash.display.DisplayObject;
 
 	public class Center
 	{
-		public static function all( thisObj:DisplayObject, ontoThat:DisplayObject ):void {
+		public static function both( thisObj:DisplayObject, ontoThat:DisplayObject ):void {
 			horizontal( thisObj, ontoThat );
 			vertical( thisObj, ontoThat );
 		}

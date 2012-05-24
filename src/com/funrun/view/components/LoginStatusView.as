@@ -2,7 +2,7 @@ package com.funrun.view.components {
 	
 	import com.cenizal.ui.AbstractComponent;
 	import com.cenizal.ui.AbstractLabel;
-	import com.cenizal.util.Center;
+	import com.cenizal.utils.Center;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
