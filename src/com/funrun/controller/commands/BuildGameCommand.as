@@ -8,15 +8,16 @@ package com.funrun.controller.commands
 	import away3d.materials.methods.FresnelSpecularMethod;
 	
 	import com.funrun.controller.events.AddLightRequest;
-	import com.funrun.controller.events.AddMaterialRequest;
 	import com.funrun.controller.events.AddObjectToSceneRequest;
 	import com.funrun.controller.events.AddPlayerRequest;
 	import com.funrun.controller.events.LoadBlocksRequest;
 	import com.funrun.controller.events.LoadFloorsRequest;
 	import com.funrun.controller.events.LoadObstaclesRequest;
+	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
 	
+	import org.osflash.signals.Signal;
 	import org.robotlegs.mvcs.Command;
 	
 	/**
@@ -30,11 +31,14 @@ package com.funrun.controller.commands
 		[Inject]
 		public var materialsModel:MaterialsModel;
 		
+		[Inject]
+		public var addMaterialRequest:AddMaterialRequest;
+		
 		override public function execute():void {
 			// Add materials.
-			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) ) );
-			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.GROUND_MATERIAL, new ColorMaterial( 0xFF0000 ) ) );
-			eventDispatcher.dispatchEvent( new AddMaterialRequest( AddMaterialRequest.ADD_MATERIAL_REQUESTED, MaterialsModel.OBSTACLE_MATERIAL, new ColorMaterial( 0x0000FF ) ) );
+			addMaterialRequest.dispatch( MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) );
+			addMaterialRequest.dispatch( MaterialsModel.GROUND_MATERIAL, new ColorMaterial( 0xFF0000 ) );
+			addMaterialRequest.dispatch( MaterialsModel.OBSTACLE_MATERIAL, new ColorMaterial( 0x0000FF ) );
 			
 			// Load stuff.
 			eventDispatcher.dispatchEvent( new LoadBlocksRequest( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED ) );

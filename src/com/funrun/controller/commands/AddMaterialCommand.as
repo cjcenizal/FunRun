@@ -1,9 +1,7 @@
 package com.funrun.controller.commands
 {
-	import com.funrun.controller.enum.GameType;
-	import com.funrun.controller.events.AddLightRequest;
-	import com.funrun.controller.events.AddMaterialRequest;
-	import com.funrun.model.LightsModel;
+	import away3d.materials.ColorMaterial;
+	
 	import com.funrun.model.MaterialsModel;
 	
 	import org.robotlegs.mvcs.Command;
@@ -11,13 +9,16 @@ package com.funrun.controller.commands
 	public class AddMaterialCommand extends Command
 	{
 		[Inject]
-		public var event:AddMaterialRequest;
+		public var materialName:String;
+		
+		[Inject]
+		public var material:ColorMaterial;
 		
 		[Inject]
 		public var model:MaterialsModel;
 		
 		override public function execute():void {
-			model.addMaterial( event.id, event.material );
+			model.addMaterial( materialName, material );
 		}
 	}
 }

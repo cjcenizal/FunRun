@@ -27,7 +27,6 @@ package com.funrun {
 	import com.funrun.controller.events.AddCameraFulfilled;
 	import com.funrun.controller.events.AddFloorsRequest;
 	import com.funrun.controller.events.AddLightRequest;
-	import com.funrun.controller.events.AddMaterialRequest;
 	import com.funrun.controller.events.AddObstacleRequest;
 	import com.funrun.controller.events.AddPlayerRequest;
 	import com.funrun.controller.events.KillPlayerRequest;
@@ -36,6 +35,7 @@ package com.funrun {
 	import com.funrun.controller.events.LoadObstaclesRequest;
 	import com.funrun.controller.events.ResetGameRequest;
 	import com.funrun.controller.events.StopGameRequest;
+	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
@@ -146,6 +146,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
 			signalCommandMap.mapSignalClass( BuildTimeRequest,						BuildTimeCommand );
 			signalCommandMap.mapSignalClass( BuildGameRequest,						BuildGameCommand );
+			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, LoadBlocksCommand, LoadBlocksRequest );
@@ -153,7 +154,6 @@ package com.funrun {
 			commandMap.mapEvent( LoadFloorsRequest.LOAD_FLOORS_REQUESTED, LoadFloorsCommand, LoadFloorsRequest );
 			commandMap.mapEvent( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, AddObstacleCommand, AddObstacleRequest );
 			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, AddLightCommand, AddLightRequest );
-			commandMap.mapEvent( AddMaterialRequest.ADD_MATERIAL_REQUESTED, AddMaterialCommand, AddMaterialRequest );
 			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, AddPlayerCommand, AddPlayerRequest );
 			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED, AddFloorsCommand, AddFloorsRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED, AddCameraCommand, AddCameraFulfilled );
