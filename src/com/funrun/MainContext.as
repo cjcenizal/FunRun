@@ -84,6 +84,7 @@ package com.funrun {
 	import com.funrun.view.components.LoginStatusView;
 	import com.funrun.view.components.MainMenuView;
 	import com.funrun.view.components.MainView;
+	import com.funrun.view.components.PopupsView;
 	import com.funrun.view.components.TrackView;
 	import com.funrun.view.mediators.AppMediator;
 	import com.funrun.view.mediators.CountdownMediator;
@@ -92,6 +93,7 @@ package com.funrun {
 	import com.funrun.view.mediators.LoginStatusMediator;
 	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
+	import com.funrun.view.mediators.PopupsMediator;
 	import com.funrun.view.mediators.TrackMediator;
 	
 	import flash.display.DisplayObjectContainer;
@@ -179,6 +181,7 @@ package com.funrun {
 			mediatorMap.mapView( LoginStatusView, 		LoginStatusMediator );
 			mediatorMap.mapView( GameView,				GameMediator );
 			mediatorMap.mapView( MainMenuView,			MainMenuMediator );
+			mediatorMap.mapView( PopupsView,			PopupsMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
 			mediatorMap.mapView( FunRun, 				AppMediator );

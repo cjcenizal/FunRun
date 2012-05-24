@@ -20,7 +20,7 @@ package com.funrun.view.mediators {
 		
 		override public function onRegister():void {
 			// Build our view.
-			view.build();
+			view.init();
 
 			// Listen for signals.
 			enableMainMenuRequest.add( onEnableMainMenuRequested );

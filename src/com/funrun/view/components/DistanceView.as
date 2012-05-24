@@ -13,6 +13,9 @@ package com.funrun.view.components {
 		
 		public function DistanceView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
+		}
+		
+		public function init():void {
 			_distanceLabel = new AbstractLabel( this, 0, 0, "Distance", 12, 0 );
 			_distanceCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
 			_distanceLabel.draw();

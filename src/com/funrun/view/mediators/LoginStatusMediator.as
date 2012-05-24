@@ -14,11 +14,8 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var updateLoginStatus:UpdateLoginStatusRequest;
 		
-		public function LoginStatusMediator() {
-			super();
-		}
-		
 		override public function onRegister():void {
+			view.init();
 			updateLoginStatus.add( onUpdateLoginStatusRequested );
 		}
 		

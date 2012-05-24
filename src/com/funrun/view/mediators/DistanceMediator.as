@@ -4,8 +4,6 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.view.components.DistanceView;
 	
-	import flash.display.Stage;
-	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -17,10 +15,8 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
-		private var stage:Stage;
-		
 		override public function onRegister():void {
-			stage = view.stage;
+			view.init();
 			displayDistanceRequest.add( onDisplayDistanceRequested );
 		}
 		

@@ -12,10 +12,10 @@ package com.funrun.view.components {
 		
 		public function CountdownView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
-			_countdownLabel = new AbstractLabel( this, 0, 0, "", 110, 0xe0920b );
 		}
 		
 		public function init():void {
+			_countdownLabel = new AbstractLabel( this, 0, 0, "", 110, 0xe0920b );
 		}
 		
 		public function set countdown( message:String ):void {

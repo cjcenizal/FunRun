@@ -27,7 +27,7 @@ package com.funrun.view.components {
 			super( parent, x, y );
 		}
 		
-		public function build():void {
+		public function init():void {
 			onStartGameButtonClick = new Signal();
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}

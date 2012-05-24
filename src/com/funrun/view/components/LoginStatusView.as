@@ -13,6 +13,9 @@ package com.funrun.view.components {
 		
 		public function LoginStatusView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
+		}
+		
+		public function init():void {
 			_label = new AbstractLabel( this, 0, 0, "Log in status", 24, 0x5555FF );
 		}
 		

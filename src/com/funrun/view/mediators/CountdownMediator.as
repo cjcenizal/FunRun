@@ -4,8 +4,6 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.view.components.CountdownView;
 	
-	import flash.display.Stage;
-	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -20,10 +18,7 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
-		private var stage:Stage;
-		
 		override public function onRegister():void {
-			stage = view.stage;
 			view.init();
 			
 			updateCountdownRequest.add( onUpdateCountdown );

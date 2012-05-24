@@ -15,7 +15,7 @@ package com.funrun.view.components {
 			visible = false;
 		}
 
-		public function build():void {
+		public function init():void {
 			_track = new TrackView( this );
 			_distance = new DistanceView( this );
 			_countdown = new CountdownView( this );

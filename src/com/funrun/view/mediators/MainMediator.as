@@ -16,7 +16,7 @@ package com.funrun.view.mediators {
 		public var showScreenRequest:ShowScreenRequest;
 		
 		override public function onRegister():void {
-			view.build();
+			view.init();
 			view.hideAll();
 			showScreenRequest.add( onShowScreenRequested );
 		}

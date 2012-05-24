@@ -13,7 +13,7 @@ package com.funrun.view.components {
 			super( parent, x, y );
 		}
 
-		public function build():void {
+		public function init():void {
 			_mainMenu = new MainMenuView( this );
 			_game = new GameView( this );
 		}
