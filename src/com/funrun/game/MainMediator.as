@@ -1,11 +1,7 @@
 package com.funrun.game {
 	
-	import com.funrun.game.controller.commands.ExternalShowGameModuleCommand;
-	import com.funrun.game.controller.events.InternalShowMainMenuRequest;
-	import com.funrun.game.controller.events.StartRunningGameRequest;
-	import com.funrun.game.controller.events.StopRunningGameRequest;
-	import com.funrun.modulemanager.controller.events.ExternalShowGameModuleRequest;
-	import com.funrun.modulemanager.controller.events.ExternalShowMainMenuModuleRequest;
+	import com.funrun.game.controller.signals.ShowScreenRequest;
+	import com.funrun.game.model.state.ScreenState;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
@@ -15,9 +11,23 @@ package com.funrun.game {
 		[Inject]
 		public var view:MainView;
 		
+		[Inject]
+		public var showScreenRequest:ShowScreenRequest;
+		
 		override public function onRegister():void {
 			view.build();
-			// Listen for events telling us which view to display (main menu, game, etc).
+			showScreenRequest.add( onShowScreenRequested );
+		}
+		
+		private function onShowScreenRequested( screen:String ):void {
+			switch ( screen ) {
+				case ScreenState.MAIN_MENU:
+					view.showMainMenu();
+					break;
+				case ScreenState.MULTIPLAYER_GAME:
+					view.showGame();
+					break;
+			}
 		}
 	}
 }

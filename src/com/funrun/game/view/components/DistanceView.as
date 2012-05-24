@@ -15,9 +15,6 @@ package com.funrun.game.view.components {
 			super( parent, x, y );
 			_distanceLabel = new AbstractLabel( this, 0, 0, "Distance", 12, 0 );
 			_distanceCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
-		}
-		
-		public function init():void {
 			_distanceLabel.draw();
 			_distanceCountLabel.draw();
 			_distanceLabel.x = _distanceCountLabel.x = 20;

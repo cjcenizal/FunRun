@@ -18,8 +18,6 @@ package com.funrun.game.view.mediators {
 		
 		override public function onRegister():void {
 			stage = view.stage;
-			view.init();
-			
 			eventDispatcher.addEventListener( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, onDisplayDistanceRequested );
 		}
 		

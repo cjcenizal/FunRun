@@ -3,7 +3,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.signals.BuildWhitelistRequest;
 	import com.funrun.game.controller.signals.LoadConfigurationRequest;
 	import com.funrun.game.controller.signals.LoginRequest;
-	import com.funrun.game.controller.signals.ShowMainModuleRequest;
+	import com.funrun.game.controller.signals.ShowScreenRequest;
 	import com.funrun.game.controller.signals.ToggleMainMenuOptionsRequest;
 	import com.funrun.game.controller.signals.payloads.ToggleMainMenuOptionsPayload;
 	
@@ -21,7 +21,7 @@ package com.funrun.game.controller.commands {
 		public var loginRequest:LoginRequest;
 		
 		[Inject]
-		public var showMainModuleRequest:ShowMainModuleRequest;
+		public var showMainModuleRequest:ShowScreenRequest;
 		
 		[Inject]
 		public var toggleMainModuleRequest:ToggleMainMenuOptionsRequest;

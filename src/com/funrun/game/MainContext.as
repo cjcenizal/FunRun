@@ -21,7 +21,6 @@ package com.funrun.game {
 	import com.funrun.game.controller.commands.LoginFulfilledCommand;
 	import com.funrun.game.controller.commands.ResetGameCommand;
 	import com.funrun.game.controller.commands.ResetPlayerCommand;
-	import com.funrun.game.controller.commands.ShowMainMenuCommand;
 	import com.funrun.game.controller.commands.StartGameCommand;
 	import com.funrun.game.controller.commands.StopGameCommand;
 	import com.funrun.game.controller.commands.ToggleMainMenuCommand;
@@ -51,7 +50,7 @@ package com.funrun.game {
 	import com.funrun.game.controller.signals.LoginFulfilled;
 	import com.funrun.game.controller.signals.LoginRequest;
 	import com.funrun.game.controller.signals.ResetPlayerRequest;
-	import com.funrun.game.controller.signals.ShowMainModuleRequest;
+	import com.funrun.game.controller.signals.ShowScreenRequest;
 	import com.funrun.game.controller.signals.StartRunningMainMenuRequest;
 	import com.funrun.game.controller.signals.StopRunningMainMenuRequest;
 	import com.funrun.game.controller.signals.ToggleCountdownRequest;
@@ -142,13 +141,13 @@ package com.funrun.game {
 			injector.mapSingleton( EnableMainMenuOptionsRequest );
 			injector.mapSingleton( DisableMainMenuOptionsRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
+			injector.mapSingleton( ShowScreenRequest );
 			signalCommandMap.mapSignalClass( BuildWhitelistRequest,					BuildWhitelistCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
-			signalCommandMap.mapSignalClass( ShowMainModuleRequest, 				ShowMainMenuCommand );
 			signalCommandMap.mapSignalClass( ToggleMainMenuOptionsRequest, 			ToggleMainMenuCommand );
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );
 			
