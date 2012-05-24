@@ -1,10 +1,11 @@
-package com.funrun {
+package com.funrun.view.mediators {
 	
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.model.state.ScreenState;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
+	import com.funrun.view.components.MainView;
 	
 	public class MainMediator extends Mediator implements IMediator {
 		
@@ -16,6 +17,7 @@ package com.funrun {
 		
 		override public function onRegister():void {
 			view.build();
+			view.hideAll();
 			showScreenRequest.add( onShowScreenRequested );
 		}
 		

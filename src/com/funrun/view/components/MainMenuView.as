@@ -26,10 +26,10 @@ package com.funrun.view.components {
 		
 		public function MainMenuView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
-			onStartGameButtonClick = new Signal();
 		}
 		
 		public function build():void {
+			onStartGameButtonClick = new Signal();
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		

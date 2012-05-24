@@ -11,7 +11,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void {
 			model.stage = contextView.stage;
-			model.start();
+			model.init();
 		}
 	}
 }

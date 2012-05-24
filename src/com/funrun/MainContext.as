@@ -31,16 +31,15 @@ package com.funrun {
 	import com.funrun.controller.events.AddMaterialRequest;
 	import com.funrun.controller.events.AddObstacleRequest;
 	import com.funrun.controller.events.AddPlayerRequest;
-	import com.funrun.controller.events.BuildGameRequest;
-	import com.funrun.controller.events.BuildTimeRequest;
 	import com.funrun.controller.events.InternalShowMainMenuRequest;
 	import com.funrun.controller.events.KillPlayerRequest;
 	import com.funrun.controller.events.LoadBlocksRequest;
 	import com.funrun.controller.events.LoadFloorsRequest;
 	import com.funrun.controller.events.LoadObstaclesRequest;
 	import com.funrun.controller.events.ResetGameRequest;
-	import com.funrun.controller.events.StartGameRequest;
 	import com.funrun.controller.events.StopGameRequest;
+	import com.funrun.controller.signals.BuildGameRequest;
+	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
@@ -49,6 +48,7 @@ package com.funrun {
 	import com.funrun.controller.signals.LoginRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.controller.signals.StartRunningMainMenuRequest;
 	import com.funrun.controller.signals.StopRunningMainMenuRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
@@ -94,6 +94,8 @@ package com.funrun {
 	import flash.events.Event;
 	
 	import org.robotlegs.mvcs.SignalContext;
+	import com.funrun.view.components.MainView;
+	import com.funrun.view.mediators.MainMediator;
 
 	public class MainContext extends SignalContext {
 
@@ -145,10 +147,11 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );
+			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
+			signalCommandMap.mapSignalClass( BuildTimeRequest,						BuildTimeCommand );
+			signalCommandMap.mapSignalClass( BuildGameRequest,						BuildGameCommand );
 			
 			// Map events to commands.
-			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, BuildTimeCommand, BuildTimeRequest, true );
-			commandMap.mapEvent( BuildGameRequest.BUILD_GAME_REQUESTED, BuildGameCommand, BuildGameRequest, true );
 			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, LoadBlocksCommand, LoadBlocksRequest );
 			commandMap.mapEvent( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED, LoadObstaclesCommand, LoadObstaclesRequest );
 			commandMap.mapEvent( LoadFloorsRequest.LOAD_FLOORS_REQUESTED, LoadFloorsCommand, LoadFloorsRequest );
@@ -160,7 +163,6 @@ package com.funrun {
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED, AddCameraCommand, AddCameraFulfilled );
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED, KillPlayerCommand, KillPlayerRequest );
 			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED, ResetGameCommand, ResetGameRequest );
-			commandMap.mapEvent( StartGameRequest.START_GAME_REQUESTED, StartGameCommand, StartGameRequest );
 			commandMap.mapEvent( StopGameRequest.STOP_GAME_REQUESTED, StopGameCommand, StopGameRequest );
 			commandMap.mapEvent( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED, InternalShowMainMenuCommand, InternalShowMainMenuRequest );
 

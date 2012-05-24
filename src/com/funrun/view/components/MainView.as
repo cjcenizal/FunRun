@@ -1,8 +1,6 @@
-package com.funrun {
+package com.funrun.view.components {
 
 	import com.cenizal.ui.AbstractComponent;
-	import com.funrun.view.components.GameView;
-	import com.funrun.view.components.MainMenuView;
 	
 	import flash.display.DisplayObjectContainer;
 
@@ -18,6 +16,11 @@ package com.funrun {
 		public function build():void {
 			_mainMenu = new MainMenuView( this );
 			_game = new GameView( this );
+		}
+		
+		public function hideAll():void {
+			_mainMenu.visible = false;
+			_game.visible = false;
 		}
 		
 		public function showGame():void {

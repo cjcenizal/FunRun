@@ -25,18 +25,11 @@ package com.funrun.model {
 			_ticks++;
 		}
 		
-		public function start():void {
+		public function init():void {
 			if ( _stage ) {
 				_lastTs = new Date().time;
 				_isRunning = true;
 				_stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
-			}
-		}
-		
-		public function stop():void {
-			if ( _stage ) {
-				_isRunning = false;
-				_stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 			}
 		}
 		

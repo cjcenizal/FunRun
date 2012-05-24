@@ -1,6 +1,7 @@
 package com.funrun.view.mediators {
 
 	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.controller.signals.StartRunningMainMenuRequest;
 	import com.funrun.controller.signals.StopRunningMainMenuRequest;
 	import com.funrun.view.components.MainMenuView;
@@ -22,6 +23,9 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var enableMainMenuRequest:EnableMainMenuRequest;
 		
+		[Inject]
+		public var startGameRequest:StartGameRequest;
+		
 		override public function onRegister():void {
 			// Build our view.
 			view.build();
@@ -30,8 +34,9 @@ package com.funrun.view.mediators {
 			stopRunningMainMenu.add( onStopRunningMainMenuRequested );
 			startRunningMainMenu.add( onStartRunningMainMenuRequested );
 			enableMainMenuRequest.add( onEnableMainMenuRequested );
+			
 			// Listen for view events.
-			//view.onStartGameButtonClick.add( onStartGameButtonClick );
+			view.onStartGameButtonClick.add( onStartGameButtonClick );
 		}
 
 		private function onStartRunningMainMenuRequested():void {
@@ -47,7 +52,7 @@ package com.funrun.view.mediators {
 		}
 
 		private function onStartGameButtonClick():void {
-			//moduleDispatcher.dispatchEvent( new ExternalShowGameModuleRequest( ExternalShowGameModuleRequest.EXTERNAL_SHOW_GAME_MODULE_REQUESTED ) );
+			startGameRequest.dispatch();
 		}
 
 	}
