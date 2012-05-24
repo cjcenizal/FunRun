@@ -1,28 +1,28 @@
 package com.funrun.modulemanager {
 	
-	import com.funrun.modulemanager.controller.commands.BuildWhitelistCommand;
-	import com.funrun.modulemanager.controller.commands.InitAppCommand;
-	import com.funrun.modulemanager.controller.commands.LoadConfigurationCommand;
-	import com.funrun.modulemanager.controller.commands.LoginCommand;
-	import com.funrun.modulemanager.controller.commands.LoginFailedCommand;
-	import com.funrun.modulemanager.controller.commands.LoginFulfilledCommand;
-	import com.funrun.modulemanager.controller.commands.ShowMainMenuCommand;
-	import com.funrun.modulemanager.controller.commands.ToggleMainMenuCommand;
-	import com.funrun.modulemanager.controller.commands.WhitelistFailedCommand;
-	import com.funrun.modulemanager.controller.signals.BuildWhitelistRequest;
-	import com.funrun.modulemanager.controller.signals.LoadConfigurationRequest;
-	import com.funrun.modulemanager.controller.signals.LoginFailed;
-	import com.funrun.modulemanager.controller.signals.LoginFulfilled;
-	import com.funrun.modulemanager.controller.signals.LoginRequest;
-	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
-	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequest;
-	import com.funrun.modulemanager.controller.signals.UpdateLoginStatusRequest;
-	import com.funrun.modulemanager.controller.signals.WhitelistFailed;
-	import com.funrun.modulemanager.model.ConfigurationModel;
-	import com.funrun.modulemanager.model.UserModel;
-	import com.funrun.modulemanager.services.IWhitelistService;
-	import com.funrun.modulemanager.services.PlayerioFacebookLoginService;
-	import com.funrun.modulemanager.services.WhitelistService;
+	import com.funrun.game.controller.commands.BuildWhitelistCommand;
+	import com.funrun.game.controller.commands.InitAppCommand;
+	import com.funrun.game.controller.commands.LoadConfigurationCommand;
+	import com.funrun.game.controller.commands.LoginCommand;
+	import com.funrun.game.controller.commands.LoginFailedCommand;
+	import com.funrun.game.controller.commands.LoginFulfilledCommand;
+	import com.funrun.game.controller.commands.ShowMainMenuCommand;
+	import com.funrun.game.controller.commands.ToggleMainMenuCommand;
+	import com.funrun.game.controller.commands.WhitelistFailedCommand;
+	import com.funrun.game.controller.signals.BuildWhitelistRequest;
+	import com.funrun.game.controller.signals.LoadConfigurationRequest;
+	import com.funrun.game.controller.signals.LoginFailed;
+	import com.funrun.game.controller.signals.LoginFulfilled;
+	import com.funrun.game.controller.signals.LoginRequest;
+	import com.funrun.game.controller.signals.ShowMainModuleRequest;
+	import com.funrun.game.controller.signals.ToggleMainMenuOptionsRequest;
+	import com.funrun.game.controller.signals.UpdateLoginStatusRequest;
+	import com.funrun.game.controller.signals.WhitelistFailed;
+	import com.funrun.game.model.ConfigurationModel;
+	import com.funrun.game.model.UserModel;
+	import com.funrun.game.services.IWhitelistService;
+	import com.funrun.game.services.PlayerioFacebookLoginService;
+	import com.funrun.game.services.WhitelistService;
 	
 	import flash.events.Event;
 	

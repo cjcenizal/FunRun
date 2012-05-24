@@ -1,6 +1,6 @@
 package com.funrun.modulemanager.controller.events {
 	
-	import com.funrun.modulemanager.controller.signals.payloads.ToggleMainMenuOptionsPayload;
+	import com.funrun.game.controller.signals.payloads.ToggleMainMenuOptionsPayload;
 	
 	import flash.events.Event;
 

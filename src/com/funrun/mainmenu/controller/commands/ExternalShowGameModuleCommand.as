@@ -1,7 +1,7 @@
 package com.funrun.mainmenu.controller.commands {
 	
 	
-	import com.funrun.mainmenu.controller.signals.StopRunningMainMenuRequest;
+	import com.funrun.game.controller.signals.StopRunningMainMenuRequest;
 	
 	import org.robotlegs.mvcs.Command;
 

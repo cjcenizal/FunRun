@@ -1,7 +1,7 @@
 package com.funrun.mainmenu.controller.commands {
 
-	import com.funrun.mainmenu.controller.signals.DisableMainMenuOptionsRequest;
-	import com.funrun.mainmenu.controller.signals.EnableMainMenuOptionsRequest;
+	import com.funrun.game.controller.signals.DisableMainMenuOptionsRequest;
+	import com.funrun.game.controller.signals.EnableMainMenuOptionsRequest;
 	import com.funrun.modulemanager.controller.events.ExternalToggleMainMenuOptionsRequest;
 	
 	import org.robotlegs.mvcs.Command;
