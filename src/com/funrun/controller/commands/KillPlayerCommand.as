@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.events.KillPlayerRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.controller.signals.StopGameRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.TrackConstants;
@@ -22,6 +23,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
+		
+		[Inject]
+		public var stopGameRequest:StopGameRequest;
 		
 		private var _timer:Timer;
 		
@@ -46,6 +50,7 @@ package com.funrun.controller.commands {
 			_timer.removeEventListener( TimerEvent.TIMER_COMPLETE, onTimer );
 			_timer.stop();
 			_timer = null;
+			stopGameRequest.dispatch();
 			showScreenRequest.dispatch( ScreenState.MAIN_MENU );
 		}
 	}

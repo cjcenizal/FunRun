@@ -3,10 +3,10 @@ package com.funrun.view.mediators
 	import away3d.containers.ObjectContainer3D;
 	
 	import com.funrun.controller.events.AddCameraFulfilled;
-	import com.funrun.controller.events.EnablePlayerInputRequest;
 	import com.funrun.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.events.RenderSceneRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.view.components.TrackView;
 	
 	import flash.display.Stage;
@@ -23,6 +23,9 @@ package com.funrun.view.mediators
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
+		[Inject]
+		public var enablePlayerInputRequest:EnablePlayerInputRequest;
+		
 		private var stage:Stage;
 		
 		override public function onRegister():void {
@@ -33,18 +36,24 @@ package com.funrun.view.mediators
 			addObjectToSceneRequest.add( onAddObjectToSceneRequested );
 			eventMap.mapListener( eventDispatcher, RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObjectFromSceneRequested );
 			eventMap.mapListener( eventDispatcher, RenderSceneRequest.RENDER_SCENE_REQUESTED, onRenderSceneRequested );
-			eventMap.mapListener( eventDispatcher, EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED, onEnablePlayerInputRequested );
+			
+			enablePlayerInputRequest.add( onEnablePlayerInputRequested );
 			
 			// Expose access to the camera.
 			eventDispatcher.dispatchEvent( new AddCameraFulfilled( AddCameraFulfilled.ADD_CAMERA_FULFILLED, view.camera ) );
 		}
 		
 		/**
-		 * Turn on player keyboard input.
+		 * Turn on/off player keyboard input.
 		 */
-		private function onEnablePlayerInputRequested( e:EnablePlayerInputRequest ):void {
-			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
-			stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+		private function onEnablePlayerInputRequested( enabled:Boolean ):void {
+			if ( enabled ) {
+				stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+				stage.addEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+			} else {
+				stage.removeEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+				stage.removeEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+			}
 		}
 		/**
 		 * Add an object to the scene.

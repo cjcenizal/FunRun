@@ -10,6 +10,8 @@ package com.funrun {
 	import com.funrun.controller.commands.BuildTimeCommand;
 	import com.funrun.controller.commands.BuildWhitelistCommand;
 	import com.funrun.controller.commands.InitAppCommand;
+	import com.funrun.controller.commands.KeyDownCommand;
+	import com.funrun.controller.commands.KeyUpCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LoadBlocksCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
@@ -27,7 +29,6 @@ package com.funrun {
 	import com.funrun.controller.events.AddCameraFulfilled;
 	import com.funrun.controller.events.KillPlayerRequest;
 	import com.funrun.controller.events.ResetGameRequest;
-	import com.funrun.controller.events.StopGameRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
@@ -38,6 +39,7 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LoadFloorsRequest;
@@ -49,6 +51,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.controller.signals.StartRunningMainMenuRequest;
+	import com.funrun.controller.signals.StopGameRequest;
 	import com.funrun.controller.signals.StopRunningMainMenuRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
@@ -93,6 +96,7 @@ package com.funrun {
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	
 	import org.robotlegs.mvcs.SignalContext;
 
@@ -138,6 +142,7 @@ package com.funrun {
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			injector.mapSingleton( ShowScreenRequest );
 			injector.mapSingleton( AddObjectToSceneRequest );
+			injector.mapSingleton( EnablePlayerInputRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
 			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
@@ -156,12 +161,14 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
 			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
+			signalCommandMap.mapSignalClass( StopGameRequest,						StopGameCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED, AddCameraCommand, AddCameraFulfilled );
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED, KillPlayerCommand, KillPlayerRequest );
 			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED, ResetGameCommand, ResetGameRequest );
-			commandMap.mapEvent( StopGameRequest.STOP_GAME_REQUESTED, StopGameCommand, StopGameRequest );
+			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
+			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
 
 			// Map views to mediators.
 			mediatorMap.mapView( MainView, 				MainMediator );

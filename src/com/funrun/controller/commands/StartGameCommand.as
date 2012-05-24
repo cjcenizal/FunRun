@@ -1,9 +1,9 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.EnablePlayerInputRequest;
 	import com.funrun.controller.events.RenderSceneRequest;
 	import com.funrun.controller.events.ResetGameRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
+	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.payload.AddFloorPayload;
@@ -38,6 +38,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var addFloorRequest:AddFloorRequest;
 		
+		[Inject]
+		public var enablePlayerInputRequest:EnablePlayerInputRequest;
+		
 		override public function execute():void {
 			// Show game screen.
 			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
@@ -48,15 +51,12 @@ package com.funrun.controller.commands {
 			toggleCountdownRequest.dispatch( true );
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
-			// Respond to input.
-			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
-			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
 			// Reset player.
 			eventDispatcher.dispatchEvent( new ResetGameRequest( ResetGameRequest.RESET_GAME_REQUESTED ) );
 			// Add initial floor.
 			addFloorRequest.dispatch( new AddFloorPayload( TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
 			// Start input.
-			eventDispatcher.dispatchEvent( new EnablePlayerInputRequest( EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED ) );
+			enablePlayerInputRequest.dispatch( true );
 			// Render to clear the view.
 			eventDispatcher.dispatchEvent( new RenderSceneRequest( RenderSceneRequest.RENDER_SCENE_REQUESTED ) );
 		}
