@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.AddFloorsRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.payload.AddFloorPayload;
 	import com.funrun.model.FloorsModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.collision.ObstacleData;
@@ -9,7 +9,7 @@ package com.funrun.controller.commands {
 	
 	import org.robotlegs.mvcs.Command;
 	
-	public class AddFloorsCommand extends Command {
+	public class AddFloorCommand extends Command {
 		
 		[Inject]
 		public var floorsModel:FloorsModel;
@@ -18,15 +18,15 @@ package com.funrun.controller.commands {
 		public var trackModel:TrackModel;
 		
 		[Inject]
-		public var event:AddFloorsRequest;
+		public var payload:AddFloorPayload;
 		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		override public function execute():void {
-			var startPos:Number = this.event.startPos;
-			var endPos:Number = this.event.endPos;
-			var increment:Number = this.event.increment;
+			var startPos:Number = payload.startPos;
+			var endPos:Number = payload.endPos;
+			var increment:Number = payload.increment;
 			while ( startPos < endPos ) {
 				var floor:ObstacleData = floorsModel.getFloorClone( FloorTypes.FLOOR );
 				floor.z = startPos + increment * .5;

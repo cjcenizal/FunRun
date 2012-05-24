@@ -1,6 +1,7 @@
 package com.funrun.controller.commands
 {
-	import com.funrun.controller.events.AddLightRequest;
+	import away3d.lights.LightBase;
+	
 	import com.funrun.model.LightsModel;
 	
 	import org.robotlegs.mvcs.Command;
@@ -8,13 +9,16 @@ package com.funrun.controller.commands
 	public class AddLightCommand extends Command
 	{
 		[Inject]
-		public var event:AddLightRequest;
+		public var lightName:String;
+		
+		[Inject]
+		public var light:LightBase;
 		
 		[Inject]
 		public var model:LightsModel;
 		
 		override public function execute():void {
-			model.addLight( event.id, event.light );
+			model.addLight( lightName, light );
 		}
 	}
 }

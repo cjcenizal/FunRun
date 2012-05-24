@@ -1,7 +1,7 @@
 package com.funrun {
 
 	import com.funrun.controller.commands.AddCameraCommand;
-	import com.funrun.controller.commands.AddFloorsCommand;
+	import com.funrun.controller.commands.AddFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
 	import com.funrun.controller.commands.AddObstacleCommand;
@@ -25,15 +25,15 @@ package com.funrun {
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.enum.GameType;
 	import com.funrun.controller.events.AddCameraFulfilled;
-	import com.funrun.controller.events.AddFloorsRequest;
-	import com.funrun.controller.events.AddLightRequest;
-	import com.funrun.controller.events.AddObstacleRequest;
-	import com.funrun.controller.events.AddPlayerRequest;
 	import com.funrun.controller.events.KillPlayerRequest;
 	import com.funrun.controller.events.ResetGameRequest;
 	import com.funrun.controller.events.StopGameRequest;
+	import com.funrun.controller.signals.AddFloorRequest;
+	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
@@ -152,12 +152,12 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( BuildTimeRequest,						BuildTimeCommand );
 			signalCommandMap.mapSignalClass( BuildGameRequest,						BuildGameCommand );
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
+			signalCommandMap.mapSignalClass( AddObstacleRequest,					AddObstacleCommand );
+			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
+			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
+			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
 			
 			// Map events to commands.
-			commandMap.mapEvent( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, AddObstacleCommand, AddObstacleRequest );
-			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, AddLightCommand, AddLightRequest );
-			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, AddPlayerCommand, AddPlayerRequest );
-			commandMap.mapEvent( AddFloorsRequest.ADD_FLOORS_REQUESTED, AddFloorsCommand, AddFloorsRequest );
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED, AddCameraCommand, AddCameraFulfilled );
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED, KillPlayerCommand, KillPlayerRequest );
 			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED, ResetGameCommand, ResetGameRequest );

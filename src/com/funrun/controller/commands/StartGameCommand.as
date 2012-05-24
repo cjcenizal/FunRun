@@ -1,11 +1,12 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.AddFloorsRequest;
 	import com.funrun.controller.events.EnablePlayerInputRequest;
 	import com.funrun.controller.events.RenderSceneRequest;
 	import com.funrun.controller.events.ResetGameRequest;
+	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.payload.AddFloorPayload;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.constants.TrackConstants;
@@ -34,6 +35,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
 		
+		[Inject]
+		public var addFloorRequest:AddFloorRequest;
+		
 		override public function execute():void {
 			// Show game screen.
 			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
@@ -50,7 +54,7 @@ package com.funrun.controller.commands {
 			// Reset player.
 			eventDispatcher.dispatchEvent( new ResetGameRequest( ResetGameRequest.RESET_GAME_REQUESTED ) );
 			// Add initial floor.
-			eventDispatcher.dispatchEvent( new AddFloorsRequest( AddFloorsRequest.ADD_FLOORS_REQUESTED, TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
+			addFloorRequest.dispatch( new AddFloorPayload( TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
 			// Start input.
 			eventDispatcher.dispatchEvent( new EnablePlayerInputRequest( EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED ) );
 			// Render to clear the view.

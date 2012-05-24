@@ -7,10 +7,10 @@ package com.funrun.controller.commands
 	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	
-	import com.funrun.controller.events.AddLightRequest;
-	import com.funrun.controller.events.AddPlayerRequest;
+	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadFloorsRequest;
 	import com.funrun.controller.signals.LoadObstaclesRequest;
@@ -45,6 +45,12 @@ package com.funrun.controller.commands
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
+		[Inject]
+		public var addLightRequest:AddLightRequest;
+		
+		[Inject]
+		public var addPlayerRequest:AddPlayerRequest;
+		
 		override public function execute():void {
 			// Add materials.
 			addMaterialRequest.dispatch( MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) );
@@ -73,8 +79,8 @@ package com.funrun.controller.commands
 			spotlight.fallOff = 2000;
 			spotlight.ambientColor = 0xa0a0c0;
 			spotlight.ambient = .5;
-			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SUN, sun ) );
-			eventDispatcher.dispatchEvent( new AddLightRequest( AddLightRequest.ADD_LIGHT_REQUESTED, LightsModel.SPOTLIGHT, spotlight ) );
+			addLightRequest.dispatch( LightsModel.SUN, sun );
+			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
 			
 			// Assign properties to materials.
 			var sunlight:DirectionalLight = lightsModel.getLight( LightsModel.SUN ) as DirectionalLight; // Casting doesn't feel too clean here
@@ -112,7 +118,7 @@ package com.funrun.controller.commands
 			addObjectToSceneRequest.dispatch( spotlight );
 			
 			// Add player to track.
-			eventDispatcher.dispatchEvent( new AddPlayerRequest( AddPlayerRequest.ADD_PLAYER_REQUESTED ) );
+			addPlayerRequest.dispatch();
 		}
 	}
 }

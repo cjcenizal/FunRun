@@ -1,10 +1,10 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.AddObstacleRequest;
 	import com.funrun.controller.events.DisplayDistanceRequest;
 	import com.funrun.controller.events.KillPlayerRequest;
 	import com.funrun.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.events.RenderSceneRequest;
+	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
@@ -61,6 +61,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
+		[Inject]
+		public var addObstacleRequest:AddObstacleRequest;
+		
 		override public function execute():void {
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
@@ -93,7 +96,7 @@ package com.funrun.controller.commands {
 	
 				// Add new obstacles until track is full again.
 				while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
-					eventDispatcher.dispatchEvent( new AddObstacleRequest( AddObstacleRequest.ADD_OBSTACLE_REQUESTED ) );
+					addObstacleRequest.dispatch();
 				}
 	
 				if ( playerModel.isDead ) {
