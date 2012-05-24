@@ -14,6 +14,7 @@ package com.funrun.game {
 	import com.funrun.game.controller.commands.LoadFloorsCommand;
 	import com.funrun.game.controller.commands.LoadObstaclesCommand;
 	import com.funrun.game.controller.commands.ResetGameCommand;
+	import com.funrun.game.controller.commands.ResetPlayerCommand;
 	import com.funrun.game.controller.commands.StartGameCommand;
 	import com.funrun.game.controller.commands.StopGameCommand;
 	import com.funrun.game.controller.enum.GameType;
@@ -34,6 +35,7 @@ package com.funrun.game {
 	import com.funrun.game.controller.events.ResetGameRequest;
 	import com.funrun.game.controller.events.StartGameRequest;
 	import com.funrun.game.controller.events.StopGameRequest;
+	import com.funrun.game.controller.signals.ResetPlayerRequest;
 	import com.funrun.game.controller.signals.ToggleCountdownRequest;
 	import com.funrun.game.controller.signals.UpdateCountdownRequest;
 	import com.funrun.game.model.BlocksModel;
@@ -95,6 +97,7 @@ package com.funrun.game {
 			// Map signals.
 			injector.mapSingleton( UpdateCountdownRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
+			signalCommandMap.mapSignalClass( ResetPlayerRequest, ResetPlayerCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( BuildTimeRequest.BUILD_TIME_REQUESTED, BuildTimeCommand, BuildTimeRequest, true );

@@ -5,6 +5,7 @@ package com.funrun.game.controller.commands {
 	import com.funrun.game.controller.events.KillPlayerRequest;
 	import com.funrun.game.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.game.controller.events.RenderSceneRequest;
+	import com.funrun.game.controller.signals.ResetPlayerRequest;
 	import com.funrun.game.controller.signals.ToggleCountdownRequest;
 	import com.funrun.game.controller.signals.UpdateCountdownRequest;
 	import com.funrun.game.model.CameraModel;
@@ -56,6 +57,9 @@ package com.funrun.game.controller.commands {
 		
 		[Inject]
 		public var toggleCountdownRequest:ToggleCountdownRequest;
+		
+		[Inject]
+		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		override public function execute():void {
 			// Update countdown if necessary.
@@ -196,7 +200,11 @@ package com.funrun.game.controller.commands {
 					// If we're not hitting something, we're airborne.
 					playerModel.isAirborne = true;
 					if ( playerModel.player.y < TrackConstants.FALL_DEATH_HEIGHT ) {
-						eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.FALL ) );
+						if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
+							resetPlayerRequest.dispatch();
+						} else if ( gameModel.gameState == GameState.RUNNING ) {
+							eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.FALL ) );
+						}
 					}
 				}
 	
