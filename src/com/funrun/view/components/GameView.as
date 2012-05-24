@@ -5,8 +5,7 @@ package com.funrun.view.components {
 	import flash.display.DisplayObjectContainer;
 
 	public class GameView extends AbstractComponent {
-
-		private var _isRunning:Boolean = false;
+		
 		private var _track:TrackView;
 		private var _distance:DistanceView;
 		private var _countdown:CountdownView;
@@ -20,22 +19,6 @@ package com.funrun.view.components {
 			_track = new TrackView( this );
 			_distance = new DistanceView( this );
 			_countdown = new CountdownView( this );
-		}
-
-		public function startRunning():void {
-			if ( !_isRunning ) {
-				this.visible = true;
-				_isRunning = true;
-			}
-		}
-
-		public function stopRunning():void {
-			this.visible = false;
-			_isRunning = false;
-		}
-
-		public function get isRunning():Boolean {
-			return _isRunning;
 		}
 	}
 }

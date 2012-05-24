@@ -10,7 +10,6 @@ package com.funrun {
 	import com.funrun.controller.commands.BuildTimeCommand;
 	import com.funrun.controller.commands.BuildWhitelistCommand;
 	import com.funrun.controller.commands.InitAppCommand;
-	import com.funrun.controller.commands.InternalShowMainMenuCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LoadBlocksCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
@@ -31,7 +30,6 @@ package com.funrun {
 	import com.funrun.controller.events.AddMaterialRequest;
 	import com.funrun.controller.events.AddObstacleRequest;
 	import com.funrun.controller.events.AddPlayerRequest;
-	import com.funrun.controller.events.InternalShowMainMenuRequest;
 	import com.funrun.controller.events.KillPlayerRequest;
 	import com.funrun.controller.events.LoadBlocksRequest;
 	import com.funrun.controller.events.LoadFloorsRequest;
@@ -81,12 +79,14 @@ package com.funrun {
 	import com.funrun.view.components.GameView;
 	import com.funrun.view.components.LoginStatusView;
 	import com.funrun.view.components.MainMenuView;
+	import com.funrun.view.components.MainView;
 	import com.funrun.view.components.TrackView;
 	import com.funrun.view.mediators.AppMediator;
 	import com.funrun.view.mediators.CountdownMediator;
 	import com.funrun.view.mediators.DistanceMediator;
 	import com.funrun.view.mediators.GameMediator;
 	import com.funrun.view.mediators.LoginStatusMediator;
+	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
 	import com.funrun.view.mediators.TrackMediator;
 	
@@ -94,8 +94,6 @@ package com.funrun {
 	import flash.events.Event;
 	
 	import org.robotlegs.mvcs.SignalContext;
-	import com.funrun.view.components.MainView;
-	import com.funrun.view.mediators.MainMediator;
 
 	public class MainContext extends SignalContext {
 
@@ -106,10 +104,6 @@ package com.funrun {
 		override public function startup():void {
 			// Set our launch configuration.
 			injector.mapValue( GameType, GameType.Local, "gameType" );
-
-			// Map services.
-			injector.mapSingleton( BlocksJsonService );
-			injector.mapSingleton( ObstaclesJsonService );
 
 			// Map models.
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
@@ -129,6 +123,8 @@ package com.funrun {
 			injector.mapSingleton( UserModel );
 			
 			// Map services.
+			injector.mapSingleton( BlocksJsonService );
+			injector.mapSingleton( ObstaclesJsonService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
 			injector.mapSingletonOf( IWhitelistService, WhitelistService ); // TO-DO: Use a variable to toggle between open and regular.
 			
@@ -164,7 +160,6 @@ package com.funrun {
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED, KillPlayerCommand, KillPlayerRequest );
 			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED, ResetGameCommand, ResetGameRequest );
 			commandMap.mapEvent( StopGameRequest.STOP_GAME_REQUESTED, StopGameCommand, StopGameRequest );
-			commandMap.mapEvent( InternalShowMainMenuRequest.INTERNAL_SHOW_MAIN_MENU_REQUESTED, InternalShowMainMenuCommand, InternalShowMainMenuRequest );
 
 			// Map views to mediators.
 			mediatorMap.mapView( MainView, 				MainMediator );
