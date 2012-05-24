@@ -1,9 +1,9 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.events.RenderSceneRequest;
-	import com.funrun.controller.events.ResetGameRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
+	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.payload.AddFloorPayload;
@@ -13,8 +13,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.ScreenState;
-	
-	import flash.events.KeyboardEvent;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -41,6 +39,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
 		
+		[Inject]
+		public var resetGameRequest:ResetGameRequest;
+		
 		override public function execute():void {
 			// Show game screen.
 			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
@@ -51,8 +52,8 @@ package com.funrun.controller.commands {
 			toggleCountdownRequest.dispatch( true );
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
-			// Reset player.
-			eventDispatcher.dispatchEvent( new ResetGameRequest( ResetGameRequest.RESET_GAME_REQUESTED ) );
+			// Reset game.
+			resetGameRequest.dispatch();
 			// Add initial floor.
 			addFloorRequest.dispatch( new AddFloorPayload( TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
 			// Start input.

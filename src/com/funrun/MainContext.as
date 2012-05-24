@@ -28,7 +28,6 @@ package com.funrun {
 	import com.funrun.controller.enum.GameType;
 	import com.funrun.controller.events.AddCameraFulfilled;
 	import com.funrun.controller.events.KillPlayerRequest;
-	import com.funrun.controller.events.ResetGameRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
@@ -47,6 +46,8 @@ package com.funrun {
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
+	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameRequest;
@@ -142,6 +143,7 @@ package com.funrun {
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			injector.mapSingleton( ShowScreenRequest );
 			injector.mapSingleton( AddObjectToSceneRequest );
+			injector.mapSingleton( RemoveObjectFromSceneRequest );
 			injector.mapSingleton( EnablePlayerInputRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
@@ -162,11 +164,11 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
 			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
 			signalCommandMap.mapSignalClass( StopGameRequest,						StopGameCommand );
+			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED, AddCameraCommand, AddCameraFulfilled );
 			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED, KillPlayerCommand, KillPlayerRequest );
-			commandMap.mapEvent( ResetGameRequest.RESET_GAME_REQUESTED, ResetGameCommand, ResetGameRequest );
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
 			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
 

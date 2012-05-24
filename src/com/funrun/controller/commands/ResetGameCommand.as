@@ -1,15 +1,12 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.events.DisplayDistanceRequest;
-	import com.funrun.controller.events.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.CameraModel;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.constants.TrackConstants;
-	
-	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -30,6 +27,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
+		[Inject]
+		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
+		
 		override public function execute():void {
 			// Reset distance.
 			distanceModel.distance = 0;
@@ -42,7 +42,7 @@ package com.funrun.controller.commands {
 			cameraModel.update();
 			// Reset obstacles.
 			while ( trackModel.numObstacles > 0 ) {
-				eventDispatcher.dispatchEvent( new RemoveObjectFromSceneRequest( RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, trackModel.getObstacleAt( 0 ).mesh ) );
+				removeObjectFromSceneRequest.dispatch( trackModel.getObstacleAt( 0 ).mesh );
 				trackModel.removeObstacleAt( 0 );
 			}
 		}

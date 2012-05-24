@@ -3,10 +3,10 @@ package com.funrun.view.mediators
 	import away3d.containers.ObjectContainer3D;
 	
 	import com.funrun.controller.events.AddCameraFulfilled;
-	import com.funrun.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.events.RenderSceneRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
+	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.view.components.TrackView;
 	
 	import flash.display.Stage;
@@ -24,6 +24,9 @@ package com.funrun.view.mediators
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		[Inject]
+		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
+		
+		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
 		
 		private var stage:Stage;
@@ -34,7 +37,7 @@ package com.funrun.view.mediators
 			view.debug();
 			
 			addObjectToSceneRequest.add( onAddObjectToSceneRequested );
-			eventMap.mapListener( eventDispatcher, RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObjectFromSceneRequested );
+			removeObjectFromSceneRequest.add( onRemoveObjectFromSceneRequested );
 			eventMap.mapListener( eventDispatcher, RenderSceneRequest.RENDER_SCENE_REQUESTED, onRenderSceneRequested );
 			
 			enablePlayerInputRequest.add( onEnablePlayerInputRequested );
@@ -65,8 +68,8 @@ package com.funrun.view.mediators
 		/**
 		 * Remove an object from the scene.
 		 */
-		private function onRemoveObjectFromSceneRequested( e:RemoveObjectFromSceneRequest ):void {
-			view.removeFromScene( e.object );
+		private function onRemoveObjectFromSceneRequested( object:ObjectContainer3D ):void {
+			view.removeFromScene( object );
 		}
 		
 		/**

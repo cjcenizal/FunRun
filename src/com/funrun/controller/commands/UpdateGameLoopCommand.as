@@ -2,9 +2,9 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.events.DisplayDistanceRequest;
 	import com.funrun.controller.events.KillPlayerRequest;
-	import com.funrun.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.events.RenderSceneRequest;
 	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
@@ -64,6 +64,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var addObstacleRequest:AddObstacleRequest;
 		
+		[Inject]
+		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
+		
 		override public function execute():void {
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
@@ -88,7 +91,7 @@ package com.funrun.controller.commands {
 				if ( trackModel.numObstacles > 0 ) {
 					var obstacle:ObstacleData = trackModel.getObstacleAt( 0 );
 					while ( obstacle.z < TrackConstants.REMOVE_OBSTACLE_DEPTH ) {
-						eventDispatcher.dispatchEvent( new RemoveObjectFromSceneRequest( RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, obstacle.mesh ) );
+						removeObjectFromSceneRequest.dispatch( obstacle.mesh );
 						trackModel.removeObstacleAt( 0 );
 						obstacle = trackModel.getObstacleAt( 0 );
 					}
