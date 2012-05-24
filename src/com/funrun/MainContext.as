@@ -30,17 +30,18 @@ package com.funrun {
 	import com.funrun.controller.events.AddObstacleRequest;
 	import com.funrun.controller.events.AddPlayerRequest;
 	import com.funrun.controller.events.KillPlayerRequest;
-	import com.funrun.controller.events.LoadBlocksRequest;
-	import com.funrun.controller.events.LoadFloorsRequest;
-	import com.funrun.controller.events.LoadObstaclesRequest;
 	import com.funrun.controller.events.ResetGameRequest;
 	import com.funrun.controller.events.StopGameRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
+	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
+	import com.funrun.controller.signals.LoadFloorsRequest;
+	import com.funrun.controller.signals.LoadObstaclesRequest;
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
@@ -136,6 +137,10 @@ package com.funrun {
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			injector.mapSingleton( ShowScreenRequest );
+			injector.mapSingleton( AddObjectToSceneRequest );
+			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
+			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
+			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
 			signalCommandMap.mapSignalClass( BuildWhitelistRequest,					BuildWhitelistCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
@@ -149,9 +154,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			
 			// Map events to commands.
-			commandMap.mapEvent( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED, LoadBlocksCommand, LoadBlocksRequest );
-			commandMap.mapEvent( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED, LoadObstaclesCommand, LoadObstaclesRequest );
-			commandMap.mapEvent( LoadFloorsRequest.LOAD_FLOORS_REQUESTED, LoadFloorsCommand, LoadFloorsRequest );
 			commandMap.mapEvent( AddObstacleRequest.ADD_OBSTACLE_REQUESTED, AddObstacleCommand, AddObstacleRequest );
 			commandMap.mapEvent( AddLightRequest.ADD_LIGHT_REQUESTED, AddLightCommand, AddLightRequest );
 			commandMap.mapEvent( AddPlayerRequest.ADD_PLAYER_REQUESTED, AddPlayerCommand, AddPlayerRequest );

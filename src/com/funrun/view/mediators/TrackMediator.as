@@ -1,10 +1,12 @@
 package com.funrun.view.mediators
 {
+	import away3d.containers.ObjectContainer3D;
+	
 	import com.funrun.controller.events.AddCameraFulfilled;
-	import com.funrun.controller.events.AddObjectToSceneRequest;
 	import com.funrun.controller.events.EnablePlayerInputRequest;
 	import com.funrun.controller.events.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.events.RenderSceneRequest;
+	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.view.components.TrackView;
 	
 	import flash.display.Stage;
@@ -18,6 +20,9 @@ package com.funrun.view.mediators
 		[Inject]
 		public var view:TrackView;
 		
+		[Inject]
+		public var addObjectToSceneRequest:AddObjectToSceneRequest;
+		
 		private var stage:Stage;
 		
 		override public function onRegister():void {
@@ -25,7 +30,7 @@ package com.funrun.view.mediators
 			view.init();
 			view.debug();
 			
-			eventMap.mapListener( eventDispatcher, AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, onAddObjectToSceneRequested );
+			addObjectToSceneRequest.add( onAddObjectToSceneRequested );
 			eventMap.mapListener( eventDispatcher, RemoveObjectFromSceneRequest.REMOVE_OBSTACLE_FROM_SCENE_REQUESTED, onRemoveObjectFromSceneRequested );
 			eventMap.mapListener( eventDispatcher, RenderSceneRequest.RENDER_SCENE_REQUESTED, onRenderSceneRequested );
 			eventMap.mapListener( eventDispatcher, EnablePlayerInputRequest.ENABLE_PLAYER_INPUT_REQUESTED, onEnablePlayerInputRequested );
@@ -44,8 +49,8 @@ package com.funrun.view.mediators
 		/**
 		 * Add an object to the scene.
 		 */
-		private function onAddObjectToSceneRequested( e:AddObjectToSceneRequest ):void {
-			view.addToScene( e.object );
+		private function onAddObjectToSceneRequested( object:ObjectContainer3D ):void {
+			view.addToScene( object );
 		}
 		
 		/**

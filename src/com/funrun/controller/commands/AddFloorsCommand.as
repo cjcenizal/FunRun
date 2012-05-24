@@ -1,25 +1,27 @@
-package com.funrun.controller.commands
-{
+package com.funrun.controller.commands {
+	
 	import com.funrun.controller.events.AddFloorsRequest;
-	import com.funrun.controller.events.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.model.FloorsModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.constants.FloorTypes;
 	import com.funrun.model.collision.ObstacleData;
+	import com.funrun.model.constants.FloorTypes;
 	
 	import org.robotlegs.mvcs.Command;
 	
-	public class AddFloorsCommand extends Command
-	{
+	public class AddFloorsCommand extends Command {
 		
 		[Inject]
 		public var floorsModel:FloorsModel;
 		
 		[Inject]
 		public var trackModel:TrackModel;
-
+		
 		[Inject]
 		public var event:AddFloorsRequest;
+		
+		[Inject]
+		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		override public function execute():void {
 			var startPos:Number = this.event.startPos;
@@ -29,8 +31,7 @@ package com.funrun.controller.commands
 				var floor:ObstacleData = floorsModel.getFloorClone( FloorTypes.FLOOR );
 				floor.z = startPos + increment * .5;
 				trackModel.addObstacle( floor );
-				var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, floor.mesh );
-				eventDispatcher.dispatchEvent( event );
+				addObjectToSceneRequest.dispatch( floor.mesh );
 				startPos += increment;
 			}
 		}

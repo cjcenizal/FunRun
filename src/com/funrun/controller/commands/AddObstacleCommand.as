@@ -1,15 +1,12 @@
 package com.funrun.controller.commands {
 	
-	import away3d.entities.Mesh;
-	
 	import com.funrun.controller.events.AddFloorsRequest;
-	import com.funrun.controller.events.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.model.FloorsModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.constants.FloorTypes;
-	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.collision.ObstacleData;
+	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -24,6 +21,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var trackModel:TrackModel;
 
+		[Inject]
+		public var addObjectToSceneRequest:AddObjectToSceneRequest;
+		
 		override public function execute():void {
 			// Get an obstacle.
 			var obstacle:ObstacleData = obstaclesModel.getRandomObstacle();
@@ -36,8 +36,7 @@ package com.funrun.controller.commands {
 			}
 			trackModel.addObstacle( obstacle );
 			// Add to view.
-			var event:AddObjectToSceneRequest = new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, obstacle.mesh );
-			eventDispatcher.dispatchEvent( event );
+			addObjectToSceneRequest.dispatch( obstacle.mesh );
 			
 			// Add floors.
 			var startPos:Number = obstacle.z + obstacle.bounds.max.z;

@@ -8,16 +8,15 @@ package com.funrun.controller.commands
 	import away3d.materials.methods.FresnelSpecularMethod;
 	
 	import com.funrun.controller.events.AddLightRequest;
-	import com.funrun.controller.events.AddObjectToSceneRequest;
 	import com.funrun.controller.events.AddPlayerRequest;
-	import com.funrun.controller.events.LoadBlocksRequest;
-	import com.funrun.controller.events.LoadFloorsRequest;
-	import com.funrun.controller.events.LoadObstaclesRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
+	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.LoadBlocksRequest;
+	import com.funrun.controller.signals.LoadFloorsRequest;
+	import com.funrun.controller.signals.LoadObstaclesRequest;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
 	
-	import org.osflash.signals.Signal;
 	import org.robotlegs.mvcs.Command;
 	
 	/**
@@ -34,6 +33,18 @@ package com.funrun.controller.commands
 		[Inject]
 		public var addMaterialRequest:AddMaterialRequest;
 		
+		[Inject]
+		public var loadBlocksRequest:LoadBlocksRequest;
+		
+		[Inject]
+		public var loadObstaclesRequest:LoadObstaclesRequest;
+		
+		[Inject]
+		public var loadFloorsRequest:LoadFloorsRequest;
+		
+		[Inject]
+		public var addObjectToSceneRequest:AddObjectToSceneRequest;
+		
 		override public function execute():void {
 			// Add materials.
 			addMaterialRequest.dispatch( MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) );
@@ -41,9 +52,9 @@ package com.funrun.controller.commands
 			addMaterialRequest.dispatch( MaterialsModel.OBSTACLE_MATERIAL, new ColorMaterial( 0x0000FF ) );
 			
 			// Load stuff.
-			eventDispatcher.dispatchEvent( new LoadBlocksRequest( LoadBlocksRequest.LOAD_BLOCKS_REQUESTED ) );
-			eventDispatcher.dispatchEvent( new LoadObstaclesRequest( LoadObstaclesRequest.LOAD_OBSTACLES_REQUESTED ) );
-			eventDispatcher.dispatchEvent( new LoadFloorsRequest( LoadFloorsRequest.LOAD_FLOORS_REQUESTED ) );
+			loadBlocksRequest.dispatch();
+			loadObstaclesRequest.dispatch();
+			loadFloorsRequest.dispatch();
 			
 			// Add lights.
 			var sun:DirectionalLight = new DirectionalLight( .25, -1, -1 );
@@ -97,8 +108,8 @@ package com.funrun.controller.commands
 			// Add a camera here, and replace the one that comes with View3D.
 			
 			// Add lights to track.
-			eventDispatcher.dispatchEvent( new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, sunlight ) );
-			eventDispatcher.dispatchEvent( new AddObjectToSceneRequest( AddObjectToSceneRequest.ADD_OBSTACLE_TO_SCENE_REQUESTED, spotlight ) );
+			addObjectToSceneRequest.dispatch( sunlight );
+			addObjectToSceneRequest.dispatch( spotlight );
 			
 			// Add player to track.
 			eventDispatcher.dispatchEvent( new AddPlayerRequest( AddPlayerRequest.ADD_PLAYER_REQUESTED ) );
