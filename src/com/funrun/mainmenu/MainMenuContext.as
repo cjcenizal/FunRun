@@ -1,13 +1,15 @@
 package com.funrun.mainmenu {
 
-	import com.funrun.mainmenu.controller.signals.EnableMainMenuOptionsRequest;
 	import com.funrun.mainmenu.controller.signals.DisableMainMenuOptionsRequest;
+	import com.funrun.mainmenu.controller.signals.EnableMainMenuOptionsRequest;
 	import com.funrun.mainmenu.controller.signals.StartRunningMainMenuRequest;
 	import com.funrun.mainmenu.controller.signals.StopRunningMainMenuRequest;
+	import com.funrun.mainmenu.view.components.LoginStatusView;
+	import com.funrun.mainmenu.view.mediators.LoginStatusMediator;
+	import com.funrun.modulemanager.controller.signals.UpdateLoginStatusRequest;
 	
 	import flash.display.DisplayObjectContainer;
 	
-	import org.robotlegs.utilities.modular.mvcs.ModuleContext;
 	import org.robotlegs.utilities.modularsignals.ModularSignalContext;
 
 	public class MainMenuContext extends ModularSignalContext {
@@ -22,9 +24,11 @@ package com.funrun.mainmenu {
 			injector.mapSingleton( StartRunningMainMenuRequest );
 			injector.mapSingleton( EnableMainMenuOptionsRequest );
 			injector.mapSingleton( DisableMainMenuOptionsRequest );
+			injector.mapSingleton( UpdateLoginStatusRequest );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( MainMenuModule, MainMenuMediator );
+			mediatorMap.mapView( LoginStatusView, LoginStatusMediator );
 			
 			super.startup();
 		}

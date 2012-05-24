@@ -4,11 +4,13 @@ package com.funrun.modulemanager.controller.commands {
 	
 	import com.funrun.modulemanager.controller.signals.LoginFailed;
 	import com.funrun.modulemanager.controller.signals.LoginFulfilled;
+	import com.funrun.modulemanager.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.modulemanager.controller.signals.WhitelistFailed;
 	import com.funrun.modulemanager.model.ConfigurationModel;
 	import com.funrun.modulemanager.model.UserModel;
 	import com.funrun.modulemanager.services.IWhitelistService;
 	import com.funrun.modulemanager.services.PlayerioFacebookLoginService;
+	import com.funrun.modulemanager.model.state.LoginState;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -35,13 +37,18 @@ package com.funrun.modulemanager.controller.commands {
 		[Inject]
 		public var whitelistFailed:WhitelistFailed;
 		
+		[Inject]
+		public var updateLoginStatus:UpdateLoginStatusRequest;
+		
 		override public function execute():void {
+			updateLoginStatus.dispatch( LoginState.LOGGING_IN );
 			loginService.onConnectedSignal.add( onConnected );
 			loginService.onErrorSignal.add( onError );
 			loginService.connect( this.contextView.stage, configurationModel.fbAccessToken, configurationModel.playerioGameId, configurationModel.playerioPartnerId );
 		}
 		
 		private function onConnected():void {
+			updateLoginStatus.dispatch( LoginState.CONNECTING_TO_FB );
 			// If we've received a new token, store it in the model.
 			configurationModel.fbAccessToken = loginService.fbAccessToken;
 			FB.init( { access_token: configurationModel.fbAccessToken, app_id: configurationModel.fbAppId, debug: true } );

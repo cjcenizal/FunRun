@@ -2,7 +2,7 @@ package com.funrun.mainmenu {
 	
 	import com.cenizal.ui.DummyButton;
 	import com.cenizal.util.Center;
-	import com.funrun.game.view.components.TrackView;
+	import com.funrun.mainmenu.view.components.LoginStatusView;
 	
 	import flash.display.Bitmap;
 	import flash.display.Graphics;
@@ -19,8 +19,8 @@ package com.funrun.mainmenu {
 		
 		private var _logo:Bitmap;
 		private var _isRunning:Boolean = false;
-		private var _track:TrackView;
 		private var _startGameButton:DummyButton;
+		private var _loginStatus:LoginStatusView;
 		
 		public var onStartGameButtonClick:Signal;
 		
@@ -37,17 +37,29 @@ package com.funrun.mainmenu {
 		
 		private function onAddedToStage( e:Event ):void {
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			
+			// Background.
 			var g:Graphics = this.graphics;
 			g.beginFill( 0xffffff );
 			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
 			g.endFill();
+			
+			// Logo.
 			_logo = new Logo();
 			addChild( _logo );
 			Center.horizontal( _logo, this );
 			_logo.y = 20;
+			
+			// Start game button.
 			_startGameButton = new DummyButton( this, 0, _logo.y + _logo.height + 40, onClick, "Start game", 0xaaaaaa );
 			_startGameButton.draw();
 			Center.horizontal( _startGameButton, this );
+			
+			// Login status.
+			_loginStatus = new LoginStatusView( this );
+			_loginStatus.draw();
+			Center.horizontal( _loginStatus, this );
+			_loginStatus.y = height - _loginStatus.height;
 		}
 		
 		private function onClick( e:MouseEvent ):void {

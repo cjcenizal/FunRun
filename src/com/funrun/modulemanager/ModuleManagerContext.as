@@ -16,6 +16,7 @@ package com.funrun.modulemanager {
 	import com.funrun.modulemanager.controller.signals.LoginRequest;
 	import com.funrun.modulemanager.controller.signals.ShowMainModuleRequest;
 	import com.funrun.modulemanager.controller.signals.ToggleMainMenuOptionsRequest;
+	import com.funrun.modulemanager.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.modulemanager.controller.signals.WhitelistFailed;
 	import com.funrun.modulemanager.model.ConfigurationModel;
 	import com.funrun.modulemanager.model.UserModel;
@@ -73,6 +74,7 @@ package com.funrun.modulemanager {
 		 */
 		override public function startup():void {
 			// Map signals.
+			injector.mapSingleton( UpdateLoginStatusRequest );
 			signalCommandMap.mapSignalClass( BuildWhitelistRequest,					BuildWhitelistCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );

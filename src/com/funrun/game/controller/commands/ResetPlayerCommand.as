@@ -19,7 +19,7 @@ package com.funrun.game.controller.commands {
 			playerModel.isJumping = false;
 			playerModel.speed = playerModel.lateralVelocity = 0;
 			playerModel.jumpVelocity = 50;
-			playerModel.player.position = new Vector3D( 0, 100, 0 );
+			playerModel.player.position = new Vector3D( Math.random() * 100, 100, 0 );
 		}
 	}
 }
