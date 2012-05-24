@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.DisplayDistanceRequest;
+	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.CameraModel;
@@ -30,10 +30,13 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
+		[Inject]
+		public var displayDistanceRequest:DisplayDistanceRequest;
+		
 		override public function execute():void {
 			// Reset distance.
 			distanceModel.distance = 0;
-			eventDispatcher.dispatchEvent( new DisplayDistanceRequest( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, distanceModel.distance ) );
+			displayDistanceRequest.dispatch( distanceModel.distance );
 			// Reset player.
 			resetPlayerRequest.dispatch();
 			// Reset camera.

@@ -1,12 +1,13 @@
 package com.funrun.view.mediators
 {
+	import away3d.cameras.Camera3D;
 	import away3d.containers.ObjectContainer3D;
 	
-	import com.funrun.controller.events.AddCameraFulfilled;
-	import com.funrun.controller.events.RenderSceneRequest;
+	import com.funrun.controller.signals.AddCameraRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.view.components.TrackView;
 	
 	import flash.display.Stage;
@@ -21,6 +22,9 @@ package com.funrun.view.mediators
 		public var view:TrackView;
 		
 		[Inject]
+		public var addCameraRequest:AddCameraRequest;
+		
+		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		[Inject]
@@ -29,6 +33,9 @@ package com.funrun.view.mediators
 		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
 		
+		[Inject]
+		public var renderSceneRequest:RenderSceneRequest;
+		
 		private var stage:Stage;
 		
 		override public function onRegister():void {
@@ -36,14 +43,11 @@ package com.funrun.view.mediators
 			view.init();
 			view.debug();
 			
+			addCameraRequest.add( onAddCameraRequested );
 			addObjectToSceneRequest.add( onAddObjectToSceneRequested );
 			removeObjectFromSceneRequest.add( onRemoveObjectFromSceneRequested );
-			eventMap.mapListener( eventDispatcher, RenderSceneRequest.RENDER_SCENE_REQUESTED, onRenderSceneRequested );
-			
+			renderSceneRequest.add( onRenderSceneRequested );
 			enablePlayerInputRequest.add( onEnablePlayerInputRequested );
-			
-			// Expose access to the camera.
-			eventDispatcher.dispatchEvent( new AddCameraFulfilled( AddCameraFulfilled.ADD_CAMERA_FULFILLED, view.camera ) );
 		}
 		
 		/**
@@ -75,8 +79,15 @@ package com.funrun.view.mediators
 		/**
 		 * Render the scene.
 		 */
-		private function onRenderSceneRequested( e:RenderSceneRequest ):void {
+		private function onRenderSceneRequested():void {
 			view.render();
+		}
+		
+		/**
+		 * Swap out track's camera.
+		 */
+		private function onAddCameraRequested( camera:Camera3D ):void {
+			view.camera = camera;
 		}
 		
 		private function onKeyDown( e:KeyboardEvent ):void {

@@ -1,6 +1,5 @@
 package com.funrun {
 
-	import com.funrun.controller.commands.AddCameraCommand;
 	import com.funrun.controller.commands.AddFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
@@ -26,8 +25,7 @@ package com.funrun {
 	import com.funrun.controller.commands.StopGameCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.enum.GameType;
-	import com.funrun.controller.events.AddCameraFulfilled;
-	import com.funrun.controller.events.KillPlayerRequest;
+	import com.funrun.controller.signals.AddCameraRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
@@ -37,8 +35,10 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
+	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
+	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LoadFloorsRequest;
@@ -47,6 +47,7 @@ package com.funrun {
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
@@ -145,6 +146,9 @@ package com.funrun {
 			injector.mapSingleton( AddObjectToSceneRequest );
 			injector.mapSingleton( RemoveObjectFromSceneRequest );
 			injector.mapSingleton( EnablePlayerInputRequest );
+			injector.mapSingleton( RenderSceneRequest );
+			injector.mapSingleton( DisplayDistanceRequest );
+			injector.mapSingleton( AddCameraRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
 			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
@@ -165,10 +169,9 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
 			signalCommandMap.mapSignalClass( StopGameRequest,						StopGameCommand );
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
+			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			
 			// Map events to commands.
-			commandMap.mapEvent( AddCameraFulfilled.ADD_CAMERA_FULFILLED, AddCameraCommand, AddCameraFulfilled );
-			commandMap.mapEvent( KillPlayerRequest.KILL_PLAYER_REQUESTED, KillPlayerCommand, KillPlayerRequest );
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
 			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
 

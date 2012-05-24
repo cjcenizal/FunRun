@@ -1,8 +1,8 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.RenderSceneRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
+	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
@@ -42,6 +42,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var resetGameRequest:ResetGameRequest;
 		
+		[Inject]
+		public var renderSceneRequest:RenderSceneRequest;
+		
 		override public function execute():void {
 			// Show game screen.
 			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
@@ -59,7 +62,7 @@ package com.funrun.controller.commands {
 			// Start input.
 			enablePlayerInputRequest.dispatch( true );
 			// Render to clear the view.
-			eventDispatcher.dispatchEvent( new RenderSceneRequest( RenderSceneRequest.RENDER_SCENE_REQUESTED ) );
+			renderSceneRequest.dispatch();
 		}
 
 	}

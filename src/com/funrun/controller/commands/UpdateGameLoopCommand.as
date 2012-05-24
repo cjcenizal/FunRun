@@ -1,10 +1,10 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.DisplayDistanceRequest;
-	import com.funrun.controller.events.KillPlayerRequest;
-	import com.funrun.controller.events.RenderSceneRequest;
 	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
@@ -67,6 +67,15 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
+		[Inject]
+		public var killPlayerRequest:KillPlayerRequest;
+		
+		[Inject]
+		public var renderSceneRequest:RenderSceneRequest;
+		
+		[Inject]
+		public var displayDistanceRequest:DisplayDistanceRequest;
+		
 		override public function execute():void {
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
@@ -110,7 +119,7 @@ package com.funrun.controller.commands {
 					if ( gameModel.gameState == GameState.RUNNING ) {
 						// Store distance.
 						distanceModel.add( playerModel.speed );
-						eventDispatcher.dispatchEvent( new DisplayDistanceRequest( DisplayDistanceRequest.DISPLAY_DISTANCE_REQUESTED, distanceModel.distance ) );
+						displayDistanceRequest.dispatch( distanceModel.distance );
 						// Update speed when you're alive.
 						if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
 							if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
@@ -198,7 +207,7 @@ package com.funrun.controller.commands {
 							// Resolve this collision by moving the world.
 							trackModel.move( face.minZ );
 							if ( face.event == CollisionTypes.SMACK ) {
-								eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.SMACK ) );
+								killPlayerRequest.dispatch( CollisionTypes.SMACK );
 							}
 						}
 					}
@@ -209,7 +218,7 @@ package com.funrun.controller.commands {
 						if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 							resetPlayerRequest.dispatch();
 						} else if ( gameModel.gameState == GameState.RUNNING ) {
-							eventDispatcher.dispatchEvent( new KillPlayerRequest( KillPlayerRequest.KILL_PLAYER_REQUESTED, CollisionTypes.FALL ) );
+							killPlayerRequest.dispatch( CollisionTypes.FALL );
 						}
 					}
 				}
@@ -223,7 +232,7 @@ package com.funrun.controller.commands {
 				cameraModel.update();
 			}
 			// Render.
-			eventDispatcher.dispatchEvent( new RenderSceneRequest( RenderSceneRequest.RENDER_SCENE_REQUESTED ) );
+			renderSceneRequest.dispatch();
 		}
 	}
 }

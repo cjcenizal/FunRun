@@ -1,6 +1,5 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.events.KillPlayerRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StopGameRequest;
 	import com.funrun.model.PlayerModel;
@@ -16,7 +15,7 @@ package com.funrun.controller.commands {
 	public class KillPlayerCommand extends Command {
 
 		[Inject]
-		public var event:KillPlayerRequest;
+		public var death:String;
 
 		[Inject]
 		public var playerModel:PlayerModel;
@@ -32,7 +31,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			if ( !playerModel.isDead ) {
 				playerModel.isDead = true;
-				switch ( event.death ) {
+				switch ( death ) {
 					case CollisionTypes.SMACK:
 						playerModel.speed = TrackConstants.HEAD_ON_SMACK_SPEED;
 						break;

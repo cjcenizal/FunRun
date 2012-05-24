@@ -1,17 +1,14 @@
 package com.funrun.view.components {
 	
 	import away3d.cameras.Camera3D;
-	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	
 	import com.cenizal.ui.AbstractComponent;
-	import com.funrun.model.constants.TrackConstants;
 	
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 	
 	/**
 	 * http://www.adobe.com/devnet/flashplayer/articles/creating-games-away3d.html
@@ -42,14 +39,8 @@ package com.funrun.view.components {
 			_view.height = stage.stageHeight;
 			_view.backgroundColor = 0xffffff;
 			addChild( _view );
-			
 			_scene = _view.scene; // Store local refs.
 			_camera = _view.camera;
-			_camera.y = TrackConstants.CAM_Y;
-			_camera.z = TrackConstants.CAM_Z;
-			_camera.rotationX = TrackConstants.CAM_TILT;
-			_camera.lens = new PerspectiveLens( TrackConstants.CAM_FOV );
-			_camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
 		}
 		
 		/**
@@ -80,6 +71,11 @@ package com.funrun.view.components {
 		 */
 		public function removeFromScene( object:ObjectContainer3D ):void {
 			_scene.removeChild( object );
+		}
+		
+		public function set camera( camera:Camera3D ):void {
+			_view.camera = camera;
+			_camera = camera;
 		}
 		
 		public function get camera():Camera3D {

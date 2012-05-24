@@ -1,5 +1,7 @@
 package com.funrun.controller.commands
 {
+	import away3d.cameras.Camera3D;
+	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
@@ -7,6 +9,7 @@ package com.funrun.controller.commands
 	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	
+	import com.funrun.controller.signals.AddCameraRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
@@ -14,8 +17,10 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadFloorsRequest;
 	import com.funrun.controller.signals.LoadObstaclesRequest;
+	import com.funrun.model.CameraModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
+	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -26,6 +31,9 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var lightsModel:LightsModel;
+		
+		[Inject]
+		public var cameraModel:CameraModel;
 		
 		[Inject]
 		public var materialsModel:MaterialsModel;
@@ -50,6 +58,9 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var addPlayerRequest:AddPlayerRequest;
+		
+		[Inject]
+		public var addCameraRequest:AddCameraRequest;
 		
 		override public function execute():void {
 			// Add materials.
@@ -110,8 +121,14 @@ package com.funrun.controller.commands
 			obstacleMaterial.gloss = 20;
 			obstacleMaterial.specularMethod = specularMethod;
 			
-			// TO-DO:
-			// Add a camera here, and replace the one that comes with View3D.
+			// Add camera.
+			var camera:Camera3D = new Camera3D( new PerspectiveLens( TrackConstants.CAM_FOV ) );
+			camera.y = TrackConstants.CAM_Y;
+			camera.z = TrackConstants.CAM_Z;
+			camera.rotationX = TrackConstants.CAM_TILT;
+			camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
+			cameraModel.setCamera( camera );
+			addCameraRequest.dispatch( camera );
 			
 			// Add lights to track.
 			addObjectToSceneRequest.dispatch( sunlight );
