@@ -1,7 +1,7 @@
 package {
 	
-	import com.funrun.game.MainContext;
-	import com.funrun.game.MainView;
+	import com.funrun.MainContext;
+	import com.funrun.MainView;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
