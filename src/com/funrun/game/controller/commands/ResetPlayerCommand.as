@@ -17,6 +17,7 @@ package com.funrun.game.controller.commands {
 			playerModel.isAirborne = true;
 			playerModel.isDucking = false;
 			playerModel.isJumping = false;
+			playerModel.cancelMovement();
 			playerModel.speed = playerModel.lateralVelocity = 0;
 			playerModel.jumpVelocity = 50;
 			playerModel.player.position = new Vector3D( Math.random() * 100, 100, 0 );

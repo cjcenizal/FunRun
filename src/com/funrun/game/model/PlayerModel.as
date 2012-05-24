@@ -70,5 +70,9 @@ package com.funrun.game.model
 			}
 			_isMovingRight = false;
 		}
+		
+		public function cancelMovement():void {
+			_isMovingRight = _isMovingLeft = false;
+		}
 	}
 }
