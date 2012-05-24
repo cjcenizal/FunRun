@@ -2,6 +2,7 @@ package com.funrun.view.components {
 	
 	import com.cenizal.ui.AbstractComponent;
 	import com.cenizal.ui.AbstractLabel;
+	import com.cenizal.util.Center;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
@@ -25,6 +26,8 @@ package com.funrun.view.components {
 		public function set status( val:String ):void {
 			_label.text = val;
 			_label.draw();
+			Center.horizontal( _label, stage );
+			_label.y = stage.stageHeight - _label.height - 20;
 		}
 	}
 }

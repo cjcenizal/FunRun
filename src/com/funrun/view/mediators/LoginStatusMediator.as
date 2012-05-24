@@ -19,12 +19,10 @@ package com.funrun.view.mediators {
 		}
 		
 		override public function onRegister():void {
-			trace(this, "onRegister");
 			updateLoginStatus.add( onUpdateLoginStatusRequested );
 		}
 		
 		private function onUpdateLoginStatusRequested( status:String ):void {
-			trace("onUpdateLoginStatusRequested: " + status);
 			view.status = status;
 		}
 	}

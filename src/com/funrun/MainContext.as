@@ -52,9 +52,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameRequest;
-	import com.funrun.controller.signals.StartRunningMainMenuRequest;
 	import com.funrun.controller.signals.StopGameRequest;
-	import com.funrun.controller.signals.StopRunningMainMenuRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
@@ -138,8 +136,6 @@ package com.funrun {
 			// Map signals.
 			injector.mapSingleton( UpdateCountdownRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
-			injector.mapSingleton( StopRunningMainMenuRequest );
-			injector.mapSingleton( StartRunningMainMenuRequest );
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			injector.mapSingleton( ShowScreenRequest );

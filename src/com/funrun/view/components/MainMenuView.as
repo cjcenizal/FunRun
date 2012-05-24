@@ -18,7 +18,6 @@ package com.funrun.view.components {
 		private var Logo:Class;
 		
 		private var _logo:Bitmap;
-		private var _isRunning:Boolean = false;
 		private var _startGameButton:DummyButton;
 		private var _loginStatus:LoginStatusView;
 		
@@ -55,24 +54,10 @@ package com.funrun.view.components {
 			// Login status.
 			_loginStatus = new LoginStatusView( this );
 			_loginStatus.draw();
-			Center.horizontal( _loginStatus, stage );
-			_loginStatus.y = height - _loginStatus.height;
 		}
 		
 		private function onClick( e:MouseEvent ):void {
 			onStartGameButtonClick.dispatch();
-		}
-		
-		public function startRunning():void {
-			if ( !_isRunning ) {
-				this.visible = true;
-				_isRunning = true;
-			}
-		}
-		
-		public function stopRunning():void {
-			this.visible = false;
-			_isRunning = false;
 		}
 		
 		public function set optionsEnabled( enabled:Boolean ):void {
@@ -83,10 +68,6 @@ package com.funrun.view.components {
 				_logo.alpha = .2;
 				_startGameButton.visible = false;
 			}
-		}
-		
-		public function get isRunning():Boolean {
-			return _isRunning;
 		}
 	}
 }
