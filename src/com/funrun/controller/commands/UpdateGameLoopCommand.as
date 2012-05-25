@@ -93,7 +93,7 @@ package com.funrun.controller.commands {
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
 				if ( gameModel.gameState == GameState.RUNNING ) {
 					// Update obstacles.
-					trackModel.move( -playerModel.speed );
+					trackModel.move( -playerModel.velocity.z );
 				}
 	
 				// Remove obstacles from end of track.
@@ -113,19 +113,19 @@ package com.funrun.controller.commands {
 	
 				if ( playerModel.isDead ) {
 					// Slow down when you're dead.
-					playerModel.lateralVelocity *= .6;
-					playerModel.speed *= .7;
+					playerModel.velocity.x *= .6;
+					playerModel.velocity.z *= .7;
 				} else {
 					if ( gameModel.gameState == GameState.RUNNING ) {
 						// Store distance.
-						distanceModel.add( playerModel.speed );
+						distanceModel.add( playerModel.velocity.z );
 						// Update speed when you're alive.
-						if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
-							if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
-								playerModel.speed--;
+						if ( Math.abs( playerModel.velocity.x ) > 0 ) {
+							if ( playerModel.velocity.z > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
+								playerModel.velocity.z--;
 							}
-						} else if ( playerModel.speed < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
-							playerModel.speed += TrackConstants.PLAYER_FOWARD_ACCELERATION;
+						} else if ( playerModel.velocity.z < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
+							playerModel.velocity.z += TrackConstants.PLAYER_FOWARD_ACCELERATION;
 						}
 					}
 					// Update jumping.
@@ -134,12 +134,12 @@ package com.funrun.controller.commands {
 						playerModel.isAirborne = true;
 					}
 					// Update lateral position.
-					playerModel.player.x += playerModel.lateralVelocity;
+					playerModel.player.x += playerModel.velocity.x;
 				}
 	
 				// Update gravity.
-				playerModel.jumpVelocity += TrackConstants.PLAYER_GRAVITY;
-				playerModel.player.y += playerModel.jumpVelocity;
+				playerModel.velocity.y += TrackConstants.PLAYER_GRAVITY;
+				playerModel.player.y += playerModel.velocity.y;
 				
 				// Apply ducking state.
 				if ( playerModel.isDucking ) {
@@ -171,9 +171,9 @@ package com.funrun.controller.commands {
 					for ( var i:int = 0; i < numCollisions; i++ ) {
 						face = collisions.getAt( i );
 						// If the player is moving up, hit the bottom sides of things.
-						if ( playerModel.jumpVelocity > 0 ) {
+						if ( playerModel.velocity.y > 0 ) {
 							if ( face.type == FaceTypes.BOTTOM ) {
-								playerModel.jumpVelocity = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
+								playerModel.velocity.y = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
 								playerModel.player.y = ( playerModel.isDucking ) ? face.minY - TrackConstants.PLAYER_HALF_SIZE * .25 : face.minY - TrackConstants.PLAYER_HALF_SIZE;
 							}
 							playerModel.isAirborne = true;
@@ -182,7 +182,7 @@ package com.funrun.controller.commands {
 							if ( face.type == FaceTypes.TOP ) {
 								if ( face.maxY > TrackConstants.CULL_FLOOR ) {
 									playerModel.player.y = ( playerModel.isDucking ) ? face.maxY + TrackConstants.PLAYER_HALF_SIZE * .25 : face.maxY + TrackConstants.PLAYER_HALF_SIZE;
-									playerModel.jumpVelocity = 0;
+									playerModel.velocity.y = 0;
 									playerModel.isAirborne = false;
 								} else {
 									// The player is airborne if he's not colliding with a floor.
@@ -191,11 +191,11 @@ package com.funrun.controller.commands {
 							}
 						}
 						// If we're moving left, hit the right sides of things.
-						if ( playerModel.lateralVelocity < 0 ) {
+						if ( playerModel.velocity.x < 0 ) {
 							if ( face.type == FaceTypes.RIGHT ) {
 	
 							}
-						} else if ( playerModel.lateralVelocity > 0 ) {
+						} else if ( playerModel.velocity.x > 0 ) {
 							// Else if we're moving right, hit the left sides of things.
 							if ( face.type == FaceTypes.LEFT ) {
 	

@@ -18,8 +18,8 @@ package com.funrun.controller.commands {
 			playerModel.isDucking = false;
 			playerModel.isJumping = false;
 			playerModel.cancelMovement();
-			playerModel.speed = playerModel.lateralVelocity = 0;
-			playerModel.jumpVelocity = 50;
+			playerModel.velocity.z = playerModel.velocity.x = 0;
+			playerModel.velocity.y = 50;
 			playerModel.player.position = new Vector3D( Math.random() * 100, 100, 0 );
 		}
 	}
