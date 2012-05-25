@@ -17,18 +17,17 @@ package com.funrun.services
 		{
 		}
 		
-		public function connect( client:Client, userJoinData:Object ):void {
+		public function connect( client:Client, roomType:String, userJoinData:Object ):void {
 			//Set developmentsever (Comment out to connect to your server online)
 			//client.multiplayer.developmentServer = "127.0.0.1:8184";
 			
 			var roomId:String = null; // A null roomId uses a random one.
-			var gameType:String = "FunRun"; // The game type started on the server.
 			var visibleToLobby:Boolean = true; // Should the room be visible in the lobby?
 			var roomData:Object = {}; // Room data. This data is returned to lobby list. Variables can be modifed on the server.
 			
 			client.multiplayer.createJoinRoom(
 				roomId,
-				gameType,
+				roomType,
 				visibleToLobby,
 				roomData,
 				userJoinData,
