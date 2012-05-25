@@ -1,14 +1,10 @@
 	package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.AddPopupRequest;
+	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.StopGameRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.PopupsModel;
 	import com.funrun.model.constants.CollisionTypes;
-	import com.funrun.model.constants.PopupTypes;
 	import com.funrun.model.constants.TrackConstants;
-	import com.funrun.view.components.Popup;
-	import com.funrun.view.factories.PopupFactory;
 	
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -24,16 +20,10 @@
 		public var playerModel:PlayerModel;
 		
 		[Inject]
-		public var popupsModel:PopupsModel;
-		
-		[Inject]
-		public var addPopupRequest:AddPopupRequest;
-		
-		[Inject]
 		public var stopGameRequest:StopGameRequest;
 		
 		[Inject]
-		public var popupFactory:PopupFactory;
+		public var showResultsPopupRequest:ShowResultsPopupRequest;
 		
 		private var _timer:Timer;
 		
@@ -59,10 +49,7 @@
 			_timer.stop();
 			_timer = null;
 			stopGameRequest.dispatch();
-			var popup:Popup = ( popupsModel.hasPopup( PopupTypes.RESULTS ) )
-				? popupsModel.getPopup( PopupTypes.RESULTS )
-				: popupsModel.addPopup( PopupTypes.RESULTS, popupFactory.build( PopupTypes.RESULTS ) );
-			addPopupRequest.dispatch( popup );
+			showResultsPopupRequest.dispatch();
 		}
 	}
 }

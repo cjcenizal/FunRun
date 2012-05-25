@@ -21,6 +21,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LoginFulfilledCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
+	import com.funrun.controller.commands.ShowResultsPopupCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StopGameCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
@@ -51,6 +52,7 @@ package com.funrun {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.controller.signals.StopGameRequest;
@@ -71,7 +73,6 @@ package com.funrun {
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.PopupsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.UserModel;
@@ -89,7 +90,6 @@ package com.funrun {
 	import com.funrun.view.components.PopupsView;
 	import com.funrun.view.components.ResultsPopup;
 	import com.funrun.view.components.TrackView;
-	import com.funrun.view.factories.PopupFactory;
 	import com.funrun.view.mediators.AppMediator;
 	import com.funrun.view.mediators.CountdownMediator;
 	import com.funrun.view.mediators.DistanceMediator;
@@ -130,13 +130,11 @@ package com.funrun {
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( UserModel );
-			injector.mapSingleton( PopupsModel );
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );
 			injector.mapSingleton( ObstaclesJsonService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
-			injector.mapSingleton( PopupFactory );
 			injector.mapSingletonOf( IWhitelistService, WhitelistService ); // TO-DO: Use a variable to toggle between open and regular.
 			
 			// Map signals.
@@ -174,6 +172,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StopGameRequest,						StopGameCommand );
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
+			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
