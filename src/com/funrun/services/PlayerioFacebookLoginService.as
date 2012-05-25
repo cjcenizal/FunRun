@@ -17,7 +17,7 @@ package com.funrun.services {
 		private var _userId:String;
 		private var _fbAccessToken:String;
 		
-		public function PlayerioFacebookLoginService(  ) {
+		public function PlayerioFacebookLoginService() {
 			_onConnectedSignal = new Signal();
 			_onErrorSignal = new Signal();
 		}
