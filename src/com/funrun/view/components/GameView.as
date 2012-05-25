@@ -9,6 +9,7 @@ package com.funrun.view.components {
 		private var _track:TrackView;
 		private var _distance:DistanceView;
 		private var _countdown:CountdownView;
+		private var _popups:PopupsView;
 
 		public function GameView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
@@ -19,6 +20,7 @@ package com.funrun.view.components {
 			_track = new TrackView( this );
 			_distance = new DistanceView( this );
 			_countdown = new CountdownView( this );
+			_popups = new PopupsView( this );
 		}
 	}
 }

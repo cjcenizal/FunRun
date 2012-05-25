@@ -71,6 +71,7 @@ package com.funrun {
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.PopupsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.UserModel;
@@ -126,6 +127,7 @@ package com.funrun {
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( UserModel );
+			injector.mapSingleton( PopupsModel );
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );
