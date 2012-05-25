@@ -24,7 +24,6 @@ package com.funrun {
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StopGameCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
-	import com.funrun.controller.enum.GameType;
 	import com.funrun.controller.signals.AddCameraRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
@@ -111,9 +110,6 @@ package com.funrun {
 		}
 
 		override public function startup():void {
-			// Set our launch configuration.
-			injector.mapValue( GameType, GameType.Local, "gameType" );
-
 			// Map models.
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
 			injector.mapSingleton( BlocksModel );
