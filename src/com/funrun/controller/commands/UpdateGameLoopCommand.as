@@ -119,7 +119,6 @@ package com.funrun.controller.commands {
 					if ( gameModel.gameState == GameState.RUNNING ) {
 						// Store distance.
 						distanceModel.add( playerModel.speed );
-						displayDistanceRequest.dispatch( distanceModel.distance );
 						// Update speed when you're alive.
 						if ( Math.abs( playerModel.lateralVelocity ) > 0 ) {
 							if ( playerModel.speed > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
@@ -231,6 +230,12 @@ package com.funrun.controller.commands {
 				cameraModel.z = -1000;
 				cameraModel.update();
 			}
+			
+			// Update UI.
+			if ( gameModel.gameState == GameState.RUNNING ) {
+				displayDistanceRequest.dispatch( distanceModel.distanceString() );
+			}
+			
 			// Render.
 			renderSceneRequest.dispatch();
 		}

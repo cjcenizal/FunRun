@@ -17,7 +17,8 @@ package com.funrun.view.components {
 			super.draw();
 			var g:Graphics = this.graphics;
 			g.clear();
-			g.beginFill( 0x666666 );
+			g.lineStyle( 1, 0x666666 );
+			g.beginFill( 0xeeeeee );
 			g.drawRect( 0, 0, _width, _height );
 			g.endFill();
 		}

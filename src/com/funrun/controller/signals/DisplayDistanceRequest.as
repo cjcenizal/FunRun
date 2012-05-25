@@ -6,7 +6,7 @@ package com.funrun.controller.signals
 	{
 		public function DisplayDistanceRequest()
 		{
-			super( Number );
+			super( String );
 		}
 	}
 }

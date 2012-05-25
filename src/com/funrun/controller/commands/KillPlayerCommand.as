@@ -32,6 +32,9 @@
 		[Inject]
 		public var stopGameRequest:StopGameRequest;
 		
+		[Inject]
+		public var popupFactory:PopupFactory;
+		
 		private var _timer:Timer;
 		
 		override public function execute():void {
@@ -58,7 +61,7 @@
 			stopGameRequest.dispatch();
 			var popup:Popup = ( popupsModel.hasPopup( PopupTypes.RESULTS ) )
 				? popupsModel.getPopup( PopupTypes.RESULTS )
-				: popupsModel.addPopup( PopupTypes.RESULTS, PopupFactory.build( PopupTypes.RESULTS ) );
+				: popupsModel.addPopup( PopupTypes.RESULTS, popupFactory.build( PopupTypes.RESULTS ) );
 			addPopupRequest.dispatch( popup );
 		}
 	}

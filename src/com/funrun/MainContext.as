@@ -87,7 +87,9 @@ package com.funrun {
 	import com.funrun.view.components.MainMenuView;
 	import com.funrun.view.components.MainView;
 	import com.funrun.view.components.PopupsView;
+	import com.funrun.view.components.ResultsPopup;
 	import com.funrun.view.components.TrackView;
+	import com.funrun.view.factories.PopupFactory;
 	import com.funrun.view.mediators.AppMediator;
 	import com.funrun.view.mediators.CountdownMediator;
 	import com.funrun.view.mediators.DistanceMediator;
@@ -96,6 +98,7 @@ package com.funrun {
 	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
 	import com.funrun.view.mediators.PopupsMediator;
+	import com.funrun.view.mediators.ResultPopupMediator;
 	import com.funrun.view.mediators.TrackMediator;
 	
 	import flash.display.DisplayObjectContainer;
@@ -133,6 +136,7 @@ package com.funrun {
 			injector.mapSingleton( BlocksJsonService );
 			injector.mapSingleton( ObstaclesJsonService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
+			injector.mapSingleton( PopupFactory );
 			injector.mapSingletonOf( IWhitelistService, WhitelistService ); // TO-DO: Use a variable to toggle between open and regular.
 			
 			// Map signals.
@@ -184,6 +188,7 @@ package com.funrun {
 			mediatorMap.mapView( GameView,				GameMediator );
 			mediatorMap.mapView( MainMenuView,			MainMenuMediator );
 			mediatorMap.mapView( PopupsView,			PopupsMediator );
+			mediatorMap.mapView( ResultsPopup,			ResultPopupMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
 			mediatorMap.mapView( FunRun, 				AppMediator );

@@ -20,8 +20,8 @@ package com.funrun.view.mediators {
 			displayDistanceRequest.add( onDisplayDistanceRequested );
 		}
 		
-		private function onDisplayDistanceRequested( distance:Number ):void {
-			view.showDistance( Numbers.addCommasTo( ( Math.round( distance * .05 ) ).toString() ) );
+		private function onDisplayDistanceRequested( message:String ):void {
+			view.showDistance( message );
 		}
 	
 	}
