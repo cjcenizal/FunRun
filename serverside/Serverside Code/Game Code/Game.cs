@@ -47,16 +47,16 @@ namespace FunRun {
 				}
 
 				// Create update message.
-				Message update = Message.Create( "update" );
-				update.Add( secondsRemaining );
-
+				Message updateMessage = Message.Create( "update" );
+				updateMessage.Add( secondsRemaining );
+				/*
 				// Tell everyone about everyone else's state.
 				foreach ( Player p in Players ) {
-					update.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+					updateMessage.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
 				}
-
+*/
 				// Broadcast message to all players.
-				Broadcast( update );
+				Broadcast( updateMessage );
 			}, 100 );
 		}
 

@@ -108,7 +108,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onUpdate( message:Message, secondsRemaining:int ):void {
-			trace("secondsRemaining");
+			trace("secondsRemaining " + secondsRemaining);
 		}
 	}
 }
