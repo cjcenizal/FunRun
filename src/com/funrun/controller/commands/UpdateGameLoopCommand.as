@@ -6,7 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
-	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.model.CameraModel;
 	import com.funrun.model.CountdownModel;
@@ -56,9 +56,6 @@ package com.funrun.controller.commands {
 		public var updateCountdownRequest:UpdateCountdownRequest;
 		
 		[Inject]
-		public var toggleCountdownRequest:ToggleCountdownRequest;
-		
-		[Inject]
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		[Inject]
@@ -76,15 +73,16 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
+		[Inject]
+		public var startRunningRequest:StartRunningRequest;
+		
 		override public function execute():void {
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 				if ( countdownModel.getSecondsRemaining( TrackConstants.WAIT_SECONDS ) > 0 ) {
 					updateCountdownRequest.dispatch( countdownModel.getSecondsRemaining( TrackConstants.WAIT_SECONDS ).toString() );
 				} else {
-					updateCountdownRequest.dispatch( "" );
-					toggleCountdownRequest.dispatch( false );
-					gameModel.gameState = GameState.RUNNING;
+					startRunningRequest.dispatch();
 				}
 			}
 			

@@ -27,11 +27,28 @@ namespace FunRun {
 
 		private Dictionary<string, int> dictionary = new Dictionary<string, int>();
 
+		private DateTime countdownStartTime;
+		private bool isRunning = false;
+		private int maxSeconds = 8;
+
 		public override void GameStarted() {
-			// Add a timer that sends out an update every 100th millisecond
+			countdownStartTime = DateTime.UtcNow;
+			// Update every 100 ms.
 			AddTimer( delegate {
+				double secondsRemaining = 0;
+				if ( !isRunning ) {
+					// Continue countdown if not running yet.
+					double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
+					secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
+					if ( secondsRemaining <= 0 ) {
+						// Start running!
+						isRunning = true;
+					}
+				}
+
 				// Create update message.
 				Message update = Message.Create( "update" );
+				update.Add( secondsRemaining );
 
 				// Tell everyone about everyone else's state.
 				foreach ( Player p in Players ) {
@@ -41,6 +58,11 @@ namespace FunRun {
 				// Broadcast message to all players.
 				Broadcast( update );
 			}, 100 );
+		}
+
+		public override bool AllowUserJoin( Player player ) {
+			// TO-DO: Check if game has started already. If it has, return false.
+			return true;
 		}
 
 		public override void UserJoined( Player player ) {

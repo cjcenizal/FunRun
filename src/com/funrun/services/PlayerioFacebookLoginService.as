@@ -16,6 +16,7 @@ package com.funrun.services {
 		private var _client:Client;
 		private var _userId:String;
 		private var _fbAccessToken:String;
+		private var _isConnected:Boolean = false;
 		
 		public function PlayerioFacebookLoginService() {
 			_onConnectedSignal = new Signal();
@@ -51,6 +52,7 @@ package com.funrun.services {
 		private function onFacebookOAuthConnectSuccess( client:Client, userId:String = "" ):void {
 			_client = client;
 			_userId = userId;
+			_isConnected = true;
 			_onConnectedSignal.dispatch();
 		}
 		
@@ -58,6 +60,7 @@ package com.funrun.services {
 			_client = client;
 			_fbAccessToken = fbAccessToken;
 			_userId = userId;
+			_isConnected = true;
 			_onConnectedSignal.dispatch();
 		}
 		
@@ -71,7 +74,7 @@ package com.funrun.services {
 		}
 
 		public function get isConnected():Boolean {
-			return true;
+			return _isConnected;
 		}
 		
 		public function get onConnectedSignal():Signal {

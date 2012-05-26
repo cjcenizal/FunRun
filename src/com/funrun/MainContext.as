@@ -23,6 +23,7 @@ package com.funrun {
 	import com.funrun.controller.commands.ResetPlayerCommand;
 	import com.funrun.controller.commands.ShowResultsPopupCommand;
 	import com.funrun.controller.commands.StartGameCommand;
+	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.signals.AddCameraRequest;
@@ -55,6 +56,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameRequest;
+	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.StopGameRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
@@ -80,6 +82,7 @@ package com.funrun {
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.ObstaclesJsonService;
 	import com.funrun.services.PlayerioFacebookLoginService;
+	import com.funrun.services.PlayerioMultiplayerService;
 	import com.funrun.services.WhitelistService;
 	import com.funrun.view.components.CountdownView;
 	import com.funrun.view.components.DistanceView;
@@ -135,6 +138,7 @@ package com.funrun {
 			injector.mapSingleton( BlocksJsonService );
 			injector.mapSingleton( ObstaclesJsonService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
+			injector.mapSingleton( PlayerioMultiplayerService );
 			injector.mapSingletonOf( IWhitelistService, WhitelistService ); // TO-DO: Use a variable to toggle between open and regular.
 			
 			// Map signals.
@@ -173,6 +177,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
+			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
