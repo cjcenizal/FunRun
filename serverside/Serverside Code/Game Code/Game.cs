@@ -67,18 +67,18 @@ namespace FunRun {
 
 		public override void UserJoined( Player player ) {
 			// Create init message for the joining player.
-			Message init = Message.Create( "init" );
+			Message initMessage = Message.Create( "init" );
 
 			// Tell player their own id
-			init.Add( player.id );
+			initMessage.Add( player.Id );
 
 			// Add the current state of all players to the init message.
-			foreach ( Player p in Players ) {
-				init.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
-			}
+			//foreach ( Player p in Players ) {
+			//	init.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+			//}
 
 			// Send init message to player.
-			player.Send( init );
+			player.Send( initMessage );
 		}
 
 		public override void UserLeft( Player player ) {

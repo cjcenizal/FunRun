@@ -4,6 +4,7 @@ package com.funrun.services {
 	
 	import playerio.Client;
 	import playerio.Connection;
+	import playerio.Message;
 	import playerio.PlayerIOError;
 
 	public class PlayerioMultiplayerService {
