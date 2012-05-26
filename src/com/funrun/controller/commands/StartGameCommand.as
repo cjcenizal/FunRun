@@ -90,6 +90,8 @@ package com.funrun.controller.commands {
 			*/
 		}
 		
+		// TO-DO: Where does all this live? In some other Command possibly?
+		
 		private function onConnected():void {
 			trace(this, "connected");
 			multiplayerService.connection.addMessageHandler( "init", onInit );

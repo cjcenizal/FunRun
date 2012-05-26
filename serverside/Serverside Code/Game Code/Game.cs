@@ -35,13 +35,15 @@ namespace FunRun {
 
 		private DateTime countdownStartTime;
 		private bool isRunning = false;
-		private int maxSeconds = 8;
+		private int maxSeconds = 11;
+		private int minJoinTime = 3;
+		private double secondsRemaining = 0;
 
 		public override void GameStarted() {
 			countdownStartTime = DateTime.UtcNow;
 			// Update every 100 ms.
 			AddTimer( delegate {
-				double secondsRemaining = 0;
+				secondsRemaining = 0;
 				if ( !isRunning ) {
 					// Continue countdown if not running yet.
 					double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
@@ -67,8 +69,11 @@ namespace FunRun {
 		}
 
 		public override bool AllowUserJoin( Player player ) {
-			// TO-DO: Check if game has started already. If it has, return false.
-			return true;
+			// Disallow players joining if there's not enough time left.
+			if ( secondsRemaining > minJoinTime ) {
+				return true;
+			}
+			return false;
 		}
 
 		public override void UserJoined( Player player ) {
@@ -79,9 +84,9 @@ namespace FunRun {
 			initMessage.Add( player.Id );
 
 			// Add the current state of all players to the init message.
-			//foreach ( Player p in Players ) {
-			//	init.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
-			//}
+			foreach ( Player p in Players ) {
+				initMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+			}
 
 			// Send init message to player.
 			player.Send( initMessage );
@@ -103,7 +108,18 @@ namespace FunRun {
 					player.vy = message.GetFloat( 4 );
 					player.vz = message.GetFloat( 5 );
 					break;
+				case "REQUEST_OBSTACLES":
+					UpdateObstacles( player );
+					break;
 			}
+		}
+
+		private void UpdateObstacles( Player player ) {
+			// TO-DO.
+			// Check if there are sufficient obstacles with which to provide the player.
+			// If not, add more.
+			// Provide them to the player.
+			// player.send( obstaclesMessage );
 		}
 	}
 }
