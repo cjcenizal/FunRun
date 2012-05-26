@@ -93,9 +93,6 @@ package com.funrun.controller.commands {
 		private function onConnected():void {
 			trace(this, "connected");
 			multiplayerService.connection.addMessageHandler( "init", onInit );
-	//		multiplayerService.connection.addMessageHandler( "init", function( m:Message, myid:int ) {
-				
-		//	} );
 			multiplayerService.connection.addMessageHandler( "update", onUpdate );
 		}
 		

@@ -19,6 +19,12 @@ namespace FunRun {
 		public float vy;
 		public float vz;
 		public Player() {
+			x = 0;
+			y = 0;
+			z = 0;
+			vx = 0;
+			vy = 0;
+			vz = 0;
 		}
 	}
 
@@ -49,12 +55,12 @@ namespace FunRun {
 				// Create update message.
 				Message updateMessage = Message.Create( "update" );
 				updateMessage.Add( secondsRemaining );
-				/*
+
 				// Tell everyone about everyone else's state.
 				foreach ( Player p in Players ) {
-					updateMessage.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+					updateMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
 				}
-*/
+
 				// Broadcast message to all players.
 				Broadcast( updateMessage );
 			}, 100 );
