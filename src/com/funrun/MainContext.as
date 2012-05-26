@@ -8,6 +8,7 @@ package com.funrun {
 	import com.funrun.controller.commands.BuildGameCommand;
 	import com.funrun.controller.commands.BuildTimeCommand;
 	import com.funrun.controller.commands.BuildWhitelistCommand;
+	import com.funrun.controller.commands.ConnectMultiplayerCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.KeyDownCommand;
 	import com.funrun.controller.commands.KeyUpCommand;
@@ -37,6 +38,7 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
+	import com.funrun.controller.signals.ConnectMultiplayerRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
@@ -178,6 +180,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
+			signalCommandMap.mapSignalClass( ConnectMultiplayerRequest,				ConnectMultiplayerCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
