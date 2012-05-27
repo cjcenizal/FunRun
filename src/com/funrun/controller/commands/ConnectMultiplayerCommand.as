@@ -1,9 +1,12 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
+	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.constants.RoomTypes;
+	import com.funrun.model.events.TimeEvent;
+	import com.funrun.model.state.ScreenState;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioMultiplayerService;
 	
@@ -19,7 +22,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
-		
 		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
 		
@@ -29,8 +31,10 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var loginService:PlayerioFacebookLoginService;
 		
+		[Inject]
+		public var showScreenRequest:ShowScreenRequest;
+		
 		override public function execute():void {
-			
 			/*
 			1) Display "finding game" panel
 			2) Connect to room or error, and show feedback
@@ -41,42 +45,37 @@ package com.funrun.controller.commands {
 			multiplayerService.onConnectedSignal.add( onConnected );
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.connect( loginService.client, RoomTypes.GAME );
-			
-			multiplayerService.connection.addMessageHandler( "init", onInit );
-			multiplayerService.connection.addMessageHandler( "update", onUpdate );
 		}
-		
-		
-		// TO-DO: Where does all this live? In some other Command possibly?
 		
 		private function onConnected():void {
 			trace(this, "connected");
+			multiplayerService.connection.addMessageHandler( "init", onInit );
+			multiplayerService.connection.addMessageHandler( "update", onUpdate );
 		}
 		
 		private function onError():void {
 			trace(this, "error");
 		}
 		
-		private function onInit( message:Message, id:int ):void {
-			// Store id so we can ignore updates we originated.
-			trace("on init " + id);
+		private function onInit( message:Message ):void {
+			// TO-DO: Store id so we can ignore updates we originated.
+			trace("on init ");
 			
-			
-			/*
-			// Start countdown.
-			countdownModel.start();
+			// Initialize countdown.
+			//countdownModel.secondsRemaining = secondsRemaining;
 			toggleCountdownRequest.dispatch( true );
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
-			*/
 			
 			// Start input.
 			enablePlayerInputRequest.dispatch( true );
 			
+			// Show game screen.
+			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
 		}
 		
 		private function onUpdate( message:Message, secondsRemaining:int ):void {
-			trace("secondsRemaining " + secondsRemaining);
+			countdownModel.secondsRemaining = secondsRemaining;
 		}
 	}
 }

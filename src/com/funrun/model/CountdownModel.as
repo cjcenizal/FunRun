@@ -4,21 +4,14 @@ package com.funrun.model {
 	
 	public class CountdownModel extends Actor {
 		
-		private var _startTime:int;
+		private var _secondsRemaining:int = 0;
 		
-		public function CountdownModel() {
+		public function set secondsRemaining( val:int ):void {
+			_secondsRemaining = secondsRemaining;
 		}
 		
-		public function start():void {
-			_startTime = new Date().getTime();
-		}
-		
-		public function get timeElapsed():int {
-			return ( new Date().getTime() ) - _startTime;
-		}
-		
-		public function getSecondsRemaining( maxSeconds:int ):int {
-			return Math.ceil( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
+		public function get secondsRemaining():int {
+			return _secondsRemaining;
 		}
 	}
 }

@@ -4,12 +4,10 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ConnectMultiplayerRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
-	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.payload.AddFloorPayload;
 	import com.funrun.model.GameModel;
-	import com.funrun.model.state.GameState;
 	import com.funrun.model.constants.TrackConstants;
-	import com.funrun.model.state.ScreenState;
+	import com.funrun.model.state.GameState;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -20,9 +18,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var gameModel:GameModel;
-		
-		[Inject]
-		public var showScreenRequest:ShowScreenRequest;
 		
 		[Inject]
 		public var resetGameRequest:ResetGameRequest;
@@ -37,8 +32,6 @@ package com.funrun.controller.commands {
 		public var connectMultiplayerRequest:ConnectMultiplayerRequest;
 		
 		override public function execute():void {
-			// Show game screen.
-			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
 			// Set game state.
 			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
 			// Reset game.

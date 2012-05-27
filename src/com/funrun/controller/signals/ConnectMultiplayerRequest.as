@@ -4,9 +4,9 @@ package com.funrun.controller.signals
 	
 	public class ConnectMultiplayerRequest extends Signal
 	{
-		public function ConnectMultiplayerRequest(...valueClasses)
+		public function ConnectMultiplayerRequest()
 		{
-			super(valueClasses);
+			super();
 		}
 	}
 }

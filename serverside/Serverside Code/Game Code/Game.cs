@@ -69,6 +69,8 @@ namespace FunRun {
 		}
 
 		public override bool AllowUserJoin( Player player ) {
+			// TO-DO: Version check to ensure all clients are identical.
+
 			// Disallow players joining if there's not enough time left.
 			if ( secondsRemaining > minJoinTime ) {
 				return true;
@@ -81,12 +83,15 @@ namespace FunRun {
 			Message initMessage = Message.Create( "init" );
 
 			// Tell player their own id
-			initMessage.Add( player.Id );
+			//initMessage.Add( player.Id );
+
+			// Add current seconds remaining.
+			//initMessage.Add( secondsRemaining );
 
 			// Add the current state of all players to the init message.
-			foreach ( Player p in Players ) {
-				initMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
-			}
+			//foreach ( Player p in Players ) {
+		//		initMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+		//	}
 
 			// Send init message to player.
 			player.Send( initMessage );
