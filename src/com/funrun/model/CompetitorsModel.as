@@ -16,7 +16,7 @@ package com.funrun.model {
 			_competitors[ competitor.id ] = competitor;
 		}
 		
-		public function getWithId( id:String ):CompetitorVO {
+		public function getWithId( id:int ):CompetitorVO {
 			return _competitors[ id ];
 		}
 	}

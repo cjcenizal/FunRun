@@ -20,8 +20,8 @@ package com.funrun.model {
 			_distance = 0;
 		}
 		
-		public function get distance():Number {
-			return Math.round( _distance / TrackConstants.BLOCK_SIZE );
+		public function get z():Number {
+			return _distance;
 		}
 		
 		public function get distanceString():String {

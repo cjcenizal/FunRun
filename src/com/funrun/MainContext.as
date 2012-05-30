@@ -74,6 +74,7 @@ package com.funrun {
 	import com.funrun.controller.signals.WhitelistFailed;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CameraModel;
+	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
@@ -147,6 +148,7 @@ package com.funrun {
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( UserModel );
+			injector.mapSingleton( CompetitorsModel );
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );

@@ -11,19 +11,13 @@ namespace FunRun {
 	public class Player : BasePlayer {
 		//public float de;
 		//public float du;
-		public float x;
-		public float y;
-		public float z;
-		public float vx;
-		public float vy;
-		public float vz;
+		public double x = 0;
+		public double y = 0;
+		public double z = 0;
+		public double vx = 0;
+		public double vy = 0;
+		public double vz = 0;
 		public Player() {
-			x = 0;
-			y = 0;
-			z = 0;
-			vx = 0;
-			vy = 0;
-			vz = 0;
 		}
 	}
 
@@ -32,7 +26,7 @@ namespace FunRun {
 
 		private DateTime countdownStartTime;
 		private bool isRunning = false;
-		private int maxSeconds = 30;
+		private int maxSeconds = 15;
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
 		private int currentFillPosition = -1;
@@ -101,12 +95,12 @@ namespace FunRun {
 			switch ( message.Type ) {
 				case "u": // Update state.
 					// Update internal representation of player.
-					player.x = message.GetFloat( 0 );
-					player.y = message.GetFloat( 1 );
-					player.z = message.GetFloat( 2 );
-					player.vx = message.GetFloat( 3 );
-					player.vy = message.GetFloat( 4 );
-					player.vz = message.GetFloat( 5 );
+					player.x = message.GetDouble( 0 );
+					player.y = message.GetDouble( 1 );
+					player.z = message.GetDouble( 2 );
+					player.vx = message.GetDouble( 3 );
+					player.vy = message.GetDouble( 4 );
+					player.vz = message.GetDouble( 5 );
 					break;
 			}
 		}

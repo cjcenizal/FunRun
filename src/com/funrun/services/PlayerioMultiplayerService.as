@@ -83,7 +83,7 @@ package com.funrun.services {
 		}
 		
 		public function send( type:String, ...args ):void {
-			_connection.send( type, 100 );
+			_connection.send.apply( null, [ type ].concat( args ) );
 		}
 		
 		public function get isConnected():Boolean {

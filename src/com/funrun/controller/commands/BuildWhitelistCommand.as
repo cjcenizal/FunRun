@@ -11,6 +11,7 @@ package com.funrun.controller.commands {
 
 		override public function execute():void {
 			whitelistService.add( "2511953" ); // CJ
+			whitelistService.add( "100001085609205" ) // Joe's fake account
 		}
 	}
 }

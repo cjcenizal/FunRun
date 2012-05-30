@@ -23,6 +23,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
+	import com.funrun.services.PlayerioMultiplayerService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -75,6 +76,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
+		
+		[Inject]
+		public var multiplayerService:PlayerioMultiplayerService;
 		
 		override public function execute():void {
 			// Update countdown if necessary.
@@ -234,6 +238,17 @@ package com.funrun.controller.commands {
 			if ( gameModel.gameState == GameState.RUNNING ) {
 				displayDistanceRequest.dispatch( distanceModel.distanceString );
 			}
+			
+			// Update server.
+			multiplayerService.send(
+				"u",
+				playerModel.player.x,
+				playerModel.player.y,
+				distanceModel.z,
+				playerModel.velocity.x,
+				playerModel.velocity.y,
+				playerModel.velocity.z
+			);
 			
 			// Render.
 			renderSceneRequest.dispatch();
