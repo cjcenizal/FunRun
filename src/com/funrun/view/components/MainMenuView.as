@@ -1,6 +1,8 @@
 package com.funrun.view.components {
 
+	import com.cenizal.ui.AbstractButton;
 	import com.cenizal.ui.AbstractComponent;
+	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.ui.DummyButton;
 	import com.cenizal.utils.Center;
 	
@@ -19,6 +21,7 @@ package com.funrun.view.components {
 		
 		private var _logo:Bitmap;
 		private var _startGameButton:DummyButton;
+		private var _instructionsLabel:AbstractLabel;
 		private var _loginStatus:LoginStatusView;
 		
 		public var onStartGameButtonClick:Signal;
@@ -40,6 +43,7 @@ package com.funrun.view.components {
 			g.beginFill( 0xffffff );
 			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
 			g.endFill();
+			
 			// Logo.
 			_logo = new Logo();
 			addChild( _logo );
@@ -50,6 +54,12 @@ package com.funrun.view.components {
 			_startGameButton = new DummyButton( this, 0, _logo.y + _logo.height + 40, onClick, "Start game", 0xaaaaaa );
 			_startGameButton.draw();
 			Center.horizontal( _startGameButton, stage );
+			
+			// Instructions.
+			var instructionText:String = "Use arrow keys to move left and right, duck, and jump."
+			_instructionsLabel = new AbstractLabel( this, 0, _startGameButton.y + _startGameButton.height + 40, instructionText, 14 );
+			_instructionsLabel.draw();
+			Center.horizontal( _instructionsLabel, stage );
 			
 			// Login status.
 			_loginStatus = new LoginStatusView( this );
