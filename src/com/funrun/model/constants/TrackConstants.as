@@ -12,9 +12,6 @@ package com.funrun.model.constants
 		public static const PLAYER_RADIUS:int = 50;
 		public static const PLAYER_HALF_SIZE:int = 55;
 		
-		// Time.
-		public static const WAIT_SECONDS:int = 8;
-		
 		// Camera.
 		public static const CAM_Y:Number = 800;
 		public static const CAM_Z:Number = -1000;

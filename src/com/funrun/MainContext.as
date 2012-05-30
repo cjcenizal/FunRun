@@ -6,6 +6,7 @@ package com.funrun {
 	import com.funrun.controller.commands.AddObstacleCommand;
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.BuildGameCommand;
+	import com.funrun.controller.commands.BuildInterpolationCommand;
 	import com.funrun.controller.commands.BuildTimeCommand;
 	import com.funrun.controller.commands.BuildWhitelistCommand;
 	import com.funrun.controller.commands.ConnectMultiplayerCommand;
@@ -43,6 +44,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.BuildGameRequest;
+	import com.funrun.controller.signals.BuildInterpolationRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.ConnectMultiplayerRequest;
@@ -90,6 +92,7 @@ package com.funrun {
 	import com.funrun.model.GameModel;
 	import com.funrun.model.GeosMockModel;
 	import com.funrun.model.IGeosModel;
+	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.ObstaclesModel;
@@ -161,6 +164,7 @@ package com.funrun {
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( UserModel );
 			injector.mapSingleton( CompetitorsModel );
+			injector.mapSingleton( InterpolationModel );
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );
@@ -202,6 +206,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );
 			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
 			signalCommandMap.mapSignalClass( BuildTimeRequest,						BuildTimeCommand );
+			signalCommandMap.mapSignalClass( BuildInterpolationRequest,				BuildInterpolationCommand );
 			signalCommandMap.mapSignalClass( BuildGameRequest,						BuildGameCommand );
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			signalCommandMap.mapSignalClass( AddObstacleRequest,					AddObstacleCommand );

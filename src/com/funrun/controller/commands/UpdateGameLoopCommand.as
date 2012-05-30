@@ -14,6 +14,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.GameModel;
+	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
@@ -61,6 +62,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
+		
+		[Inject]
+		public var interpolationModel:InterpolationModel;
 		
 		// Commands.
 		
@@ -243,22 +247,18 @@ package com.funrun.controller.commands {
 				cameraModel.y += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - cameraModel.y ) * followFactor;
 				cameraModel.z = -1000;
 				cameraModel.update();
+				
+				// Update competitors' physics.
+				var len:int = competitorsModel.numCompetitors;
+				for ( var i:int = 0; i < len; i++ ) {
+					competitorsModel.getAt( i ).interpolate( interpolationModel.percent );
+				}
+				interpolationModel.increment();
 			}
 			
 			// Update UI.
 			if ( gameModel.gameState == GameState.RUNNING ) {
 				displayDistanceRequest.dispatch( distanceModel.distanceString );
-			}
-			
-			// Update competitors' physics.
-			var len:int = competitorsModel.numCompetitors;
-			var comp:CompetitorVO;
-			for ( var i:int = 0; i < len; i++ ) {
-				comp = competitorsModel.getAt( i );
-				// TO-DO: This type of interpolation looks janky.
-				//comp.mesh.x += comp.velocity.x;
-				//comp.mesh.y += comp.velocity.y;
-				//comp.mesh.z += comp.velocity.z;
 			}
 			
 			// Update other players.
