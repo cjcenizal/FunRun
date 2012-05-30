@@ -40,46 +40,30 @@ namespace FunRun {
 		private int minJoinTime = 5;
 
 		public override void GameStarted() {
-			countdownStartTime = DateTime.UtcNow;
 			// Update every 100 ms.
 			AddTimer( delegate {
-				secondsRemaining = 0;
 				if ( !isRunning ) {
-					// Continue countdown if not running yet.
-					double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
-					secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
+					updateSecondsRemaining();
 					if ( secondsRemaining <= 0 ) {
 						// Start running!
 						isRunning = true;
 					}
 				}
-
-				// Create update message.
-				Message updateMessage = Message.Create( "update" );
-				updateMessage.Add( secondsRemaining );
-
-				// Tell everyone about everyone else's state.
-				foreach ( Player p in Players ) {
-					updateMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
-				}
-
-				// Broadcast message to all players.
-				Broadcast( updateMessage );
+				broadcastUpdate();
 			}, 100 );
 		}
 
 		public override bool AllowUserJoin( Player player ) {
+			// This is called before GameStarted, so we will set up our countdown here, when the first player joins.
 			if ( PlayerCount == 0 ) {
 				countdownStartTime = DateTime.UtcNow;
 			}
-			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
-			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
-			// TO-DO: Check if game has started already. If it has, return false.
+			updateSecondsRemaining();
+			// Return whether or not game has already started.
 			return ( secondsRemaining > minJoinTime );
 		}
 
 		public override void UserJoined( Player player ) {
-
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "init" );
 
@@ -87,15 +71,14 @@ namespace FunRun {
 			initMessage.Add( player.Id );
 			
 			// Update and add time remaining.
-			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
-			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
-			initMessage.Add( 20 );
+			updateSecondsRemaining();
+			initMessage.Add( secondsRemaining );
 
 			// Add the current state of all players to the init message.
-			//foreach ( Player p in Players ) {
-			//	init.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
-			//}
-
+			foreach ( Player p in Players ) {
+				initMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+			}
+			
 			// Send init message to player.
 			player.Send( initMessage );
 		}
@@ -117,6 +100,25 @@ namespace FunRun {
 					player.vz = message.GetFloat( 5 );
 					break;
 			}
+		}
+
+		private void broadcastUpdate() {
+			// Create update message.
+			Message updateMessage = Message.Create( "update" );
+			updateMessage.Add( secondsRemaining );
+
+			// Tell everyone about everyone else's state.
+			foreach ( Player p in Players ) {
+				updateMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+			}
+
+			// Broadcast message to all players.
+			Broadcast( updateMessage );
+		}
+
+		private void updateSecondsRemaining() {
+			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
+			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
 		}
 	}
 }

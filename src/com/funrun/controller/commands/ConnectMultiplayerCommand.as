@@ -38,8 +38,8 @@ package com.funrun.controller.commands {
 			/*
 			1) Display "finding game" panel
 			2) Connect to room or error, and show feedback
-			3) Room tells us how much time is remaining, and controls the countdown
-			4) When countdown is up, room tells us to start the game
+			3) DONE: Room tells us how much time is remaining, and controls the countdown
+			4) DONE: When countdown is up, room tells us to start the game
 			*/
 			// Connect to room.
 			multiplayerService.onConnectedSignal.add( onConnected );
@@ -48,7 +48,6 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onConnected():void {
-			trace(this, "connected");
 			multiplayerService.connection.addMessageHandler( "init", onInit );
 			multiplayerService.connection.addMessageHandler( "update", onUpdate );
 		}
@@ -58,27 +57,21 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onInit( message:Message ):void {
-			// TO-DO: Store id so we can ignore updates we originated.
-			trace("on init ");
-			
-			/*
+			// Store id so we can ignore updates we originated.
+			multiplayerService.roomId = message.getInt( 0 );
 			// Initialize countdown.
-			//countdownModel.secondsRemaining = secondsRemaining;
+			countdownModel.secondsRemaining = message.getInt( 1 );
 			toggleCountdownRequest.dispatch( true );
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
-			
 			// Start input.
 			enablePlayerInputRequest.dispatch( true );
-			
 			// Show game screen.
 			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
-			*/
 		}
 		
-		private function onUpdate( message:Message, secondsRemaining:int ):void {
-			countdownModel.secondsRemaining = secondsRemaining;
-			trace("secondsRemaining: " + secondsRemaining);
+		private function onUpdate( message:Message ):void {
+			countdownModel.secondsRemaining = message.getInt( 0 );
 		}
 	}
 }

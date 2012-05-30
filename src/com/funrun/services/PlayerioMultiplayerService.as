@@ -14,6 +14,7 @@ package com.funrun.services {
 		private var _onConnectedSignal:Signal;
 		private var _onErrorSignal:Signal;
 		private var _isConnected:Boolean = false;
+		public var roomId:int = -1;
 
 		public function PlayerioMultiplayerService() {
 			_onConnectedSignal = new Signal();

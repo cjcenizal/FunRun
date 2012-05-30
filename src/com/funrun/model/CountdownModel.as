@@ -7,7 +7,7 @@ package com.funrun.model {
 		private var _secondsRemaining:int = 0;
 		
 		public function set secondsRemaining( val:int ):void {
-			_secondsRemaining = secondsRemaining;
+			_secondsRemaining = val;
 		}
 		
 		public function get secondsRemaining():int {
