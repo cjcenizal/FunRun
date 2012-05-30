@@ -8,6 +8,7 @@ package com.funrun.view.components {
 		
 		private var _mainMenu:MainMenuView;
 		private var _game:GameView;
+		private var _popups:PopupsView;
 		
 		public function MainView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
@@ -16,6 +17,7 @@ package com.funrun.view.components {
 		public function init():void {
 			_mainMenu = new MainMenuView( this );
 			_game = new GameView( this );
+			_popups = new PopupsView( this );
 		}
 		
 		public function hideAll():void {

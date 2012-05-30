@@ -24,6 +24,7 @@ package com.funrun {
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
+	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
 	import com.funrun.controller.commands.ShowResultsPopupCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StartRunningCommand;
@@ -53,6 +54,7 @@ package com.funrun {
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
+	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
@@ -60,6 +62,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
+	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameRequest;
@@ -93,20 +96,24 @@ package com.funrun {
 	import com.funrun.services.WhitelistService;
 	import com.funrun.view.components.CountdownView;
 	import com.funrun.view.components.DistanceView;
+	import com.funrun.view.components.FindingGamePopup;
 	import com.funrun.view.components.GameView;
 	import com.funrun.view.components.LoginStatusView;
 	import com.funrun.view.components.MainMenuView;
 	import com.funrun.view.components.MainView;
+	import com.funrun.view.components.PlayerioErrorPopupView;
 	import com.funrun.view.components.PopupsView;
 	import com.funrun.view.components.ResultsPopup;
 	import com.funrun.view.components.TrackView;
 	import com.funrun.view.mediators.AppMediator;
 	import com.funrun.view.mediators.CountdownMediator;
 	import com.funrun.view.mediators.DistanceMediator;
+	import com.funrun.view.mediators.FindingGamePopupMediator;
 	import com.funrun.view.mediators.GameMediator;
 	import com.funrun.view.mediators.LoginStatusMediator;
 	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
+	import com.funrun.view.mediators.PlayerioErrorPopupMediator;
 	import com.funrun.view.mediators.PopupsMediator;
 	import com.funrun.view.mediators.ResultPopupMediator;
 	import com.funrun.view.mediators.TrackMediator;
@@ -163,6 +170,7 @@ package com.funrun {
 			injector.mapSingleton( AddPopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
 			injector.mapSingleton( RemoveResultsPopupRequest );
+			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
 			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
@@ -190,21 +198,24 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
+			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
 			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
 
 			// Map views to mediators.
-			mediatorMap.mapView( MainView, 				MainMediator );
-			mediatorMap.mapView( TrackView, 			TrackMediator );
-			mediatorMap.mapView( DistanceView, 			DistanceMediator );
-			mediatorMap.mapView( CountdownView, 		CountdownMediator );
-			mediatorMap.mapView( LoginStatusView, 		LoginStatusMediator );
-			mediatorMap.mapView( GameView,				GameMediator );
-			mediatorMap.mapView( MainMenuView,			MainMenuMediator );
-			mediatorMap.mapView( PopupsView,			PopupsMediator );
-			mediatorMap.mapView( ResultsPopup,			ResultPopupMediator );
+			mediatorMap.mapView( MainView, 					MainMediator );
+			mediatorMap.mapView( TrackView, 				TrackMediator );
+			mediatorMap.mapView( DistanceView, 				DistanceMediator );
+			mediatorMap.mapView( CountdownView, 			CountdownMediator );
+			mediatorMap.mapView( LoginStatusView, 			LoginStatusMediator );
+			mediatorMap.mapView( GameView,					GameMediator );
+			mediatorMap.mapView( MainMenuView,				MainMenuMediator );
+			mediatorMap.mapView( PopupsView,				PopupsMediator );
+			mediatorMap.mapView( ResultsPopup,				ResultPopupMediator );
+			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
+			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
 			mediatorMap.mapView( FunRun, 				AppMediator );

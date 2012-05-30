@@ -35,7 +35,9 @@ package com.funrun.services {
 			_connection.removeDisconnectHandler( onServerDisconnect );
 			for ( var key:String in _messageHandlers ) {
 				_connection.removeMessageHandler( key, _messageHandlers[ key ] );
+				delete _messageHandlers[ key ];
 			}
+			_messageHandlers = {};
 			_connection = null;
 			_error = null;
 			_isConnected = false;

@@ -27,6 +27,7 @@ package com.funrun.controller.commands {
 			commandMap.unmapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			// Stop responding to input.
 			enablePlayerInputRequest.dispatch( false );
+			// Disconnect from server.
 			multiplayerService.disconnect();
 		}
 	}

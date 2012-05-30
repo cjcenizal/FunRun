@@ -31,9 +31,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var connectMultiplayerRequest:ConnectMultiplayerRequest;
 		
-		//[Inject]
-		//public var show
-		
 		override public function execute():void {
 			// Set game state.
 			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
