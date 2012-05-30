@@ -40,6 +40,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
+	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
@@ -117,6 +118,7 @@ package com.funrun {
 	import com.funrun.view.components.LoginStatusView;
 	import com.funrun.view.components.MainMenuView;
 	import com.funrun.view.components.MainView;
+	import com.funrun.view.components.NametagsView;
 	import com.funrun.view.components.PlayerioErrorPopupView;
 	import com.funrun.view.components.PopupsView;
 	import com.funrun.view.components.ResultsPopup;
@@ -129,6 +131,7 @@ package com.funrun {
 	import com.funrun.view.mediators.LoginStatusMediator;
 	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
+	import com.funrun.view.mediators.NametagsMediator;
 	import com.funrun.view.mediators.PlayerioErrorPopupMediator;
 	import com.funrun.view.mediators.PopupsMediator;
 	import com.funrun.view.mediators.ResultPopupMediator;
@@ -196,6 +199,7 @@ package com.funrun {
 			injector.mapSingleton( RemovePopupRequest );
 			injector.mapSingleton( RemoveResultsPopupRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
+			injector.mapSingleton( AddNametagRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
 			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
@@ -248,6 +252,7 @@ package com.funrun {
 			mediatorMap.mapView( ResultsPopup,				ResultPopupMediator );
 			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
 			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
+			mediatorMap.mapView( NametagsView,				NametagsMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
 			mediatorMap.mapView( FunRun, 					AppMediator );

@@ -1,5 +1,6 @@
 package com.funrun.controller.commands {
 	
+	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -9,15 +10,16 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
-	import com.funrun.model.View3DModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
+	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
+	import com.funrun.model.View3DModel;
 	import com.funrun.model.collision.CollisionsCollection;
 	import com.funrun.model.collision.FaceCollision;
 	import com.funrun.model.collision.ObstacleData;
@@ -27,6 +29,8 @@ package com.funrun.controller.commands {
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.vo.CompetitorVO;
+	
+	import flash.geom.Point;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -65,6 +69,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var interpolationModel:InterpolationModel;
+		
+		[Inject]
+		public var nametagsModel:NametagsModel;
 		
 		// Commands.
 		
@@ -250,8 +257,17 @@ package com.funrun.controller.commands {
 				
 				// Update competitors' physics.
 				var len:int = competitorsModel.numCompetitors;
+				var competitor:CompetitorVO;
+				var nametag:AbstractLabel;
 				for ( var i:int = 0; i < len; i++ ) {
-					competitorsModel.getAt( i ).interpolate( interpolationModel.percent );
+					competitor = competitorsModel.getAt( i );
+					competitor.interpolate( interpolationModel.percent );
+					nametag = nametagsModel.getWithId( competitor.id );
+					if ( nametag ) {
+						var pos:Point = view3DModel.get2DFrom3D( competitor.mesh.position );
+						nametag.x = pos.x;
+						nametag.y = pos.y;
+					}
 				}
 				interpolationModel.increment();
 			}

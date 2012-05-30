@@ -44,15 +44,18 @@ package com.funrun.controller.commands {
 			for ( var i:int = 1; i < message.length; i += 7 ) {
 				if ( message.getInt( i ) != multiplayerService.playerRoomId ) {
 					comp = competitorsModel.getWithId( message.getInt( i ) );
-					comp.hardUpdate();
-					comp.updatePosition(
-						message.getNumber( i + 1 ),
-						message.getNumber( i + 2 ),
-						distanceModel.getRelativeDistanceTo( message.getNumber( i + 3 ) )
-						);
-					comp.velocity.x = message.getNumber( i + 4 );
-					comp.velocity.y = message.getNumber( i + 5 );
-					comp.velocity.z = message.getNumber( i + 6 );
+					// Sometimes comp returns null for some reason.
+					if ( comp ) {
+						comp.hardUpdate();
+						comp.updatePosition(
+							message.getNumber( i + 1 ),
+							message.getNumber( i + 2 ),
+							distanceModel.getRelativeDistanceTo( message.getNumber( i + 3 ) )
+							);
+						comp.velocity.x = message.getNumber( i + 4 );
+						comp.velocity.y = message.getNumber( i + 5 );
+						comp.velocity.z = message.getNumber( i + 6 );
+					}
 				}
 			}
 		}

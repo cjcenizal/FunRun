@@ -5,6 +5,7 @@ package com.funrun.model {
 	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	
+	import flash.geom.Point;
 	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Actor;
@@ -48,6 +49,10 @@ package com.funrun.model {
 		 */
 		public function removeFromScene( object:ObjectContainer3D ):void {
 			_scene.removeChild( object );
+		}
+		
+		public function get2DFrom3D( position:Vector3D ):Point {
+			return _view.project( position );
 		}
 		
 		public function get cameraX():Number {

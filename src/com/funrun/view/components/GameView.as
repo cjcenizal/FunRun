@@ -7,6 +7,7 @@ package com.funrun.view.components {
 	public class GameView extends AbstractComponent {
 		
 		private var _track:TrackView;
+		private var _nametags:NametagsView;
 		private var _distance:DistanceView;
 		private var _countdown:CountdownView;
 
@@ -17,6 +18,7 @@ package com.funrun.view.components {
 
 		public function init():void {
 			_track = new TrackView( this );
+			_nametags = new NametagsView( this );
 			_distance = new DistanceView( this );
 			_countdown = new CountdownView( this );
 		}

@@ -4,6 +4,7 @@ package com.funrun.controller.commands {
 	import away3d.primitives.CylinderGeometry;
 	
 	import com.cenizal.ui.AbstractLabel;
+	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
@@ -68,6 +69,9 @@ package com.funrun.controller.commands {
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		[Inject]
+		public var addNametagRequest:AddNametagRequest;
+		
+		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
 		
 		[Inject]
@@ -93,16 +97,20 @@ package com.funrun.controller.commands {
 					mesh.x = message.getNumber( i + 2 );
 					mesh.y = message.getNumber( i + 3 );
 					mesh.z = distanceModel.getRelativeDistanceTo( message.getNumber( i + 4 ) );
-					competitorsModel.add( new CompetitorVO(
+					var competitor:CompetitorVO = new CompetitorVO(
 						message.getInt( i ),
 						message.getString( i + 1 ),
 						mesh,
 						new Vector3D( message.getNumber( i + 5 ), message.getNumber( i + 6 ), message.getNumber( i + 7 ) ),
 						false,
-						false ) );
+						false
+					);
+					competitorsModel.add( competitor );
 					addObjectToSceneRequest.dispatch( mesh );
 					// Add nametag.
-					//var nametag:AbstractLabel = new AbstractLabel( null, 0, 0, 
+					var nametag:AbstractLabel = new AbstractLabel( null, 0, 0, competitor.name );
+					nametagsModel.add( competitor.id, nametag );
+					addNametagRequest.dispatch( nametag );
 				}
 			}
 			
