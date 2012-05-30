@@ -5,7 +5,7 @@ package com.funrun.services {
 		public function WhitelistOpenService() {
 		}
 
-		public function add( id:String ):void {
+		public function add( id:Number ):void {
 		}
 
 		public function passes( id:String ):Boolean {

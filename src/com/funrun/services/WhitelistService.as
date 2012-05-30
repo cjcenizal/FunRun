@@ -8,14 +8,14 @@ package com.funrun.services {
 			_ids = [];
 		}
 		
-		public function add( id:String ):void {
+		public function add( id:Number ):void {
 			_ids.push( id );
 		}
 		
 		public function passes( id:String ):Boolean {
 			var len:int = _ids.length;
 			for ( var i:int = 0; i < len; i++ ) {
-				if ( _ids[ i ] == id ) {
+				if ( ( _ids[ i ] as Number ).toString() == id ) {
 					return true;
 				}
 			}
