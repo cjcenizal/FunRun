@@ -9,6 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.model.CameraModel;
+	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.GameModel;
@@ -23,6 +24,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
+	import com.funrun.model.vo.CompetitorVO;
 	import com.funrun.services.PlayerioMultiplayerService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -52,6 +54,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var countdownModel:CountdownModel;
+		
+		[Inject]
+		public var competitorsModel:CompetitorsModel;
 		
 		[Inject]
 		public var startRunningRequest:StartRunningRequest;
@@ -237,6 +242,17 @@ package com.funrun.controller.commands {
 			// Update UI.
 			if ( gameModel.gameState == GameState.RUNNING ) {
 				displayDistanceRequest.dispatch( distanceModel.distanceString );
+			}
+			
+			// Update competitors' physics.
+			var len:int = competitorsModel.numCompetitors;
+			var comp:CompetitorVO;
+			for ( var i:int = 0; i < len; i++ ) {
+				comp = competitorsModel.getAt( i );
+				// TO-DO: This type of interpolation looks janky.
+				comp.mesh.x += comp.velocity.x;
+				comp.mesh.y += comp.velocity.y;
+				comp.mesh.z += comp.velocity.z;
 			}
 			
 			// Update server.
