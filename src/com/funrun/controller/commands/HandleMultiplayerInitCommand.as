@@ -1,22 +1,13 @@
 package com.funrun.controller.commands {
 	
-	import away3d.entities.Mesh;
-	import away3d.primitives.CylinderGeometry;
-	
-	import com.cenizal.ui.AbstractLabel;
-	import com.funrun.controller.signals.AddNametagRequest;
-	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
-	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
-	import com.funrun.model.MaterialsModel;
-	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObstaclesModel;
-	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.model.vo.CompetitorVO;
@@ -44,16 +35,7 @@ package com.funrun.controller.commands {
 		public var countdownModel:CountdownModel;
 		
 		[Inject]
-		public var competitorsModel:CompetitorsModel;
-		
-		[Inject]
 		public var distanceModel:DistanceModel;
-		
-		[Inject]
-		public var materialsModel:MaterialsModel;
-		
-		[Inject]
-		public var nametagsModel:NametagsModel;
 		
 		// Services.
 		
@@ -66,10 +48,7 @@ package com.funrun.controller.commands {
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
 		[Inject]
-		public var addObjectToSceneRequest:AddObjectToSceneRequest;
-		
-		[Inject]
-		public var addNametagRequest:AddNametagRequest;
+		public var addCompetitorRequest:AddCompetitorRequest;
 		
 		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
@@ -92,25 +71,15 @@ package com.funrun.controller.commands {
 			// Add pre-existing competitors.
 			for ( var i:int = 3; i < message.length; i += 8 ) {
 				if ( message.getInt( i ) != multiplayerService.playerRoomId ) {
-					// Add mesh.
-					var mesh:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
-					mesh.x = message.getNumber( i + 2 );
-					mesh.y = message.getNumber( i + 3 );
-					mesh.z = distanceModel.getRelativeDistanceTo( message.getNumber( i + 4 ) );
 					var competitor:CompetitorVO = new CompetitorVO(
 						message.getInt( i ),
 						message.getString( i + 1 ),
-						mesh,
 						new Vector3D( message.getNumber( i + 5 ), message.getNumber( i + 6 ), message.getNumber( i + 7 ) ),
 						false,
 						false
 					);
-					competitorsModel.add( competitor );
-					addObjectToSceneRequest.dispatch( mesh );
-					// Add nametag.
-					var nametag:AbstractLabel = new AbstractLabel( null, 0, 0, competitor.name );
-					nametagsModel.add( competitor.id, nametag );
-					addNametagRequest.dispatch( nametag );
+					competitor.updatePosition( message.getNumber( i + 2 ), message.getNumber( i + 3 ), distanceModel.getRelativeDistanceTo( message.getNumber( i + 4 ) ) );
+					addCompetitorRequest.dispatch( competitor );
 				}
 			}
 			

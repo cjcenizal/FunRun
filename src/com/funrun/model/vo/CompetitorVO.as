@@ -8,17 +8,16 @@ package com.funrun.model.vo {
 
 		private var _id:int;
 		private var _name:String;
-		private var _mesh:Mesh;
+		public var mesh:Mesh;
 		private var _velocity:Vector3D;
 		private var _isDead:Boolean;
 		private var _isDucking:Boolean;
 		private var _oldPosition:Vector3D;
 		private var _newPosition:Vector3D;
 
-		public function CompetitorVO( id:int, name:String, mesh:Mesh, velocity:Vector3D, isDead:Boolean, isDucking:Boolean ) {
+		public function CompetitorVO( id:int, name:String, velocity:Vector3D, isDead:Boolean, isDucking:Boolean ) {
 			_id = id;
 			_name = name;
-			_mesh = mesh;
 			_velocity = velocity;
 			_isDead = isDead;
 			_isDucking = isDucking;
@@ -36,15 +35,15 @@ package com.funrun.model.vo {
 		}
 		
 		public function hardUpdate():void {
-			_mesh.x = _newPosition.x;
-			_mesh.y = _newPosition.y;
-			_mesh.z = _newPosition.z;
+			mesh.x = _newPosition.x;
+			mesh.y = _newPosition.y;
+			mesh.z = _newPosition.z;
 		}
 		
 		public function interpolate( pct:Number ):void {
-			_mesh.x = _oldPosition.x + ( _newPosition.x - _oldPosition.x ) * pct;
-			_mesh.y = _oldPosition.y + ( _newPosition.y - _oldPosition.y ) * pct;
-			_mesh.z = _oldPosition.z + ( _newPosition.z - _oldPosition.z ) * pct;
+			mesh.x = _oldPosition.x + ( _newPosition.x - _oldPosition.x ) * pct;
+			mesh.y = _oldPosition.y + ( _newPosition.y - _oldPosition.y ) * pct;
+			mesh.z = _oldPosition.z + ( _newPosition.z - _oldPosition.z ) * pct;
 		}
 		
 		public function get id():int {
@@ -57,10 +56,6 @@ package com.funrun.model.vo {
 		
 		public function get velocity():Vector3D {
 			return _velocity;
-		}
-		
-		public function get mesh():Mesh {
-			return _mesh;
 		}
 	}
 }

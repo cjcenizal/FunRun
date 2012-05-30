@@ -1,5 +1,6 @@
 package com.funrun {
 
+	import com.funrun.controller.commands.AddCompetitorCommand;
 	import com.funrun.controller.commands.AddFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
@@ -37,6 +38,7 @@ package com.funrun {
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
+	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
@@ -235,6 +237,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
+			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
