@@ -36,8 +36,8 @@ namespace FunRun {
 		private DateTime countdownStartTime;
 		private bool isRunning = false;
 		private int maxSeconds = 11;
-		private int minJoinTime = 3;
 		private double secondsRemaining = 0;
+		private int minJoinTime = 5;
 
 		public override void GameStarted() {
 			countdownStartTime = DateTime.UtcNow;
@@ -69,29 +69,32 @@ namespace FunRun {
 		}
 
 		public override bool AllowUserJoin( Player player ) {
-			// TO-DO: Version check to ensure all clients are identical.
-
-			// Disallow players joining if there's not enough time left.
-			if ( secondsRemaining > minJoinTime ) {
-				return true;
+			if ( PlayerCount == 0 ) {
+				countdownStartTime = DateTime.UtcNow;
 			}
-			return false;
+			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
+			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
+			// TO-DO: Check if game has started already. If it has, return false.
+			return ( secondsRemaining > minJoinTime );
 		}
 
 		public override void UserJoined( Player player ) {
+
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "init" );
 
 			// Tell player their own id
-			//initMessage.Add( player.Id );
-
-			// Add current seconds remaining.
-			//initMessage.Add( secondsRemaining );
+			initMessage.Add( player.Id );
+			
+			// Update and add time remaining.
+			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
+			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
+			initMessage.Add( 20 );
 
 			// Add the current state of all players to the init message.
 			//foreach ( Player p in Players ) {
-		//		initMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
-		//	}
+			//	init.Add( p.id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+			//}
 
 			// Send init message to player.
 			player.Send( initMessage );
@@ -113,18 +116,7 @@ namespace FunRun {
 					player.vy = message.GetFloat( 4 );
 					player.vz = message.GetFloat( 5 );
 					break;
-				case "REQUEST_OBSTACLES":
-					UpdateObstacles( player );
-					break;
 			}
-		}
-
-		private void UpdateObstacles( Player player ) {
-			// TO-DO.
-			// Check if there are sufficient obstacles with which to provide the player.
-			// If not, add more.
-			// Provide them to the player.
-			// player.send( obstaclesMessage );
 		}
 	}
 }

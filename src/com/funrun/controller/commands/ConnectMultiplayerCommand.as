@@ -61,6 +61,7 @@ package com.funrun.controller.commands {
 			// TO-DO: Store id so we can ignore updates we originated.
 			trace("on init ");
 			
+			/*
 			// Initialize countdown.
 			//countdownModel.secondsRemaining = secondsRemaining;
 			toggleCountdownRequest.dispatch( true );
@@ -72,10 +73,12 @@ package com.funrun.controller.commands {
 			
 			// Show game screen.
 			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
+			*/
 		}
 		
 		private function onUpdate( message:Message, secondsRemaining:int ):void {
 			countdownModel.secondsRemaining = secondsRemaining;
+			trace("secondsRemaining: " + secondsRemaining);
 		}
 	}
 }
