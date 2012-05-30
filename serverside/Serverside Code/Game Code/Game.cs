@@ -9,7 +9,6 @@ namespace FunRun {
 	
 	// Each player that joins the game will have these attributes.
 	public class Player : BasePlayer {
-		public string id;
 		//public float de;
 		//public float du;
 		public float x;
@@ -33,7 +32,7 @@ namespace FunRun {
 
 		private DateTime countdownStartTime;
 		private bool isRunning = false;
-		private int maxSeconds = 2;//10;
+		private int maxSeconds = 30;
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
 		private int currentFillPosition = -1;
@@ -63,7 +62,7 @@ namespace FunRun {
 			return true;//( secondsRemaining > minJoinTime );
 		}
 
-		public override void UserJoined (Player player) {
+		public override void UserJoined( Player player ) {
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "i" );
 
@@ -86,11 +85,16 @@ namespace FunRun {
 			
 			// Send init message to player.
 			player.Send( initMessage );
+
+			// Let everyone know who's here.
+			Message newPlayerMessage = Message.Create( "n" );
+			newPlayerMessage.Add( player.Id, player.x, player.y, player.z, player.vx, player.vy, player.vz );
+			Broadcast( newPlayerMessage );
 		}
 
 		public override void UserLeft( Player player ) {
 			//Inform all other players that user left.
-			Broadcast( "left", player.id );
+			Broadcast( "l", player.Id );
 		}
 		
 		public override void GotMessage( Player player, Message message ) {

@@ -78,6 +78,7 @@ package com.funrun.controller.commands {
 		private function onConnected():void {
 			multiplayerService.addMessageHandler( "i", onInit );
 			multiplayerService.addMessageHandler( "u", onUpdate );
+			multiplayerService.addMessageHandler( "n", onNewPlayerJoined );
 		}
 		
 		private function onError():void {
@@ -103,6 +104,10 @@ package com.funrun.controller.commands {
 		
 		private function onUpdate( message:Message ):void {
 			countdownModel.secondsRemaining = message.getInt( 0 );
+		}
+		
+		private function onNewPlayerJoined( message:Message ):void {
+			trace(this, "new player!", message.getInt( 0 ));
 		}
 	}
 }
