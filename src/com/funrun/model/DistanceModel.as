@@ -2,6 +2,7 @@ package com.funrun.model {
 	
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.TrackConstants;
+	
 	import org.robotlegs.mvcs.Actor;
 
 	public class DistanceModel extends Actor {
@@ -20,7 +21,11 @@ package com.funrun.model {
 			_distance = 0;
 		}
 		
-		public function get z():Number {
+		public function getRelativeDistanceTo( otherPlayerDistance:Number ):Number {
+			return otherPlayerDistance - _distance;
+		}
+		
+		public function get rawDistance():Number {
 			return _distance;
 		}
 		

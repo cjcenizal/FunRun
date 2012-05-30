@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.model.CameraModel;
@@ -25,14 +26,17 @@ package com.funrun.controller.commands {
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.vo.CompetitorVO;
-	import com.funrun.services.PlayerioMultiplayerService;
 	
 	import org.robotlegs.mvcs.Command;
 
 	public class UpdateGameLoopCommand extends Command {
 		
+		// Arguments.
+		
 		[Inject]
 		public var timeEvent:TimeEvent;
+		
+		// Models.
 		
 		[Inject]
 		public var trackModel:TrackModel;
@@ -57,6 +61,8 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
+		
+		// Commands.
 		
 		[Inject]
 		public var startRunningRequest:StartRunningRequest;
@@ -83,7 +89,7 @@ package com.funrun.controller.commands {
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
 		[Inject]
-		public var multiplayerService:PlayerioMultiplayerService;
+		public var sendMultiplayerUpdateRequest:SendMultiplayerUpdateRequest;
 		
 		override public function execute():void {
 			// Update countdown if necessary.
@@ -250,21 +256,13 @@ package com.funrun.controller.commands {
 			for ( var i:int = 0; i < len; i++ ) {
 				comp = competitorsModel.getAt( i );
 				// TO-DO: This type of interpolation looks janky.
-				comp.mesh.x += comp.velocity.x;
-				comp.mesh.y += comp.velocity.y;
-				comp.mesh.z += comp.velocity.z;
+				//comp.mesh.x += comp.velocity.x;
+				//comp.mesh.y += comp.velocity.y;
+				//comp.mesh.z += comp.velocity.z;
 			}
 			
-			// Update server.
-			multiplayerService.send(
-				"u",
-				playerModel.player.x,
-				playerModel.player.y,
-				distanceModel.z,
-				playerModel.velocity.x,
-				playerModel.velocity.y,
-				playerModel.velocity.z
-			);
+			// Update other players.
+			sendMultiplayerUpdateRequest.dispatch();
 			
 			// Render.
 			renderSceneRequest.dispatch();

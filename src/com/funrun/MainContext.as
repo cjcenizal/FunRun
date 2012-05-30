@@ -9,6 +9,9 @@ package com.funrun {
 	import com.funrun.controller.commands.BuildTimeCommand;
 	import com.funrun.controller.commands.BuildWhitelistCommand;
 	import com.funrun.controller.commands.ConnectMultiplayerCommand;
+	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
+	import com.funrun.controller.commands.HandleMultiplayerNewPlayerJoinedCommand;
+	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.KeyDownCommand;
 	import com.funrun.controller.commands.KeyUpCommand;
@@ -23,6 +26,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LoginFulfilledCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
+	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
 	import com.funrun.controller.commands.ShowResultsPopupCommand;
@@ -45,6 +49,9 @@ package com.funrun {
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
+	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
+	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
@@ -61,6 +68,7 @@ package com.funrun {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
@@ -201,6 +209,10 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );
+			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );

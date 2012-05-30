@@ -3,13 +3,11 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.payload.AddFloorPayload;
-	import com.funrun.model.DistanceModel;
 	import com.funrun.model.FloorsModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.collision.ObstacleData;
 	import com.funrun.model.constants.TrackConstants;
-	import com.funrun.services.PlayerioMultiplayerService;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -17,9 +15,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var obstaclesModel:ObstaclesModel;
-		
-		[Inject]
-		public var distanceModel:DistanceModel;
 		
 		[Inject]
 		public var floorsModel:FloorsModel;
@@ -32,9 +27,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var addFloorRequest:AddFloorRequest;
-		
-		[Inject]
-		public var multiplayerService:PlayerioMultiplayerService;
 		
 		override public function execute():void {
 			// Get an obstacle.
