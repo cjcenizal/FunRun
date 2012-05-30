@@ -1,5 +1,7 @@
 package com.funrun.services {
 
+	import flash.utils.Dictionary;
+	
 	import org.osflash.signals.Signal;
 	
 	import playerio.Client;
@@ -65,7 +67,21 @@ package com.funrun.services {
 		
 		public function addMessageHandler( type:String, handler:Function ):void {
 			_connection.addMessageHandler( type, handler );
-			_messageHandlers[ type ] = handler;
+			if ( !_messageHandlers[ type ] ) {
+				_messageHandlers[ type ] = new Dictionary();
+			}
+			( _messageHandlers[ type ] as Dictionary )[ handler ] = handler;
+		}
+		
+		public function removeMessageHandler( type:String, handler:Function ):void {
+			_connection.removeMessageHandler( type, handler );
+			if ( _messageHandlers[ type ] ) {
+				delete _messageHandlers[ type ][ handler ];
+			}
+		}
+		
+		public function send( type:String, ...args ):void {
+			_connection.send( type, 100 );
 		}
 		
 		public function get isConnected():Boolean {

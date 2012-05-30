@@ -35,8 +35,8 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Reset distance.
-			distanceModel.distance = 0;
-			displayDistanceRequest.dispatch( distanceModel.distanceString() );
+			distanceModel.reset();
+			displayDistanceRequest.dispatch( distanceModel.distanceString );
 			// Reset player.
 			resetPlayerRequest.dispatch();
 			// Reset camera.

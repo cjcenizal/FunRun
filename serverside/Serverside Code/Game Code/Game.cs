@@ -31,13 +31,13 @@ namespace FunRun {
 	[RoomType("Game")]
 	public class GameCode : Game<Player> {
 
-		private Dictionary<string, int> dictionary = new Dictionary<string, int>();
-
 		private DateTime countdownStartTime;
 		private bool isRunning = false;
 		private int maxSeconds = 2;//10;
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
+		private int currentFillPosition = -1;
+		private Random obstacleGenerator = new Random();
 
 		public override void GameStarted() {
 			// Update every 100 ms.
@@ -57,6 +57,7 @@ namespace FunRun {
 			// This is called before GameStarted, so we will set up our countdown here, when the first player joins.
 			if ( PlayerCount == 0 ) {
 				countdownStartTime = DateTime.UtcNow;
+				fillUpObstaclesUntil( 0 );
 			}
 			updateSecondsRemaining();
 			// Return whether or not game has already started.
@@ -65,7 +66,7 @@ namespace FunRun {
 
 		public override void UserJoined( Player player ) {
 			// Create init message for the joining player.
-			Message initMessage = Message.Create( "init" );
+			Message initMessage = Message.Create( "i" );
 
 			// Tell player their own id
 			initMessage.Add( player.Id );
@@ -73,6 +74,8 @@ namespace FunRun {
 			// Update and add time remaining.
 			updateSecondsRemaining();
 			initMessage.Add( secondsRemaining );
+
+			// Add obstacles.
 
 			// Add the current state of all players to the init message.
 			foreach ( Player p in Players ) {
@@ -90,7 +93,10 @@ namespace FunRun {
 		
 		public override void GotMessage( Player player, Message message ) {
 			switch ( message.Type ) {
-				case "UPDATE":
+				case "o": // Fill up obstacles.
+					fillUpObstaclesUntil( message.GetInt( 0 ) );
+					break;
+				case "u": // Update state.
 					// Update internal representation of player.
 					player.x = message.GetFloat( 0 );
 					player.y = message.GetFloat( 1 );
@@ -102,9 +108,13 @@ namespace FunRun {
 			}
 		}
 
+		// This method is called when the last player leaves the room, and it's closed down.
+		public override void GameClosed() {
+		}
+
 		private void broadcastUpdate() {
 			// Create update message.
-			Message updateMessage = Message.Create( "update" );
+			Message updateMessage = Message.Create( "u" );
 			updateMessage.Add( secondsRemaining );
 
 			// Tell everyone about everyone else's state.
@@ -120,91 +130,20 @@ namespace FunRun {
 			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
 			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
 		}
+
+		private void fillUpObstaclesUntil( int blocksPosition ) {
+			// If we haven't generated obstacles up to this position yet.
+			if ( blocksPosition > currentFillPosition ) {
+				currentFillPosition = blocksPosition;
+				Message obstaclesMessage = Message.Create( "o" );
+				// Create a ton of obstacles and tell everyone about them.
+				int i = 0;
+				while ( i < 20 ) {
+					obstaclesMessage.Add( obstacleGenerator.NextDouble() );
+					i++;
+				}
+				Broadcast( obstaclesMessage );
+			}
+		}
 	}
 }
-
-
-
-
-
-
-
-
-
-/*
-SNIPPPETS
- 
- 
-		//Create array to store our letters
-		private Letter[] letters = new Letter[230];
-		
- 
-			// add a timer that sends out an update every 100th millisecond
-			AddTimer(delegate {
-				//Create update message
-				Message update = Message.Create("update");
-
-				//Add mouse cordinates for each player to the message
-				foreach(Player p in Players) {
-					update.Add(p.Id, p.X, p.Y);
-				}
-
-				//Broadcast message to all players
-				Broadcast(update);
-			}, 100);	
- 
- 
-
-		// This method is called when the last player leaves the room, and it's closed down.
-		public override void GameClosed() {
-		}
- 
- // This method is called when a player sends a message into the server code
-		public override void GotMessage(Player player, Message message) {
-			//Switch on message type
-			switch(message.Type) {
-				case "move": {
-						//Move letter in internal representation
-						Letter l = letters[message.GetInteger(0)];
-						l.X = message.GetInteger(1);
-						l.Y = message.GetInteger(2);
-
-						//inform all players that the letter have been moved
-						Broadcast("move", message.GetInteger(0), l.X, l.Y);
-						break;
-					}
-				case "mouse": {
-						//Set player mouse information
-						player.X = message.GetInteger(0);
-						player.Y = message.GetInteger(1);
-						break;
-					}
-				case "activate": {
-						Broadcast("activate", player.Id, message.GetInteger(0));
-						break;
-					}
-			}
-		}
- 
- 
-
-			// Create init message for the joining player
-			Message m = Message.Create("init");
-
-			// Tell player their own id
-			m.Add(player.Id);
-
-			//Add the current position of all letters to the init message
-			for(int a = 0; a < letters.Length; a++) {
-				Letter l = letters[a];
-				m.Add(l.X, l.Y);
-			}
-
-			// Send init message to player
-			player.Send(m);
-			
- 
- 
- 
- 
- */

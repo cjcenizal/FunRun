@@ -1,22 +1,31 @@
 package com.funrun.model {
 	
 	import com.cenizal.utils.Numbers;
+	import com.funrun.model.constants.TrackConstants;
 	import org.robotlegs.mvcs.Actor;
 
 	public class DistanceModel extends Actor {
 		
-		public var distance:Number = 0;
+		private var _distance:Number = 0;
 		
 		public function DistanceModel() {
 			super();
 		}
 		
 		public function add( amount:Number ):void {
-			distance += amount;
+			_distance += amount;
 		}
 		
-		public function distanceString():String {
-			return Numbers.addCommasTo( ( Math.round( distance * .05 ) ).toString() );
+		public function reset():void {
+			_distance = 0;
+		}
+		
+		public function get distance():Number {
+			return Math.round( _distance / TrackConstants.BLOCK_SIZE );
+		}
+		
+		public function get distanceString():String {
+			return Numbers.addCommasTo( Math.round( _distance / TrackConstants.BLOCK_SIZE ).toString() );
 		}
 	}
 }

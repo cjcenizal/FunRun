@@ -1,7 +1,9 @@
 package com.funrun.controller.commands {
 	
+	import com.cenizal.utils.Numbers;
 	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.GetInitialObstaclesRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
@@ -53,6 +55,9 @@ package com.funrun.controller.commands {
 		public var countdownModel:CountdownModel;
 		
 		[Inject]
+		public var getInitialObstaclesRequest:GetInitialObstaclesRequest;
+		
+		[Inject]
 		public var updateCountdownRequest:UpdateCountdownRequest;
 		
 		[Inject]
@@ -73,16 +78,14 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
-		[Inject]
-		public var startRunningRequest:StartRunningRequest;
-		
 		override public function execute():void {
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 				if ( countdownModel.secondsRemaining > 0 ) {
 					updateCountdownRequest.dispatch( countdownModel.secondsRemaining.toString() );
 				} else {
-					startRunningRequest.dispatch();
+					// Get initial obstacles.
+					getInitialObstaclesRequest.dispatch();
 				}
 			}
 			
@@ -92,21 +95,21 @@ package com.funrun.controller.commands {
 				if ( gameModel.gameState == GameState.RUNNING ) {
 					// Update obstacles.
 					trackModel.move( -playerModel.velocity.z );
-				}
-	
-				// Remove obstacles from end of track.
-				if ( trackModel.numObstacles > 0 ) {
-					var obstacle:ObstacleData = trackModel.getObstacleAt( 0 );
-					while ( obstacle.z < TrackConstants.REMOVE_OBSTACLE_DEPTH ) {
-						removeObjectFromSceneRequest.dispatch( obstacle.mesh );
-						trackModel.removeObstacleAt( 0 );
-						obstacle = trackModel.getObstacleAt( 0 );
+		
+					// Remove obstacles from end of track.
+					if ( trackModel.numObstacles > 0 ) {
+						var obstacle:ObstacleData = trackModel.getObstacleAt( 0 );
+						while ( obstacle.z < TrackConstants.REMOVE_OBSTACLE_DEPTH ) {
+							removeObjectFromSceneRequest.dispatch( obstacle.mesh );
+							trackModel.removeObstacleAt( 0 );
+							obstacle = trackModel.getObstacleAt( 0 );
+						}
 					}
-				}
-	
-				// Add new obstacles until track is full again.
-				while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
-					addObstacleRequest.dispatch();
+		
+					// Add new obstacles until track is full again.
+					while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
+						addObstacleRequest.dispatch();
+					}
 				}
 	
 				if ( playerModel.isDead ) {
@@ -231,7 +234,7 @@ package com.funrun.controller.commands {
 			
 			// Update UI.
 			if ( gameModel.gameState == GameState.RUNNING ) {
-				displayDistanceRequest.dispatch( distanceModel.distanceString() );
+				displayDistanceRequest.dispatch( distanceModel.distanceString );
 			}
 			
 			// Render.
