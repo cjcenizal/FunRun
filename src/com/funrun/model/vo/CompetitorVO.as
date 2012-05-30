@@ -7,6 +7,7 @@ package com.funrun.model.vo {
 	public class CompetitorVO {
 
 		private var _id:int;
+		private var _name:String;
 		private var _mesh:Mesh;
 		private var _velocity:Vector3D;
 		private var _isDead:Boolean;
@@ -14,8 +15,9 @@ package com.funrun.model.vo {
 		private var _oldPosition:Vector3D;
 		private var _newPosition:Vector3D;
 
-		public function CompetitorVO( id:int, mesh:Mesh, velocity:Vector3D, isDead:Boolean, isDucking:Boolean ) {
+		public function CompetitorVO( id:int, name:String, mesh:Mesh, velocity:Vector3D, isDead:Boolean, isDucking:Boolean ) {
 			_id = id;
+			_name = name;
 			_mesh = mesh;
 			_velocity = velocity;
 			_isDead = isDead;
@@ -47,6 +49,10 @@ package com.funrun.model.vo {
 		
 		public function get id():int {
 			return _id;
+		}
+		
+		public function get name():String {
+			return _name;
 		}
 		
 		public function get velocity():Vector3D {

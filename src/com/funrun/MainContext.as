@@ -96,6 +96,7 @@ package com.funrun {
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
+	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
@@ -167,6 +168,7 @@ package com.funrun {
 			injector.mapSingleton( UserModel );
 			injector.mapSingleton( CompetitorsModel );
 			injector.mapSingleton( InterpolationModel );
+			injector.mapSingleton( NametagsModel );
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );

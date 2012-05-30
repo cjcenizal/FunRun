@@ -48,13 +48,14 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			if ( message.getInt( 0 ) != multiplayerService.playerRoomId ) {
 				var mesh:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
-				mesh.x = message.getNumber( 1 );
-				mesh.y = message.getNumber( 2 );
-				mesh.z = distanceModel.getRelativeDistanceTo( message.getNumber( 3 ) );
+				mesh.x = message.getNumber( 2 );
+				mesh.y = message.getNumber( 3 );
+				mesh.z = distanceModel.getRelativeDistanceTo( message.getNumber( 4 ) );
 				competitorsModel.add( new CompetitorVO(
 					message.getInt( 0 ),
+					message.getString( 1 ),
 					mesh,
-					new Vector3D( message.getNumber( 4 ), message.getNumber( 5 ), message.getNumber( 6 ) ),
+					new Vector3D( message.getNumber( 5 ), message.getNumber( 6 ), message.getNumber( 7 ) ),
 					false,
 					false ) );
 				addObjectToSceneRequest.dispatch( mesh );

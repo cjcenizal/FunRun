@@ -11,6 +11,7 @@ namespace FunRun {
 	public class Player : BasePlayer {
 		//public float de;
 		//public float du;
+		public string name = "Anonymous";
 		public double x = 0;
 		public double y = 0;
 		public double z = 0;
@@ -56,24 +57,25 @@ namespace FunRun {
 		}
 
 		public override void UserJoined( Player player ) {
+			// Assign user-provided data.
+			player.name = player.JoinData[ "name" ];
+
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "i" );
 
 			// Tell player their own id
 			initMessage.Add( player.Id );
 
-			// Random seed.
+			// Random seed for obstacles.
 			initMessage.Add( randomSeed );
 			
 			// Update and add time remaining.
 			updateSecondsRemaining();
 			initMessage.Add( secondsRemaining );
 
-			// Add obstacles.
-
 			// Add the current state of all players to the init message.
 			foreach ( Player p in Players ) {
-				initMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+				initMessage.Add( p.Id, p.name, p.x, p.y, p.z, p.vx, p.vy, p.vz );
 			}
 			
 			// Send init message to player.
@@ -81,7 +83,7 @@ namespace FunRun {
 
 			// Let everyone know who's here.
 			Message newPlayerMessage = Message.Create( "n" );
-			newPlayerMessage.Add( player.Id, player.x, player.y, player.z, player.vx, player.vy, player.vz );
+			newPlayerMessage.Add( player.Id, player.name, player.x, player.y, player.z, player.vx, player.vy, player.vz );
 			Broadcast( newPlayerMessage );
 		}
 

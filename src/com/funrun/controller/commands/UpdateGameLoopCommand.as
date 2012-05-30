@@ -256,7 +256,7 @@ package com.funrun.controller.commands {
 				interpolationModel.increment();
 			}
 			
-			// Update UI.
+			// Update distance counter.
 			if ( gameModel.gameState == GameState.RUNNING ) {
 				displayDistanceRequest.dispatch( distanceModel.distanceString );
 			}

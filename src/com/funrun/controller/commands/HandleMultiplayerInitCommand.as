@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import away3d.entities.Mesh;
 	import away3d.primitives.CylinderGeometry;
 	
+	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
@@ -12,6 +13,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.MaterialsModel;
+	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.events.TimeEvent;
@@ -49,6 +51,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var materialsModel:MaterialsModel;
 		
+		[Inject]
+		public var nametagsModel:NametagsModel;
+		
 		// Services.
 		
 		[Inject]
@@ -81,19 +86,23 @@ package com.funrun.controller.commands {
 			toggleCountdownRequest.dispatch( true );
 			
 			// Add pre-existing competitors.
-			for ( var i:int = 3; i < message.length; i += 7 ) {
+			for ( var i:int = 3; i < message.length; i += 8 ) {
 				if ( message.getInt( i ) != multiplayerService.playerRoomId ) {
+					// Add mesh.
 					var mesh:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
-					mesh.x = message.getNumber( i + 1 );
-					mesh.y = message.getNumber( i + 2 );
-					mesh.z = distanceModel.getRelativeDistanceTo( message.getNumber( i + 3 ) );
+					mesh.x = message.getNumber( i + 2 );
+					mesh.y = message.getNumber( i + 3 );
+					mesh.z = distanceModel.getRelativeDistanceTo( message.getNumber( i + 4 ) );
 					competitorsModel.add( new CompetitorVO(
 						message.getInt( i ),
+						message.getString( i + 1 ),
 						mesh,
-						new Vector3D( message.getNumber( i + 4 ), message.getNumber( i + 5 ), message.getNumber( i + 6 ) ),
+						new Vector3D( message.getNumber( i + 5 ), message.getNumber( i + 6 ), message.getNumber( i + 7 ) ),
 						false,
 						false ) );
 					addObjectToSceneRequest.dispatch( mesh );
+					// Add nametag.
+					//var nametag:AbstractLabel = new AbstractLabel( null, 0, 0, 
 				}
 			}
 			

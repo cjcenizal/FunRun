@@ -5,6 +5,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
+	import com.funrun.model.PlayerModel;
+	import com.funrun.model.UserModel;
 	import com.funrun.model.constants.MessageTypes;
 	import com.funrun.model.constants.RoomTypes;
 	import com.funrun.model.vo.PlayerioErrorVO;
@@ -24,6 +26,11 @@ package com.funrun.controller.commands {
 	 * When the countdown is up, the room tells us to start the game.
 	 */
 	public class ConnectMultiplayerCommand extends Command {
+		
+		// Models.
+		
+		[Inject]
+		public var userModel:UserModel;
 		
 		// Services.
 		
@@ -63,7 +70,7 @@ package com.funrun.controller.commands {
 		private function onEnterFrame( e:Event ):void {
 			contextView.stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 			// Get a room!
-			multiplayerService.connect( loginService.client, RoomTypes.GAME );
+			multiplayerService.connect( loginService.client, RoomTypes.GAME, { name: userModel.name } );
 		}
 		
 		private function onConnected():void {
