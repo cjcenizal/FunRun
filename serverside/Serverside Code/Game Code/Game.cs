@@ -37,7 +37,7 @@ namespace FunRun {
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
 		private int currentFillPosition = -1;
-		private Random obstacleGenerator = new Random();
+		private int randomSeed = ( new Random() ).Next();
 
 		public override void GameStarted() {
 			// Update every 100 ms.
@@ -57,19 +57,21 @@ namespace FunRun {
 			// This is called before GameStarted, so we will set up our countdown here, when the first player joins.
 			if ( PlayerCount == 0 ) {
 				countdownStartTime = DateTime.UtcNow;
-				fillUpObstaclesUntil( 0 );
 			}
 			updateSecondsRemaining();
 			// Return whether or not game has already started.
 			return true;//( secondsRemaining > minJoinTime );
 		}
 
-		public override void UserJoined( Player player ) {
+		public override void UserJoined (Player player) {
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "i" );
 
 			// Tell player their own id
 			initMessage.Add( player.Id );
+
+			// Random seed.
+			initMessage.Add( randomSeed );
 			
 			// Update and add time remaining.
 			updateSecondsRemaining();
@@ -93,9 +95,6 @@ namespace FunRun {
 		
 		public override void GotMessage( Player player, Message message ) {
 			switch ( message.Type ) {
-				case "o": // Fill up obstacles.
-					fillUpObstaclesUntil( message.GetInt( 0 ) );
-					break;
 				case "u": // Update state.
 					// Update internal representation of player.
 					player.x = message.GetFloat( 0 );
@@ -129,21 +128,6 @@ namespace FunRun {
 		private void updateSecondsRemaining() {
 			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
 			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
-		}
-
-		private void fillUpObstaclesUntil( int blocksPosition ) {
-			// If we haven't generated obstacles up to this position yet.
-			if ( blocksPosition > currentFillPosition ) {
-				currentFillPosition = blocksPosition;
-				Message obstaclesMessage = Message.Create( "o" );
-				// Create a ton of obstacles and tell everyone about them.
-				int i = 0;
-				while ( i < 20 ) {
-					obstaclesMessage.Add( obstacleGenerator.NextDouble() );
-					i++;
-				}
-				Broadcast( obstaclesMessage );
-			}
 		}
 	}
 }

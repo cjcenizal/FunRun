@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 	import com.funrun.services.PlayerioMultiplayerService;
 	
 	import org.robotlegs.mvcs.Command;
-
+	
 	public class AddObstacleCommand extends Command {
 		
 		[Inject]
@@ -26,7 +26,7 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var trackModel:TrackModel;
-
+		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
@@ -37,30 +37,23 @@ package com.funrun.controller.commands {
 		public var multiplayerService:PlayerioMultiplayerService;
 		
 		override public function execute():void {
-			// Request more obstacles if necessary.
-			if ( obstaclesModel.remainingInQueue < 20 ) {
-				multiplayerService.send( "u", distanceModel.distance );
-			}
-			trace(this, obstaclesModel.remainingInQueue);
 			// Get an obstacle.
 			var obstacle:ObstacleData = obstaclesModel.getNext();
-			if ( obstacle ) {
-				// Add it to the model.
-				var numObstacles:int = trackModel.numObstacles;
-				if ( numObstacles > 0 ) {
-					obstacle.z = trackModel.depthOfLastObstacle;
-				} else {
-					obstacle.z = TrackConstants.TRACK_LENGTH;
-				}
-				trackModel.addObstacle( obstacle );
-				// Add to view.
-				addObjectToSceneRequest.dispatch( obstacle.mesh );
-				
-				// Add floors.
-				var startPos:Number = obstacle.z + obstacle.bounds.max.z;
-				var endPos:Number = obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP;
-				addFloorRequest.dispatch( new AddFloorPayload( startPos, endPos, TrackConstants.BLOCK_SIZE ) );
+			// Add it to the model.
+			var numObstacles:int = trackModel.numObstacles;
+			if ( numObstacles > 0 ) {
+				obstacle.z = trackModel.depthOfLastObstacle;
+			} else {
+				obstacle.z = TrackConstants.TRACK_LENGTH;
 			}
+			trackModel.addObstacle( obstacle );
+			// Add to view.
+			addObjectToSceneRequest.dispatch( obstacle.mesh );
+			
+			// Add floors.
+			var startPos:Number = obstacle.z + obstacle.bounds.max.z;
+			var endPos:Number = obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP;
+			addFloorRequest.dispatch( new AddFloorPayload( startPos, endPos, TrackConstants.BLOCK_SIZE ) );
 		}
 	}
 }

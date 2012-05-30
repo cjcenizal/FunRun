@@ -78,7 +78,6 @@ package com.funrun.controller.commands {
 		private function onConnected():void {
 			multiplayerService.addMessageHandler( "i", onInit );
 			multiplayerService.addMessageHandler( "u", onUpdate );
-			multiplayerService.addMessageHandler( "o", onNewObstacles );
 		}
 		
 		private function onError():void {
@@ -88,8 +87,10 @@ package com.funrun.controller.commands {
 		private function onInit( message:Message ):void {
 			// Store id so we can ignore updates we originated.
 			multiplayerService.roomId = message.getInt( 0 );
+			// Store random seed.
+			obstaclesModel.seed = message.getInt( 1 );
 			// Initialize countdown.
-			countdownModel.secondsRemaining = message.getInt( 1 );
+			countdownModel.secondsRemaining = message.getInt( 2 );
 			toggleCountdownRequest.dispatch( true );
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
@@ -102,15 +103,6 @@ package com.funrun.controller.commands {
 		
 		private function onUpdate( message:Message ):void {
 			countdownModel.secondsRemaining = message.getInt( 0 );
-		}
-		
-		private function onNewObstacles( message:Message ):void {
-			// Add obstacles to obstacles model.
-			var len:int = message.length;
-			trace(this, "onNewObstacles", len);
-			for ( var i:int = 0; i < len; i++ ) {
-				obstaclesModel.addToQueue( message.getNumber( i ) );
-			}
 		}
 	}
 }

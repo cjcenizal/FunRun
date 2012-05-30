@@ -1,9 +1,7 @@
 package com.funrun.controller.commands {
 	
-	import com.cenizal.utils.Numbers;
 	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
-	import com.funrun.controller.signals.GetInitialObstaclesRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
@@ -55,7 +53,7 @@ package com.funrun.controller.commands {
 		public var countdownModel:CountdownModel;
 		
 		[Inject]
-		public var getInitialObstaclesRequest:GetInitialObstaclesRequest;
+		public var startRunningRequest:StartRunningRequest;
 		
 		[Inject]
 		public var updateCountdownRequest:UpdateCountdownRequest;
@@ -84,8 +82,8 @@ package com.funrun.controller.commands {
 				if ( countdownModel.secondsRemaining > 0 ) {
 					updateCountdownRequest.dispatch( countdownModel.secondsRemaining.toString() );
 				} else {
-					// Get initial obstacles.
-					getInitialObstaclesRequest.dispatch();
+					// Start running.
+					startRunningRequest.dispatch();
 				}
 			}
 			
