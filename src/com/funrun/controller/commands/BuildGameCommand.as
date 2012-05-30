@@ -2,6 +2,7 @@ package com.funrun.controller.commands
 {
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
+	import away3d.containers.View3D;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
@@ -9,17 +10,17 @@ package com.funrun.controller.commands
 	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	
-	import com.funrun.controller.signals.AddCameraRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
+	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadFloorsRequest;
 	import com.funrun.controller.signals.LoadObstaclesRequest;
-	import com.funrun.model.CameraModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
+	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
@@ -33,7 +34,7 @@ package com.funrun.controller.commands
 		public var lightsModel:LightsModel;
 		
 		[Inject]
-		public var cameraModel:CameraModel;
+		public var cameraModel:View3DModel;
 		
 		[Inject]
 		public var materialsModel:MaterialsModel;
@@ -60,9 +61,23 @@ package com.funrun.controller.commands
 		public var addPlayerRequest:AddPlayerRequest;
 		
 		[Inject]
-		public var addCameraRequest:AddCameraRequest;
+		public var addView3DRequest:AddView3DRequest;
 		
 		override public function execute():void {
+			// Add view.
+			var camera:Camera3D = new Camera3D( new PerspectiveLens( TrackConstants.CAM_FOV ) );
+			camera.y = TrackConstants.CAM_Y;
+			camera.z = TrackConstants.CAM_Z;
+			camera.rotationX = TrackConstants.CAM_TILT;
+			camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
+			var view:View3D = new View3D( null, camera );
+			view.antiAlias = 2; // 2, 4, or 16
+			view.width = contextView.stage.stageWidth;
+			view.height = contextView.stage.stageHeight;
+			view.backgroundColor = 0xffffff;
+			cameraModel.setView( view );
+			addView3DRequest.dispatch( view );
+			
 			// Add materials.
 			addMaterialRequest.dispatch( MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) );
 			addMaterialRequest.dispatch( MaterialsModel.GROUND_MATERIAL, new ColorMaterial( 0xFF0000 ) );
@@ -120,15 +135,6 @@ package com.funrun.controller.commands
 			obstacleMaterial.specular = .25;
 			obstacleMaterial.gloss = 20;
 			obstacleMaterial.specularMethod = specularMethod;
-			
-			// Add camera.
-			var camera:Camera3D = new Camera3D( new PerspectiveLens( TrackConstants.CAM_FOV ) );
-			camera.y = TrackConstants.CAM_Y;
-			camera.z = TrackConstants.CAM_Z;
-			camera.rotationX = TrackConstants.CAM_TILT;
-			camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
-			cameraModel.setCamera( camera );
-			addCameraRequest.dispatch( camera );
 			
 			// Add lights to track.
 			addObjectToSceneRequest.dispatch( sunlight );

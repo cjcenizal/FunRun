@@ -1,8 +1,5 @@
 package com.funrun.view.components {
 	
-	import away3d.cameras.Camera3D;
-	import away3d.containers.ObjectContainer3D;
-	import away3d.containers.Scene3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	
@@ -17,10 +14,7 @@ package com.funrun.view.components {
 	 */
 	public class TrackView extends AbstractComponent {
 		
-		// Engine vars.
 		private var _view:View3D;
-		private var _scene:Scene3D;
-		private var _camera:Camera3D;
 		
 		/**
 		 * Constructor
@@ -33,14 +27,6 @@ package com.funrun.view.components {
 		 * Initialize our view, scene, and camera.
 		 */
 		public function init():void {
-			_view = new View3D();
-			_view.antiAlias = 2; // 2, 4, or 16
-			_view.width = stage.stageWidth;
-			_view.height = stage.stageHeight;
-			_view.backgroundColor = 0xffffff;
-			addChild( _view );
-			_scene = _view.scene; // Store local refs.
-			_camera = _view.camera;
 		}
 		
 		/**
@@ -59,27 +45,13 @@ package com.funrun.view.components {
 			_view.render();
 		}
 		
-		/**
-		 * Adding 3D objects to the scene.
-		 */
-		public function addToScene( object:ObjectContainer3D ):void {
-			_scene.addChild( object );
-		}
-		
-		/**
-		 * Removing 3D objects from the scene.
-		 */
-		public function removeFromScene( object:ObjectContainer3D ):void {
-			_scene.removeChild( object );
-		}
-		
-		public function set camera( camera:Camera3D ):void {
-			_view.camera = camera;
-			_camera = camera;
-		}
-		
-		public function get camera():Camera3D {
-			return _camera;
+		public function set view3D( view:View3D ):void {
+			if ( _view ) {
+				removeChild( _view );
+				_view = null;
+			}
+			_view = view;
+			addChild( _view );
 		}
 	}
 }

@@ -29,13 +29,12 @@ namespace FunRun {
 		private int maxSeconds = 15;
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
-		private int currentFillPosition = -1;
 		private int randomSeed = ( new Random() ).Next();
 
 		public override void GameStarted() {
 			// Update every 100 ms.
 			AddTimer( delegate {
-				if ( !isRunning ) {
+				if ( !isRunning && PlayerCount >= 2 ) {
 					updateSecondsRemaining();
 					if ( secondsRemaining <= 0 ) {
 						// Start running!
@@ -48,7 +47,7 @@ namespace FunRun {
 
 		public override bool AllowUserJoin( Player player ) {
 			// This is called before GameStarted, so we will set up our countdown here, when the first player joins.
-			if ( PlayerCount == 0 ) {
+			if ( PlayerCount <= 1 ) {
 				countdownStartTime = DateTime.UtcNow;
 			}
 			updateSecondsRemaining();

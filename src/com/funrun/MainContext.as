@@ -3,6 +3,7 @@ package com.funrun {
 	import com.funrun.controller.commands.AddFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
+	import com.funrun.controller.commands.AddObjectToSceneCommand;
 	import com.funrun.controller.commands.AddObstacleCommand;
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.BuildGameCommand;
@@ -25,6 +26,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LoginCommand;
 	import com.funrun.controller.commands.LoginFailedCommand;
 	import com.funrun.controller.commands.LoginFulfilledCommand;
+	import com.funrun.controller.commands.RemoveObjectFromSceneCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
 	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
@@ -35,7 +37,6 @@ package com.funrun {
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
-	import com.funrun.controller.signals.AddCameraRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
@@ -43,6 +44,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddPopupRequest;
+	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildInterpolationRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
@@ -83,7 +85,6 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.controller.signals.WhitelistFailed;
 	import com.funrun.model.BlocksModel;
-	import com.funrun.model.CameraModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
@@ -100,6 +101,7 @@ package com.funrun {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.UserModel;
+	import com.funrun.model.View3DModel;
 	import com.funrun.services.BlocksJsonService;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.ObstaclesJsonService;
@@ -156,7 +158,7 @@ package com.funrun {
 			injector.mapSingleton( TimeModel );
 			injector.mapSingleton( TrackModel );
 			injector.mapSingleton( PlayerModel );
-			injector.mapSingleton( CameraModel );
+			injector.mapSingleton( View3DModel );
 			injector.mapSingleton( FloorsModel );
 			injector.mapSingleton( DistanceModel );
 			injector.mapSingleton( GameModel );
@@ -184,12 +186,10 @@ package com.funrun {
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			injector.mapSingleton( ShowScreenRequest );
-			injector.mapSingleton( AddObjectToSceneRequest );
-			injector.mapSingleton( RemoveObjectFromSceneRequest );
 			injector.mapSingleton( EnablePlayerInputRequest );
 			injector.mapSingleton( RenderSceneRequest );
 			injector.mapSingleton( DisplayDistanceRequest );
-			injector.mapSingleton( AddCameraRequest );
+			injector.mapSingleton( AddView3DRequest );
 			injector.mapSingleton( AddPopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
 			injector.mapSingleton( RemoveResultsPopupRequest );
@@ -213,6 +213,8 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
 			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
+			signalCommandMap.mapSignalClass( AddObjectToSceneRequest,				AddObjectToSceneCommand );
+			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );
 			signalCommandMap.mapSignalClass( StopGameRequest,						StopGameCommand );
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );

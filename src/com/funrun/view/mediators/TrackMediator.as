@@ -1,12 +1,9 @@
 package com.funrun.view.mediators
 {
-	import away3d.cameras.Camera3D;
-	import away3d.containers.ObjectContainer3D;
+	import away3d.containers.View3D;
 	
-	import com.funrun.controller.signals.AddCameraRequest;
-	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
-	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.view.components.TrackView;
 	
@@ -22,16 +19,10 @@ package com.funrun.view.mediators
 		public var view:TrackView;
 		
 		[Inject]
-		public var addCameraRequest:AddCameraRequest;
-		
-		[Inject]
-		public var addObjectToSceneRequest:AddObjectToSceneRequest;
-		
-		[Inject]
-		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
-		
-		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
+		
+		[Inject]
+		public var addView3DRequest:AddView3DRequest;
 		
 		[Inject]
 		public var renderSceneRequest:RenderSceneRequest;
@@ -42,10 +33,7 @@ package com.funrun.view.mediators
 			stage = view.stage;
 			view.init();
 			view.debug();
-			
-			addCameraRequest.add( onAddCameraRequested );
-			addObjectToSceneRequest.add( onAddObjectToSceneRequested );
-			removeObjectFromSceneRequest.add( onRemoveObjectFromSceneRequested );
+			addView3DRequest.add( onAddView3DRequested );
 			renderSceneRequest.add( onRenderSceneRequested );
 			enablePlayerInputRequest.add( onEnablePlayerInputRequested );
 		}
@@ -62,18 +50,9 @@ package com.funrun.view.mediators
 				stage.removeEventListener( KeyboardEvent.KEY_UP, onKeyUp );
 			}
 		}
-		/**
-		 * Add an object to the scene.
-		 */
-		private function onAddObjectToSceneRequested( object:ObjectContainer3D ):void {
-			view.addToScene( object );
-		}
 		
-		/**
-		 * Remove an object from the scene.
-		 */
-		private function onRemoveObjectFromSceneRequested( object:ObjectContainer3D ):void {
-			view.removeFromScene( object );
+		private function onAddView3DRequested( view3D:View3D ):void {
+			this.view.view3D = view3D;
 		}
 		
 		/**
@@ -81,13 +60,6 @@ package com.funrun.view.mediators
 		 */
 		private function onRenderSceneRequested():void {
 			view.render();
-		}
-		
-		/**
-		 * Swap out track's camera.
-		 */
-		private function onAddCameraRequested( camera:Camera3D ):void {
-			view.camera = camera;
 		}
 		
 		private function onKeyDown( e:KeyboardEvent ):void {

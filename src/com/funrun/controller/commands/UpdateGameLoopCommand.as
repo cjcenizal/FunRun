@@ -9,7 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
-	import com.funrun.model.CameraModel;
+	import com.funrun.model.View3DModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
@@ -46,7 +46,7 @@ package com.funrun.controller.commands {
 		public var playerModel:PlayerModel;
 
 		[Inject]
-		public var cameraModel:CameraModel;
+		public var view3DModel:View3DModel;
 
 		[Inject]
 		public var timeModel:TimeModel;
@@ -241,12 +241,12 @@ package com.funrun.controller.commands {
 				}
 	
 				// Update camera.
-				cameraModel.x = playerModel.player.x;
-				var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.player.y < cameraModel.y ) ? .3 : .1;
+				view3DModel.cameraX = playerModel.player.x;
+				var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.player.y < view3DModel.cameraY ) ? .3 : .1;
 				// We'll try easing to follow the player instead of being locked.
-				cameraModel.y += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - cameraModel.y ) * followFactor;
-				cameraModel.z = -1000;
-				cameraModel.update();
+				view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - view3DModel.cameraY ) * followFactor;
+				view3DModel.cameraZ = -1000;
+				view3DModel.update();
 				
 				// Update competitors' physics.
 				var len:int = competitorsModel.numCompetitors;
