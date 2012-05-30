@@ -102,6 +102,7 @@ package com.funrun {
 	import com.funrun.services.ObstaclesJsonService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioMultiplayerService;
+	import com.funrun.services.WhitelistOpenService;
 	import com.funrun.services.WhitelistService;
 	import com.funrun.view.components.CountdownView;
 	import com.funrun.view.components.DistanceView;
@@ -140,6 +141,9 @@ package com.funrun {
 		}
 
 		override public function startup():void {
+			// Switches.
+			var useWhitelist:Boolean = true;
+			
 			// Map models.
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
 			injector.mapSingleton( BlocksModel );
@@ -163,8 +167,13 @@ package com.funrun {
 			injector.mapSingleton( ObstaclesJsonService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
 			injector.mapSingleton( PlayerioMultiplayerService );
-			injector.mapSingletonOf( IWhitelistService, WhitelistService ); // TO-DO: Use a variable to toggle between open and regular.
-			
+			if ( useWhitelist ) {
+				// Block non-whitelisted users.
+				injector.mapSingletonOf( IWhitelistService, WhitelistService );
+			} else {
+				// Allow everybody.
+				injector.mapSingletonOf( IWhitelistService, WhitelistOpenService );
+			}
 			// Map signals.
 			injector.mapSingleton( UpdateCountdownRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
@@ -232,7 +241,7 @@ package com.funrun {
 			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
-			mediatorMap.mapView( FunRun, 				AppMediator );
+			mediatorMap.mapView( FunRun, 					AppMediator );
 			
 			// Kick everything off one frame later.
 			this.contextView.addEventListener( Event.ENTER_FRAME, onEnterFrame );
