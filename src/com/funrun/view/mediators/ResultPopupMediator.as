@@ -1,8 +1,8 @@
 package com.funrun.view.mediators
 {
+	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.RemovePopupRequest;
-	import com.funrun.controller.signals.ShowScreenRequest;
-	import com.funrun.model.state.ScreenState;
+	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.view.components.ResultsPopup;
 	
 	import org.robotlegs.core.IMediator;
@@ -14,7 +14,10 @@ package com.funrun.view.mediators
 		public var view:ResultsPopup;
 		
 		[Inject]
-		public var showScreenRequest:ShowScreenRequest;
+		public var leaveGameRequest:LeaveGameRequest;
+		
+		[Inject]
+		public var removeResultsPopupRequest:RemoveResultsPopupRequest;
 		
 		[Inject]
 		public var removePopupRequest:RemovePopupRequest;
@@ -22,6 +25,7 @@ package com.funrun.view.mediators
 		override public function onRegister():void {
 			view.init();
 			view.onClickMainMenuSignal.add( onClickMainMenu );
+			removeResultsPopupRequest.add( onRemoveResultsPopup );
 		}
 		
 		override public function onRemove():void {
@@ -30,7 +34,10 @@ package com.funrun.view.mediators
 		}
 		
 		private function onClickMainMenu():void {
-			showScreenRequest.dispatch( ScreenState.MAIN_MENU );
+			leaveGameRequest.dispatch();
+		}
+		
+		private function onRemoveResultsPopup():void {
 			removePopupRequest.dispatch( view );
 		}
 		

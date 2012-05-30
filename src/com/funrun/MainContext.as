@@ -13,6 +13,7 @@ package com.funrun {
 	import com.funrun.controller.commands.KeyDownCommand;
 	import com.funrun.controller.commands.KeyUpCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
+	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LoadBlocksCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
 	import com.funrun.controller.commands.LoadFloorsCommand;
@@ -22,6 +23,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LoginFulfilledCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
+	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowResultsPopupCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StartRunningCommand;
@@ -43,6 +45,7 @@ package com.funrun {
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
+	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LoadFloorsRequest;
@@ -52,9 +55,11 @@ package com.funrun {
 	import com.funrun.controller.signals.LoginRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RemovePopupRequest;
+	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameRequest;
@@ -157,6 +162,7 @@ package com.funrun {
 			injector.mapSingleton( AddCameraRequest );
 			injector.mapSingleton( AddPopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
+			injector.mapSingleton( RemoveResultsPopupRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
 			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
@@ -181,6 +187,9 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
 			signalCommandMap.mapSignalClass( ConnectMultiplayerRequest,				ConnectMultiplayerCommand );
+			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
+			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
+			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );

@@ -4,7 +4,6 @@ package com.funrun.services {
 	
 	import playerio.Client;
 	import playerio.Connection;
-	import playerio.Message;
 	import playerio.PlayerIOError;
 
 	public class PlayerioMultiplayerService {
@@ -13,12 +12,15 @@ package com.funrun.services {
 		private var _error:PlayerIOError;
 		private var _onConnectedSignal:Signal;
 		private var _onErrorSignal:Signal;
+		private var _onServerDisconnectSignal:Signal;
 		private var _isConnected:Boolean = false;
+		private var _messageHandlers:Object = {};
 		public var roomId:int = -1;
 
 		public function PlayerioMultiplayerService() {
 			_onConnectedSignal = new Signal();
 			_onErrorSignal = new Signal();
+			_onServerDisconnectSignal = new Signal();
 		}
 
 		public function connect( client:Client, roomType:String, userJoinData:Object = null, roomId:String = "$service-room$" ):void {
@@ -29,11 +31,23 @@ package com.funrun.services {
 		}
 
 		public function disconnect():void {
-			// TO-DO: Disconnect.
+			_connection.disconnect();
+			_connection.removeDisconnectHandler( onServerDisconnect );
+			for ( var key:String in _messageHandlers ) {
+				_connection.removeMessageHandler( key, _messageHandlers[ key ] );
+			}
+			_connection = null;
+			_error = null;
+			_isConnected = false;
+			_onConnectedSignal.removeAll();
+			_onErrorSignal.removeAll();
+			_onServerDisconnectSignal.removeAll();
+			roomId = -1;
 		}
 		
 		private function onRoomJoinSuccess( connection:Connection ):void {
 			_connection = connection;
+			_connection.addDisconnectHandler( onServerDisconnect );
 			_isConnected = true;
 			_onConnectedSignal.dispatch();
 		}
@@ -43,6 +57,15 @@ package com.funrun.services {
 			_onErrorSignal.dispatch();
 		}
 
+		private function onServerDisconnect():void {
+			_onServerDisconnectSignal.dispatch();
+		}
+		
+		public function addMessageHandler( type:String, handler:Function ):void {
+			_connection.addMessageHandler( type, handler );
+			_messageHandlers[ type ] = handler;
+		}
+		
 		public function get isConnected():Boolean {
 			return _isConnected;
 		}
@@ -55,12 +78,12 @@ package com.funrun.services {
 			return _onErrorSignal;
 		}
 		
-		public function get error():PlayerIOError {
-			return _error;
+		public function get onServerDisconnectSignal():Signal {
+			return _onServerDisconnectSignal;
 		}
 		
-		public function get connection():Connection {
-			return _connection;
+		public function get error():PlayerIOError {
+			return _error;
 		}
 	}
 }

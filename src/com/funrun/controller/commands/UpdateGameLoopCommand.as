@@ -78,7 +78,6 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Update countdown if necessary.
-		//	trace("gameModel.gameState: " + gameModel.gameState);
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 				if ( countdownModel.secondsRemaining > 0 ) {
 					updateCountdownRequest.dispatch( countdownModel.secondsRemaining.toString() );

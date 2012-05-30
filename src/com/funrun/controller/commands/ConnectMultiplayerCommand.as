@@ -48,8 +48,8 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onConnected():void {
-			multiplayerService.connection.addMessageHandler( "init", onInit );
-			multiplayerService.connection.addMessageHandler( "update", onUpdate );
+			multiplayerService.addMessageHandler( "init", onInit );
+			multiplayerService.addMessageHandler( "update", onUpdate );
 		}
 		
 		private function onError():void {
@@ -57,6 +57,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onInit( message:Message ):void {
+			trace("onInit: " + message.toString());
 			// Store id so we can ignore updates we originated.
 			multiplayerService.roomId = message.getInt( 0 );
 			// Initialize countdown.
@@ -71,6 +72,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onUpdate( message:Message ):void {
+			trace("update " + message.getInt( 0 ));
 			countdownModel.secondsRemaining = message.getInt( 0 );
 		}
 	}

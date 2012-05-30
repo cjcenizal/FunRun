@@ -35,7 +35,7 @@ namespace FunRun {
 
 		private DateTime countdownStartTime;
 		private bool isRunning = false;
-		private int maxSeconds = 11;
+		private int maxSeconds = 2;//10;
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
 
@@ -60,7 +60,7 @@ namespace FunRun {
 			}
 			updateSecondsRemaining();
 			// Return whether or not game has already started.
-			return ( secondsRemaining > minJoinTime );
+			return true;//( secondsRemaining > minJoinTime );
 		}
 
 		public override void UserJoined( Player player ) {
