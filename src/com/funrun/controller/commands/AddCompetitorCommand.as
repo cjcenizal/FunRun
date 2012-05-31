@@ -42,16 +42,19 @@ package com.funrun.controller.commands {
 		public var addNametagRequest:AddNametagRequest;
 		
 		override public function execute():void {
-			// Add mesh.
-			var mesh:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
-			competitor.mesh = mesh;
-			competitor.hardUpdate();
-			competitorsModel.add( competitor );
-			addObjectToSceneRequest.dispatch( mesh );
-			// Add nametag.
-			var nametag:AbstractLabel = new AbstractLabel( null, 0, 0, competitor.name );
-			nametagsModel.add( competitor.id, nametag );
-			addNametagRequest.dispatch( nametag );
+			// Avoid adding accidental duplicates.
+			if ( !competitorsModel.getWithId( competitor.id ) ) {
+				// Add mesh.
+				var mesh:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
+				competitor.mesh = mesh;
+				competitor.hardUpdate();
+				competitorsModel.add( competitor );
+				addObjectToSceneRequest.dispatch( mesh );
+				// Add nametag.
+				var nametag:AbstractLabel = new AbstractLabel( null, 0, 0, competitor.name );
+				nametagsModel.add( competitor.id, nametag );
+				addNametagRequest.dispatch( nametag );
+			}
 		}
 	}
 }

@@ -5,7 +5,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
-	import com.funrun.model.PlayerModel;
 	import com.funrun.model.UserModel;
 	import com.funrun.model.constants.MessageTypes;
 	import com.funrun.model.constants.RoomTypes;

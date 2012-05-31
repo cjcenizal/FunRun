@@ -5,7 +5,6 @@ package com.funrun.view.components {
 	import com.cenizal.utils.Center;
 	import com.funrun.model.vo.ResultsPopupVO;
 	
-	import flash.display.DisplayObjectContainer;
 	import flash.events.MouseEvent;
 	
 	import org.osflash.signals.Signal;
@@ -48,6 +47,7 @@ package com.funrun.view.components {
 			_button.draw();
 			Center.horizontal( _button, this );
 			_button.y = _messageLabel.y + _messageLabel.height + 20;
+		//	Center.both( this, stage ); // sometimes this fucks up the popup
 		}
 		
 		private function onClick( e:MouseEvent ):void {

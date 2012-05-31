@@ -4,9 +4,8 @@ package com.funrun.controller.signals {
 
 	import org.osflash.signals.Signal;
 
-	public class AddNametagRequest extends Signal {
-		
-		public function AddNametagRequest() {
+	public class RemoveNametagRequest extends Signal {
+		public function RemoveNametagRequest() {
 			super( AbstractLabel );
 		}
 	}

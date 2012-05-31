@@ -4,7 +4,7 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.view.components.ResultsPopup;
-
+	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
 

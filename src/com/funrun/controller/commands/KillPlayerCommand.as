@@ -1,7 +1,6 @@
 	package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
-	import com.funrun.controller.signals.StopGameRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.TrackConstants;
@@ -18,9 +17,6 @@
 
 		[Inject]
 		public var playerModel:PlayerModel;
-		
-		[Inject]
-		public var stopGameRequest:StopGameRequest;
 		
 		[Inject]
 		public var showResultsPopupRequest:ShowResultsPopupRequest;
@@ -48,7 +44,6 @@
 			_timer.removeEventListener( TimerEvent.TIMER_COMPLETE, onTimer );
 			_timer.stop();
 			_timer = null;
-			stopGameRequest.dispatch();
 			showResultsPopupRequest.dispatch();
 		}
 	}

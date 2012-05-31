@@ -13,11 +13,19 @@ package com.funrun.model {
 			_nametags = {};
 		}
 		
+		public function reset():void {
+			for ( var key:String in _nametags ) {
+				getWithId( key ).destroy();
+				delete _nametags[ key ];
+			}
+			_nametags = {};
+		}
+		
 		public function add( id:int, nametag:AbstractLabel ):void {
 			_nametags[ id ] = nametag;
 		}
 		
-		public function getWithId( id:int ):AbstractLabel {
+		public function getWithId( id:String ):AbstractLabel {
 			return _nametags[ id ];
 		}
 	}

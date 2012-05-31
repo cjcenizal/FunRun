@@ -262,7 +262,7 @@ package com.funrun.controller.commands {
 				for ( var i:int = 0; i < len; i++ ) {
 					competitor = competitorsModel.getAt( i );
 					competitor.interpolate( interpolationModel.percent );
-					nametag = nametagsModel.getWithId( competitor.id );
+					nametag = nametagsModel.getWithId( competitor.id.toString() );
 					if ( nametag ) {
 						var pos:Point = view3DModel.get2DFrom3D( competitor.mesh.position );
 						nametag.x = pos.x;

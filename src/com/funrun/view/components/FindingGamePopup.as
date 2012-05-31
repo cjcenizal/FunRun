@@ -27,6 +27,7 @@ package com.funrun.view.components {
 			_messageLabel.draw();
 			Center.both( _messageLabel, this );
 			_messageLabel.y -= 100;
+			Center.both( this, stage );
 		}
 	}
 }

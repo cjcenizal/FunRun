@@ -3,7 +3,7 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.view.components.FindingGamePopup;
-
+	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
 

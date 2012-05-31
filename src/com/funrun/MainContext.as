@@ -27,6 +27,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LoginCommand;
 	import com.funrun.controller.commands.LoginFailedCommand;
 	import com.funrun.controller.commands.LoginFulfilledCommand;
+	import com.funrun.controller.commands.RemoveCompetitorCommand;
 	import com.funrun.controller.commands.RemoveObjectFromSceneCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
@@ -68,7 +69,9 @@ package com.funrun {
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
+	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
+	import com.funrun.controller.signals.RemoveNametagRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
@@ -202,6 +205,7 @@ package com.funrun {
 			injector.mapSingleton( RemoveResultsPopupRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			injector.mapSingleton( AddNametagRequest );
+			injector.mapSingleton( RemoveNametagRequest );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
 			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
@@ -238,6 +242,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
+			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );

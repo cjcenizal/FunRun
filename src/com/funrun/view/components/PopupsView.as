@@ -1,7 +1,6 @@
 package com.funrun.view.components {
 	
 	import com.cenizal.ui.AbstractComponent;
-	import com.cenizal.utils.Center;
 	
 	import flash.display.DisplayObjectContainer;
 	
@@ -20,7 +19,6 @@ package com.funrun.view.components {
 		public function add( popup:Popup ):void {
 			addChild( popup );
 			_popups.push( popup );
-			Center.both( popup, stage );
 		}
 		
 		public function remove( popup:Popup ):void {
