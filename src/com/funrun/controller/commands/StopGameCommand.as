@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
+	import com.funrun.model.UserModel;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.services.PlayerioMultiplayerService;
 	
@@ -10,11 +11,18 @@ package com.funrun.controller.commands {
 	
 	public class StopGameCommand extends Command {
 		
+		// Models.
+		
 		[Inject]
 		public var trackModel:TrackModel;
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var userModel:UserModel;
+		
+		// Commands.
 		
 		[Inject]
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
@@ -29,6 +37,8 @@ package com.funrun.controller.commands {
 			enablePlayerInputRequest.dispatch( false );
 			// Disconnect from server.
 			multiplayerService.disconnect();
+			// Reset in-game ID.
+			userModel.resetInGameId();
 		}
 	}
 }

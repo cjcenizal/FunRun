@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddFloorRequest;
-	import com.funrun.controller.signals.ConnectMultiplayerRequest;
+	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.payload.AddFloorPayload;
@@ -29,7 +29,7 @@ package com.funrun.controller.commands {
 		public var renderSceneRequest:RenderSceneRequest;
 		
 		[Inject]
-		public var connectMultiplayerRequest:ConnectMultiplayerRequest;
+		public var connectMultiplayerRequest:JoinMatchmakingRequest;
 		
 		override public function execute():void {
 			// Set game state.

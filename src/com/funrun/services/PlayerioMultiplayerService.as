@@ -17,7 +17,6 @@ package com.funrun.services {
 		private var _onServerDisconnectSignal:Signal;
 		private var _isConnected:Boolean = false;
 		private var _messageHandlers:Object = {};
-		public var playerRoomId:int = -1;
 
 		public function PlayerioMultiplayerService() {
 			_onConnectedSignal = new Signal();
@@ -34,6 +33,9 @@ package com.funrun.services {
 
 		public function disconnect():void {
 			_connection.disconnect();
+		}
+		
+		public function reset():void {
 			_connection.removeDisconnectHandler( onServerDisconnect );
 			for ( var key:String in _messageHandlers ) {
 				for ( var fn:String in _messageHandlers[ key ] ) {
@@ -48,7 +50,6 @@ package com.funrun.services {
 			_onConnectedSignal.removeAll();
 			_onErrorSignal.removeAll();
 			_onServerDisconnectSignal.removeAll();
-			playerRoomId = -1;
 		}
 		
 		private function onRoomJoinSuccess( connection:Connection ):void {

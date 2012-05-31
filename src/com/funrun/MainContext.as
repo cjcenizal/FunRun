@@ -11,12 +11,14 @@ package com.funrun {
 	import com.funrun.controller.commands.BuildInterpolationCommand;
 	import com.funrun.controller.commands.BuildTimeCommand;
 	import com.funrun.controller.commands.BuildWhitelistCommand;
-	import com.funrun.controller.commands.ConnectMultiplayerCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
+	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
 	import com.funrun.controller.commands.HandleMultiplayerNewPlayerJoinedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerPlayerLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
+	import com.funrun.controller.commands.JoinGameCommand;
+	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KeyDownCommand;
 	import com.funrun.controller.commands.KeyUpCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
@@ -54,14 +56,16 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildInterpolationRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
-	import com.funrun.controller.signals.ConnectMultiplayerRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
+	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
 	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
+	import com.funrun.controller.signals.JoinGameRequest;
+	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
@@ -113,6 +117,8 @@ package com.funrun {
 	import com.funrun.model.View3DModel;
 	import com.funrun.services.BlocksJsonService;
 	import com.funrun.services.IWhitelistService;
+	import com.funrun.services.MatchmakingService;
+	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.ObstaclesJsonService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioMultiplayerService;
@@ -186,7 +192,8 @@ package com.funrun {
 			injector.mapSingleton( BlocksJsonService );
 			injector.mapSingleton( ObstaclesJsonService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
-			injector.mapSingleton( PlayerioMultiplayerService );
+			injector.mapSingleton( MatchmakingService );
+			injector.mapSingleton( MultiplayerService );
 			if ( useWhitelist ) {
 				// Block non-whitelisted users.
 				injector.mapSingletonOf( IWhitelistService, WhitelistService );
@@ -236,11 +243,13 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
-			signalCommandMap.mapSignalClass( ConnectMultiplayerRequest,				ConnectMultiplayerCommand );
+			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
+			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
 			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );

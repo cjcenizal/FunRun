@@ -3,7 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.MessageTypes;
-	import com.funrun.services.PlayerioMultiplayerService;
+	import com.funrun.services.MultiplayerService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -20,7 +20,7 @@ package com.funrun.controller.commands {
 		// Services.
 		
 		[Inject]
-		public var multiplayerService:PlayerioMultiplayerService;
+		public var multiplayerService:MultiplayerService;
 		
 		override public function execute():void {
 			// Update server with position and velocity.

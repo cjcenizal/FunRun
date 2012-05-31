@@ -2,10 +2,8 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.model.DistanceModel;
+	import com.funrun.model.UserModel;
 	import com.funrun.model.vo.CompetitorVO;
-	import com.funrun.services.PlayerioMultiplayerService;
-	
-	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -23,10 +21,8 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var distanceModel:DistanceModel;
 		
-		// Services.
-		
 		[Inject]
-		public var multiplayerService:PlayerioMultiplayerService;
+		public var userModel:UserModel;
 		
 		// Commands.
 		
@@ -34,7 +30,7 @@ package com.funrun.controller.commands {
 		public var addCompetitorRequest:AddCompetitorRequest;
 		
 		override public function execute():void {
-			if ( message.getInt( 0 ) != multiplayerService.playerRoomId ) {
+			if ( message.getInt( 0 ) != userModel.inGameId ) {
 				var competitor:CompetitorVO = new CompetitorVO(
 					message.getInt( 0 ),
 					message.getString( 1 )

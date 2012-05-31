@@ -4,16 +4,11 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
-	import com.funrun.controller.signals.ToggleCountdownRequest;
-	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
-	import com.funrun.model.ObstaclesModel;
+	import com.funrun.model.UserModel;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.model.vo.CompetitorVO;
-	import com.funrun.services.PlayerioMultiplayerService;
-	
-	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -29,23 +24,12 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var obstaclesModel:ObstaclesModel;
-		
-		[Inject]
-		public var countdownModel:CountdownModel;
-		
-		[Inject]
 		public var distanceModel:DistanceModel;
 		
-		// Services.
-		
 		[Inject]
-		public var multiplayerService:PlayerioMultiplayerService;
+		public var userModel:UserModel;
 		
 		// Commands.
-		
-		[Inject]
-		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
 		[Inject]
 		public var addCompetitorRequest:AddCompetitorRequest;
@@ -61,16 +45,11 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Store id so we can ignore updates we originated.
-			multiplayerService.playerRoomId = message.getInt( 0 );
-			// Store random seed.
-			obstaclesModel.seed = message.getInt( 1 );
-			// Initialize countdown.
-			countdownModel.secondsRemaining = message.getInt( 2 );
-			toggleCountdownRequest.dispatch( true );
+			userModel.inGameId = message.getInt( 0 );
 			
 			// Add pre-existing competitors.
-			for ( var i:int = 3; i < message.length; i += 6 ) {
-				if ( message.getInt( i ) != multiplayerService.playerRoomId ) {
+			for ( var i:int = 1; i < message.length; i += 6 ) {
+				if ( message.getInt( i ) != userModel.inGameId ) {
 					var competitor:CompetitorVO = new CompetitorVO(
 						message.getInt( i ),
 						message.getString( i + 1 )

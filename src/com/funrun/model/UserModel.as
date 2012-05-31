@@ -6,9 +6,14 @@ package com.funrun.model {
 		
 		public var userId:String;
 		public var name:String;
+		public var inGameId:int = -1;
 		
 		public function UserModel() {
 			super();
+		}
+		
+		public function resetInGameId():void {
+			inGameId = -1;
 		}
 	}
 }

@@ -2,9 +2,9 @@ package com.funrun.controller.signals
 {
 	import org.osflash.signals.Signal;
 	
-	public class ConnectMultiplayerRequest extends Signal
+	public class JoinMatchmakingRequest extends Signal
 	{
-		public function ConnectMultiplayerRequest()
+		public function JoinMatchmakingRequest()
 		{
 			super();
 		}
