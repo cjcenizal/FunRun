@@ -26,6 +26,9 @@ namespace FunRun {
 		enum GameState { WAITING_FOR_PLAYERS, COUNTING_DOWN, FINAL_COUNTDOWN, PLAYING };
 		private int currentGameState = ( int ) GameState.WAITING_FOR_PLAYERS;
 
+		// Requirements.
+		private const int MIN_REQUIRED_NUM_PLAYERS = 2;
+
 		// Countdown.
 		private DateTime countdownStartTime;
 		private int maxSeconds = 15;
@@ -49,7 +52,7 @@ namespace FunRun {
 		}
 
 		public override void UserJoined( Player player ) {
-			if ( PlayerCount == 2 ) {
+			if ( PlayerCount == MIN_REQUIRED_NUM_PLAYERS ) {
 				currentGameState = ( int ) GameState.COUNTING_DOWN;
 				countdownStartTime = DateTime.UtcNow;
 			}
@@ -85,7 +88,15 @@ namespace FunRun {
 		}
 
 		public override void UserLeft( Player player ) {
-			//Inform all other players that user left.
+			// Restart countdown if necessary.
+			if ( currentGameState == ( int ) GameState.COUNTING_DOWN
+			    || currentGameState == ( int ) GameState.FINAL_COUNTDOWN
+			    ) {
+				if ( PlayerCount < MIN_REQUIRED_NUM_PLAYERS ) {
+					currentGameState = ( int ) GameState.WAITING_FOR_PLAYERS;
+				}
+			}
+			// Inform all other players that user left.
 			Broadcast( "l", player.Id );
 		}
 		
