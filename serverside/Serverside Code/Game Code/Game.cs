@@ -22,44 +22,38 @@ namespace FunRun {
 	[RoomType("Game")]
 	public class GameCode : Game<Player> {
 
+		// Game state.
+		enum GameState { WAITING_FOR_PLAYERS, COUNTING_DOWN, FINAL_COUNTDOWN, PLAYING };
+		private int currentGameState = ( int ) GameState.WAITING_FOR_PLAYERS;
+
+		// Countdown.
 		private DateTime countdownStartTime;
-		private bool gameIsOpen = true;
-		private bool playersAreRunning = false;
 		private int maxSeconds = 15;
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
+
+		// Obstacle generation.
 		private int randomSeed = ( new Random() ).Next();
 
 		public override void GameStarted() {
-			// Update every 100 ms.
 			AddTimer( delegate {
-				if ( !playersAreRunning && PlayerCount >= 2 ) {
-					updateSecondsRemaining();
-					if ( secondsRemaining <= 0 ) {
-						// Start running!
-						playersAreRunning = true;
-					}
-				}
-				broadcastUpdate();
+				Update();
 			}, 100 );
 		}
 
 		public override bool AllowUserJoin( Player player ) {
-			// This is called before GameStarted, so we will set up our countdown here, when the first player joins.
-			if ( PlayerCount <= 1 ) {
-				// Keep resetting countdown start time until we hit 2 players.
-				countdownStartTime = DateTime.UtcNow;
-			} else {
-				// Once we have 2 players we can start counting down.
-				updateSecondsRemaining();
-				gameIsOpen = secondsRemaining > minJoinTime;
-			}
-			// Return whether or not game has already started.
-			return gameIsOpen;
+			// Return true if we are still counting down, but not in the final countdown.
+			return ( currentGameState == ( int ) GameState.WAITING_FOR_PLAYERS
+			        || currentGameState == ( int ) GameState.COUNTING_DOWN );
 			//return ( PlayerCount == 0 ); // For testing only.
 		}
 
 		public override void UserJoined( Player player ) {
+			if ( PlayerCount == 2 ) {
+				currentGameState = ( int ) GameState.COUNTING_DOWN;
+				countdownStartTime = DateTime.UtcNow;
+			}
+
 			// Assign user-provided data.
 			player.name = player.JoinData[ "name" ];
 
@@ -73,7 +67,7 @@ namespace FunRun {
 			initMessage.Add( randomSeed );
 			
 			// Update and add time remaining.
-			updateSecondsRemaining();
+			UpdateSecondsRemaining();
 			initMessage.Add( secondsRemaining );
 
 			// Add the current state of all players to the init message.
@@ -111,9 +105,12 @@ namespace FunRun {
 		public override void GameClosed() {
 		}
 
-		private void broadcastUpdate() {
+		private void Update() {
 			// Create update message.
 			Message updateMessage = Message.Create( "u" );
+
+			// Add time left in countdown.
+			UpdateSecondsRemaining();
 			updateMessage.Add( secondsRemaining );
 
 			// Tell everyone about everyone else's state.
@@ -125,9 +122,19 @@ namespace FunRun {
 			Broadcast( updateMessage );
 		}
 
-		private void updateSecondsRemaining() {
-			double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
-			secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
+		private void UpdateSecondsRemaining() {
+			secondsRemaining = 1000; // Default seconds remaining to 1000.
+			if ( currentGameState == ( int ) GameState.COUNTING_DOWN
+			    || currentGameState == ( int ) GameState.FINAL_COUNTDOWN
+			    ) {
+				double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
+				secondsRemaining = Math.Ceiling( ( ( maxSeconds * 1000 ) - timeElapsed ) * .001 );
+				if ( secondsRemaining <= 0 ) {
+					currentGameState = ( int ) GameState.PLAYING;
+				} else if ( secondsRemaining <= minJoinTime ) {
+					currentGameState = ( int ) GameState.FINAL_COUNTDOWN;
+				}
+			}
 		}
 	}
 }
