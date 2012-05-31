@@ -44,6 +44,7 @@ package com.funrun.controller.commands {
 		public var showScreenRequest:ShowScreenRequest;
 		
 		override public function execute():void {
+			trace(this);
 			// Store id so we can ignore updates we originated.
 			userModel.inGameId = message.getInt( 0 );
 			

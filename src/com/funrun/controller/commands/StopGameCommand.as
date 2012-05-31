@@ -5,6 +5,8 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.UserModel;
 	import com.funrun.model.events.TimeEvent;
+	import com.funrun.services.MatchmakingService;
+	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.PlayerioMultiplayerService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -28,7 +30,10 @@ package com.funrun.controller.commands {
 		public var enablePlayerInputRequest:EnablePlayerInputRequest;
 
 		[Inject]
-		public var multiplayerService:PlayerioMultiplayerService;
+		public var multiplayerService:MultiplayerService;
+		
+		[Inject]
+		public var matchmakingService:MatchmakingService;
 		
 		override public function execute():void {
 			// Stop responding to time.
@@ -36,7 +41,8 @@ package com.funrun.controller.commands {
 			// Stop responding to input.
 			enablePlayerInputRequest.dispatch( false );
 			// Disconnect from server.
-			multiplayerService.disconnect();
+			multiplayerService.disconnectAndReset();
+			matchmakingService.disconnectAndReset();
 			// Reset in-game ID.
 			userModel.resetInGameId();
 		}

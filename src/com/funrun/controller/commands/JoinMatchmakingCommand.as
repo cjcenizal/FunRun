@@ -1,6 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
+	import com.funrun.controller.signals.ResetCountdownRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
@@ -44,6 +45,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var startCountdownRequest:StartCountdownRequest;
 		
+		[Inject]
+		public var resetCountdownRequest:ResetCountdownRequest;
+		
 		override public function execute():void {
 			// Hide view and block interaction.
 			showFindingGamePopupRequest.dispatch();
@@ -78,13 +82,11 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onStartCountdown( message:Message ):void {
-			trace("onStartCountdown");
 			startCountdownRequest.dispatch( message.getNumber( 0 ) );
 		}
 		
 		private function onResetCountdown( message:Message ):void {
-			// Reset the countdown.
-			trace("reset");
+			resetCountdownRequest.dispatch();
 		}
 	}
 }

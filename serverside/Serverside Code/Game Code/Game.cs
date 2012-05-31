@@ -33,7 +33,7 @@ namespace FunRun {
 		private DateTime countdownStartTime;
 		private int maxMs = 15 * 1000;
 		private int minJoinMs = 5;
-		private double remainingMs = 0;
+		private double remainingMs = 15 * 1000;
 
 		// Obstacle generation.
 		private int randomSeed = ( new Random() ).Next();
@@ -42,6 +42,7 @@ namespace FunRun {
 		private string gameId = System.Guid.NewGuid().ToString();
 
 		public override void GameStarted() {
+			remainingMs = maxMs;
 			AddTimer( delegate {
 				UpdateRemainingMs();
 			}, 100 );

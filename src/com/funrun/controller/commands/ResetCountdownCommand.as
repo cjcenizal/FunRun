@@ -5,12 +5,7 @@ package com.funrun.controller.commands {
 	
 	import org.robotlegs.mvcs.Command;
 
-	public class StartCountdownCommand extends Command {
-		
-		// Arguments.
-		
-		[Inject]
-		public var remainingMs:Number;
+	public class ResetCountdownCommand extends Command {
 		
 		// Models.
 		
@@ -23,8 +18,8 @@ package com.funrun.controller.commands {
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
 		override public function execute():void {
-			countdownModel.start( remainingMs );
-			toggleCountdownRequest.dispatch( true );
+			countdownModel.reset();
+			toggleCountdownRequest.dispatch( false );
 		}
 	}
 }

@@ -32,6 +32,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LoginFulfilledCommand;
 	import com.funrun.controller.commands.RemoveCompetitorCommand;
 	import com.funrun.controller.commands.RemoveObjectFromSceneCommand;
+	import com.funrun.controller.commands.ResetCountdownCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
 	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
@@ -83,6 +84,7 @@ package com.funrun {
 	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
+	import com.funrun.controller.signals.ResetCountdownRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
@@ -260,6 +262,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
+			signalCommandMap.mapSignalClass( ResetCountdownRequest,					ResetCountdownCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );

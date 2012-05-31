@@ -105,11 +105,13 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
-				if ( countdownModel.secondsRemaining > 0 ) {
-					updateCountdownRequest.dispatch( countdownModel.secondsRemaining.toString() );
-				} else {
-					// Start running.
-					startRunningRequest.dispatch();
+				if ( countdownModel.isRunning ) {
+					if ( countdownModel.secondsRemaining > 0 ) {
+						updateCountdownRequest.dispatch( countdownModel.secondsRemaining.toString() );
+					} else {
+						// Start running.
+						startRunningRequest.dispatch();
+					}
 				}
 			}
 			

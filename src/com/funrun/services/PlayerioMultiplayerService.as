@@ -31,8 +31,9 @@ package com.funrun.services {
 			client.multiplayer.createJoinRoom( roomId, roomType, visibleToLobby, roomData, userJoinData, onRoomJoinSuccess, onError );
 		}
 
-		public function disconnect():void {
+		public function disconnectAndReset():void {
 			_connection.disconnect();
+			reset();
 		}
 		
 		public function reset():void {
