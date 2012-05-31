@@ -26,7 +26,8 @@ namespace FunRun {
 	public class GameCode : Game<Player> {
 
 		private DateTime countdownStartTime;
-		private bool isRunning = false;
+		private bool gameIsOpen = true;
+		private bool playersAreRunning = false;
 		private int maxSeconds = 15;
 		private double secondsRemaining = 0;
 		private int minJoinTime = 5;
@@ -35,11 +36,11 @@ namespace FunRun {
 		public override void GameStarted() {
 			// Update every 100 ms.
 			AddTimer( delegate {
-				if ( !isRunning && PlayerCount >= 2 ) {
+				if ( !playersAreRunning && PlayerCount >= 2 ) {
 					updateSecondsRemaining();
 					if ( secondsRemaining <= 0 ) {
 						// Start running!
-						isRunning = true;
+						playersAreRunning = true;
 					}
 				}
 				broadcastUpdate();
@@ -49,11 +50,16 @@ namespace FunRun {
 		public override bool AllowUserJoin( Player player ) {
 			// This is called before GameStarted, so we will set up our countdown here, when the first player joins.
 			if ( PlayerCount <= 1 ) {
+				// Keep resetting countdown start time until we hit 2 players.
 				countdownStartTime = DateTime.UtcNow;
+			} else {
+				// Once we have 2 players we can start counting down.
+				updateSecondsRemaining();
+				gameIsOpen = secondsRemaining > minJoinTime;
 			}
-			updateSecondsRemaining();
 			// Return whether or not game has already started.
-			return true;//( secondsRemaining > minJoinTime );
+			return gameIsOpen;
+			//return ( PlayerCount == 0 ); // For testing only.
 		}
 
 		public override void UserJoined( Player player ) {

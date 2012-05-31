@@ -84,6 +84,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onInit( message:Message ):void {
+			multiplayerService.removeMessageHandler( MessageTypes.INIT, onInit );
 			handleMultiplayerInitRequest.dispatch( message );
 		}
 		
