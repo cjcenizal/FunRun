@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.RemoveNametagRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
@@ -15,6 +16,9 @@ package com.funrun.controller.commands {
 		public var competitor:CompetitorVO;
 		
 		// Models.
+		
+		[Inject]
+		public var competitorsModel:CompetitorsModel;
 		
 		[Inject]
 		public var nametagsModel:NametagsModel;
@@ -32,6 +36,9 @@ package com.funrun.controller.commands {
 			removeObjectFromSceneRequest.dispatch( competitor.mesh );
 			// Remove nametag.
 			removeNametagRequest.dispatch( nametagsModel.getWithId( competitor.id.toString() ) );
+			// Remove from models.
+			competitorsModel.remove( competitor.id );
+			nametagsModel.remove( competitor.id );
 		}
 	}
 }

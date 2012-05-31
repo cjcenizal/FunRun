@@ -19,6 +19,17 @@ package com.funrun.model {
 			_competitorsArray.push( competitor );
 		}
 		
+		public function remove( id:int ):void {
+			var comp:CompetitorVO = getWithId( id );
+			delete _competitors[ id ];
+			for ( var i:int = 0; i < _competitorsArray.length; i++ ) {
+				if ( getAt( i ) == comp ) {
+					_competitorsArray.splice( i, 1 );
+					return;
+				}
+			}
+		}
+		
 		public function reset():void {
 			_competitors = {};
 			_competitorsArray = [];

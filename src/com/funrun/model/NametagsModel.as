@@ -25,6 +25,10 @@ package com.funrun.model {
 			_nametags[ id ] = nametag;
 		}
 		
+		public function remove( id:int ):void {
+			delete _nametags[ id ];
+		}
+		
 		public function getWithId( id:String ):AbstractLabel {
 			return _nametags[ id ];
 		}

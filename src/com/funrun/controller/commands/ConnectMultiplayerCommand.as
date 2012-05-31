@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
@@ -56,10 +57,14 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var handleMultiplayerNewPlayerJoinedRequest:HandleMultiplayerNewPlayerJoinedRequest;
 		
+		[Inject]
+		public var handleMultiplayerPlayerLeftRequest:HandleMultiplayerPlayerLeftRequest;
+		
 		override public function execute():void {
 			// Hide view and block interaction.
 			showFindingGamePopupRequest.dispatch();
 			// Set up multiplayer.
+			multiplayerService.onServerDisconnectSignal.add( onDisconnected );
 			multiplayerService.onConnectedSignal.add( onConnected );
 			multiplayerService.onErrorSignal.add( onError );
 			// One frame delay.
@@ -72,10 +77,15 @@ package com.funrun.controller.commands {
 			multiplayerService.connect( loginService.client, RoomTypes.GAME, { name: userModel.name } );
 		}
 		
+		private function onDisconnected():void {
+			trace(this, "disconnected");
+		}
+		
 		private function onConnected():void {
 			multiplayerService.addMessageHandler( MessageTypes.INIT, onInit );
 			multiplayerService.addMessageHandler( MessageTypes.UPDATE, onUpdate );
 			multiplayerService.addMessageHandler( MessageTypes.NEW_PLAYER_JOINED, onNewPlayerJoined );
+			multiplayerService.addMessageHandler( MessageTypes.PLAYER_LEFT, onPlayerLeft );
 		}
 		
 		private function onError():void {
@@ -93,6 +103,10 @@ package com.funrun.controller.commands {
 		
 		private function onNewPlayerJoined( message:Message ):void {
 			handleMultiplayerNewPlayerJoinedRequest.dispatch( message );
+		}
+		
+		private function onPlayerLeft( message:Message ):void {
+			handleMultiplayerPlayerLeftRequest.dispatch( message );
 		}
 	}
 }
