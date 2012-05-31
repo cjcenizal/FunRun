@@ -7,9 +7,9 @@ package com.cenizal.ui {
 		
 		private var _label:AbstractLabel;
 		
-		public function DummyButton( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0, defaultHandler:Function = null, text:String = null, fontColor:uint = 0 ) {
+		public function DummyButton( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0, defaultHandler:Function = null, text:String = null, fontColor:uint = 0, fontSize:uint = 24 ) {
 			super( parent, x, y, defaultHandler );
-			_label = new AbstractLabel( this, 0, 0, text, 24, fontColor );
+			_label = new AbstractLabel( this, 0, 0, text, fontSize, fontColor );
 		}
 		
 		override protected function onMouseOver( e:MouseEvent ):void {

@@ -126,6 +126,7 @@ package com.funrun {
 	import com.funrun.view.components.NametagsView;
 	import com.funrun.view.components.PlayerioErrorPopupView;
 	import com.funrun.view.components.PopupsView;
+	import com.funrun.view.components.QuitGameView;
 	import com.funrun.view.components.ResultsPopup;
 	import com.funrun.view.components.TrackView;
 	import com.funrun.view.mediators.AppMediator;
@@ -139,6 +140,7 @@ package com.funrun {
 	import com.funrun.view.mediators.NametagsMediator;
 	import com.funrun.view.mediators.PlayerioErrorPopupMediator;
 	import com.funrun.view.mediators.PopupsMediator;
+	import com.funrun.view.mediators.QuitGameMediator;
 	import com.funrun.view.mediators.ResultPopupMediator;
 	import com.funrun.view.mediators.TrackMediator;
 	
@@ -261,6 +263,7 @@ package com.funrun {
 			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
 			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
 			mediatorMap.mapView( NametagsView,				NametagsMediator );
+			mediatorMap.mapView( QuitGameView,				QuitGameMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
 			mediatorMap.mapView( FunRun, 					AppMediator );
