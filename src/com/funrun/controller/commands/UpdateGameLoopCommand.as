@@ -230,6 +230,7 @@ package com.funrun.controller.commands {
 						if ( face.type == FaceTypes.FRONT ) {
 							// Resolve this collision by moving the world.
 							trackModel.move( face.minZ );
+							distanceModel.add( -face.minZ );
 							if ( face.event == CollisionTypes.SMACK ) {
 								killPlayerRequest.dispatch( CollisionTypes.SMACK );
 							}

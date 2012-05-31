@@ -29,9 +29,7 @@ package com.funrun.controller.commands {
 				playerModel.player.x,
 				playerModel.player.y,
 				distanceModel.rawDistance,
-				playerModel.velocity.x,
-				playerModel.velocity.y,
-				playerModel.velocity.z
+				playerModel.isDucking
 			);
 		}
 	}

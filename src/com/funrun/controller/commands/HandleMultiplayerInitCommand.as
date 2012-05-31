@@ -69,16 +69,14 @@ package com.funrun.controller.commands {
 			toggleCountdownRequest.dispatch( true );
 			
 			// Add pre-existing competitors.
-			for ( var i:int = 3; i < message.length; i += 8 ) {
+			for ( var i:int = 3; i < message.length; i += 6 ) {
 				if ( message.getInt( i ) != multiplayerService.playerRoomId ) {
 					var competitor:CompetitorVO = new CompetitorVO(
 						message.getInt( i ),
-						message.getString( i + 1 ),
-						new Vector3D( message.getNumber( i + 5 ), message.getNumber( i + 6 ), message.getNumber( i + 7 ) ),
-						false,
-						false
+						message.getString( i + 1 )
 					);
 					competitor.updatePosition( message.getNumber( i + 2 ), message.getNumber( i + 3 ), distanceModel.getRelativeDistanceTo( message.getNumber( i + 4 ) ) );
+					competitor.isDucking = message.getBoolean( i + 5 );
 					addCompetitorRequest.dispatch( competitor );
 				}
 			}

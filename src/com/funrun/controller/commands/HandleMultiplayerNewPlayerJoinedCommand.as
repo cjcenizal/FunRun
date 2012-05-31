@@ -37,12 +37,10 @@ package com.funrun.controller.commands {
 			if ( message.getInt( 0 ) != multiplayerService.playerRoomId ) {
 				var competitor:CompetitorVO = new CompetitorVO(
 					message.getInt( 0 ),
-					message.getString( 1 ),
-					new Vector3D( message.getNumber( 5 ), message.getNumber( 6 ), message.getNumber( 7 ) ),
-					false,
-					false
+					message.getString( 1 )
 				);
 				competitor.updatePosition( message.getNumber( 2 ), message.getNumber( 3 ), distanceModel.getRelativeDistanceTo( message.getNumber( 4 ) ) );
+				competitor.isDucking = message.getBoolean( 5 );
 				addCompetitorRequest.dispatch( competitor );
 			}
 		}

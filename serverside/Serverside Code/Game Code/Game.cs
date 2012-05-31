@@ -9,15 +9,12 @@ namespace FunRun {
 	
 	// Each player that joins the game will have these attributes.
 	public class Player : BasePlayer {
-		//public float de;
-		//public float du;
+		//public bool isDead = false;
+		public bool isDucking = false;
 		public string name = "Anonymous";
 		public double x = 0;
 		public double y = 0;
 		public double z = 0;
-		public double vx = 0;
-		public double vy = 0;
-		public double vz = 0;
 		public Player() {
 		}
 	}
@@ -81,7 +78,7 @@ namespace FunRun {
 
 			// Add the current state of all players to the init message.
 			foreach ( Player p in Players ) {
-				initMessage.Add( p.Id, p.name, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+				initMessage.Add( p.Id, p.name, p.x, p.y, p.z, p.isDucking );
 			}
 			
 			// Send init message to player.
@@ -89,7 +86,7 @@ namespace FunRun {
 
 			// Let everyone know who's here.
 			Message newPlayerMessage = Message.Create( "n" );
-			newPlayerMessage.Add( player.Id, player.name, player.x, player.y, player.z, player.vx, player.vy, player.vz );
+			newPlayerMessage.Add( player.Id, player.name, player.x, player.y, player.z, player.isDucking );
 			Broadcast( newPlayerMessage );
 		}
 
@@ -105,9 +102,7 @@ namespace FunRun {
 					player.x = message.GetDouble( 0 );
 					player.y = message.GetDouble( 1 );
 					player.z = message.GetDouble( 2 );
-					player.vx = message.GetDouble( 3 );
-					player.vy = message.GetDouble( 4 );
-					player.vz = message.GetDouble( 5 );
+					player.isDucking = message.GetBoolean( 3 );
 					break;
 			}
 		}
@@ -123,7 +118,7 @@ namespace FunRun {
 
 			// Tell everyone about everyone else's state.
 			foreach ( Player p in Players ) {
-				updateMessage.Add( p.Id, p.x, p.y, p.z, p.vx, p.vy, p.vz );
+				updateMessage.Add( p.Id, p.x, p.y, p.z, p.isDucking );
 			}
 
 			// Broadcast message to all players.
