@@ -4,7 +4,7 @@ package com.funrun.model {
 	
 	public class CountdownModel extends Actor {
 		
-		private var _secondsRemaining:int = 0;
+		private var _secondsRemaining:int = 7;
 		
 		public function set secondsRemaining( val:int ):void {
 			_secondsRemaining = val;

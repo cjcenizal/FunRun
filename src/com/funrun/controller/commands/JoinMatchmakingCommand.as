@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
+	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.model.constants.MessageTypes;
 	import com.funrun.model.constants.RoomTypes;
 	import com.funrun.model.vo.PlayerioErrorVO;
@@ -40,6 +41,8 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var handleMultiplayerJoinGameRequest:HandleMultiplayerJoinGameRequest;
 		
+		[Inject]
+		public var startCountdownRequest:StartCountdownRequest;
 		
 		override public function execute():void {
 			// Hide view and block interaction.
@@ -55,6 +58,7 @@ package com.funrun.controller.commands {
 			// Listen for disconnect.
 			matchmakingService.onServerDisconnectSignal.add( onDisconnected );
 			matchmakingService.addMessageHandler( MessageTypes.JOIN_GAME, onJoinGame );
+			matchmakingService.addMessageHandler( MessageTypes.START_COUNTDOWN, onStartCountdown );
 			matchmakingService.addMessageHandler( MessageTypes.RESET_COUNTDOWN, onResetCountdown );
 		}
 		
@@ -73,8 +77,14 @@ package com.funrun.controller.commands {
 			handleMultiplayerJoinGameRequest.dispatch( message );
 		}
 		
+		private function onStartCountdown( message:Message ):void {
+			trace("onStartCountdown");
+			startCountdownRequest.dispatch( message.getNumber( 0 ) );
+		}
+		
 		private function onResetCountdown( message:Message ):void {
 			// Reset the countdown.
+			trace("reset");
 		}
 	}
 }

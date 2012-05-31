@@ -42,6 +42,9 @@ namespace FunRun {
 		private string gameId = System.Guid.NewGuid().ToString();
 
 		public override void GameStarted() {
+			AddTimer( delegate {
+				UpdateRemainingMs();
+			}, 100 );
 		}
 
 		public override bool AllowUserJoin( Player player ) {
@@ -49,12 +52,6 @@ namespace FunRun {
 		}
 
 		public override void UserJoined( Player player ) {
-			// Start countdown if we have enough players.
-			if ( PlayerCount == MIN_REQUIRED_NUM_PLAYERS ) {
-				currentState = ( int ) State.COUNTING_DOWN;
-				countdownStartTime = DateTime.UtcNow;
-			}
-
 			// Create start message for the joining player.
 			Message joinGameMessage = Message.Create( "j" );
 
@@ -63,14 +60,19 @@ namespace FunRun {
 
 			// Random seed for obstacles.
 			joinGameMessage.Add( randomSeed );
-			
-			// Update and tell them how much time is left.
-			// The client will handle his own countdown.
-			UpdateRemainingMs();
-			joinGameMessage.Add( remainingMs );
-			
+
 			// Send message to player.
 			player.Send( joinGameMessage );
+
+			// Start countdown if we have enough players.
+			if ( PlayerCount == MIN_REQUIRED_NUM_PLAYERS ) {
+				currentState = ( int ) State.COUNTING_DOWN;
+				countdownStartTime = DateTime.UtcNow;
+				// Tell everyone we can start the countdown.
+				Message startCountdownMessage = Message.Create( "s" );
+				startCountdownMessage.Add( remainingMs );
+				Broadcast( startCountdownMessage );
+			}
 		}
 
 		public override void UserLeft( Player player ) {
@@ -93,7 +95,7 @@ namespace FunRun {
 		}
 
 		private void UpdateRemainingMs() {
-			remainingMs = 100 * 1000; // Default seconds remaining to 1000.
+			remainingMs = maxMs;
 			if ( currentState == ( int ) State.COUNTING_DOWN ) {
 				double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
 				remainingMs = maxMs - timeElapsed;

@@ -38,6 +38,7 @@ package com.funrun {
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
 	import com.funrun.controller.commands.ShowResultsPopupCommand;
+	import com.funrun.controller.commands.StartCountdownCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameCommand;
@@ -89,6 +90,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.StopGameRequest;
@@ -257,6 +259,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
+			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
 			
 			// Map events to commands.
 			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
