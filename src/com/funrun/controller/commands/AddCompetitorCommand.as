@@ -47,6 +47,15 @@ package com.funrun.controller.commands {
 				// Add mesh.
 				var mesh:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
 				competitor.mesh = mesh;
+				if ( competitor.isDucking ) {
+					if ( competitor.mesh.scaleY != .25 ) {
+						competitor.mesh.scaleY = .25;
+					}
+				} else {
+					if ( competitor.mesh.scaleY != 1 ) {
+						competitor.mesh.scaleY = 1;
+					}
+				}
 				competitor.hardUpdate();
 				competitorsModel.add( competitor );
 				addObjectToSceneRequest.dispatch( mesh );

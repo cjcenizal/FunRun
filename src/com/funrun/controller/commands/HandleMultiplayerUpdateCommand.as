@@ -40,19 +40,28 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			interpolationModel.reset();
 			countdownModel.secondsRemaining = message.getInt( 0 );
-			var comp:CompetitorVO;
+			var competitor:CompetitorVO;
 			for ( var i:int = 1; i < message.length; i += 5 ) {
 				if ( message.getInt( i ) != multiplayerService.playerRoomId ) {
-					comp = competitorsModel.getWithId( message.getInt( i ) );
+					competitor = competitorsModel.getWithId( message.getInt( i ) );
 					// Sometimes comp returns null for some reason.
-					if ( comp ) {
-						comp.hardUpdate();
-						comp.updatePosition(
+					if ( competitor ) {
+						competitor.hardUpdate();
+						competitor.updatePosition(
 							message.getNumber( i + 1 ),
 							message.getNumber( i + 2 ),
 							distanceModel.getRelativeDistanceTo( message.getNumber( i + 3 ) )
 							);
-						comp.isDucking = message.getBoolean( i + 4 );
+						competitor.isDucking = message.getBoolean( i + 4 );
+						if ( competitor.isDucking ) {
+							if ( competitor.mesh.scaleY != .25 ) {
+								competitor.mesh.scaleY = .25;
+							}
+						} else {
+							if ( competitor.mesh.scaleY != 1 ) {
+								competitor.mesh.scaleY = 1;
+							}
+						}
 					}
 				}
 			}
