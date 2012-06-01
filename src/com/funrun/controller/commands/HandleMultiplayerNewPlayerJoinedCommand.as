@@ -34,6 +34,7 @@ package com.funrun.controller.commands {
 		public var displayMessageRequest:DisplayMessageRequest;
 		
 		override public function execute():void {
+			// We receive ourselves as new players, so screen ourselves out.
 			if ( message.getInt( 0 ) != userModel.inGameId ) {
 				var competitor:CompetitorVO = new CompetitorVO(
 					message.getInt( 0 ),
@@ -43,8 +44,6 @@ package com.funrun.controller.commands {
 				competitor.isDucking = message.getBoolean( 5 );
 				addCompetitorRequest.dispatch( competitor );
 				displayMessageRequest.dispatch( competitor.name + " has joined the game." );
-			} else {
-				trace(this, "ERROR: The new player is us." );
 			}
 		}
 	}

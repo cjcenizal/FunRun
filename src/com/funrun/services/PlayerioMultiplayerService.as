@@ -32,20 +32,24 @@ package com.funrun.services {
 		}
 
 		public function disconnectAndReset():void {
-			_connection.disconnect();
+			if ( _connection ) {
+				_connection.disconnect();
+			}
 			reset();
 		}
 		
 		public function reset():void {
-			_connection.removeDisconnectHandler( onServerDisconnect );
-			for ( var key:String in _messageHandlers ) {
-				for ( var fn:String in _messageHandlers[ key ] ) {
-					_connection.removeMessageHandler( key, _messageHandlers[ key ][ fn ] );
+			if ( _connection ) {
+				_connection.removeDisconnectHandler( onServerDisconnect );
+				for ( var key:String in _messageHandlers ) {
+					for ( var fn:String in _messageHandlers[ key ] ) {
+						_connection.removeMessageHandler( key, _messageHandlers[ key ][ fn ] );
+					}
+					delete _messageHandlers[ key ];
 				}
-				delete _messageHandlers[ key ];
+				_messageHandlers = {};
+				_connection = null;
 			}
-			_messageHandlers = {};
-			_connection = null;
 			_error = null;
 			_isConnected = false;
 			_onConnectedSignal.removeAll();

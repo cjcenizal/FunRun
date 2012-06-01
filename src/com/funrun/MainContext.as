@@ -47,7 +47,6 @@ package com.funrun {
 	import com.funrun.controller.commands.StartCountdownCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StartRunningCommand;
-	import com.funrun.controller.commands.StopGameCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.signals.AddCompetitorRequest;
@@ -108,7 +107,6 @@ package com.funrun {
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
-	import com.funrun.controller.signals.StopGameRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
@@ -285,7 +283,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
 			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
-			signalCommandMap.mapSignalClass( StopGameRequest,						StopGameCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
 			
