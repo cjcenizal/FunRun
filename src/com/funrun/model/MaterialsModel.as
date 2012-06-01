@@ -13,6 +13,7 @@ package com.funrun.model {
 		private var _materials:Object;
 		
 		public function MaterialsModel() {
+			super();
 			_materials = {};
 		}
 		

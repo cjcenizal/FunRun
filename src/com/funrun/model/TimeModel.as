@@ -15,6 +15,7 @@ package com.funrun.model {
 		private var _lastTs:int = 0;
 		
 		public function TimeModel() {
+			super();
 		}
 		
 		private function onEnterFrame( e:Event ):void {

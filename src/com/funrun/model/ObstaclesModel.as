@@ -12,6 +12,7 @@ package com.funrun.model {
 		private var _obstacles:Array;
 		
 		public function ObstaclesModel() {
+			super();
 			_obstacles = [];
 		}
 		

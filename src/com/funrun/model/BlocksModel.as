@@ -9,6 +9,7 @@ package com.funrun.model {
 		private var _blocks:Object;
 		
 		public function BlocksModel() {
+			super();
 			_blocks = {};
 		}
 		

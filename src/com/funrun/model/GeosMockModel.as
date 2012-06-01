@@ -15,6 +15,7 @@ package com.funrun.model {
 		private var _geos:Object;
 		
 		public function GeosMockModel() {
+			super();
 			_geos = {};
 			_geos[ BlockTypes.EMPTY ] = new PlaneGeometry( 1, 1 );
 			_geos[ BlockTypes.BLOCK ] = new CubeGeometry( 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE, 1 * TrackConstants.BLOCK_SIZE );

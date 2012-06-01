@@ -10,6 +10,7 @@ package com.funrun.model {
 		private var _competitorsArray:Array;
 
 		public function CompetitorsModel() {
+			super();
 			_competitors = {};
 			_competitorsArray = [];
 		}

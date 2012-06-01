@@ -11,6 +11,7 @@ package com.funrun.model {
 		private var _floors:Object;
 		
 		public function FloorsModel() {
+			super();
 			_floors = {};
 		}
 		

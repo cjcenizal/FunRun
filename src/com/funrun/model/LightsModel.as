@@ -11,6 +11,7 @@ package com.funrun.model {
 		private var _lights:Object;
 		
 		public function LightsModel() {
+			super();
 			_lights = {};
 		}
 		
