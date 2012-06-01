@@ -4,12 +4,14 @@
 	"list" : [
 		{
 			"id" : "beam",
+			"active" : true,
 			"blocks" : [
 				[ [ "block", "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ "block", "block" ] ]
 			]
 		},
 		{
 			"id" : "teeth",
+			"active" : false,
 			"blocks" : [
 				[ [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ] ],
 				[ [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ] ]
@@ -17,12 +19,14 @@
 		},
 		{
 			"id" : "wall",
+			"active" : false,
 			"blocks" : [
 				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
 			]
 		},
 		{
 			"id" : "underpass",
+			"active" : false,
 			"blocks" : [
 				[ [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ] ],
 			[ [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ] ],
@@ -33,6 +37,7 @@
 		},
 		{
 			"id" : "trench",
+			"active" : false,
 			"flip" : true,
 			"pits" : [
 				[ [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ], [ "block", null, null, null, null, null ] ],
@@ -49,6 +54,7 @@
 		},
 		{
 			"id" : "wallPit",
+			"active" : false,
 			"flip" : true,
 			"pits" : [
 				[ [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ], [ "block", null ] ],

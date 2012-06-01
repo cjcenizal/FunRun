@@ -31,11 +31,13 @@ package com.funrun.controller.commands {
 			var len:int = obstacles.length;
 			for ( var i:int = 0; i < len; i++ ) {
 				var obstacle:ObstacleParser = obstacles.getAt( i );
-				// Store this sucker.
-				obstaclesModel.addObstacle( ObstacleData.make( blocksModel, materialsModel, obstacle ) );
-				if ( obstacle.flip ) {
-					// Store mirror version if required.
-					obstaclesModel.addObstacle( ObstacleData.make( blocksModel, materialsModel, obstacle, true ) );
+				if ( obstacle.active ) {
+					// Store this sucker.
+					obstaclesModel.addObstacle( ObstacleData.make( blocksModel, materialsModel, obstacle ) );
+					if ( obstacle.flip ) {
+						// Store mirror version if required.
+						obstaclesModel.addObstacle( ObstacleData.make( blocksModel, materialsModel, obstacle, true ) );
+					}
 				}
 			}
 		}

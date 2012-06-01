@@ -7,6 +7,7 @@ package com.funrun.services.parsers {
 		private const BLOCKS:String = "blocks";
 		private const PITS:String = "pits";
 		private const FLIP:String = "flip";
+		private const ACTIVE:String = "active";
 		
 		private var _id:String;
 		private var _blocks:Array;
@@ -14,11 +15,13 @@ package com.funrun.services.parsers {
 		private var _height:int = 0;
 		private var _depth:int = 0;
 		private var _flip:Boolean = false;
+		private var _active:Boolean = false;
 		
 		public function ObstacleParser( data:Object ) {
 			super( data );
 			_id = new IdParser( data ).id;
 			_flip = data[ FLIP ];
+			_active = data[ ACTIVE ];
 			_blocks = [];
 			
 			var blocksDeep:Array, blocksWide:Array, blocksHigh:Array;
@@ -74,6 +77,10 @@ package com.funrun.services.parsers {
 		
 		public function get flip():Boolean {
 			return _flip;
+		}
+		
+		public function get active():Boolean {
+			return _active;
 		}
 		
 		public function getBlockAt( index:int ):BlockData {
