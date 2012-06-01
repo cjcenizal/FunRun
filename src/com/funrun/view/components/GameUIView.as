@@ -37,8 +37,8 @@ package com.funrun.view.components {
 		public function init():void {
 			// Messages.
 			_messagesList = new MessagesList( this );
-			_messagesList.x = 20;
-			_messagesList.y = stage.stageHeight - 30;
+			_messagesList.x = 170;
+			_messagesList.y = stage.stageHeight - 40;
 			
 			// Distance.
 			_distanceLabel = new AbstractLabel( this, 0, 0, "Distance", 12, 0 );
@@ -46,7 +46,7 @@ package com.funrun.view.components {
 			_distanceLabel.draw();
 			_distanceCountLabel.draw();
 			_distanceLabel.x = _distanceCountLabel.x = 20;
-			_distanceCountLabel.y = _messagesList.y - _distanceCountLabel.height - 20;
+			_distanceCountLabel.y = stage.stageHeight - _distanceCountLabel.height - 20;
 			_distanceLabel.y = _distanceCountLabel.y - _distanceLabel.height;
 			
 			// Place.
