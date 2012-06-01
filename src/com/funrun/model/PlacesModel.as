@@ -26,6 +26,10 @@ package com.funrun.model {
 		
 		public function sortPlaces():void {
 			_placeables.sortOn( "distance" );
+			var len:int = _placeables.length;
+			for ( var i:int = 0; i < len; i++ ) {
+				( _placeables[ i ] as IPlaceable ).place = len - i;
+			}
 		}
 	}
 }
