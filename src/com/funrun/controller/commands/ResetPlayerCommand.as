@@ -20,7 +20,8 @@ package com.funrun.controller.commands {
 			playerModel.cancelMovement();
 			playerModel.velocity.z = playerModel.velocity.x = 0;
 			playerModel.velocity.y = 50;
-			playerModel.player.position = new Vector3D( Math.random() * 100, 100, 0 );
+			var width:Number = TrackConstants.TRACK_WIDTH * .8;
+			playerModel.mesh.position = new Vector3D( Math.random() * width - width * .5, 100, 0 );
 		}
 	}
 }

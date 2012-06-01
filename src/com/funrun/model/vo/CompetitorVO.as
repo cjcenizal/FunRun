@@ -34,9 +34,9 @@ package com.funrun.model.vo {
 		}
 		
 		public function hardUpdate():void {
-			mesh.x = _newPosition.x;
-			mesh.y = _newPosition.y;
-			mesh.z = _newPosition.z;
+			mesh.x = _oldPosition.x = _newPosition.x;
+			mesh.y = _oldPosition.y = _newPosition.y;
+			mesh.z = _oldPosition.z = _newPosition.z;
 		}
 		
 		public function interpolate( pct:Number ):void {

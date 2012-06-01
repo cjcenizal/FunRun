@@ -9,7 +9,7 @@ package com.funrun.model {
 	public class PlayerModel extends Actor {
 		
 		// Player geometry.
-		private var _player:Mesh;
+		private var _mesh:Mesh;
 
 		// State.
 		public var velocity:Vector3D;
@@ -25,12 +25,12 @@ package com.funrun.model {
 			velocity = new Vector3D();
 		}
 
-		public function get player():Mesh {
-			return _player;
+		public function get mesh():Mesh {
+			return _mesh;
 		}
 
-		public function set player( p:Mesh ):void {
-			_player = p;
+		public function set mesh( m:Mesh ):void {
+			_mesh = m;
 		}
 
 		public function jump( speed:Number ):void {

@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.UserModel;
 	import com.funrun.model.constants.MessageTypes;
 	import com.funrun.model.constants.RoomTypes;
@@ -28,6 +29,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var userModel:UserModel;
+		
+		[Inject]
+		public var playerModel:PlayerModel;
 		
 		// Services.
 		
@@ -60,7 +64,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.onConnectedSignal.add( onConnected );
-			multiplayerService.connect( loginService.client, RoomTypes.GAME, { name: userModel.name }, roomId );
+			multiplayerService.connect( loginService.client, RoomTypes.GAME, { name: userModel.name, x: playerModel.mesh.x, y: playerModel.mesh.y }, roomId );
 		}
 		
 		private function onConnected():void {

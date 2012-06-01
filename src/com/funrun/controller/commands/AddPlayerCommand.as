@@ -39,7 +39,7 @@ package com.funrun.controller.commands {
 			
 			// Add mesh.
 			var player:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ), materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
-			playerModel.player = player;
+			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 		}
 	}

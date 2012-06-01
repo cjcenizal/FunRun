@@ -165,31 +165,31 @@ package com.funrun.controller.commands {
 						playerModel.isAirborne = true;
 					}
 					// Update lateral position.
-					playerModel.player.x += playerModel.velocity.x;
+					playerModel.mesh.x += playerModel.velocity.x;
 				}
 	
 				// Update gravity.
 				playerModel.velocity.y += TrackConstants.PLAYER_GRAVITY;
-				playerModel.player.y += playerModel.velocity.y;
+				playerModel.mesh.y += playerModel.velocity.y;
 				
 				// Apply ducking state.
 				if ( playerModel.isDucking ) {
-					if ( playerModel.player.scaleY != .25 ) {
-						playerModel.player.scaleY = .25;
-						playerModel.player.bounds.min.y *= .25;
-						playerModel.player.bounds.max.y *= .25;
+					if ( playerModel.mesh.scaleY != .25 ) {
+						playerModel.mesh.scaleY = .25;
+						playerModel.mesh.bounds.min.y *= .25;
+						playerModel.mesh.bounds.max.y *= .25;
 					}
 				} else {
-					if ( playerModel.player.scaleY != 1 ) {
-						playerModel.player.scaleY = 1;
-						playerModel.player.bounds.min.y /= .25;
-						playerModel.player.bounds.max.y /= .25;
+					if ( playerModel.mesh.scaleY != 1 ) {
+						playerModel.mesh.scaleY = 1;
+						playerModel.mesh.bounds.min.y /= .25;
+						playerModel.mesh.bounds.max.y /= .25;
 					}
 				}
 				
 				// Collect all collisions.
 				var collisions:CollisionsCollection = new CollisionsCollection();
-				collisions.collectCollisions( trackModel, playerModel.player.x + playerModel.player.bounds.min.x, playerModel.player.y + playerModel.player.bounds.min.y, playerModel.player.z + playerModel.player.bounds.min.z, playerModel.player.x + playerModel.player.bounds.max.x, playerModel.player.y + playerModel.player.bounds.max.y, playerModel.player.z + playerModel.player.bounds.max.z );
+				collisions.collectCollisions( trackModel, playerModel.mesh.x + playerModel.mesh.bounds.min.x, playerModel.mesh.y + playerModel.mesh.bounds.min.y, playerModel.mesh.z + playerModel.mesh.bounds.min.z, playerModel.mesh.x + playerModel.mesh.bounds.max.x, playerModel.mesh.y + playerModel.mesh.bounds.max.y, playerModel.mesh.z + playerModel.mesh.bounds.max.z );
 	
 				// TO-DO: We can optimize our collision detection by only testing against sides
 				// that oppose the direction in which we're moving.
@@ -205,14 +205,14 @@ package com.funrun.controller.commands {
 						if ( playerModel.velocity.y > 0 ) {
 							if ( face.type == FaceTypes.BOTTOM ) {
 								playerModel.velocity.y = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
-								playerModel.player.y = ( playerModel.isDucking ) ? face.minY - TrackConstants.PLAYER_HALF_SIZE * .25 : face.minY - TrackConstants.PLAYER_HALF_SIZE;
+								playerModel.mesh.y = ( playerModel.isDucking ) ? face.minY - TrackConstants.PLAYER_HALF_SIZE * .25 : face.minY - TrackConstants.PLAYER_HALF_SIZE;
 							}
 							playerModel.isAirborne = true;
 						} else {
 							// Else hit the top sides of things.
 							if ( face.type == FaceTypes.TOP ) {
 								if ( face.maxY > TrackConstants.CULL_FLOOR ) {
-									playerModel.player.y = ( playerModel.isDucking ) ? face.maxY + TrackConstants.PLAYER_HALF_SIZE * .25 : face.maxY + TrackConstants.PLAYER_HALF_SIZE;
+									playerModel.mesh.y = ( playerModel.isDucking ) ? face.maxY + TrackConstants.PLAYER_HALF_SIZE * .25 : face.maxY + TrackConstants.PLAYER_HALF_SIZE;
 									playerModel.velocity.y = 0;
 									playerModel.isAirborne = false;
 								} else {
@@ -245,7 +245,7 @@ package com.funrun.controller.commands {
 				} else {
 					// If we're not hitting something, we're airborne.
 					playerModel.isAirborne = true;
-					if ( playerModel.player.y < TrackConstants.FALL_DEATH_HEIGHT ) {
+					if ( playerModel.mesh.y < TrackConstants.FALL_DEATH_HEIGHT ) {
 						if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 							resetPlayerRequest.dispatch();
 						} else if ( gameModel.gameState == GameState.RUNNING ) {
@@ -255,10 +255,10 @@ package com.funrun.controller.commands {
 				}
 	
 				// Update camera.
-				view3DModel.cameraX = playerModel.player.x;
-				var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.player.y < view3DModel.cameraY ) ? .3 : .1;
+				view3DModel.cameraX = playerModel.mesh.x;
+				var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.mesh.y < view3DModel.cameraY ) ? .3 : .1;
 				// We'll try easing to follow the player instead of being locked.
-				view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.player.y ) - view3DModel.cameraY ) * followFactor;
+				view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.mesh.y ) - view3DModel.cameraY ) * followFactor;
 				view3DModel.cameraZ = -1000;
 				view3DModel.update();
 				

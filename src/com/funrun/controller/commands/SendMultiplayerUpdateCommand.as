@@ -33,8 +33,8 @@ package com.funrun.controller.commands {
 				// Update server with position and velocity.
 				multiplayerService.send(
 					MessageTypes.UPDATE,
-					playerModel.player.x,
-					playerModel.player.y,
+					playerModel.mesh.x,
+					playerModel.mesh.y,
 					distanceModel.distance,
 					playerModel.isDucking
 				);

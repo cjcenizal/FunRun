@@ -112,6 +112,7 @@ namespace FunRun {
 
 	[RoomType("Game")]
 	public class GameCode : Game<Player> {
+
 		public override void GameStarted() {
 			AddTimer( delegate {
 				UpdatePlayers();
@@ -125,11 +126,13 @@ namespace FunRun {
 		public override void UserJoined( Player player ) {
 			// Assign user-provided data.
 			player.name = player.JoinData[ "name" ];
+			player.x = Convert.ToDouble( player.JoinData[ "x" ] );
+			player.y = Convert.ToDouble( player.JoinData[ "y" ] );
 
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "i" );
 
-			// Tell player their own id
+			// Tell player their own id, and other initial values.
 			initMessage.Add( player.Id );
 
 			// Add the current state of all players to the init message.
