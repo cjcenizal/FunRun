@@ -132,12 +132,10 @@ package com.funrun {
 	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.ObstaclesJsonService;
 	import com.funrun.services.PlayerioFacebookLoginService;
-	import com.funrun.services.PlayerioMultiplayerService;
 	import com.funrun.services.WhitelistOpenService;
 	import com.funrun.services.WhitelistService;
-	import com.funrun.view.components.CountdownView;
-	import com.funrun.view.components.DistanceView;
 	import com.funrun.view.components.FindingGamePopup;
+	import com.funrun.view.components.GameUIView;
 	import com.funrun.view.components.GameView;
 	import com.funrun.view.components.LoginStatusView;
 	import com.funrun.view.components.MainMenuView;
@@ -145,21 +143,18 @@ package com.funrun {
 	import com.funrun.view.components.NametagsView;
 	import com.funrun.view.components.PlayerioErrorPopupView;
 	import com.funrun.view.components.PopupsView;
-	import com.funrun.view.components.QuitGameView;
 	import com.funrun.view.components.ResultsPopup;
 	import com.funrun.view.components.TrackView;
 	import com.funrun.view.mediators.AppMediator;
-	import com.funrun.view.mediators.CountdownMediator;
-	import com.funrun.view.mediators.DistanceMediator;
 	import com.funrun.view.mediators.FindingGamePopupMediator;
 	import com.funrun.view.mediators.GameMediator;
+	import com.funrun.view.mediators.GameUIMediator;
 	import com.funrun.view.mediators.LoginStatusMediator;
 	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
 	import com.funrun.view.mediators.NametagsMediator;
 	import com.funrun.view.mediators.PlayerioErrorPopupMediator;
 	import com.funrun.view.mediators.PopupsMediator;
-	import com.funrun.view.mediators.QuitGameMediator;
 	import com.funrun.view.mediators.ResultPopupMediator;
 	import com.funrun.view.mediators.TrackMediator;
 	
@@ -281,8 +276,7 @@ package com.funrun {
 			// Map views to mediators.
 			mediatorMap.mapView( MainView, 					MainMediator );
 			mediatorMap.mapView( TrackView, 				TrackMediator );
-			mediatorMap.mapView( DistanceView, 				DistanceMediator );
-			mediatorMap.mapView( CountdownView, 			CountdownMediator );
+			mediatorMap.mapView( GameUIView,				GameUIMediator );
 			mediatorMap.mapView( LoginStatusView, 			LoginStatusMediator );
 			mediatorMap.mapView( GameView,					GameMediator );
 			mediatorMap.mapView( MainMenuView,				MainMenuMediator );
@@ -291,7 +285,6 @@ package com.funrun {
 			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
 			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
 			mediatorMap.mapView( NametagsView,				NametagsMediator );
-			mediatorMap.mapView( QuitGameView,				QuitGameMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
 			mediatorMap.mapView( FunRun, 					AppMediator );

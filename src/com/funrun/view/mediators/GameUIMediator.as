@@ -1,16 +1,21 @@
 package com.funrun.view.mediators {
 	
+	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
-	import com.funrun.view.components.CountdownView;
+	import com.funrun.view.components.GameUIView;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
 	
-	public class CountdownMediator extends Mediator implements IMediator {
+	public class GameUIMediator extends Mediator implements IMediator {
 		
 		[Inject]
-		public var view:CountdownView;
+		public var view:GameUIView;
+		
+		[Inject]
+		public var displayDistanceRequest:DisplayDistanceRequest;
 		
 		[Inject]
 		public var updateCountdownRequest:UpdateCountdownRequest;
@@ -18,11 +23,19 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
+		[Inject]
+		public var leaveGameRequest:LeaveGameRequest;
+		
 		override public function onRegister():void {
 			view.init();
-			
+			view.onClickQuitGameButtonSignal.add( onQuitGameClicked );
+			displayDistanceRequest.add( onDisplayDistanceRequested );
 			updateCountdownRequest.add( onUpdateCountdown );
 			toggleCountdownRequest.add( onToggleCountdown );
+		}
+		
+		private function onDisplayDistanceRequested( message:String ):void {
+			view.showDistance( message );
 		}
 		
 		private function onUpdateCountdown( message:String ):void {
@@ -35,6 +48,10 @@ package com.funrun.view.mediators {
 			} else {
 				view.disableCountdown();
 			}
+		}
+		
+		private function onQuitGameClicked():void {
+			leaveGameRequest.dispatch();
 		}
 	}
 }
