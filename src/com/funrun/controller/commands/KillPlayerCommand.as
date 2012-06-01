@@ -1,5 +1,6 @@
 	package com.funrun.controller.commands {
 	
+	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.CollisionTypes;
@@ -21,10 +22,14 @@
 		[Inject]
 		public var showResultsPopupRequest:ShowResultsPopupRequest;
 		
+		[Inject]
+		public var sendMultiplayerDeathRequest:SendMultiplayerDeathRequest;
+		
 		private var _timer:Timer;
 		
 		override public function execute():void {
 			if ( !playerModel.isDead ) {
+				// Update the model.
 				playerModel.isDead = true;
 				switch ( death ) {
 					case CollisionTypes.SMACK:
@@ -34,6 +39,9 @@
 						trace(this, "Fell to death");
 						break;
 				}
+				// Update server.
+				sendMultiplayerDeathRequest.dispatch();
+				// Wait before we take action on the death.
 				_timer = new Timer( 1500, 1 );
 				_timer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimer );
 				_timer.start();

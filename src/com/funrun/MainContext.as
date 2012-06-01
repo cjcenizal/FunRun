@@ -15,6 +15,7 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
 	import com.funrun.controller.commands.HandleMultiplayerNewPlayerJoinedCommand;
+	import com.funrun.controller.commands.HandleMultiplayerPlayerDiedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerPlayerLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
@@ -38,6 +39,7 @@ package com.funrun {
 	import com.funrun.controller.commands.ResetCountdownCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
+	import com.funrun.controller.commands.SendMultiplayerDeathCommand;
 	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
@@ -71,6 +73,7 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
 	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.InitGameRequest;
@@ -96,6 +99,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ResetCountdownRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
@@ -179,7 +183,7 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( false );
+			var onlineState:OnlineState = new OnlineState( true );
 		
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
@@ -252,6 +256,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerDiedRequest,	HandleMultiplayerPlayerDiedCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerLeftRequest,	HandleMultiplayerPlayerLeftCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
@@ -272,6 +277,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ResetCountdownRequest,					ResetCountdownCommand );
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );
+			signalCommandMap.mapSignalClass( SendMultiplayerDeathRequest,			SendMultiplayerDeathCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
 			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );

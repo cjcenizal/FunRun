@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
@@ -53,6 +54,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var handleMultiplayerPlayerLeftRequest:HandleMultiplayerPlayerLeftRequest;
 		
+		[Inject]
+		public var handleMultiplayerPlayerDiedRequest:HandleMultiplayerPlayerDiedRequest;
+		
 		override public function execute():void {
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.onConnectedSignal.add( onConnected );
@@ -66,6 +70,7 @@ package com.funrun.controller.commands {
 			multiplayerService.addMessageHandler( MessageTypes.UPDATE, onUpdate );
 			multiplayerService.addMessageHandler( MessageTypes.NEW_PLAYER_JOINED, onNewPlayerJoined );
 			multiplayerService.addMessageHandler( MessageTypes.PLAYER_LEFT, onPlayerLeft );
+			multiplayerService.addMessageHandler( MessageTypes.DEATH, onPlayerDied );
 		}
 		
 		private function onDisconnected():void {
@@ -93,6 +98,10 @@ package com.funrun.controller.commands {
 		
 		private function onPlayerLeft( message:Message ):void {
 			handleMultiplayerPlayerLeftRequest.dispatch( message );
+		}
+		
+		private function onPlayerDied( message:Message ):void {
+			handleMultiplayerPlayerDiedRequest.dispatch( message );
 		}
 	}
 }

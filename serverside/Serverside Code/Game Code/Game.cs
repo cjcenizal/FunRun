@@ -14,7 +14,7 @@ namespace FunRun {
 		public double y = 0;
 		public double z = 0;
 		public bool isDucking = false;
-		//public bool isDead = false;
+		public bool isDead = false;
 		public Player() {
 		}
 	}
@@ -159,6 +159,12 @@ namespace FunRun {
 					player.y = message.GetDouble( 1 );
 					player.z = message.GetDouble( 2 );
 					player.isDucking = message.GetBoolean( 3 );
+					break;
+				case "d": // Update death.
+					player.isDead = true;
+					Message deathMessage = Message.Create( "d" );
+					deathMessage.Add( player.Id );
+					Broadcast( deathMessage );
 					break;
 			}
 		}
