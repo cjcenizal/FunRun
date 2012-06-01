@@ -17,6 +17,7 @@ package com.funrun.model {
 		}
 		
 		public function addObstacle( obstacle:ObstacleData ):void {
+			// TO-DO
 			// Add bounding boxes, ids, behaviors
 			// Add geo (animations?)
 			// Maintain links to geo in bounding boxes
@@ -24,22 +25,19 @@ package com.funrun.model {
 		}
 		
 		public function removeObstacle( obstacle:ObstacleData ):void {
+			// TO-DO
 			// Remove from geo somehow.
 			// Remove obstacle from array.
 		}
 		
 		public function move( amount:Number ):void {
+			// TO-DO
 			// Move all bounding boxes.
 			// Move geo transform.
 			var len:int = _obstacles.length;
 			for ( var i:int = 0; i < len; i++ ) {
 				( _obstacles[ i ] as ObstacleData ).z += amount;
 			}
-		}
-		
-		public function getCollisionsWidth( bounds:BoundingVolumeBase ):Vector.<BoundingVolumeBase> {
-			// Get all blocks we collide with.
-			return null;
 		}
 		
 		public function removeObstacleAt( index:int ):void {

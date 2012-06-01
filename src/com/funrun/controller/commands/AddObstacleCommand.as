@@ -34,18 +34,18 @@ package com.funrun.controller.commands {
 			// Add it to the model.
 			var numObstacles:int = trackModel.numObstacles;
 			if ( numObstacles > 0 ) {
-				obstacle.z = trackModel.depthOfLastObstacle;
+				obstacle.z = trackModel.depthOfLastObstacle + 26 * TrackConstants.BLOCK_SIZE;
 			} else {
-				obstacle.z = TrackConstants.TRACK_LENGTH;
+				obstacle.z = TrackConstants.TRACK_LENGTH - 26 * TrackConstants.BLOCK_SIZE;
 			}
 			trackModel.addObstacle( obstacle );
 			// Add to view.
 			addObjectToSceneRequest.dispatch( obstacle.mesh );
 			
 			// Add floors.
-			var startPos:Number = obstacle.z + obstacle.bounds.max.z;
-			var endPos:Number = obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP;
-			addFloorRequest.dispatch( new AddFloorPayload( startPos, endPos, TrackConstants.BLOCK_SIZE ) );
+			//var startPos:Number = obstacle.z + obstacle.bounds.max.z;
+			//var endPos:Number = obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP;
+			//addFloorRequest.dispatch( new AddFloorPayload( startPos, endPos, TrackConstants.BLOCK_SIZE ) );
 		}
 	}
 }
