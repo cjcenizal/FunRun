@@ -28,7 +28,7 @@ package com.funrun.controller.commands {
 				MessageTypes.UPDATE,
 				playerModel.player.x,
 				playerModel.player.y,
-				distanceModel.rawDistance,
+				distanceModel.distance,
 				playerModel.isDucking
 			);
 		}

@@ -30,6 +30,8 @@ package com.funrun.controller.commands
 	 */
 	public class BuildGameCommand extends Command {
 		
+		// Models.
+		
 		[Inject]
 		public var lightsModel:LightsModel;
 		
@@ -38,6 +40,8 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var materialsModel:MaterialsModel;
+		
+		// Commands.
 		
 		[Inject]
 		public var addMaterialRequest:AddMaterialRequest;

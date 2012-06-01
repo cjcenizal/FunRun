@@ -1,6 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddCompetitorRequest;
+	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
@@ -43,8 +44,10 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
 		
+		[Inject]
+		public var addPlaceableRequest:AddPlaceableRequest;
+		
 		override public function execute():void {
-			trace(this);
 			// Store id so we can ignore updates we originated.
 			userModel.inGameId = message.getInt( 0 );
 			

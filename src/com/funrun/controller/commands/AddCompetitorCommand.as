@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
@@ -41,6 +42,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var addNametagRequest:AddNametagRequest;
 		
+		[Inject]
+		public var addPlaceableRequest:AddPlaceableRequest;
+		
 		override public function execute():void {
 			// Avoid adding accidental duplicates.
 			if ( !competitorsModel.getWithId( competitor.id ) ) {
@@ -63,6 +67,7 @@ package com.funrun.controller.commands {
 				var nametag:AbstractLabel = new AbstractLabel( null, 0, 0, competitor.name );
 				nametagsModel.add( competitor.id, nametag );
 				addNametagRequest.dispatch( nametag );
+				addPlaceableRequest.dispatch( competitor );
 			}
 		}
 	}

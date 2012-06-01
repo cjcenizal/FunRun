@@ -10,6 +10,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
+	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
@@ -101,6 +102,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var sendMultiplayerUpdateRequest:SendMultiplayerUpdateRequest;
+		
+		[Inject]
+		public var updatePlacesRequest:UpdatePlacesRequest;
 		
 		override public function execute():void {
 			// Update countdown if necessary.
@@ -280,8 +284,11 @@ package com.funrun.controller.commands {
 				displayDistanceRequest.dispatch( distanceModel.distanceString );
 			}
 			
-			// Update other players.
+			// Update other players with our position.
 			sendMultiplayerUpdateRequest.dispatch();
+			
+			// Update places.
+			updatePlacesRequest.dispatch();
 			
 			// Render.
 			renderSceneRequest.dispatch();

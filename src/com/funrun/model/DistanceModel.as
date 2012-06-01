@@ -5,9 +5,10 @@ package com.funrun.model {
 	
 	import org.robotlegs.mvcs.Actor;
 
-	public class DistanceModel extends Actor {
+	public class DistanceModel extends Actor implements IPlaceable {
 		
 		private var _distance:Number = 0;
+		private var _place:int = 0;
 		
 		public function DistanceModel() {
 			super();
@@ -25,12 +26,20 @@ package com.funrun.model {
 			return otherPlayerDistance - _distance;
 		}
 		
-		public function get rawDistance():Number {
+		public function get distance():Number {
 			return _distance;
 		}
 		
 		public function get distanceString():String {
 			return Numbers.addCommasTo( Math.round( _distance / TrackConstants.BLOCK_SIZE ).toString() );
+		}
+		
+		public function set place( val:int ):void {
+			_place = val;
+		}
+		
+		public function get place():int {
+			return _place;
 		}
 	}
 }
