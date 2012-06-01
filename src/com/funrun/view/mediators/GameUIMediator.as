@@ -1,6 +1,7 @@
 package com.funrun.view.mediators {
 	
 	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
@@ -22,6 +23,9 @@ package com.funrun.view.mediators {
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
 		[Inject]
+		public var displayMessageRequest:DisplayMessageRequest;
+		
+		[Inject]
 		public var updateCountdownRequest:UpdateCountdownRequest;
 		
 		[Inject]
@@ -35,6 +39,7 @@ package com.funrun.view.mediators {
 			view.onClickQuitGameButtonSignal.add( onQuitGameClicked );
 			displayDistanceRequest.add( onDisplayDistanceRequested );
 			displayPlaceRequest.add( onDisplayPlaceRequested );
+			displayMessageRequest.add( onDisplayMessageRequested );
 			updateCountdownRequest.add( onUpdateCountdown );
 			toggleCountdownRequest.add( onToggleCountdown );
 		}
@@ -45,6 +50,10 @@ package com.funrun.view.mediators {
 		
 		private function onDisplayPlaceRequested( place:String ):void {
 			view.showPlace( place );
+		}
+		
+		private function onDisplayMessageRequested( message:String ):void {
+			view.showMessage( message );
 		}
 		
 		private function onUpdateCountdown( message:String ):void {

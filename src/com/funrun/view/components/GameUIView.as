@@ -23,6 +23,9 @@ package com.funrun.view.components {
 		// Countdown.
 		private var _countdownLabel:AbstractLabel;
 		
+		// Messages.
+		public var _messagesList:MessagesList;
+		
 		// Quit game.
 		private var _button:DummyButton;
 		public var onClickQuitGameButtonSignal:Signal;
@@ -32,13 +35,18 @@ package com.funrun.view.components {
 		}
 
 		public function init():void {
+			// Messages.
+			_messagesList = new MessagesList( this );
+			_messagesList.x = 20;
+			_messagesList.y = stage.stageHeight - 30;
+			
 			// Distance.
 			_distanceLabel = new AbstractLabel( this, 0, 0, "Distance", 12, 0 );
 			_distanceCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
 			_distanceLabel.draw();
 			_distanceCountLabel.draw();
 			_distanceLabel.x = _distanceCountLabel.x = 20;
-			_distanceCountLabel.y = stage.stageHeight - _distanceCountLabel.height - 20;
+			_distanceCountLabel.y = _messagesList.y - _distanceCountLabel.height - 20;
 			_distanceLabel.y = _distanceCountLabel.y - _distanceLabel.height;
 			
 			// Place.
@@ -68,6 +76,10 @@ package com.funrun.view.components {
 		public function showPlace( place:String ):void {
 			_placeCountLabel.text = place;
 			_placeCountLabel.draw();
+		}
+		
+		public function showMessage( message:String ):void {
+			_messagesList.add( message );
 		}
 		
 		public function set countdown( message:String ):void {

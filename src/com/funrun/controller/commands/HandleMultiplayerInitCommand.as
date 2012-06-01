@@ -2,13 +2,9 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
-	import com.funrun.controller.signals.EnablePlayerInputRequest;
-	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
-	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.UserModel;
-	import com.funrun.model.events.TimeEvent;
-	import com.funrun.model.state.ScreenState;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -36,16 +32,10 @@ package com.funrun.controller.commands {
 		public var addCompetitorRequest:AddCompetitorRequest;
 		
 		[Inject]
-		public var enablePlayerInputRequest:EnablePlayerInputRequest;
-		
-		[Inject]
-		public var removeFindingGamePopupRequest:RemoveFindingGamePopupRequest;
-		
-		[Inject]
-		public var showScreenRequest:ShowScreenRequest;
-		
-		[Inject]
 		public var addPlaceableRequest:AddPlaceableRequest;
+		
+		[Inject]
+		public var initGameRequest:InitGameRequest;
 		
 		override public function execute():void {
 			// Store id so we can ignore updates we originated.
@@ -63,14 +53,7 @@ package com.funrun.controller.commands {
 					addCompetitorRequest.dispatch( competitor );
 				}
 			}
-			
-			// Respond to time.
-			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
-			// Start input.
-			enablePlayerInputRequest.dispatch( true );
-			// Show game screen.
-			removeFindingGamePopupRequest.dispatch();
-			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
+			initGameRequest.dispatch();
 		}
 	}
 }

@@ -18,6 +18,7 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleMultiplayerPlayerLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
+	import com.funrun.controller.commands.InitGameCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KeyDownCommand;
@@ -63,6 +64,7 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
@@ -71,6 +73,7 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
+	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -127,6 +130,7 @@ package com.funrun {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.UserModel;
 	import com.funrun.model.View3DModel;
+	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.BlocksJsonService;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.MatchmakingService;
@@ -175,6 +179,10 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
+			var onlineState:OnlineState = new OnlineState( false );
+		
+			// Map switches.
+			injector.mapValue( OnlineState, onlineState );
 			
 			// Map models.
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
@@ -216,6 +224,7 @@ package com.funrun {
 			injector.mapSingleton( AddPopupRequest );
 			injector.mapSingleton( AddView3DRequest );
 			injector.mapSingleton( DisplayDistanceRequest );
+			injector.mapSingleton( DisplayMessageRequest );
 			injector.mapSingleton( DisplayPlaceRequest );
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( EnablePlayerInputRequest );
@@ -245,6 +254,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerLeftRequest,	HandleMultiplayerPlayerLeftCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
+			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );

@@ -1,13 +1,16 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddFloorRequest;
+	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
+	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.payload.AddFloorPayload;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.state.GameState;
+	import com.funrun.model.state.OnlineState;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -16,8 +19,17 @@ package com.funrun.controller.commands {
 	 */
 	public class StartGameCommand extends Command {
 		
+		// State.
+		
+		[Inject]
+		public var onlineState:OnlineState;
+		
+		// Models.
+		
 		[Inject]
 		public var gameModel:GameModel;
+		
+		// Commands.
 		
 		[Inject]
 		public var resetGameRequest:ResetGameRequest;
@@ -31,6 +43,12 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var connectMultiplayerRequest:JoinMatchmakingRequest;
 		
+		[Inject]
+		public var initGameRequest:InitGameRequest;
+		
+		[Inject]
+		public var startRunningRequest:StartRunningRequest;
+		
 		override public function execute():void {
 			// Set game state.
 			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
@@ -41,7 +59,12 @@ package com.funrun.controller.commands {
 			// Render to clear the view.
 			renderSceneRequest.dispatch();
 			// Connect to a game.
-			connectMultiplayerRequest.dispatch();
+			if ( onlineState.isOnline ) {
+				connectMultiplayerRequest.dispatch();
+			} else {
+				initGameRequest.dispatch();
+				startRunningRequest.dispatch();
+			}
 		}
 	}
 }

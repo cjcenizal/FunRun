@@ -6,14 +6,23 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
+	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ScreenState;
 	
 	import org.robotlegs.mvcs.Command;
 
 	public class InitAppCommand extends Command {
 
+		// State.
+		
+		[Inject]
+		public var onlineState:OnlineState;
+		
+		// Commands.
+		
 		[Inject]
 		public var buildWhitelistRequest:BuildWhitelistRequest;
 		
@@ -22,6 +31,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var loginRequest:LoginRequest;
+		
+		[Inject]
+		public var loginFulfilled:LoginFulfilled;
 		
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
@@ -49,7 +61,11 @@ package com.funrun.controller.commands {
 			buildWhitelistRequest.dispatch();
 			// Configure the app and login.
 			loadConfigurationRequest.dispatch();
-			loginRequest.dispatch();
+			if ( onlineState.isOnline ) {
+				loginRequest.dispatch();
+			} else {
+				loginFulfilled.dispatch();
+			}
 		}
 	}
 }
