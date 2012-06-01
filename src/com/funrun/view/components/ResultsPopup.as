@@ -47,7 +47,6 @@ package com.funrun.view.components {
 			_button.draw();
 			Center.horizontal( _button, this );
 			_button.y = _messageLabel.y + _messageLabel.height + 20;
-		//	Center.both( this, stage ); // sometimes this fucks up the popup
 		}
 		
 		private function onClick( e:MouseEvent ):void {

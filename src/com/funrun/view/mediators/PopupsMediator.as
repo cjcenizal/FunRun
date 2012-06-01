@@ -4,6 +4,7 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.view.components.Popup;
+	import com.cenizal.utils.Center;
 	import com.funrun.view.components.PopupsView;
 	
 	import org.robotlegs.core.IMediator;
@@ -28,6 +29,7 @@ package com.funrun.view.mediators {
 		
 		private function onAddPopupRequested( popup:Popup ):void {
 			view.add( popup );
+			Center.bothVals( popup, view.stage.stageWidth, view.stage.stageHeight );
 		}
 		
 		private function onRemovePopupRequested( popup:Popup ):void {

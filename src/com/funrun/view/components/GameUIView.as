@@ -85,7 +85,7 @@ package com.funrun.view.components {
 		public function set countdown( message:String ):void {
 			_countdownLabel.text = message;
 			_countdownLabel.draw();
-			Center.both( _countdownLabel, stage );
+			Center.bothVals( _countdownLabel, stage.stageWidth, stage.stageHeight );
 		}
 		
 		public function enableCountdown():void {
