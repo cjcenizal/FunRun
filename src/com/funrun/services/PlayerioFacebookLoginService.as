@@ -23,7 +23,7 @@ package com.funrun.services {
 			_onErrorSignal = new Signal();
 		}
 
-		public function connect( stage:Stage, fbAccessToken:String, gameId:String, partnerId:String ):void {			
+		public function connect( stage:Stage, fbAccessToken:String, gameId:String, partnerId:String ):void {
 			// If we are already logged into Facebook, then we can move a little more quickly.
 			if ( fbAccessToken ) {
 				_fbAccessToken = fbAccessToken;

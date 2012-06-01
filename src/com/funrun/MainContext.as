@@ -63,6 +63,7 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
@@ -131,6 +132,7 @@ package com.funrun {
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.ObstaclesJsonService;
+	import com.funrun.services.OrdinalizeNumberService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.WhitelistOpenService;
 	import com.funrun.services.WhitelistService;
@@ -201,6 +203,7 @@ package com.funrun {
 			injector.mapSingleton( PlayerioFacebookLoginService );
 			injector.mapSingleton( MatchmakingService );
 			injector.mapSingleton( MultiplayerService );
+			injector.mapSingleton( OrdinalizeNumberService );
 			if ( useWhitelist ) {
 				// Block non-whitelisted users.
 				injector.mapSingletonOf( IWhitelistService, WhitelistService );
@@ -213,6 +216,7 @@ package com.funrun {
 			injector.mapSingleton( AddPopupRequest );
 			injector.mapSingleton( AddView3DRequest );
 			injector.mapSingleton( DisplayDistanceRequest );
+			injector.mapSingleton( DisplayPlaceRequest );
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( EnablePlayerInputRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );

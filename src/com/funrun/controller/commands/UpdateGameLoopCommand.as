@@ -281,7 +281,7 @@ package com.funrun.controller.commands {
 			
 			// Update distance counter.
 			if ( gameModel.gameState == GameState.RUNNING ) {
-				displayDistanceRequest.dispatch( distanceModel.distanceString );
+				displayDistanceRequest.dispatch( distanceModel.distanceString + " feet" );
 			}
 			
 			// Update other players with our position.

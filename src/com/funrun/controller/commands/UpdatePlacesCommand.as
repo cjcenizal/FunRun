@@ -1,6 +1,9 @@
 package com.funrun.controller.commands {
 
+	import com.funrun.controller.signals.DisplayPlaceRequest;
+	import com.funrun.model.DistanceModel;
 	import com.funrun.model.PlacesModel;
+	import com.funrun.services.OrdinalizeNumberService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -11,9 +14,22 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var placesModel:PlacesModel;
 		
+		[Inject]
+		public var distanceModel:DistanceModel;
+		
+		// Services.
+		
+		[Inject]
+		public var ordinalizeNumberService:OrdinalizeNumberService;
+		
+		// Commands.
+		
+		[Inject]
+		public var displayPlaceRequest:DisplayPlaceRequest;
+		
 		override public function execute():void {
 			placesModel.sortPlaces();
-			// TO-DO: Update UI.
+			displayPlaceRequest.dispatch( ordinalizeNumberService.ordinalize( distanceModel.place ) );
 		}
 	}
 }

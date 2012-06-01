@@ -16,6 +16,10 @@ package com.funrun.view.components {
 		private var _distanceLabel:AbstractLabel;
 		private var _distanceCountLabel:AbstractLabel;
 		
+		// Place.
+		private var _placeLabel:AbstractLabel;
+		private var _placeCountLabel:AbstractLabel;
+		
 		// Countdown.
 		private var _countdownLabel:AbstractLabel;
 		
@@ -37,6 +41,15 @@ package com.funrun.view.components {
 			_distanceCountLabel.y = stage.stageHeight - _distanceCountLabel.height - 20;
 			_distanceLabel.y = _distanceCountLabel.y - _distanceLabel.height;
 			
+			// Place.
+			_placeLabel = new AbstractLabel( this, 0, 0, "Place", 12, 0 );
+			_placeCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
+			_placeLabel.draw();
+			_placeCountLabel.draw();
+			_placeLabel.x = _placeCountLabel.x = 20;
+			_placeCountLabel.y = _distanceLabel.y - _distanceLabel.height - 20;
+			_placeLabel.y = _placeCountLabel.y - _distanceLabel.height;
+			
 			// Countdown.
 			_countdownLabel = new AbstractLabel( this, 0, 0, "", 110, 0xe0920b );
 			
@@ -50,6 +63,11 @@ package com.funrun.view.components {
 		public function showDistance( distance:String ):void {
 			_distanceCountLabel.text = distance;
 			_distanceCountLabel.draw();
+		}
+		
+		public function showPlace( place:String ):void {
+			_placeCountLabel.text = place;
+			_placeCountLabel.draw();
 		}
 		
 		public function set countdown( message:String ):void {
