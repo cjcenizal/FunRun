@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.AddEmptyFloorRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.TrackModel;
@@ -28,26 +29,32 @@ package com.funrun.controller.commands {
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		[Inject]
+		public var addEmptyFloorRequest:AddEmptyFloorRequest;
+		
+		[Inject]
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
 		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
 		override public function execute():void {
+			// Remove all existing obstacles.
+			while ( trackModel.numObstacles > 0 ) {
+				removeObjectFromSceneRequest.dispatch( trackModel.getObstacleAt( 0 ).mesh );
+				trackModel.removeObstacleAt( 0 );
+			}
 			// Reset distance.
 			distanceModel.reset();
 			displayDistanceRequest.dispatch( distanceModel.distanceString );
 			// Reset player.
 			resetPlayerRequest.dispatch();
+			// Reset floor.
+			addEmptyFloorRequest.dispatch();
 			// Reset camera.
+			// TO-DO: Move this into a command.
 			cameraModel.cameraX = 0;
 			cameraModel.cameraY = 100;
 			cameraModel.update();
-			// Reset obstacles.
-			while ( trackModel.numObstacles > 0 ) {
-				removeObjectFromSceneRequest.dispatch( trackModel.getObstacleAt( 0 ).mesh );
-				trackModel.removeObstacleAt( 0 );
-			}
 		}
 	}
 }

@@ -1,6 +1,5 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.payload.AddFloorPayload;
 	import com.funrun.model.FloorsModel;
@@ -25,27 +24,19 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
-		[Inject]
-		public var addFloorRequest:AddFloorRequest;
-		
 		override public function execute():void {
 			// Get an obstacle.
 			var obstacle:ObstacleData = obstaclesModel.getNext();
 			// Add it to the model.
 			var numObstacles:int = trackModel.numObstacles;
 			if ( numObstacles > 0 ) {
-				obstacle.z = trackModel.depthOfLastObstacle + 26 * TrackConstants.BLOCK_SIZE;
+				obstacle.z = trackModel.depthOfLastObstacle + TrackConstants.SEGMENT_DEPTH;
 			} else {
-				obstacle.z = TrackConstants.TRACK_LENGTH - 26 * TrackConstants.BLOCK_SIZE;
+				obstacle.z = 0;
 			}
 			trackModel.addObstacle( obstacle );
 			// Add to view.
 			addObjectToSceneRequest.dispatch( obstacle.mesh );
-			
-			// Add floors.
-			//var startPos:Number = obstacle.z + obstacle.bounds.max.z;
-			//var endPos:Number = obstacle.z + obstacle.bounds.max.z + TrackConstants.OBSTACLE_GAP;
-			//addFloorRequest.dispatch( new AddFloorPayload( startPos, endPos, TrackConstants.BLOCK_SIZE ) );
 		}
 	}
 }

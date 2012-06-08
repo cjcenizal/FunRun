@@ -1,14 +1,11 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
-	import com.funrun.controller.signals.payload.AddFloorPayload;
 	import com.funrun.model.GameModel;
-	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.OnlineState;
 	
@@ -35,9 +32,6 @@ package com.funrun.controller.commands {
 		public var resetGameRequest:ResetGameRequest;
 		
 		[Inject]
-		public var addFloorRequest:AddFloorRequest;
-		
-		[Inject]
 		public var renderSceneRequest:RenderSceneRequest;
 		
 		[Inject]
@@ -54,8 +48,6 @@ package com.funrun.controller.commands {
 			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
 			// Reset game.
 			resetGameRequest.dispatch();
-			// Add initial floor.
-			addFloorRequest.dispatch( new AddFloorPayload( TrackConstants.REMOVE_OBSTACLE_DEPTH, TrackConstants.TRACK_LENGTH, TrackConstants.BLOCK_SIZE ) );
 			// Render to clear the view.
 			renderSceneRequest.dispatch();
 			// Connect to a game.

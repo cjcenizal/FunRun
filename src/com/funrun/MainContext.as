@@ -1,7 +1,7 @@
 package com.funrun {
 
 	import com.funrun.controller.commands.AddCompetitorCommand;
-	import com.funrun.controller.commands.AddFloorCommand;
+	import com.funrun.controller.commands.AddEmptyFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
 	import com.funrun.controller.commands.AddObjectToSceneCommand;
@@ -47,10 +47,11 @@ package com.funrun {
 	import com.funrun.controller.commands.StartCountdownCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StartRunningCommand;
+	import com.funrun.controller.commands.UpdateObstaclesCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.signals.AddCompetitorRequest;
-	import com.funrun.controller.signals.AddFloorRequest;
+	import com.funrun.controller.signals.AddEmptyFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddNametagRequest;
@@ -110,6 +111,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
+	import com.funrun.controller.signals.UpdateObstaclesRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.WhitelistFailed;
 	import com.funrun.model.BlocksModel;
@@ -240,7 +242,7 @@ package com.funrun {
 			injector.mapSingleton( UpdateCountdownRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
-			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
+			signalCommandMap.mapSignalClass( AddEmptyFloorRequest,					AddEmptyFloorCommand );
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			signalCommandMap.mapSignalClass( AddObjectToSceneRequest,				AddObjectToSceneCommand );
@@ -283,6 +285,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
 			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
+			signalCommandMap.mapSignalClass( UpdateObstaclesRequest,				UpdateObstaclesCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
 			

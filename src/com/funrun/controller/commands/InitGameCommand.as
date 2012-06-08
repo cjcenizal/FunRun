@@ -3,12 +3,18 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.model.TrackModel;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
-
+	
 	import org.robotlegs.mvcs.Command;
 
 	public class InitGameCommand extends Command {
+		
+		// Models.
+		
+		[Inject]
+		public var trackModel:TrackModel;
 
 		// Commands.
 
@@ -20,7 +26,7 @@ package com.funrun.controller.commands {
 
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
-
+		
 		override public function execute():void {
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );

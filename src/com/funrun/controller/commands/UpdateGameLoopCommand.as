@@ -1,15 +1,14 @@
 package com.funrun.controller.commands {
 	
 	import com.cenizal.ui.AbstractLabel;
-	import com.funrun.controller.signals.AddObstacleRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
-	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
+	import com.funrun.controller.signals.UpdateObstaclesRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
@@ -23,7 +22,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.collision.CollisionsCollection;
 	import com.funrun.model.collision.FaceCollision;
-	import com.funrun.model.collision.ObstacleData;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.FaceTypes;
 	import com.funrun.model.constants.TrackConstants;
@@ -86,10 +84,7 @@ package com.funrun.controller.commands {
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		[Inject]
-		public var addObstacleRequest:AddObstacleRequest;
-		
-		[Inject]
-		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
+		public var updateObstaclesRequest:UpdateObstaclesRequest;
 		
 		[Inject]
 		public var killPlayerRequest:KillPlayerRequest;
@@ -124,22 +119,7 @@ package com.funrun.controller.commands {
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
 				if ( gameModel.gameState == GameState.RUNNING ) {
 					// Update obstacles.
-					trackModel.move( -playerModel.velocity.z );
-		
-					// Remove obstacles from end of track.
-					if ( trackModel.numObstacles > 0 ) {
-						var obstacle:ObstacleData = trackModel.getObstacleAt( 0 );
-						while ( obstacle.z < TrackConstants.REMOVE_OBSTACLE_DEPTH ) {
-							removeObjectFromSceneRequest.dispatch( obstacle.mesh );
-							trackModel.removeObstacleAt( 0 );
-							obstacle = trackModel.getObstacleAt( 0 );
-						}
-					}
-		
-					// Add new obstacles until track is full again.
-					while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_LENGTH + TrackConstants.BLOCK_SIZE ) {
-						addObstacleRequest.dispatch();
-					}
+					updateObstaclesRequest.dispatch();
 				}
 	
 				if ( playerModel.isDead ) {

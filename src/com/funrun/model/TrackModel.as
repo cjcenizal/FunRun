@@ -1,9 +1,7 @@
 package com.funrun.model {
 	
-	import away3d.bounds.BoundingVolumeBase;
-	
-	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.collision.ObstacleData;
+	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -17,23 +15,10 @@ package com.funrun.model {
 		}
 		
 		public function addObstacle( obstacle:ObstacleData ):void {
-			// TO-DO
-			// Add bounding boxes, ids, behaviors
-			// Add geo (animations?)
-			// Maintain links to geo in bounding boxes
 			_obstacles.push( obstacle );
 		}
 		
-		public function removeObstacle( obstacle:ObstacleData ):void {
-			// TO-DO
-			// Remove from geo somehow.
-			// Remove obstacle from array.
-		}
-		
 		public function move( amount:Number ):void {
-			// TO-DO
-			// Move all bounding boxes.
-			// Move geo transform.
 			var len:int = _obstacles.length;
 			for ( var i:int = 0; i < len; i++ ) {
 				( _obstacles[ i ] as ObstacleData ).z += amount;
@@ -56,7 +41,7 @@ package com.funrun.model {
 			if ( _obstacles.length > 0 ) {
 				return ( _obstacles[ _obstacles.length - 1 ] as ObstacleData ).z;
 			}
-			return TrackConstants.TRACK_LENGTH;
+			return TrackConstants.TRACK_DEPTH;
 		}
 	}
 }

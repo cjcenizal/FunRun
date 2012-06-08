@@ -6,9 +6,9 @@ package com.funrun.model.constants
 		public static const BLOCK_SIZE:Number = 100;
 		public static const BLOCK_SIZE_HALF:Number = BLOCK_SIZE * .5;
 		public static const TRACK_WIDTH:int = 1200;
-		public static const TRACK_LENGTH:int = 8000;
+		public static const TRACK_DEPTH:int = 8000;
 		public static const TRACK_WIDTH_BLOCKS:int = TRACK_WIDTH / BLOCK_SIZE;
-		public static const TRACK_LENGTH_BLOCKS:int = TRACK_LENGTH / BLOCK_SIZE;
+		public static const TRACK_DEPTH_BLOCKS:int = TRACK_DEPTH / BLOCK_SIZE;
 		public static const PLAYER_RADIUS:int = 50;
 		public static const PLAYER_HALF_SIZE:int = 55;
 		
@@ -27,11 +27,9 @@ package com.funrun.model.constants
 		public static const PLAYER_LATERAL_SPEED:Number = 30;
 		public static const PLAYER_GRAVITY:Number = -8;
 		
-		// Obstacle creation constants.
-		private static const NAIVE_OBSTACLE_GAP:Number = 1200;
-		private static const OBSTACLES_PER_NAIVE_GAP:Number = Math.round( NAIVE_OBSTACLE_GAP / BLOCK_SIZE );
-		public static const OBSTACLE_GAP:Number = OBSTACLES_PER_NAIVE_GAP * BLOCK_SIZE;
-		public static const REMOVE_OBSTACLE_DEPTH:Number = -1600;
+		// Segment constants.
+		public static const SEGMENT_DEPTH:Number = 26 * BLOCK_SIZE;
+		public static const REMOVE_SEGMENT_DEPTH:Number = -( SEGMENT_DEPTH + 200 );
 		
 		// Collision constants.
 		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;
