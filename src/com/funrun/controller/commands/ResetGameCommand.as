@@ -1,8 +1,9 @@
 package com.funrun.controller.commands {
 	
+	import com.funrun.controller.signals.AddEmptyFloorRequest;
+	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
-	import com.funrun.controller.signals.AddEmptyFloorRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.TrackModel;
@@ -29,6 +30,9 @@ package com.funrun.controller.commands {
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		[Inject]
+		public var addObstaclesRequest:AddObstaclesRequest;
+		
+		[Inject]
 		public var addEmptyFloorRequest:AddEmptyFloorRequest;
 		
 		[Inject]
@@ -48,8 +52,9 @@ package com.funrun.controller.commands {
 			displayDistanceRequest.dispatch( distanceModel.distanceString );
 			// Reset player.
 			resetPlayerRequest.dispatch();
-			// Reset floor.
+			// Reset floor and obstacles.
 			addEmptyFloorRequest.dispatch();
+			addObstaclesRequest.dispatch();
 			// Reset camera.
 			// TO-DO: Move this into a command.
 			cameraModel.cameraX = 0;

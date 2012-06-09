@@ -15,5 +15,9 @@ package com.funrun.services {
 			var ba:ByteArray = new JsonData() as ByteArray;
 			data = JSON.decode( ba.readUTFBytes( ba.length ) );
 		}
+		
+		protected function readString( jsonData:String ):void {
+			data = JSON.decode( jsonData );
+		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
@@ -25,7 +25,7 @@ package com.funrun.controller.commands {
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
 		[Inject]
-		public var addObstacleRequest:AddObstacleRequest;
+		public var addObstacleRequests:AddObstaclesRequest;
 		
 		override public function execute():void {
 			// Move obstacles.
@@ -41,10 +41,7 @@ package com.funrun.controller.commands {
 				}
 			}
 			
-			// Add new obstacles until track is full again.
-			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_DEPTH + TrackConstants.BLOCK_SIZE ) {
-				addObstacleRequest.dispatch();
-			}
+			addObstacleRequests.dispatch();
 		}
 	}
 }

@@ -3,7 +3,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildInterpolationRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
-	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LoginFulfilled;
@@ -11,6 +10,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ScreenState;
+	import com.funrun.services.IWhitelistService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -22,9 +22,6 @@ package com.funrun.controller.commands {
 		public var onlineState:OnlineState;
 		
 		// Commands.
-		
-		[Inject]
-		public var buildWhitelistRequest:BuildWhitelistRequest;
 		
 		[Inject]
 		public var loadConfigurationRequest:LoadConfigurationRequest;
@@ -50,7 +47,14 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var buildGameRequest:BuildGameRequest;
 		
+		// Services.
+		
+		[Inject]
+		public var whitelistService:IWhitelistService;
+		
 		override public function execute():void {
+			// Load whitelist.
+			whitelistService.load();
 			// Update view.
 			showScreenRequest.dispatch( ScreenState.MAIN_MENU );
 			toggleMainModuleRequest.dispatch( false );
@@ -58,14 +62,22 @@ package com.funrun.controller.commands {
 			buildInterpolationRequest.dispatch();
 			buildTimeRequest.dispatch();
 			buildGameRequest.dispatch();
-			buildWhitelistRequest.dispatch();
 			// Configure the app and login.
 			loadConfigurationRequest.dispatch();
 			if ( onlineState.isOnline ) {
-				loginRequest.dispatch();
+				if ( whitelistService.isLoaded ) {
+					loginRequest.dispatch();
+				} else {
+					whitelistService.onLoadedSignal.add( onWhitelistLoaded );
+				}
 			} else {
 				loginFulfilled.dispatch();
 			}
+		}
+		
+		private function onWhitelistLoaded():void {
+			whitelistService.onLoadedSignal.remove( onWhitelistLoaded );
+			loginRequest.dispatch();
 		}
 	}
 }

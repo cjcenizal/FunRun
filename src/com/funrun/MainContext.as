@@ -6,12 +6,12 @@ package com.funrun {
 	import com.funrun.controller.commands.AddMaterialCommand;
 	import com.funrun.controller.commands.AddObjectToSceneCommand;
 	import com.funrun.controller.commands.AddObstacleCommand;
+	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.BuildGameCommand;
 	import com.funrun.controller.commands.BuildInterpolationCommand;
 	import com.funrun.controller.commands.BuildTimeCommand;
-	import com.funrun.controller.commands.BuildWhitelistCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
 	import com.funrun.controller.commands.HandleMultiplayerNewPlayerJoinedCommand;
@@ -57,6 +57,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddPopupRequest;
@@ -64,7 +65,6 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildInterpolationRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
-	import com.funrun.controller.signals.BuildWhitelistRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
@@ -183,7 +183,7 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( false );
+			var onlineState:OnlineState = new OnlineState( true );
 		
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
@@ -247,12 +247,12 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			signalCommandMap.mapSignalClass( AddObjectToSceneRequest,				AddObjectToSceneCommand );
 			signalCommandMap.mapSignalClass( AddObstacleRequest,					AddObstacleCommand );
+			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
 			signalCommandMap.mapSignalClass( BuildGameRequest,						BuildGameCommand );
 			signalCommandMap.mapSignalClass( BuildInterpolationRequest,				BuildInterpolationCommand );
 			signalCommandMap.mapSignalClass( BuildTimeRequest,						BuildTimeCommand );
-			signalCommandMap.mapSignalClass( BuildWhitelistRequest,					BuildWhitelistCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );

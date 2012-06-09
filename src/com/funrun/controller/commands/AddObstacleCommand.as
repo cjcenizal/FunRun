@@ -1,7 +1,6 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
-	import com.funrun.controller.signals.payload.AddFloorPayload;
 	import com.funrun.model.FloorsModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.TrackModel;
@@ -12,6 +11,8 @@ package com.funrun.controller.commands {
 	
 	public class AddObstacleCommand extends Command {
 		
+		// Models.
+		
 		[Inject]
 		public var obstaclesModel:ObstaclesModel;
 		
@@ -20,6 +21,8 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var trackModel:TrackModel;
+		
+		// Commands.
 		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
