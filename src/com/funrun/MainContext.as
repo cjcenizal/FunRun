@@ -12,6 +12,7 @@ package com.funrun {
 	import com.funrun.controller.commands.BuildGameCommand;
 	import com.funrun.controller.commands.BuildInterpolationCommand;
 	import com.funrun.controller.commands.BuildTimeCommand;
+	import com.funrun.controller.commands.CheckWhitelistCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
 	import com.funrun.controller.commands.HandleMultiplayerNewPlayerJoinedCommand;
@@ -65,6 +66,7 @@ package com.funrun {
 	import com.funrun.controller.signals.BuildGameRequest;
 	import com.funrun.controller.signals.BuildInterpolationRequest;
 	import com.funrun.controller.signals.BuildTimeRequest;
+	import com.funrun.controller.signals.CheckWhitelistRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
@@ -253,6 +255,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( BuildGameRequest,						BuildGameCommand );
 			signalCommandMap.mapSignalClass( BuildInterpolationRequest,				BuildInterpolationCommand );
 			signalCommandMap.mapSignalClass( BuildTimeRequest,						BuildTimeCommand );
+			signalCommandMap.mapSignalClass( CheckWhitelistRequest,					CheckWhitelistCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );

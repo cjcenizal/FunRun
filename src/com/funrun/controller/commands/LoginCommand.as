@@ -2,19 +2,19 @@ package com.funrun.controller.commands {
 	
 	import Facebook.FB;
 	
+	import com.funrun.controller.signals.CheckWhitelistRequest;
 	import com.funrun.controller.signals.LoginFailed;
-	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
-	import com.funrun.controller.signals.WhitelistFailed;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.UserModel;
-	import com.funrun.services.IWhitelistService;
-	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.model.state.LoginState;
+	import com.funrun.services.PlayerioFacebookLoginService;
 	
 	import org.robotlegs.mvcs.Command;
 	
 	public class LoginCommand extends Command {
+		
+		// Models.
 		
 		[Inject]
 		public var configurationModel:ConfigurationModel;
@@ -22,23 +22,21 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var userModel:UserModel;
 		
+		// Services.
+		
 		[Inject]
 		public var loginService:PlayerioFacebookLoginService;
 		
-		[Inject]
-		public var loginFulfilled:LoginFulfilled;
+		// Commands.
 		
 		[Inject]
 		public var loginFailed:LoginFailed;
 		
 		[Inject]
-		public var whitelistService:IWhitelistService;
-		
-		[Inject]
-		public var whitelistFailed:WhitelistFailed;
-		
-		[Inject]
 		public var updateLoginStatus:UpdateLoginStatusRequest;
+		
+		[Inject]
+		public var checkWhitelistRequest:CheckWhitelistRequest;
 		
 		override public function execute():void {
 			updateLoginStatus.dispatch( LoginState.LOGGING_IN );
@@ -56,12 +54,7 @@ package com.funrun.controller.commands {
 				// Get user info from Facebook Graph, like their name.
 				userModel.name = response.name;
 				userModel.userId = response.id;
-				// Check user id against whitelist.
-				if ( whitelistService.passes( userModel.userId ) ) {
-					loginFulfilled.dispatch();
-				} else {
-					whitelistFailed.dispatch();
-				}
+				checkWhitelistRequest.dispatch();
 			} );
 		}
 		

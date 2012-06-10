@@ -10,7 +10,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ScreenState;
-	import com.funrun.services.IWhitelistService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -47,14 +46,7 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var buildGameRequest:BuildGameRequest;
 		
-		// Services.
-		
-		[Inject]
-		public var whitelistService:IWhitelistService;
-		
 		override public function execute():void {
-			// Load whitelist.
-			whitelistService.load();
 			// Update view.
 			showScreenRequest.dispatch( ScreenState.MAIN_MENU );
 			toggleMainModuleRequest.dispatch( false );
@@ -65,19 +57,10 @@ package com.funrun.controller.commands {
 			// Configure the app and login.
 			loadConfigurationRequest.dispatch();
 			if ( onlineState.isOnline ) {
-				if ( whitelistService.isLoaded ) {
-					loginRequest.dispatch();
-				} else {
-					whitelistService.onLoadedSignal.add( onWhitelistLoaded );
-				}
+				loginRequest.dispatch();
 			} else {
 				loginFulfilled.dispatch();
 			}
-		}
-		
-		private function onWhitelistLoaded():void {
-			whitelistService.onLoadedSignal.remove( onWhitelistLoaded );
-			loginRequest.dispatch();
 		}
 	}
 }

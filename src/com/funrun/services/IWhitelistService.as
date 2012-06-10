@@ -1,13 +1,14 @@
-package com.funrun.services
-{
+package com.funrun.services {
+	
 	import org.osflash.signals.Signal;
-
-	public interface IWhitelistService
-	{
-		function add( id:Number ):void;
-		function passes( id:String ):Boolean;
-		function load():void;
-		function get onLoadedSignal():Signal;
-		function get isLoaded():Boolean;
+	
+	import playerio.Client;
+	
+	public interface IWhitelistService {
+		function isIdInTable( id:String, dbName:String, client:Client ):void;
+		function get onPassSignal():Signal;
+		function get onFailSignal():Signal;
+		function get onErrorSignal():Signal;
+		function get error():Error;
 	}
 }
