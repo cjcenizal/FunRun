@@ -50,6 +50,7 @@ package com.funrun {
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.UpdateObstaclesCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
+	import com.funrun.controller.commands.UpdatePlayerCollisionsCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddEmptyFloorRequest;
@@ -115,6 +116,7 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.controller.signals.UpdateObstaclesRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
+	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
 	import com.funrun.controller.signals.WhitelistFailed;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CompetitorsModel;
@@ -290,6 +292,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
 			signalCommandMap.mapSignalClass( UpdateObstaclesRequest,				UpdateObstaclesCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
+			signalCommandMap.mapSignalClass( UpdatePlayerCollisionsRequest,			UpdatePlayerCollisionsCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
 			
 			// Map events to commands.
