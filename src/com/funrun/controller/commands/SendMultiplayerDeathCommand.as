@@ -1,6 +1,5 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.model.DistanceModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.MessageTypes;
 	import com.funrun.model.state.OnlineState;
@@ -20,9 +19,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var playerModel:PlayerModel;
 		
-		[Inject]
-		public var distanceModel:DistanceModel;
-		
 		// Services.
 		
 		[Inject]
@@ -32,9 +28,9 @@ package com.funrun.controller.commands {
 			if ( onlineState.isOnline ) {
 				multiplayerService.send(
 					MessageTypes.DEATH,
-					playerModel.mesh.x,
-					playerModel.mesh.y,
-					distanceModel.distance
+					playerModel.positionX,
+					playerModel.positionY,
+					playerModel.positionZ
 				);
 			}
 		}

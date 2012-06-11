@@ -33,7 +33,7 @@
 				playerModel.isDead = true;
 				switch ( death ) {
 					case CollisionTypes.SMACK:
-						playerModel.velocity.z = TrackConstants.HEAD_ON_SMACK_SPEED;
+						playerModel.velocityZ = TrackConstants.HEAD_ON_SMACK_SPEED;
 						break;
 					case CollisionTypes.FALL:
 						trace(this, "Fell to death");

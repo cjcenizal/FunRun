@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddPopupRequest;
-	import com.funrun.model.DistanceModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.ResultsPopupVO;
 	import com.funrun.view.components.ResultsPopup;
 	
@@ -13,11 +13,11 @@ package com.funrun.controller.commands {
 		public var addPopupRequest:AddPopupRequest;
 		
 		[Inject]
-		public var distanceModel:DistanceModel;
+		public var playerModel:PlayerModel;
 		
 		override public function execute():void {
 			addPopupRequest.dispatch( new ResultsPopup(
-				new ResultsPopupVO( "You ran " + distanceModel.distanceString + " feet!" ) ) );
+				new ResultsPopupVO( "You ran " + playerModel.distanceString + " feet!" ) ) );
 		}
 	}
 }

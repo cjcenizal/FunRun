@@ -1,40 +1,35 @@
 package com.funrun.model {
 
+	import away3d.bounds.BoundingVolumeBase;
 	import away3d.entities.Mesh;
-
+	
+	import com.cenizal.utils.Numbers;
+	import com.funrun.model.constants.TrackConstants;
+	
 	import flash.geom.Vector3D;
-
+	
 	import org.robotlegs.mvcs.Actor;
 
-	public class PlayerModel extends Actor {
+	public class PlayerModel extends Actor implements IPlaceable {
 		
 		// Player geometry.
 		private var _mesh:Mesh;
 
 		// State.
-		public var velocity:Vector3D;
+		private var _position:Vector3D;
+		private var _velocity:Vector3D;
+		private var _isMovingLeft:Boolean = false;
+		private var _isMovingRight:Boolean = false;
+		private var _place:int = 0;
 		public var isDucking:Boolean = false;
 		public var isAirborne:Boolean = false;
 		public var isDead:Boolean = false;
 		public var isJumping:Boolean = false;
-		private var _isMovingLeft:Boolean = false;
-		private var _isMovingRight:Boolean = false;
 
 		public function PlayerModel() {
 			super();
-			velocity = new Vector3D();
-		}
-
-		public function get mesh():Mesh {
-			return _mesh;
-		}
-
-		public function set mesh( m:Mesh ):void {
-			_mesh = m;
-		}
-
-		public function jump( speed:Number ):void {
-			velocity.y += speed;
+			_velocity = new Vector3D();
+			_position = new Vector3D();
 		}
 
 		public function startMovingLeft( speed:Number ):void {
@@ -42,7 +37,7 @@ package com.funrun.model {
 				stopMovingRight( speed );
 			}
 			if ( !_isMovingLeft ) {
-				velocity.x -= speed;
+				_velocity.x -= speed;
 			}
 			_isMovingLeft = true;
 		}
@@ -52,27 +47,117 @@ package com.funrun.model {
 				stopMovingLeft( speed );
 			}
 			if ( !_isMovingRight ) {
-				velocity.x += speed;
+				_velocity.x += speed;
 			}
 			_isMovingRight = true;
 		}
 
 		public function stopMovingLeft( speed:Number ):void {
 			if ( _isMovingLeft ) {
-				velocity.x += speed;
+				_velocity.x += speed;
 			}
 			_isMovingLeft = false;
 		}
 
 		public function stopMovingRight( speed:Number ):void {
 			if ( _isMovingRight ) {
-				velocity.x -= speed;
+				_velocity.x -= speed;
 			}
 			_isMovingRight = false;
 		}
 
 		public function cancelMovement():void {
 			_isMovingRight = _isMovingLeft = false;
+		}
+		
+		public function getRelativeDistanceTo( otherPlayerDistance:Number ):Number {
+			return otherPlayerDistance - distance;
+		}
+		
+		public function updateMeshPosition( x:Number, y:Number, z:Number ):void {
+			_mesh.x = x;
+			_mesh.y = y;
+			_mesh.z = z;
+		}
+		
+		public function get distance():Number {
+			return _position.z;
+		}
+		
+		public function get distanceString():String {
+			return Numbers.addCommasTo( Math.round( distance / TrackConstants.BLOCK_SIZE ).toString() );
+		}
+		
+		public function set place( val:int ):void {
+			_place = val;
+		}
+		
+		public function get place():int {
+			return _place;
+		}
+		
+		public function set mesh( m:Mesh ):void {
+			_mesh = m;
+		}
+		
+		public function get velocityX():Number {
+			return _velocity.x;
+		}
+		
+		public function get velocityY():Number {
+			return _velocity.y;
+		}
+		
+		public function get velocityZ():Number {
+			return _velocity.z;
+		}
+		
+		public function set velocityX( amount:Number ):void {
+			_velocity.x = 0;
+		}
+		
+		public function set velocityY( value:Number ):void {
+			_velocity.y = value;
+		}
+		
+		public function set velocityZ( value:Number ):void {
+			_velocity.z = value;
+		}
+		
+		public function get positionX():Number {
+			return _position.x;
+		}
+		
+		public function get positionY():Number {
+			return _position.y;
+		}
+		
+		public function get positionZ():Number {
+			return _position.z;
+		}
+		
+		public function set positionX( value:Number ):void {
+			_position.x = value;
+		}
+		
+		public function set positionY( value:Number ):void {
+			_position.y = value;
+		}
+		
+		public function set positionZ( value:Number ):void {
+			_position.z = value;
+		}
+		
+		public function get bounds():BoundingVolumeBase {
+			return _mesh.bounds;
+		}
+		
+		public function get scaleY():Number {
+			return _mesh.scaleY;
+		}
+		
+		public function set scaleY( val:Number ):void {
+			_mesh.scaleY = val;
 		}
 	}
 }

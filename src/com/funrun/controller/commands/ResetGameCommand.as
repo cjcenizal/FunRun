@@ -5,7 +5,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
-	import com.funrun.model.DistanceModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
 	
@@ -22,7 +22,7 @@ package com.funrun.controller.commands {
 		public var cameraModel:View3DModel;
 
 		[Inject]
-		public var distanceModel:DistanceModel;
+		public var playerModel:PlayerModel;
 		
 		// Commands.
 		
@@ -48,8 +48,8 @@ package com.funrun.controller.commands {
 				trackModel.removeObstacleAt( 0 );
 			}
 			// Reset distance.
-			distanceModel.reset();
-			displayDistanceRequest.dispatch( distanceModel.distanceString );
+			playerModel.positionZ = 0;
+			displayDistanceRequest.dispatch( playerModel.distanceString );
 			// Reset player.
 			resetPlayerRequest.dispatch();
 			// Reset floor and obstacles.

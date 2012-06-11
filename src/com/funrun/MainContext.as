@@ -124,7 +124,6 @@ package com.funrun {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
-	import com.funrun.model.DistanceModel;
 	import com.funrun.model.FloorsModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.GeosMockModel;
@@ -205,7 +204,6 @@ package com.funrun {
 			injector.mapSingleton( PlayerModel );
 			injector.mapSingleton( View3DModel );
 			injector.mapSingleton( FloorsModel );
-			injector.mapSingleton( DistanceModel );
 			injector.mapSingleton( GameModel );
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( ConfigurationModel );

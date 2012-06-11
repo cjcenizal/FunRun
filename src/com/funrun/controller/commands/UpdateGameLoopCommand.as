@@ -10,7 +10,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
 	import com.funrun.model.CountdownModel;
-	import com.funrun.model.DistanceModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
@@ -38,9 +37,6 @@ package com.funrun.controller.commands {
 
 		[Inject]
 		public var timeModel:TimeModel;
-
-		[Inject]
-		public var distanceModel:DistanceModel;
 		
 		[Inject]
 		public var gameModel:GameModel;
@@ -100,67 +96,70 @@ package com.funrun.controller.commands {
 	
 				if ( playerModel.isDead ) {
 					// Slow down when you're dead.
-					playerModel.velocity.x *= .6;
-					playerModel.velocity.z *= .7;
+					playerModel.velocityX *= .6;
+					playerModel.velocityZ *= .7;
 				} else {
 					if ( gameModel.gameState == GameState.RUNNING ) {
 						// Store distance.
-						distanceModel.add( playerModel.velocity.z );
+						playerModel.positionZ += playerModel.velocityZ;
 						// Update speed when you're alive.
-						if ( Math.abs( playerModel.velocity.x ) > 0 ) {
-							if ( playerModel.velocity.z > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
-								playerModel.velocity.z--;
+						if ( Math.abs( playerModel.velocityX ) > 0 ) {
+							if ( playerModel.velocityZ > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
+								playerModel.velocityZ--;
 							}
-						} else if ( playerModel.velocity.z < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
-							playerModel.velocity.z += TrackConstants.PLAYER_FOWARD_ACCELERATION;
+						} else if ( playerModel.velocityZ < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
+							playerModel.velocityZ += TrackConstants.PLAYER_FOWARD_ACCELERATION;
 						}
 					}
 					// Update jumping.
 					if ( playerModel.isJumping && !playerModel.isAirborne ) {
-						playerModel.jump( TrackConstants.PLAYER_JUMP_SPEED );
+						playerModel.velocityY += TrackConstants.PLAYER_JUMP_SPEED;
 						playerModel.isAirborne = true;
 					}
 					// Update lateral position.
-					playerModel.mesh.x += playerModel.velocity.x;
+					playerModel.positionX += playerModel.velocityX;
 				}
 	
 				// Update gravity.
-				playerModel.velocity.y += TrackConstants.PLAYER_GRAVITY;
-				playerModel.mesh.y += playerModel.velocity.y;
+				playerModel.velocityY += TrackConstants.PLAYER_GRAVITY;
+				playerModel.positionY += playerModel.velocityY;
 				
 				// Apply ducking state.
 				if ( playerModel.isDucking ) {
-					if ( playerModel.mesh.scaleY != .25 ) {
-						playerModel.mesh.scaleY = .25;
-						playerModel.mesh.bounds.min.y *= .25;
-						playerModel.mesh.bounds.max.y *= .25;
+					if ( playerModel.scaleY != .25 ) {
+						playerModel.scaleY = .25;
+						playerModel.bounds.min.y *= .25;
+						playerModel.bounds.max.y *= .25;
 					}
 				} else {
-					if ( playerModel.mesh.scaleY != 1 ) {
-						playerModel.mesh.scaleY = 1;
-						playerModel.mesh.bounds.min.y /= .25;
-						playerModel.mesh.bounds.max.y /= .25;
+					if ( playerModel.scaleY != 1 ) {
+						playerModel.scaleY = 1;
+						playerModel.bounds.min.y /= .25;
+						playerModel.bounds.max.y /= .25;
 					}
 				}
 				
 				// Detect collisions.
 				updatePlayerCollisionsRequest.dispatch();
-	
-				// Update camera.
-				view3DModel.cameraX = playerModel.mesh.x;
-				var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.mesh.y < view3DModel.cameraY ) ? .3 : .1;
-				// We'll try easing to follow the player instead of being locked.
-				view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.mesh.y ) - view3DModel.cameraY ) * followFactor;
-				view3DModel.cameraZ = -1000;
-				view3DModel.update();
 			}
+			
+			// Set position to mesh.
+			playerModel.updateMeshPosition( playerModel.positionX, playerModel.positionY, 0 );
+			
+			// Update camera.
+			view3DModel.cameraX = playerModel.positionX;
+			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
+			// We'll try easing to follow the player instead of being locked.
+			view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
+			view3DModel.cameraZ = -1000;
+			view3DModel.update();
 			
 			// Update competitors' positions.
 			updateCompetitorsRequest.dispatch();
 			
 			// Update distance counter.
 			if ( gameModel.gameState == GameState.RUNNING ) {
-				displayDistanceRequest.dispatch( distanceModel.distanceString + " feet" );
+				displayDistanceRequest.dispatch( playerModel.distanceString + " feet" );
 			}
 			
 			// Update other players with our position.

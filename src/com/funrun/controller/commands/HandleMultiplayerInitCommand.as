@@ -3,7 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.InitGameRequest;
-	import com.funrun.model.DistanceModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.UserModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
@@ -21,7 +21,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var distanceModel:DistanceModel;
+		public var playerModel:PlayerModel;
 		
 		[Inject]
 		public var userModel:UserModel;
@@ -48,7 +48,7 @@ package com.funrun.controller.commands {
 						message.getInt( i ),
 						message.getString( i + 1 )
 					);
-					competitor.updatePosition( message.getNumber( i + 2 ), message.getNumber( i + 3 ), distanceModel.getRelativeDistanceTo( message.getNumber( i + 4 ) ) );
+					competitor.updatePosition( message.getNumber( i + 2 ), message.getNumber( i + 3 ), playerModel.getRelativeDistanceTo( message.getNumber( i + 4 ) ) );
 					competitor.isDucking = message.getBoolean( i + 5 );
 					addCompetitorRequest.dispatch( competitor );
 				}

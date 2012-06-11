@@ -1,8 +1,8 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.model.CompetitorsModel;
-	import com.funrun.model.DistanceModel;
 	import com.funrun.model.InterpolationModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.UserModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 		public var competitorsModel:CompetitorsModel;
 		
 		[Inject]
-		public var distanceModel:DistanceModel;
+		public var playerModel:PlayerModel;
 		
 		[Inject]
 		public var interpolationModel:InterpolationModel;
@@ -43,7 +43,7 @@ package com.funrun.controller.commands {
 						competitor.updatePosition(
 							message.getNumber( i + 1 ),
 							message.getNumber( i + 2 ),
-							distanceModel.getRelativeDistanceTo( message.getNumber( i + 3 ) )
+							playerModel.getRelativeDistanceTo( message.getNumber( i + 3 ) )
 							);
 						competitor.isDucking = message.getBoolean( i + 4 );
 						if ( competitor.isDucking ) {

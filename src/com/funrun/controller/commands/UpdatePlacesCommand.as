@@ -1,8 +1,8 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.DisplayPlaceRequest;
-	import com.funrun.model.DistanceModel;
 	import com.funrun.model.PlacesModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.services.OrdinalizeNumberService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -15,7 +15,7 @@ package com.funrun.controller.commands {
 		public var placesModel:PlacesModel;
 		
 		[Inject]
-		public var distanceModel:DistanceModel;
+		public var playerModel:PlayerModel;
 		
 		// Services.
 		
@@ -29,7 +29,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			placesModel.sortPlaces();
-			displayPlaceRequest.dispatch( ordinalizeNumberService.ordinalize( distanceModel.place ) );
+			displayPlaceRequest.dispatch( ordinalizeNumberService.ordinalize( playerModel.place ) );
 		}
 	}
 }
