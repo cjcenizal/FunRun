@@ -1,31 +1,23 @@
 package com.funrun.controller.commands {
 	
-	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
-	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
-	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
+	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateObstaclesRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
-	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DistanceModel;
 	import com.funrun.model.GameModel;
-	import com.funrun.model.InterpolationModel;
-	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
-	import com.funrun.model.vo.CompetitorVO;
-	
-	import flash.geom.Point;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -38,9 +30,6 @@ package com.funrun.controller.commands {
 		
 		// Models.
 		
-	//	[Inject]
-	//	public var trackModel:TrackModel;
-
 		[Inject]
 		public var playerModel:PlayerModel;
 
@@ -59,15 +48,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var countdownModel:CountdownModel;
 		
-		[Inject]
-		public var competitorsModel:CompetitorsModel;
-		
-		[Inject]
-		public var interpolationModel:InterpolationModel;
-		
-		[Inject]
-		public var nametagsModel:NametagsModel;
-		
 		// Commands.
 		
 		[Inject]
@@ -77,16 +57,10 @@ package com.funrun.controller.commands {
 		public var updateCountdownRequest:UpdateCountdownRequest;
 		
 		[Inject]
-		public var resetPlayerRequest:ResetPlayerRequest;
-		
-		[Inject]
 		public var updateObstaclesRequest:UpdateObstaclesRequest;
 		
 		[Inject]
 		public var updatePlayerCollisionsRequest:UpdatePlayerCollisionsRequest;
-		
-		[Inject]
-		public var killPlayerRequest:KillPlayerRequest;
 		
 		[Inject]
 		public var renderSceneRequest:RenderSceneRequest;
@@ -96,6 +70,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var sendMultiplayerUpdateRequest:SendMultiplayerUpdateRequest;
+		
+		[Inject]
+		public var updateCompetitorsRequest:UpdateCompetitorsRequest;
 		
 		[Inject]
 		public var updatePlacesRequest:UpdatePlacesRequest;
@@ -176,23 +153,10 @@ package com.funrun.controller.commands {
 				view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.mesh.y ) - view3DModel.cameraY ) * followFactor;
 				view3DModel.cameraZ = -1000;
 				view3DModel.update();
-				
-				// Update competitors' physics.
-				var len:int = competitorsModel.numCompetitors;
-				var competitor:CompetitorVO;
-				var nametag:AbstractLabel;
-				for ( var i:int = 0; i < len; i++ ) {
-					competitor = competitorsModel.getAt( i );
-					competitor.interpolate( interpolationModel.percent );
-					nametag = nametagsModel.getWithId( competitor.id.toString() );
-					if ( nametag ) {
-						var pos:Point = view3DModel.get2DFrom3D( competitor.mesh.position );
-						nametag.x = pos.x;
-						nametag.y = pos.y;
-					}
-				}
-				interpolationModel.increment();
 			}
+			
+			// Update competitors' positions.
+			updateCompetitorsRequest.dispatch();
 			
 			// Update distance counter.
 			if ( gameModel.gameState == GameState.RUNNING ) {
