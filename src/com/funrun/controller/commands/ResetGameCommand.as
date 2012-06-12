@@ -7,7 +7,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.View3DModel;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -17,9 +16,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var trackModel:TrackModel;
-
-		[Inject]
-		public var cameraModel:View3DModel;
 
 		[Inject]
 		public var playerModel:PlayerModel;
@@ -55,11 +51,7 @@ package com.funrun.controller.commands {
 			// Reset floor and obstacles.
 			addEmptyFloorRequest.dispatch();
 			addObstaclesRequest.dispatch();
-			// Reset camera.
-			// TO-DO: Move this into a command.
-			cameraModel.cameraX = 0;
-			cameraModel.cameraY = 100;
-			cameraModel.update();
+			
 		}
 	}
 }

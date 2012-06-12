@@ -2,6 +2,9 @@
 	
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
+	import com.funrun.controller.signals.StartObserverLoopRequest;
+	import com.funrun.controller.signals.StopGameLoopRequest;
+	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.TrackConstants;
@@ -13,17 +16,34 @@
 
 	public class KillPlayerCommand extends Command {
 
+		// Arguments.
+		
 		[Inject]
 		public var death:String;
 
+		// Models.
+		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var competitorsModel:CompetitorsModel;
+		
+		// Commands.
 		
 		[Inject]
 		public var showResultsPopupRequest:ShowResultsPopupRequest;
 		
 		[Inject]
 		public var sendMultiplayerDeathRequest:SendMultiplayerDeathRequest;
+		
+		[Inject]
+		public var stopGameLoopRequest:StopGameLoopRequest;
+		
+		[Inject]
+		public var startObserverLoopRequest:StartObserverLoopRequest;
+		
+		// Private vars.
 		
 		private var _timer:Timer;
 		
@@ -52,7 +72,13 @@
 			_timer.removeEventListener( TimerEvent.TIMER_COMPLETE, onTimer );
 			_timer.stop();
 			_timer = null;
-			showResultsPopupRequest.dispatch();
+			stopGameLoopRequest.dispatch();
+			// TO-DO: If there are any surviving competitors, observe them.
+			//if ( competitorsModel.numCompetitors > 0 ) {
+			//	startObserverLoopRequest.dispatch();
+			//} else {
+				showResultsPopupRequest.dispatch();
+			//}
 		}
 	}
 }

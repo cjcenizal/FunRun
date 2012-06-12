@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
-	import com.funrun.controller.signals.InitGameRequest;
+	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.UserModel;
 	import com.funrun.model.vo.CompetitorVO;
@@ -35,7 +35,7 @@ package com.funrun.controller.commands {
 		public var addPlaceableRequest:AddPlaceableRequest;
 		
 		[Inject]
-		public var initGameRequest:InitGameRequest;
+		public var startGameLoopRequest:StartGameLoopRequest;
 		
 		override public function execute():void {
 			// Store id so we can ignore updates we originated.
@@ -53,7 +53,7 @@ package com.funrun.controller.commands {
 					addCompetitorRequest.dispatch( competitor );
 				}
 			}
-			initGameRequest.dispatch();
+			startGameLoopRequest.dispatch();
 		}
 	}
 }

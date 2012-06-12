@@ -20,7 +20,6 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleMultiplayerPlayerLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
-	import com.funrun.controller.commands.InitGameCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KeyDownCommand;
@@ -47,7 +46,11 @@ package com.funrun {
 	import com.funrun.controller.commands.ShowResultsPopupCommand;
 	import com.funrun.controller.commands.StartCountdownCommand;
 	import com.funrun.controller.commands.StartGameCommand;
+	import com.funrun.controller.commands.StartGameLoopCommand;
+	import com.funrun.controller.commands.StartObserverLoopCommand;
 	import com.funrun.controller.commands.StartRunningCommand;
+	import com.funrun.controller.commands.StopGameLoopCommand;
+	import com.funrun.controller.commands.StopObserverLoopCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateObstaclesCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
@@ -80,7 +83,6 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
-	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -110,8 +112,12 @@ package com.funrun {
 	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
+	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartGameRequest;
+	import com.funrun.controller.signals.StartObserverLoopRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
+	import com.funrun.controller.signals.StopGameLoopRequest;
+	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
@@ -264,7 +270,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerDiedRequest,	HandleMultiplayerPlayerDiedCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerLeftRequest,	HandleMultiplayerPlayerLeftCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
-			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
@@ -289,7 +294,11 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
 			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
+			signalCommandMap.mapSignalClass( StartGameLoopRequest,					StartGameLoopCommand );
+			signalCommandMap.mapSignalClass( StartObserverLoopRequest,				StartObserverLoopCommand );
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
+			signalCommandMap.mapSignalClass( StopGameLoopRequest,					StopGameLoopCommand );
+			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateObstaclesRequest,				UpdateObstaclesCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );

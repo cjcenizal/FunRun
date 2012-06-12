@@ -1,9 +1,9 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
+	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.state.GameState;
@@ -38,7 +38,7 @@ package com.funrun.controller.commands {
 		public var connectMultiplayerRequest:JoinMatchmakingRequest;
 		
 		[Inject]
-		public var initGameRequest:InitGameRequest;
+		public var startGameLoopRequest:StartGameLoopRequest;
 		
 		[Inject]
 		public var startRunningRequest:StartRunningRequest;
@@ -54,7 +54,7 @@ package com.funrun.controller.commands {
 			if ( onlineState.isOnline ) {
 				connectMultiplayerRequest.dispatch();
 			} else {
-				initGameRequest.dispatch();
+				startGameLoopRequest.dispatch();
 				startRunningRequest.dispatch();
 			}
 		}
