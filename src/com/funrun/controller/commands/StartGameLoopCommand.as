@@ -16,7 +16,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var cameraModel:View3DModel;
+		public var view3DModel:View3DModel;
 		
 		[Inject]
 		public var trackModel:TrackModel;
@@ -38,9 +38,9 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Set camera.
-			cameraModel.cameraX = 0;
-			cameraModel.cameraY = 100;
-			cameraModel.update();
+			view3DModel.cameraX = 0;
+			view3DModel.cameraY = 100;
+			view3DModel.update();
 			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );

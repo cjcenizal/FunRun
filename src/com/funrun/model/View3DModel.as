@@ -55,6 +55,10 @@ package com.funrun.model {
 			return _view.project( position );
 		}
 		
+		public function lookAt( target:Vector3D ):void {
+			_camera.lookAt( target );
+		}
+		
 		public function get cameraX():Number {
 			return _cameraPosition.x;
 		}
