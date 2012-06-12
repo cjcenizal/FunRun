@@ -4,6 +4,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.controller.signals.StopGameLoopRequest;
+	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.NametagsModel;
@@ -42,6 +44,12 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
+		public var stopGameLoopRequst:StopGameLoopRequest;
+		
+		[Inject]
+		public var stopObserverLoopRequest:StopObserverLoopRequest;
+		
+		[Inject]
 		public var removeCompetitorRequest:RemoveCompetitorRequest;
 		
 		[Inject]
@@ -61,7 +69,8 @@ package com.funrun.controller.commands {
 
 		override public function execute():void {
 			// Stop responding to time.
-			commandMap.unmapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
+			stopGameLoopRequst.dispatch();
+			stopObserverLoopRequest.dispatch();
 			// Stop responding to input.
 			enablePlayerInputRequest.dispatch( false );
 			// Disconnect from server.

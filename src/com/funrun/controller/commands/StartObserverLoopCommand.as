@@ -25,8 +25,8 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Set camera.
-			view3DModel.cameraX = 400;
-			view3DModel.cameraY = 300;
+			view3DModel.cameraX = 1400;
+			view3DModel.cameraY = 900;
 			view3DModel.update();
 			
 			// Respond to time.
