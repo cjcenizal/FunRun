@@ -17,6 +17,7 @@ package com.funrun.model {
 
 		// State.
 		private var _position:Vector3D;
+		private var _prevPosition:Vector3D;
 		private var _velocity:Vector3D;
 		private var _isMovingLeft:Boolean = false;
 		private var _isMovingRight:Boolean = false;
@@ -30,6 +31,7 @@ package com.funrun.model {
 			super();
 			_velocity = new Vector3D();
 			_position = new Vector3D();
+			_prevPosition = new Vector3D();
 		}
 
 		public function startMovingLeft( speed:Number ):void {
@@ -74,10 +76,25 @@ package com.funrun.model {
 			return otherPlayerDistance - distance;
 		}
 		
-		public function updateMeshPosition( x:Number, y:Number, z:Number ):void {
-			_mesh.x = x;
-			_mesh.y = y;
-			_mesh.z = z;
+		public function getPositionClone():Vector3D {
+			return _position.clone();
+		}
+		
+		public function getPreviousPositionClone():Vector3D {
+			return _prevPosition.clone();
+		}
+		
+		public function getDistanceFromPreviousPosition():Number {
+			return _position.subtract( _prevPosition ).length;
+		}
+		
+		public function updateMeshPosition():void {
+			_mesh.x = _position.x;
+			_mesh.y = _position.y;
+			_mesh.z = 0;
+			_prevPosition.x = _position.x;
+			_prevPosition.y = _position.y;
+			_prevPosition.z = _position.z;
 		}
 		
 		public function get distance():Number {
@@ -159,5 +176,6 @@ package com.funrun.model {
 		public function set scaleY( val:Number ):void {
 			_mesh.scaleY = val;
 		}
+		
 	}
 }

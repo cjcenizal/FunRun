@@ -144,7 +144,7 @@ package com.funrun.controller.commands {
 			}
 			
 			// Set position to mesh.
-			playerModel.updateMeshPosition( playerModel.positionX, playerModel.positionY, 0 );
+			playerModel.updateMeshPosition();
 			
 			// Update camera.
 			view3DModel.cameraX = playerModel.positionX;

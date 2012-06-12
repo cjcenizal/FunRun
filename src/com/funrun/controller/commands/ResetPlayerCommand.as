@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 			var width:Number = TrackConstants.TRACK_WIDTH * .8;
 			playerModel.positionX = Math.random() * width - width * .5;
 			playerModel.positionY = 100;
-			playerModel.updateMeshPosition( playerModel.positionX, playerModel.positionY, 0 );
+			playerModel.updateMeshPosition();
 		}
 	}
 }
