@@ -91,7 +91,7 @@ package com.funrun.model {
 		public function updateMeshPosition():void {
 			_mesh.x = _position.x;
 			_mesh.y = _position.y;
-			_mesh.z = 0;
+			_mesh.z = _position.z;
 			_prevPosition.x = _position.x;
 			_prevPosition.y = _position.y;
 			_prevPosition.z = _position.z;
@@ -129,8 +129,8 @@ package com.funrun.model {
 			return _velocity.z;
 		}
 		
-		public function set velocityX( amount:Number ):void {
-			_velocity.x = 0;
+		public function set velocityX( value:Number ):void {
+			_velocity.x = value;
 		}
 		
 		public function set velocityY( value:Number ):void {
@@ -173,8 +173,8 @@ package com.funrun.model {
 			return _mesh.scaleY;
 		}
 		
-		public function set scaleY( val:Number ):void {
-			_mesh.scaleY = val;
+		public function set scaleY( value:Number ):void {
+			_mesh.scaleY = value;
 		}
 		
 	}

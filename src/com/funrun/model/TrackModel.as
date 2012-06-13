@@ -19,13 +19,13 @@ package com.funrun.model {
 			var len:int = _obstacles.length;
 			_obstacles.sortOn( "z", [ Array.NUMERIC ] );
 		}
-		
+		/*
 		public function move( amount:Number ):void {
 			var len:int = _obstacles.length;
 			for ( var i:int = 0; i < len; i++ ) {
 				( _obstacles[ i ] as ObstacleData ).z += amount;
 			}
-		}
+		}*/
 		
 		public function removeObstacleAt( index:int ):void {
 			_obstacles.splice( index, 1 );

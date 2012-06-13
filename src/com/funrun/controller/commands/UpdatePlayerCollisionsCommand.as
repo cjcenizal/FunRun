@@ -55,6 +55,7 @@ package com.funrun.controller.commands {
 			if ( numSteps == 1 ) {
 				testPos.x = playerModel.positionX;
 				testPos.y = playerModel.positionY;
+				testPos.z = playerModel.positionZ;
 			}
 			
 			for ( var n:int = 0; n < numSteps; n++ ) {
@@ -64,10 +65,10 @@ package com.funrun.controller.commands {
 					trackModel,
 					testPos.x + playerModel.bounds.min.x,
 					testPos.y + playerModel.bounds.min.y,
-					playerModel.bounds.min.z,
+					testPos.z + playerModel.bounds.min.z,
 					testPos.x + playerModel.bounds.max.x,
 					testPos.y + playerModel.bounds.max.y,
-					playerModel.bounds.max.z );
+					testPos.z + playerModel.bounds.max.z );
 				
 				// TO-DO: We can optimize our collision detection by only testing against sides
 				// that oppose the direction in which we're moving.
@@ -115,8 +116,10 @@ package com.funrun.controller.commands {
 						// Always hit the front sides of things.
 						if ( face.type == FaceTypes.FRONT ) {
 							// Resolve this collision by moving the world.
-							trackModel.move( face.minZ );
-							playerModel.positionZ += -face.minZ;
+							
+							// FIX
+					//		trackModel.move( face.minZ );
+					//		playerModel.positionZ += -face.minZ;
 							//distanceModel.add( -face.minZ );
 							if ( face.event == CollisionTypes.SMACK ) {
 								killPlayerRequest.dispatch( CollisionTypes.SMACK );

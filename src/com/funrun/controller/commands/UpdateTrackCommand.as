@@ -32,7 +32,8 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			if ( Math.abs( payload.speed ) > 0 ) {
 				// Move obstacles.
-				trackModel.move( payload.speed );
+				// FIX
+				//trackModel.move( payload.speed );
 				
 				if ( trackModel.numObstacles > 0 ) {
 					// Remove obstacles from end of track.
