@@ -30,18 +30,14 @@ package com.funrun.controller.commands {
 			// Fill up track from the front to the back.
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_DEPTH + TrackConstants.BLOCK_SIZE ) {
 				index = Math.floor( ( positionZ + trackModel.depthOfLastObstacle ) / TrackConstants.SEGMENT_DEPTH ) + 1;
-				//trace("add forward " + index);
 				addObstacleRequest.dispatch( new AddObstaclePayload( index, positionZ ) );
 			}
 			
-			//index = Math.floor( positionZ + trackModel.depthOfFirstObstacle ) / TrackConstants.SEGMENT_DEPTH;
-			//trace("add backward " + index);
 			// Fill up track from the back to the front.
-			/*while ( trackModel.depthOfFirstObstacle > TrackConstants.REMOVE_SEGMENT_DEPTH + TrackConstants.SEGMENT_DEPTH ) {
-				var index:int = Math.floor( positionZ + trackModel.depthOfFirstObstacle ) / TrackConstants.SEGMENT_DEPTH;
-				trace("add backward " + index);
-				addObstacleRequest.dispatch( index );
-			}*/
+			while ( positionZ > 0 && trackModel.depthOfFirstObstacle > TrackConstants.REMOVE_SEGMENT_DEPTH + TrackConstants.SEGMENT_DEPTH ) {
+				index = Math.floor( positionZ + trackModel.depthOfFirstObstacle ) / TrackConstants.SEGMENT_DEPTH - 1;
+				addObstacleRequest.dispatch( new AddObstaclePayload( index, positionZ ) );
+			}
 		}
 	}
 }

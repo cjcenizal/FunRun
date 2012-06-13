@@ -16,6 +16,8 @@ package com.funrun.model {
 		
 		public function addObstacle( obstacle:ObstacleData ):void {
 			_obstacles.push( obstacle );
+			var len:int = _obstacles.length;
+			_obstacles.sortOn( "z", [ Array.NUMERIC ] );
 		}
 		
 		public function move( amount:Number ):void {
