@@ -1,6 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.RenderSceneRequest;
+	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.model.ObservationModel;
 	import com.funrun.model.View3DModel;
 	
@@ -23,12 +24,24 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var renderSceneRequest:RenderSceneRequest;
 		
+		[Inject]
+		public var updateTrackRequest:UpdateTrackRequest;
+		
 		override public function execute():void {
 			// Position camera.
 			view3DModel.lookAt( new Vector3D() );
 			
 			// Update track.
-			trace(observationModel.direction);
+			var speed:int = 0;
+			if ( observationModel.direction < 0 ) {
+				speed = 50;
+			} else if ( observationModel.direction > 0 ) {
+				speed = -50;
+			}
+			
+			
+			updateTrackRequest.dispatch( speed );
+			
 			
 			// Update camera.
 			view3DModel.update();

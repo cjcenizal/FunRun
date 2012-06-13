@@ -49,7 +49,7 @@ package com.funrun {
 	import com.funrun.controller.commands.StopGameLoopCommand;
 	import com.funrun.controller.commands.StopObserverLoopCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
-	import com.funrun.controller.commands.UpdateObstaclesCommand;
+	import com.funrun.controller.commands.UpdateTrackCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.UpdatePlayerCollisionsCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
@@ -117,7 +117,7 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
-	import com.funrun.controller.signals.UpdateObstaclesRequest;
+	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
 	import com.funrun.controller.signals.WhitelistFailed;
@@ -296,7 +296,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StopGameLoopRequest,					StopGameLoopCommand );
 			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
-			signalCommandMap.mapSignalClass( UpdateObstaclesRequest,				UpdateObstaclesCommand );
+			signalCommandMap.mapSignalClass( UpdateTrackRequest,				UpdateTrackCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
 			signalCommandMap.mapSignalClass( UpdatePlayerCollisionsRequest,			UpdatePlayerCollisionsCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
