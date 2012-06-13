@@ -30,17 +30,10 @@ package com.funrun.controller.commands {
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		override public function execute():void {
-			// Get an obstacle.
+			// Get an obstacle, set its position, add it to the model and view.
 			var obstacle:ObstacleData = obstaclesModel.getAt( payload.index );
-			// Add it to the model.
-			var numObstacles:int = trackModel.numObstacles;
-			if ( numObstacles > 0 ) {
-				obstacle.z = trackModel.depthOfLastObstacle + TrackConstants.SEGMENT_DEPTH;
-			} else {
-				obstacle.z = 0;
-			}
+			obstacle.z = payload.index * TrackConstants.SEGMENT_DEPTH - payload.relativePositionZ;
 			trackModel.addObstacle( obstacle );
-			// Add to view.
 			addObjectToSceneRequest.dispatch( obstacle.mesh );
 		}
 	}
