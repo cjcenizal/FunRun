@@ -34,14 +34,13 @@ package com.funrun.controller.commands {
 			// Update track.
 			var speed:int = 0;
 			if ( observationModel.direction < 0 ) {
-				speed = 50;
-			} else if ( observationModel.direction > 0 ) {
 				speed = -50;
+			} else if ( observationModel.direction > 0 ) {
+				speed = 50;
 			}
 			
-			
-			updateTrackRequest.dispatch( speed );
-			
+			observationModel.position += speed;
+			updateTrackRequest.dispatch( -speed );
 			
 			// Update camera.
 			view3DModel.update();

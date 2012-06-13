@@ -6,6 +6,7 @@ package com.funrun.model
 	{
 		
 		public var direction:int = 0;
+		public var position:Number = 0;
 		
 		public function ObservationModel()
 		{
