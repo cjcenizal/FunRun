@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
+	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.ObservationModel;
 	import com.funrun.model.View3DModel;
 	
@@ -40,7 +41,7 @@ package com.funrun.controller.commands {
 			}
 			
 			observationModel.position += speed;
-			updateTrackRequest.dispatch( -speed );
+			updateTrackRequest.dispatch( new UpdateTrackPayload( -speed, observationModel.position ) );
 			
 			// Update camera.
 			view3DModel.update();

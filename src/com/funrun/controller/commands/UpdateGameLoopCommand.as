@@ -9,6 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
+	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
@@ -91,7 +92,7 @@ package com.funrun.controller.commands {
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
 				if ( gameModel.gameState == GameState.RUNNING ) {
 					// Update obstacles.
-					updateTrackRequest.dispatch( -playerModel.velocityZ );
+					updateTrackRequest.dispatch( new UpdateTrackPayload( -playerModel.velocityZ, playerModel.distance ) );
 				}
 	
 				if ( playerModel.isDead ) {

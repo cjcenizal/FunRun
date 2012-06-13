@@ -4,9 +4,9 @@ package com.funrun.controller.signals
 	
 	public class AddObstaclesRequest extends Signal
 	{
-		public function AddObstaclesRequest(...valueClasses)
+		public function AddObstaclesRequest()
 		{
-			super(valueClasses);
+			super( Number );
 		}
 	}
 }

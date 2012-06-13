@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.collision.ObstacleData;
 	import com.funrun.model.constants.TrackConstants;
@@ -11,8 +12,9 @@ package com.funrun.controller.commands {
 	public class UpdateTrackCommand extends Command {
 		
 		// Arguments.
+		
 		[Inject]
-		public var speed:Number;
+		public var payload:UpdateTrackPayload;
 		
 		// Models.
 		
@@ -28,9 +30,9 @@ package com.funrun.controller.commands {
 		public var addObstacleRequests:AddObstaclesRequest;
 		
 		override public function execute():void {
-			if ( Math.abs( speed ) > 0 ) {
+			if ( Math.abs( payload.speed ) > 0 ) {
 				// Move obstacles.
-				trackModel.move( speed );
+				trackModel.move( payload.speed );
 				
 				if ( trackModel.numObstacles > 0 ) {
 					// Remove obstacles from end of track.
@@ -42,7 +44,7 @@ package com.funrun.controller.commands {
 					}
 				}
 			}
-			addObstacleRequests.dispatch();
+			addObstacleRequests.dispatch( payload.positionZ );
 		}
 	}
 }

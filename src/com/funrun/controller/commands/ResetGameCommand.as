@@ -50,7 +50,7 @@ package com.funrun.controller.commands {
 			resetPlayerRequest.dispatch();
 			// Reset floor and obstacles.
 			addEmptyFloorRequest.dispatch();
-			addObstaclesRequest.dispatch();
+			addObstaclesRequest.dispatch( playerModel.positionZ );
 			
 		}
 	}

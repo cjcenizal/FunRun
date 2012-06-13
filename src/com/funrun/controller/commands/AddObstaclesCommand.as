@@ -1,8 +1,6 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddObstacleRequest;
-	import com.funrun.model.ObservationModel;
-	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.TrackConstants;
 	
@@ -10,15 +8,15 @@ package com.funrun.controller.commands {
 
 	public class AddObstaclesCommand extends Command {
 		
+		// Arguments.
+		
+		[Inject]
+		public var positionZ:Number;
+		
 		// Models.
 		
 		[Inject]
 		public var trackModel:TrackModel;
-		
-		[Inject]
-		public var playerModel:PlayerModel;
-		[Inject]
-		public var obs:ObservationModel;
 		
 		// Commands.
 		
@@ -28,7 +26,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// Fill up track from the front to the back.
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_DEPTH + TrackConstants.BLOCK_SIZE ) {
-				var index:int = Math.floor( ( obs.position + trackModel.depthOfLastObstacle + TrackConstants.SEGMENT_DEPTH ) / TrackConstants.SEGMENT_DEPTH );
+				var index:int = Math.floor( ( positionZ + trackModel.depthOfLastObstacle + TrackConstants.SEGMENT_DEPTH ) / TrackConstants.SEGMENT_DEPTH );
 				addObstacleRequest.dispatch( index );
 			}
 			
