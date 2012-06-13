@@ -9,9 +9,6 @@ package com.funrun {
 	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
 	import com.funrun.controller.commands.AddPlayerCommand;
-	import com.funrun.controller.commands.BuildGameCommand;
-	import com.funrun.controller.commands.BuildInterpolationCommand;
-	import com.funrun.controller.commands.BuildTimeCommand;
 	import com.funrun.controller.commands.CheckWhitelistCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
@@ -20,6 +17,8 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleMultiplayerPlayerLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
+	import com.funrun.controller.commands.InitGameCommand;
+	import com.funrun.controller.commands.InitModelsCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KeyDownCommand;
@@ -68,9 +67,6 @@ package com.funrun {
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
-	import com.funrun.controller.signals.BuildGameRequest;
-	import com.funrun.controller.signals.BuildInterpolationRequest;
-	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.CheckWhitelistRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.DisplayMessageRequest;
@@ -83,6 +79,8 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
+	import com.funrun.controller.signals.InitGameRequest;
+	import com.funrun.controller.signals.InitModelsRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -135,6 +133,7 @@ package com.funrun {
 	import com.funrun.model.GeosMockModel;
 	import com.funrun.model.IGeosModel;
 	import com.funrun.model.InterpolationModel;
+	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
@@ -218,6 +217,7 @@ package com.funrun {
 			injector.mapSingleton( InterpolationModel );
 			injector.mapSingleton( NametagsModel );
 			injector.mapSingleton( PlacesModel );
+			injector.mapSingleton( KeyboardModel );
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );
@@ -260,9 +260,8 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
-			signalCommandMap.mapSignalClass( BuildGameRequest,						BuildGameCommand );
-			signalCommandMap.mapSignalClass( BuildInterpolationRequest,				BuildInterpolationCommand );
-			signalCommandMap.mapSignalClass( BuildTimeRequest,						BuildTimeCommand );
+			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
+			signalCommandMap.mapSignalClass( InitModelsRequest,						InitModelsCommand );
 			signalCommandMap.mapSignalClass( CheckWhitelistRequest,					CheckWhitelistCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );

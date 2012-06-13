@@ -1,9 +1,8 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.BuildGameRequest;
-	import com.funrun.controller.signals.BuildInterpolationRequest;
-	import com.funrun.controller.signals.BuildTimeRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.InitGameRequest;
+	import com.funrun.controller.signals.InitModelsRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
@@ -38,22 +37,21 @@ package com.funrun.controller.commands {
 		public var toggleMainModuleRequest:EnableMainMenuRequest;
 		
 		[Inject]
-		public var buildInterpolationRequest:BuildInterpolationRequest;
+		public var buildInterpolationRequest:InitModelsRequest;
 		
 		[Inject]
-		public var buildTimeRequest:BuildTimeRequest;
+		public var initModelsRequest:InitModelsRequest;
 		
 		[Inject]
-		public var buildGameRequest:BuildGameRequest;
+		public var initGameRequest:InitGameRequest;
 		
 		override public function execute():void {
 			// Update view.
 			showScreenRequest.dispatch( ScreenState.MAIN_MENU );
 			toggleMainModuleRequest.dispatch( false );
 			// Build everyhing.
-			buildInterpolationRequest.dispatch();
-			buildTimeRequest.dispatch();
-			buildGameRequest.dispatch();
+			initModelsRequest.dispatch();
+			initGameRequest.dispatch();
 			// Configure the app and login.
 			loadConfigurationRequest.dispatch();
 			if ( onlineState.isOnline ) {

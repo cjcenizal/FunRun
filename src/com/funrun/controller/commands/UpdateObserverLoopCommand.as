@@ -25,6 +25,7 @@ package com.funrun.controller.commands {
 			
 			// Update track.
 			
+			
 			// Update camera.
 			view3DModel.update();
 			

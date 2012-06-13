@@ -28,7 +28,7 @@ package com.funrun.controller.commands
 	/**
 	 * BuildGameCommand assigns materials and lights to the track.
 	 */
-	public class BuildGameCommand extends Command {
+	public class InitGameCommand extends Command {
 		
 		// Models.
 		
