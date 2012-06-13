@@ -1,8 +1,5 @@
 package com.funrun.model {
 	
-	import away3d.entities.Mesh;
-	import com.funrun.model.constants.TrackConstants;
-	
 	import com.funrun.model.collision.ObstacleData;
 	import com.gskinner.utils.Rndm;
 	
@@ -36,9 +33,7 @@ package com.funrun.model {
 			while ( _history.length < index + 1 ) {
 				_history.push( Rndm.float( 1 ) );
 			}
-			var obstacleData:ObstacleData = ( _obstacles[ Math.floor( _history[ index ] * _obstacles.length ) ] as ObstacleData ).clone();
-			obstacleData.z = index * TrackConstants.SEGMENT_DEPTH;
-			return obstacleData;
+			return ( _obstacles[ Math.floor( _history[ index ] * _obstacles.length ) ] as ObstacleData ).clone();
 		}
 	}
 }

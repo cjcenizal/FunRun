@@ -43,5 +43,12 @@ package com.funrun.model {
 			}
 			return TrackConstants.TRACK_DEPTH;
 		}
+		
+		public function get depthOfFirstObstacle():Number {
+			if ( _obstacles.length > 0 ) {
+				return ( _obstacles[ 0 ] as ObstacleData ).z;
+			}
+			return 0;
+		}
 	}
 }
