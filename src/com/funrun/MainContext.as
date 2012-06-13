@@ -134,6 +134,7 @@ package com.funrun {
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
+	import com.funrun.model.ObservationModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
@@ -210,6 +211,7 @@ package com.funrun {
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( UserModel );
 			injector.mapSingleton( CompetitorsModel );
+			injector.mapSingleton( ObservationModel );
 			injector.mapSingleton( InterpolationModel );
 			injector.mapSingleton( NametagsModel );
 			injector.mapSingleton( PlacesModel );

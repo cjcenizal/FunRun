@@ -1,6 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.RenderSceneRequest;
+	import com.funrun.model.ObservationModel;
 	import com.funrun.model.View3DModel;
 	
 	import flash.geom.Vector3D;
@@ -14,6 +15,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var view3DModel:View3DModel;
 		
+		[Inject]
+		public var observationModel:ObservationModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -24,7 +28,7 @@ package com.funrun.controller.commands {
 			view3DModel.lookAt( new Vector3D() );
 			
 			// Update track.
-			
+			trace(observationModel.direction);
 			
 			// Update camera.
 			view3DModel.update();
