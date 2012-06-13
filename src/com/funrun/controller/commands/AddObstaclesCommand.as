@@ -1,6 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.payload.AddObstaclePayload;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.TrackConstants;
 	
@@ -30,7 +31,7 @@ package com.funrun.controller.commands {
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_DEPTH + TrackConstants.BLOCK_SIZE ) {
 				index = Math.floor( ( positionZ + trackModel.depthOfLastObstacle ) / TrackConstants.SEGMENT_DEPTH ) + 1;
 				//trace("add forward " + index);
-				addObstacleRequest.dispatch( index );
+				addObstacleRequest.dispatch( new AddObstaclePayload( index, positionZ ) );
 			}
 			
 			//index = Math.floor( positionZ + trackModel.depthOfFirstObstacle ) / TrackConstants.SEGMENT_DEPTH;
