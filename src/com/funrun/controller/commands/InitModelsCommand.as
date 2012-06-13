@@ -23,6 +23,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// Keyboard.
 			keyboardModel.stage = contextView.stage;
+			keyboardModel.init();
 			
 			// Interpolation.
 			interpolationModel.setIncrement( TimeConstants.INTERPOLATION_INCREMENT );

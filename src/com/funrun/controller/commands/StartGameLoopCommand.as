@@ -1,6 +1,5 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
@@ -8,6 +7,8 @@ package com.funrun.controller.commands {
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
+	
+	import flash.events.KeyboardEvent;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -27,9 +28,6 @@ package com.funrun.controller.commands {
 		public var startGameLoopRequest:StartGameLoopRequest;
 		
 		[Inject]
-		public var enablePlayerInputRequest:EnablePlayerInputRequest;
-		
-		[Inject]
 		public var removeFindingGamePopupRequest:RemoveFindingGamePopupRequest;
 		
 		[Inject]
@@ -45,8 +43,9 @@ package com.funrun.controller.commands {
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			
-			// Start input.
-			enablePlayerInputRequest.dispatch( true );
+			// Respond to keyboard input.
+			commandMap.mapEvent( KeyboardEvent.KEY_UP, UpdateGameKeyUpCommand, KeyboardEvent );
+			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, UpdateGameKeyDownCommand, KeyboardEvent );
 			
 			// Show game screen.
 			removeFindingGamePopupRequest.dispatch();

@@ -21,8 +21,6 @@ package com.funrun {
 	import com.funrun.controller.commands.InitModelsCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
-	import com.funrun.controller.commands.KeyDownCommand;
-	import com.funrun.controller.commands.KeyUpCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LoadBlocksCommand;
@@ -72,7 +70,6 @@ package com.funrun {
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
-	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
 	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
@@ -180,7 +177,6 @@ package com.funrun {
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
 	
 	import org.robotlegs.mvcs.SignalContext;
 
@@ -241,7 +237,6 @@ package com.funrun {
 			injector.mapSingleton( DisplayMessageRequest );
 			injector.mapSingleton( DisplayPlaceRequest );
 			injector.mapSingleton( EnableMainMenuRequest );
-			injector.mapSingleton( EnablePlayerInputRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
 			injector.mapSingleton( RemoveResultsPopupRequest );
@@ -303,10 +298,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
 			signalCommandMap.mapSignalClass( UpdatePlayerCollisionsRequest,			UpdatePlayerCollisionsCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
-			
-			// Map events to commands.
-			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, KeyDownCommand, KeyboardEvent );
-			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
 
 			// Map views to mediators.
 			mediatorMap.mapView( MainView, 					MainMediator );

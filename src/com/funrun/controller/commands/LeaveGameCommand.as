@@ -1,6 +1,5 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.EnablePlayerInputRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
@@ -12,7 +11,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.UserModel;
-	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
@@ -57,9 +55,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var removeResultsPopupRequest:RemoveResultsPopupRequest;
-	
-		[Inject]
-		public var enablePlayerInputRequest:EnablePlayerInputRequest;
 		
 		[Inject]
 		public var multiplayerService:MultiplayerService;
@@ -71,8 +66,6 @@ package com.funrun.controller.commands {
 			// Stop responding to time.
 			stopGameLoopRequst.dispatch();
 			stopObserverLoopRequest.dispatch();
-			// Stop responding to input.
-			enablePlayerInputRequest.dispatch( false );
 			// Disconnect from server.
 			multiplayerService.disconnectAndReset();
 			matchmakingService.disconnectAndReset();

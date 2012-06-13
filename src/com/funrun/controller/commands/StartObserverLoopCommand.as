@@ -6,6 +6,8 @@ package com.funrun.controller.commands {
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
 	
+	import flash.events.KeyboardEvent;
+	
 	import org.robotlegs.mvcs.Command;
 	
 	public class StartObserverLoopCommand extends Command {
@@ -31,6 +33,10 @@ package com.funrun.controller.commands {
 			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateObserverLoopCommand, TimeEvent );
+			
+			// Respond to keyboard input.
+			commandMap.mapEvent( KeyboardEvent.KEY_UP, UpdateObserverKeyUpCommand, KeyboardEvent );
+			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, UpdateObserverKeyDownCommand, KeyboardEvent );
 			
 			// TEMP: Show game screen.
 			removeFindingGamePopupRequest.dispatch();
