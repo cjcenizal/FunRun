@@ -101,8 +101,6 @@ package com.funrun.controller.commands {
 					playerModel.velocityZ *= .7;
 				} else {
 					if ( gameModel.gameState == GameState.RUNNING ) {
-						// Store distance.
-						playerModel.positionZ += playerModel.velocityZ;
 						// Update speed when you're alive.
 						if ( Math.abs( playerModel.velocityX ) > 0 ) {
 							if ( playerModel.velocityZ > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
@@ -120,6 +118,9 @@ package com.funrun.controller.commands {
 					// Update lateral position.
 					playerModel.positionX += playerModel.velocityX;
 				}
+				
+				// Run forward.
+				playerModel.positionZ += playerModel.velocityZ;
 	
 				// Update gravity.
 				playerModel.velocityY += TrackConstants.PLAYER_GRAVITY;
@@ -152,8 +153,11 @@ package com.funrun.controller.commands {
 			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
 			// We'll try easing to follow the player instead of being locked.
 			view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
-			view3DModel.cameraZ = -1000;
+			view3DModel.cameraZ = playerModel.positionZ - 1000;
 			view3DModel.update();
+			
+			// TO-DO:
+			// Update lights.
 			
 			// Update competitors' positions.
 			updateCompetitorsRequest.dispatch();

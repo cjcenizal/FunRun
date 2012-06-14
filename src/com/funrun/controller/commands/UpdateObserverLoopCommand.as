@@ -44,6 +44,7 @@ package com.funrun.controller.commands {
 			updateTrackRequest.dispatch( new UpdateTrackPayload( -speed, observationModel.position ) );
 			
 			// Update camera.
+			view3DModel.cameraZ = observationModel.position;
 			view3DModel.update();
 			
 			// Render.

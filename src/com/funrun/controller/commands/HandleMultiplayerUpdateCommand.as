@@ -43,7 +43,7 @@ package com.funrun.controller.commands {
 						competitor.updatePosition(
 							message.getNumber( i + 1 ),
 							message.getNumber( i + 2 ),
-							playerModel.getRelativeDistanceTo( message.getNumber( i + 3 ) )
+							message.getNumber( i + 3 )
 							);
 						competitor.isDucking = message.getBoolean( i + 4 );
 						if ( competitor.isDucking ) {

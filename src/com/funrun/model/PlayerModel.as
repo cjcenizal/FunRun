@@ -72,10 +72,6 @@ package com.funrun.model {
 			_isMovingRight = _isMovingLeft = false;
 		}
 		
-		public function getRelativeDistanceTo( otherPlayerDistance:Number ):Number {
-			return otherPlayerDistance - distance;
-		}
-		
 		public function getPositionClone():Vector3D {
 			return _position.clone();
 		}

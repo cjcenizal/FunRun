@@ -48,7 +48,7 @@ package com.funrun.controller.commands {
 						message.getInt( i ),
 						message.getString( i + 1 )
 					);
-					competitor.updatePosition( message.getNumber( i + 2 ), message.getNumber( i + 3 ), playerModel.getRelativeDistanceTo( message.getNumber( i + 4 ) ) );
+					competitor.updatePosition( message.getNumber( i + 2 ), message.getNumber( i + 3 ), message.getNumber( i + 4 ) );
 					competitor.isDucking = message.getBoolean( i + 5 );
 					addCompetitorRequest.dispatch( competitor );
 				}

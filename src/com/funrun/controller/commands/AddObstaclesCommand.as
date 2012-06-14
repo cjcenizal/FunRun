@@ -26,7 +26,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			var index:int;
-			
+			// FIX
 			// Fill up track from the front to the back.
 			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_DEPTH + TrackConstants.BLOCK_SIZE ) {
 				index = Math.floor( ( positionZ + trackModel.depthOfLastObstacle ) / TrackConstants.SEGMENT_DEPTH ) + 1;

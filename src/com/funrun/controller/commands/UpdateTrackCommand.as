@@ -30,12 +30,10 @@ package com.funrun.controller.commands {
 		public var addObstacleRequests:AddObstaclesRequest;
 		
 		override public function execute():void {
+			/*
 			if ( Math.abs( payload.speed ) > 0 ) {
-				// Move obstacles.
-				// FIX
-				//trackModel.move( payload.speed );
-				
 				if ( trackModel.numObstacles > 0 ) {
+					for ( var i:int = 0; i < tracklModel.n
 					// Remove obstacles from end of track.
 					var obstacle:ObstacleData = trackModel.getObstacleAt( 0 );
 					while ( obstacle.z < TrackConstants.REMOVE_SEGMENT_DEPTH ) {
@@ -43,6 +41,15 @@ package com.funrun.controller.commands {
 						trackModel.removeObstacleAt( 0 );
 						obstacle = trackModel.getObstacleAt( 0 );
 					}
+				}
+			}*/
+			// FIX
+			for ( var i:int = 0; i < trackModel.numObstacles; i++ ) {
+				var obstacle:ObstacleData = trackModel.getObstacleAt( i );
+				if ( obstacle.z < payload.positionZ - 5000 || obstacle.z > payload.positionZ + TrackConstants.TRACK_DEPTH ) {
+					removeObjectFromSceneRequest.dispatch( obstacle.mesh );
+					trackModel.removeObstacleAt( i );
+					i--;
 				}
 			}
 			addObstacleRequests.dispatch( payload.positionZ );

@@ -115,12 +115,8 @@ package com.funrun.controller.commands {
 						}
 						// Always hit the front sides of things.
 						if ( face.type == FaceTypes.FRONT ) {
-							// Resolve this collision by moving the world.
-							
-							// FIX
-					//		trackModel.move( face.minZ );
-					//		playerModel.positionZ += -face.minZ;
-							//distanceModel.add( -face.minZ );
+							// Resolve this collision.
+							playerModel.positionZ = face.minZ - TrackConstants.PLAYER_HALF_SIZE;
 							if ( face.event == CollisionTypes.SMACK ) {
 								killPlayerRequest.dispatch( CollisionTypes.SMACK );
 							}
