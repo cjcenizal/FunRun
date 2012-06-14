@@ -92,7 +92,7 @@ package com.funrun.controller.commands {
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
 				if ( gameModel.gameState == GameState.RUNNING ) {
 					// Update obstacles.
-					updateTrackRequest.dispatch( new UpdateTrackPayload( -playerModel.velocityZ, playerModel.distance ) );
+					updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
 				}
 	
 				if ( playerModel.isDead ) {
@@ -156,8 +156,7 @@ package com.funrun.controller.commands {
 			view3DModel.cameraZ += ( ( playerModel.positionZ + TrackConstants.CAM_Z ) - view3DModel.cameraZ ) * .65;
 			view3DModel.update();
 			
-			// TO-DO:
-			// Update lights.
+			// TO-DO: Update lights.
 			
 			// Update competitors' positions.
 			updateCompetitorsRequest.dispatch();

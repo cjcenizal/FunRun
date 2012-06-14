@@ -4,6 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3DModel;
+	import com.funrun.model.constants.ObserverConstants;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
 	
@@ -31,12 +32,15 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Set up observer.
-			observerModel.position = -1000;
+			observerModel.reset();
+			observerModel.x = ObserverConstants.CAM_Z;
+			observerModel.y = ObserverConstants.CAM_Z;
+			observerModel.z = ObserverConstants.CAM_Z;
 			
 			// Set camera.
-			view3DModel.cameraX = 1400;
-			view3DModel.cameraY = 1000;
-			view3DModel.cameraZ = observerModel.position;
+			view3DModel.cameraX = observerModel.x;
+			view3DModel.cameraY = observerModel.y;
+			view3DModel.cameraZ = observerModel.z;
 			view3DModel.update();
 			
 			// Respond to time.

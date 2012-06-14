@@ -22,10 +22,8 @@ package com.funrun.controller.commands {
 					
 					break;
 				case Keyboard.LEFT:
-					observationModel.direction = 0;
 					break;
 				case Keyboard.RIGHT:
-					observationModel.direction = 0;
 					break;
 				case Keyboard.DOWN:
 					
