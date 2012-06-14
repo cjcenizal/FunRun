@@ -3,7 +3,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.payload.UpdateTrackPayload;
-	import com.funrun.model.ObservationModel;
+	import com.funrun.model.ObserverModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.View3DModel;
 	
 	import flash.geom.Vector3D;
@@ -18,7 +19,10 @@ package com.funrun.controller.commands {
 		public var view3DModel:View3DModel;
 		
 		[Inject]
-		public var observationModel:ObservationModel;
+		public var observerModel:ObserverModel;
+		
+		[Inject]
+		public var playerModel:PlayerModel;
 		
 		// Commands.
 		
@@ -29,22 +33,22 @@ package com.funrun.controller.commands {
 		public var updateTrackRequest:UpdateTrackRequest;
 		
 		override public function execute():void {
-			// Position camera.
-			view3DModel.lookAt( new Vector3D() );
-			
 			// Update track.
 			var speed:int = 0;
-			if ( observationModel.direction < 0 ) {
+			if ( observerModel.direction < 0 ) {
 				speed = -50;
-			} else if ( observationModel.direction > 0 ) {
+			} else if ( observerModel.direction > 0 ) {
 				speed = 50;
 			}
 			
-			observationModel.position += speed;
-			updateTrackRequest.dispatch( new UpdateTrackPayload( -speed, observationModel.position ) );
+			observerModel.position += speed;
+			playerModel.positionZ += speed;
+			playerModel.updateMeshPosition();
+			updateTrackRequest.dispatch( new UpdateTrackPayload( -speed, observerModel.position ) );
 			
 			// Update camera.
-			view3DModel.cameraZ = observationModel.position;
+			view3DModel.cameraZ = observerModel.position;
+			view3DModel.lookAt( playerModel.getMeshPosition() );
 			view3DModel.update();
 			
 			// Render.

@@ -29,7 +29,10 @@ package com.funrun.model.constants
 		
 		// Segment constants.
 		public static const SEGMENT_DEPTH:Number = 26 * BLOCK_SIZE;
-		public static const REMOVE_SEGMENT_DEPTH:Number = -( SEGMENT_DEPTH + 400 );
+		public static const SEGMENT_CULL_DEPTH_NEAR:Number = -2000;
+		public static const SEGMENT_CULL_DEPTH_FAR:Number = TRACK_DEPTH + SEGMENT_DEPTH;
+		public static const SEGMENT_ADD_DEPTH_NEAR:Number = SEGMENT_DEPTH + SEGMENT_CULL_DEPTH_NEAR;
+		public static const SEGMENT_ADD_DEPTH_FAR:Number = TRACK_DEPTH;
 		
 		// Collision constants.
 		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;

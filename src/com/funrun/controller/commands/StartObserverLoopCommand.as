@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
@@ -17,6 +18,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var view3DModel:View3DModel;
 		
+		[Inject]
+		public var observerModel:ObserverModel;
+		
 		// Temp.
 		
 		[Inject]
@@ -26,10 +30,13 @@ package com.funrun.controller.commands {
 		public var showScreenRequest:ShowScreenRequest;
 		
 		override public function execute():void {
+			// Set up observer.
+			observerModel.position = -1000;
+			
 			// Set camera.
 			view3DModel.cameraX = 1400;
 			view3DModel.cameraY = 1000;
-			view3DModel.cameraZ = -1000;
+			view3DModel.cameraZ = observerModel.position;
 			view3DModel.update();
 			
 			// Respond to time.

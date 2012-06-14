@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.model.ObservationModel;
+	import com.funrun.model.ObserverModel;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
@@ -13,7 +13,7 @@ package com.funrun.controller.commands {
 		public var event:KeyboardEvent;
 		
 		[Inject]
-		public var observationModel:ObservationModel;
+		public var observationModel:ObserverModel;
 		
 		override public function execute():void {
 			switch ( event.keyCode ) {

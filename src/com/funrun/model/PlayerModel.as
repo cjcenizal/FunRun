@@ -93,6 +93,10 @@ package com.funrun.model {
 			_prevPosition.z = _position.z;
 		}
 		
+		public function getMeshPosition():Vector3D {
+			return _mesh.position;
+		}
+		
 		public function get distance():Number {
 			return _position.z;
 		}

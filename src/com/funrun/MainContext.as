@@ -49,9 +49,9 @@ package com.funrun {
 	import com.funrun.controller.commands.StopGameLoopCommand;
 	import com.funrun.controller.commands.StopObserverLoopCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
-	import com.funrun.controller.commands.UpdateTrackCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.UpdatePlayerCollisionsCommand;
+	import com.funrun.controller.commands.UpdateTrackCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddEmptyFloorRequest;
@@ -117,9 +117,9 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
-	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
+	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.WhitelistFailed;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CompetitorsModel;
@@ -134,7 +134,7 @@ package com.funrun {
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
-	import com.funrun.model.ObservationModel;
+	import com.funrun.model.ObserverModel;
 	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
@@ -211,7 +211,7 @@ package com.funrun {
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( UserModel );
 			injector.mapSingleton( CompetitorsModel );
-			injector.mapSingleton( ObservationModel );
+			injector.mapSingleton( ObserverModel );
 			injector.mapSingleton( InterpolationModel );
 			injector.mapSingleton( NametagsModel );
 			injector.mapSingleton( PlacesModel );

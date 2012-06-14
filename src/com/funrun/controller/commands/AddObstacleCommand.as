@@ -32,7 +32,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// Get an obstacle, set its position, add it to the model and view.
 			var obstacle:ObstacleData = obstaclesModel.getAt( payload.index );
-			obstacle.z = payload.index * TrackConstants.SEGMENT_DEPTH - payload.relativePositionZ;
+			obstacle.z = payload.index * TrackConstants.SEGMENT_DEPTH;
 			trackModel.addObstacle( obstacle );
 			addObjectToSceneRequest.dispatch( obstacle.mesh );
 		}

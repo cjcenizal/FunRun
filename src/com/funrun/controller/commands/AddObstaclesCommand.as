@@ -26,17 +26,23 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			var index:int;
-			// FIX
-			// Fill up track from the front to the back.
-			while ( trackModel.depthOfLastObstacle < TrackConstants.TRACK_DEPTH + TrackConstants.BLOCK_SIZE ) {
-				index = Math.floor( ( positionZ + trackModel.depthOfLastObstacle ) / TrackConstants.SEGMENT_DEPTH ) + 1;
-				addObstacleRequest.dispatch( new AddObstaclePayload( index, positionZ ) );
+			
+			// Fill up track on the near side.
+			while ( trackModel.depthOfFirstObstacle > positionZ + TrackConstants.SEGMENT_ADD_DEPTH_NEAR ) {
+				index = Math.floor( trackModel.depthOfFirstObstacle / TrackConstants.SEGMENT_DEPTH ) - 1;
+				if ( index < 0 ) {
+					break;
+				}
+				addObstacleRequest.dispatch( new AddObstaclePayload( index ) );
 			}
 			
-			// Fill up track from the back to the front.
-			while ( positionZ > 0 && trackModel.depthOfFirstObstacle > TrackConstants.REMOVE_SEGMENT_DEPTH + TrackConstants.SEGMENT_DEPTH ) {
-				index = Math.floor( positionZ + trackModel.depthOfFirstObstacle ) / TrackConstants.SEGMENT_DEPTH - 1;
-				addObstacleRequest.dispatch( new AddObstaclePayload( index, positionZ ) );
+			// Fill up track on the far side.
+			while ( trackModel.depthOfLastObstacle < positionZ + TrackConstants.SEGMENT_ADD_DEPTH_FAR ) {
+				index = Math.floor( trackModel.depthOfLastObstacle / TrackConstants.SEGMENT_DEPTH ) + 1;
+				if ( index < 0 ) {
+					break;
+				}
+				addObstacleRequest.dispatch( new AddObstaclePayload( index ) );
 			}
 		}
 	}
