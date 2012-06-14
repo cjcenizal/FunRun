@@ -73,12 +73,12 @@
 			_timer.stop();
 			_timer = null;
 			stopGameLoopRequest.dispatch();
-			// TO-DO: If there are any surviving competitors, observe them.
-			//if ( competitorsModel.numCompetitors > 0 ) {
-			//	startObserverLoopRequest.dispatch();
-			//} else {
+			// If there are any surviving competitors, observe them.
+			if ( competitorsModel.numLiveCompetitors > 0 ) {
+				startObserverLoopRequest.dispatch();
+			} else {
 				showResultsPopupRequest.dispatch();
-			//}
+			}
 		}
 	}
 }

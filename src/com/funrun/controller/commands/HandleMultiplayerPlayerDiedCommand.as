@@ -33,7 +33,7 @@ package com.funrun.controller.commands {
 			var id:int = message.getInt( 0 );
 			if ( id != userModel.inGameId ) {
 				var competitor:CompetitorVO = competitorsModel.getWithId( id );
-				competitor.isDead = true;
+				competitorsModel.kill( competitor.id );
 				displayMessageRequest.dispatch( competitor.name + " just died!" );
 			}
 		}
