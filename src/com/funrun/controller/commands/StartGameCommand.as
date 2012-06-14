@@ -39,8 +39,8 @@ package com.funrun.controller.commands {
 		public var connectMultiplayerRequest:JoinMatchmakingRequest;
 		
 		[Inject]
-		public var startGameLoopRequest:StartObserverLoopRequest; // temp
-		//public var startGameLoopRequest:StartGameLoopRequest;
+		//public var startGameLoopRequest:StartObserverLoopRequest; // temp
+		public var startGameLoopRequest:StartGameLoopRequest;
 		
 		[Inject]
 		public var startRunningRequest:StartRunningRequest;

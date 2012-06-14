@@ -153,7 +153,7 @@ package com.funrun.controller.commands {
 			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
 			// We'll try easing to follow the player instead of being locked.
 			view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
-			view3DModel.cameraZ = playerModel.positionZ - 1000;
+			view3DModel.cameraZ += ( ( playerModel.positionZ + TrackConstants.CAM_Z ) - view3DModel.cameraZ ) * .65;
 			view3DModel.update();
 			
 			// TO-DO:

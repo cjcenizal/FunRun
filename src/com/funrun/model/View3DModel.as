@@ -75,6 +75,10 @@ package com.funrun.model {
 			_cameraPosition.y = val;
 		}
 		
+		public function get cameraZ():Number {
+			return _cameraPosition.z;
+		}
+		
 		public function set cameraZ( val:Number ):void {
 			_cameraPosition.z = val;
 		}
