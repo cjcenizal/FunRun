@@ -33,8 +33,8 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// Set up observer.
 			observerModel.reset();
-			observerModel.x = ObserverConstants.CAM_Z;
-			observerModel.y = ObserverConstants.CAM_Z;
+			observerModel.x = ObserverConstants.CAM_X;
+			observerModel.y = ObserverConstants.CAM_Y;
 			observerModel.z = ObserverConstants.CAM_Z;
 			
 			// Set camera.

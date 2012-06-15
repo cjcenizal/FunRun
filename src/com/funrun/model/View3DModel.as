@@ -37,6 +37,10 @@ package com.funrun.model {
 			}
 		}
 		
+		public function render():void {
+			_view.render();
+		}
+		
 		/**
 		 * Adding 3D objects to the scene.
 		 */

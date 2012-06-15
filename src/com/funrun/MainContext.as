@@ -34,6 +34,7 @@ package com.funrun {
 	import com.funrun.controller.commands.RemoveCompetitorCommand;
 	import com.funrun.controller.commands.RemoveObjectFromSceneCommand;
 	import com.funrun.controller.commands.RemovePlaceableCommand;
+	import com.funrun.controller.commands.RenderSceneCommand;
 	import com.funrun.controller.commands.ResetCountdownCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
@@ -283,6 +284,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );
 			signalCommandMap.mapSignalClass( RemovePlaceableRequest,				RemovePlaceableCommand );
+			signalCommandMap.mapSignalClass( RenderSceneRequest,					RenderSceneCommand );
 			signalCommandMap.mapSignalClass( ResetCountdownRequest,					ResetCountdownCommand );
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );

@@ -10,12 +10,9 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ObserverModel;
-	import com.funrun.model.PlayerModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.ObserverConstants;
 	import com.funrun.model.vo.CompetitorVO;
-	
-	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -71,13 +68,13 @@ package com.funrun.controller.commands {
 				// Cull + rebuild track.
 				updateTrackRequest.dispatch( new UpdateTrackPayload( competitor.mesh.position.z ) );
 				
-				// Update camera.
-				view3DModel.cameraZ = observerModel.z;
-				view3DModel.lookAt( competitor.mesh.position );
-				view3DModel.update();
-				
 				// Update places.
 				updatePlacesRequest.dispatch();
+				
+				// Update camera.
+				view3DModel.cameraZ = observerModel.z;
+				view3DModel.update();
+				view3DModel.lookAt( competitor.mesh.position );
 				
 				// Render.
 				renderSceneRequest.dispatch();

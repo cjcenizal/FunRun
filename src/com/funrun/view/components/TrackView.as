@@ -38,13 +38,6 @@ package com.funrun.view.components {
 			addChild( awayStats );
 		}
 		
-		/**
-		 * Rendering.
-		 */
-		public function render():void {
-			_view.render();
-		}
-		
 		public function set view3D( view:View3D ):void {
 			if ( _view ) {
 				removeChild( _view );
