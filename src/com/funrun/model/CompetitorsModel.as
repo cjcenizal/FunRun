@@ -8,8 +8,7 @@ package com.funrun.model {
 		
 		private var _competitors:Object;
 		private var _competitorsArray:Array;
-		private var _liveCompetitors:Object;
-		private var _numLiveCompetitors:int;
+		private var _liveCompetitorsArray:Array;
 
 		public function CompetitorsModel() {
 			super();
@@ -19,41 +18,49 @@ package com.funrun.model {
 		public function add( competitor:CompetitorVO ):void {
 			_competitors[ competitor.id ] = competitor;
 			_competitorsArray.push( competitor );
-			_liveCompetitors[ competitor.id ] = competitor;
 			if ( !competitor.isDead ) {
-				_numLiveCompetitors++;
+				competitor.liveIndex = _liveCompetitorsArray.length;
+				_liveCompetitorsArray.push( competitor );
 			}
 		}
 		
 		public function remove( id:int ):void {
 			var competitor:CompetitorVO = getWithId( id );
-			if ( !competitor.isDead ) {
-				_numLiveCompetitors--;
+			for ( var i:int = 0; i < _liveCompetitorsArray.length; i++ ) {
+				if ( _liveCompetitorsArray[ i ] == competitor ) {
+					_liveCompetitorsArray.splice( i, 1 );
+					i--;
+				}
+				if ( i >= 0 ) {
+					( _liveCompetitorsArray[ i ] as CompetitorVO ).liveIndex = i;
+				}
 			}
-			delete _liveCompetitors[ id ];
 			delete _competitors[ id ];
 			for ( var i:int = 0; i < _competitorsArray.length; i++ ) {
 				if ( getAt( i ) == competitor ) {
 					_competitorsArray.splice( i, 1 );
-					return;
+					break;
 				}
 			}
 		}
 		
 		public function kill( id:int ):void {
 			var competitor:CompetitorVO = getWithId( id );
-			if ( !competitor.isDead ) {
+			if ( competitor ) {
 				competitor.isDead = true;
-				_numLiveCompetitors--;
-				delete _liveCompetitors[ id ];
+				for ( var i:int = 0; i < _liveCompetitorsArray.length; i++ ) {
+					if ( _liveCompetitorsArray[ i ] == competitor ) {
+						_liveCompetitorsArray.splice( i, 1 );
+						break;
+					}
+				}
 			}
 		}
 		
 		public function reset():void {
 			_competitors = {};
 			_competitorsArray = [];
-			_liveCompetitors = {};
-			_numLiveCompetitors = 0;
+			_liveCompetitorsArray = [];
 		}
 		
 		public function getWithId( id:int ):CompetitorVO {
@@ -64,12 +71,16 @@ package com.funrun.model {
 			return _competitorsArray[ i ];
 		}
 		
+		public function getLiveCompetitorAt( i:int ):CompetitorVO {
+			return _liveCompetitorsArray[ i ];
+		}
+		
 		public function get numCompetitors():int {
 			return _competitorsArray.length;
 		}
 		
 		public function get numLiveCompetitors():int {
-			return _numLiveCompetitors;
+			return _liveCompetitorsArray.length;
 		}
 	}
 }

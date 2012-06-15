@@ -27,7 +27,7 @@ package com.funrun.controller.commands {
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
 		[Inject]
-		public var addObstacleRequests:AddObstaclesRequest;
+		public var addObstaclesRequest:AddObstaclesRequest;
 		
 		override public function execute():void {
 			for ( var i:int = 0; i < trackModel.numObstacles; i++ ) {
@@ -39,7 +39,7 @@ package com.funrun.controller.commands {
 					i--;
 				}
 			}
-			addObstacleRequests.dispatch( payload.positionZ );
+			addObstaclesRequest.dispatch( payload.positionZ );
 		}
 	}
 }

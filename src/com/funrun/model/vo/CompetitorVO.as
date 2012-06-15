@@ -8,13 +8,14 @@ package com.funrun.model.vo {
 
 	public class CompetitorVO implements IPlaceable {
 
-		private var _id:int;
-		private var _name:String;
 		public var mesh:Mesh;
-		private var _oldPosition:Vector3D;
-		private var _newPosition:Vector3D;
 		public var isDead:Boolean;
 		public var isDucking:Boolean;
+		public var liveIndex:int = 0;
+		private var _id:int;
+		private var _name:String;
+		private var _oldPosition:Vector3D;
+		private var _newPosition:Vector3D;
 		private var _place:int = 0;
 		
 		public function CompetitorVO( id:int, name:String ) {

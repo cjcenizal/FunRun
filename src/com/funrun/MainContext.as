@@ -10,6 +10,7 @@ package com.funrun {
 	import com.funrun.controller.commands.AddPlaceableCommand;
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.CheckWhitelistCommand;
+	import com.funrun.controller.commands.FollowNewCompetitorCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
 	import com.funrun.controller.commands.HandleMultiplayerNewPlayerJoinedCommand;
@@ -70,6 +71,7 @@ package com.funrun {
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
 	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
@@ -190,7 +192,7 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( false );
+			var onlineState:OnlineState = new OnlineState( true );
 		
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
@@ -260,6 +262,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
 			signalCommandMap.mapSignalClass( InitModelsRequest,						InitModelsCommand );
 			signalCommandMap.mapSignalClass( CheckWhitelistRequest,					CheckWhitelistCommand );
+			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );
@@ -296,7 +299,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StopGameLoopRequest,					StopGameLoopCommand );
 			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
-			signalCommandMap.mapSignalClass( UpdateTrackRequest,				UpdateTrackCommand );
+			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
 			signalCommandMap.mapSignalClass( UpdatePlayerCollisionsRequest,			UpdatePlayerCollisionsCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
