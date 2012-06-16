@@ -3,8 +3,12 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.model.CompetitorsModel;
+	import com.funrun.model.CountdownModel;
+	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
@@ -24,7 +28,16 @@ package com.funrun.controller.commands {
 		public var playerModel:PlayerModel;
 		
 		[Inject]
+		public var nametagsModel:NametagsModel;
+		
+		[Inject]
+		public var countdownModel:CountdownModel;
+		
+		[Inject]
 		public var timeModel:TimeModel;
+		
+		[Inject]
+		public var competitorsModel:CompetitorsModel;
 		
 		// Commands.
 		
@@ -41,6 +54,9 @@ package com.funrun.controller.commands {
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
 		[Inject]
+		public var removeCompetitorRequest:RemoveCompetitorRequest;
+		
+		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
 		[Inject]
@@ -54,6 +70,13 @@ package com.funrun.controller.commands {
 				removeObjectFromSceneRequest.dispatch( trackModel.getObstacleAt( 0 ).mesh );
 				trackModel.removeObstacleAt( 0 );
 			}
+			// Remove competitors.
+			while ( competitorsModel.numCompetitors > 0 ) {
+				removeCompetitorRequest.dispatch( competitorsModel.getAt( 0 ) );
+			}
+			competitorsModel.reset();
+			nametagsModel.reset();
+			countdownModel.reset();
 			// Reset distance.
 			playerModel.positionZ = 0;
 			displayDistanceRequest.dispatch( playerModel.distanceString );

@@ -248,7 +248,6 @@ package com.funrun {
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
 			injector.mapSingleton( RemoveResultsPopupRequest );
-			injector.mapSingleton( RenderSceneRequest );
 			injector.mapSingleton( RemoveNametagRequest );
 			injector.mapSingleton( ShowScreenRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
@@ -260,7 +259,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			signalCommandMap.mapSignalClass( AddObjectToSceneRequest,				AddObjectToSceneCommand );
-			signalCommandMap.mapSignalClass( AddSegmentRequest,					AddSegmentCommand );
+			signalCommandMap.mapSignalClass( AddSegmentRequest,						AddSegmentCommand );
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
