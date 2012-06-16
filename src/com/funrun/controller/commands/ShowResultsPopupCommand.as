@@ -16,8 +16,9 @@ package com.funrun.controller.commands {
 		public var playerModel:PlayerModel;
 		
 		override public function execute():void {
+			var message:String = "You ran " + playerModel.distanceString + " feet!<br>Nice";
 			addPopupRequest.dispatch( new ResultsPopup(
-				new ResultsPopupVO( "You ran " + playerModel.distanceString + " feet!" ) ) );
+				new ResultsPopupVO( message ) ) );
 		}
 	}
 }

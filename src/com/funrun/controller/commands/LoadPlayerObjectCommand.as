@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioPlayerObjectService;
 	
@@ -36,11 +37,16 @@ package com.funrun.controller.commands {
 		
 		private function onLoaded():void {
 			trace(this, "onLoaded");
-			
-			
-			// Assign the player object to the model.
-			
-			
+			// Load up properties from the database.
+			var key:String, val:*;
+			for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {
+				key = PlayerProperties.KEYS[ i ];
+				val = playerioPlayerObjectService.playerObject[ key ];
+				if ( !val || val == undefined ) {
+					val = PlayerProperties.DEFAULTS[ key ];
+				}
+				playerModel.properties[ key ] = val;
+			}
 			enableMainMenuRequest.dispatch( true );
 		}
 		

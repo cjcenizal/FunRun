@@ -4,6 +4,7 @@ package com.funrun.model {
 	import away3d.entities.Mesh;
 	
 	import com.cenizal.utils.Numbers;
+	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.constants.TrackConstants;
 	
 	import flash.geom.Vector3D;
@@ -18,8 +19,8 @@ package com.funrun.model {
 		// Player properties.
 		public var userId:String;
 		public var name:String;
-		public var inGameId:int = -1;
-		public var personalBest:Number = 0;
+		private var _inGameId:int;
+		private var _properties:Object;
 		
 		// Physical state.
 		private var _position:Vector3D;
@@ -35,6 +36,7 @@ package com.funrun.model {
 
 		public function PlayerModel() {
 			super();
+			_properties = {};
 			_velocity = new Vector3D();
 			_position = new Vector3D();
 			_prevPosition = new Vector3D();
@@ -42,7 +44,7 @@ package com.funrun.model {
 		}
 		
 		public function resetInGameId():void {
-			inGameId = -1;
+			_inGameId = -1;
 		}
 		
 		public function startMovingLeft( speed:Number ):void {
@@ -188,5 +190,32 @@ package com.funrun.model {
 			_mesh.scaleY = value;
 		}
 		
+		public function set inGameId( val:int ) {
+			_inGameId = val;
+		}
+		
+		public function get inGameId():int {
+			return _inGameId;
+		}
+		
+		public function get properties():Object {
+			return _properties;
+		}
+		
+		public function get bestDistance():Number {
+			return _properties[ PlayerProperties.BEST_DISTANCE ];
+		}
+		
+		public function set bestDistance( val:Number ) {
+			_properties[ PlayerProperties.BEST_DISTANCE ] = val;
+		}
+		
+		public function get points():Number {
+			return _properties[ PlayerProperties.POINTS ];
+		}
+		
+		public function set points( val:Number ) {
+			_properties[ PlayerProperties.POINTS ] = val;
+		}
 	}
 }

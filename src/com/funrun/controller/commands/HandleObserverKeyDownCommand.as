@@ -32,7 +32,9 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			switch ( event.keyCode ) {
 				case Keyboard.SPACE:
+					followNewCompetitorRequest.dispatch( 1 );
 				case Keyboard.UP:
+					followNewCompetitorRequest.dispatch( 1 );
 					break;
 				case Keyboard.LEFT:
 					followNewCompetitorRequest.dispatch( -1 );
@@ -41,6 +43,7 @@ package com.funrun.controller.commands {
 					followNewCompetitorRequest.dispatch( 1 );
 					break;
 				case Keyboard.DOWN:
+					followNewCompetitorRequest.dispatch( -1 );
 					break;
 			}
 		}
