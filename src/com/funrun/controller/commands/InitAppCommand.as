@@ -4,7 +4,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.InitModelsRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
-	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.model.state.OnlineState;
@@ -28,7 +27,7 @@ package com.funrun.controller.commands {
 		public var loginRequest:LoginRequest;
 		
 		[Inject]
-		public var loginFulfilled:LoginFulfilled;
+		public var enableMainMenuRequest:EnableMainMenuRequest;
 		
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
@@ -57,7 +56,7 @@ package com.funrun.controller.commands {
 			if ( onlineState.isOnline ) {
 				loginRequest.dispatch();
 			} else {
-				loginFulfilled.dispatch();
+				enableMainMenuRequest.dispatch( true );
 			}
 		}
 	}

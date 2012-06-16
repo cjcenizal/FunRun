@@ -19,6 +19,7 @@ package com.funrun.model {
 		public var userId:String;
 		public var name:String;
 		public var inGameId:int = -1;
+		public var personalBest:Number = 0;
 		
 		// Physical state.
 		private var _position:Vector3D;

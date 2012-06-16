@@ -28,6 +28,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LoadBlocksCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
+	import com.funrun.controller.commands.LoadPlayerObjectCommand;
 	import com.funrun.controller.commands.LoadSegmentsCommand;
 	import com.funrun.controller.commands.LoginCommand;
 	import com.funrun.controller.commands.LoginFailedCommand;
@@ -91,6 +92,7 @@ package com.funrun {
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
+	import com.funrun.controller.signals.LoadPlayerObjectRequest;
 	import com.funrun.controller.signals.LoadSegmentsRequest;
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
@@ -155,6 +157,8 @@ package com.funrun {
 	import com.funrun.services.ObstaclesJsonService;
 	import com.funrun.services.OrdinalizeNumberService;
 	import com.funrun.services.PlayerioFacebookLoginService;
+	import com.funrun.services.PlayerioMultiplayerService;
+	import com.funrun.services.PlayerioPlayerObjectService;
 	import com.funrun.services.WhitelistOpenService;
 	import com.funrun.services.WhitelistService;
 	import com.funrun.view.components.FindingGamePopup;
@@ -195,7 +199,7 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( false );
+			var onlineState:OnlineState = new OnlineState( true );
 		
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
@@ -231,11 +235,13 @@ package com.funrun {
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );
-			injector.mapSingleton( ObstaclesJsonService );
-			injector.mapSingleton( PlayerioFacebookLoginService );
 			injector.mapSingleton( MatchmakingService );
 			injector.mapSingleton( MultiplayerService );
+			injector.mapSingleton( ObstaclesJsonService );
 			injector.mapSingleton( OrdinalizeNumberService );
+			injector.mapSingleton( PlayerioFacebookLoginService );
+			injector.mapSingleton( PlayerioMultiplayerService );
+			injector.mapSingleton( PlayerioPlayerObjectService );
 			
 			// Map signals.
 			injector.mapSingleton( AddNametagRequest );
@@ -280,6 +286,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
+			signalCommandMap.mapSignalClass( LoadPlayerObjectRequest, 				LoadPlayerObjectCommand );
 			signalCommandMap.mapSignalClass( LoadSegmentsRequest,					LoadSegmentsCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );

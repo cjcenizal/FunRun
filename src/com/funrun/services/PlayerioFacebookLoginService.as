@@ -5,7 +5,6 @@ package com.funrun.services {
 	import org.osflash.signals.Signal;
 	
 	import playerio.Client;
-	import playerio.DatabaseObject;
 	import playerio.PlayerIO;
 	import playerio.PlayerIOError;
 	
