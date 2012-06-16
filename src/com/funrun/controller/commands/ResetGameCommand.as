@@ -7,6 +7,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
+	import com.funrun.model.View3DModel;
+	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -37,6 +39,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
+		[Inject]
+		public var view3DModel:View3DModel;
+		
 		override public function execute():void {
 			// Remove all existing obstacles.
 			while ( trackModel.numObstacles > 0 ) {
@@ -51,7 +56,14 @@ package com.funrun.controller.commands {
 			// Reset floor and obstacles.
 			addEmptyFloorRequest.dispatch();
 			addObstaclesRequest.dispatch( playerModel.positionZ );
-			
+			// Reset camera.
+			view3DModel.cameraX = 0;
+			view3DModel.cameraY = TrackConstants.CAM_Y;
+			view3DModel.cameraZ = TrackConstants.CAM_Z;
+			view3DModel.cameraRotationX = TrackConstants.CAM_TILT;
+			view3DModel.cameraRotationY = 0;
+			view3DModel.cameraRotationZ = 0;
+			view3DModel.update();
 		}
 	}
 }

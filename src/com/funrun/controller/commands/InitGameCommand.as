@@ -70,9 +70,6 @@ package com.funrun.controller.commands
 		override public function execute():void {
 			// Add view.
 			var camera:Camera3D = new Camera3D( new PerspectiveLens( TrackConstants.CAM_FOV ) );
-			camera.y = TrackConstants.CAM_Y;
-			camera.z = TrackConstants.CAM_Z;
-			camera.rotationX = TrackConstants.CAM_TILT;
 			camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
 			var view:View3D = new View3D( null, camera );
 			view.antiAlias = 2; // 2, 4, or 16

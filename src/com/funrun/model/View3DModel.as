@@ -16,11 +16,13 @@ package com.funrun.model {
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
 		private var _cameraPosition:Vector3D;
+		private var _cameraRotation:Vector3D;
 		private var _cameraOffsetY:Number = 0;
 		
 		public function View3DModel() {
 			super();
 			_cameraPosition = new Vector3D();
+			_cameraRotation = new Vector3D();
 		}
 		
 		public function setView( view:View3D ):void {
@@ -34,6 +36,10 @@ package com.funrun.model {
 				_camera.x = _cameraPosition.x;
 				_camera.y = _cameraPosition.y + _cameraOffsetY;
 				_camera.z = _cameraPosition.z;
+				
+				_camera.rotationX= _cameraRotation.x;
+				_camera.rotationY = _cameraRotation.y;
+				_camera.rotationZ = _cameraRotation.z;
 			}
 		}
 		
@@ -89,6 +95,30 @@ package com.funrun.model {
 		
 		public function set cameraOffsetY( val:Number ):void {
 			_cameraOffsetY = val;
+		}
+		
+		public function get cameraRotationX():Number {
+			return _cameraRotation.x;
+		}
+		
+		public function set cameraRotationX( val:Number ):void {
+			_cameraRotation.x = val;
+		}
+		
+		public function get cameraRotationY():Number {
+			return _cameraRotation.y;
+		}
+		
+		public function set cameraRotationY( val:Number ):void {
+			_cameraRotation.y = val;
+		}
+		
+		public function get cameraRotationZ():Number {
+			return _cameraRotation.z;
+		}
+		
+		public function set cameraRotationZ( val:Number ):void {
+			_cameraRotation.z = val;
 		}
 	}
 }
