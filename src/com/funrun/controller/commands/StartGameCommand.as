@@ -1,11 +1,9 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
-	import com.funrun.controller.signals.StartGameLoopRequest;
-	import com.funrun.controller.signals.StartRunningRequest;
+	import com.funrun.controller.signals.StartOfflineGameRequest;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.OnlineState;
@@ -39,13 +37,7 @@ package com.funrun.controller.commands {
 		public var connectMultiplayerRequest:JoinMatchmakingRequest;
 		
 		[Inject]
-		public var startGameLoopRequest:StartGameLoopRequest;
-		
-		[Inject]
-		public var startRunningRequest:StartRunningRequest;
-		
-		[Inject]
-		public var addAiCompetitorsRequest:AddAiCompetitorsRequest;
+		public var startOfflineGameRequest:StartOfflineGameRequest;
 		
 		override public function execute():void {
 			// Set game state.
@@ -58,9 +50,7 @@ package com.funrun.controller.commands {
 			if ( onlineState.isOnline ) {
 				connectMultiplayerRequest.dispatch();
 			} else {
-				startGameLoopRequest.dispatch();
-				startRunningRequest.dispatch();
-				addAiCompetitorsRequest.dispatch( 6 );
+				startOfflineGameRequest.dispatch();
 			}
 		}
 	}

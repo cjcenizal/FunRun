@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	
 	import org.robotlegs.mvcs.Command;
 
-	public class LoadPlayerObjectCommand extends Command {
+	public class ConnectPlayerObjectCommand extends Command {
 		
 		// Services.
 		
@@ -32,12 +32,12 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			playerioPlayerObjectService.onLoadedSignal.add( onLoaded );
 			playerioPlayerObjectService.onErrorSignal.add( onError );
-			playerioPlayerObjectService.load( playerioFacebookLoginService.client );
+			playerioPlayerObjectService.connect( playerioFacebookLoginService.client );
 		}
 		
 		private function onLoaded():void {
 			trace(this, "onLoaded");
-			// Load up properties from the database.
+			// Read properties from the database.
 			var key:String, val:*;
 			for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {
 				key = PlayerProperties.KEYS[ i ];

@@ -11,7 +11,9 @@ package com.funrun {
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.AddSegmentCommand;
 	import com.funrun.controller.commands.CheckWhitelistCommand;
+	import com.funrun.controller.commands.ConnectPlayerObjectCommand;
 	import com.funrun.controller.commands.CullSegmentsCommand;
+	import com.funrun.controller.commands.EndRoundCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorDiedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorJoinedCommand;
@@ -28,7 +30,6 @@ package com.funrun {
 	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LoadBlocksCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
-	import com.funrun.controller.commands.LoadPlayerObjectCommand;
 	import com.funrun.controller.commands.LoadSegmentsCommand;
 	import com.funrun.controller.commands.LoginCommand;
 	import com.funrun.controller.commands.LoginFailedCommand;
@@ -40,15 +41,16 @@ package com.funrun {
 	import com.funrun.controller.commands.ResetCountdownCommand;
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
+	import com.funrun.controller.commands.SavePlayerObjectCommand;
 	import com.funrun.controller.commands.SendMultiplayerDeathCommand;
 	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
-	import com.funrun.controller.commands.ShowResultsPopupCommand;
 	import com.funrun.controller.commands.StartCountdownCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StartGameLoopCommand;
 	import com.funrun.controller.commands.StartObserverLoopCommand;
+	import com.funrun.controller.commands.StartOfflineGameCommand;
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameLoopCommand;
 	import com.funrun.controller.commands.StopObserverLoopCommand;
@@ -72,11 +74,13 @@ package com.funrun {
 	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.CheckWhitelistRequest;
+	import com.funrun.controller.signals.ConnectPlayerObjectRequest;
 	import com.funrun.controller.signals.CullSegmentsRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
@@ -92,7 +96,6 @@ package com.funrun {
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
-	import com.funrun.controller.signals.LoadPlayerObjectRequest;
 	import com.funrun.controller.signals.LoadSegmentsRequest;
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
@@ -108,16 +111,17 @@ package com.funrun {
 	import com.funrun.controller.signals.ResetCountdownRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.controller.signals.SavePlayerObjectRequest;
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
-	import com.funrun.controller.signals.ShowResultsPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
+	import com.funrun.controller.signals.StartOfflineGameRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
@@ -199,7 +203,7 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( false );
+			var onlineState:OnlineState = new OnlineState( true );
 		
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
@@ -269,10 +273,11 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
+			signalCommandMap.mapSignalClass( CheckWhitelistRequest,					CheckWhitelistCommand );
 			signalCommandMap.mapSignalClass( CullSegmentsRequest,					CullSegmentsCommand );
+			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
 			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
 			signalCommandMap.mapSignalClass( InitModelsRequest,						InitModelsCommand );
-			signalCommandMap.mapSignalClass( CheckWhitelistRequest,					CheckWhitelistCommand );
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
@@ -286,11 +291,11 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
-			signalCommandMap.mapSignalClass( LoadPlayerObjectRequest, 				LoadPlayerObjectCommand );
 			signalCommandMap.mapSignalClass( LoadSegmentsRequest,					LoadSegmentsCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );
+			signalCommandMap.mapSignalClass( ConnectPlayerObjectRequest, 				ConnectPlayerObjectCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );
 			signalCommandMap.mapSignalClass( RemovePlaceableRequest,				RemovePlaceableCommand );
@@ -298,15 +303,16 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ResetCountdownRequest,					ResetCountdownCommand );
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );
+			signalCommandMap.mapSignalClass( SavePlayerObjectRequest,				SavePlayerObjectCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerDeathRequest,			SendMultiplayerDeathCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
 			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );
-			signalCommandMap.mapSignalClass( ShowResultsPopupRequest,				ShowResultsPopupCommand );
 			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
 			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
 			signalCommandMap.mapSignalClass( StartGameLoopRequest,					StartGameLoopCommand );
 			signalCommandMap.mapSignalClass( StartObserverLoopRequest,				StartObserverLoopCommand );
+			signalCommandMap.mapSignalClass( StartOfflineGameRequest,				StartOfflineGameCommand );
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
 			signalCommandMap.mapSignalClass( StopGameLoopRequest,					StopGameLoopCommand );
 			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );

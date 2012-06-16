@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
-	import com.funrun.controller.signals.ShowResultsPopupRequest;
+	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
@@ -47,7 +47,7 @@ package com.funrun.controller.commands {
 		public var followNewCompetitorRequest:FollowNewCompetitorRequest;
 		
 		[Inject]
-		public var showResultsPopupRequest:ShowResultsPopupRequest;
+		public var endRoundRequest:EndRoundRequest;
 		
 		[Inject]
 		public var stopObserverLoopRequest:StopObserverLoopRequest;
@@ -85,7 +85,7 @@ package com.funrun.controller.commands {
 					followNewCompetitorRequest.dispatch( 1 );
 				} else {
 					// If there are no surviving competitors, show end results.
-					showResultsPopupRequest.dispatch();
+					endRoundRequest.dispatch();
 					stopObserverLoopRequest.dispatch();
 				}
 			}

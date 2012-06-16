@@ -1,7 +1,7 @@
 	package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
-	import com.funrun.controller.signals.ShowResultsPopupRequest;
+	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.model.CompetitorsModel;
@@ -32,7 +32,7 @@
 		// Commands.
 		
 		[Inject]
-		public var showResultsPopupRequest:ShowResultsPopupRequest;
+		public var endRoundRequest:EndRoundRequest;
 		
 		[Inject]
 		public var sendMultiplayerDeathRequest:SendMultiplayerDeathRequest;
@@ -77,7 +77,7 @@
 			if ( competitorsModel.numLiveCompetitors > 0 ) {
 				startObserverLoopRequest.dispatch();
 			} else {
-				showResultsPopupRequest.dispatch();
+				endRoundRequest.dispatch();
 			}
 		}
 	}

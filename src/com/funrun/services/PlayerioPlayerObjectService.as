@@ -10,16 +10,33 @@ package com.funrun.services {
 
 		private var _onLoadedSignal:Signal;
 		private var _onErrorSignal:Signal;
+		private var _onPlayerObjectSavedSignal:Signal;
+		private var _onPlayerObjectSaveErrorSignal:Signal;
 		private var _playerObject:DatabaseObject;
 		private var _error:PlayerIOError;
 		
 		public function PlayerioPlayerObjectService() {
 			_onLoadedSignal = new Signal();
 			_onErrorSignal = new Signal();
+			_onPlayerObjectSavedSignal = new Signal();
+			_onPlayerObjectSaveErrorSignal = new Signal();
 		}
 
-		public function load( client:Client ):void {
+		public function connect( client:Client ):void {
 			client.bigDB.loadMyPlayerObject( onLoaded, onError );
+		}
+		
+		public function save( useOptimisticLocks:Boolean = false, fullOverwrite:Boolean = false ):void {
+			_playerObject.save( useOptimisticLocks, fullOverwrite, onPlayerObjectSaved, onPlayerObjectSaveError );
+		}
+		
+		private function onPlayerObjectSaved():void {
+			_onPlayerObjectSavedSignal.dispatch();
+		}
+		
+		private function onPlayerObjectSaveError( e:PlayerIOError ):void {
+			_error = e;
+			_onPlayerObjectSaveErrorSignal.dispatch();
 		}
 		
 		private function onLoaded( playerObject:DatabaseObject ):void {
@@ -38,6 +55,14 @@ package com.funrun.services {
 		
 		public function get onErrorSignal():Signal {
 			return _onErrorSignal;
+		}
+		
+		public function get onPlayerObjectSavedSignal():Signal {
+			return _onPlayerObjectSavedSignal;
+		}
+		
+		public function get onPlayerObjectSaveErrorSignal():Signal {
+			return _onPlayerObjectSaveErrorSignal;
 		}
 		
 		public function get playerObject():DatabaseObject {

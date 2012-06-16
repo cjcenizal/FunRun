@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.LoadPlayerObjectRequest;
+	import com.funrun.controller.signals.ConnectPlayerObjectRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.model.state.LoginState;
 	
@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 		public var updateLoginStatus:UpdateLoginStatusRequest;
 		
 		[Inject]
-		public var loadPlayerObjectRequest:LoadPlayerObjectRequest;
+		public var loadPlayerObjectRequest:ConnectPlayerObjectRequest;
 		
 		override public function execute():void {
 			updateLoginStatus.dispatch( LoginState.LOGIN_SUCCESS );

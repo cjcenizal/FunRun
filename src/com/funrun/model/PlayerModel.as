@@ -114,8 +114,12 @@ package com.funrun.model {
 			return _position.z;
 		}
 		
+		public function get distanceInFeet():int {
+			return Math.round( distance / TrackConstants.BLOCK_SIZE );
+		}
+		
 		public function get distanceString():String {
-			return Numbers.addCommasTo( Math.round( distance / TrackConstants.BLOCK_SIZE ).toString() );
+			return Numbers.addCommasTo( distanceInFeet.toString() );
 		}
 		
 		public function set place( val:int ):void {
