@@ -4,9 +4,9 @@ package com.funrun.controller.signals {
 
 	import playerio.Message;
 
-	public class HandleMultiplayerPlayerLeftRequest extends Signal {
+	public class HandleMultiplayerCompetitorLeftRequest extends Signal {
 		
-		public function HandleMultiplayerPlayerLeftRequest() {
+		public function HandleMultiplayerCompetitorLeftRequest() {
 			super( Message );
 		}
 	}

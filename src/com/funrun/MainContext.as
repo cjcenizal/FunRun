@@ -15,8 +15,8 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorJoinedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
-	import com.funrun.controller.commands.HandleMultiplayerPlayerDiedCommand;
-	import com.funrun.controller.commands.HandleMultiplayerPlayerLeftCommand;
+	import com.funrun.controller.commands.HandleMultiplayerCompetitorDiedCommand;
+	import com.funrun.controller.commands.HandleMultiplayerCompetitorLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.InitGameCommand;
@@ -79,8 +79,8 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
-	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
-	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.InitModelsRequest;
@@ -275,8 +275,8 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorJoinedRequest,HandleMultiplayerCompetitorJoinedCommand );
-			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerDiedRequest,	HandleMultiplayerPlayerDiedCommand );
-			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerLeftRequest,	HandleMultiplayerPlayerLeftCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorDiedRequest,	HandleMultiplayerCompetitorDiedCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorLeftRequest,	HandleMultiplayerCompetitorLeftCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );

@@ -2,8 +2,8 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
-	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
-	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.model.PlayerModel;
@@ -56,10 +56,10 @@ package com.funrun.controller.commands {
 		public var handleMultiplayerCompetitorJoinedRequest:HandleMultiplayerCompetitorJoinedRequest;
 		
 		[Inject]
-		public var handleMultiplayerPlayerLeftRequest:HandleMultiplayerPlayerLeftRequest;
+		public var handleMultiplayerCompetitorLeftRequest:HandleMultiplayerCompetitorLeftRequest;
 		
 		[Inject]
-		public var handleMultiplayerPlayerDiedRequest:HandleMultiplayerPlayerDiedRequest;
+		public var handleMultiplayerCompetitorDiedRequest:HandleMultiplayerCompetitorDiedRequest;
 		
 		override public function execute():void {
 			multiplayerService.onErrorSignal.add( onError );
@@ -101,11 +101,11 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onPlayerLeft( message:Message ):void {
-			handleMultiplayerPlayerLeftRequest.dispatch( message );
+			handleMultiplayerCompetitorLeftRequest.dispatch( message );
 		}
 		
 		private function onPlayerDied( message:Message ):void {
-			handleMultiplayerPlayerDiedRequest.dispatch( message );
+			handleMultiplayerCompetitorDiedRequest.dispatch( message );
 		}
 	}
 }
