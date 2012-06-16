@@ -147,6 +147,14 @@ package com.funrun.controller.commands {
 				updatePlayerCollisionsRequest.dispatch();
 			}
 			
+			// Update camera before updating competitors.
+			view3DModel.cameraX = playerModel.positionX;
+			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
+			// We'll try easing to follow the player instead of being locked.
+			view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
+			view3DModel.cameraZ += ( ( playerModel.positionZ + TrackConstants.CAM_Z ) - view3DModel.cameraZ ) * .65;
+			view3DModel.update();
+			
 			// Set position to mesh.
 			playerModel.updateMeshPosition();
 			
@@ -166,14 +174,6 @@ package com.funrun.controller.commands {
 			
 			// Update places.
 			updatePlacesRequest.dispatch();
-			
-			// Update camera.
-			view3DModel.cameraX = playerModel.positionX;
-			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
-			// We'll try easing to follow the player instead of being locked.
-			view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
-			view3DModel.cameraZ += ( ( playerModel.positionZ + TrackConstants.CAM_Z ) - view3DModel.cameraZ ) * .65;
-			view3DModel.update();
 			
 			// Render.
 			renderSceneRequest.dispatch();
