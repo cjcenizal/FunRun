@@ -51,7 +51,10 @@ package com.funrun.model {
 				for ( var i:int = 0; i < _liveCompetitorsArray.length; i++ ) {
 					if ( _liveCompetitorsArray[ i ] == competitor ) {
 						_liveCompetitorsArray.splice( i, 1 );
-						break;
+						i--;
+					}
+					if ( i >= 0 ) {
+						( _liveCompetitorsArray[ i ] as CompetitorVO ).liveIndex = i;
 					}
 				}
 			}

@@ -11,11 +11,12 @@ package com.funrun.model {
 		
 		private var _isRunning:Boolean = false;
 		private var _stage:Stage;
-		private var _ticks:int = 0;
-		private var _lastTs:int = 0;
+		private var _ticks:int;
+		private var _lastTs:int;
 		
 		public function TimeModel() {
 			super();
+			reset();
 		}
 		
 		private function onEnterFrame( e:Event ):void {
@@ -32,6 +33,11 @@ package com.funrun.model {
 				_isRunning = true;
 				_stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
 			}
+		}
+		
+		public function reset():void {
+			_ticks = 0;
+			_lastTs = 0;
 		}
 		
 		public function set stage( stage:Stage ):void {

@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	
 	import org.robotlegs.mvcs.Command;
 	
-	public class UpdateGameKeyDownCommand extends Command {
+	public class HandleGameKeyUpCommand extends Command {
 		
 		[Inject]
 		public var event:KeyboardEvent;
@@ -20,18 +20,18 @@ package com.funrun.controller.commands {
 			switch ( event.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:
-					playerModel.isJumping = true;
+					playerModel.isJumping = false;
 					break;
 				case Keyboard.LEFT:
-					playerModel.startMovingLeft( TrackConstants.PLAYER_LATERAL_SPEED );
+					playerModel.stopMovingLeft( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.RIGHT:
-					playerModel.startMovingRight( TrackConstants.PLAYER_LATERAL_SPEED );
+					playerModel.stopMovingRight( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.DOWN:
-					playerModel.isDucking = true;
+					playerModel.isDucking = false;;
 					break;
-			}	
+			}
 		}
 	}
 }

@@ -10,8 +10,8 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			commandMap.unmapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
-			commandMap.unmapEvent( KeyboardEvent.KEY_UP, UpdateGameKeyUpCommand, KeyboardEvent );
-			commandMap.unmapEvent( KeyboardEvent.KEY_DOWN, UpdateGameKeyDownCommand, KeyboardEvent );
+			commandMap.unmapEvent( KeyboardEvent.KEY_UP, HandleGameKeyUpCommand, KeyboardEvent );
+			commandMap.unmapEvent( KeyboardEvent.KEY_DOWN, HandleGameKeyDownCommand, KeyboardEvent );
 		}
 	}
 }

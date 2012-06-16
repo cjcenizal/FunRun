@@ -27,7 +27,12 @@ package com.funrun.controller.commands {
 			if ( !competitor ) {
 				competitor = competitorsModel.getLiveCompetitorAt( 0 );
 			} else {
-				var index:int = ( competitor.liveIndex >= competitorsModel.numLiveCompetitors - 1 ) ? 0 : competitor.liveIndex + 1;
+				var index:int = competitor.liveIndex + increment;
+				if ( index >= competitorsModel.numLiveCompetitors ) {
+					index = 0;
+				} else if ( index < 0 ) {
+					index = competitorsModel.numLiveCompetitors - 1;
+				}
 				competitor = competitorsModel.getLiveCompetitorAt( index );
 			}
 			observerModel.competitorId = competitor.id;

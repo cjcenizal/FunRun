@@ -1,35 +1,39 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.ObserverModel;
+	import com.funrun.model.CompetitorsModel;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
 	import org.robotlegs.mvcs.Command;
 	
-	public class UpdateGameKeyUpCommand extends Command {
+	public class HandleObserverKeyUpCommand extends Command {
+		
+		// Arguments.
 		
 		[Inject]
 		public var event:KeyboardEvent;
 		
+		// Models.
+		
 		[Inject]
-		public var playerModel:PlayerModel;
+		public var observerModel:ObserverModel;
+		
+		[Inject]
+		public var competitorsModel:CompetitorsModel;
 		
 		override public function execute():void {
 			switch ( event.keyCode ) {
 				case Keyboard.SPACE:
 				case Keyboard.UP:
-					playerModel.isJumping = false;
 					break;
 				case Keyboard.LEFT:
-					playerModel.stopMovingLeft( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.RIGHT:
-					playerModel.stopMovingRight( TrackConstants.PLAYER_LATERAL_SPEED );
 					break;
 				case Keyboard.DOWN:
-					playerModel.isDucking = false;;
+					
 					break;
 			}
 		}

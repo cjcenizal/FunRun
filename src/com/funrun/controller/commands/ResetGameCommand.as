@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.TrackConstants;
@@ -21,6 +22,9 @@ package com.funrun.controller.commands {
 
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var timeModel:TimeModel;
 		
 		// Commands.
 		
@@ -43,6 +47,8 @@ package com.funrun.controller.commands {
 		public var view3DModel:View3DModel;
 		
 		override public function execute():void {
+			// Reset time.
+			timeModel.reset();
 			// Remove all existing obstacles.
 			while ( trackModel.numObstacles > 0 ) {
 				removeObjectFromSceneRequest.dispatch( trackModel.getObstacleAt( 0 ).mesh );

@@ -29,8 +29,8 @@ package com.funrun.controller.commands {
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			
 			// Respond to keyboard input.
-			commandMap.mapEvent( KeyboardEvent.KEY_UP, UpdateGameKeyUpCommand, KeyboardEvent );
-			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, UpdateGameKeyDownCommand, KeyboardEvent );
+			commandMap.mapEvent( KeyboardEvent.KEY_UP, HandleGameKeyUpCommand, KeyboardEvent );
+			commandMap.mapEvent( KeyboardEvent.KEY_DOWN, HandleGameKeyDownCommand, KeyboardEvent );
 			
 			// Show game screen.
 			removeFindingGamePopupRequest.dispatch();
