@@ -2,12 +2,13 @@ package com.funrun.services.parsers {
 	
 	import com.funrun.model.collision.BlockData;
 	
-	public class ObstacleParser extends AbstractParser {
+	public class SegmentParser extends AbstractParser {
 		
 		private const BLOCKS:String = "blocks";
 		private const PITS:String = "pits";
 		private const FLIP:String = "flip";
 		private const ACTIVE:String = "active";
+		private const TYPE:String = "type";
 		
 		private var _id:String;
 		private var _blocks:Array;
@@ -16,12 +17,14 @@ package com.funrun.services.parsers {
 		private var _depth:int = 0;
 		private var _flip:Boolean = false;
 		private var _active:Boolean = false;
+		private var _type:String;
 		
-		public function ObstacleParser( data:Object ) {
+		public function SegmentParser( data:Object ) {
 			super( data );
 			_id = new IdParser( data ).id;
 			_flip = data[ FLIP ];
 			_active = data[ ACTIVE ];
+			_type = data[ TYPE ];
 			_blocks = [];
 			
 			var blocksDeep:Array, blocksWide:Array, blocksHigh:Array;
@@ -83,8 +86,13 @@ package com.funrun.services.parsers {
 			return _active;
 		}
 		
+		public function get type():String {
+			return _type;
+		}
+		
 		public function getBlockAt( index:int ):BlockData {
 			return _blocks[ index ];
 		}
+		
 	}
 }

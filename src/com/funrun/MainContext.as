@@ -2,7 +2,7 @@ package com.funrun {
 
 	import com.funrun.controller.commands.AddAiCompetitorsCommand;
 	import com.funrun.controller.commands.AddCompetitorCommand;
-	import com.funrun.controller.commands.AddEmptyFloorCommand;
+	import com.funrun.controller.commands.AddFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
 	import com.funrun.controller.commands.AddObjectToSceneCommand;
@@ -12,11 +12,11 @@ package com.funrun {
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.CheckWhitelistCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
+	import com.funrun.controller.commands.HandleMultiplayerCompetitorDiedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorJoinedCommand;
+	import com.funrun.controller.commands.HandleMultiplayerCompetitorLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
-	import com.funrun.controller.commands.HandleMultiplayerCompetitorDiedCommand;
-	import com.funrun.controller.commands.HandleMultiplayerCompetitorLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.InitGameCommand;
@@ -27,8 +27,7 @@ package com.funrun {
 	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LoadBlocksCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
-	import com.funrun.controller.commands.LoadFloorsCommand;
-	import com.funrun.controller.commands.LoadObstaclesCommand;
+	import com.funrun.controller.commands.LoadSegmentsCommand;
 	import com.funrun.controller.commands.LoginCommand;
 	import com.funrun.controller.commands.LoginFailedCommand;
 	import com.funrun.controller.commands.LoginFulfilledCommand;
@@ -59,7 +58,7 @@ package com.funrun {
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.AddCompetitorRequest;
-	import com.funrun.controller.signals.AddEmptyFloorRequest;
+	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddNametagRequest;
@@ -76,11 +75,11 @@ package com.funrun {
 	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
-	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
-	import com.funrun.controller.signals.HandleMultiplayerCompetitorLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.InitGameRequest;
 	import com.funrun.controller.signals.InitModelsRequest;
@@ -90,8 +89,7 @@ package com.funrun {
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
-	import com.funrun.controller.signals.LoadFloorsRequest;
-	import com.funrun.controller.signals.LoadObstaclesRequest;
+	import com.funrun.controller.signals.LoadSegmentsRequest;
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
@@ -132,7 +130,6 @@ package com.funrun {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
-	import com.funrun.model.FloorsModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.GeosMockModel;
 	import com.funrun.model.IGeosModel;
@@ -142,9 +139,9 @@ package com.funrun {
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
-	import com.funrun.model.ObstaclesModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.UserModel;
@@ -214,14 +211,13 @@ package com.funrun {
 			// Map models.
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
 			injector.mapSingleton( BlocksModel );
-			injector.mapSingleton( ObstaclesModel );
+			injector.mapSingleton( SegmentsModel );
 			injector.mapSingleton( MaterialsModel );
 			injector.mapSingleton( LightsModel );
 			injector.mapSingleton( TimeModel );
 			injector.mapSingleton( TrackModel );
 			injector.mapSingleton( PlayerModel );
 			injector.mapSingleton( View3DModel );
-			injector.mapSingleton( FloorsModel );
 			injector.mapSingleton( GameModel );
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( ConfigurationModel );
@@ -260,7 +256,7 @@ package com.funrun {
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			signalCommandMap.mapSignalClass( AddAiCompetitorsRequest,				AddAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
-			signalCommandMap.mapSignalClass( AddEmptyFloorRequest,					AddEmptyFloorCommand );
+			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			signalCommandMap.mapSignalClass( AddObjectToSceneRequest,				AddObjectToSceneCommand );
@@ -275,8 +271,8 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorJoinedRequest,HandleMultiplayerCompetitorJoinedCommand );
-			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorDiedRequest,	HandleMultiplayerCompetitorDiedCommand );
-			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorLeftRequest,	HandleMultiplayerCompetitorLeftCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorDiedRequest,HandleMultiplayerCompetitorDiedCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorLeftRequest,HandleMultiplayerCompetitorLeftCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
@@ -284,8 +280,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
-			signalCommandMap.mapSignalClass( LoadFloorsRequest,						LoadFloorsCommand );
-			signalCommandMap.mapSignalClass( LoadObstaclesRequest,					LoadObstaclesCommand );
+			signalCommandMap.mapSignalClass( LoadSegmentsRequest,					LoadSegmentsCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );

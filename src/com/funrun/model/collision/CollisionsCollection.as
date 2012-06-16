@@ -67,7 +67,7 @@ package com.funrun.model.collision
 									 minX:Number, minY:Number, minZ:Number,
 									 maxX:Number, maxY:Number, maxZ:Number ):void {
 			var numObstacles:int = obstacles.numObstacles;
-			var obstacle:ObstacleData;
+			var obstacle:SegmentData;
 			for ( var i:int = 0; i < numObstacles; i++ ) {
 				obstacle = obstacles.getObstacleAt( i );
 				var obsX:Number = obstacle.x;

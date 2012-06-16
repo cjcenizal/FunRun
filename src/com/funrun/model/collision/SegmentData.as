@@ -12,10 +12,11 @@ package com.funrun.model.collision {
 	import com.funrun.model.constants.BlockTypes;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.vo.BlockVO;
-	import com.funrun.services.parsers.ObstacleParser;
+	import com.funrun.services.parsers.SegmentParser;
 
-	public class ObstacleData {
+	public class SegmentData {
 
+		private var _type:String;
 		private var _mesh:Mesh;
 		private var _boundingBoxes:Array;
 		private var _numBoundingBoxes:int;
@@ -27,7 +28,8 @@ package com.funrun.model.collision {
 		private var _maxY:Number;
 		private var _maxZ:Number;
 
-		public function ObstacleData( mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+		public function SegmentData( type:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+			_type = type;
 			_mesh = mesh;
 			_boundingBoxes = boundingBoxes;
 			_numBoundingBoxes = ( _boundingBoxes ) ? _boundingBoxes.length : 0;
@@ -39,8 +41,16 @@ package com.funrun.model.collision {
 			_maxZ = maxZ;
 		}
 		
-		public function clone():ObstacleData {
-			return new ObstacleData( _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+		public function clone():SegmentData {
+			return new SegmentData( _type, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+		}
+		
+		/**
+		 * Get this obstacle's type (floor or obstacle).
+		 * @return The original.
+		 */
+		public function get type():String {
+			return _type;
 		}
 		
 		/**
@@ -103,7 +113,7 @@ package com.funrun.model.collision {
 			return _maxZ;
 		}
 		
-		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, parser:ObstacleParser, flip:Boolean = false ):ObstacleData {
+		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, parser:SegmentParser, flip:Boolean = false ):SegmentData {
 			
 			// TO-DO:
 			// We need to be able to specify here that some blocks on top of pit edges
@@ -200,7 +210,7 @@ package com.funrun.model.collision {
 				}
 			}
 			
-			return new ObstacleData( obstacleMesh, boundingBoxes,
+			return new SegmentData( parser.type, obstacleMesh, boundingBoxes,
 				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
 				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 		}

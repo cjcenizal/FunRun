@@ -7,29 +7,41 @@ package com.funrun.controller.commands {
 	import away3d.tools.commands.Merge;
 	
 	import com.funrun.model.BlocksModel;
-	import com.funrun.model.FloorsModel;
 	import com.funrun.model.MaterialsModel;
+	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.collision.BoundingBoxData;
-	import com.funrun.model.collision.ObstacleData;
+	import com.funrun.model.collision.SegmentData;
 	import com.funrun.model.constants.BlockTypes;
-	import com.funrun.model.constants.FloorTypes;
+	import com.funrun.model.constants.SegmentTypes;
 	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.services.ObstaclesJsonService;
+	import com.funrun.services.parsers.SegmentParser;
+	import com.funrun.services.parsers.SegmentsParser;
 	
 	import org.robotlegs.mvcs.Command;
-
-	public class LoadFloorsCommand extends Command {
-
-		[Inject]
-		public var floorsModel:FloorsModel;
+	
+	public class LoadSegmentsCommand extends Command {
+		
+		// Models.
 		
 		[Inject]
-		public var materialsModel:MaterialsModel;
+		public var segmentsModel:SegmentsModel;
 		
 		[Inject]
 		public var blocksModel:BlocksModel;
 		
+		[Inject]
+		public var materialsModel:MaterialsModel;
+		
+		// Services.
+		
+		[Inject]
+		public var obstaclesService:ObstaclesJsonService;
+		
 		override public function execute():void {
 			
+			// Load temp floor.
+			// TO-DO: Put floor(s) into json.
 			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial;
 			var merge:Merge = new Merge( true );
 			geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
@@ -64,8 +76,22 @@ package com.funrun.controller.commands {
 			var maxY:Number = TrackConstants.BLOCK_SIZE_HALF;
 			var minZ:Number = 0;
 			var maxZ:Number = TrackConstants.SEGMENT_DEPTH;
+			segmentsModel.addSegment( new SegmentData( SegmentTypes.FLOOR, floorMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ ) );
 			
-			floorsModel.addFloor( FloorTypes.FLOOR, new ObstacleData( floorMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ ) );
+			var material:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
+			var segments:SegmentsParser = new SegmentsParser( obstaclesService.data );
+			var len:int = segments.length;
+			for ( var i:int = 0; i < len; i++ ) {
+				var segment:SegmentParser = segments.getAt( i );
+				if ( segment.active ) {
+					// Store this sucker.
+					segmentsModel.addSegment( SegmentData.make( blocksModel, materialsModel, segment ) );
+					if ( segment.flip ) {
+						// Store mirror version if required.
+						segmentsModel.addSegment( SegmentData.make( blocksModel, materialsModel, segment, true ) );
+					}
+				}
+			}
 		}
 	}
 }

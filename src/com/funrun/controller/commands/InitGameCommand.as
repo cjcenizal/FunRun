@@ -16,8 +16,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
-	import com.funrun.controller.signals.LoadFloorsRequest;
-	import com.funrun.controller.signals.LoadObstaclesRequest;
+	import com.funrun.controller.signals.LoadSegmentsRequest;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.View3DModel;
@@ -50,10 +49,7 @@ package com.funrun.controller.commands
 		public var loadBlocksRequest:LoadBlocksRequest;
 		
 		[Inject]
-		public var loadObstaclesRequest:LoadObstaclesRequest;
-		
-		[Inject]
-		public var loadFloorsRequest:LoadFloorsRequest;
+		public var loadSegmentsRequest:LoadSegmentsRequest;
 		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
@@ -86,8 +82,7 @@ package com.funrun.controller.commands
 			
 			// Load stuff.
 			loadBlocksRequest.dispatch();
-			loadObstaclesRequest.dispatch();
-			loadFloorsRequest.dispatch();
+			loadSegmentsRequest.dispatch();
 			
 			// Add lights.
 			var sun:DirectionalLight = new DirectionalLight( .25, -1, -1 );

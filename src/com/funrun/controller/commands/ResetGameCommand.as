@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.AddEmptyFloorRequest;
+	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
@@ -35,7 +35,7 @@ package com.funrun.controller.commands {
 		public var addObstaclesRequest:AddObstaclesRequest;
 		
 		[Inject]
-		public var addEmptyFloorRequest:AddEmptyFloorRequest;
+		public var addFloorRequest:AddFloorRequest;
 		
 		[Inject]
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
@@ -60,7 +60,7 @@ package com.funrun.controller.commands {
 			// Reset player.
 			resetPlayerRequest.dispatch();
 			// Reset floor and obstacles.
-			addEmptyFloorRequest.dispatch();
+			addFloorRequest.dispatch();
 			addObstaclesRequest.dispatch( playerModel.positionZ );
 			// Reset camera.
 			view3DModel.cameraX = 0;

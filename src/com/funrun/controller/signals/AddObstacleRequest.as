@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.controller.signals.payload.AddObstaclePayload;
+	import com.funrun.controller.signals.payload.AddSegmentPayload;
 	
 	import org.osflash.signals.Signal;
 	
@@ -8,7 +8,7 @@ package com.funrun.controller.signals
 	{
 		public function AddObstacleRequest()
 		{
-			super( AddObstaclePayload );
+			super( AddSegmentPayload );
 		}
 	}
 }

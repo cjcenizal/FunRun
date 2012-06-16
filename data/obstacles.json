@@ -4,6 +4,7 @@
 	"list" : [
 		{
 			"id" : "beamSegment",
+			"type" : "obstacle",
 			"active" : true,
 			"blocks" : [
 				[ [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ] ],
@@ -36,6 +37,7 @@
 		},
 		{
 			"id" : "beamSegment2",
+			"type" : "obstacle",
 			"active" : true,
 			"blocks" : [
 				[ [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ], [ null ] ],
@@ -68,6 +70,7 @@
 		},
 		{
 			"id" : "beam",
+			"type" : "obstacle",
 			"active" : false,
 			"blocks" : [
 				[ [ "block", "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ null, "block" ], [ "block", "block" ] ]
@@ -75,6 +78,7 @@
 		},
 		{
 			"id" : "teeth",
+			"type" : "obstacle",
 			"active" : false,
 			"blocks" : [
 				[ [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ], [ "block", "block" ], [ null, null ] ],
@@ -83,6 +87,7 @@
 		},
 		{
 			"id" : "wall",
+			"type" : "obstacle",
 			"active" : false,
 			"blocks" : [
 				[ [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ], [ "block", "block", "block" ] ]
@@ -90,6 +95,7 @@
 		},
 		{
 			"id" : "underpass",
+			"type" : "obstacle",
 			"active" : false,
 			"blocks" : [
 				[ [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ], [ null, null, null, "ceil" ] ],
@@ -101,6 +107,7 @@
 		},
 		{
 			"id" : "trench",
+			"type" : "obstacle",
 			"active" : false,
 			"flip" : true,
 			"pits" : [
@@ -118,6 +125,7 @@
 		},
 		{
 			"id" : "wallPit",
+			"type" : "obstacle",
 			"active" : false,
 			"flip" : true,
 			"pits" : [

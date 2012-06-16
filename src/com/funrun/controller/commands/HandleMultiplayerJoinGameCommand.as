@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.model.CountdownModel;
-	import com.funrun.model.ObstaclesModel;
+	import com.funrun.model.SegmentsModel;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -18,7 +18,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var obstaclesModel:ObstaclesModel;
+		public var segmentsModel:SegmentsModel;
 		
 		[Inject]
 		public var countdownModel:CountdownModel;
@@ -34,7 +34,7 @@ package com.funrun.controller.commands {
 			var remainingMsInCountdown:Number = message.getNumber( 2 );
 			
 			// Store random seed.
-			obstaclesModel.seed = obstacleSeed;
+			segmentsModel.seed = obstacleSeed;
 			
 			// Connect to game.
 			joinGameRequest.dispatch( roomIdToJoin );
