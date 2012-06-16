@@ -146,7 +146,6 @@ package com.funrun {
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.UserModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.BlocksJsonService;
@@ -223,7 +222,6 @@ package com.funrun {
 			injector.mapSingleton( GameModel );
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( ConfigurationModel );
-			injector.mapSingleton( UserModel );
 			injector.mapSingleton( CompetitorsModel );
 			injector.mapSingleton( ObserverModel );
 			injector.mapSingleton( InterpolationModel );

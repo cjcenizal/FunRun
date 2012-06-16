@@ -3,7 +3,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.UserModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -22,9 +21,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var playerModel:PlayerModel;
 		
-		[Inject]
-		public var userModel:UserModel;
-		
 		// Commands.
 		
 		[Inject]
@@ -35,7 +31,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// We receive ourselves as new players, so screen ourselves out.
-			if ( message.getInt( 0 ) != userModel.inGameId ) {
+			if ( message.getInt( 0 ) != playerModel.inGameId ) {
 				var competitor:CompetitorVO = new CompetitorVO(
 					message.getInt( 0 ),
 					message.getString( 1 )

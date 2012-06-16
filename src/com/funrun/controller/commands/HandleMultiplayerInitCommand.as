@@ -4,7 +4,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.UserModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -23,9 +22,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var playerModel:PlayerModel;
 		
-		[Inject]
-		public var userModel:UserModel;
-		
 		// Commands.
 		
 		[Inject]
@@ -39,11 +35,11 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Store id so we can ignore updates we originated.
-			userModel.inGameId = message.getInt( 0 );
+			playerModel.inGameId = message.getInt( 0 );
 			
 			// Add pre-existing competitors.
 			for ( var i:int = 1; i < message.length; i += 6 ) {
-				if ( message.getInt( i ) != userModel.inGameId ) {
+				if ( message.getInt( i ) != playerModel.inGameId ) {
 					var competitor:CompetitorVO = new CompetitorVO(
 						message.getInt( i ),
 						message.getString( i + 1 )

@@ -6,7 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.model.ConfigurationModel;
-	import com.funrun.model.UserModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.state.LoginState;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
@@ -20,7 +20,7 @@ package com.funrun.controller.commands {
 		public var configurationModel:ConfigurationModel;
 		
 		[Inject]
-		public var userModel:UserModel;
+		public var playerModel:PlayerModel;
 		
 		// Services.
 		
@@ -52,8 +52,8 @@ package com.funrun.controller.commands {
 			FB.init( { access_token: configurationModel.fbAccessToken, app_id: configurationModel.fbAppId, debug: true } );
 			FB.api( '/me', function( response:* ):void {
 				// Get user info from Facebook Graph, like their name.
-				userModel.name = response.name;
-				userModel.userId = response.id;
+				playerModel.name = response.name;
+				playerModel.userId = response.id;
 				checkWhitelistRequest.dispatch();
 			} );
 		}

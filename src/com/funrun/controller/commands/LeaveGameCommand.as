@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
-	import com.funrun.model.UserModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
@@ -16,7 +16,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var userModel:UserModel;
+		public var playerModel:PlayerModel;
 		
 		// Commands.
 		
@@ -46,7 +46,7 @@ package com.funrun.controller.commands {
 			multiplayerService.disconnectAndReset();
 			matchmakingService.disconnectAndReset();
 			// Reset in-game ID.
-			userModel.resetInGameId();
+			playerModel.resetInGameId();
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
 			showScreenRequest.dispatch( ScreenState.MAIN_MENU );

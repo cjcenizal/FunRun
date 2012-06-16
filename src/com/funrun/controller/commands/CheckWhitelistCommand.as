@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.WhitelistFailed;
-	import com.funrun.model.UserModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
@@ -13,7 +13,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var userModel:UserModel;
+		public var playerModel:PlayerModel;
 		
 		// Services.
 		
@@ -34,7 +34,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			whitelistService.onPassSignal.add( onPass );
 			whitelistService.onFailSignal.add( onFail );
-			whitelistService.isIdInTable( userModel.userId, "Whitelist", loginService.client );
+			whitelistService.isIdInTable( playerModel.userId, "Whitelist", loginService.client );
 		}
 		
 		private function onPass():void {

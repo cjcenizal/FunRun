@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.model.CompetitorsModel;
-	import com.funrun.model.UserModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -22,7 +22,7 @@ package com.funrun.controller.commands {
 		public var competitorsModel:CompetitorsModel;
 		
 		[Inject]
-		public var userModel:UserModel;
+		public var playerModel:PlayerModel;
 		
 		// Commands.
 		
@@ -31,7 +31,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			var id:int = message.getInt( 0 );
-			if ( id != userModel.inGameId ) {
+			if ( id != playerModel.inGameId ) {
 				var competitor:CompetitorVO = competitorsModel.getWithId( id );
 				competitorsModel.kill( competitor.id );
 				displayMessageRequest.dispatch( competitor.name + " just died!" );

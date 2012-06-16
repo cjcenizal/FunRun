@@ -14,8 +14,13 @@ package com.funrun.model {
 		
 		// Player geometry.
 		private var _mesh:Mesh;
-
-		// State.
+		
+		// Player properties.
+		public var userId:String;
+		public var name:String;
+		public var inGameId:int = -1;
+		
+		// Physical state.
 		private var _position:Vector3D;
 		private var _prevPosition:Vector3D;
 		private var _velocity:Vector3D;
@@ -32,8 +37,13 @@ package com.funrun.model {
 			_velocity = new Vector3D();
 			_position = new Vector3D();
 			_prevPosition = new Vector3D();
+			resetInGameId();
 		}
-
+		
+		public function resetInGameId():void {
+			inGameId = -1;
+		}
+		
 		public function startMovingLeft( speed:Number ):void {
 			if ( _isMovingRight ) {
 				stopMovingRight( speed );
