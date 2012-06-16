@@ -6,11 +6,12 @@ package com.funrun {
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
 	import com.funrun.controller.commands.AddObjectToSceneCommand;
-	import com.funrun.controller.commands.AddSegmentCommand;
 	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
 	import com.funrun.controller.commands.AddPlayerCommand;
+	import com.funrun.controller.commands.AddSegmentCommand;
 	import com.funrun.controller.commands.CheckWhitelistCommand;
+	import com.funrun.controller.commands.CullSegmentsCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorDiedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorJoinedCommand;
@@ -63,13 +64,14 @@ package com.funrun {
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
-	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddPopupRequest;
+	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.CheckWhitelistRequest;
+	import com.funrun.controller.signals.CullSegmentsRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.DisplayMessageRequest;
 	import com.funrun.controller.signals.DisplayPlaceRequest;
@@ -263,6 +265,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
+			signalCommandMap.mapSignalClass( CullSegmentsRequest,					CullSegmentsCommand );
 			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
 			signalCommandMap.mapSignalClass( InitModelsRequest,						InitModelsCommand );
 			signalCommandMap.mapSignalClass( CheckWhitelistRequest,					CheckWhitelistCommand );
