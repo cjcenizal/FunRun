@@ -79,16 +79,23 @@ package com.funrun.controller.commands {
 			segmentsModel.addSegment( new SegmentData( SegmentTypes.FLOOR, floorMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ ) );
 			
 			var material:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
-			var segments:SegmentsParser = new SegmentsParser( obstaclesService.data );
-			var len:int = segments.length;
+			var parsers:SegmentsParser = new SegmentsParser( obstaclesService.data );
+			var len:int = parsers.length;
 			for ( var i:int = 0; i < len; i++ ) {
-				var segment:SegmentParser = segments.getAt( i );
-				if ( segment.active ) {
+				var parser:SegmentParser = parsers.getAt( i );
+				if ( parser.active ) {
 					// Store this sucker.
-					segmentsModel.addSegment( SegmentData.make( blocksModel, materialsModel, segment ) );
-					if ( segment.flip ) {
-						// Store mirror version if required.
-						segmentsModel.addSegment( SegmentData.make( blocksModel, materialsModel, segment, true ) );
+					var segment:SegmentData = SegmentData.make( blocksModel, materialsModel, parser );
+					if ( segment.depth != TrackConstants.SEGMENT_DEPTH ) {
+						trace("WARNING in " + this + "! "
+							+ parser.id + " is the wrong depth! It's " + segment.depth + " and it should be " + TrackConstants.SEGMENT_DEPTH
+							+ ". It's off by " + ( ( TrackConstants.SEGMENT_DEPTH - segment.depth ) / TrackConstants.BLOCK_SIZE ) + " blocks.");
+					} else {
+						segmentsModel.addSegment( segment );
+						if ( parser.flip ) {
+							// Store mirror version if required.
+							segmentsModel.addSegment( SegmentData.make( blocksModel, materialsModel, parser, true ) );
+						}
 					}
 				}
 			}

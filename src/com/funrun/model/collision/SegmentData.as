@@ -113,6 +113,18 @@ package com.funrun.model.collision {
 			return _maxZ;
 		}
 		
+		public function get width():Number {
+			return _maxX - _minX;
+		}
+
+		public function get height():Number {
+			return _maxY - _minY;
+		}
+		
+		public function get depth():Number {
+			return _maxZ - _minZ;
+		}
+		
 		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, parser:SegmentParser, flip:Boolean = false ):SegmentData {
 			
 			// TO-DO:
