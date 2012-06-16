@@ -1,5 +1,6 @@
 package com.funrun.controller.commands {
 	
+	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
@@ -43,6 +44,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var startRunningRequest:StartRunningRequest;
 		
+		[Inject]
+		public var addAiCompetitorsRequest:AddAiCompetitorsRequest;
+		
 		override public function execute():void {
 			// Set game state.
 			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
@@ -56,6 +60,7 @@ package com.funrun.controller.commands {
 			} else {
 				startGameLoopRequest.dispatch();
 				startRunningRequest.dispatch();
+				addAiCompetitorsRequest.dispatch( 6 );
 			}
 		}
 	}

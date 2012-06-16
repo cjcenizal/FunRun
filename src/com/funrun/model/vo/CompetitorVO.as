@@ -46,6 +46,10 @@ package com.funrun.model.vo {
 			mesh.z = _oldPosition.z + ( _newPosition.z - _oldPosition.z ) * pct;
 		}
 		
+		public function get position():Vector3D {
+			return _newPosition;
+		}
+		
 		public function get id():int {
 			return _id;
 		}

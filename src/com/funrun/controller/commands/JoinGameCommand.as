@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
-	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
@@ -53,7 +53,7 @@ package com.funrun.controller.commands {
 		public var handleMultiplayerUpdateRequest:HandleMultiplayerUpdateRequest;
 		
 		[Inject]
-		public var handleMultiplayerNewPlayerJoinedRequest:HandleMultiplayerNewPlayerJoinedRequest;
+		public var handleMultiplayerCompetitorJoinedRequest:HandleMultiplayerCompetitorJoinedRequest;
 		
 		[Inject]
 		public var handleMultiplayerPlayerLeftRequest:HandleMultiplayerPlayerLeftRequest;
@@ -97,7 +97,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onNewPlayerJoined( message:Message ):void {
-			handleMultiplayerNewPlayerJoinedRequest.dispatch( message );
+			handleMultiplayerCompetitorJoinedRequest.dispatch( message );
 		}
 		
 		private function onPlayerLeft( message:Message ):void {

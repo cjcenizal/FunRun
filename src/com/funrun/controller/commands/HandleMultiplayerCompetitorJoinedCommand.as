@@ -10,7 +10,7 @@ package com.funrun.controller.commands {
 	
 	import playerio.Message;
 
-	public class HandleMultiplayerNewPlayerJoinedCommand extends Command {
+	public class HandleMultiplayerCompetitorJoinedCommand extends Command {
 		
 		// Arguments.
 		

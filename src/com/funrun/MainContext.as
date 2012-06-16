@@ -1,5 +1,6 @@
 package com.funrun {
 
+	import com.funrun.controller.commands.AddAiCompetitorsCommand;
 	import com.funrun.controller.commands.AddCompetitorCommand;
 	import com.funrun.controller.commands.AddEmptyFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
@@ -11,9 +12,9 @@ package com.funrun {
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.CheckWhitelistCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
+	import com.funrun.controller.commands.HandleMultiplayerCompetitorJoinedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerInitCommand;
 	import com.funrun.controller.commands.HandleMultiplayerJoinGameCommand;
-	import com.funrun.controller.commands.HandleMultiplayerNewPlayerJoinedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerPlayerDiedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerPlayerLeftCommand;
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
@@ -50,11 +51,13 @@ package com.funrun {
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameLoopCommand;
 	import com.funrun.controller.commands.StopObserverLoopCommand;
+	import com.funrun.controller.commands.UpdateAiCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.UpdatePlayerCollisionsCommand;
 	import com.funrun.controller.commands.UpdateTrackCommand;
 	import com.funrun.controller.commands.WhitelistFailedCommand;
+	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddEmptyFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
@@ -73,9 +76,9 @@ package com.funrun {
 	import com.funrun.controller.signals.DisplayPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
-	import com.funrun.controller.signals.HandleMultiplayerNewPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
@@ -117,6 +120,7 @@ package com.funrun {
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
@@ -193,10 +197,19 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( true );
+			var onlineState:OnlineState = new OnlineState( false );
 		
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
+			
+			// Apply whitelist switch.
+			if ( useWhitelist ) {
+				// Block non-whitelisted users.
+				injector.mapSingletonOf( IWhitelistService, WhitelistService );
+			} else {
+				// Allow everybody.
+				injector.mapSingletonOf( IWhitelistService, WhitelistOpenService );
+			}
 			
 			// Map models.
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
@@ -227,13 +240,7 @@ package com.funrun {
 			injector.mapSingleton( MatchmakingService );
 			injector.mapSingleton( MultiplayerService );
 			injector.mapSingleton( OrdinalizeNumberService );
-			if ( useWhitelist ) {
-				// Block non-whitelisted users.
-				injector.mapSingletonOf( IWhitelistService, WhitelistService );
-			} else {
-				// Allow everybody.
-				injector.mapSingletonOf( IWhitelistService, WhitelistOpenService );
-			}
+			
 			// Map signals.
 			injector.mapSingleton( AddNametagRequest );
 			injector.mapSingleton( AddPopupRequest );
@@ -251,6 +258,7 @@ package com.funrun {
 			injector.mapSingleton( ToggleCountdownRequest );
 			injector.mapSingleton( UpdateCountdownRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
+			signalCommandMap.mapSignalClass( AddAiCompetitorsRequest,				AddAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
 			signalCommandMap.mapSignalClass( AddEmptyFloorRequest,					AddEmptyFloorCommand );
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
@@ -266,7 +274,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
-			signalCommandMap.mapSignalClass( HandleMultiplayerNewPlayerJoinedRequest,HandleMultiplayerNewPlayerJoinedCommand );
+			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorJoinedRequest,HandleMultiplayerCompetitorJoinedCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerDiedRequest,	HandleMultiplayerPlayerDiedCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerPlayerLeftRequest,	HandleMultiplayerPlayerLeftCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
@@ -300,6 +308,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
 			signalCommandMap.mapSignalClass( StopGameLoopRequest,					StopGameLoopCommand );
 			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );
+			signalCommandMap.mapSignalClass( UpdateAiCompetitorsRequest,			UpdateAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );

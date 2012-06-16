@@ -1,10 +1,12 @@
 package com.funrun.controller.commands {
 	
 	import com.cenizal.ui.AbstractLabel;
+	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.View3DModel;
+	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import flash.geom.Point;
@@ -12,6 +14,11 @@ package com.funrun.controller.commands {
 	import org.robotlegs.mvcs.Command;
 	
 	public class UpdateCompetitorsCommand extends Command {
+		
+		// State.
+		
+		[Inject]
+		public var onlineState:OnlineState;
 		
 		// Models.
 		
@@ -27,12 +34,25 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var view3DModel:View3DModel;
 		
+		// Commands.
+		
+		[Inject]
+		public var updateAiCompetitorsRequest:UpdateAiCompetitorsRequest;
+		
 		override public function execute():void {
+			
+			// Update AI.
+			if ( !onlineState.isOnline ) {
+				updateAiCompetitorsRequest.dispatch();
+			}
+			
+			// Interpolate competitor position.
 			var len:int = competitorsModel.numCompetitors;
 			var competitor:CompetitorVO;
 			var nametag:AbstractLabel;
 			for ( var i:int = 0; i < len; i++ ) {
 				competitor = competitorsModel.getAt( i );
+				competitor.hardUpdate();
 				competitor.interpolate( interpolationModel.percent );
 				nametag = nametagsModel.getWithId( competitor.id.toString() );
 				if ( nametag ) {
