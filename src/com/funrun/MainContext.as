@@ -6,7 +6,7 @@ package com.funrun {
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
 	import com.funrun.controller.commands.AddObjectToSceneCommand;
-	import com.funrun.controller.commands.AddObstacleCommand;
+	import com.funrun.controller.commands.AddSegmentCommand;
 	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
 	import com.funrun.controller.commands.AddPlayerCommand;
@@ -63,7 +63,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
-	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
@@ -260,7 +260,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			signalCommandMap.mapSignalClass( AddObjectToSceneRequest,				AddObjectToSceneCommand );
-			signalCommandMap.mapSignalClass( AddObstacleRequest,					AddObstacleCommand );
+			signalCommandMap.mapSignalClass( AddSegmentRequest,					AddSegmentCommand );
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );

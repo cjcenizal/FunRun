@@ -4,9 +4,9 @@ package com.funrun.controller.signals
 	
 	import org.osflash.signals.Signal;
 	
-	public class AddObstacleRequest extends Signal
+	public class AddSegmentRequest extends Signal
 	{
-		public function AddObstacleRequest()
+		public function AddSegmentRequest()
 		{
 			super( AddSegmentPayload );
 		}

@@ -4,9 +4,9 @@ package com.funrun.controller.signals
 	
 	public class AddFloorRequest extends Signal
 	{
-		public function AddFloorRequest(...valueClasses)
+		public function AddFloorRequest()
 		{
-			super(valueClasses);
+			super();
 		}
 	}
 }

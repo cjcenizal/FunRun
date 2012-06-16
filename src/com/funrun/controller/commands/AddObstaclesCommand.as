@@ -1,8 +1,9 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.AddObstacleRequest;
+	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.payload.AddSegmentPayload;
 	import com.funrun.model.TrackModel;
+	import com.funrun.model.constants.SegmentTypes;
 	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
@@ -22,7 +23,7 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var addObstacleRequest:AddObstacleRequest;
+		public var addObstacleRequest:AddSegmentRequest;
 		
 		override public function execute():void {
 			var index:int;
@@ -33,7 +34,7 @@ package com.funrun.controller.commands {
 				if ( index < 0 ) {
 					break;
 				}
-				addObstacleRequest.dispatch( new AddSegmentPayload( index ) );
+				addObstacleRequest.dispatch( new AddSegmentPayload( SegmentTypes.OBSTACLE, index ) );
 			}
 			
 			// Fill up track on the far side.
@@ -42,7 +43,7 @@ package com.funrun.controller.commands {
 				if ( index < 0 ) {
 					break;
 				}
-				addObstacleRequest.dispatch( new AddSegmentPayload( index ) );
+				addObstacleRequest.dispatch( new AddSegmentPayload( SegmentTypes.OBSTACLE, index ) );
 			}
 		}
 	}
