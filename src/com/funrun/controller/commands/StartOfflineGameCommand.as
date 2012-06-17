@@ -34,7 +34,7 @@ package com.funrun.controller.commands {
 			}
 			startGameLoopRequest.dispatch();
 			startRunningRequest.dispatch();
-			addAiCompetitorsRequest.dispatch( 0 );
+			addAiCompetitorsRequest.dispatch( 6 );
 		}
 	}
 }

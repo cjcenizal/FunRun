@@ -1,8 +1,8 @@
 package com.funrun.controller.commands {
 
+	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
-	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
@@ -56,9 +56,18 @@ package com.funrun.controller.commands {
 			
 			// TO-DO: Implement a timer to watch a dead competitor for a few seconds before switching.
 			
-			// If we are observing a live competitor, continue following him.
 			var competitor:CompetitorVO = competitorsModel.getWithId( observerModel.competitorId );
-			if ( competitor && !competitor.isDead ) {
+			if ( !competitor ||
+				( competitor.isDead && ( new Date().getTime() - competitor.deathTime > 1500 ) ) ) {
+				// Else, try to follow a new competitor.
+				if ( competitorsModel.numLiveCompetitors > 0 ) {
+					followNewCompetitorRequest.dispatch( 1 );
+				} else {
+					// If there are no surviving competitors, show end results.
+					endRoundRequest.dispatch();
+					stopObserverLoopRequest.dispatch();
+				}
+			} else {
 				// Update competitors' positions.
 				updateCompetitorsRequest.dispatch();
 				
@@ -79,17 +88,7 @@ package com.funrun.controller.commands {
 				// Render.
 				renderSceneRequest.dispatch();
 				
-			} else {
-				// Else, try to follow a new competitor.
-				if ( competitorsModel.numLiveCompetitors > 0 ) {
-					followNewCompetitorRequest.dispatch( 1 );
-				} else {
-					// If there are no surviving competitors, show end results.
-					endRoundRequest.dispatch();
-					stopObserverLoopRequest.dispatch();
-				}
 			}
-			
 		}
 	}
 }

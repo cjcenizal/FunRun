@@ -203,7 +203,7 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( true );
+			var onlineState:OnlineState = new OnlineState( false );
 		
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );

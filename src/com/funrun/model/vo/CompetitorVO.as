@@ -9,7 +9,6 @@ package com.funrun.model.vo {
 	public class CompetitorVO implements IPlaceable {
 
 		public var mesh:Mesh;
-		public var isDead:Boolean;
 		public var isDucking:Boolean;
 		public var liveIndex:int = 0;
 		private var _id:int;
@@ -17,6 +16,8 @@ package com.funrun.model.vo {
 		private var _oldPosition:Vector3D;
 		private var _newPosition:Vector3D;
 		private var _place:int = 0;
+		private var _isDead:Boolean = false;
+		private var _deathTime:Number = 0;
 		
 		public function CompetitorVO( id:int, name:String ) {
 			_id = id;
@@ -46,6 +47,11 @@ package com.funrun.model.vo {
 			mesh.z = _oldPosition.z + ( _newPosition.z - _oldPosition.z ) * pct;
 		}
 		
+		public function kill():void {
+			_isDead = true;
+			_deathTime = new Date().getTime();
+		}
+		
 		public function get position():Vector3D {
 			return _newPosition;
 		}
@@ -68,6 +74,14 @@ package com.funrun.model.vo {
 		
 		public function get place():int {
 			return _place;
+		}
+		
+		public function get isDead():Boolean {
+			return _isDead;
+		}
+		
+		public function get deathTime():Number {
+			return _deathTime;
 		}
 	}
 }

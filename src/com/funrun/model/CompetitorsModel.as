@@ -47,7 +47,7 @@ package com.funrun.model {
 		public function kill( id:int ):void {
 			var competitor:CompetitorVO = getWithId( id );
 			if ( competitor ) {
-				competitor.isDead = true;
+				competitor.kill();
 				for ( var i:int = 0; i < _liveCompetitorsArray.length; i++ ) {
 					if ( _liveCompetitorsArray[ i ] == competitor ) {
 						_liveCompetitorsArray.splice( i, 1 );
