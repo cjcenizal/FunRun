@@ -301,7 +301,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );
-			signalCommandMap.mapSignalClass( ConnectPlayerObjectRequest, 				ConnectPlayerObjectCommand );
+			signalCommandMap.mapSignalClass( ConnectPlayerObjectRequest, 			ConnectPlayerObjectCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );
 			signalCommandMap.mapSignalClass( RemovePlaceableRequest,				RemovePlaceableCommand );
@@ -331,17 +331,17 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
 			
 			// Map views to mediators.
-			mediatorMap.mapView( MainView, 					MainMediator );
-			mediatorMap.mapView( TrackView, 				TrackMediator );
+			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
 			mediatorMap.mapView( GameUIView,				GameUIMediator );
-			mediatorMap.mapView( LoginStatusView, 			LoginStatusMediator );
 			mediatorMap.mapView( GameView,					GameMediator );
+			mediatorMap.mapView( LoginStatusView, 			LoginStatusMediator );
+			mediatorMap.mapView( MainView, 					MainMediator );
 			mediatorMap.mapView( MainMenuView,				MainMenuMediator );
+			mediatorMap.mapView( NametagsView,				NametagsMediator );
+			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
 			mediatorMap.mapView( PopupsView,				PopupsMediator );
 			mediatorMap.mapView( ResultsPopup,				ResultPopupMediator );
-			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
-			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
-			mediatorMap.mapView( NametagsView,				NametagsMediator );
+			mediatorMap.mapView( TrackView, 				TrackMediator );
 			
 			// Do this last, since it causes our entire view system to be built.
 			mediatorMap.mapView( FunRun, 					AppMediator );
