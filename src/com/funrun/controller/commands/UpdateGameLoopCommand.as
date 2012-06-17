@@ -171,7 +171,6 @@ package com.funrun.controller.commands {
 			updateNametagsRequest.dispatch();
 			
 			// Update distance counter.
-			// TO-DO: Fix this so that a maxDistance var is stored inside PlayerModel.
 			if ( gameModel.gameState == GameState.RUNNING ) {
 				displayDistanceRequest.dispatch( playerModel.distanceString + " feet" );
 			}

@@ -27,7 +27,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			for ( var i:int = 0; i < trackModel.numObstacles; i++ ) {
 				var obstacle:SegmentData = trackModel.getObstacleAt( i );
-				if ( obstacle.z < positionZ - TrackConstants.SEGMENT_CULL_DEPTH_NEAR
+				if ( obstacle.z < positionZ + TrackConstants.SEGMENT_CULL_DEPTH_NEAR
 					|| obstacle.z > positionZ + TrackConstants.SEGMENT_CULL_DEPTH_FAR ) {
 					removeObjectFromSceneRequest.dispatch( obstacle.mesh );
 					trackModel.removeObstacleAt( i );
