@@ -116,6 +116,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartGameRequest;
@@ -155,6 +156,7 @@ package com.funrun {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.state.OnlineState;
+	import com.funrun.model.state.ProductionState;
 	import com.funrun.services.BlocksJsonService;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.MatchmakingService;
@@ -203,11 +205,13 @@ package com.funrun {
 		
 		override public function startup():void {
 			// Switches.
-			var useWhitelist:Boolean = true;
-			var onlineState:OnlineState = new OnlineState( false );
+			var useWhitelist:Boolean 				= true;
+			var onlineState:OnlineState 			= new OnlineState( false );
+			var productionState:ProductionState 	= new ProductionState( false );
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
+			injector.mapValue( ProductionState, productionState );
 			
 			// Apply whitelist switch.
 			if ( useWhitelist ) {
@@ -262,6 +266,7 @@ package com.funrun {
 			injector.mapSingleton( RemoveResultsPopupRequest );
 			injector.mapSingleton( RemoveNametagRequest );
 			injector.mapSingleton( ShowScreenRequest );
+			injector.mapSingleton( ShowStatsRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
 			injector.mapSingleton( UpdateCountdownRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );

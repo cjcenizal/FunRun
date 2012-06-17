@@ -15,6 +15,8 @@ package com.funrun.view.components {
 	public class TrackView extends AbstractComponent {
 		
 		private var _view:View3D;
+		private var _isDebugging:Boolean = false;
+		private var _awayStats:AwayStats;
 		
 		/**
 		 * Constructor
@@ -32,10 +34,20 @@ package com.funrun.view.components {
 		/**
 		 * Add debugging UI.
 		 */
-		public function debug():void {
-			// Add stats.
-			var awayStats:AwayStats = new AwayStats( _view );
-			addChild( awayStats );
+		public function debug( doDebug:Boolean ):void {
+			_isDebugging = doDebug;
+			if ( !_isDebugging ) {
+				if ( _awayStats ) {
+					_awayStats.registerView( null );
+					removeChild( _awayStats );
+					_awayStats = null;
+				}
+			} else {
+				if ( !_awayStats ) {
+					_awayStats = new AwayStats( _view );
+					addChild( _awayStats );
+				}
+			}
 		}
 		
 		public function set view3D( view:View3D ):void {
@@ -43,8 +55,13 @@ package com.funrun.view.components {
 				removeChild( _view );
 				_view = null;
 			}
-			_view = view;
-			addChild( _view );
+			if ( view ) {
+				_view = view;
+				addChild( _view );
+				if ( _awayStats ) {
+					_awayStats.registerView( _view );
+				}
+			}
 		}
 	}
 }

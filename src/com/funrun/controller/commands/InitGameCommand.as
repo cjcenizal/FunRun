@@ -18,6 +18,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadSegmentsRequest;
+	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
@@ -27,6 +28,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.TimeConstants;
 	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -34,6 +36,11 @@ package com.funrun.controller.commands
 	 * BuildGameCommand assigns materials and lights to the track.
 	 */
 	public class InitGameCommand extends Command {
+		
+		// State.
+		
+		[Inject]
+		public var productionState:ProductionState;
 		
 		// Models.
 		
@@ -81,7 +88,14 @@ package com.funrun.controller.commands
 		[Inject]
 		public var addView3DRequest:AddView3DRequest;
 		
+		[Inject]
+		public var showStatsRequest:ShowStatsRequest;
+		
 		override public function execute():void {
+			
+			// Show stats if we're in development.
+			showStatsRequest.dispatch( !productionState.isProduction );
+			
 			// Assign points to places.
 			pointsModel.assign( 0, 10 );
 			pointsModel.assign( 1, 9 );
