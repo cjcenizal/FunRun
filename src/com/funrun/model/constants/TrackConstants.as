@@ -39,6 +39,10 @@ package com.funrun.model.constants
 		public static const HEAD_ON_SMACK_SPEED:Number = -160;
 		public static const FALL_DEATH_HEIGHT:Number = -1500;
 		
+		// Fog.
+		public static const FOG_FAR:Number = TRACK_DEPTH;
+		public static const FOG_NEAR:Number = FOG_FAR - 2000;
+		
 		// Culling.
 		public static const CULL_FLOOR:int = -100000;
 	}

@@ -91,6 +91,7 @@ package com.funrun.controller.commands {
 						} else {
 							// Else hit the top sides of things.
 							if ( face.type == FaceTypes.TOP ) {
+								// TO-DO: What is CULL_FLOOR and why is this here?
 								if ( face.maxY > TrackConstants.CULL_FLOOR ) {
 									playerModel.positionY = ( playerModel.isDucking ) ? face.maxY + TrackConstants.PLAYER_HALF_SIZE * .25 : face.maxY + TrackConstants.PLAYER_HALF_SIZE;
 									playerModel.velocityY = 0;

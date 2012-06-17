@@ -114,7 +114,7 @@ package com.funrun.controller.commands
 			addView3DRequest.dispatch( view );
 			
 			// Add materials.
-			var fog:FogMethod = new FogMethod( TrackConstants.TRACK_DEPTH - 2000, TrackConstants.TRACK_DEPTH, 0xffffff );
+			var fog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
 			var playerMaterial:ColorMaterial = new ColorMaterial( 0x00FF00 );
 			playerMaterial.addMethod( fog );
 			var floorMaterial:ColorMaterial = new ColorMaterial( 0xFF0000 );
