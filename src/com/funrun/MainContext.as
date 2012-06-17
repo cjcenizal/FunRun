@@ -23,7 +23,6 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.InitGameCommand;
-	import com.funrun.controller.commands.InitModelsCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
@@ -89,7 +88,6 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.InitGameRequest;
-	import com.funrun.controller.signals.InitModelsRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -149,6 +147,7 @@ package com.funrun {
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.PointsModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
@@ -220,22 +219,23 @@ package com.funrun {
 			// Map models.
 			injector.mapSingletonOf( IGeosModel, GeosMockModel );
 			injector.mapSingleton( BlocksModel );
-			injector.mapSingleton( SegmentsModel );
-			injector.mapSingleton( MaterialsModel );
+			injector.mapSingleton( CompetitorsModel );
+			injector.mapSingleton( ConfigurationModel );
+			injector.mapSingleton( CountdownModel );
+			injector.mapSingleton( GameModel );
+			injector.mapSingleton( InterpolationModel );
+			injector.mapSingleton( KeyboardModel );
 			injector.mapSingleton( LightsModel );
+			injector.mapSingleton( MaterialsModel );
+			injector.mapSingleton( NametagsModel );
+			injector.mapSingleton( ObserverModel );
+			injector.mapSingleton( PlacesModel );
+			injector.mapSingleton( PlayerModel );
+			injector.mapSingleton( PointsModel );
+			injector.mapSingleton( SegmentsModel );
 			injector.mapSingleton( TimeModel );
 			injector.mapSingleton( TrackModel );
-			injector.mapSingleton( PlayerModel );
 			injector.mapSingleton( View3DModel );
-			injector.mapSingleton( GameModel );
-			injector.mapSingleton( CountdownModel );
-			injector.mapSingleton( ConfigurationModel );
-			injector.mapSingleton( CompetitorsModel );
-			injector.mapSingleton( ObserverModel );
-			injector.mapSingleton( InterpolationModel );
-			injector.mapSingleton( NametagsModel );
-			injector.mapSingleton( PlacesModel );
-			injector.mapSingleton( KeyboardModel );
 			
 			// Map services.
 			injector.mapSingleton( BlocksJsonService );
@@ -277,7 +277,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( CullSegmentsRequest,					CullSegmentsCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
 			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
-			signalCommandMap.mapSignalClass( InitModelsRequest,						InitModelsCommand );
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );

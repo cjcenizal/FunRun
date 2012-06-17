@@ -2,6 +2,8 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.SavePlayerObjectRequest;
+	import com.funrun.model.CompetitorsModel;
+	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.ResultsPopupVO;
 	import com.funrun.view.components.ResultsPopup;
@@ -14,6 +16,12 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var placesModel:PlacesModel;
+		
+		[Inject]
+		public var competitorsModel:CompetitorsModel;
 		
 		// Commands.
 		
@@ -33,6 +41,18 @@ package com.funrun.controller.commands {
 			}
 			addPopupRequest.dispatch( new ResultsPopup(
 				new ResultsPopupVO( message ) ) );
+			
+			// Show places.
+			var orderedByPlace:Array = [];
+			for ( var i:int = 0; i < competitorsModel.numCompetitors; i++ ) {
+				orderedByPlace.push( { "place" : competitorsModel.getAt( i ).place, "name" : competitorsModel.getAt( i ).name } );
+			}
+			orderedByPlace.push( { "place" : playerModel.place, "name" : "You" } );
+			orderedByPlace.sortOn( "place", Array.NUMERIC );
+			
+			for ( var i:int = 0; i < orderedByPlace.length; i++ ) {
+				trace(orderedByPlace[ i ].place + " : " + orderedByPlace[ i ].name );
+			}
 			
 			// Assign new best distance and save.
 			playerModel.bestDistance = playerModel.distanceInFeet;

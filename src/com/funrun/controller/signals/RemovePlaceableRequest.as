@@ -1,6 +1,6 @@
 package com.funrun.controller.signals {
 	
-	import com.funrun.model.IPlaceable;
+	import com.funrun.model.vo.IPlaceable;
 	
 	import org.osflash.signals.Signal;
 	

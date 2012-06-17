@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.UpdatePlacesRequest;
-	import com.funrun.model.IPlaceable;
+	import com.funrun.model.vo.IPlaceable;
 	import com.funrun.model.PlacesModel;
 
 	import org.robotlegs.mvcs.Command;

@@ -2,7 +2,6 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.InitGameRequest;
-	import com.funrun.controller.signals.InitModelsRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LoginRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
@@ -36,12 +35,6 @@ package com.funrun.controller.commands {
 		public var toggleMainModuleRequest:EnableMainMenuRequest;
 		
 		[Inject]
-		public var buildInterpolationRequest:InitModelsRequest;
-		
-		[Inject]
-		public var initModelsRequest:InitModelsRequest;
-		
-		[Inject]
 		public var initGameRequest:InitGameRequest;
 		
 		override public function execute():void {
@@ -49,7 +42,6 @@ package com.funrun.controller.commands {
 			showScreenRequest.dispatch( ScreenState.MAIN_MENU );
 			toggleMainModuleRequest.dispatch( false );
 			// Build everyhing.
-			initModelsRequest.dispatch();
 			initGameRequest.dispatch();
 			// Configure the app and login.
 			loadConfigurationRequest.dispatch();

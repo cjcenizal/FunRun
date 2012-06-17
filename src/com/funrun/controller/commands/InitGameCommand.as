@@ -17,9 +17,14 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadSegmentsRequest;
+	import com.funrun.model.InterpolationModel;
+	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
+	import com.funrun.model.PointsModel;
+	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
+	import com.funrun.model.constants.TimeConstants;
 	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Command;
@@ -39,6 +44,18 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var materialsModel:MaterialsModel;
+		
+		[Inject]
+		public var keyboardModel:KeyboardModel;
+		
+		[Inject]
+		public var interpolationModel:InterpolationModel;
+		
+		[Inject]
+		public var timeModel:TimeModel;
+		
+		[Inject]
+		public var pointsModel:PointsModel;
 		
 		// Commands.
 		
@@ -64,6 +81,26 @@ package com.funrun.controller.commands
 		public var addView3DRequest:AddView3DRequest;
 		
 		override public function execute():void {
+			// Assign points to places.
+			pointsModel.assign( 0, 10 );
+			pointsModel.assign( 1, 9 );
+			pointsModel.assign( 2, 8 );
+			pointsModel.assign( 3, 6 );
+			pointsModel.assign( 4, 4 );
+			pointsModel.assign( 5, 2 );
+			pointsModel.assign( 6, 1 );
+			
+			// Keyboard.
+			keyboardModel.stage = contextView.stage;
+			keyboardModel.init();
+			
+			// Interpolation.
+			interpolationModel.setIncrement( TimeConstants.INTERPOLATION_INCREMENT );
+			
+			// Time.
+			timeModel.stage = contextView.stage;
+			timeModel.init();
+			
 			// Add view.
 			var camera:Camera3D = new Camera3D( new PerspectiveLens( TrackConstants.CAM_FOV ) );
 			camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;

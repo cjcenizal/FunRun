@@ -2,7 +2,6 @@ package com.funrun.model.vo {
 
 	import away3d.entities.Mesh;
 	
-	import com.funrun.model.IPlaceable;
 	
 	import flash.geom.Vector3D;
 

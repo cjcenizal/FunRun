@@ -10,6 +10,7 @@ package com.funrun.model {
 	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Actor;
+	import com.funrun.model.vo.IPlaceable;
 
 	public class PlayerModel extends Actor implements IPlaceable {
 		
