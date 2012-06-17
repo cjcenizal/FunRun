@@ -1,12 +1,16 @@
 package com.funrun.controller.commands {
 	
+	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.model.CompetitorsModel;
+	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.ObserverConstants;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
+	import com.funrun.model.vo.CompetitorVO;
 	
 	import flash.events.KeyboardEvent;
 	
@@ -22,6 +26,12 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var observerModel:ObserverModel;
 		
+		[Inject]
+		public var nametagsModel:NametagsModel;
+		
+		[Inject]
+		public var competitorsModel:CompetitorsModel;
+		
 		// Temp.
 		
 		[Inject]
@@ -31,6 +41,18 @@ package com.funrun.controller.commands {
 		public var showScreenRequest:ShowScreenRequest;
 		
 		override public function execute():void {
+			// Move nametags out of the way.
+			var len:int = competitorsModel.numCompetitors;
+			var competitor:CompetitorVO;
+			var nametag:AbstractLabel;
+			for ( var i:int = 0; i < len; i++ ) {
+				competitor = competitorsModel.getAt( i );
+				nametag = nametagsModel.getWithId( competitor.id.toString() );
+				if ( nametag ) {
+					nametag.x = -500;
+				}
+			}
+			
 			// Set up observer.
 			observerModel.reset();
 			observerModel.x = ObserverConstants.CAM_X;

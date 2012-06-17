@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
-
+	
 	public class UpdateAiCompetitorsCommand extends Command {
 		
 		// Models.
@@ -33,7 +33,7 @@ package com.funrun.controller.commands {
 			for ( var i:int = 0; i < competitorsModel.numCompetitors; i++ ) {
 				competitor = competitorsModel.getAt( i );
 				if ( !competitor.isDead ) {
-					if ( !killed && timeModel.ticks > ( 30 * 4 ) && timeModel.ticks % 40 == 0 ) {
+					if ( !killed && timeModel.ticks > ( 30 * 4 ) && timeModel.ticks % 200 == 0 ) {
 						competitorsModel.kill( competitor.id );
 						displayMessageRequest.dispatch( competitor.name + " just died!" );
 						killed = true;

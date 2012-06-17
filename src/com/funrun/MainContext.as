@@ -1,5 +1,5 @@
 package com.funrun {
-
+	
 	import com.funrun.controller.commands.AddAiCompetitorsCommand;
 	import com.funrun.controller.commands.AddCompetitorCommand;
 	import com.funrun.controller.commands.AddFloorCommand;
@@ -55,6 +55,7 @@ package com.funrun {
 	import com.funrun.controller.commands.StopObserverLoopCommand;
 	import com.funrun.controller.commands.UpdateAiCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
+	import com.funrun.controller.commands.UpdateNametagsCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.UpdatePlayerCollisionsCommand;
 	import com.funrun.controller.commands.UpdateTrackCommand;
@@ -128,6 +129,7 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
+	import com.funrun.controller.signals.UpdateNametagsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
@@ -192,18 +194,18 @@ package com.funrun {
 	import flash.events.Event;
 	
 	import org.robotlegs.mvcs.SignalContext;
-
+	
 	public class MainContext extends SignalContext {
-
+		
 		public function MainContext( contextView:DisplayObjectContainer, autoStartup:Boolean ) {
 			super( contextView, autoStartup );
 		}
-
+		
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean = true;
 			var onlineState:OnlineState = new OnlineState( false );
-		
+			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
 			
@@ -317,11 +319,12 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );
 			signalCommandMap.mapSignalClass( UpdateAiCompetitorsRequest,			UpdateAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
+			signalCommandMap.mapSignalClass( UpdateNametagsRequest,					UpdateNametagsCommand );
 			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
 			signalCommandMap.mapSignalClass( UpdatePlayerCollisionsRequest,			UpdatePlayerCollisionsCommand );
 			signalCommandMap.mapSignalClass( WhitelistFailed,						WhitelistFailedCommand );
-
+			
 			// Map views to mediators.
 			mediatorMap.mapView( MainView, 					MainMediator );
 			mediatorMap.mapView( TrackView, 				TrackMediator );
@@ -343,7 +346,7 @@ package com.funrun {
 			
 			super.startup();
 		}
-
+		
 		private function onEnterFrame( e:Event ):void {
 			this.contextView.removeEventListener( Event.ENTER_FRAME, onEnterFrame );
 			commandMap.execute( InitAppCommand );

@@ -5,6 +5,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.PointsModel;
 	import com.funrun.model.vo.ResultsPopupVO;
 	import com.funrun.view.components.ResultsPopup;
 	
@@ -19,6 +20,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var placesModel:PlacesModel;
+		
+		[Inject]
+		public var pointsModel:PointsModel;
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
@@ -54,8 +58,11 @@ package com.funrun.controller.commands {
 				trace(orderedByPlace[ i ].place + " : " + orderedByPlace[ i ].name );
 			}
 			
-			// Assign new best distance and save.
-			playerModel.bestDistance = playerModel.distanceInFeet;
+			// Assign new best distance, points, and save.
+			if ( playerModel.distanceInFeet > playerModel.bestDistance ) {
+				playerModel.bestDistance = playerModel.distanceInFeet;
+			}
+			playerModel.points += pointsModel.retrieveValue( playerModel.place - 1 );
 			savePlayerObjectRequest.dispatch();
 		}
 	}

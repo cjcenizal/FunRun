@@ -7,6 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
+	import com.funrun.controller.signals.UpdateNametagsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
@@ -22,7 +23,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.state.OnlineState;
 	
 	import org.robotlegs.mvcs.Command;
-
+	
 	public class UpdateGameLoopCommand extends Command {
 		
 		// Arguments.
@@ -34,10 +35,10 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var playerModel:PlayerModel;
-
+		
 		[Inject]
 		public var view3DModel:View3DModel;
-
+		
 		[Inject]
 		public var timeModel:TimeModel;
 		
@@ -74,6 +75,9 @@ package com.funrun.controller.commands {
 		public var updateCompetitorsRequest:UpdateCompetitorsRequest;
 		
 		[Inject]
+		public var updateNametagsRequest:UpdateNametagsRequest;
+		
+		[Inject]
 		public var updatePlacesRequest:UpdatePlacesRequest;
 		
 		override public function execute():void {
@@ -96,7 +100,7 @@ package com.funrun.controller.commands {
 					// Update obstacles.
 					updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
 				}
-	
+				
 				if ( playerModel.isDead ) {
 					// Slow down when you're dead.
 					playerModel.velocityX *= .6;
@@ -123,7 +127,7 @@ package com.funrun.controller.commands {
 				
 				// Run forward.
 				playerModel.positionZ += playerModel.velocityZ;
-	
+				
 				// Update gravity.
 				playerModel.velocityY += TrackConstants.PLAYER_GRAVITY;
 				playerModel.positionY += playerModel.velocityY;
@@ -162,6 +166,9 @@ package com.funrun.controller.commands {
 			
 			// Update competitors' positions.
 			updateCompetitorsRequest.dispatch();
+			
+			// Update nametags.
+			updateNametagsRequest.dispatch();
 			
 			// Update distance counter.
 			// TO-DO: Fix this so that a maxDistance var is stored inside PlayerModel.

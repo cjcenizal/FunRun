@@ -1,5 +1,5 @@
 package com.funrun.controller.commands {
-
+	
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
@@ -15,7 +15,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
-
+	
 	public class UpdateObserverLoopCommand extends Command {
 		
 		// Models.
@@ -87,7 +87,6 @@ package com.funrun.controller.commands {
 				
 				// Render.
 				renderSceneRequest.dispatch();
-				
 			}
 		}
 	}
