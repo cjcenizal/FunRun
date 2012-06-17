@@ -8,6 +8,7 @@ package com.funrun.controller.commands
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FilteredShadowMapMethod;
+	import away3d.materials.methods.FogMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	
 	import com.funrun.controller.signals.AddLightRequest;
@@ -113,9 +114,16 @@ package com.funrun.controller.commands
 			addView3DRequest.dispatch( view );
 			
 			// Add materials.
-			addMaterialRequest.dispatch( MaterialsModel.PLAYER_MATERIAL, new ColorMaterial( 0x00FF00 ) );
-			addMaterialRequest.dispatch( MaterialsModel.GROUND_MATERIAL, new ColorMaterial( 0xFF0000 ) );
-			addMaterialRequest.dispatch( MaterialsModel.OBSTACLE_MATERIAL, new ColorMaterial( 0x0000FF ) );
+			var fog:FogMethod = new FogMethod( TrackConstants.TRACK_DEPTH - 2000, TrackConstants.TRACK_DEPTH, 0xffffff );
+			var playerMaterial:ColorMaterial = new ColorMaterial( 0x00FF00 );
+			playerMaterial.addMethod( fog );
+			var floorMaterial:ColorMaterial = new ColorMaterial( 0xFF0000 );
+			floorMaterial.addMethod( fog );
+			var obstacleMaterial:ColorMaterial = new ColorMaterial( 0x0000FF );
+			obstacleMaterial.addMethod( fog );
+			addMaterialRequest.dispatch( MaterialsModel.PLAYER_MATERIAL, playerMaterial );
+			addMaterialRequest.dispatch( MaterialsModel.FLOOR_MATERIAL, floorMaterial );
+			addMaterialRequest.dispatch( MaterialsModel.OBSTACLE_MATERIAL, obstacleMaterial );
 			
 			// Load stuff.
 			loadBlocksRequest.dispatch();
@@ -148,7 +156,7 @@ package com.funrun.controller.commands
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			var lightPicker:StaticLightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			var playerMaterial:ColorMaterial = materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL );
-			var groundMaterial:ColorMaterial = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
+			var groundMaterial:ColorMaterial = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
 			var obstacleMaterial:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 			
 			playerMaterial.lightPicker = lightPicker;

@@ -45,7 +45,7 @@ package com.funrun.controller.commands {
 			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial;
 			var merge:Merge = new Merge( true );
 			geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
-			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
+			material = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
 			var floorMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
 			var boundingBoxes:Array = [];
 			for ( var x:int = 0; x < TrackConstants.TRACK_WIDTH; x += TrackConstants.BLOCK_SIZE ) {

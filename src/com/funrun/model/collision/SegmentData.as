@@ -195,7 +195,7 @@ package com.funrun.model.collision {
 			geo = blocksModel.getBlock( floorType ).geo;
 			
 			// TO-DO: Customize this to be specific to the block.
-			material = materialsModel.getMaterial( MaterialsModel.GROUND_MATERIAL );
+			material = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
 			
 			// Fill in gaps with floors.
 			for ( var x:int = minX; x <= maxX; x++ ) {
