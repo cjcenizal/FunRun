@@ -37,7 +37,6 @@ package com.funrun.model {
 		
 		public function reset():void {
 			_ticks = 0;
-			_lastTs = 0;
 		}
 		
 		public function set stage( stage:Stage ):void {

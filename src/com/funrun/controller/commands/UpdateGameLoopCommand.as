@@ -81,6 +81,7 @@ package com.funrun.controller.commands {
 		public var updatePlacesRequest:UpdatePlacesRequest;
 		
 		override public function execute():void {
+			
 			// Update countdown if necessary.
 			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 				if ( countdownModel.isRunning ) {
@@ -95,6 +96,7 @@ package com.funrun.controller.commands {
 			
 			// Target 30 frames per second.
 			var framesElapsed:int = Math.round( .03 * timeEvent.delta );
+			
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
 				if ( gameModel.gameState == GameState.RUNNING ) {
 					// Update obstacles.
