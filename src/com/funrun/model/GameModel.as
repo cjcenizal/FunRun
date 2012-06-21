@@ -4,10 +4,10 @@ package com.funrun.model {
 	
 	public class GameModel extends Actor {
 		
+		public var gameState:String;
+		
 		public function GameModel() {
 			super();
 		}
-		
-		public var gameState:String;
 	}
 }

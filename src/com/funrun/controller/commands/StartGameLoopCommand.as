@@ -25,6 +25,7 @@ package com.funrun.controller.commands {
 		
 		
 		override public function execute():void {
+			trace(this);
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			

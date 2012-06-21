@@ -141,8 +141,6 @@ package com.funrun.controller.commands
 			var playerFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
 			var playerMaterial:ColorMaterial = new ColorMaterial( 0x00FF00 );
 			playerMaterial.addMethod( playerFog );
-			//var floorMaterial:ColorMaterial = new ColorMaterial( 0xFF0000 );
-			//floorMaterial.addMethod( fog );
 			
 			var textureFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
 			

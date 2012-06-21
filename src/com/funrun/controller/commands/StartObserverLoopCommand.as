@@ -41,6 +41,7 @@ package com.funrun.controller.commands {
 		public var showScreenRequest:ShowScreenRequest;
 		
 		override public function execute():void {
+			trace(this);
 			// Move nametags out of the way.
 			var len:int = competitorsModel.numCompetitors;
 			var competitor:CompetitorVO;
