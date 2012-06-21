@@ -1,10 +1,21 @@
 package com.funrun.controller.commands {
 
+	import com.funrun.controller.signals.payload.AddDelayedCommandPayload;
+	import com.funrun.model.DelayedCommandsModel;
+	
 	import org.robotlegs.mvcs.Command;
 
 	public class AddDelayedCommandCommand extends Command {
 
+		[Inject]
+		public var payload:AddDelayedCommandPayload;
+		
+		[Inject]
+		public var delayedCommandsModel:DelayedCommandsModel;
+		
 		override public function execute():void {
+			// How do we pass args
+			delayedCommandsModel.add( payload.signal, payload.delayMs, payload.args );
 		}
 	}
 }
