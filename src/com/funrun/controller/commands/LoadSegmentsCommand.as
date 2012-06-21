@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import away3d.entities.Mesh;
-	import away3d.materials.ColorMaterial;
+	import away3d.materials.MaterialBase;
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.PrimitiveBase;
 	import away3d.tools.commands.Merge;
@@ -42,15 +42,15 @@ package com.funrun.controller.commands {
 			
 			// Load temp floor.
 			// TO-DO: Put floor(s) into json.
-			var geo:PrimitiveBase, mesh:Mesh, material:ColorMaterial;
+			var geo:PrimitiveBase, mesh:Mesh, floorMaterial:MaterialBase;
 			var merge:Merge = new Merge( true );
 			geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
-			material = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
-			var floorMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
+			floorMaterial = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
+			var floorMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), floorMaterial );
 			var boundingBoxes:Array = [];
 			for ( var x:int = 0; x < TrackConstants.TRACK_WIDTH; x += TrackConstants.BLOCK_SIZE ) {
 				for ( var z:int = 0; z < TrackConstants.SEGMENT_DEPTH; z += TrackConstants.BLOCK_SIZE ) {
-					mesh = new Mesh( geo, material );
+					mesh = new Mesh( geo, floorMaterial );
 					mesh.x = x - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE_HALF;
 					mesh.y = -TrackConstants.BLOCK_SIZE_HALF;
 					mesh.z = z + TrackConstants.BLOCK_SIZE_HALF;
@@ -78,7 +78,6 @@ package com.funrun.controller.commands {
 			var maxZ:Number = TrackConstants.SEGMENT_DEPTH;
 			segmentsModel.addSegment( new SegmentData( SegmentTypes.FLOOR, floorMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ ) );
 			
-			var material:ColorMaterial = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 			var parsers:SegmentsParser = new SegmentsParser( obstaclesService.data );
 			var len:int = parsers.length;
 			for ( var i:int = 0; i < len; i++ ) {

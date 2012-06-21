@@ -1,6 +1,6 @@
 package com.funrun.model {
 	
-	import away3d.materials.ColorMaterial;
+	import away3d.materials.MaterialBase;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -17,11 +17,11 @@ package com.funrun.model {
 			_materials = {};
 		}
 		
-		public function addMaterial( id:String, material:ColorMaterial ):void {
+		public function addMaterial( id:String, material:MaterialBase ):void {
 			_materials[ id ] = material;
 		}
 		
-		public function getMaterial( id:String ):ColorMaterial {
+		public function getMaterial( id:String ):MaterialBase {
 			return _materials[ id ];
 		}
 	}

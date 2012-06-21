@@ -1,6 +1,6 @@
 package com.funrun.controller.commands
 {
-	import away3d.materials.ColorMaterial;
+	import away3d.materials.MaterialBase;
 	
 	import com.funrun.model.MaterialsModel;
 	
@@ -12,7 +12,7 @@ package com.funrun.controller.commands
 		public var materialName:String;
 		
 		[Inject]
-		public var material:ColorMaterial;
+		public var material:MaterialBase;
 		
 		[Inject]
 		public var model:MaterialsModel;
