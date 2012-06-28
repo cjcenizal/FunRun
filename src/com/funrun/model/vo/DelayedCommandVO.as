@@ -13,13 +13,13 @@ package com.funrun.model.vo {
 		public function DelayedCommandVO( delayMs:int, callback:Function ) {
 			this.callback = callback;
 			_timer = new Timer( delayMs );
-			_timer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
+			_timer.addEventListener( TimerEvent.TIMER, onTimerComplete );
 			_timer.start();
 		}
 
 		private function onTimerComplete( e:TimerEvent ):void {
 			_timer.stop();
-			_timer.removeEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
+			_timer.removeEventListener( TimerEvent.TIMER, onTimerComplete );
 			_timer = null;
 			callback( this );
 			callback = null;

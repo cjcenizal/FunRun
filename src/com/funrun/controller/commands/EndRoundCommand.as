@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.SavePlayerObjectRequest;
+	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
@@ -30,12 +31,18 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
+		public var stopGameLoopRequest:StopGameLoopRequest;
+		
+		[Inject]
 		public var addPopupRequest:AddPopupRequest;
 		
 		[Inject]
 		public var savePlayerObjectRequest:SavePlayerObjectRequest;
 		
 		override public function execute():void {
+			// Stop game loop.
+			stopGameLoopRequest.dispatch();
+			
 			// Show popup.
 			var message:String = "You ran " + playerModel.distanceString + " feet!";
 			if ( playerModel.distanceInFeet > playerModel.bestDistance ) {

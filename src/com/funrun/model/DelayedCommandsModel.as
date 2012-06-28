@@ -14,11 +14,12 @@ package com.funrun.model {
 			_delayedCommands = [];
 		}
 		
-		public function add( signal:Signal, delayMs:int, args... ):void {
+		public function add( signal:Signal, delayMs:int, ...args ):void {
 			var callback:Function = function( command:DelayedCommandVO ) {
 				signal.dispatch.apply( null, args );
 				remove( command );
 			}
+			_delayedCommands.push( new DelayedCommandVO( delayMs, callback ) );
 		}
 		
 		public function remove( command:DelayedCommandVO ):void {
@@ -28,6 +29,12 @@ package com.funrun.model {
 					_delayedCommands.splice( i, 1 );
 					return;
 				}
+			}
+		}
+		
+		public function removeAll():void {
+			while ( _delayedCommands.length > 0 ) {
+				remove( _delayedCommands[ 0 ] as DelayedCommandVO );
 			}
 		}
 	}

@@ -63,7 +63,6 @@ package com.funrun.controller.commands {
 		public var view3DModel:View3DModel;
 		
 		override public function execute():void {
-			trace(this, "reset");
 			// Reset time.
 			timeModel.reset();
 			// Remove all existing obstacles.

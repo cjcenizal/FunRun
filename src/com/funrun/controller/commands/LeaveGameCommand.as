@@ -4,6 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
+	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.services.MatchmakingService;
@@ -17,6 +18,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var delayedCommandsModel:DelayedCommandsModel;
 		
 		// Commands.
 		
@@ -39,6 +43,8 @@ package com.funrun.controller.commands {
 		public var matchmakingService:MatchmakingService;
 
 		override public function execute():void {
+			// Remove delayed commands.
+			delayedCommandsModel.removeAll();
 			// Stop responding to time.
 			stopGameLoopRequst.dispatch();
 			stopObserverLoopRequest.dispatch();

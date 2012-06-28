@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
@@ -32,7 +33,10 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
 		
-		// Temp.
+		// Commands.
+		
+		[Inject]
+		public var stopGameLoopRequest:StopGameLoopRequest;
 		
 		[Inject]
 		public var removeFindingGamePopupRequest:RemoveFindingGamePopupRequest;
@@ -41,7 +45,9 @@ package com.funrun.controller.commands {
 		public var showScreenRequest:ShowScreenRequest;
 		
 		override public function execute():void {
-			trace(this);
+			// Stop game loop.
+			stopGameLoopRequest.dispatch();
+			
 			// Move nametags out of the way.
 			var len:int = competitorsModel.numCompetitors;
 			var competitor:CompetitorVO;

@@ -40,7 +40,6 @@ package com.funrun.controller.commands {
 		public var startOfflineGameRequest:StartOfflineGameRequest;
 		
 		override public function execute():void {
-			trace(this);
 			// Set game state.
 			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
 			// Reset game.

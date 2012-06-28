@@ -7,14 +7,18 @@ package com.funrun.controller.commands {
 
 	public class AddDelayedCommandCommand extends Command {
 
+		// Arguments.
+		
 		[Inject]
 		public var payload:AddDelayedCommandPayload;
+		
+		// Models.
 		
 		[Inject]
 		public var delayedCommandsModel:DelayedCommandsModel;
 		
 		override public function execute():void {
-			// How do we pass args
+			// How do we pass args?
 			delayedCommandsModel.add( payload.signal, payload.delayMs, payload.args );
 		}
 	}

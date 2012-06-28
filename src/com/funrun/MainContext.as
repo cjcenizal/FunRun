@@ -2,6 +2,7 @@ package com.funrun {
 	
 	import com.funrun.controller.commands.AddAiCompetitorsCommand;
 	import com.funrun.controller.commands.AddCompetitorCommand;
+	import com.funrun.controller.commands.AddDelayedCommandCommand;
 	import com.funrun.controller.commands.AddFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
 	import com.funrun.controller.commands.AddMaterialCommand;
@@ -62,6 +63,7 @@ package com.funrun {
 	import com.funrun.controller.commands.WhitelistFailedCommand;
 	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.AddCompetitorRequest;
+	import com.funrun.controller.signals.AddDelayedCommandRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddMaterialRequest;
@@ -139,6 +141,7 @@ package com.funrun {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
+	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.GeosMockModel;
 	import com.funrun.model.IGeosModel;
@@ -228,6 +231,7 @@ package com.funrun {
 			injector.mapSingleton( CompetitorsModel );
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( CountdownModel );
+			injector.mapSingleton( DelayedCommandsModel );
 			injector.mapSingleton( GameModel );
 			injector.mapSingleton( InterpolationModel );
 			injector.mapSingleton( KeyboardModel );
@@ -272,6 +276,7 @@ package com.funrun {
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			signalCommandMap.mapSignalClass( AddAiCompetitorsRequest,				AddAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
+			signalCommandMap.mapSignalClass( AddDelayedCommandRequest,				AddDelayedCommandCommand );
 			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
 			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );

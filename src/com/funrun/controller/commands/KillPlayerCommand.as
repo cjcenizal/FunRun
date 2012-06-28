@@ -1,16 +1,14 @@
 	package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
+	import com.funrun.controller.signals.AddDelayedCommandRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
+	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
-	import com.funrun.controller.signals.StopGameLoopRequest;
+	import com.funrun.controller.signals.payload.AddDelayedCommandPayload;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.TrackConstants;
-	
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -38,14 +36,10 @@
 		public var sendMultiplayerDeathRequest:SendMultiplayerDeathRequest;
 		
 		[Inject]
-		public var stopGameLoopRequest:StopGameLoopRequest;
-		
-		[Inject]
 		public var startObserverLoopRequest:StartObserverLoopRequest;
 		
-		// Private vars.
-		
-		private var _timer:Timer;
+		[Inject]
+		public var addDelayedCommandRequest:AddDelayedCommandRequest;
 		
 		override public function execute():void {
 			if ( !playerModel.isDead ) {
@@ -62,22 +56,13 @@
 				// Update server.
 				sendMultiplayerDeathRequest.dispatch();
 				// Wait before we take action on the death.
-				_timer = new Timer( 1500, 1 );
-				_timer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimer );
-				_timer.start();
-			}
-		}
-		
-		private function onTimer( e:TimerEvent ):void {
-			_timer.removeEventListener( TimerEvent.TIMER_COMPLETE, onTimer );
-			_timer.stop();
-			_timer = null;
-			stopGameLoopRequest.dispatch();
-			// If there are any surviving competitors, observe them.
-			if ( competitorsModel.numLiveCompetitors > 0 ) {
-				startObserverLoopRequest.dispatch();
-			} else {
-				endRoundRequest.dispatch();
+				
+				// If there are any surviving competitors, observe them.
+				if ( competitorsModel.numLiveCompetitors > 0 ) {
+					addDelayedCommandRequest.dispatch( new AddDelayedCommandPayload( startObserverLoopRequest, 1500 ) );
+				} else {
+					addDelayedCommandRequest.dispatch( new AddDelayedCommandPayload( endRoundRequest, 1500 ) );
+				}
 			}
 		}
 	}
