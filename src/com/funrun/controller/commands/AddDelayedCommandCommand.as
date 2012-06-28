@@ -19,7 +19,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// How do we pass args?
-			delayedCommandsModel.add( payload.signal, payload.delayMs, payload.arg, payload.type );
+			delayedCommandsModel.add( payload.signal, payload.delayMs, payload.arg );
 		}
 	}
 }

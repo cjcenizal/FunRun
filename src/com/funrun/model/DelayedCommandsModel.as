@@ -14,9 +14,10 @@ package com.funrun.model {
 			_delayedCommands = [];
 		}
 		
-		public function add( signal:Signal, delayMs:int, arg:* = null, type:Class = null ):void {
+		public function add( signal:Signal, delayMs:int, arg:* = null ):void {
 			var callback:Function = function( command:DelayedCommandVO ):void {
-				if ( arg && type ) {
+				if ( arg ) {
+					var type:Class = Object( arg ).constructor;
 					signal.dispatch.call( null, arg as type );
 				} else {
 					signal.dispatch.call( null );
