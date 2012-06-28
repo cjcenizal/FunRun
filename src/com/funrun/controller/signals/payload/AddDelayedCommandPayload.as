@@ -7,13 +7,15 @@ package com.funrun.controller.signals.payload
 		
 		public var signal:Signal;
 		public var delayMs:int;
-		public var args:Array;
+		public var arg:*;
+		public var type:Class;
 		
-		public function AddDelayedCommandPayload( signal:Signal, delayMs:int, ...args )
+		public function AddDelayedCommandPayload( signal:Signal, delayMs:int, arg:* = null, type:Class = null )
 		{
 			this.signal = signal;
 			this.delayMs = delayMs;
-			this.args = args;
+			this.arg = arg;
+			this.type = type;
 		}
 	}
 }

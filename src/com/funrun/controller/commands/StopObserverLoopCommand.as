@@ -12,7 +12,6 @@ package com.funrun.controller.commands {
 			commandMap.unmapEvent( TimeEvent.TICK, UpdateObserverLoopCommand, TimeEvent );
 			commandMap.unmapEvent( KeyboardEvent.KEY_UP, HandleObserverKeyUpCommand, KeyboardEvent );
 			commandMap.unmapEvent( KeyboardEvent.KEY_DOWN, HandleObserverKeyDownCommand, KeyboardEvent );
-			
 		}
 	}
 }
