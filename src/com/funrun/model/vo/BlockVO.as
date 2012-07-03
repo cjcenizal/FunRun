@@ -1,5 +1,6 @@
 package com.funrun.model.vo {
 	
+	import away3d.entities.Mesh;
 	import away3d.primitives.PrimitiveBase;
 	
 	import com.funrun.model.constants.FaceTypes;
@@ -12,7 +13,8 @@ package com.funrun.model.vo {
 		private var _faces:Object;
 		private var _numFaces:int = 0;
 		
-		public var geo:PrimitiveBase;
+		//public var geo:PrimitiveBase;
+		public var mesh:Mesh;
 		
 		public function BlockVO(
 			id:String,

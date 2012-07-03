@@ -1,13 +1,10 @@
 {
-	"doc" : "These are the blocks that can be used to compose obstacles.",
+	"doc" : "These are the blocks that compose obstacles.",
 	"author" : "CJ Cenizal",
 	"list" : [
 		{
-			"id" : "empty"
-		},
-		{
-			"id" : "block",
-			"filename" : "block.dae",
+			"id" : "001_brick_block",
+			"filename" : "001_brick_block.obj",
 			"hit" : [
 				"all"
 			],
@@ -21,71 +18,33 @@
 			}
 		},
 		{
-			"id" : "saw",
-			"filename" : "saw.dae",
-			"hit" : [
-				"all"
-			],
-			"faces" : {
-				"all" : "slice"
-			}
-		},
-		{
-			"id" : "lava",
-			"filename" : "lava.dae",
-			"hit" : [
-				"all"
-			],
-			"faces" : {
-				"all" : "burn"
-			}
-		},
-		{
-			"id" : "jumpPad",
-			"filename" : "jump.dae",
-			"hit" : [
-				"all"
-			],
-			"faces" : {
-				"t" : "jump"
-			}
-		},
-		{
-			"id" : "jumpField",
-			"filename" : "jump.dae",
-			"hit" : [
-				"top"
-			],
-			"faces" : {
-				"t" : "jump"
-			}
-		},
-		{
-			"id" : "point",
-			"filename" : "point.dae",
-			"faces" : {
-				"all" : "point"
-			}
-		},
-		{
 			"id" : "floor",
-			"filename" : "floor.dae",
+			"filename" : "001_brick_block.obj",
 			"hit" : [
-				"t"
+				"all"
 			],
 			"faces" : {
-				"t" : "walk"
+				"t" : "walk",
+				"b" : "smack",
+				"l" : "slow",
+				"r" : "slow",
+				"f" : "smack",
+				"a" : "smack"
 			}
 		},
 		{
-			"id" : "ceil",
-			"filename" : "ceil.dae",
+			"id" : "002_warning_block",
+			"filename" : "002_warning_block.obj",
 			"hit" : [
-				"t",
-				"b"
+				"all"
 			],
 			"faces" : {
-				"t" : "walk"
+				"t" : "walk",
+				"b" : "smack",
+				"l" : "slow",
+				"r" : "slow",
+				"f" : "smack",
+				"a" : "smack"
 			}
 		}
 	]

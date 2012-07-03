@@ -42,15 +42,16 @@ package com.funrun.controller.commands {
 			
 			// Load temp floor.
 			// TO-DO: Put floor(s) into json.
-			var geo:PrimitiveBase, mesh:Mesh, floorMaterial:MaterialBase;
+			var referenceMesh:Mesh, mesh:Mesh, floorMaterial:MaterialBase;
 			var merge:Merge = new Merge( true );
-			geo = blocksModel.getBlock( BlockTypes.FLOOR ).geo;
+			referenceMesh = blocksModel.getBlock( BlockTypes.FLOOR ).mesh;
+			trace("referenceMesh: "+ referenceMesh);
 			floorMaterial = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
 			var floorMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), floorMaterial );
 			var boundingBoxes:Array = [];
 			for ( var x:int = 0; x < TrackConstants.TRACK_WIDTH; x += TrackConstants.BLOCK_SIZE ) {
 				for ( var z:int = 0; z < TrackConstants.SEGMENT_DEPTH; z += TrackConstants.BLOCK_SIZE ) {
-					mesh = new Mesh( geo, floorMaterial );
+					mesh = referenceMesh.clone() as Mesh;//new Mesh( referenceMesh.geometry, referenceMesh.material );
 					mesh.x = x - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE_HALF;
 					mesh.y = -TrackConstants.BLOCK_SIZE_HALF;
 					mesh.z = z + TrackConstants.BLOCK_SIZE_HALF;

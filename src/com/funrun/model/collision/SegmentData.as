@@ -132,7 +132,7 @@ package com.funrun.model.collision {
 			// need to be walkable and not obstacle.
 			
 			var boundingBoxes:Array = [];
-			var geo:PrimitiveBase, mesh:Mesh, pitMap:Object, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number;
+			var referenceMesh:Mesh, mesh:Mesh, pitMap:Object, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number;
 			
 			// TO-DO: Customize this with a material specific to the block.
 			var material:MaterialBase = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
@@ -154,8 +154,8 @@ package com.funrun.model.collision {
 			for ( var j:int = 0; j < parser.numBlocks; j++ ) {
 				var data:BlockData = parser.getBlockAt( j );
 				var geoData:BlockVO = blocksModel.getBlock( data.id );
-				geo = geoData.geo;
-				mesh = new Mesh( geo, material );
+				referenceMesh = geoData.mesh;
+				mesh = referenceMesh.clone() as Mesh;// new Mesh( geo, material );
 				var posX:int = ( flip ) ? ( TrackConstants.TRACK_WIDTH_BLOCKS - data.x - 1 ) : data.x;
 				mesh.x = posX * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
 				mesh.y = data.y * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
@@ -192,7 +192,7 @@ package com.funrun.model.collision {
 			var floorType:String = BlockTypes.FLOOR;
 			
 			// TO-DO: Customize this geo to be specific to the block.
-			geo = blocksModel.getBlock( floorType ).geo;
+			referenceMesh = blocksModel.getBlock( floorType ).mesh;
 			
 			// TO-DO: Customize this to be specific to the block.
 			material = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
@@ -201,7 +201,7 @@ package com.funrun.model.collision {
 			for ( var x:int = minX; x <= maxX; x++ ) {
 				for ( var z:int = minZ; z <= maxZ; z++ ) {
 					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
-						mesh = new Mesh( geo, material );
+						mesh = referenceMesh.clone() as Mesh;//new Mesh( geo, material );
 						mesh.x = x * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
 						mesh.y = TrackConstants.BLOCK_SIZE * -.5;
 						mesh.z = z * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;

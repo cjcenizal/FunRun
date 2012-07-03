@@ -154,7 +154,9 @@ package com.funrun.controller.commands
 			addMaterialRequest.dispatch( MaterialsModel.OBSTACLE_MATERIAL, obstacleMaterial );
 			
 			// Load stuff.
-			loadBlocksRequest.dispatch();
+			loadBlocksRequest.dispatch(); // Wait until it's done!
+		}
+		/*	
 			loadSegmentsRequest.dispatch();
 			
 			// Add lights.
@@ -205,6 +207,6 @@ package com.funrun.controller.commands
 			
 			// Add player to track.
 			addPlayerRequest.dispatch();
-		}
+		}*/
 	}
 }

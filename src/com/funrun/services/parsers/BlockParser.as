@@ -11,7 +11,7 @@ package com.funrun.services.parsers {
 		public function BlockParser() {
 		}
 		
-		public function parse( data:Object ) {
+		public function parse( data:Object ):BlockVO {
 			var id:String = new IdParser( data ).id;
 			var filename:String = new FilenameParser( data ).filename;
 			var collisions:Array = [];

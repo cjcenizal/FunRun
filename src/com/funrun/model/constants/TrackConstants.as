@@ -28,7 +28,7 @@ package com.funrun.model.constants
 		public static const PLAYER_GRAVITY:Number = -8;
 		
 		// Segment constants.
-		public static const SEGMENT_DEPTH:Number = 26 * BLOCK_SIZE;
+		public static const SEGMENT_DEPTH:Number = 24 * BLOCK_SIZE;
 		public static const SEGMENT_CULL_DEPTH_NEAR:Number = -2000 -SEGMENT_DEPTH;
 		public static const SEGMENT_CULL_DEPTH_FAR:Number = TRACK_DEPTH + SEGMENT_DEPTH;
 		public static const SEGMENT_ADD_DEPTH_NEAR:Number = SEGMENT_DEPTH + SEGMENT_CULL_DEPTH_NEAR;
