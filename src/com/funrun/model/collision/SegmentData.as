@@ -135,12 +135,12 @@ package com.funrun.model.collision {
 			var referenceMesh:Mesh, mesh:Mesh, pitMap:Object, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number;
 			
 			// TO-DO: Customize this with a material specific to the block.
-			var material:MaterialBase = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
+			//var material:MaterialBase = materialsModel.getMaterial( MaterialsModel.OBSTACLE_MATERIAL );
 			
 			var merge:Merge = new Merge( true );
 			
 			// TO-DO: Customize this geo to be specific to the block.
-			var obstacleMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), material );
+			var obstacleMesh:Mesh = new Mesh();// new CubeGeometry( 0, 0, 0 ), material );
 			
 			var boundingBoxes:Array = [];
 			pitMap = {};
@@ -154,6 +154,7 @@ package com.funrun.model.collision {
 			for ( var j:int = 0; j < parser.numBlocks; j++ ) {
 				var data:BlockData = parser.getBlockAt( j );
 				var geoData:BlockVO = blocksModel.getBlock( data.id );
+				trace("get block " + data.id + ", it's: " + geoData);
 				referenceMesh = geoData.mesh;
 				mesh = referenceMesh.clone() as Mesh;// new Mesh( geo, material );
 				var posX:int = ( flip ) ? ( TrackConstants.TRACK_WIDTH_BLOCKS - data.x - 1 ) : data.x;
@@ -195,7 +196,7 @@ package com.funrun.model.collision {
 			referenceMesh = blocksModel.getBlock( floorType ).mesh;
 			
 			// TO-DO: Customize this to be specific to the block.
-			material = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
+			//material = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
 			
 			// Fill in gaps with floors.
 			for ( var x:int = minX; x <= maxX; x++ ) {

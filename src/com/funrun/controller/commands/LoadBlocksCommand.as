@@ -1,5 +1,5 @@
-package com.funrun.controller.commands
-{
+package com.funrun.controller.commands {
+
 	import away3d.entities.Mesh;
 	import away3d.events.AssetEvent;
 	import away3d.library.AssetLibrary;
@@ -17,25 +17,29 @@ package com.funrun.controller.commands
 	
 	import flash.net.URLRequest;
 	
-	import org.robotlegs.mvcs.Command;
-	
-	public class LoadBlocksCommand extends Command
-	{	
+	import org.robotlegs.utilities.macrobot.AsyncCommand;
+
+	public class LoadBlocksCommand extends AsyncCommand {
+		
 		[Inject]
 		public var blocksModel:BlocksModel;
-		
+
 		[Inject]
 		public var geosModel:IGeosModel;
-		
+
 		[Inject]
 		public var service:BlocksJsonService;
 		
+		private var _blocksToLoad:int;
+		
+		private var _loadedBlocksCount:int = 0;
+
 		override public function execute():void {
 			Parsers.enableAllBundled();
 			var context:AssetLoaderContext = new AssetLoaderContext( true, "../objs/" );
-			
+
 			var blocks:BlocksParser = new BlocksParser( service.data );
-			var len:int = blocks.length;
+			var len:int = _blocksToLoad = blocks.length;
 			var block:BlockVO;
 			for ( var i:int = 0; i < len; i++ ) {
 				block = blocks.getAt( i );
@@ -46,24 +50,29 @@ package com.funrun.controller.commands
 				token.addEventListener( AssetEvent.ASSET_COMPLETE, getOnAssetComplete( block ) );
 			}
 		}
-		
+
 		/**
 		 * Listener function for asset complete event on loader
 		 */
 		private function getOnAssetComplete( block:BlockVO ):Function {
 			return function( event:AssetEvent ):void {
-				trace("name: " + event.asset.name);
-				trace("assetNamespace: " + event.asset.assetNamespace);
-				trace("assetFullPath: " + event.asset.assetFullPath);
+				trace( "name: " + event.asset.name );
+				trace( "assetNamespace: " + event.asset.assetNamespace );
+				trace( "assetFullPath: " + event.asset.assetFullPath );
 				if ( event.asset.assetType == AssetType.MESH ) {
 					var mesh:Mesh = event.asset as Mesh;
 					mesh.geometry.scale( 100 ); //TODO scale cannot be performed on mesh when using sub-surface diffuse method
 					mesh.y = -50;
 					mesh.rotationY = 180;
 					block.mesh = mesh;
-					//mesh.material.lightPicker = lightPicker;
-					//scene.addChild( mesh );
+						//mesh.material.lightPicker = lightPicker;
+						//scene.addChild( mesh );
+					_loadedBlocksCount++;
+					if ( _loadedBlocksCount == _blocksToLoad ) {
+						dispatchComplete( true );
+					}
 				}
+				
 			}
 		}
 	}

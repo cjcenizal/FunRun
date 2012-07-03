@@ -3,7 +3,7 @@
 	"author" : "CJ Cenizal",
 	"list" : [
 		{
-			"id" : "001_brick_block",
+			"id" : "block",
 			"filename" : "001_brick_block.obj",
 			"hit" : [
 				"all"

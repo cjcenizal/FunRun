@@ -6,9 +6,9 @@ package com.funrun.model {
 	
 	public class MaterialsModel extends Actor {
 		
-		public static const OBSTACLE_MATERIAL:String = "OBSTACLE_MATERIAL";
-		public static const PLAYER_MATERIAL:String = "PLAYER_MATERIAL";
-		public static const FLOOR_MATERIAL:String = "GROUND_MATERIAL";
+		//public static const OBSTACLE_MATERIAL:String = "OBSTACLE_MATERIAL";
+		//public static const PLAYER_MATERIAL:String = "PLAYER_MATERIAL";
+		//public static const FLOOR_MATERIAL:String = "GROUND_MATERIAL";
 		
 		private var _materials:Object;
 		
