@@ -162,7 +162,7 @@ package com.funrun {
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
-	import com.funrun.services.ObstaclesJsonService;
+	import com.funrun.services.LoadSegmentsJsonService;
 	import com.funrun.services.OrdinalizeNumberService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioMultiplayerService;
@@ -249,7 +249,7 @@ package com.funrun {
 			injector.mapSingleton( BlocksJsonService );
 			injector.mapSingleton( MatchmakingService );
 			injector.mapSingleton( MultiplayerService );
-			injector.mapSingleton( ObstaclesJsonService );
+			injector.mapSingleton( LoadSegmentsJsonService );
 			injector.mapSingleton( OrdinalizeNumberService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
 			injector.mapSingleton( PlayerioMultiplayerService );

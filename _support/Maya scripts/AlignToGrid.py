@@ -9,6 +9,9 @@
 import os
 import maya.cmds as cmds
 
+# Save original selection.
+originalSelection = cmds.ls( sl=True )
+
 # Store only user-created layers.
 allLayers = cmds.ls( long=True, type='displayLayer' )
 layers = []
@@ -18,8 +21,6 @@ for l in allLayers:
 
 # Now iterate over each layer.
 for currLayer in layers:
-	print currLayer
-	
 	# Select everything in the scene.
 	cmds.select( all=True )
 	sel = cmds.ls( sl=True, type="transform" )
@@ -39,11 +40,15 @@ for currLayer in layers:
 					translateX = cmds.getAttr( obj + '.translateX' )
 					translateY = cmds.getAttr( obj + '.translateY' )
 					translateZ = cmds.getAttr( obj + '.translateZ' )
-					print name + ": " + str( translateX ) + ", " + str( translateY ) + ", " + str( translateZ )
 					cmds.setAttr( obj + '.translateX', round( translateX - .5 ) + .5 )
 					cmds.setAttr( obj + '.translateY', round( translateY ) + 0 )
 					cmds.setAttr( obj + '.translateZ', round( translateZ - .5 ) + .5 )
-					translateX = cmds.getAttr( obj + '.translateX' )
-					translateY = cmds.getAttr( obj + '.translateY' )
-					translateZ = cmds.getAttr( obj + '.translateZ' )
-					print "   to: " + str( translateX ) + ", " + str( translateY ) + ", " + str( translateZ )
+					translateX2 = cmds.getAttr( obj + '.translateX' )
+					translateY2 = cmds.getAttr( obj + '.translateY' )
+					translateZ2 = cmds.getAttr( obj + '.translateZ' )
+					if translateX != translateX2 or translateY != translateY2 or translateZ != translateZ2:
+					  print "Moved [" + currLayer + "]" + obj + " from (" + str(translateX) + ", " + str(translateY) + ", " + str(translateZ) + ") to (" + str(translateX2) + ", " + str(translateY2) + ", " + str(translateZ2) + ")"
+					
+# Select the original selection.
+cmds.select( deselect=True )
+cmds.select( originalSelection )

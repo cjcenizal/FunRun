@@ -10,6 +10,9 @@ import os
 import maya.cmds as cmds
 import json
 
+# Save original selection.
+originalSelection = cmds.ls( sl=True )
+
 # Store only user-created layers.
 allLayers = cmds.ls( long=True, type='displayLayer' )
 layers = []
@@ -23,7 +26,8 @@ for currLayer in layers:
 	# Create a new file.
 	projectPath = cmds.file( query=True, list=True )[ 0 ]
 	fileName = currLayer
-	jsonFile = open( os.path.abspath( projectPath + '/../Exported JSON/' + fileName + '.json' ), 'w' )
+	filePath = projectPath + '/../Exported JSON/' + fileName + '.json'
+	jsonFile = open( os.path.abspath( filePath ), 'w' )
 	
 	# Create object to build.
 	jsonObject = []
@@ -55,3 +59,9 @@ for currLayer in layers:
 	# Close the file.
 	jsonFile.write( json.dumps( jsonObject ) )
 	jsonFile.close()
+	
+	print "Exported " + filePath
+
+# Select the original selection.
+cmds.select( deselect=True )
+cmds.select( originalSelection )

@@ -16,7 +16,7 @@ package com.funrun.view.components {
 
 	public class MainMenuView extends AbstractComponent {
 		
-		[Embed (source="embed/logo.jpg" )]
+		[Embed (source="external/embed/images/logo.jpg" )]
 		private var Logo:Class;
 		
 		private var _logo:Bitmap;

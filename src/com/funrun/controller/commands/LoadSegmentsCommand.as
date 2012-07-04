@@ -16,7 +16,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.SegmentTypes;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.vo.BlockVO;
-	import com.funrun.services.ObstaclesJsonService;
+	import com.funrun.services.LoadSegmentsJsonService;
 	import com.funrun.services.parsers.SegmentParser;
 	import com.funrun.services.parsers.SegmentsParser;
 	
@@ -39,7 +39,7 @@ package com.funrun.controller.commands {
 		// Services.
 		
 		[Inject]
-		public var obstaclesService:ObstaclesJsonService;
+		public var obstaclesService:LoadSegmentsJsonService;
 		
 		override public function execute():void {
 			// Load all json files.
