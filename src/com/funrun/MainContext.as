@@ -161,7 +161,6 @@ package com.funrun {
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.services.IWhitelistService;
-	import com.funrun.services.LoadSegmentsJsonService;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.OrdinalizeNumberService;
@@ -248,7 +247,6 @@ package com.funrun {
 			// Map services.
 			injector.mapSingleton( MatchmakingService );
 			injector.mapSingleton( MultiplayerService );
-			injector.mapSingleton( LoadSegmentsJsonService );
 			injector.mapSingleton( OrdinalizeNumberService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
 			injector.mapSingleton( PlayerioMultiplayerService );

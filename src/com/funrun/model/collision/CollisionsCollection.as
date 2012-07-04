@@ -3,6 +3,7 @@ package com.funrun.model.collision
 	import com.funrun.model.IObstacleProvider;
 	import com.funrun.model.constants.FaceTypes;
 	import com.funrun.model.vo.BlockVO;
+	import com.funrun.model.vo.SegmentVO;
 	
 	/**
 	 * CollisionData provides information
@@ -67,7 +68,7 @@ package com.funrun.model.collision
 									 minX:Number, minY:Number, minZ:Number,
 									 maxX:Number, maxY:Number, maxZ:Number ):void {
 			var numObstacles:int = obstacles.numObstacles;
-			var obstacle:SegmentData;
+			var obstacle:SegmentVO;
 			for ( var i:int = 0; i < numObstacles; i++ ) {
 				obstacle = obstacles.getObstacleAt( i );
 				var obsX:Number = obstacle.x;

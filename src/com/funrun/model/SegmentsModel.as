@@ -1,6 +1,6 @@
 package com.funrun.model {
 	
-	import com.funrun.model.collision.SegmentData;
+	import com.funrun.model.vo.SegmentVO;
 	import com.gskinner.utils.Rndm;
 	
 	import org.robotlegs.mvcs.Actor;
@@ -16,7 +16,7 @@ package com.funrun.model {
 			_histories = {};
 		}
 		
-		public function addSegment( segment:SegmentData ):void {
+		public function addSegment( segment:SegmentVO ):void {
 			if ( !_segments[ segment.type ] ) {
 				_segments[ segment.type ] = new Array();
 				_histories[ segment.type ] = new Array();
@@ -33,13 +33,13 @@ package com.funrun.model {
 		 * @param index The index of the desired obstacle.
 		 * @return A clone of the original, since we need to duplicate obstacle mesh.
 		 */
-		public function getOfType( type:String, index:int ):SegmentData {
+		public function getOfType( type:String, index:int ):SegmentVO {
 			var history:Array = _histories[ type ];
 			while ( history.length < index + 1 ) {
 				history.push( Rndm.float( 1 ) );
 			}
 			var segments:Array = _segments[ type ];
-			return ( segments[ Math.floor( history[ index ] * segments.length ) ] as SegmentData ).clone();
+			return ( segments[ Math.floor( history[ index ] * segments.length ) ] as SegmentVO ).clone();
 		}
 	}
 }

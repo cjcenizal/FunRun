@@ -29,22 +29,20 @@ package com.funrun.controller.commands {
 		
 		// Private vars.
 		
-		private var _blocksToLoad:int;
-		private var _loadedBlocksCount:int = 0;
+		private var _filePath:String = "blocks/";
+		private var _countTotal:int;
+		private var _countLoaded:int = 0;
 
 		override public function execute():void {
-			// Store path to obj files.
-			var filePath:String = "../external/objs/";
-			
 			// Parse object to give it meaning.
 			var parsedBlocks:BlocksParser = new BlocksParser( new JsonService().read( BlocksJsonData ) );
 			
 			// Store a count so we know when we're done loading the block objs.
 			var len:int = parsedBlocks.length;
-			_blocksToLoad = len * 2; // Assume one mtl and obj pair per block.
+			_countTotal = len * 2; // Assume one mtl and obj pair per block.
 			
 			// Set up loading context.
-			var context:AssetLoaderContext = new AssetLoaderContext( true, filePath );
+			var context:AssetLoaderContext = new AssetLoaderContext( true, _filePath );
 			
 			// Load the block objs.
 			var blockData:BlockVO;
@@ -53,7 +51,7 @@ package com.funrun.controller.commands {
 				// Store in model.
 				blocksModel.addBlock( blockData );
 				// Load it.
-				var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( filePath + blockData.filename ), context, blockData.id, new OBJParser() );
+				var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( _filePath + blockData.filename ), context, blockData.id, new OBJParser() );
 				token.addEventListener( AssetEvent.ASSET_COMPLETE, getOnAssetComplete( blockData ) );
 			}
 		}
@@ -72,9 +70,8 @@ package com.funrun.controller.commands {
 					mesh.rotationY = 180;
 					blockData.mesh = mesh;
 					// Increment complete count and check if we're done.
-					_loadedBlocksCount++;
-					if ( _loadedBlocksCount == _blocksToLoad ) {
-						trace("load blocks done");
+					_countLoaded++;
+					if ( _countLoaded == _countTotal ) {
 						completeCallback.call( null, true );
 					}
 				}

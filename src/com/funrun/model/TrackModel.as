@@ -1,6 +1,6 @@
 package com.funrun.model {
 	
-	import com.funrun.model.collision.SegmentData;
+	import com.funrun.model.vo.SegmentVO;
 	import com.funrun.model.constants.TrackConstants;
 	
 	import org.robotlegs.mvcs.Actor;
@@ -14,7 +14,7 @@ package com.funrun.model {
 			_obstacles = [];
 		}
 		
-		public function addSegment( obstacle:SegmentData ):void {
+		public function addSegment( obstacle:SegmentVO ):void {
 			_obstacles.push( obstacle );
 			var len:int = _obstacles.length;
 			_obstacles.sortOn( "z", [ Array.NUMERIC ] );
@@ -24,7 +24,7 @@ package com.funrun.model {
 			_obstacles.splice( index, 1 );
 		}
 		
-		public function getObstacleAt( index:int ):SegmentData {
+		public function getObstacleAt( index:int ):SegmentVO {
 			return _obstacles[ index ];
 		}
 		
@@ -34,14 +34,14 @@ package com.funrun.model {
 		
 		public function get depthOfLastObstacle():Number {
 			if ( _obstacles.length > 0 ) {
-				return ( _obstacles[ _obstacles.length - 1 ] as SegmentData ).z;
+				return ( _obstacles[ _obstacles.length - 1 ] as SegmentVO ).z;
 			}
 			return TrackConstants.TRACK_DEPTH;
 		}
 		
 		public function get depthOfFirstObstacle():Number {
 			if ( _obstacles.length > 0 ) {
-				return ( _obstacles[ 0 ] as SegmentData ).z;
+				return ( _obstacles[ 0 ] as SegmentVO ).z;
 			}
 			return 0;
 		}

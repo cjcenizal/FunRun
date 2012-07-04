@@ -1,4 +1,4 @@
-package com.funrun.model.collision {
+package com.funrun.model.vo {
 	
 	import away3d.bounds.BoundingVolumeBase;
 	import away3d.entities.Mesh;
@@ -11,10 +11,11 @@ package com.funrun.model.collision {
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.constants.BlockTypes;
 	import com.funrun.model.constants.TrackConstants;
-	import com.funrun.model.vo.BlockVO;
 	import com.funrun.services.parsers.SegmentParser;
+	import com.funrun.model.collision.BlockData;
+	import com.funrun.model.collision.BoundingBoxData;
 
-	public class SegmentData {
+	public class SegmentVO {
 
 		private var _type:String;
 		private var _mesh:Mesh;
@@ -28,7 +29,7 @@ package com.funrun.model.collision {
 		private var _maxY:Number;
 		private var _maxZ:Number;
 
-		public function SegmentData( type:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+		public function SegmentVO( type:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
 			_type = type;
 			_mesh = mesh;
 			_boundingBoxes = boundingBoxes;
@@ -41,8 +42,8 @@ package com.funrun.model.collision {
 			_maxZ = maxZ;
 		}
 		
-		public function clone():SegmentData {
-			return new SegmentData( _type, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+		public function clone():SegmentVO {
+			return new SegmentVO( _type, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
 		}
 		
 		/**
@@ -125,7 +126,7 @@ package com.funrun.model.collision {
 			return _maxZ - _minZ;
 		}
 		
-		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, parser:SegmentParser, flip:Boolean = false ):SegmentData {
+		public static function make( blocksModel:BlocksModel, materialsModel:MaterialsModel, parser:SegmentParser, flip:Boolean = false ):SegmentVO {
 			
 			// TO-DO:
 			// We need to be able to specify here that some blocks on top of pit edges
@@ -216,7 +217,7 @@ package com.funrun.model.collision {
 				}
 			}
 			
-			return new SegmentData( parser.type, obstacleMesh, boundingBoxes,
+			return new SegmentVO( parser.type, obstacleMesh, boundingBoxes,
 				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
 				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 		}
