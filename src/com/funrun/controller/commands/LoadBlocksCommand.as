@@ -41,19 +41,22 @@ package com.funrun.controller.commands {
 			// Store a count so we know when we're done loading the block objs.
 			var len:int = parsedBlocks.length;
 			_countTotal = len * 2; // Assume one mtl and obj pair per block.
-			
-			// Set up loading context.
-			var context:AssetLoaderContext = new AssetLoaderContext( true, _filePath );
-			
-			// Load the block objs.
-			var blockData:BlockVO;
-			for ( var i:int = 0; i < len; i++ ) {
-				blockData = parsedBlocks.getAt( i );
-				// Store in model.
-				blocksModel.addBlock( blockData );
-				// Load it.
-				var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( _filePath + blockData.filename ), context, blockData.id, new OBJParser() );
-				token.addEventListener( AssetEvent.ASSET_COMPLETE, getOnAssetComplete( blockData ) );
+			if ( len == 0 ) {
+				dispatchComplete( true );
+			} else {
+				// Set up loading context.
+				var context:AssetLoaderContext = new AssetLoaderContext( true, _filePath );
+				
+				// Load the block objs.
+				var blockData:BlockVO;
+				for ( var i:int = 0; i < len; i++ ) {
+					blockData = parsedBlocks.getAt( i );
+					// Store in model.
+					blocksModel.addBlock( blockData );
+					// Load it.
+					var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( _filePath + blockData.filename ), context, blockData.id, new OBJParser() );
+					token.addEventListener( AssetEvent.ASSET_COMPLETE, getOnAssetComplete( blockData ) );
+				}
 			}
 		}
 

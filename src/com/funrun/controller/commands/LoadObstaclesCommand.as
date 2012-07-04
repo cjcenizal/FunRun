@@ -95,10 +95,15 @@ package com.funrun.controller.commands {
 			// Load all json files.
 			var obstacleJson:Object = new JsonService().read( ObstaclesJsonData );
 			var obstacleJsonFiles:Array = obstacleJson[ "list" ];
-			for ( var i:int = 0; i < obstacleJsonFiles.length; i++ ) {
-				var loader:URLLoader = new URLLoader( new URLRequest( _filePath + obstacleJsonFiles[ i ] ) );
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onJsonIoError );
-				loader.addEventListener( Event.COMPLETE, onJsonLoaded );
+			var len:int = _countTotal = obstacleJsonFiles.length;
+			if ( len == 0 ) {
+				dispatchComplete( true );
+			} else {
+				for ( var i:int = 0; i < len; i++ ) {
+					var loader:URLLoader = new URLLoader( new URLRequest( _filePath + obstacleJsonFiles[ i ] ) );
+					loader.addEventListener( IOErrorEvent.IO_ERROR, onJsonIoError );
+					loader.addEventListener( Event.COMPLETE, onJsonLoaded );
+				}
 			}
 		}
 		
@@ -159,20 +164,20 @@ package com.funrun.controller.commands {
 					blockMesh.z + TrackConstants.BLOCK_SIZE_HALF
 				) );
 				// Store pit location.
-				if ( !pitMap[ blockData.x ] ) {
+				/*if ( !pitMap[ blockData.x ] ) {
 					pitMap[ blockData.x ] = {};
 				}
 				if ( data.y < 0 ) {
 					// We only want to store positives, not negative.
 					pitMap[ blockData.x ][ blockData.z ] = true;
-				}
+				}*/
 				// Update bounds of obstacle.
 				minX = Math.min( blockData.x, minX );
 				minZ = Math.min( blockData.z, minZ );
 				maxX = Math.max( blockData.x, maxX );
 				maxZ = Math.max( blockData.z, maxZ );
 			}
-			
+			/*
 			// Fill in floors where necessary.
 			var floorBlockRefMesh:Mesh = blocksModel.getBlock( BlockTypes.FLOOR ).mesh;
 			var floorBlockMesh:Mesh;
@@ -199,7 +204,7 @@ package com.funrun.controller.commands {
 						) );
 					}
 				}
-			}
+			}*/
 			
 			var segment:SegmentVO = new SegmentVO( BlockTypes.OBSTACLE, obstacleMesh, boundingBoxes,
 				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
