@@ -11,6 +11,8 @@ package com.funrun {
 	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.AddSegmentCommand;
 	import com.funrun.controller.commands.CheckWhitelistCommand;
+	import com.funrun.controller.commands.CompleteAppCommand;
+	import com.funrun.controller.commands.CompleteUserCommand;
 	import com.funrun.controller.commands.ConnectPlayerObjectCommand;
 	import com.funrun.controller.commands.CullSegmentsCommand;
 	import com.funrun.controller.commands.EndRoundCommand;
@@ -23,6 +25,8 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.InitGameCommand;
+	import com.funrun.controller.commands.InitUserCommand;
+	import com.funrun.controller.commands.InitViewCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
@@ -74,6 +78,8 @@ package com.funrun {
 	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.CheckWhitelistRequest;
+	import com.funrun.controller.signals.CompleteAppRequest;
+	import com.funrun.controller.signals.CompleteUserRequest;
 	import com.funrun.controller.signals.ConnectPlayerObjectRequest;
 	import com.funrun.controller.signals.CullSegmentsRequest;
 	import com.funrun.controller.signals.DisplayDistanceRequest;
@@ -89,6 +95,8 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.InitGameRequest;
+	import com.funrun.controller.signals.InitUserRequest;
+	import com.funrun.controller.signals.InitViewRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -160,9 +168,9 @@ package com.funrun {
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.services.BlocksJsonService;
 	import com.funrun.services.IWhitelistService;
+	import com.funrun.services.LoadSegmentsJsonService;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
-	import com.funrun.services.LoadSegmentsJsonService;
 	import com.funrun.services.OrdinalizeNumberService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioMultiplayerService;
@@ -283,9 +291,11 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
 			signalCommandMap.mapSignalClass( CheckWhitelistRequest,					CheckWhitelistCommand );
+			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );
+			signalCommandMap.mapSignalClass( CompleteUserRequest,					CompleteUserCommand );
+			signalCommandMap.mapSignalClass( ConnectPlayerObjectRequest, 			ConnectPlayerObjectCommand );
 			signalCommandMap.mapSignalClass( CullSegmentsRequest,					CullSegmentsCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
-			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
@@ -293,6 +303,9 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorDiedRequest,HandleMultiplayerCompetitorDiedCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorLeftRequest,HandleMultiplayerCompetitorLeftCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerUpdateRequest,		HandleMultiplayerUpdateCommand );
+			signalCommandMap.mapSignalClass( InitGameRequest,						InitGameCommand );
+			signalCommandMap.mapSignalClass( InitUserRequest,						InitUserCommand );
+			signalCommandMap.mapSignalClass( InitViewRequest,						InitViewCommand );
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
@@ -303,7 +316,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );
-			signalCommandMap.mapSignalClass( ConnectPlayerObjectRequest, 			ConnectPlayerObjectCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );
 			signalCommandMap.mapSignalClass( RemovePlaceableRequest,				RemovePlaceableCommand );

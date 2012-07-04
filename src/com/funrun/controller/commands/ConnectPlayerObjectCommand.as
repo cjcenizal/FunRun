@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.CompleteUserRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.services.PlayerioFacebookLoginService;
@@ -26,8 +26,7 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var enableMainMenuRequest:EnableMainMenuRequest;
-		
+		public var completeUserRequest:CompleteUserRequest;
 		
 		override public function execute():void {
 			playerioPlayerObjectService.onLoadedSignal.add( onLoaded );
@@ -47,7 +46,7 @@ package com.funrun.controller.commands {
 				}
 				playerModel.properties[ key ] = val;
 			}
-			enableMainMenuRequest.dispatch( true );
+			completeUserRequest.dispatch();
 		}
 		
 		private function onError():void {

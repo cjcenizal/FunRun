@@ -12,11 +12,11 @@ package com.funrun.controller.commands {
 		public var updateLoginStatus:UpdateLoginStatusRequest;
 		
 		[Inject]
-		public var loadPlayerObjectRequest:ConnectPlayerObjectRequest;
+		public var connectPlayerObjectRequest:ConnectPlayerObjectRequest;
 		
 		override public function execute():void {
 			updateLoginStatus.dispatch( LoginState.LOGIN_SUCCESS );
-			loadPlayerObjectRequest.dispatch();
+			connectPlayerObjectRequest.dispatch();
 		}
 	}
 }
