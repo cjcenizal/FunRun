@@ -39,12 +39,11 @@ package com.funrun.controller.commands {
 			var context:AssetLoaderContext = new AssetLoaderContext( true, "../objs/" );
 
 			var blocks:BlocksParser = new BlocksParser( service.data );
-			var len:int = _blocksToLoad = blocks.length;
+			var len:int = blocks.length;
+			_blocksToLoad = len * 2; // Assume one mtl and obj pair per block.
 			var block:BlockVO;
 			for ( var i:int = 0; i < len; i++ ) {
 				block = blocks.getAt( i );
-				// Apply geo to block.
-				//block.geo = geosModel.getGeo( block.id );
 				blocksModel.addBlock( block );
 				var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( "../objs/" + block.filename ), context, block.id, new OBJParser() );
 				token.addEventListener( AssetEvent.ASSET_COMPLETE, getOnAssetComplete( block ) );
@@ -56,17 +55,12 @@ package com.funrun.controller.commands {
 		 */
 		private function getOnAssetComplete( block:BlockVO ):Function {
 			return function( event:AssetEvent ):void {
-				trace( "name: " + event.asset.name );
-				trace( "assetNamespace: " + event.asset.assetNamespace );
-				trace( "assetFullPath: " + event.asset.assetFullPath );
 				if ( event.asset.assetType == AssetType.MESH ) {
 					var mesh:Mesh = event.asset as Mesh;
-					mesh.geometry.scale( 100 ); //TODO scale cannot be performed on mesh when using sub-surface diffuse method
+					mesh.geometry.scale( 100 ); // Note: scale cannot be performed on mesh when using sub-surface diffuse method.
 					mesh.y = -50;
 					mesh.rotationY = 180;
 					block.mesh = mesh;
-						//mesh.material.lightPicker = lightPicker;
-						//scene.addChild( mesh );
 					_loadedBlocksCount++;
 					if ( _loadedBlocksCount == _blocksToLoad ) {
 						dispatchComplete( true );

@@ -1,51 +1,51 @@
 {
-	"doc" : "These are the blocks that compose obstacles.",
-	"author" : "CJ Cenizal",
-	"list" : [
-		{
-			"id" : "block",
-			"filename" : "001_brick_block.obj",
-			"hit" : [
-				"all"
-			],
-			"faces" : {
-				"t" : "walk",
-				"b" : "smack",
-				"l" : "slow",
-				"r" : "slow",
-				"f" : "smack",
-				"a" : "smack"
-			}
-		},
-		{
-			"id" : "floor",
-			"filename" : "001_brick_block.obj",
-			"hit" : [
-				"all"
-			],
-			"faces" : {
-				"t" : "walk",
-				"b" : "smack",
-				"l" : "slow",
-				"r" : "slow",
-				"f" : "smack",
-				"a" : "smack"
-			}
-		},
-		{
-			"id" : "002_warning_block",
-			"filename" : "002_warning_block.obj",
-			"hit" : [
-				"all"
-			],
-			"faces" : {
-				"t" : "walk",
-				"b" : "smack",
-				"l" : "slow",
-				"r" : "slow",
-				"f" : "smack",
-				"a" : "smack"
-			}
-		}
-	]
+  "doc" : "These are the blocks that compose obstacles.",
+  "author" : "CJ Cenizal",
+  "list" : [
+    {
+      "id" : "001",
+      "filename" : "001_brick_block.obj",
+      "hit" : [
+          "all"
+        ],
+      "faces" : {
+          "t" : "walk",
+          "b" : "smack",
+          "l" : "slow",
+          "r" : "slow",
+          "f" : "smack",
+          "a" : "smack"
+        }
+      },
+    {
+      "id" : "000",
+      "filename" : "001_brick_block.obj",
+      "hit" : [
+          "all"
+          ],
+      "faces" : {
+          "t" : "walk",
+          "b" : "smack",
+          "l" : "slow",
+          "r" : "slow",
+          "f" : "smack",
+          "a" : "smack"
+        }
+      },
+    {
+      "id" : "002",
+      "filename" : "002_warning_block.obj",
+      "hit" : [
+          "all"
+        ],
+      "faces" : {
+          "t" : "walk",
+          "b" : "smack",
+          "l" : "slow",
+          "r" : "slow",
+          "f" : "smack",
+          "a" : "smack"
+        }
+      }
+  ]
 }

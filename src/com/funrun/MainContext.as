@@ -5,7 +5,6 @@ package com.funrun {
 	import com.funrun.controller.commands.AddDelayedCommandCommand;
 	import com.funrun.controller.commands.AddFloorCommand;
 	import com.funrun.controller.commands.AddLightCommand;
-	import com.funrun.controller.commands.AddMaterialCommand;
 	import com.funrun.controller.commands.AddObjectToSceneCommand;
 	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
@@ -66,7 +65,6 @@ package com.funrun {
 	import com.funrun.controller.signals.AddDelayedCommandRequest;
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddLightRequest;
-	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddObstaclesRequest;
@@ -279,7 +277,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddDelayedCommandRequest,				AddDelayedCommandCommand );
 			signalCommandMap.mapSignalClass( AddFloorRequest,						AddFloorCommand );
 			signalCommandMap.mapSignalClass( AddLightRequest,						AddLightCommand );
-			signalCommandMap.mapSignalClass( AddMaterialRequest,					AddMaterialCommand );
 			signalCommandMap.mapSignalClass( AddObjectToSceneRequest,				AddObjectToSceneCommand );
 			signalCommandMap.mapSignalClass( AddSegmentRequest,						AddSegmentCommand );
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );

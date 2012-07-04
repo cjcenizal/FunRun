@@ -8,25 +8,17 @@
 
 import os
 import maya.cmds as cmds
-import json
 
 # Store only user-created layers.
 allLayers = cmds.ls( long=True, type='displayLayer' )
 layers = []
 for l in allLayers:
-	if ( l != "Floorplan" and cmds.getAttr( l + ".identification" ) > 0 ):
+	if ( cmds.getAttr( l + ".identification" ) > 0 ):
 		layers.append( l )
 
 # Now iterate over each layer.
 for currLayer in layers:
-	
-	# Create a new file.
-	projectPath = cmds.file( query=True, list=True )[ 0 ]
-	fileName = currLayer
-	jsonFile = open( os.path.abspath( projectPath + '/../Exported JSON/' + fileName + '.json' ), 'w' )
-	
-	# Create object to build.
-	jsonObject = []
+	print currLayer
 	
 	# Select everything in the scene.
 	cmds.select( all=True )
@@ -42,16 +34,16 @@ for currLayer in layers:
 			children = cmds.listRelatives( obj )
 			for child in children:
 				if ( child.find( 'locator' ) >= 0 ):
-					# Create object to store properties for this block.
-					childObj = {}
-					jsonObject.append( childObj )
-					# Add the id.
-					childObj[ 'id' ] = child.split( '_' )[ 1 ]
-					# Add the position.
-					childObj[ 'x' ] = cmds.getAttr( obj + '.translateX' )
-					childObj[ 'y' ] = cmds.getAttr( obj + '.translateY' )
-					childObj[ 'z' ] = cmds.getAttr( obj + '.translateZ' )
-	
-	# Close the file.
-	jsonFile.write( json.dumps( jsonObject ) )
-	jsonFile.close()
+					nameParts = child.split( '_' )
+					name = nameParts[ 1 ]
+					translateX = cmds.getAttr( obj + '.translateX' )
+					translateY = cmds.getAttr( obj + '.translateY' )
+					translateZ = cmds.getAttr( obj + '.translateZ' )
+					print name + ": " + str( translateX ) + ", " + str( translateY ) + ", " + str( translateZ )
+					cmds.setAttr( obj + '.translateX', round( translateX - .5 ) + .5 )
+					cmds.setAttr( obj + '.translateY', round( translateY ) + 0 )
+					cmds.setAttr( obj + '.translateZ', round( translateZ - .5 ) + .5 )
+					translateX = cmds.getAttr( obj + '.translateX' )
+					translateY = cmds.getAttr( obj + '.translateY' )
+					translateZ = cmds.getAttr( obj + '.translateZ' )
+					print "   to: " + str( translateX ) + ", " + str( translateY ) + ", " + str( translateZ )

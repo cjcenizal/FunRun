@@ -9,18 +9,21 @@ package com.funrun.controller.commands {
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.SegmentsModel;
+	import com.funrun.model.collision.BlockData;
 	import com.funrun.model.collision.BoundingBoxData;
 	import com.funrun.model.collision.SegmentData;
 	import com.funrun.model.constants.BlockTypes;
 	import com.funrun.model.constants.SegmentTypes;
 	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.vo.BlockVO;
 	import com.funrun.services.ObstaclesJsonService;
 	import com.funrun.services.parsers.SegmentParser;
 	import com.funrun.services.parsers.SegmentsParser;
 	
 	import org.robotlegs.mvcs.Command;
+	import org.robotlegs.utilities.macrobot.AsyncCommand;
 	
-	public class LoadSegmentsCommand extends Command {
+	public class LoadSegmentsCommand extends AsyncCommand {
 		
 		// Models.
 		
@@ -39,19 +42,21 @@ package com.funrun.controller.commands {
 		public var obstaclesService:ObstaclesJsonService;
 		
 		override public function execute():void {
-			
-			// Load temp floor.
-			// TO-DO: Put floor(s) into json.
-			var referenceMesh:Mesh, mesh:Mesh;//, floorMaterial:MaterialBase;
+			// Load all json files.
+		}
+		
+		private function build():void {
+			// Add a basic, empty floor.
 			var merge:Merge = new Merge( true );
-			referenceMesh = blocksModel.getBlock( BlockTypes.FLOOR ).mesh;
+			var referenceBlock:BlockVO = blocksModel.getBlock( BlockTypes.FLOOR );
+			var referenceMesh:Mesh = referenceBlock.mesh;
 			trace("referenceMesh: "+ referenceMesh);
-			//floorMaterial = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
-			//var floorMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), floorMaterial );
-			/*var boundingBoxes:Array = [];
+			var floorMesh:Mesh = new Mesh( new CubeGeometry( 0, 0, 0 ), referenceBlock.mesh.material );
+			var boundingBoxes:Array = [];
+			var mesh:Mesh;
 			for ( var x:int = 0; x < TrackConstants.TRACK_WIDTH; x += TrackConstants.BLOCK_SIZE ) {
 				for ( var z:int = 0; z < TrackConstants.SEGMENT_DEPTH; z += TrackConstants.BLOCK_SIZE ) {
-					mesh = referenceMesh.clone() as Mesh;//new Mesh( referenceMesh.geometry, referenceMesh.material );
+					mesh = new Mesh( referenceMesh.geometry, referenceMesh.material );
 					mesh.x = x - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE_HALF;
 					mesh.y = -TrackConstants.BLOCK_SIZE_HALF;
 					mesh.z = z + TrackConstants.BLOCK_SIZE_HALF;
@@ -78,7 +83,8 @@ package com.funrun.controller.commands {
 			var minZ:Number = 0;
 			var maxZ:Number = TrackConstants.SEGMENT_DEPTH;
 			segmentsModel.addSegment( new SegmentData( SegmentTypes.FLOOR, floorMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ ) );
-			*/
+			
+			/*
 			var parsers:SegmentsParser = new SegmentsParser( obstaclesService.data );
 			var len:int = parsers.length;
 			for ( var i:int = 0; i < len; i++ ) {
@@ -98,7 +104,7 @@ package com.funrun.controller.commands {
 						}
 					}
 				}
-			}
+			}*/
 		}
 	}
 }

@@ -6,15 +6,9 @@ package com.funrun.controller.commands {
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
-	import away3d.materials.TextureMaterial;
-	import away3d.materials.lightpickers.StaticLightPicker;
-	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FogMethod;
-	import away3d.materials.methods.FresnelSpecularMethod;
-	import away3d.textures.BitmapTexture;
 	
 	import com.funrun.controller.signals.AddLightRequest;
-	import com.funrun.controller.signals.AddMaterialRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
@@ -31,8 +25,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.TimeConstants;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.state.ProductionState;
-	
-	import flash.display.Bitmap;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -70,9 +62,6 @@ package com.funrun.controller.commands {
 		// Commands.
 
 		[Inject]
-		public var addMaterialRequest:AddMaterialRequest;
-
-		[Inject]
 		public var loadBlocksRequest:LoadBlocksRequest;
 
 		[Inject]
@@ -94,6 +83,7 @@ package com.funrun.controller.commands {
 		public var showStatsRequest:ShowStatsRequest;
 
 		override public function execute():void {
+			trace(this);
 			// Show stats if we're in development.
 			showStatsRequest.dispatch( !productionState.isProduction );
 
@@ -129,23 +119,17 @@ package com.funrun.controller.commands {
 			addView3DRequest.dispatch( view );
 
 			// Add materials.
+			/*
+			TO-DO: Add fog and light picker to all materials.
 			var playerFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
 			var playerMaterial:ColorMaterial = new ColorMaterial( 0x00FF00 );
 			playerMaterial.addMethod( playerFog );
-
 			var textureFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
-
-			/*var floorMaterial:TextureMaterial = new TextureMaterial( new BitmapTexture( ( new ConcreteImage() as Bitmap ).bitmapData ), true );
-			floorMaterial.addMethod( textureFog );
-
-			var obstacleMaterial:TextureMaterial = new TextureMaterial( new BitmapTexture( ( new BrickImage() as Bitmap ).bitmapData ), true );
-			obstacleMaterial.addMethod( textureFog );
-			addMaterialRequest.dispatch( MaterialsModel.PLAYER_MATERIAL, playerMaterial );
-			addMaterialRequest.dispatch( MaterialsModel.FLOOR_MATERIAL, floorMaterial );
-			addMaterialRequest.dispatch( MaterialsModel.OBSTACLE_MATERIAL, obstacleMaterial );*/
-
+			*/
+				
 			loadSegmentsRequest.dispatch();
 
+			/*
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -1 );
 			sunlight.castsShadows = true;
@@ -166,7 +150,7 @@ package com.funrun.controller.commands {
 			addLightRequest.dispatch( LightsModel.SUN, sunlight );
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
 
-			/*
+			
 			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			var lightPicker:StaticLightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
@@ -188,13 +172,14 @@ package com.funrun.controller.commands {
 			obstacleMaterial.specular = .25;
 			obstacleMaterial.gloss = 20;
 			obstacleMaterial.specularMethod = specularMethod;
-			*/
+			
 			// Add lights to track.
 			addObjectToSceneRequest.dispatch( sunlight );
 			addObjectToSceneRequest.dispatch( spotlight );
-
+			*/
 			// Add player to track.
 			addPlayerRequest.dispatch();
+			
 		}
 	}
 }
