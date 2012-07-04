@@ -11,11 +11,12 @@ package com.funrun.controller.commands {
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.collision.BlockData;
 	import com.funrun.model.collision.BoundingBoxData;
-	import com.funrun.model.vo.SegmentVO;
 	import com.funrun.model.constants.BlockTypes;
 	import com.funrun.model.constants.SegmentTypes;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.vo.BlockVO;
+	import com.funrun.model.vo.ObstacleBlockVO;
+	import com.funrun.model.vo.SegmentVO;
 	import com.funrun.services.JsonService;
 	import com.funrun.services.parsers.ObstacleParser;
 	import com.funrun.services.parsers.SegmentParser;
@@ -52,64 +53,8 @@ package com.funrun.controller.commands {
 		private var _countLoaded:int = 0;
 		
 		override public function execute():void {
-			// Load all json files.
-			var obstacleJson:Object = new JsonService().read( ObstaclesJsonData );
-			var obstacleJsonFiles:Array = obstacleJson[ "list" ];
-			for ( var i:int = 0; i < obstacleJsonFiles.length; i++ ) {
-				var loader:URLLoader = new URLLoader( new URLRequest( _filePath + obstacleJsonFiles[ i ] ) );
-				loader.addEventListener( IOErrorEvent.IO_ERROR, onJsonIoError );
-				loader.addEventListener( Event.COMPLETE, onJsonLoaded );
-			}
-		}
-		
-		private function onJsonLoaded( e:Event ):void {
-			// Parse and store obstacle.
-			var json:String = ( e.target as URLLoader ).data;
-			parseObstacle( new JsonService().readString( json ) );
-			_countLoaded++;
-			if ( _countLoaded == _countTotal ) {
-				dispatchComplete( true );
-			}
-		}
-		
-		private function onJsonIoError( e:IOErrorEvent ):void {
-			trace(this, "IOError");
-		}
-		
-		private function parseObstacle( data:Object ):void {
-			// Parse obstacle and add it to the model.
-			var parsedObstacle:ObstacleParser = new ObstacleParser( data );
-			segmentsModel.addSegment( parsedObstacle );
-			
-			
+			// TO-DO: Add a default floor segment.
 			/*
-			var parsers:SegmentsParser = new SegmentsParser( json );
-			var len:int = parsers.length;
-			for ( var i:int = 0; i < len; i++ ) {
-				var parser:SegmentParser = parsers.getAt( i );
-				if ( parser.active ) {
-					// Store this sucker.
-					var segment:SegmentData = SegmentData.make( blocksModel, materialsModel, parser );
-					if ( segment.depth != TrackConstants.SEGMENT_DEPTH ) {
-						trace("WARNING in " + this + "! "
-							+ parser.id + " is the wrong depth! It's " + segment.depth + " and it should be " + TrackConstants.SEGMENT_DEPTH
-							+ ". It's off by " + ( ( TrackConstants.SEGMENT_DEPTH - segment.depth ) / TrackConstants.BLOCK_SIZE ) + " blocks.");
-					} else {
-						segmentsModel.addSegment( segment );
-						if ( parser.flip ) {
-							// Store mirror version if required.
-							segmentsModel.addSegment( SegmentData.make( blocksModel, materialsModel, parser, true ) );
-						}
-					}
-				}
-			}
-			*/
-		}
-		
-		private function build():void {
-			
-			/*
-			// Add a basic, empty floor.
 			var merge:Merge = new Merge( true );
 			var referenceBlock:BlockVO = blocksModel.getBlock( BlockTypes.FLOOR );
 			var referenceMesh:Mesh = referenceBlock.mesh;
@@ -146,6 +91,128 @@ package com.funrun.controller.commands {
 			var maxZ:Number = TrackConstants.SEGMENT_DEPTH;
 			segmentsModel.addSegment( new SegmentData( SegmentTypes.FLOOR, floorMesh, boundingBoxes, minX, minY, minZ, maxX, maxY, maxZ ) );
 			*/
+			
+			// Load all json files.
+			var obstacleJson:Object = new JsonService().read( ObstaclesJsonData );
+			var obstacleJsonFiles:Array = obstacleJson[ "list" ];
+			for ( var i:int = 0; i < obstacleJsonFiles.length; i++ ) {
+				var loader:URLLoader = new URLLoader( new URLRequest( _filePath + obstacleJsonFiles[ i ] ) );
+				loader.addEventListener( IOErrorEvent.IO_ERROR, onJsonIoError );
+				loader.addEventListener( Event.COMPLETE, onJsonLoaded );
+			}
+		}
+		
+		private function onJsonLoaded( e:Event ):void {
+			// Parse and store obstacle.
+			var json:String = ( e.target as URLLoader ).data;
+			parseObstacle( new JsonService().readString( json ) as Array );
+			_countLoaded++;
+			if ( _countLoaded == _countTotal ) {
+				dispatchComplete( true );
+			}
+		}
+		
+		private function onJsonIoError( e:IOErrorEvent ):void {
+			trace(this, "IOError");
+		}
+		
+		private function parseObstacle( data:Array ):void {
+			// Parse obstacle and add it to the model.
+			var parsedObstacle:ObstacleParser = new ObstacleParser( data );
+			
+			// Set up obstacle mesh vars.
+			var blockData:ObstacleBlockVO;
+			var block:BlockVO;
+			var blockMesh:Mesh;
+			var obstacleMesh:Mesh = new Mesh();
+			var merge:Merge = new Merge( true );
+			var boundingBoxes:Array = [];
+			// Used for filling in gaps with floors.
+			var pitMap:Object = {};
+			var minX:Number = 0;
+			var minZ:Number = 0;
+			var maxX:Number = TrackConstants.TRACK_WIDTH_BLOCKS - 1;
+			var maxZ:Number = 0;
+			
+			// Traverse block data and construct an obstacle mesh, filling in floors where necessary.
+			var len:int = parsedObstacle.numBlockData;
+			for ( var i:int = 0; i < len; i++ ) {
+				// Get position and mesh data for particular block.
+				blockData = parsedObstacle.getBlockDataAt( i );
+				block = blocksModel.getBlock( blockData.id );
+				// Create and position a mesh from data.
+				blockMesh = block.mesh.clone() as Mesh;
+				blockMesh.x = blockData.x * TrackConstants.BLOCK_SIZE; // TO-DO: DO we need to offset this?
+				blockMesh.y = blockData.y * TrackConstants.BLOCK_SIZE; // TO-DO: Do we need to adjust this?
+				blockMesh.z = blockData.z * TrackConstants.BLOCK_SIZE; // TO-DO: DO we need to offset this?
+				// Merge the block mesh into the obstacle mesh.
+				merge.apply( obstacleMesh, blockMesh );
+				// Add a bounding box so we can collide with the obstacle.
+				boundingBoxes.push( new BoundingBoxData(
+					blocksModel.getBlock( blockData.id ),
+					blockMesh.x, blockMesh.y, blockMesh.z,
+					blockMesh.x - TrackConstants.BLOCK_SIZE_HALF,
+					blockMesh.y - TrackConstants.BLOCK_SIZE_HALF, // TO-DO: Do we need to adjust this?
+					blockMesh.z - TrackConstants.BLOCK_SIZE_HALF,
+					blockMesh.x + TrackConstants.BLOCK_SIZE_HALF,
+					blockMesh.y + TrackConstants.BLOCK_SIZE_HALF, // TO-DO: Do we need to adjust this?
+					blockMesh.z + TrackConstants.BLOCK_SIZE_HALF
+				) );
+				// Store pit location.
+				if ( !pitMap[ blockData.x ] ) {
+					pitMap[ blockData.x ] = {};
+				}
+				if ( data.y < 0 ) {
+					// We only want to store positives, not negative.
+					pitMap[ blockData.x ][ blockData.z ] = true;
+				}
+				// Update bounds of obstacle.
+				minX = Math.min( blockData.x, minX );
+				minZ = Math.min( blockData.z, minZ );
+				maxX = Math.max( blockData.x, maxX );
+				maxZ = Math.max( blockData.z, maxZ );
+			}
+			
+			// Fill in floors where necessary.
+			var floorBlockRefMesh:Mesh = blocksModel.getBlock( BlockTypes.FLOOR ).mesh;
+			var floorBlockMesh:Mesh;
+			for ( var x:int = minX; x <= maxX; x++ ) {
+				for ( var z:int = minZ; z <= maxZ; z++ ) {
+					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
+						// Create a floor block mesh in the appropriate place.
+						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
+						floorBlockMesh.x = x * TrackConstants.BLOCK_SIZE - TrackConstants.TRACK_WIDTH * .5 + TrackConstants.BLOCK_SIZE * .5;
+						floorBlockMesh.y = TrackConstants.BLOCK_SIZE * -.5;
+						floorBlockMesh.z = z * TrackConstants.BLOCK_SIZE + TrackConstants.BLOCK_SIZE * .5;
+						// Merge it into the obstacle.
+						merge.apply( obstacleMesh, floorBlockMesh );
+						// Add a bounding box so we can collide with the floor.
+						boundingBoxes.push( new BoundingBoxData(
+							blocksModel.getBlock( BlockTypes.FLOOR ),
+							floorBlockMesh.x, floorBlockMesh.z, floorBlockMesh.z,
+							floorBlockMesh.x - TrackConstants.BLOCK_SIZE_HALF,
+							floorBlockMesh.y - TrackConstants.BLOCK_SIZE_HALF,
+							floorBlockMesh.z - TrackConstants.BLOCK_SIZE_HALF,
+							floorBlockMesh.x + TrackConstants.BLOCK_SIZE_HALF,
+							floorBlockMesh.y + TrackConstants.BLOCK_SIZE_HALF,
+							floorBlockMesh.z + TrackConstants.BLOCK_SIZE_HALF
+						) );
+					}
+				}
+			}
+			
+			var segment:SegmentVO = new SegmentVO( BlockTypes.OBSTACLE, obstacleMesh, boundingBoxes,
+				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
+				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
+			segmentsModel.addSegment( segment );
+			
+			
+			
+			
+			// TO-DO:
+			// We need to be able to specify here that some blocks on top of pit edges
+			// need to be walkable and not obstacle.
+			
 		}
 	}
 }

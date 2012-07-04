@@ -9,6 +9,7 @@ package com.funrun.controller.commands {
 	import away3d.loaders.parsers.OBJParser;
 	
 	import com.funrun.model.BlocksModel;
+	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.vo.BlockVO;
 	import com.funrun.services.JsonService;
 	import com.funrun.services.parsers.BlocksParser;
@@ -65,7 +66,7 @@ package com.funrun.controller.commands {
 				if ( event.asset.assetType == AssetType.MESH ) {
 					// Treat and assign mesh to block.
 					var mesh:Mesh = event.asset as Mesh;
-					mesh.geometry.scale( 100 ); // Note: scale cannot be performed on mesh when using sub-surface diffuse method.
+					mesh.geometry.scale( TrackConstants.BLOCK_SIZE ); // Note: scale cannot be performed on mesh when using sub-surface diffuse method.
 					mesh.y = -50;
 					mesh.rotationY = 180;
 					blockData.mesh = mesh;

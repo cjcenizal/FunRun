@@ -1,9 +1,8 @@
 package com.funrun.controller.commands {
 
-	import org.robotlegs.utilities.macrobot.AsyncCommand;
-	import org.robotlegs.utilities.macrobot.ParallelCommand;
+	import org.robotlegs.utilities.macrobot.SequenceCommand;
 
-	public class BuildGameDataCommand extends ParallelCommand {
+	public class BuildGameDataCommand extends SequenceCommand {
 		
 		public function BuildGameDataCommand() {
 			// Load all blocks.
