@@ -31,9 +31,7 @@ package com.funrun {
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LeaveGameCommand;
-	import com.funrun.controller.commands.LoadBlocksCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
-	import com.funrun.controller.commands.LoadSegmentsCommand;
 	import com.funrun.controller.commands.LoginCommand;
 	import com.funrun.controller.commands.LoginFailedCommand;
 	import com.funrun.controller.commands.LoginFulfilledCommand;
@@ -101,9 +99,7 @@ package com.funrun {
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
-	import com.funrun.controller.signals.LoadBlocksRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
-	import com.funrun.controller.signals.LoadSegmentsRequest;
 	import com.funrun.controller.signals.LoginFailed;
 	import com.funrun.controller.signals.LoginFulfilled;
 	import com.funrun.controller.signals.LoginRequest;
@@ -149,8 +145,6 @@ package com.funrun {
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.GameModel;
-	import com.funrun.model.GeosMockModel;
-	import com.funrun.model.IGeosModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
@@ -166,7 +160,6 @@ package com.funrun {
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
-	import com.funrun.services.BlocksJsonService;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.LoadSegmentsJsonService;
 	import com.funrun.services.MatchmakingService;
@@ -232,7 +225,6 @@ package com.funrun {
 			}
 			
 			// Map models.
-			injector.mapSingletonOf( IGeosModel, GeosMockModel );
 			injector.mapSingleton( BlocksModel );
 			injector.mapSingleton( CompetitorsModel );
 			injector.mapSingleton( ConfigurationModel );
@@ -254,7 +246,6 @@ package com.funrun {
 			injector.mapSingleton( View3DModel );
 			
 			// Map services.
-			injector.mapSingleton( BlocksJsonService );
 			injector.mapSingleton( MatchmakingService );
 			injector.mapSingleton( MultiplayerService );
 			injector.mapSingleton( LoadSegmentsJsonService );
@@ -310,9 +301,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
-			signalCommandMap.mapSignalClass( LoadBlocksRequest,						LoadBlocksCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
-			signalCommandMap.mapSignalClass( LoadSegmentsRequest,					LoadSegmentsCommand );
 			signalCommandMap.mapSignalClass( LoginRequest,							LoginCommand );
 			signalCommandMap.mapSignalClass( LoginFailed,							LoginFailedCommand );
 			signalCommandMap.mapSignalClass( LoginFulfilled,						LoginFulfilledCommand );

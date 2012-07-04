@@ -23,7 +23,10 @@ package com.funrun.controller.commands {
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
 	
-	public class LoadSegmentsCommand extends AsyncCommand {
+	public class LoadObstaclesCommand extends AsyncCommand {
+		
+		[ Embed( source = "external/embed/data/obstacles.json", mimeType = "application/octet-stream" ) ]
+		private const ObstaclesJsonData:Class;
 		
 		// Models.
 		

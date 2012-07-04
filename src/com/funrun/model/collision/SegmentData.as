@@ -189,16 +189,9 @@ package com.funrun.model.collision {
 				maxX = Math.max( posX, maxX );
 				maxZ = Math.max( data.z, maxZ );
 			}
-			// Fill in floor geometry wherever no pits exist.
-			var floorType:String = BlockTypes.FLOOR;
-			
-			// TO-DO: Customize this geo to be specific to the block.
-			referenceMesh = blocksModel.getBlock( floorType ).mesh;
-			
-			// TO-DO: Customize this to be specific to the block.
-			//material = materialsModel.getMaterial( MaterialsModel.FLOOR_MATERIAL );
 			
 			// Fill in gaps with floors.
+			referenceMesh = blocksModel.getBlock( BlockTypes.FLOOR ).mesh;
 			for ( var x:int = minX; x <= maxX; x++ ) {
 				for ( var z:int = minZ; z <= maxZ; z++ ) {
 					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
@@ -210,7 +203,7 @@ package com.funrun.model.collision {
 						
 						// Add a bounding box so we can collide with the floor.
 						boundingBoxes.push( new BoundingBoxData(
-							blocksModel.getBlock( floorType ),
+							blocksModel.getBlock( BlockTypes.FLOOR ),
 							mesh.x, mesh.z, mesh.z,
 							mesh.x - TrackConstants.BLOCK_SIZE_HALF,
 							mesh.y - TrackConstants.BLOCK_SIZE_HALF,

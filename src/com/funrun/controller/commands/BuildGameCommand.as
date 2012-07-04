@@ -3,17 +3,11 @@ package com.funrun.controller.commands {
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.View3D;
-	import away3d.lights.DirectionalLight;
-	import away3d.lights.PointLight;
-	import away3d.materials.ColorMaterial;
-	import away3d.materials.methods.FogMethod;
 	
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
-	import com.funrun.controller.signals.LoadBlocksRequest;
-	import com.funrun.controller.signals.LoadSegmentsRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.KeyboardModel;
@@ -29,7 +23,7 @@ package com.funrun.controller.commands {
 	import org.robotlegs.mvcs.Command;
 
 
-	public class SetupGameCommand extends Command {
+	public class BuildGameCommand extends Command {
 
 		// State.
 
@@ -60,12 +54,6 @@ package com.funrun.controller.commands {
 		public var pointsModel:PointsModel;
 
 		// Commands.
-
-		[Inject]
-		public var loadBlocksRequest:LoadBlocksRequest;
-
-		[Inject]
-		public var loadSegmentsRequest:LoadSegmentsRequest;
 
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
@@ -127,7 +115,7 @@ package com.funrun.controller.commands {
 			var textureFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
 			*/
 				
-			loadSegmentsRequest.dispatch();
+			//loadSegmentsRequest.dispatch();
 
 			/*
 			// Add lights.

@@ -8,8 +8,10 @@ package com.funrun.controller.commands
 	public class InitGameCommand extends SequenceCommand {
 		
 		public function InitGameCommand() {
-			//addCommand( LoadBlocksCommand );
-			//addCommand( SetupGameCommand );
+			// Load and parse all data files.
+			addCommand( BuildGameDataCommand );
+			// Build the game, using the game data.
+			addCommand( BuildGameCommand );
 		}
 		
 	}

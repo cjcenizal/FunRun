@@ -6,7 +6,7 @@ package com.funrun.services {
 	import playerio.DatabaseObject;
 	import playerio.PlayerIOError;
 	
-	public class WhitelistService extends AbstractJsonService implements IWhitelistService {
+	public class WhitelistService extends JsonService implements IWhitelistService {
 		
 		private var _onPassSignal:Signal;
 		private var _onFailSignal:Signal;
