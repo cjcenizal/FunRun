@@ -16,7 +16,8 @@ package com.funrun.model.vo {
 	import com.funrun.model.collision.BoundingBoxData;
 
 	public class SegmentVO {
-
+		
+		private var _id:String;
 		private var _type:String;
 		private var _mesh:Mesh;
 		private var _boundingBoxes:Array;
@@ -29,7 +30,8 @@ package com.funrun.model.vo {
 		private var _maxY:Number;
 		private var _maxZ:Number;
 
-		public function SegmentVO( type:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+		public function SegmentVO( id:String, type:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+			_id = id;
 			_type = type;
 			_mesh = mesh;
 			_boundingBoxes = boundingBoxes;
@@ -43,7 +45,11 @@ package com.funrun.model.vo {
 		}
 		
 		public function clone():SegmentVO {
-			return new SegmentVO( _type, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+			return new SegmentVO( _id, _type, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+		}
+		
+		public function get id():String {
+			return _id;
 		}
 		
 		/**

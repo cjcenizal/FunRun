@@ -7,7 +7,5 @@ package com.funrun.model.state
 		public static const PLAYERIO_FAILURE:String = "Sorry, our servers barfed! Please try again later.";
 		public static const WHITELIST_FAILURE:String = "We're currently in private beta, sorry!";
 		public static const LOGIN_SUCCESS:String = "";
-		
-		public static var isComplete:Boolean = false;
 	}
 }

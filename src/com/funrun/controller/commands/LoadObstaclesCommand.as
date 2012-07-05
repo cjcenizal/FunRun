@@ -110,7 +110,8 @@ package com.funrun.controller.commands {
 		private function onJsonLoaded( e:Event ):void {
 			// Parse and store obstacle.
 			var json:String = ( e.target as URLLoader ).data;
-			parseObstacle( new JsonService().readString( json ) as Array );
+			// TO-DO: Transfer id to obstacle, using BulkLoader possibly.
+			parseObstacle(  "placeHolderId", new JsonService().readString( json ) as Array );
 			_countLoaded++;
 			if ( _countLoaded == _countTotal ) {
 				dispatchComplete( true );
@@ -121,7 +122,12 @@ package com.funrun.controller.commands {
 			trace(this, "IOError");
 		}
 		
-		private function parseObstacle( data:Array ):void {
+		private function parseObstacle( id:String, data:Array ):void {
+			
+			// TO-DO:
+			// We need to be able to specify here that some blocks on top of pit edges
+			// need to be walkable and not obstacle.
+			
 			// Parse obstacle and add it to the model.
 			var parsedObstacle:ObstacleParser = new ObstacleParser( data );
 			
@@ -206,18 +212,15 @@ package com.funrun.controller.commands {
 				}
 			}*/
 			
-			var segment:SegmentVO = new SegmentVO( BlockTypes.OBSTACLE, obstacleMesh, boundingBoxes,
+			var segment:SegmentVO = new SegmentVO( id, BlockTypes.OBSTACLE, obstacleMesh, boundingBoxes,
 				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
 				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 			segmentsModel.addSegment( segment );
 			
-			
-			
-			
-			// TO-DO:
-			// We need to be able to specify here that some blocks on top of pit edges
-			// need to be walkable and not obstacle.
-			
+			trace("Bounds for " + segment.id);
+			trace("x: " + obstacleMesh.bounds.min.x + ", " + obstacleMesh.bounds.max.x);
+			trace("y: " + obstacleMesh.bounds.min.y + ", " + obstacleMesh.bounds.max.y);
+			trace("z: " + obstacleMesh.bounds.min.z + ", " + obstacleMesh.bounds.max.z);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 package com.funrun.controller.commands {
-
+	
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.View3D;
@@ -21,60 +21,59 @@ package com.funrun.controller.commands {
 	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
-
-
+	
 	public class BuildGameCommand extends Command {
-
+		
 		// State.
-
+		
 		[Inject]
 		public var productionState:ProductionState;
-
+		
 		// Models.
-
+		
 		[Inject]
 		public var lightsModel:LightsModel;
-
+		
 		[Inject]
 		public var cameraModel:View3DModel;
-
+		
 		[Inject]
 		public var materialsModel:MaterialsModel;
-
+		
 		[Inject]
 		public var keyboardModel:KeyboardModel;
-
+		
 		[Inject]
 		public var interpolationModel:InterpolationModel;
-
+		
 		[Inject]
 		public var timeModel:TimeModel;
-
+		
 		[Inject]
 		public var pointsModel:PointsModel;
-
+		
 		// Commands.
-
+		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
-
+		
 		[Inject]
 		public var addLightRequest:AddLightRequest;
-
+		
 		[Inject]
 		public var addPlayerRequest:AddPlayerRequest;
-
+		
 		[Inject]
 		public var addView3DRequest:AddView3DRequest;
-
+		
 		[Inject]
 		public var showStatsRequest:ShowStatsRequest;
-
+		
 		override public function execute():void {
 			trace(this);
 			// Show stats if we're in development.
 			showStatsRequest.dispatch( !productionState.isProduction );
-
+			
 			// Assign points to places.
 			pointsModel.assign( 0, 10 );
 			pointsModel.assign( 1, 9 );
@@ -83,18 +82,18 @@ package com.funrun.controller.commands {
 			pointsModel.assign( 4, 4 );
 			pointsModel.assign( 5, 2 );
 			pointsModel.assign( 6, 1 );
-
+			
 			// Keyboard.
 			keyboardModel.stage = contextView.stage;
 			keyboardModel.init();
-
+			
 			// Interpolation.
 			interpolationModel.setIncrement( TimeConstants.INTERPOLATION_INCREMENT );
-
+			
 			// Time.
 			timeModel.stage = contextView.stage;
 			timeModel.init();
-
+			
 			// Add view.
 			var camera:Camera3D = new Camera3D( new PerspectiveLens( TrackConstants.CAM_FOV ) );
 			camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
@@ -105,7 +104,7 @@ package com.funrun.controller.commands {
 			view.backgroundColor = 0xffffff;
 			cameraModel.setView( view );
 			addView3DRequest.dispatch( view );
-
+			
 			// Add materials.
 			/*
 			TO-DO: Add fog and light picker to all materials.
@@ -114,9 +113,9 @@ package com.funrun.controller.commands {
 			playerMaterial.addMethod( playerFog );
 			var textureFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
 			*/
-				
+			
 			//loadSegmentsRequest.dispatch();
-
+			
 			/*
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -1 );
@@ -137,24 +136,24 @@ package com.funrun.controller.commands {
 			spotlight.ambient = .5;
 			addLightRequest.dispatch( LightsModel.SUN, sunlight );
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
-
+			
 			
 			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			var lightPicker:StaticLightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
-
+			
 			playerMaterial.lightPicker = lightPicker;
 			playerMaterial.shadowMethod = shadowMethod;
 			playerMaterial.specular = .25;
 			playerMaterial.gloss = 20;
 			playerMaterial.specularMethod = specularMethod;
-
+			
 			floorMaterial.lightPicker = lightPicker;
 			floorMaterial.shadowMethod = shadowMethod;
 			floorMaterial.specular = .25;
 			floorMaterial.gloss = 20;
 			floorMaterial.specularMethod = specularMethod;
-
+			
 			obstacleMaterial.lightPicker = lightPicker;
 			obstacleMaterial.shadowMethod = shadowMethod;
 			obstacleMaterial.specular = .25;
@@ -167,7 +166,7 @@ package com.funrun.controller.commands {
 			*/
 			// Add player to track.
 			addPlayerRequest.dispatch();
-			
+		
 		}
 	}
 }
