@@ -13,5 +13,9 @@ package com.funrun.model.vo {
 			this.y = y;
 			this.z = z;
 		}
+		
+		public function toString():String {
+			return (id + ": " + x + ", " + y + ", " + z);
+		}
 	}
 }

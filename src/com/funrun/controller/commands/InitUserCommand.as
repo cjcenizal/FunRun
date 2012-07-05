@@ -105,6 +105,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onPlayerObjectLoaded():void {
+			updateLoginStatus.dispatch( LoginState.PLAYER_OBJECT_LOADED );
 			// Read properties from the database.
 			var key:String, val:*;
 			for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {

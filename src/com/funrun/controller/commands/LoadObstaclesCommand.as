@@ -1,33 +1,25 @@
 package com.funrun.controller.commands {
 	
 	import away3d.entities.Mesh;
-	import away3d.materials.MaterialBase;
-	import away3d.primitives.CubeGeometry;
-	import away3d.primitives.PrimitiveBase;
 	import away3d.tools.commands.Merge;
 	
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.SegmentsModel;
-	import com.funrun.model.collision.BlockData;
 	import com.funrun.model.collision.BoundingBoxData;
 	import com.funrun.model.constants.BlockTypes;
-	import com.funrun.model.constants.SegmentTypes;
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.vo.BlockVO;
 	import com.funrun.model.vo.ObstacleBlockVO;
 	import com.funrun.model.vo.SegmentVO;
 	import com.funrun.services.JsonService;
 	import com.funrun.services.parsers.ObstacleParser;
-	import com.funrun.services.parsers.SegmentParser;
-	import com.funrun.services.parsers.SegmentsParser;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
-	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
 	
 	public class LoadObstaclesCommand extends AsyncCommand {
@@ -100,7 +92,8 @@ package com.funrun.controller.commands {
 				dispatchComplete( true );
 			} else {
 				for ( var i:int = 0; i < len; i++ ) {
-					var loader:URLLoader = new URLLoader( new URLRequest( _filePath + obstacleJsonFiles[ i ] ) );
+					var filePath:String = _filePath + obstacleJsonFiles[ i ];
+					var loader:URLLoader = new URLLoader( new URLRequest( filePath ) );
 					loader.addEventListener( IOErrorEvent.IO_ERROR, onJsonIoError );
 					loader.addEventListener( Event.COMPLETE, onJsonLoaded );
 				}
@@ -138,12 +131,9 @@ package com.funrun.controller.commands {
 			var obstacleMesh:Mesh = new Mesh();
 			var merge:Merge = new Merge( true );
 			var boundingBoxes:Array = [];
-			// Used for filling in gaps with floors.
-			var pitMap:Object = {};
-			var minX:Number = 0;
-			var minZ:Number = 0;
-			var maxX:Number = TrackConstants.TRACK_WIDTH_BLOCKS - 1;
-			var maxZ:Number = 0;
+			
+			// A map of all pit locations in the obstacle.
+			var pitMap:Object = makePitMap();
 			
 			// Traverse block data and construct an obstacle mesh, filling in floors where necessary.
 			var len:int = parsedObstacle.numBlockData;
@@ -153,9 +143,9 @@ package com.funrun.controller.commands {
 				block = blocksModel.getBlock( blockData.id );
 				// Create and position a mesh from data.
 				blockMesh = block.mesh.clone() as Mesh;
-				blockMesh.x = blockData.x * TrackConstants.BLOCK_SIZE; // TO-DO: DO we need to offset this?
-				blockMesh.y = blockData.y * TrackConstants.BLOCK_SIZE; // TO-DO: Do we need to adjust this?
-				blockMesh.z = blockData.z * TrackConstants.BLOCK_SIZE; // TO-DO: DO we need to offset this?
+				blockMesh.x = blockData.x * TrackConstants.BLOCK_SIZE;
+				blockMesh.y = blockData.y * TrackConstants.BLOCK_SIZE;
+				blockMesh.z = blockData.z * TrackConstants.BLOCK_SIZE;
 				// Merge the block mesh into the obstacle mesh.
 				merge.apply( obstacleMesh, blockMesh );
 				// Add a bounding box so we can collide with the obstacle.
@@ -163,32 +153,26 @@ package com.funrun.controller.commands {
 					blocksModel.getBlock( blockData.id ),
 					blockMesh.x, blockMesh.y, blockMesh.z,
 					blockMesh.x - TrackConstants.BLOCK_SIZE_HALF,
-					blockMesh.y - TrackConstants.BLOCK_SIZE_HALF, // TO-DO: Do we need to adjust this?
+					blockMesh.y - TrackConstants.BLOCK_SIZE_HALF,
 					blockMesh.z - TrackConstants.BLOCK_SIZE_HALF,
 					blockMesh.x + TrackConstants.BLOCK_SIZE_HALF,
-					blockMesh.y + TrackConstants.BLOCK_SIZE_HALF, // TO-DO: Do we need to adjust this?
+					blockMesh.y + TrackConstants.BLOCK_SIZE_HALF,
 					blockMesh.z + TrackConstants.BLOCK_SIZE_HALF
 				) );
-				// Store pit location.
-				/*if ( !pitMap[ blockData.x ] ) {
-					pitMap[ blockData.x ] = {};
+				// If the block is below ground-level, it signals a pit.
+				if ( blockData.y < 0 ) {
+					// So mark it as positive in the pitmap.
+					markPitAt( pitMap, blockData.x, blockData.z );
 				}
-				if ( data.y < 0 ) {
-					// We only want to store positives, not negative.
-					pitMap[ blockData.x ][ blockData.z ] = true;
-				}*/
-				// Update bounds of obstacle.
-				minX = Math.min( blockData.x, minX );
-				minZ = Math.min( blockData.z, minZ );
-				maxX = Math.max( blockData.x, maxX );
-				maxZ = Math.max( blockData.z, maxZ );
 			}
+			
 			/*
 			// Fill in floors where necessary.
 			var floorBlockRefMesh:Mesh = blocksModel.getBlock( BlockTypes.FLOOR ).mesh;
 			var floorBlockMesh:Mesh;
 			for ( var x:int = minX; x <= maxX; x++ ) {
 				for ( var z:int = minZ; z <= maxZ; z++ ) {
+					// Put floor blocks wherever the pit map is negative.
 					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
 						// Create a floor block mesh in the appropriate place.
 						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
@@ -221,6 +205,23 @@ package com.funrun.controller.commands {
 			trace("x: " + obstacleMesh.bounds.min.x + ", " + obstacleMesh.bounds.max.x);
 			trace("y: " + obstacleMesh.bounds.min.y + ", " + obstacleMesh.bounds.max.y);
 			trace("z: " + obstacleMesh.bounds.min.z + ", " + obstacleMesh.bounds.max.z);
+		}
+		
+		private function makePitMap():Object {
+			// TO-DO: Import a Maya obstacle with pits to make sure this logic is sound.
+			var pitMap:Object = {};
+			for ( var x:Number = 0; x < 12; x++ ) {
+				pitMap[ x ] = {};
+				for ( var z:Number = 0; z < 24; z++ ) {
+					pitMap[ x ][ z ] = false;
+				}
+			}
+			return pitMap;
+		}
+		
+		private function markPitAt( pitMap:Object, posX:Number, posZ:Number ):void {
+			// TO-DO: Import a Maya obstacle with pits to make sure this logic is sound, and pits are being marked where I expect them to be.
+			pitMap[ Math.round( posX - .5 ) ][ Math.round( posZ - .5 ) ] = true;
 		}
 	}
 }

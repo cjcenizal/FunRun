@@ -47,14 +47,14 @@ for currLayer in layers:
 			for child in children:
 				if ( child.find( 'locator' ) >= 0 ):
 					# Create object to store properties for this block.
-					childObj = {}
-					jsonObject.append( childObj )
+					blockObj = {}
+					jsonObject.append( blockObj )
 					# Add the id.
-					childObj[ 'id' ] = child.split( '_' )[ 1 ]
+					blockObj[ 'id' ] = child.split( '_' )[ 1 ]
 					# Add the position.
-					childObj[ 'x' ] = cmds.getAttr( obj + '.translateX' )
-					childObj[ 'y' ] = cmds.getAttr( obj + '.translateY' )
-					childObj[ 'z' ] = cmds.getAttr( obj + '.translateZ' )
+					blockObj[ 'x' ] = cmds.getAttr( obj + '.translateX' )
+					blockObj[ 'y' ] = cmds.getAttr( obj + '.translateY' ) + cmds.getAttr( child + '.translateY' )
+					blockObj[ 'z' ] = cmds.getAttr( obj + '.translateZ' ) + 12
 	
 	# Close the file.
 	jsonFile.write( json.dumps( jsonObject ) )
@@ -64,4 +64,5 @@ for currLayer in layers:
 
 # Select the original selection.
 cmds.select( deselect=True )
-cmds.select( originalSelection )
+if len( originalSelection ) > 0:
+  cmds.select( originalSelection )

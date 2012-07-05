@@ -41,7 +41,7 @@ for currLayer in layers:
 					translateY = cmds.getAttr( obj + '.translateY' )
 					translateZ = cmds.getAttr( obj + '.translateZ' )
 					cmds.setAttr( obj + '.translateX', round( translateX - .5 ) + .5 )
-					cmds.setAttr( obj + '.translateY', round( translateY ) + 0 )
+					cmds.setAttr( obj + '.translateY', round( translateY - 0 ) + 0 )
 					cmds.setAttr( obj + '.translateZ', round( translateZ - .5 ) + .5 )
 					translateX2 = cmds.getAttr( obj + '.translateX' )
 					translateY2 = cmds.getAttr( obj + '.translateY' )
@@ -51,4 +51,6 @@ for currLayer in layers:
 					
 # Select the original selection.
 cmds.select( deselect=True )
-cmds.select( originalSelection )
+print originalSelection
+if len( originalSelection ) > 0:
+  cmds.select( originalSelection )

@@ -11,7 +11,6 @@ package com.funrun.model.vo {
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.constants.BlockTypes;
 	import com.funrun.model.constants.TrackConstants;
-	import com.funrun.services.parsers.SegmentParser;
 	import com.funrun.model.collision.BlockData;
 	import com.funrun.model.collision.BoundingBoxData;
 

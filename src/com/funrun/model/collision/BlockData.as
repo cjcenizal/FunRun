@@ -14,5 +14,9 @@ package com.funrun.model.collision
 			this.y = y;
 			this.z = z;
 		}
+		
+		public function toString():String {
+			return (id + ": " + x + ", " + y + ", " + z);
+		}
 	}
 }
