@@ -90,22 +90,21 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onWhitelistFailed():void {
-			updateLoginStatus.dispatch( LoginState.WHITELIST_FAILURE );
+			updateLoginStatus.dispatch( LoginState.WHITELIST_FAILED );
 		}
 		
 		private function onWhitelistPassed():void {
-			updateLoginStatus.dispatch( LoginState.LOGIN_SUCCESS );
+			updateLoginStatus.dispatch( LoginState.WHITELIST_PASSED );
 			playerioPlayerObjectService.onLoadedSignal.add( onPlayerObjectLoaded );
 			playerioPlayerObjectService.onErrorSignal.add( onPlayerObjectError );
 			playerioPlayerObjectService.connect( playerioFacebookLoginService.client );
 		}
 		
 		private function onPlayerObjectError():void {
-			trace(this, "Player Object error");
+			updateLoginStatus.dispatch( LoginState.PLAYER_OBJECT_ERROR );
 		}
 		
 		private function onPlayerObjectLoaded():void {
-			trace(this, "Player Object loaded");
 			// Read properties from the database.
 			var key:String, val:*;
 			for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {
