@@ -34,6 +34,8 @@ package com.funrun.controller.commands {
 		public var startGameLoopRequest:StartGameLoopRequest;
 		
 		override public function execute():void {
+			// TO-DO: Check game state here. If in a game already, ignore all of this.
+			
 			// Store id so we can ignore updates we originated.
 			playerModel.inGameId = message.getInt( 0 );
 			
