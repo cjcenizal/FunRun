@@ -167,7 +167,7 @@ package Facebook{
 				return query.toFql();
 			});
 			
-			params.queries = JSON.serialize(params.queries);
+			params.queries = Facebook.JSON.serialize(params.queries);
 			
 			FB.api(params, function(result:*) : void {
 				if (result.error_msg) {

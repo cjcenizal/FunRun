@@ -27,7 +27,7 @@ package Facebook{
 		private var _value:Object = null;
 		
 		public function set value(value:Object) : void{
-			if( JSON.serialize(value) != JSON.serialize(_value) ){
+			if( Facebook.JSON.serialize(value) != Facebook.JSON.serialize(_value) ){
 				_value = value;
 				fire("value",value);
 			}

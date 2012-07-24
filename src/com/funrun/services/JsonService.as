@@ -11,11 +11,11 @@ package com.funrun.services {
 		
 		public function read( JsonData:Class ):Object {
 			var ba:ByteArray = new JsonData() as ByteArray;
-			return JSON.decode( ba.readUTFBytes( ba.length ) );
+			return com.adobe.serialization.json.JSON.decode( ba.readUTFBytes( ba.length ) );
 		}
 		
 		public function readString( jsonData:String ):Object {
-			return JSON.decode( jsonData );
+			return com.adobe.serialization.json.JSON.decode( jsonData );
 		}
 	}
 }

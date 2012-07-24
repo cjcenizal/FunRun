@@ -109,7 +109,7 @@
 package Facebook
 {
 	
-	internal class JSON
+	public class JSON
 	{
 		
 	// ----o Public Methods

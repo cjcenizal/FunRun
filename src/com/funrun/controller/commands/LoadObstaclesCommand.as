@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
 	
 	public class LoadObstaclesCommand extends AsyncCommand {
-		
+		/*
 		[ Embed( source = "external/embed/data/obstacles.json", mimeType = "application/octet-stream" ) ]
 		private const ObstaclesJsonData:Class;
 		
@@ -44,7 +44,7 @@ package com.funrun.controller.commands {
 		private var _countTotal:int;
 		private var _countLoaded:int = 0;
 		
-		override public function execute():void {
+		override public function execute():void {*/
 			// TO-DO: Add a default floor segment.
 			/*
 			var merge:Merge = new Merge( true );
@@ -85,7 +85,7 @@ package com.funrun.controller.commands {
 			*/
 			
 			// Load all json files.
-			var obstacleJson:Object = new JsonService().read( ObstaclesJsonData );
+		/*	var obstacleJson:Object = new JsonService().read( ObstaclesJsonData );
 			var obstacleJsonFiles:Array = obstacleJson[ "list" ];
 			var len:int = _countTotal = obstacleJsonFiles.length;
 			if ( len == 0 ) {
@@ -165,7 +165,7 @@ package com.funrun.controller.commands {
 					markPitAt( pitMap, blockData.x, blockData.z );
 				}
 			}
-			
+			*/
 			/*
 			// Fill in floors where necessary.
 			var floorBlockRefMesh:Mesh = blocksModel.getBlock( BlockTypes.FLOOR ).mesh;
@@ -196,7 +196,7 @@ package com.funrun.controller.commands {
 				}
 			}*/
 			
-			var segment:SegmentVO = new SegmentVO( id, BlockTypes.OBSTACLE, obstacleMesh, boundingBoxes,
+		/*	var segment:SegmentVO = new SegmentVO( id, BlockTypes.OBSTACLE, obstacleMesh, boundingBoxes,
 				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
 				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 			segmentsModel.addSegment( segment );
@@ -222,6 +222,6 @@ package com.funrun.controller.commands {
 		private function markPitAt( pitMap:Object, posX:Number, posZ:Number ):void {
 			// TO-DO: Import a Maya obstacle with pits to make sure this logic is sound, and pits are being marked where I expect them to be.
 			pitMap[ Math.round( posX - .5 ) ][ Math.round( posZ - .5 ) ] = true;
-		}
+		}*/
 	}
 }

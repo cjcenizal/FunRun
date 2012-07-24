@@ -142,7 +142,7 @@ package Facebook{
 				if (/^(["'])(?:\\?.)*?\1$/.test(value)) {
 					// Use eval to unquote the string
 					// convert
-					value = JSON.deserialize(value);
+					value = Facebook.JSON.deserialize(value);
 					type = 'index';
 				} else if (/^\d+\.?\d*$/.test(value)) {
 					type = 'index';
