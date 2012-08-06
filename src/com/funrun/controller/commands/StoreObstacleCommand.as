@@ -73,25 +73,22 @@ package com.funrun.controller.commands
 				// If the block is below ground-level, it signals a pit.
 				if ( blockData.y < 0 ) {
 					// So mark it as positive in the pitmap.
-					markPitAt( pitMap, blockData.x, blockData.z );
+					markPitAt( pitMap, blockData.x - .5, blockData.z - .5 );
 				}
 			}
 			
 			// Fill in floors where necessary.
 			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "001" ).mesh;
 			var floorBlockMesh:Mesh;
-			var posX:Number, posZ:Number;
 			for ( var x:int = 0; x <= Segment.NUM_BLOCKS_WIDE; x++ ) {
-				posX = x + .5;
 				for ( var z:int = 0; z <= Segment.NUM_BLOCKS_DEPTH; z++ ) {
-					posZ = z + .5;
 					// Put floor blocks wherever the pit map is negative.
-					if ( !pitMap[ posX ] || !pitMap[ posX ][ posZ ] ) {
+					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
 						// Create a floor block mesh in the appropriate place.
 						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
-						floorBlockMesh.x = posX * Block.SIZE;
+						floorBlockMesh.x = x * Block.SIZE;
 						floorBlockMesh.y = -Block.SIZE;
-						floorBlockMesh.z = posZ * Block.SIZE;
+						floorBlockMesh.z = z * Block.SIZE;
 						// Merge it into the obstacle.
 						merge.apply( obstacleMesh, floorBlockMesh );
 						// Add a bounding box so we can collide with the floor.
@@ -127,7 +124,7 @@ package com.funrun.controller.commands
 		}
 		
 		private function markPitAt( pitMap:Object, posX:Number, posZ:Number ):void {
-			pitMap[ Math.round( posX - .5 ) ][ Math.round( posZ - .5 ) ] = true;
+			pitMap[ Math.round( posX ) ][ Math.round( posZ ) ] = true;
 		}
 		
 		

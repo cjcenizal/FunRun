@@ -2,7 +2,6 @@
   "doc" : "These are the obstacles constrcuted from models.",
   "author" : "CJ Cenizal",
   "list" : [
-      "staggered_pits.json",
-      "lattice.json"
+      "staggered_pits.json"
     ]
 }
