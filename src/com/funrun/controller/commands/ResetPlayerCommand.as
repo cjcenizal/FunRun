@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
 	
 	import flash.geom.Vector3D;
 	
@@ -20,7 +20,7 @@ package com.funrun.controller.commands {
 			playerModel.cancelMovement();
 			playerModel.velocityZ = playerModel.velocityX = 0;
 			playerModel.velocityY = 50;
-			var width:Number = TrackConstants.TRACK_WIDTH * .8;
+			var width:Number = Track.WIDTH * .8;
 			playerModel.positionX = Math.random() * width - width * .5;
 			playerModel.positionY = 100;
 			playerModel.positionZ = Math.random() * 100;

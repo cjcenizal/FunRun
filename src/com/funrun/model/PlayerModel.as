@@ -4,13 +4,13 @@ package com.funrun.model {
 	import away3d.entities.Mesh;
 	
 	import com.cenizal.utils.Numbers;
+	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.PlayerProperties;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.vo.IPlaceable;
 	
 	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Actor;
-	import com.funrun.model.vo.IPlaceable;
 
 	public class PlayerModel extends Actor implements IPlaceable {
 		
@@ -116,7 +116,7 @@ package com.funrun.model {
 		}
 		
 		public function get distanceInFeet():int {
-			return Math.round( distance / TrackConstants.BLOCK_SIZE );
+			return Math.round( distance / Block.SIZE );
 		}
 		
 		public function get distanceString():String {

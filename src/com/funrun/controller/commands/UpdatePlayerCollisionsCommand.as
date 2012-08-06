@@ -9,7 +9,8 @@ package com.funrun.controller.commands {
 	import com.funrun.model.collision.FaceCollision;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.FaceTypes;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.Block;
 	import com.funrun.model.state.GameState;
 	
 	import flash.geom.Vector3D;
@@ -44,7 +45,7 @@ package com.funrun.controller.commands {
 			// is detected.
 			
 			var testPos:Vector3D = playerModel.getPreviousPositionClone();
-			var targetInterpolationDist:Number = TrackConstants.BLOCK_SIZE;
+			var targetInterpolationDist:Number = Block.SIZE;
 			var numSteps:Number = Math.ceil( playerModel.getDistanceFromPreviousPosition() / targetInterpolationDist );
 			var interpolationVector:Vector3D = new Vector3D(
 				( playerModel.positionX - testPos.x ) / numSteps,
@@ -83,8 +84,8 @@ package com.funrun.controller.commands {
 						// If the player is moving up, hit the bottom sides of things.
 						if ( playerModel.velocityY > 0 ) {
 							if ( face.type == FaceTypes.BOTTOM ) {
-								playerModel.velocityY = TrackConstants.BOUNCE_OFF_BOTTOM_VELOCITY;
-								playerModel.positionY = ( playerModel.isDucking ) ? face.minY - TrackConstants.PLAYER_HALF_SIZE * .25 : face.minY - TrackConstants.PLAYER_HALF_SIZE;
+								playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
+								playerModel.positionY = ( playerModel.isDucking ) ? face.minY - Track.PLAYER_HALF_SIZE * .25 : face.minY - Track.PLAYER_HALF_SIZE;
 								return;
 							}
 							playerModel.isAirborne = true;
@@ -92,8 +93,8 @@ package com.funrun.controller.commands {
 							// Else hit the top sides of things.
 							if ( face.type == FaceTypes.TOP ) {
 								// TO-DO: What is CULL_FLOOR and why is this here?
-								if ( face.maxY > TrackConstants.CULL_FLOOR ) {
-									playerModel.positionY = ( playerModel.isDucking ) ? face.maxY + TrackConstants.PLAYER_HALF_SIZE * .25 : face.maxY + TrackConstants.PLAYER_HALF_SIZE;
+								if ( face.maxY > Track.CULL_FLOOR ) {
+									playerModel.positionY = ( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
 									playerModel.velocityY = 0;
 									playerModel.isAirborne = false;
 									return;
@@ -117,7 +118,7 @@ package com.funrun.controller.commands {
 						// Always hit the front sides of things.
 						if ( face.type == FaceTypes.FRONT ) {
 							// Resolve this collision.
-							playerModel.positionZ = face.minZ - TrackConstants.PLAYER_HALF_SIZE;
+							playerModel.positionZ = face.minZ - Track.PLAYER_HALF_SIZE;
 							if ( face.event == CollisionTypes.SMACK ) {
 								killPlayerRequest.dispatch( CollisionTypes.SMACK );
 							}
@@ -127,7 +128,7 @@ package com.funrun.controller.commands {
 				} else {
 					// If we're not hitting something, we're airborne.
 					playerModel.isAirborne = true;
-					if ( playerModel.positionY < TrackConstants.FALL_DEATH_HEIGHT ) {
+					if ( playerModel.positionY < Track.FALL_DEATH_HEIGHT ) {
 						if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
 							resetPlayerRequest.dispatch();
 						} else if ( gameModel.gameState == GameState.RUNNING ) {

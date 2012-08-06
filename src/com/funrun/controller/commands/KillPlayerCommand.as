@@ -8,7 +8,7 @@
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.CollisionTypes;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -47,7 +47,7 @@
 				playerModel.isDead = true;
 				switch ( death ) {
 					case CollisionTypes.SMACK:
-						playerModel.velocityZ = TrackConstants.HEAD_ON_SMACK_SPEED;
+						playerModel.velocityZ = Track.HEAD_ON_SMACK_SPEED;
 						break;
 					case CollisionTypes.FALL:
 						trace(this, "Fell to death");

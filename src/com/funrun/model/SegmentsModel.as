@@ -7,25 +7,21 @@ package com.funrun.model {
 	
 	public class SegmentsModel extends Actor {
 		
-		private var _segments:Object;
-		private var _histories:Object;
+		private var _segments:Array;
+		private var _histories:Array;
 		
 		public function SegmentsModel() {
 			super();
-			_segments = {};
-			_histories = {};
+			_segments = [];
+			_histories = [];
 		}
 		
-		public function addSegment( segment:SegmentVO ):void {
-			if ( !_segments[ segment.type ] ) {
-				_segments[ segment.type ] = new Array();
-				_histories[ segment.type ] = new Array();
-			}
-			_segments[ segment.type ].push( segment );
+		public function storeObstacle( segment:SegmentVO ):void {
+			_segments.push( segment );
 		}
 		
-		public function set seed( val:int ):void {
-			Rndm.seed = val;
+		public function storeFloor( segment:SegmentVO ):void {
+			_segments.unshift( segment );
 		}
 		
 		/**
@@ -33,13 +29,17 @@ package com.funrun.model {
 		 * @param index The index of the desired obstacle.
 		 * @return A clone of the original, since we need to duplicate obstacle mesh.
 		 */
-		public function getOfType( type:String, index:int ):SegmentVO {
-			var history:Array = _histories[ type ];
-			while ( history.length < index + 1 ) {
-				history.push( Rndm.float( 1 ) );
+		public function getAt( index:int ):SegmentVO {
+			while ( _histories.length < index + 1 ) {
+				_histories.push( Rndm.float( 1 ) );
 			}
-			var segments:Array = _segments[ type ];
-			return ( segments[ Math.floor( history[ index ] * segments.length ) ] as SegmentVO ).clone();
+			// If index is 0, return a floor. Else, return an obstacle.
+			var index:int = ( index == 0 ) ? index : Math.floor( _histories[ index ] * ( _segments.length - 1 ) ) + 1;
+			return ( _segments[ index ] as SegmentVO ).clone();
+		}
+		
+		public function set seed( val:int ):void {
+			Rndm.seed = val;
 		}
 	}
 }

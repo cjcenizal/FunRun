@@ -17,7 +17,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.TimeConstants;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -95,8 +95,8 @@ package com.funrun.controller.commands {
 			timeModel.init();
 			
 			// Add view.
-			var camera:Camera3D = new Camera3D( new PerspectiveLens( TrackConstants.CAM_FOV ) );
-			camera.lens.far = TrackConstants.CAM_FRUSTUM_DISTANCE;
+			var camera:Camera3D = new Camera3D( new PerspectiveLens( Track.CAM_FOV ) );
+			camera.lens.far = Track.CAM_FRUSTUM_DISTANCE;
 			var view:View3D = new View3D( null, camera );
 			view.antiAlias = 2; // 2, 4, or 16
 			view.width = contextView.stage.stageWidth;

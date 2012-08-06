@@ -4,7 +4,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.vo.SegmentVO;
-	import com.funrun.model.constants.SegmentTypes;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -24,7 +23,7 @@ package com.funrun.controller.commands {
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		override public function execute():void {
-			var floor:SegmentVO = segmentsModel.getOfType( SegmentTypes.FLOOR, 0 );
+			var floor:SegmentVO = segmentsModel.getAt( 0 );
 			floor.z = -400;
 			trackModel.addSegment( floor );
 			addObjectToSceneRequest.dispatch( floor.mesh );

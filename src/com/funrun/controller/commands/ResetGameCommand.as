@@ -13,7 +13,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -87,9 +87,9 @@ package com.funrun.controller.commands {
 			addObstaclesRequest.dispatch( playerModel.positionZ );
 			// Reset camera.
 			view3DModel.cameraX = 0;
-			view3DModel.cameraY = TrackConstants.CAM_Y;
-			view3DModel.cameraZ = TrackConstants.CAM_Z;
-			view3DModel.cameraRotationX = TrackConstants.CAM_TILT;
+			view3DModel.cameraY = Track.CAM_Y;
+			view3DModel.cameraZ = Track.CAM_Z;
+			view3DModel.cameraRotationX = Track.CAM_TILT;
 			view3DModel.cameraRotationY = 0;
 			view3DModel.cameraRotationZ = 0;
 			view3DModel.update();

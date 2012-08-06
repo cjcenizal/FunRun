@@ -7,7 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -34,7 +34,7 @@ package com.funrun.controller.commands {
 			addPlaceableRequest.dispatch( playerModel );
 			
 			// Add mesh.
-			var player:Mesh = new Mesh( new CylinderGeometry( TrackConstants.PLAYER_RADIUS * .9, TrackConstants.PLAYER_RADIUS, TrackConstants.PLAYER_HALF_SIZE * 2 ) );//, materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
+			var player:Mesh = new Mesh( new CylinderGeometry( Track.PLAYER_RADIUS * .9, Track.PLAYER_RADIUS, Track.PLAYER_HALF_SIZE * 2 ) );//, materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 		}

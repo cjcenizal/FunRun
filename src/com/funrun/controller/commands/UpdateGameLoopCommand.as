@@ -17,7 +17,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.OnlineState;
@@ -111,16 +111,16 @@ package com.funrun.controller.commands {
 					if ( gameModel.gameState == GameState.RUNNING ) {
 						// Update speed when you're alive.
 						if ( Math.abs( playerModel.velocityX ) > 0 ) {
-							if ( playerModel.velocityZ > TrackConstants.SLOWED_DIAGONAL_SPEED ) {
+							if ( playerModel.velocityZ > Track.SLOWED_DIAGONAL_SPEED ) {
 								playerModel.velocityZ--;
 							}
-						} else if ( playerModel.velocityZ < TrackConstants.MAX_PLAYER_FORWARD_VELOCITY ) {
-							playerModel.velocityZ += TrackConstants.PLAYER_FOWARD_ACCELERATION;
+						} else if ( playerModel.velocityZ < Track.MAX_PLAYER_FORWARD_VELOCITY ) {
+							playerModel.velocityZ += Track.PLAYER_FOWARD_ACCELERATION;
 						}
 					}
 					// Update jumping.
 					if ( playerModel.isJumping && !playerModel.isAirborne ) {
-						playerModel.velocityY += TrackConstants.PLAYER_JUMP_SPEED;
+						playerModel.velocityY += Track.PLAYER_JUMP_SPEED;
 						playerModel.isAirborne = true;
 					}
 					// Update lateral position.
@@ -131,7 +131,7 @@ package com.funrun.controller.commands {
 				playerModel.positionZ += playerModel.velocityZ;
 				
 				// Update gravity.
-				playerModel.velocityY += TrackConstants.PLAYER_GRAVITY;
+				playerModel.velocityY += Track.PLAYER_GRAVITY;
 				playerModel.positionY += playerModel.velocityY;
 				
 				// Apply ducking state.
@@ -155,10 +155,10 @@ package com.funrun.controller.commands {
 			
 			// Update camera before updating competitors.
 			view3DModel.cameraX = playerModel.positionX;
-			var followFactor:Number = ( TrackConstants.CAM_Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
+			var followFactor:Number = ( Track.CAM_Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
 			// We'll try easing to follow the player instead of being locked.
-			view3DModel.cameraY += ( ( TrackConstants.CAM_Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
-			view3DModel.cameraZ += ( ( playerModel.positionZ + TrackConstants.CAM_Z ) - view3DModel.cameraZ ) * .65;
+			view3DModel.cameraY += ( ( Track.CAM_Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
+			view3DModel.cameraZ += ( ( playerModel.positionZ + Track.CAM_Z ) - view3DModel.cameraZ ) * .65;
 			view3DModel.update();
 			
 			// Set position to mesh.

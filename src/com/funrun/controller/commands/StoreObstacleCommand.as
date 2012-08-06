@@ -4,11 +4,14 @@ package com.funrun.controller.commands
 	import away3d.tools.commands.Merge;
 	
 	import com.funrun.model.BlocksModel;
+	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.collision.BoundingBoxData;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Block;
+	import com.funrun.model.constants.Segment;
+	import com.funrun.model.constants.Track;
 	import com.funrun.model.vo.BlockVO;
 	import com.funrun.model.vo.ObstacleBlockVO;
-	import com.funrun.services.parsers.BlockParser;
+	import com.funrun.model.vo.SegmentVO;
 	import com.funrun.services.parsers.ObstacleParser;
 	
 	import org.robotlegs.mvcs.Command;
@@ -25,6 +28,9 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var blocksModel:BlocksModel;
+		
+		[Inject]
+		public var segmentsModel:SegmentsModel;
 		
 		override public function execute():void {
 			var obstacleData:ObstacleParser = new ObstacleParser( json );
@@ -48,21 +54,21 @@ package com.funrun.controller.commands
 				block = blocksModel.getBlock( blockData.id );
 				// Create and position a mesh from data.
 				blockMesh = block.mesh.clone() as Mesh;
-				blockMesh.x = blockData.x * TrackConstants.BLOCK_SIZE;
-				blockMesh.y = blockData.y * TrackConstants.BLOCK_SIZE;
-				blockMesh.z = blockData.z * TrackConstants.BLOCK_SIZE;
+				blockMesh.x = blockData.x * Block.SIZE;
+				blockMesh.y = blockData.y * Block.SIZE;
+				blockMesh.z = blockData.z * Block.SIZE;
 				// Merge the block mesh into the obstacle mesh.
 				merge.apply( obstacleMesh, blockMesh );
 				// Add a bounding box so we can collide with the obstacle.
 				boundingBoxes.push( new BoundingBoxData(
-					blocksModel.getBlock( blockData.id ),
+					block,
 					blockMesh.x, blockMesh.y, blockMesh.z,
-					blockMesh.x - TrackConstants.BLOCK_SIZE_HALF,
-					blockMesh.y - TrackConstants.BLOCK_SIZE_HALF,
-					blockMesh.z - TrackConstants.BLOCK_SIZE_HALF,
-					blockMesh.x + TrackConstants.BLOCK_SIZE_HALF,
-					blockMesh.y + TrackConstants.BLOCK_SIZE_HALF,
-					blockMesh.z + TrackConstants.BLOCK_SIZE_HALF
+					blockMesh.x - Block.HALF_SIZE,
+					blockMesh.y - Block.HALF_SIZE,
+					blockMesh.z - Block.HALF_SIZE,
+					blockMesh.x + Block.HALF_SIZE,
+					blockMesh.y + Block.HALF_SIZE,
+					blockMesh.z + Block.HALF_SIZE
 				) );
 				// If the block is below ground-level, it signals a pit.
 				if ( blockData.y < 0 ) {
@@ -70,10 +76,46 @@ package com.funrun.controller.commands
 					markPitAt( pitMap, blockData.x, blockData.z );
 				}
 			}
+			
+			// Fill in floors where necessary.
+			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "001" ).mesh;
+			var floorBlockMesh:Mesh;
+			var posX:Number, posZ:Number;
+			for ( var x:int = 0; x <= Segment.NUM_BLOCKS_WIDE; x++ ) {
+				posX = x + .5;
+				for ( var z:int = 0; z <= Segment.NUM_BLOCKS_DEPTH; z++ ) {
+					posZ = z + .5;
+					// Put floor blocks wherever the pit map is negative.
+					if ( !pitMap[ posX ] || !pitMap[ posX ][ posZ ] ) {
+						// Create a floor block mesh in the appropriate place.
+						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
+						floorBlockMesh.x = posX * Block.SIZE;
+						floorBlockMesh.y = -Block.SIZE;
+						floorBlockMesh.z = posZ * Block.SIZE;
+						// Merge it into the obstacle.
+						merge.apply( obstacleMesh, floorBlockMesh );
+						// Add a bounding box so we can collide with the floor.
+						boundingBoxes.push( new BoundingBoxData(
+							blocksModel.getBlock( "001" ),
+							floorBlockMesh.x, floorBlockMesh.z, floorBlockMesh.z,
+							floorBlockMesh.x - Block.HALF_SIZE,
+							floorBlockMesh.y - Block.HALF_SIZE,
+							floorBlockMesh.z - Block.HALF_SIZE,
+							floorBlockMesh.x + Block.HALF_SIZE,
+							floorBlockMesh.y + Block.HALF_SIZE,
+							floorBlockMesh.z + Block.HALF_SIZE
+						) );
+					}
+				}
+			}
+			
+			var obstacle:SegmentVO = new SegmentVO( blockData.id, obstacleMesh, boundingBoxes,
+			obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
+			obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
+			segmentsModel.storeObstacle( obstacle );
 		}
 		
 		private function makePitMap():Object {
-			// TO-DO: Import a Maya obstacle with pits to make sure this logic is sound.
 			var pitMap:Object = {};
 			for ( var x:Number = 0; x < 12; x++ ) {
 				pitMap[ x ] = {};

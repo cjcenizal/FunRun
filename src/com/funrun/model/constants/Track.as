@@ -1,14 +1,12 @@
 package com.funrun.model.constants
 {
-	public class TrackConstants
+	public class Track
 	{
 		// Sizes.
-		public static const BLOCK_SIZE:Number = 100;
-		public static const BLOCK_SIZE_HALF:Number = BLOCK_SIZE * .5;
-		public static const TRACK_WIDTH:int = 1200;
-		public static const TRACK_DEPTH:int = 8000;
-		public static const TRACK_WIDTH_BLOCKS:int = TRACK_WIDTH / BLOCK_SIZE;
-		public static const TRACK_DEPTH_BLOCKS:int = TRACK_DEPTH / BLOCK_SIZE;
+		public static const WIDTH:int = 1200;
+		public static const DEPTH:int = 8000;
+		public static const WIDTH_BLOCKS:int = WIDTH / Block.SIZE;
+		public static const DEPTH_BLOCKS:int = DEPTH / Block.SIZE;
 		public static const PLAYER_RADIUS:int = 50;
 		public static const PLAYER_HALF_SIZE:int = 55;
 		
@@ -28,11 +26,10 @@ package com.funrun.model.constants
 		public static const PLAYER_GRAVITY:Number = -8;
 		
 		// Segment constants.
-		public static const SEGMENT_DEPTH:Number = 24 * BLOCK_SIZE;
-		public static const SEGMENT_CULL_DEPTH_NEAR:Number = -2000 -SEGMENT_DEPTH;
-		public static const SEGMENT_CULL_DEPTH_FAR:Number = TRACK_DEPTH + SEGMENT_DEPTH;
-		public static const SEGMENT_ADD_DEPTH_NEAR:Number = SEGMENT_DEPTH + SEGMENT_CULL_DEPTH_NEAR;
-		public static const SEGMENT_ADD_DEPTH_FAR:Number = TRACK_DEPTH;
+		public static const SEGMENT_CULL_DEPTH_NEAR:Number = -2000 -Segment.SEGMENT_DEPTH;
+		public static const SEGMENT_CULL_DEPTH_FAR:Number = DEPTH + Segment.SEGMENT_DEPTH;
+		public static const SEGMENT_ADD_DEPTH_NEAR:Number = Segment.SEGMENT_DEPTH + SEGMENT_CULL_DEPTH_NEAR;
+		public static const SEGMENT_ADD_DEPTH_FAR:Number = DEPTH;
 		
 		// Collision constants.
 		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;
@@ -40,7 +37,7 @@ package com.funrun.model.constants
 		public static const FALL_DEATH_HEIGHT:Number = -1500;
 		
 		// Fog.
-		public static const FOG_FAR:Number = TRACK_DEPTH;
+		public static const FOG_FAR:Number = DEPTH;
 		public static const FOG_NEAR:Number = FOG_FAR - 2000;
 		
 		// Culling.

@@ -1,24 +1,10 @@
 package com.funrun.controller.commands {
 	
-	import away3d.entities.Mesh;
-	import away3d.tools.commands.Merge;
-	
 	import com.funrun.controller.signals.StoreObstacleRequest;
-	import com.funrun.model.BlocksModel;
-	import com.funrun.model.MaterialsModel;
-	import com.funrun.model.SegmentsModel;
-	import com.funrun.model.collision.BoundingBoxData;
-	import com.funrun.model.constants.BlockTypes;
-	import com.funrun.model.constants.TrackConstants;
-	import com.funrun.model.vo.BlockVO;
-	import com.funrun.model.vo.ObstacleBlockVO;
-	import com.funrun.model.vo.SegmentVO;
 	import com.funrun.services.JsonService;
-	import com.funrun.services.parsers.ObstacleParser;
 	import com.funrun.services.parsers.ObstaclesListParser;
 	
 	import flash.events.Event;
-	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
@@ -65,7 +51,6 @@ package com.funrun.controller.commands {
 					loader.addEventListener( Event.COMPLETE, getOnObstacleLoaded( filename ) );
 				}
 			}
-			
 		}
 		
 		private function getOnObstacleLoaded( filename:String ):Function {

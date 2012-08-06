@@ -5,7 +5,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.vo.SegmentVO;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Segment;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -31,8 +31,8 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Get an obstacle, set its position, add it to the model and view.
-			var obstacle:SegmentVO = segmentsModel.getOfType( payload.type, payload.index );
-			obstacle.z = payload.index * TrackConstants.SEGMENT_DEPTH;
+			var obstacle:SegmentVO = segmentsModel.getAt( payload.index );
+			obstacle.z = payload.index * Segment.SEGMENT_DEPTH;
 			trackModel.addSegment( obstacle );
 			addObjectToSceneRequest.dispatch( obstacle.mesh );
 		}

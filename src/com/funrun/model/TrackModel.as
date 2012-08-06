@@ -1,7 +1,7 @@
 package com.funrun.model {
 	
 	import com.funrun.model.vo.SegmentVO;
-	import com.funrun.model.constants.TrackConstants;
+	import com.funrun.model.constants.Track;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -36,7 +36,7 @@ package com.funrun.model {
 			if ( _obstacles.length > 0 ) {
 				return ( _obstacles[ _obstacles.length - 1 ] as SegmentVO ).z;
 			}
-			return TrackConstants.TRACK_DEPTH;
+			return Track.DEPTH;
 		}
 		
 		public function get depthOfFirstObstacle():Number {

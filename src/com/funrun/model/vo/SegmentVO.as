@@ -2,22 +2,12 @@ package com.funrun.model.vo {
 	
 	import away3d.bounds.BoundingVolumeBase;
 	import away3d.entities.Mesh;
-	import away3d.materials.MaterialBase;
-	import away3d.primitives.CubeGeometry;
-	import away3d.primitives.PrimitiveBase;
-	import away3d.tools.commands.Merge;
 	
-	import com.funrun.model.BlocksModel;
-	import com.funrun.model.MaterialsModel;
-	import com.funrun.model.constants.BlockTypes;
-	import com.funrun.model.constants.TrackConstants;
-	import com.funrun.model.collision.BlockData;
 	import com.funrun.model.collision.BoundingBoxData;
 
 	public class SegmentVO {
 		
 		private var _id:String;
-		private var _type:String;
 		private var _mesh:Mesh;
 		private var _boundingBoxes:Array;
 		private var _numBoundingBoxes:int;
@@ -29,9 +19,8 @@ package com.funrun.model.vo {
 		private var _maxY:Number;
 		private var _maxZ:Number;
 
-		public function SegmentVO( id:String, type:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+		public function SegmentVO( id:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
 			_id = id;
-			_type = type;
 			_mesh = mesh;
 			_boundingBoxes = boundingBoxes;
 			_numBoundingBoxes = ( _boundingBoxes ) ? _boundingBoxes.length : 0;
@@ -44,19 +33,11 @@ package com.funrun.model.vo {
 		}
 		
 		public function clone():SegmentVO {
-			return new SegmentVO( _id, _type, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+			return new SegmentVO( _id, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
 		}
 		
 		public function get id():String {
 			return _id;
-		}
-		
-		/**
-		 * Get this obstacle's type (floor or obstacle).
-		 * @return The original.
-		 */
-		public function get type():String {
-			return _type;
 		}
 		
 		/**
