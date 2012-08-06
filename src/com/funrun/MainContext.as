@@ -46,6 +46,7 @@ package com.funrun {
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameLoopCommand;
 	import com.funrun.controller.commands.StopObserverLoopCommand;
+	import com.funrun.controller.commands.StoreFloorCommand;
 	import com.funrun.controller.commands.StoreObstacleCommand;
 	import com.funrun.controller.commands.UpdateAiCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
@@ -111,6 +112,7 @@ package com.funrun {
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
+	import com.funrun.controller.signals.StoreFloorRequest;
 	import com.funrun.controller.signals.StoreObstacleRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
@@ -296,6 +298,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
 			signalCommandMap.mapSignalClass( StopGameLoopRequest,					StopGameLoopCommand );
 			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );
+			signalCommandMap.mapSignalClass( StoreFloorRequest,						StoreFloorCommand );
 			signalCommandMap.mapSignalClass( StoreObstacleRequest,					StoreObstacleCommand );
 			signalCommandMap.mapSignalClass( UpdateAiCompetitorsRequest,			UpdateAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
