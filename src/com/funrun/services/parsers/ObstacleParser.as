@@ -30,7 +30,7 @@ package com.funrun.services.parsers {
 			return _blocks.length;
 		}
 		
-		public function getBlockDataAt( index:int ):ObstacleBlockVO {
+		public function getAt( index:int ):ObstacleBlockVO {
 			return _blocks[ index ];
 		}
 	}

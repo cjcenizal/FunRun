@@ -46,6 +46,7 @@ package com.funrun {
 	import com.funrun.controller.commands.StartRunningCommand;
 	import com.funrun.controller.commands.StopGameLoopCommand;
 	import com.funrun.controller.commands.StopObserverLoopCommand;
+	import com.funrun.controller.commands.StoreObstacleCommand;
 	import com.funrun.controller.commands.UpdateAiCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateNametagsCommand;
@@ -110,6 +111,7 @@ package com.funrun {
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
+	import com.funrun.controller.signals.StoreObstacleRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
@@ -187,7 +189,7 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean 				= true;
-			var onlineState:OnlineState 			= new OnlineState( true );
+			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
 			
 			// Map switches.
@@ -294,6 +296,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StartRunningRequest,					StartRunningCommand );
 			signalCommandMap.mapSignalClass( StopGameLoopRequest,					StopGameLoopCommand );
 			signalCommandMap.mapSignalClass( StopObserverLoopRequest,				StopObserverLoopCommand );
+			signalCommandMap.mapSignalClass( StoreObstacleRequest,					StoreObstacleCommand );
 			signalCommandMap.mapSignalClass( UpdateAiCompetitorsRequest,			UpdateAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateNametagsRequest,					UpdateNametagsCommand );

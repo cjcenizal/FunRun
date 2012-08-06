@@ -1,11 +1,11 @@
 package com.funrun.services.parsers {
 	import com.funrun.model.vo.BlockVO;
 	
-	public class BlocksParser extends AbstractParser {
+	public class BlocksListParser extends AbstractParser {
 		
 		private const LIST:String = "list";
 		
-		public function BlocksParser( data:Object ) {
+		public function BlocksListParser( data:Object ) {
 			super( data );
 		}
 		

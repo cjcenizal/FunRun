@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.TrackConstants;
 	import com.funrun.model.vo.BlockVO;
 	import com.funrun.services.JsonService;
-	import com.funrun.services.parsers.BlocksParser;
+	import com.funrun.services.parsers.BlocksListParser;
 	
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -44,10 +44,10 @@ package com.funrun.controller.commands {
 		private function onLoadComplete( e:Event ):void {
 			var data:String = ( e.target as URLLoader ).data;
 			// Parse object to give it meaning.
-			var parsedBlocks:BlocksParser = new BlocksParser( new JsonService().readString( data ) );
+			var parsedBlocksList:BlocksListParser = new BlocksListParser( new JsonService().readString( data ) );
 			
 			// Store a count so we know when we're done loading the block objs.
-			var len:int = parsedBlocks.length;
+			var len:int = parsedBlocksList.length;
 			_countTotal = len * 2; // Assume one mtl and obj pair per block.
 			if ( len == 0 ) {
 				dispatchComplete( true );
@@ -58,7 +58,7 @@ package com.funrun.controller.commands {
 				// Load the block objs.
 				var blockData:BlockVO;
 				for ( var i:int = 0; i < len; i++ ) {
-					blockData = parsedBlocks.getAt( i );
+					blockData = parsedBlocksList.getAt( i );
 					// Store in model.
 					blocksModel.addBlock( blockData );
 					// Load it.
