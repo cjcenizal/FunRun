@@ -10,7 +10,7 @@ package com.funrun.services.parsers {
 		}
 		
 		public function getAt( index:int ):String {
-			return data[ LIST ];
+			return data[ LIST ][ index ];
 		}
 		
 		public function get length():int {

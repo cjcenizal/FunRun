@@ -26,7 +26,7 @@ package com.funrun.controller.commands {
 			for ( var i:int = 0; i < numCompetitors; i++ ) {
 				var competitor:CompetitorVO = new CompetitorVO( i, "Bot_" + i.toString() );
 				var width:Number = Track.WIDTH * .8;
-				competitor.updatePosition(  Math.random() * width - width * .5, 0, Math.random() * 300 );
+				competitor.updatePosition(  Math.random() * width, 0, Math.random() * 300 );
 				addCompetitorRequest.dispatch( competitor );
 				displayMessageRequest.dispatch( competitor.name + " has joined the game." );
 			}
