@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TrackModel;
+	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.SegmentVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -22,11 +23,16 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
+		// State.
+		
+		[Inject]
+		public var showBoundsState:ShowBoundsState;
+		
 		override public function execute():void {
 			var floor:SegmentVO = segmentsModel.getAt( 0 );
 			floor.z = -400;
 			trackModel.addSegment( floor );
-			addObjectToSceneRequest.dispatch( floor.mesh );
+			addObjectToSceneRequest.dispatch( ( showBoundsState.showBounds ) ? floor.boundsMesh : floor.mesh );
 		}
 	}
 }

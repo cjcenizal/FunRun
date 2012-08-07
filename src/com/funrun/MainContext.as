@@ -144,6 +144,7 @@ package com.funrun {
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
+	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
@@ -193,10 +194,12 @@ package com.funrun {
 			var useWhitelist:Boolean 				= true;
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
+			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
 			injector.mapValue( ProductionState, productionState );
+			injector.mapValue( ShowBoundsState, showBoundsState );
 			
 			// Apply whitelist switch.
 			if ( useWhitelist ) {

@@ -7,8 +7,11 @@ package com.funrun.model.vo {
 
 	public class SegmentVO {
 		
+		public static var useBoundsMesh:Boolean = false;
+		
 		private var _id:String;
 		private var _mesh:Mesh;
+		private var _boundsMesh:Mesh;
 		private var _boundingBoxes:Array;
 		private var _numBoundingBoxes:int;
 		private var _z:Number = 0;
@@ -19,9 +22,10 @@ package com.funrun.model.vo {
 		private var _maxY:Number;
 		private var _maxZ:Number;
 
-		public function SegmentVO( id:String, mesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+		public function SegmentVO( id:String, mesh:Mesh, boundsMesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
 			_id = id;
 			_mesh = mesh;
+			_boundsMesh = boundsMesh;
 			_boundingBoxes = boundingBoxes;
 			_numBoundingBoxes = ( _boundingBoxes ) ? _boundingBoxes.length : 0;
 			_minX = minX;
@@ -33,7 +37,7 @@ package com.funrun.model.vo {
 		}
 		
 		public function clone():SegmentVO {
-			return new SegmentVO( _id, _mesh.clone() as Mesh, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+			return new SegmentVO( _id, _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
 		}
 		
 		public function get id():String {
@@ -48,6 +52,10 @@ package com.funrun.model.vo {
 			return _mesh;
 		}
 		
+		public function get boundsMesh():Mesh {
+			return _boundsMesh;
+		}
+		
 		public function get numBoundingBoxes():int {
 			return _numBoundingBoxes;
 		}
@@ -57,19 +65,22 @@ package com.funrun.model.vo {
 		}
 
 		public function get x():Number {
-			return _mesh.x;
+			return ( useBoundsMesh ) ? _boundsMesh.x : _mesh.x;
 		}
 		
 		public function get y():Number {
-			return _mesh.y;
+			return ( useBoundsMesh ) ? _boundsMesh.y : _mesh.y;
 		}
 		
 		public function set z( val:Number ):void {
 			_mesh.z = _z = val;
+			if ( _boundsMesh ) {
+				_boundsMesh.z = val;
+			}
 		}
 		
 		public function get z():Number {
-			return _z;
+			return ( useBoundsMesh ) ? _boundsMesh.z : _z;
 		}
 		
 		public function get bounds():BoundingVolumeBase {
