@@ -34,7 +34,7 @@ package com.funrun.model {
 				_histories.push( Rndm.float( 1 ) );
 			}
 			// If index is 0, return a floor. Else, return an obstacle.
-			var index:int = ( index == 0 ) ? index : Math.floor( _histories[ index ] * ( _segments.length - 1 ) ) + 1;
+			var index:int = 0;//( index == 0 ) ? index : Math.floor( _histories[ index ] * ( _segments.length - 1 ) ) + 1;
 			return ( _segments[ index ] as SegmentVO ).clone();
 		}
 		

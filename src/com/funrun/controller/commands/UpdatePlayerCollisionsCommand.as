@@ -58,7 +58,7 @@ package com.funrun.controller.commands {
 				testPos.y = playerModel.positionY;
 				testPos.z = playerModel.positionZ;
 			}
-			
+			trace(playerModel.bounds.min, playerModel.bounds.max);
 			for ( var n:int = 0; n < numSteps; n++ ) {
 				// Collect all collisions.
 				var collisions:CollisionsCollection = new CollisionsCollection();
@@ -78,9 +78,11 @@ package com.funrun.controller.commands {
 				// Resolve collisions.
 				var numCollisions:int = collisions.numCollisions;
 				var face:FaceCollision;
+				trace("collide " + numCollisions);
 				if ( numCollisions > 0 ) {
 					for ( var i:int = 0; i < numCollisions; i++ ) {
 						face = collisions.getAt( i );
+						trace("  " + face.type);
 						// If the player is moving up, hit the bottom sides of things.
 						if ( playerModel.velocityY > 0 ) {
 							if ( face.type == FaceTypes.BOTTOM ) {
@@ -93,15 +95,15 @@ package com.funrun.controller.commands {
 							// Else hit the top sides of things.
 							if ( face.type == FaceTypes.TOP ) {
 								// TO-DO: What is CULL_FLOOR and why is this here?
-								if ( face.maxY > Track.CULL_FLOOR ) {
-									playerModel.positionY = ( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
+								//if ( face.maxY > Track.CULL_FLOOR ) {
+									playerModel.positionY = face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
 									playerModel.velocityY = 0;
 									playerModel.isAirborne = false;
 									return;
-								} else {
+								//} else {
 									// The player is airborne if he's not colliding with a floor.
-									playerModel.isAirborne = true;
-								}
+								//	playerModel.isAirborne = true;
+								//}
 							}
 						}
 						// If we're moving left, hit the right sides of things.
