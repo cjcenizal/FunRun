@@ -77,7 +77,6 @@ package com.funrun.controller.commands {
 				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
 				var segment:SegmentVO;
 				for ( var i:int = 0; i < segmentIndices.length; i++ ) {
-					
 					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
 					// Get all the blocks we're colliding with.
 					blocks = segment.getBoundingBoxes();
