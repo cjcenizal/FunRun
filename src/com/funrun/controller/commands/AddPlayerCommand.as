@@ -9,6 +9,8 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
 	
+	import flash.geom.Matrix3D;
+	
 	import org.robotlegs.mvcs.Command;
 	
 	public class AddPlayerCommand extends Command {
@@ -31,7 +33,8 @@ package com.funrun.controller.commands {
 			addPlaceableRequest.dispatch( playerModel );
 			
 			// Add mesh.
-			var player:Mesh = new Mesh( new CubeGeometry( Player.WIDTH, Player.HEIGHT, Player.WIDTH ), Materials.DEBUG_PLAYER );
+			var geometry:CubeGeometry = new CubeGeometry( Player.WIDTH, Player.HEIGHT, Player.WIDTH );
+			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 		}
