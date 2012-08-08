@@ -18,6 +18,11 @@ package com.funrun.controller.commands {
 	
 	import org.robotlegs.mvcs.Command;
 	
+	/**
+	 * Interpolate a fixed distance from previous position
+	 * to current position, performing collision detection
+	 * along the way.
+	 */
 	public class UpdatePlayerCollisionsCommand extends Command {
 		
 		// Models.
@@ -39,20 +44,7 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
-		
-		
-		// TO-DO: Figure out why this is necessary. It's probably due to the way the model is being
-		// treated in relation to its position. Then figure out how to fix it so this magic # isn't needed.
-		//private var playerVerticalOffset:Number = 150;
-		
-		
 		override public function execute():void {
-			// Interpolate a fixed distance from previous position
-			// to current position, performing collision detection
-			// along the way. Exit loop as soon as a collision
-			// is detected.
-			
-			
 			var testPos:Vector3D = playerModel.getPreviousPositionClone();
 			var targetInterpolationDist:Number = Block.SIZE;
 			var numSteps:Number = Math.ceil( playerModel.getDistanceFromPreviousPosition() / targetInterpolationDist );
@@ -101,6 +93,7 @@ package com.funrun.controller.commands {
 							// React to collisions with various faces.
 							// - If we land on top of a walkable block, walk on it.
 							// - If we run into the front of a smacking block, die.
+							// TO-DO: Detect which face the COLLIDER is colliding with, too.
 							switch ( face ) {
 								case CollisionDetector.BOTTOM:
 									if ( playerModel.velocityY > 0 ) {
@@ -130,14 +123,6 @@ package com.funrun.controller.commands {
 							}
 						}
 					}
-					
-					/*
-					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
-					blocks = segment.getBoundingBoxes();
-					// Recursively resolve each collision with the blocks of a segment.
-					while ( !resolved( collider, segment, blocks ) ) {
-					}
-					*/
 				}
 				if ( segmentIndices.length == 0 ) {
 					// If we're not hitting something, we're airborne.
@@ -155,60 +140,5 @@ package com.funrun.controller.commands {
 				testPos.z += interpolationVector.z;
 			}
 		}
-		
-		/*
-		private function resolved( collider:ICollidable, segment:SegmentVO, blocks:Array, count:int = 0 ):Boolean {
-			if ( count >= 5 ) {
-				// Terminate recursion after 5 iterations.
-				return true;
-			}
-			// Get all the blocks we're colliding with.
-			var blockIndices:Array = CollisionDetector.getCollidingIndices( collider, blocks, segment );
-			var block:BoundingBoxVO;
-			var faces:Array;
-			for ( var j:int = 0; j < blockIndices.length; j++ ) {
-				block = segment.getBoundingBoxAt( blockIndices[ j ] );
-				// Get the faces we're colliding with.
-				faces = CollisionDetector.getCollidingFaces( collider, block.add( segment ) );
-				var face:String;
-				for ( var k:int = 0; k < faces.length; k++ ) {
-					face = faces[ k ];
-					// React to collisions with various faces.
-					switch ( face ) {
-						case CollisionDetector.BOTTOM:
-							if ( playerModel.velocityY > 0 ) {
-								playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
-								playerModel.positionY = block.y + block.minY;//( playerModel.isDucking ) ? face.minY - Track.PLAYER_HALF_SIZE * .25 : face.minY - Track.PLAYER_HALF_SIZE;
-								playerModel.isAirborne = true;
-								collider.y = playerModel.positionY - playerVerticalOffset;
-								return resolved( collider, segment, blocks, count + 1 );
-							}
-						case CollisionDetector.TOP:
-							if ( playerModel.velocityY <= 0 && block.block.getEventAtFace( face ) == Collisions.WALK) {
-								playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
-								playerModel.velocityY = 0;
-								playerModel.isAirborne = false;
-								collider.y = playerModel.positionY - playerVerticalOffset;
-								return resolved( collider, segment, blocks, count + 1 );
-							}
-					}
-					switch ( face ) {
-						case CollisionDetector.FRONT:
-							playerModel.positionZ += block.minZ - Track.PLAYER_HALF_SIZE;
-							collider.z = playerModel.positionZ;
-							if ( block.block.getEventAtFace( face ) == Collisions.SMACK ) {
-								killPlayerRequest.dispatch( Collisions.SMACK );
-								return true;
-							}
-							return resolved( collider, segment, blocks, count + 1 );
-						//case CollisionDetector.LEFT:
-						//	return resolved( collider, segment, blocks, count + 1 );
-						//case CollisionDetector.RIGHT:
-						//	return resolved( collider, segment, blocks, count + 1 );
-					}
-				}
-			}
-			return true;
-		}*/
 	}
 }
