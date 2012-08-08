@@ -52,8 +52,7 @@ package com.cenizal.physics.collisions
 		 * 
 		 * @return An array of indices indicating collisions.
 		 */
-		public static function getCollidingIndices( collider:ICollidable, collidees:Array, limits:Object = null, debug:Boolean = false ):Array {
-			limits = limits || {};
+		public static function getCollidingIndices( collider:ICollidable, collidees:Array, collideeOffset:ICollidable = null ):Array {
 			var collisions:Array = [];
 			var count:int = collidees.length;
 			var collidee:ICollidable;
@@ -69,21 +68,18 @@ package com.cenizal.physics.collisions
 			
 			for ( var i:int = 0; i < count; i++ ) {
 				collidee = collidees[ i ];
+				if ( collideeOffset ) {
+					collidee = collidee.add( collideeOffset );
+				}
 				x = collidee.x;
 				y = collidee.y;
 				z = collidee.z;
 				// Optimize by checking against obstacle bounds first.
-				var theyDoIntersect:Boolean = doTheyIntersect( collider, collidee, limits,debug );
-				if ( debug ) {
-					if ( theyDoIntersect ) fail = false;
-					trace(theyDoIntersect);
-					output(collider, collidee);
-				}
+				var theyDoIntersect:Boolean = doTheyIntersect( collider, collidee );
 				if ( theyDoIntersect ) {
 					collisions.push( i );
 				}
 			}
-			if ( debug && fail ) trace(" ====================================================================================================================================");
 			return collisions;
 		}
 		
@@ -161,8 +157,7 @@ package com.cenizal.physics.collisions
 			return faces;
 		}
 		
-		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable, limits:Object = null, debug:Boolean = false ):Boolean {
-			limits = limits || {};
+		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
 			var aMinX:Number = collider.x + collider.minX;
 			var aMinY:Number = collider.y + collider.minY;
 			var aMinZ:Number = collider.z + collider.minZ;
@@ -177,16 +172,13 @@ package com.cenizal.physics.collisions
 			var bMaxY:Number = collidee.y + collidee.maxY;
 			var bMaxZ:Number = collidee.z + collidee.maxZ;
 			
-			if ( !limits.X && ( aMinX > bMaxX || bMinX > aMaxX ) ) {
-				if ( debug ) trace("    fail x", aMinX, aMaxX, bMinX, bMaxX );
+			if ( aMinX > bMaxX || bMinX > aMaxX ) {
 				return false;
 			}
-			if ( !limits.Y && ( aMinY > bMaxY || bMinY > aMaxY ) ) {
-				if ( debug ) trace("    fail y", aMinY, aMaxY, bMinY, bMaxY );
+			if ( aMinY > bMaxY || bMinY > aMaxY ) {
 				return false;
 			}
-			if ( !limits.Z && ( aMinZ > bMaxZ || bMinZ > aMaxZ ) ) {
-				if ( debug ) trace("    fail z", aMinZ, aMaxZ, bMinZ, bMaxZ );
+			if ( aMinZ > bMaxZ || bMinZ > aMaxZ ) {
 				return false;
 			}
 			return true;

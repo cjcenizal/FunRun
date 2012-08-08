@@ -29,7 +29,7 @@ package com.funrun.model.vo
 			_maxZ = maxZ;
 		}
 		
-		public function add( collidable:ICollidable ):BoundingBoxVO {
+		public function add( collidable:ICollidable ):ICollidable {
 			return new BoundingBoxVO( block,
 				_x + collidable.x,
 				_y + collidable.y,

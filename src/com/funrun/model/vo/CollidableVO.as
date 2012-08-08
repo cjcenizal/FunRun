@@ -28,6 +28,15 @@ package com.funrun.model.vo
 			_maxZ = maxZ;
 		}
 		
+		public function add( collidable:ICollidable ):ICollidable {
+			return new CollidableVO(
+				_x + collidable.x,
+				_y + collidable.y,
+				_z + collidable.z,
+				_minX, _minY, minZ,
+				_maxX, _maxY, maxZ );
+		}
+		
 		public function get x():Number
 		{
 			return _x;

@@ -79,18 +79,13 @@ package com.funrun.controller.commands {
 				collider.z = testPos.z;
 				// Get all the segments we're colliding with.
 				segments = trackModel.getObstacleArray();
-				trace("check against ",collider.z,collider.minZ,collider.maxZ);
-				for ( var f:int = 0; f < segments.length; f++ ) {
-					trace("  ",f,trackModel.getObstacleAt(f).z);
-				}
-				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments, { "X" : true, "Y" : true }, true );
+				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
 				var segment:SegmentVO;
-				trace("segmentIndices:",segmentIndices.length);
 				for ( var i:int = 0; i < segmentIndices.length; i++ ) {
 					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
 					// Get all the blocks we're colliding with.
 					blocks = segment.getBoundingBoxes();
-					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks );
+					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
 					var block:BoundingBoxVO;
 					for ( var j:int = 0; j < blockIndices.length; j++ ) {
 						block = segment.getBoundingBoxAt( blockIndices[ j ] );

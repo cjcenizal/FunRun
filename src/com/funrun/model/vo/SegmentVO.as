@@ -36,6 +36,14 @@ package com.funrun.model.vo {
 			_maxZ = maxZ;
 		}
 		
+		public function add( collidable:ICollidable ):ICollidable {
+			return new SegmentVO(
+				_id, _mesh, _boundsMesh, _boundingBoxes,
+				_minX, _minY, minZ,
+				_maxX, _maxY, maxZ );
+		}
+		
+		
 		public function clone():SegmentVO {
 			return new SegmentVO( _id, _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
 		}
