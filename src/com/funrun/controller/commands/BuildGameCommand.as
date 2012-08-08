@@ -8,6 +8,9 @@ package com.funrun.controller.commands {
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
+	import away3d.materials.methods.HardShadowMapMethod;
+	import away3d.materials.methods.SoftShadowMapMethod;
+	import away3d.materials.methods.TripleFilteredShadowMapMethod;
 	
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
@@ -120,13 +123,10 @@ package com.funrun.controller.commands {
 			
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -1 );
-			sunlight.castsShadows = true;
 			sunlight.ambient = .05; // Higher = "brighter"
 			sunlight.diffuse = .1; // Higher = "brighter"
 			sunlight.z = 2000;
 			var spotlight:PointLight = new PointLight();
-			spotlight.castsShadows = true;
-			spotlight.shadowMapper.depthMapSize = 1024;
 			spotlight.y = 700;
 			spotlight.color = 0xffffff;
 			spotlight.diffuse = 1;
@@ -139,7 +139,9 @@ package com.funrun.controller.commands {
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
 			
 			
-			var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sunlight );
+			//var shadowMethod:HardShadowMapMethod = new HardShadowMapMethod( sunlight );
+			var shadowMethod:SoftShadowMapMethod = new SoftShadowMapMethod( sunlight );
+			//var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			var lightPicker:StaticLightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			

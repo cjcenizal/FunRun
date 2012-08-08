@@ -11,10 +11,10 @@ package com.funrun.model.constants
 		public static const GRAVITY:Number = -8;
 		
 		// Size.
-		public static const HEIGHT:Number = 70;
-		public static const WIDTH:Number = 40;
+		public static const HEIGHT:Number = 180;
+		public static const WIDTH:Number = 100;
 		public static const HALF_WIDTH:Number = WIDTH * .5;
-		public static const HALF_HEIGHT:Number = HEIGHT * .5;
+		public static const HALF_HEIGHT:Number = HEIGHT * .5 - 5;
 		
 	}
 }

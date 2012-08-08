@@ -89,8 +89,8 @@ package com.funrun.controller.commands
 			//  Fill in floors where necessary.
 			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "floor" ).mesh;
 			var floorBlockMesh:Mesh;
-			for ( var x:int = 0; x < Segment.NUM_BLOCKS_WIDE; x++ ) {
-				for ( var z:int = 0; z < Segment.NUM_BLOCKS_DEPTH; z++ ) {
+			for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
+				for ( var z:int = 0; z < Segment.DEPTH_BLOCKS; z++ ) {
 					// Put floor blocks wherever the pit map is negative.
 					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
 						// Create a floor block mesh in the appropriate place.
