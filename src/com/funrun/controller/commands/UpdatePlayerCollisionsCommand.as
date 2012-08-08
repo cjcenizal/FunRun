@@ -11,6 +11,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.FaceTypes;
 	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.vo.BlockVO;
 	import com.funrun.model.vo.BoundingBoxVO;
@@ -88,11 +89,59 @@ package com.funrun.controller.commands {
 				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
 				var segment:SegmentVO;
 				for ( var i:int = 0; i < segmentIndices.length; i++ ) {
+					
+					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
+					// Get all the blocks we're colliding with.
+					blocks = segment.getBoundingBoxes();
+					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
+					var block:BoundingBoxVO;
+					for ( var j:int = 0; j < blockIndices.length; j++ ) {
+						block = segment.getBoundingBoxAt( blockIndices[ j ] );
+						// Get the faces we're colliding with.
+						faces = CollisionDetector.getCollidingFaces( collider, block.add( segment ) );
+						trace(faces)
+						var face:String;
+						for ( var k:int = 0; k < faces.length; k++ ) {
+							face = faces[ k ];
+							// React to collisions with various faces.
+							// - If we land on top of a walkable block, walk on it.
+							// - If we run into the front of a smacking block, die.
+							switch ( face ) {
+								case CollisionDetector.BOTTOM:
+									if ( playerModel.velocityY > 0 ) {
+										playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
+										playerModel.positionY = block.y + block.minY;//( playerModel.isDucking ) ? face.minY - Track.PLAYER_HALF_SIZE * .25 : face.minY - Track.PLAYER_HALF_SIZE;
+										playerModel.isAirborne = true;
+										break;
+									}
+								case CollisionDetector.TOP:
+									if ( playerModel.velocityY <= 0 && block.block.getEventAtFace( face ) == Collisions.WALK ) {
+										playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
+										playerModel.velocityY = 0;
+										playerModel.isAirborne = false;
+									}
+							}
+							switch ( face ) {
+								case CollisionDetector.FRONT:
+									if ( block.block.getEventAtFace( face ) == Collisions.SMACK ) {
+										playerModel.positionZ = segment.z + block.z + block.minZ - Track.PLAYER_HALF_SIZE;
+										killPlayerRequest.dispatch( Collisions.SMACK );
+										return;
+									}
+								case CollisionDetector.LEFT:
+									break;
+								case CollisionDetector.RIGHT:
+							}
+						}
+					}
+					
+					/*
 					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
 					blocks = segment.getBoundingBoxes();
 					// Recursively resolve each collision with the blocks of a segment.
 					while ( !resolved( collider, segment, blocks ) ) {
 					}
+					*/
 				}
 				testPos.x += interpolationVector.x;
 				testPos.y += interpolationVector.y;
