@@ -94,28 +94,28 @@ package com.funrun.controller.commands {
 						var face:String;
 						for ( var k:int = 0; k < faces.length; k++ ) {
 							face = faces[ k ];
-							if ( playerModel.velocityY > 0 ) {
-								// If the player is moving up, hit the bottom sides of things.
-								if ( face == CollisionDetector.BOTTOM ) {
-									playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
-									playerModel.positionY = block.y + block.minY;//( playerModel.isDucking ) ? face.minY - Track.PLAYER_HALF_SIZE * .25 : face.minY - Track.PLAYER_HALF_SIZE;
-									return;
-								}
-								playerModel.isAirborne = true;
-							} else {
-								// Else hit the top sides of things.
-								if ( face == CollisionDetector.TOP ) {
-									// TO-DO: What is CULL_FLOOR and why is this here?
-									//if ( face.maxY > Track.CULL_FLOOR ) {
-									playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
-									playerModel.velocityY = 0;
-									playerModel.isAirborne = false;
-									return;
-									//} else {
-									// The player is airborne if he's not colliding with a floor.
-									//	playerModel.isAirborne = true;
-									//}
-								}
+							// React to collisions with various faces.
+							switch ( face ) {
+								case CollisionDetector.BOTTOM:
+									if ( playerModel.velocityY > 0 ) {
+										playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
+										playerModel.positionY = block.y + block.minY;//( playerModel.isDucking ) ? face.minY - Track.PLAYER_HALF_SIZE * .25 : face.minY - Track.PLAYER_HALF_SIZE;
+										playerModel.isAirborne = true;
+										break;
+									}
+								case CollisionDetector.TOP:
+									if ( playerModel.velocityY <= 0 ) {
+										playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
+										playerModel.velocityY = 0;
+										playerModel.isAirborne = false;
+									}
+							}
+							switch ( face ) {
+								case CollisionDetector.FRONT:
+									break;
+								case CollisionDetector.LEFT:
+									break;
+								case CollisionDetector.RIGHT:
 							}
 						}
 					}

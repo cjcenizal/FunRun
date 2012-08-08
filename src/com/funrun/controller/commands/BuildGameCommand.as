@@ -70,7 +70,6 @@ package com.funrun.controller.commands {
 		public var showStatsRequest:ShowStatsRequest;
 		
 		override public function execute():void {
-			trace(this);
 			// Show stats if we're in development.
 			showStatsRequest.dispatch( !productionState.isProduction );
 			

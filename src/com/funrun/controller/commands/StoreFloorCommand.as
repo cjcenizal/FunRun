@@ -47,7 +47,7 @@ package com.funrun.controller.commands
 					// Create a floor block mesh in the appropriate place.
 					floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
 					floorBlockMesh.x = posX * Block.SIZE;
-					floorBlockMesh.y = 0;//-1 * Block.SIZE;
+					floorBlockMesh.y = -1 * Block.SIZE;
 					floorBlockMesh.z = posZ * Block.SIZE;
 					// Merge it into the obstacle.
 					merge.apply( floorMesh, floorBlockMesh );
