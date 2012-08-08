@@ -82,7 +82,7 @@ package com.funrun.model.vo
 		{
 			return _maxZ;
 		}
-		/*
+		
 		public function set x( x:Number ):void {
 			this._x = x;
 		}
@@ -94,7 +94,7 @@ package com.funrun.model.vo
 		public function set z( z:Number ):void {
 			this._z = z;
 		}
-		
+		/*
 		public function set minX( minX:Number ):void {
 			this._minX = minX;
 		}

@@ -84,13 +84,6 @@ package com.funrun.model.vo {
 			return ( useBoundsMesh ) ? _boundsMesh.y : _mesh.y;
 		}
 		
-		public function set z( val:Number ):void {
-			_mesh.z = _z = val;
-			if ( _boundsMesh ) {
-				_boundsMesh.z = val;
-			}
-		}
-		
 		public function get z():Number {
 			return ( useBoundsMesh ) ? _boundsMesh.z : _z;
 		}
@@ -121,6 +114,21 @@ package com.funrun.model.vo {
 		
 		public function get maxZ():Number {
 			return _maxZ;
+		}
+		
+		public function set x( x:Number ):void {
+			( useBoundsMesh ) ? _boundsMesh.x = x : _mesh.x = x;
+		}
+		
+		public function set y( y:Number ):void {
+			( useBoundsMesh ) ? _boundsMesh.y = y : _mesh.y = y;
+		}
+		
+		public function set z( val:Number ):void {
+			_mesh.z = _z = val;
+			if ( _boundsMesh ) {
+				_boundsMesh.z = val;
+			}
 		}
 		
 		public function get width():Number {

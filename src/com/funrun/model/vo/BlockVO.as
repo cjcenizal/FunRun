@@ -7,6 +7,14 @@ package com.funrun.model.vo {
 	
 	public class BlockVO {
 		
+		private static const TRANSLATIONS:Object = {};
+		TRANSLATIONS[ 'front' ] = 'f';
+		TRANSLATIONS[ 'back' ] = 'a';
+		TRANSLATIONS[ 'left' ] = 'l';
+		TRANSLATIONS[ 'right' ] = 'r';
+		TRANSLATIONS[ 'top' ] = 't';
+		TRANSLATIONS[ 'bottom' ] = 'b';
+		
 		private var _id:String;
 		private var _filename:String;
 		private var _collisions:Array;
@@ -42,7 +50,8 @@ package com.funrun.model.vo {
 			return _numFaces;
 		}
 		
-		public function getEventAtFace( face:String ):String {
+		public function getEventAtFace( f:String ):String {
+			var face:String = TRANSLATIONS[ f ];
 			return _faces[ face ] || _faces[ FaceTypes.ALL ];
 		}
 		

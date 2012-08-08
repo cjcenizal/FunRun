@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.TimeModel;
-	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -38,7 +38,7 @@ package com.funrun.controller.commands {
 						displayMessageRequest.dispatch( competitor.name + " just died!" );
 						killed = true;
 					} else {
-						competitor.updatePosition( competitor.position.x, competitor.position.y, competitor.position.z + Math.random() * Track.MAX_PLAYER_FORWARD_VELOCITY + Track.MAX_PLAYER_FORWARD_VELOCITY * .25 );
+						competitor.updatePosition( competitor.position.x, competitor.position.y, competitor.position.z + Math.random() * Player.MAX_FORWARD_VELOCITY + Player.MAX_FORWARD_VELOCITY * .25 );
 					}
 				}
 			}

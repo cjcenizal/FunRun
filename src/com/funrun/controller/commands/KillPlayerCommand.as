@@ -7,7 +7,7 @@
 	import com.funrun.controller.signals.payload.AddDelayedCommandPayload;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.CollisionTypes;
+	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Track;
 	
 	import org.robotlegs.mvcs.Command;
@@ -46,10 +46,10 @@
 				// Update the model.
 				playerModel.isDead = true;
 				switch ( death ) {
-					case CollisionTypes.SMACK:
+					case Collisions.SMACK:
 						playerModel.velocityZ = Track.HEAD_ON_SMACK_SPEED;
 						break;
-					case CollisionTypes.FALL:
+					case Collisions.FALL:
 						trace(this, "Fell to death");
 						break;
 				}

@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.SegmentVO;
 	
@@ -33,8 +33,8 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			for ( var i:int = 0; i < trackModel.numObstacles; i++ ) {
 				var obstacle:SegmentVO = trackModel.getObstacleAt( i );
-				if ( obstacle.z < positionZ + Track.SEGMENT_CULL_DEPTH_NEAR
-					|| obstacle.z > positionZ + Track.SEGMENT_CULL_DEPTH_FAR ) {
+				if ( obstacle.z < positionZ + Segment.SEGMENT_CULL_DEPTH_NEAR
+					|| obstacle.z > positionZ + Segment.SEGMENT_CULL_DEPTH_FAR ) {
 					removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? obstacle.boundsMesh : obstacle.mesh );
 					trackModel.removeObstacleAt( i );
 					i--;
