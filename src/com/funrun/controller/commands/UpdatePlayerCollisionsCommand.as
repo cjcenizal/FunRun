@@ -9,11 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Collisions;
-	import com.funrun.model.constants.FaceTypes;
 	import com.funrun.model.constants.Track;
-	import com.funrun.model.constants.Player;
-	import com.funrun.model.state.GameState;
-	import com.funrun.model.vo.BlockVO;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
@@ -99,7 +95,6 @@ package com.funrun.controller.commands {
 						block = segment.getBoundingBoxAt( blockIndices[ j ] );
 						// Get the faces we're colliding with.
 						faces = CollisionDetector.getCollidingFaces( collider, block.add( segment ) );
-						trace(faces)
 						var face:String;
 						for ( var k:int = 0; k < faces.length; k++ ) {
 							face = faces[ k ];
@@ -115,18 +110,19 @@ package com.funrun.controller.commands {
 										break;
 									}
 								case CollisionDetector.TOP:
-									if ( playerModel.velocityY <= 0 && block.block.getEventAtFace( face ) == Collisions.WALK ) {
-										playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
-										playerModel.velocityY = 0;
-										playerModel.isAirborne = false;
+									if ( playerModel.velocityY <= 0 ) {
+										if ( block.block.getEventAtFace( face ) == Collisions.WALK ) {
+											playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
+											playerModel.velocityY = 0;
+											playerModel.isAirborne = false;
+											break;
+										}
 									}
-							}
-							switch ( face ) {
 								case CollisionDetector.FRONT:
 									if ( block.block.getEventAtFace( face ) == Collisions.SMACK ) {
 										playerModel.positionZ = segment.z + block.z + block.minZ - Track.PLAYER_HALF_SIZE;
 										killPlayerRequest.dispatch( Collisions.SMACK );
-										return;
+										break;
 									}
 								case CollisionDetector.LEFT:
 									break;

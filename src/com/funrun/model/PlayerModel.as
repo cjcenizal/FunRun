@@ -5,7 +5,7 @@ package com.funrun.model {
 	
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.Block;
-	import com.funrun.model.constants.PlayerProperties;
+	import com.funrun.model.constants.Stats;
 	import com.funrun.model.vo.IPlaceable;
 	
 	import flash.geom.Vector3D;
@@ -208,19 +208,19 @@ package com.funrun.model {
 		}
 		
 		public function get bestDistance():Number {
-			return _properties[ PlayerProperties.BEST_DISTANCE ];
+			return _properties[ Stats.BEST_DISTANCE ];
 		}
 		
 		public function set bestDistance( val:Number ) {
-			_properties[ PlayerProperties.BEST_DISTANCE ] = val;
+			_properties[ Stats.BEST_DISTANCE ] = val;
 		}
 		
 		public function get points():Number {
-			return _properties[ PlayerProperties.POINTS ];
+			return _properties[ Stats.POINTS ];
 		}
 		
 		public function set points( val:Number ) {
-			_properties[ PlayerProperties.POINTS ] = val;
+			_properties[ Stats.POINTS ] = val;
 		}
 	}
 }

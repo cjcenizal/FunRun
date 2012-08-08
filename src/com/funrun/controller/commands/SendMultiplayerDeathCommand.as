@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.MessageTypes;
+	import com.funrun.model.constants.Messages;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.MultiplayerService;
 	
@@ -27,7 +27,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			if ( onlineState.isOnline ) {
 				multiplayerService.send(
-					MessageTypes.DEATH,
+					Messages.DEATH,
 					playerModel.positionX,
 					playerModel.positionY,
 					playerModel.positionZ

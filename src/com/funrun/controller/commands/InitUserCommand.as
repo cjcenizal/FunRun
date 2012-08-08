@@ -6,7 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.PlayerProperties;
+	import com.funrun.model.constants.Stats;
 	import com.funrun.model.state.LoginState;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.IWhitelistService;
@@ -108,11 +108,11 @@ package com.funrun.controller.commands {
 			updateLoginStatus.dispatch( LoginState.PLAYER_OBJECT_LOADED );
 			// Read properties from the database.
 			var key:String, val:*;
-			for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {
-				key = PlayerProperties.KEYS[ i ];
+			for ( var i:int = 0; i < Stats.KEYS.length; i++ ) {
+				key = Stats.KEYS[ i ];
 				val = playerioPlayerObjectService.playerObject[ key ];
 				if ( !val || val == undefined ) {
-					val = PlayerProperties.DEFAULTS[ key ];
+					val = Stats.DEFAULTS[ key ];
 				}
 				playerModel.properties[ key ] = val;
 			}

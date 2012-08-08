@@ -10,6 +10,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.constants.Block;
+	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.BlockVO;
@@ -86,7 +87,7 @@ package com.funrun.controller.commands
 			}
 			
 			//  Fill in floors where necessary.
-			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "001" ).mesh;
+			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "floor" ).mesh;
 			var floorBlockMesh:Mesh;
 			for ( var x:int = 0; x < Segment.NUM_BLOCKS_WIDE; x++ ) {
 				for ( var z:int = 0; z < Segment.NUM_BLOCKS_DEPTH; z++ ) {
@@ -101,7 +102,7 @@ package com.funrun.controller.commands
 						merge.apply( obstacleMesh, floorBlockMesh );
 						// Add a bounding box so we can collide with the floor.
 						boundingBoxes.push( new BoundingBoxVO(
-							blocksModel.getBlock( "001" ),
+							blocksModel.getBlock( "floor" ),
 							floorBlockMesh.x, floorBlockMesh.y, floorBlockMesh.z,
 							-Block.HALF_SIZE,
 							-Block.HALF_SIZE,
@@ -119,13 +120,12 @@ package com.funrun.controller.commands
 			if ( showBoundsState.showBounds ) {
 				boundsMesh = new Mesh();
 				var blockGeo:Geometry = new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE );
-				var material:ColorMaterial = new ColorMaterial( 0x00ff00, .1 );
 				var len:int = boundingBoxes.length;
 				var box:BoundingBoxVO;
 				var indicator:Mesh;
 				for ( var i:int = 0; i < len; i++ ) {
 					box = boundingBoxes[ i ];
-					indicator = new Mesh( blockGeo, material );
+					indicator = new Mesh( blockGeo, Materials.DEBUG_BLOCK );
 					indicator.x = box.x;
 					indicator.y = box.y;
 					indicator.z = box.z;

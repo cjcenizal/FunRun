@@ -7,8 +7,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.MessageTypes;
-	import com.funrun.model.constants.RoomTypes;
+	import com.funrun.model.constants.Messages;
+	import com.funrun.model.constants.Rooms;
 	import com.funrun.model.vo.PlayerioErrorVO;
 	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.PlayerioFacebookLoginService;
@@ -60,17 +60,17 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.onConnectedSignal.add( onConnected );
-			multiplayerService.connect( loginService.client, RoomTypes.GAME, { name: playerModel.name, x: playerModel.positionX, y: playerModel.positionY }, roomId );
+			multiplayerService.connect( loginService.client, Rooms.GAME, { name: playerModel.name, x: playerModel.positionX, y: playerModel.positionY }, roomId );
 		}
 		
 		private function onConnected():void {
 			trace(this, "connected");
 			multiplayerService.onServerDisconnectSignal.add( onDisconnected );
-			multiplayerService.addMessageHandler( MessageTypes.INIT, onInit );
-			multiplayerService.addMessageHandler( MessageTypes.UPDATE, onUpdate );
-			multiplayerService.addMessageHandler( MessageTypes.NEW_PLAYER_JOINED, onNewPlayerJoined );
-			multiplayerService.addMessageHandler( MessageTypes.PLAYER_LEFT, onPlayerLeft );
-			multiplayerService.addMessageHandler( MessageTypes.DEATH, onPlayerDied );
+			multiplayerService.addMessageHandler( Messages.INIT, onInit );
+			multiplayerService.addMessageHandler( Messages.UPDATE, onUpdate );
+			multiplayerService.addMessageHandler( Messages.NEW_PLAYER_JOINED, onNewPlayerJoined );
+			multiplayerService.addMessageHandler( Messages.PLAYER_LEFT, onPlayerLeft );
+			multiplayerService.addMessageHandler( Messages.DEATH, onPlayerDied );
 		}
 		
 		private function onDisconnected():void {
@@ -84,7 +84,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onInit( message:Message ):void {
-			multiplayerService.removeMessageHandler( MessageTypes.INIT, onInit );
+			multiplayerService.removeMessageHandler( Messages.INIT, onInit );
 			handleMultiplayerInitRequest.dispatch( message );
 		}
 		

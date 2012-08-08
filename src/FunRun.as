@@ -1,7 +1,7 @@
 package {
 	
 	import com.funrun.MainContext;
-	import com.funrun.model.constants.TimeConstants;
+	import com.funrun.model.constants.Time;
 	import com.funrun.view.components.MainView;
 	
 	import flash.display.Sprite;
@@ -45,7 +45,7 @@ package {
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.quality = StageQuality.BEST;
-			stage.frameRate = TimeConstants.FPS;
+			stage.frameRate = Time.FPS;
 		}
 	}
 }

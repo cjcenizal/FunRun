@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.PlayerProperties;
+	import com.funrun.model.constants.Stats;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -28,9 +28,9 @@ package com.funrun.controller.commands {
 
 		override public function execute():void {
 			var key:String, val:*;
-			for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {
-				key = PlayerProperties.KEYS[ i ];
-				playerModel.properties[ key ] = PlayerProperties.DEFAULTS[ key ];
+			for ( var i:int = 0; i < Stats.KEYS.length; i++ ) {
+				key = Stats.KEYS[ i ];
+				playerModel.properties[ key ] = Stats.DEFAULTS[ key ];
 			}
 			startGameLoopRequest.dispatch();
 			startRunningRequest.dispatch();

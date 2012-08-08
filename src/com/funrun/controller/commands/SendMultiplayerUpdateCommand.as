@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.MessageTypes;
+	import com.funrun.model.constants.Messages;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.MultiplayerService;
 	
@@ -28,7 +28,7 @@ package com.funrun.controller.commands {
 			if ( onlineState.isOnline ) {
 				// Update server with position and velocity.
 				multiplayerService.send(
-					MessageTypes.UPDATE,
+					Messages.UPDATE,
 					playerModel.positionX,
 					playerModel.positionY,
 					playerModel.positionZ,

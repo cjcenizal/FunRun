@@ -3,6 +3,11 @@ package com.funrun.controller.commands {
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.View3D;
+	import away3d.lights.DirectionalLight;
+	import away3d.lights.PointLight;
+	import away3d.materials.lightpickers.StaticLightPicker;
+	import away3d.materials.methods.FilteredShadowMapMethod;
+	import away3d.materials.methods.FresnelSpecularMethod;
 	
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
@@ -16,9 +21,10 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.TimeConstants;
-	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.constants.Camera;
+	import com.funrun.model.constants.Materials;
+	import com.funrun.model.constants.Time;
+	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -87,7 +93,7 @@ package com.funrun.controller.commands {
 			keyboardModel.init();
 			
 			// Interpolation.
-			interpolationModel.setIncrement( TimeConstants.INTERPOLATION_INCREMENT );
+			interpolationModel.setIncrement( Time.INTERPOLATION_INCREMENT );
 			
 			// Time.
 			timeModel.stage = contextView.stage;
@@ -115,7 +121,7 @@ package com.funrun.controller.commands {
 			
 			//loadSegmentsRequest.dispatch();
 			
-			/*
+			
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -1 );
 			sunlight.castsShadows = true;
@@ -141,28 +147,28 @@ package com.funrun.controller.commands {
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			var lightPicker:StaticLightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			
-			playerMaterial.lightPicker = lightPicker;
-			playerMaterial.shadowMethod = shadowMethod;
-			playerMaterial.specular = .25;
-			playerMaterial.gloss = 20;
-			playerMaterial.specularMethod = specularMethod;
+			Materials.DEBUG_PLAYER.lightPicker = lightPicker;
+			Materials.DEBUG_PLAYER.shadowMethod = shadowMethod;
+			Materials.DEBUG_PLAYER.specular = .25;
+			Materials.DEBUG_PLAYER.gloss = 20;
+			Materials.DEBUG_PLAYER.specularMethod = specularMethod;
 			
-			floorMaterial.lightPicker = lightPicker;
+		/*	floorMaterial.lightPicker = lightPicker;
 			floorMaterial.shadowMethod = shadowMethod;
 			floorMaterial.specular = .25;
 			floorMaterial.gloss = 20;
-			floorMaterial.specularMethod = specularMethod;
+			floorMaterial.specularMethod = specularMethod;*/
 			
-			obstacleMaterial.lightPicker = lightPicker;
-			obstacleMaterial.shadowMethod = shadowMethod;
-			obstacleMaterial.specular = .25;
-			obstacleMaterial.gloss = 20;
-			obstacleMaterial.specularMethod = specularMethod;
+			Materials.DEBUG_BLOCK.lightPicker = lightPicker;
+			Materials.DEBUG_BLOCK.shadowMethod = shadowMethod;
+			Materials.DEBUG_BLOCK.specular = .25;
+			Materials.DEBUG_BLOCK.gloss = 20;
+			Materials.DEBUG_BLOCK.specularMethod = specularMethod;
 			
 			// Add lights to track.
 			addObjectToSceneRequest.dispatch( sunlight );
 			addObjectToSceneRequest.dispatch( spotlight );
-			*/
+			
 			// Add player to track.
 			addPlayerRequest.dispatch();
 		

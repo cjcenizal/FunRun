@@ -1,6 +1,6 @@
 package com.funrun.model.constants {
 
-	public class MessageTypes {
+	public class Messages {
 
 		// Matchmaking.
 		public static const JOIN_GAME:String = "j";

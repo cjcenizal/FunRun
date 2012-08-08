@@ -1,6 +1,6 @@
 package com.funrun.model.constants {
 
-	public class TimeConstants {
+	public class Time {
 
 		public static const FPS:Number = 30;
 		public static const MS_PER_SERVER_UPDATE:Number = 100;

@@ -1,7 +1,6 @@
 package com.funrun.controller.commands {
 	
 	import away3d.entities.Mesh;
-	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.CylinderGeometry;
 	
@@ -9,6 +8,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.ShowBoundsState;
 	
@@ -43,8 +43,8 @@ package com.funrun.controller.commands {
 			
 			// Add mesh.
 			var player:Mesh = ( showBoundsState.showBounds )
-				? new Mesh( new CubeGeometry( 100, 100, 100 ), new ColorMaterial( 0x0000ff, .5 ) )
-				: new Mesh( new CylinderGeometry( Track.PLAYER_RADIUS * .9, Track.PLAYER_RADIUS, Track.PLAYER_HALF_SIZE * 2 ), new ColorMaterial( 0x00ff00 ) );
+				? new Mesh( new CubeGeometry( 100, Track.PLAYER_HALF_SIZE * 2, 100 ), Materials.DEBUG_PLAYER )
+				: new Mesh( new CylinderGeometry( Track.PLAYER_RADIUS * .9, Track.PLAYER_RADIUS, Track.PLAYER_HALF_SIZE * 2 ), Materials.DEBUG_PLAYER );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 		}

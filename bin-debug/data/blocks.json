@@ -2,6 +2,16 @@
   "doc" : "These are the blocks that compose obstacles.",
   "author" : "CJ Cenizal",
   "list" : [
+  {
+      "id" : "floor",
+      "filename" : "001_brick_block.obj",
+      "hit" : [
+          "all"
+        ],
+      "faces" : {
+          "t" : "walk"
+        }
+      },
     {
       "id" : "001",
       "filename" : "001_brick_block.obj",

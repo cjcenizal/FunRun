@@ -5,8 +5,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
-	import com.funrun.model.constants.MessageTypes;
-	import com.funrun.model.constants.RoomTypes;
+	import com.funrun.model.constants.Messages;
+	import com.funrun.model.constants.Rooms;
 	import com.funrun.model.vo.PlayerioErrorVO;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.PlayerioFacebookLoginService;
@@ -54,16 +54,16 @@ package com.funrun.controller.commands {
 			// First we need to get matched up with other players.
 			matchmakingService.onErrorSignal.add( onError );
 			matchmakingService.onConnectedSignal.add( onConnected );
-			matchmakingService.connect( loginService.client, RoomTypes.MATCH_MAKING );
+			matchmakingService.connect( loginService.client, Rooms.MATCH_MAKING );
 		}
 		
 		private function onConnected():void {
 			trace(this, "connected");
 			// Listen for disconnect.
 			matchmakingService.onServerDisconnectSignal.add( onDisconnected );
-			matchmakingService.addMessageHandler( MessageTypes.JOIN_GAME, onJoinGame );
-			matchmakingService.addMessageHandler( MessageTypes.START_COUNTDOWN, onStartCountdown );
-			matchmakingService.addMessageHandler( MessageTypes.RESET_COUNTDOWN, onResetCountdown );
+			matchmakingService.addMessageHandler( Messages.JOIN_GAME, onJoinGame );
+			matchmakingService.addMessageHandler( Messages.START_COUNTDOWN, onStartCountdown );
+			matchmakingService.addMessageHandler( Messages.RESET_COUNTDOWN, onResetCountdown );
 		}
 		
 		private function onDisconnected():void {
@@ -77,7 +77,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onJoinGame( message:Message ):void {
-			matchmakingService.removeMessageHandler( MessageTypes.JOIN_GAME, onJoinGame );
+			matchmakingService.removeMessageHandler( Messages.JOIN_GAME, onJoinGame );
 			handleMultiplayerJoinGameRequest.dispatch( message );
 		}
 		

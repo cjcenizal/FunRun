@@ -1,6 +1,6 @@
 package com.funrun.model.constants {
 
-	public class PlayerProperties {
+	public class Stats {
 
 		public static const BEST_DISTANCE:String = "be";
 		public static const POINTS:String = "po";
