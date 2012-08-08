@@ -1,16 +1,16 @@
 package com.funrun.controller.commands {
 	
 	import away3d.entities.Mesh;
-	import away3d.primitives.CylinderGeometry;
+	import away3d.primitives.CubeGeometry;
 	
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.model.CompetitorsModel;
-	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
-	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.Materials;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -24,9 +24,6 @@ package com.funrun.controller.commands {
 		public var competitor:CompetitorVO;
 		
 		// Models.
-		
-		[Inject]
-		public var materialsModel:MaterialsModel;
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
@@ -49,7 +46,7 @@ package com.funrun.controller.commands {
 			// Avoid adding accidental duplicates.
 			if ( !competitorsModel.getWithId( competitor.id ) ) {
 				// Add mesh.
-				var mesh:Mesh = new Mesh( new CylinderGeometry( Track.PLAYER_RADIUS * .9, Track.PLAYER_RADIUS, Track.PLAYER_HALF_SIZE * 2 ) );//, materialsModel.getMaterial( MaterialsModel.PLAYER_MATERIAL ) );
+				var mesh:Mesh = new Mesh( new CubeGeometry( Player.WIDTH, Player.HEIGHT, Player.WIDTH ), Materials.DEBUG_PLAYER );
 				competitor.mesh = mesh;
 				if ( competitor.isDucking ) {
 					if ( competitor.mesh.scaleY != .25 ) {

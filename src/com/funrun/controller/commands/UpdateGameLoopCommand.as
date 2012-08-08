@@ -1,5 +1,8 @@
 package com.funrun.controller.commands {
 	
+	import away3d.lights.LightBase;
+	import away3d.lights.PointLight;
+	
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
@@ -12,13 +15,12 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.CountdownModel;
-	import com.funrun.model.GameModel;
+	import com.funrun.model.LightsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.Player;
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.constants.Camera;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
 	
@@ -30,6 +32,11 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var timeEvent:TimeEvent;
+		
+		// State.
+		
+		[Inject]
+		public var gameState:GameState;
 		
 		// Models.
 		
@@ -43,7 +50,7 @@ package com.funrun.controller.commands {
 		public var timeModel:TimeModel;
 		
 		[Inject]
-		public var gameModel:GameModel;
+		public var lightsModel:LightsModel;
 		
 		[Inject]
 		public var countdownModel:CountdownModel;
@@ -83,7 +90,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			
 			// Update countdown if necessary.
-			if ( gameModel.gameState == GameState.WAITING_FOR_PLAYERS ) {
+			if ( gameState.gameState == GameState.WAITING_FOR_PLAYERS ) {
 				if ( countdownModel.isRunning ) {
 					if ( countdownModel.secondsRemaining > 0 ) {
 						updateCountdownRequest.dispatch( countdownModel.secondsRemaining.toString() );
@@ -98,7 +105,7 @@ package com.funrun.controller.commands {
 			var framesElapsed:int = Math.round( .03 * timeEvent.delta );
 			
 			for ( var f:int = 0; f < framesElapsed; f++ ) {
-				if ( gameModel.gameState == GameState.RUNNING ) {
+				if ( gameState.gameState == GameState.RUNNING ) {
 					// Update obstacles.
 					updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
 				}
@@ -108,7 +115,7 @@ package com.funrun.controller.commands {
 					playerModel.velocityX *= .6;
 					playerModel.velocityZ *= .7;
 				} else {
-					if ( gameModel.gameState == GameState.RUNNING ) {
+					if ( gameState.gameState == GameState.RUNNING ) {
 						// Update speed when you're alive.
 						if ( Math.abs( playerModel.velocityX ) > 0 ) {
 							if ( playerModel.velocityZ > Player.SLOWED_DIAGONAL_SPEED ) {
@@ -161,6 +168,10 @@ package com.funrun.controller.commands {
 			view3DModel.cameraZ += ( ( playerModel.positionZ + Camera.Z ) - view3DModel.cameraZ ) * .65;
 			view3DModel.update();
 			
+			// Update light.
+			var light:LightBase = lightsModel.getLight( LightsModel.SPOTLIGHT );
+			light.z = playerModel.positionZ;
+			
 			// Set position to mesh.
 			playerModel.updateMeshPosition();
 			
@@ -173,7 +184,7 @@ package com.funrun.controller.commands {
 			updateNametagsRequest.dispatch();
 			
 			// Update distance counter.
-			if ( gameModel.gameState == GameState.RUNNING ) {
+			if ( gameState.gameState == GameState.RUNNING ) {
 				displayDistanceRequest.dispatch( playerModel.distanceString + " feet" );
 			}
 			

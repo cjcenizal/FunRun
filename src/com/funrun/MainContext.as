@@ -128,11 +128,9 @@ package com.funrun {
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DelayedCommandsModel;
-	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
-	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.PlacesModel;
@@ -142,6 +140,7 @@ package com.funrun {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
+	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.state.ShowBoundsState;
@@ -195,11 +194,13 @@ package com.funrun {
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
+			var gameState:GameState = new GameState();
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
 			injector.mapValue( ProductionState, productionState );
 			injector.mapValue( ShowBoundsState, showBoundsState );
+			injector.mapValue( GameState, gameState );
 			
 			// Apply whitelist switch.
 			if ( useWhitelist ) {
@@ -216,11 +217,9 @@ package com.funrun {
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( DelayedCommandsModel );
-			injector.mapSingleton( GameModel );
 			injector.mapSingleton( InterpolationModel );
 			injector.mapSingleton( KeyboardModel );
 			injector.mapSingleton( LightsModel );
-			injector.mapSingleton( MaterialsModel );
 			injector.mapSingleton( NametagsModel );
 			injector.mapSingleton( ObserverModel );
 			injector.mapSingleton( PlacesModel );

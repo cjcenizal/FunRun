@@ -10,5 +10,11 @@ package com.funrun.model.constants
 		public static const LATERAL_SPEED:Number = 30;
 		public static const GRAVITY:Number = -8;
 		
+		// Size.
+		public static const HEIGHT:Number = 70;
+		public static const WIDTH:Number = 40;
+		public static const HALF_WIDTH:Number = WIDTH * .5;
+		public static const HALF_HEIGHT:Number = HEIGHT * .5;
+		
 	}
 }

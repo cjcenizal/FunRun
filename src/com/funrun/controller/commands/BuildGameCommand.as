@@ -17,7 +17,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
-	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
@@ -42,9 +41,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var cameraModel:View3DModel;
-		
-		[Inject]
-		public var materialsModel:MaterialsModel;
 		
 		[Inject]
 		public var keyboardModel:KeyboardModel;

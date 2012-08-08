@@ -7,8 +7,6 @@ package com.funrun.model.constants
 		public static const DEPTH:int = 8000;
 		public static const WIDTH_BLOCKS:int = WIDTH / Block.SIZE;
 		public static const DEPTH_BLOCKS:int = DEPTH / Block.SIZE;
-		public static const PLAYER_RADIUS:int = 50;
-		public static const PLAYER_HALF_SIZE:int = 55;
 		
 		// Collision constants.
 		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;

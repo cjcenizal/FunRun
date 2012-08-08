@@ -4,7 +4,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.StartOfflineGameRequest;
-	import com.funrun.model.GameModel;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.OnlineState;
 	
@@ -20,10 +19,8 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var onlineState:OnlineState;
 		
-		// Models.
-		
 		[Inject]
-		public var gameModel:GameModel;
+		public var gameState:GameState;
 		
 		// Commands.
 		
@@ -41,7 +38,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Set game state.
-			gameModel.gameState = GameState.WAITING_FOR_PLAYERS;
+			gameState.gameState = GameState.WAITING_FOR_PLAYERS;
 			// Reset game.
 			resetGameRequest.dispatch();
 			// Render to clear the view.

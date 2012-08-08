@@ -1,14 +1,13 @@
 package com.funrun.controller.commands {
 	
 	import com.cenizal.physics.collisions.CollisionDetector;
-	import com.cenizal.physics.collisions.ICollidable;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
-	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Collisions;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
@@ -28,9 +27,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var playerModel:PlayerModel;
 		
-		[Inject]
-		public var gameModel:GameModel;
-		
 		// Commands.
 		
 		[Inject]
@@ -43,7 +39,7 @@ package com.funrun.controller.commands {
 		
 		// TO-DO: Figure out why this is necessary. It's probably due to the way the model is being
 		// treated in relation to its position. Then figure out how to fix it so this magic # isn't needed.
-		private var playerVerticalOffset:Number = 150;
+		//private var playerVerticalOffset:Number = 150;
 		
 		
 		override public function execute():void {
@@ -78,7 +74,7 @@ package com.funrun.controller.commands {
 			var segmentIndices:Array, blockIndices:Array;
 			for ( var n:int = 0; n < numSteps; n++ ) {
 				collider.x = testPos.x;
-				collider.y = testPos.y - playerVerticalOffset;
+				collider.y = testPos.y - Player.HALF_HEIGHT;// - playerVerticalOffset;
 				collider.z = testPos.z;
 				// Get all the segments we're colliding with.
 				segments = trackModel.getObstacleArray();
@@ -112,7 +108,7 @@ package com.funrun.controller.commands {
 								case CollisionDetector.TOP:
 									if ( playerModel.velocityY <= 0 ) {
 										if ( block.block.getEventAtFace( face ) == Collisions.WALK ) {
-											playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
+											playerModel.positionY = block.y + block.maxY + Player.HALF_HEIGHT;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
 											playerModel.velocityY = 0;
 											playerModel.isAirborne = false;
 											break;
@@ -120,7 +116,7 @@ package com.funrun.controller.commands {
 									}
 								case CollisionDetector.FRONT:
 									if ( block.block.getEventAtFace( face ) == Collisions.SMACK ) {
-										playerModel.positionZ = segment.z + block.z + block.minZ - Track.PLAYER_HALF_SIZE;
+										playerModel.positionZ = segment.z + block.z + block.minZ - Player.HALF_WIDTH;
 										killPlayerRequest.dispatch( Collisions.SMACK );
 										break;
 									}
@@ -145,6 +141,7 @@ package com.funrun.controller.commands {
 			}
 		}
 		
+		/*
 		private function resolved( collider:ICollidable, segment:SegmentVO, blocks:Array, count:int = 0 ):Boolean {
 			if ( count >= 5 ) {
 				// Terminate recursion after 5 iterations.
@@ -189,15 +186,15 @@ package com.funrun.controller.commands {
 								return true;
 							}
 							return resolved( collider, segment, blocks, count + 1 );
-						/*case CollisionDetector.LEFT:
-							return resolved( collider, segment, blocks, count + 1 );
-						case CollisionDetector.RIGHT:
-							return resolved( collider, segment, blocks, count + 1 );*/
+						//case CollisionDetector.LEFT:
+						//	return resolved( collider, segment, blocks, count + 1 );
+						//case CollisionDetector.RIGHT:
+						//	return resolved( collider, segment, blocks, count + 1 );
 					}
 				}
 			}
 			return true;
-		}
+		}*/
 		
 		/*
 		collisions.collectCollisions(
