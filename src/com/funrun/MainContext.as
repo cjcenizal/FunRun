@@ -194,7 +194,7 @@ package com.funrun {
 			var useWhitelist:Boolean 				= true;
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
-			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
+			var showBoundsState:ShowBoundsState		= new ShowBoundsState( false );
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );

@@ -6,12 +6,12 @@ package com.funrun.controller.commands {
 	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.FaceTypes;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.GameState;
+	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
 	
@@ -46,6 +46,10 @@ package com.funrun.controller.commands {
 			// along the way. Exit loop as soon as a collision
 			// is detected.
 			
+			// TO-DO: Figure out why this is necessary. It's probably due to the way the model is being
+			// treated in relation to its position. Then figure out how to fix it so this magic # isn't needed.
+			var playerVerticalOffset:Number = 150;
+			
 			var testPos:Vector3D = playerModel.getPreviousPositionClone();
 			var targetInterpolationDist:Number = Block.SIZE;
 			var numSteps:Number = Math.ceil( playerModel.getDistanceFromPreviousPosition() / targetInterpolationDist );
@@ -71,7 +75,7 @@ package com.funrun.controller.commands {
 			var segmentIndices:Array, blockIndices:Array;
 			for ( var n:int = 0; n < numSteps; n++ ) {
 				collider.x = testPos.x;
-				collider.y = testPos.y;
+				collider.y = testPos.y - playerVerticalOffset;
 				collider.z = testPos.z;
 				// Get all the segments we're colliding with.
 				segments = trackModel.getObstacleArray();
@@ -93,7 +97,6 @@ package com.funrun.controller.commands {
 							if ( playerModel.velocityY > 0 ) {
 								// If the player is moving up, hit the bottom sides of things.
 								if ( face == CollisionDetector.BOTTOM ) {
-									trace("collide with top");
 									playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
 									playerModel.positionY = block.y + block.minY;//( playerModel.isDucking ) ? face.minY - Track.PLAYER_HALF_SIZE * .25 : face.minY - Track.PLAYER_HALF_SIZE;
 									return;
@@ -102,13 +105,9 @@ package com.funrun.controller.commands {
 							} else {
 								// Else hit the top sides of things.
 								if ( face == CollisionDetector.TOP ) {
-									trace("collide with top");
 									// TO-DO: What is CULL_FLOOR and why is this here?
 									//if ( face.maxY > Track.CULL_FLOOR ) {
-									trace("move from " + playerModel.positionY);
-									trace(block.y,block.minY,block.maxY);
-									playerModel.positionY = block.y + block.maxY;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
-									trace("to " + playerModel.positionY);
+									playerModel.positionY = block.y + block.maxY + playerVerticalOffset;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
 									playerModel.velocityY = 0;
 									playerModel.isAirborne = false;
 									return;

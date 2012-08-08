@@ -1,5 +1,7 @@
 package com.funrun.controller.commands {
 	
+	import away3d.entities.Mesh;
+	
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.payload.AddSegmentPayload;
 	import com.funrun.model.SegmentsModel;
@@ -40,7 +42,8 @@ package com.funrun.controller.commands {
 			var obstacle:SegmentVO = segmentsModel.getAt( payload.index );
 			obstacle.z = payload.index * Segment.SEGMENT_DEPTH;
 			trackModel.addSegment( obstacle );
-			addObjectToSceneRequest.dispatch( ( showBoundsState ) ? obstacle.boundsMesh : obstacle.mesh );
+			var mesh:Mesh = ( showBoundsState.showBounds ) ? obstacle.boundsMesh : obstacle.mesh;
+			addObjectToSceneRequest.dispatch( mesh );
 		}
 	}
 }

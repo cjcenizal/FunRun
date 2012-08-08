@@ -8,8 +8,12 @@ package com.funrun.controller.commands {
 
 	public class AddObjectToSceneCommand extends Command {
 		
+		// Arguments.
+		
 		[Inject]
 		public var object:ObjectContainer3D;
+		
+		// Models.
 		
 		[Inject]
 		public var view3DModel:View3DModel;
