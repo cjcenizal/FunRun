@@ -8,7 +8,7 @@ package com.funrun.controller.commands
 	
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.SegmentsModel;
-	import com.funrun.model.collision.BoundingBoxData;
+	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
@@ -68,15 +68,15 @@ package com.funrun.controller.commands
 				// Merge the block mesh into the obstacle mesh.
 				merge.apply( obstacleMesh, blockMesh );
 				// Add a bounding box so we can collide with the obstacle.
-				boundingBoxes.push( new BoundingBoxData(
+				boundingBoxes.push( new BoundingBoxVO(
 					block,
 					blockMesh.x, blockMesh.y, blockMesh.z,
-					blockMesh.x - Block.HALF_SIZE,
-					blockMesh.y - Block.HALF_SIZE,
-					blockMesh.z - Block.HALF_SIZE,
-					blockMesh.x + Block.HALF_SIZE,
-					blockMesh.y + Block.HALF_SIZE,
-					blockMesh.z + Block.HALF_SIZE
+					-Block.HALF_SIZE,
+					-Block.HALF_SIZE,
+					-Block.HALF_SIZE,
+					Block.HALF_SIZE,
+					Block.HALF_SIZE,
+					Block.HALF_SIZE
 				) );
 				// If the block is below ground-level, it signals a pit.
 				if ( blockData.y < 0 ) {
@@ -100,15 +100,15 @@ package com.funrun.controller.commands
 						// Merge it into the obstacle.
 						merge.apply( obstacleMesh, floorBlockMesh );
 						// Add a bounding box so we can collide with the floor.
-						boundingBoxes.push( new BoundingBoxData(
+						boundingBoxes.push( new BoundingBoxVO(
 							blocksModel.getBlock( "001" ),
 							floorBlockMesh.x, floorBlockMesh.y, floorBlockMesh.z,
-							floorBlockMesh.x - Block.HALF_SIZE,
-							floorBlockMesh.y - Block.HALF_SIZE,
-							floorBlockMesh.z - Block.HALF_SIZE,
-							floorBlockMesh.x + Block.HALF_SIZE,
-							floorBlockMesh.y + Block.HALF_SIZE,
-							floorBlockMesh.z + Block.HALF_SIZE
+							-Block.HALF_SIZE,
+							-Block.HALF_SIZE,
+							-Block.HALF_SIZE,
+							Block.HALF_SIZE,
+							Block.HALF_SIZE,
+							Block.HALF_SIZE
 						) );
 					}
 				}
@@ -121,7 +121,7 @@ package com.funrun.controller.commands
 				var blockGeo:Geometry = new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE );
 				var material:ColorMaterial = new ColorMaterial( 0x00ff00, .1 );
 				var len:int = boundingBoxes.length;
-				var box:BoundingBoxData;
+				var box:BoundingBoxVO;
 				var indicator:Mesh;
 				for ( var i:int = 0; i < len; i++ ) {
 					box = boundingBoxes[ i ];

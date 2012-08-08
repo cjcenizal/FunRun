@@ -1,7 +1,7 @@
 package com.funrun.model {
 	
-	import com.funrun.model.vo.SegmentVO;
 	import com.funrun.model.constants.Track;
+	import com.funrun.model.vo.SegmentVO;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -26,6 +26,10 @@ package com.funrun.model {
 		
 		public function getObstacleAt( index:int ):SegmentVO {
 			return _obstacles[ index ];
+		}
+		
+		public function getObstacleArray():Array {
+			return _obstacles;
 		}
 		
 		public function get numObstacles():int {

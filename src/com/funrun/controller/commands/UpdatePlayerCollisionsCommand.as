@@ -1,17 +1,19 @@
 package com.funrun.controller.commands {
 	
+	import com.cenizal.physics.collisions.CollisionDetector;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.collision.CollisionsCollection;
-	import com.funrun.model.collision.FaceCollision;
+	import com.funrun.model.vo.BoundingBoxVO;
+	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.CollisionTypes;
 	import com.funrun.model.constants.FaceTypes;
 	import com.funrun.model.constants.Track;
-	import com.funrun.model.constants.Block;
 	import com.funrun.model.state.GameState;
+	import com.funrun.model.vo.CollidableVO;
+	import com.funrun.model.vo.SegmentVO;
 	
 	import flash.geom.Vector3D;
 	
@@ -58,24 +60,83 @@ package com.funrun.controller.commands {
 				testPos.y = playerModel.positionY;
 				testPos.z = playerModel.positionZ;
 			}
-			trace(playerModel.bounds.min, playerModel.bounds.max);
+			var collider:CollidableVO = new CollidableVO();
+			collider.minX = playerModel.bounds.min.x;
+			collider.minY = playerModel.bounds.min.y;
+			collider.minZ = playerModel.bounds.min.z;
+			collider.maxX = playerModel.bounds.max.x;
+			collider.maxY = playerModel.bounds.max.y;
+			collider.maxZ = playerModel.bounds.max.z;
+			var segments:Array, blocks:Array, faces:Array;
+			var segmentIndices:Array, blockIndices:Array;
 			for ( var n:int = 0; n < numSteps; n++ ) {
-				// Collect all collisions.
-				var collisions:CollisionsCollection = new CollisionsCollection();
-				collisions.collectCollisions(
+				collider.x = testPos.x;
+				collider.y = testPos.y;
+				collider.z = testPos.z;
+				// Get all the segments we're colliding with.
+				segments = trackModel.getObstacleArray();
+				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
+				var segment:SegmentVO;
+				for ( var i:int = 0; i < segmentIndices.length; i++ ) {
+					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
+					// Get all the blocks we're colliding with.
+					blocks = segment.getBoundingBoxes();
+					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks );
+					var block:BoundingBoxVO;
+					for ( var j:int = 0; j < blockIndices.length; j++ ) {
+						block = segment.getBoundingBoxAt( blockIndices[ j ] );
+						// Get the faces we're colliding with.
+						faces = CollisionDetector.getCollidingFaces( collider, block );
+						var face:String;
+						for ( var k:int = 0; k < faces.length; k++ ) {
+							face = faces[ k ];
+							if ( playerModel.velocityY > 0 ) {
+								// If the player is moving up, hit the bottom sides of things.
+								if ( face == CollisionDetector.BOTTOM ) {
+									trace("collide with top");
+									playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
+									playerModel.positionY = block.y + block.minY;//( playerModel.isDucking ) ? face.minY - Track.PLAYER_HALF_SIZE * .25 : face.minY - Track.PLAYER_HALF_SIZE;
+									return;
+								}
+								playerModel.isAirborne = true;
+							} else {
+								// Else hit the top sides of things.
+								if ( face == CollisionDetector.TOP ) {
+									trace("collide with top");
+									// TO-DO: What is CULL_FLOOR and why is this here?
+									//if ( face.maxY > Track.CULL_FLOOR ) {
+									trace("move from " + playerModel.positionY);
+									trace(block.y,block.minY,block.maxY);
+									playerModel.positionY = block.y + block.maxY;// face.maxY + 150;//( playerModel.isDucking ) ? face.maxY + Track.PLAYER_HALF_SIZE * .25 : face.maxY + Track.PLAYER_HALF_SIZE;
+									trace("to " + playerModel.positionY);
+									playerModel.velocityY = 0;
+									playerModel.isAirborne = false;
+									return;
+									//} else {
+									// The player is airborne if he's not colliding with a floor.
+									//	playerModel.isAirborne = true;
+									//}
+								}
+							}
+						}
+					}
+				}
+				
+				/*collisions.collectCollisions(
 					trackModel,
 					testPos.x + playerModel.bounds.min.x,
 					testPos.y + playerModel.bounds.min.y,
 					testPos.z + playerModel.bounds.min.z,
 					testPos.x + playerModel.bounds.max.x,
 					testPos.y + playerModel.bounds.max.y,
-					testPos.z + playerModel.bounds.max.z );
+					testPos.z + playerModel.bounds.max.z );*/
 				
 				// TO-DO: We can optimize our collision detection by only testing against sides
 				// that oppose the direction in which we're moving.
 				// This will reduce our testing calculations by about 50%.
 				
 				// Resolve collisions.
+				/*
 				var numCollisions:int = collisions.numCollisions;
 				var face:FaceCollision;
 				trace("collide " + numCollisions);
@@ -138,7 +199,7 @@ package com.funrun.controller.commands {
 						}
 					}
 				}
-				
+				*/
 				testPos.x += interpolationVector.x;
 				testPos.y += interpolationVector.y;
 				testPos.z += interpolationVector.z;

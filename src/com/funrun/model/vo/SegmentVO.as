@@ -3,9 +3,9 @@ package com.funrun.model.vo {
 	import away3d.bounds.BoundingVolumeBase;
 	import away3d.entities.Mesh;
 	
-	import com.funrun.model.collision.BoundingBoxData;
+	import com.cenizal.physics.collisions.ICollidable;
 
-	public class SegmentVO {
+	public class SegmentVO implements ICollidable{
 		
 		public static var useBoundsMesh:Boolean = false;
 		
@@ -60,7 +60,11 @@ package com.funrun.model.vo {
 			return _numBoundingBoxes;
 		}
 		
-		public function getBoundingBoxAt( index:int ):BoundingBoxData {
+		public function getBoundingBoxes():Array {
+			return _boundingBoxes;
+		}
+		
+		public function getBoundingBoxAt( index:int ):BoundingBoxVO {
 			return _boundingBoxes[ index ];
 		}
 
