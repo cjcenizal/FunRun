@@ -52,7 +52,8 @@ package com.cenizal.physics.collisions
 		 * 
 		 * @return An array of indices indicating collisions.
 		 */
-		public static function getCollidingIndices( collider:ICollidable, collidees:Array ):Array {
+		public static function getCollidingIndices( collider:ICollidable, collidees:Array, limits:Object = null, debug:Boolean = false ):Array {
+			limits = limits || {};
 			var collisions:Array = [];
 			var count:int = collidees.length;
 			var collidee:ICollidable;
@@ -63,21 +64,46 @@ package com.cenizal.physics.collisions
 			var maxY:Number = collider.y + collider.maxY;
 			var maxZ:Number = collider.z + collider.maxZ;
 			var x:Number, y:Number, z:Number;
+			
+			var fail:Boolean = true;
+			
 			for ( var i:int = 0; i < count; i++ ) {
 				collidee = collidees[ i ];
 				x = collidee.x;
 				y = collidee.y;
 				z = collidee.z;
 				// Optimize by checking against obstacle bounds first.
-				var theyDoIntersect:Boolean = doTheyIntersect(
-					x + collidee.minX, y + collidee.minY, z + collidee.minZ,
-					x + collidee.maxX, y + collidee.maxY, z + collidee.maxZ,
-					minX, minY, minZ, maxX, maxY, maxZ );
+				var theyDoIntersect:Boolean = doTheyIntersect( collider, collidee, limits,debug );
+				if ( debug ) {
+					if ( theyDoIntersect ) fail = false;
+					trace(theyDoIntersect);
+					output(collider, collidee);
+				}
 				if ( theyDoIntersect ) {
 					collisions.push( i );
 				}
 			}
+			if ( debug && fail ) trace(" ====================================================================================================================================");
 			return collisions;
+		}
+		
+		private static function output( collider:ICollidable, collidee:ICollidable ):void {
+			var aMinX:Number = collider.x + collider.minX;
+			var aMinY:Number = collider.y + collider.minY;
+			var aMinZ:Number = collider.z + collider.minZ;
+			var aMaxX:Number = collider.x + collider.maxX;
+			var aMaxY:Number = collider.y + collider.maxY;
+			var aMaxZ:Number = collider.z + collider.maxZ;
+			
+			var bMinX:Number = collidee.x + collidee.minX;
+			var bMinY:Number = collidee.y + collidee.minY;
+			var bMinZ:Number = collidee.z + collidee.minZ;
+			var bMaxX:Number = collidee.x + collidee.maxX;
+			var bMaxY:Number = collidee.y + collidee.maxY;
+			var bMaxZ:Number = collidee.z + collidee.maxZ;
+			
+			trace("a: min(",aMinX, aMinY, aMinZ, "), max(",aMaxX, aMaxY, aMaxZ,")");
+			trace("b: min(", bMinX, bMinY, bMinZ, "), max(",bMaxX, bMaxY, bMaxZ,")");
 		}
 		
 		/**
@@ -105,54 +131,62 @@ package com.cenizal.physics.collisions
 			var bMaxY:Number = collidee.y + collidee.maxY;
 			var bMaxZ:Number = collidee.z + collidee.maxZ;
 			
-			//trace("a:",aMinX, aMinY, aMinZ, aMaxX, aMaxY, aMaxZ);
-			//trace("b:", bMinX, bMinY, bMinZ, bMaxX, bMaxY, bMaxZ);
-			
-			var arr:Array = [];
-			if ( doTheyIntersect( aMinX, aMinY, aMinZ, aMaxX, aMaxY, aMaxZ,
-				bMinX, bMinY, bMinZ, bMaxX, bMaxY, bMaxZ ) ) {
+			var faces:Array = [];
+			if ( doTheyIntersect( collider, collidee ) ) {
 				if ( aMinX <= bMinX && aMaxX >= bMinX ) {
 					// A is left of B, but A's max overlaps B's min: right.
-					arr.push( RIGHT );
+					faces.push( RIGHT );
 				}
 				if ( bMinX <= aMinX && bMaxX >= aMinX ) {
 					// B is left of A, but B's max overlaps A's min: left.
-					arr.push( LEFT );
+					faces.push( LEFT );
 				}
 				if ( aMinY <= bMinY && aMaxY >= bMinY ) {
 					// A is below B, but A's max overlaps B's min: top.
-					arr.push( BOTTOM );
+					faces.push( BOTTOM );
 				}
 				if ( bMinY <= aMinY && bMaxY >= aMinY ) {
 					// B is below A, but B's max overlaps A's min: bottom.
-					arr.push( TOP );
+					faces.push( TOP );
 				}
 				if ( aMinZ <= bMinZ && aMaxZ >= bMinZ ) {
 					// A is in front of B, but A's max overlaps B's min: aft.
-					arr.push( BACK );
+					faces.push( BACK );
 				}
 				if ( bMinZ <= aMinZ && bMaxZ >= aMinZ ) {
 					// B is in front of A, but B's max overlaps A's min: front.
-					arr.push( FRONT );
+					faces.push( FRONT );
 				}
-				return arr;
 			}
-			return null;
+			return faces;
 		}
 		
-		private static function doTheyIntersect(
-			aMinX:Number, aMinY:Number, aMinZ:Number, aMaxX:Number, aMaxY:Number, aMaxZ:Number,
-			bMinX:Number, bMinY:Number, bMinZ:Number, bMaxX:Number, bMaxY:Number, bMaxZ:Number
-		):Boolean {
-			//trace("a:",aMinX, aMinY, aMinZ, aMaxX, aMaxY, aMaxZ);
-			//trace("b:", bMinX, bMinY, bMinZ, bMaxX, bMaxY, bMaxZ);
-			if ( aMinX > bMaxX || bMinX > aMaxX ) {
+		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable, limits:Object = null, debug:Boolean = false ):Boolean {
+			limits = limits || {};
+			var aMinX:Number = collider.x + collider.minX;
+			var aMinY:Number = collider.y + collider.minY;
+			var aMinZ:Number = collider.z + collider.minZ;
+			var aMaxX:Number = collider.x + collider.maxX;
+			var aMaxY:Number = collider.y + collider.maxY;
+			var aMaxZ:Number = collider.z + collider.maxZ;
+			
+			var bMinX:Number = collidee.x + collidee.minX;
+			var bMinY:Number = collidee.y + collidee.minY;
+			var bMinZ:Number = collidee.z + collidee.minZ;
+			var bMaxX:Number = collidee.x + collidee.maxX;
+			var bMaxY:Number = collidee.y + collidee.maxY;
+			var bMaxZ:Number = collidee.z + collidee.maxZ;
+			
+			if ( !limits.X && ( aMinX > bMaxX || bMinX > aMaxX ) ) {
+				if ( debug ) trace("    fail x", aMinX, aMaxX, bMinX, bMaxX );
 				return false;
 			}
-			if ( aMinY > bMaxY || bMinY > aMaxY ) {
+			if ( !limits.Y && ( aMinY > bMaxY || bMinY > aMaxY ) ) {
+				if ( debug ) trace("    fail y", aMinY, aMaxY, bMinY, bMaxY );
 				return false;
 			}
-			if ( aMinZ > bMaxZ || bMinZ > aMaxZ ) {
+			if ( !limits.Z && ( aMinZ > bMaxZ || bMinZ > aMaxZ ) ) {
+				if ( debug ) trace("    fail z", aMinZ, aMaxZ, bMinZ, bMaxZ );
 				return false;
 			}
 			return true;

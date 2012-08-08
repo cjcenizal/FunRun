@@ -115,7 +115,7 @@ package com.funrun.controller.commands {
 								playerModel.velocityZ--;
 							}
 						} else if ( playerModel.velocityZ < Track.MAX_PLAYER_FORWARD_VELOCITY ) {
-						//	playerModel.velocityZ += Track.PLAYER_FOWARD_ACCELERATION;
+							playerModel.velocityZ += Track.PLAYER_FOWARD_ACCELERATION;
 						}
 					}
 					// Update jumping.
