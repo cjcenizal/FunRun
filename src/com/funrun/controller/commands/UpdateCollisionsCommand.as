@@ -27,7 +27,7 @@ package com.funrun.controller.commands {
 	 * to current position, performing collision detection
 	 * along the way.
 	 */
-	public class UpdatePlayerCollisionsCommand extends Command {
+	public class UpdateCollisionsCommand extends Command {
 		
 		// Models.
 		
@@ -106,21 +106,21 @@ package com.funrun.controller.commands {
 						
 						/*
 						var face:String;
-						for ( var k:int = 0; k < faces.length; k++ ) {
-							face = faces[ k ];
+						for ( var k:int = 0; k < faces.faces.length; k++ ) {
+							face = faces.faces[ k ];
 							// React to collisions with various faces.
 							// - If we land on top of a walkable block, walk on it.
 							// - If we run into the front of a smacking block, die.
 							// TO-DO: Detect which face the COLLIDER is colliding with, too.
 							switch ( face ) {
-								case CollisionDetector.BOTTOM:
+								case Face.BOTTOM:
 									if ( playerModel.velocityY > 0 ) {
 										playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
 										playerModel.positionY = block.y + block.minY;
 										playerModel.isAirborne = true;
 										break;
 									}
-								case CollisionDetector.TOP:
+								case Face.TOP:
 									if ( playerModel.velocityY <= 0 ) {
 										if ( block.block.getEventAtFace( face ) == Collisions.WALK ) {
 											playerModel.positionY = block.y + block.maxY + Player.HALF_HEIGHT;
@@ -129,15 +129,15 @@ package com.funrun.controller.commands {
 											break;
 										}
 									}
-								case CollisionDetector.FRONT:
+								case Face.FRONT:
 									if ( block.block.getEventAtFace( face ) == Collisions.SMACK ) {
 										playerModel.positionZ = segment.z + block.z + block.minZ - Player.HALF_WIDTH;
 										killPlayerRequest.dispatch( Collisions.SMACK );
 										break;
 									}
-								case CollisionDetector.LEFT:
+								case Face.LEFT:
 									break;
-								case CollisionDetector.RIGHT:
+								case Face.RIGHT:
 							}
 						}*/
 					}

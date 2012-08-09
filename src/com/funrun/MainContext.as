@@ -52,7 +52,7 @@ package com.funrun {
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateNametagsCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
-	import com.funrun.controller.commands.UpdatePlayerCollisionsCommand;
+	import com.funrun.controller.commands.UpdateCollisionsCommand;
 	import com.funrun.controller.commands.UpdateTrackCommand;
 	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.AddCompetitorRequest;
@@ -121,7 +121,7 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.controller.signals.UpdateNametagsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
-	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
+	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CompetitorsModel;
@@ -307,7 +307,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( UpdateNametagsRequest,					UpdateNametagsCommand );
 			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
-			signalCommandMap.mapSignalClass( UpdatePlayerCollisionsRequest,			UpdatePlayerCollisionsCommand );
+			signalCommandMap.mapSignalClass( UpdateCollisionsRequest,			UpdateCollisionsCommand );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );

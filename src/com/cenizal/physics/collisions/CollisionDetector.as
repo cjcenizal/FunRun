@@ -43,8 +43,8 @@ package com.cenizal.physics.collisions
 				y = collidee.y;
 				z = collidee.z;
 				// Optimize by checking against obstacle bounds first.
-				var theyDoIntersect:Boolean = doTheyIntersect( collider, collidee );
-				if ( theyDoIntersect ) {
+				var volume:Number = getIntersectionVolume( collider, collidee );
+				if ( volume > 0 ) {
 					collisions.push( i );
 				}
 			}
@@ -121,17 +121,13 @@ package com.cenizal.physics.collisions
 					// B is in front of A, but B's max overlaps A's min: front.
 					faces.push( Face.FRONT );
 				}
-				// TO-DO: Intersect the two collidables, and get the width, height, and depth of the resulting cube.
-				var xPenetration:Number = getPenetration( aMinX, aMaxX, bMinX, bMaxX );
-				var yPenetration:Number = getPenetration( aMinY, aMaxY, bMinY, bMaxY );
-				var zPenetration:Number = getPenetration( aMinZ, aMaxZ, bMinZ, bMaxZ );
+				// Intersect the two collidables, and get the width, height, and depth of the resulting cube.
+				var xPenetration:Number = getIntersectionDistance( aMinX, aMaxX, bMinX, bMaxX );
+				var yPenetration:Number = getIntersectionDistance( aMinY, aMaxY, bMinY, bMaxY );
+				var zPenetration:Number = getIntersectionDistance( aMinZ, aMaxZ, bMinZ, bMaxZ );
 				return new FaceCollisionsVO( faces, xPenetration, yPenetration, zPenetration );
 			}
 			return null;
-		}
-		
-		private static function getPenetration( aMin:Number, aMax:Number, bMin:Number, bMax:Number ):Number {
-			return ( aMax < bMax ) ? ( aMax - bMin ) : ( bMax - aMin );
 		}
 		
 		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
@@ -160,5 +156,42 @@ package com.cenizal.physics.collisions
 			}
 			return true;
 		}
+		
+		private static function getIntersectionVolume( collider:ICollidable, collidee:ICollidable ):Number {
+			var aMinX:Number = collider.x + collider.minX;
+			var aMinY:Number = collider.y + collider.minY;
+			var aMinZ:Number = collider.z + collider.minZ;
+			var aMaxX:Number = collider.x + collider.maxX;
+			var aMaxY:Number = collider.y + collider.maxY;
+			var aMaxZ:Number = collider.z + collider.maxZ;
+			
+			var bMinX:Number = collidee.x + collidee.minX;
+			var bMinY:Number = collidee.y + collidee.minY;
+			var bMinZ:Number = collidee.z + collidee.minZ;
+			var bMaxX:Number = collidee.x + collidee.maxX;
+			var bMaxY:Number = collidee.y + collidee.maxY;
+			var bMaxZ:Number = collidee.z + collidee.maxZ;
+			
+			if ( aMinX > bMaxX || bMinX > aMaxX ) {
+				return 0;
+			}
+			if ( aMinY > bMaxY || bMinY > aMaxY ) {
+				return 0;
+			}
+			if ( aMinZ > bMaxZ || bMinZ > aMaxZ ) {
+				return 0;
+			}
+			
+			var xPenetration:Number = Math.max( 0, getIntersectionDistance( aMinX, aMaxX, bMinX, bMaxX ) );
+			var yPenetration:Number = Math.max( 0, getIntersectionDistance( aMinY, aMaxY, bMinY, bMaxY ) );
+			var zPenetration:Number = Math.max( 0, getIntersectionDistance( aMinZ, aMaxZ, bMinZ, bMaxZ ) );
+			
+			return xPenetration * yPenetration * zPenetration;
+		}
+		
+		private static function getIntersectionDistance( aMin:Number, aMax:Number, bMin:Number, bMax:Number ):Number {
+			return ( aMax < bMax ) ? ( aMax - bMin ) : ( bMax - aMin );
+		}
+		
 	}
 }

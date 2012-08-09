@@ -11,7 +11,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateNametagsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
-	import com.funrun.controller.signals.UpdatePlayerCollisionsRequest;
+	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.CountdownModel;
@@ -67,7 +67,7 @@ package com.funrun.controller.commands {
 		public var updateTrackRequest:UpdateTrackRequest;
 		
 		[Inject]
-		public var updatePlayerCollisionsRequest:UpdatePlayerCollisionsRequest;
+		public var updateCollisionsRequest:UpdateCollisionsRequest;
 		
 		[Inject]
 		public var renderSceneRequest:RenderSceneRequest;
@@ -157,7 +157,7 @@ package com.funrun.controller.commands {
 				}
 				
 				// Detect collisions.
-				updatePlayerCollisionsRequest.dispatch();
+				updateCollisionsRequest.dispatch();
 			}
 			
 			// Update camera before updating competitors.
