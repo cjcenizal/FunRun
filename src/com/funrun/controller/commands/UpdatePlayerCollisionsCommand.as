@@ -1,6 +1,10 @@
 package com.funrun.controller.commands {
 	
+	import com.cenizal.physics.collisions.Axis;
 	import com.cenizal.physics.collisions.CollisionDetector;
+	import com.cenizal.physics.collisions.Face;
+	import com.cenizal.physics.collisions.FaceCollisionsVO;
+	import com.cenizal.physics.collisions.ICollidable;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.PlayerModel;
@@ -66,7 +70,7 @@ package com.funrun.controller.commands {
 			collider.maxX = playerModel.bounds.max.x;
 			collider.maxY = playerModel.bounds.max.y;
 			collider.maxZ = playerModel.bounds.max.z;
-			var segments:Array, blocks:Array, faces:Array;
+			var segments:Array, blocks:Array, faces:FaceCollisionsVO;
 			var segmentIndices:Array, blockIndices:Array;
 			for ( var n:int = 0; n < numSteps; n++ ) {
 				collider.x = testPos.x;
@@ -78,7 +82,19 @@ package com.funrun.controller.commands {
 				var segment:SegmentVO;
 				for ( var i:int = 0; i < segmentIndices.length; i++ ) {
 					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
+					
 					// Get all the blocks we're colliding with.
+					
+					// Get the blocks we collide with most.
+					
+					// For each of those blocks, get the faces we collide with most.
+					
+					// For each of those faces, test if there is an event on that face.
+					
+					// If there is, resolve collision and react to event, and terminate.
+					
+					// Else, continue.
+					
 					blocks = segment.getBoundingBoxes();
 					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
 					var block:BoundingBoxVO;
@@ -86,6 +102,9 @@ package com.funrun.controller.commands {
 						block = segment.getBoundingBoxAt( blockIndices[ j ] );
 						// Get the faces we're colliding with.
 						faces = CollisionDetector.getCollidingFaces( collider, block.add( segment ) );
+						collide( collider, block, faces );
+						
+						/*
 						var face:String;
 						for ( var k:int = 0; k < faces.length; k++ ) {
 							face = faces[ k ];
@@ -120,7 +139,7 @@ package com.funrun.controller.commands {
 									break;
 								case CollisionDetector.RIGHT:
 							}
-						}
+						}*/
 					}
 				}
 				if ( segmentIndices.length == 0 ) {
@@ -137,6 +156,28 @@ package com.funrun.controller.commands {
 				testPos.x += interpolationVector.x;
 				testPos.y += interpolationVector.y;
 				testPos.z += interpolationVector.z;
+			}
+		}
+		
+		
+		private function collide( collider:ICollidable, block:BoundingBoxVO, faces:FaceCollisionsVO ):void {
+			var axis:String;
+			for ( var k:int = 0; k < faces.faces.length; k++ ) {
+				axis = faces.axes[ k ];
+				switch ( axis ) {
+					case Axis.X:
+					if ( faces.contains( Face.LEFT ) ) {
+						
+						return;
+					} else if ( faces.contains( Face.RIGHT ) ) {
+						return;
+					}
+					break;
+					case Axis.Y:
+					break;
+					case Axis.Z:
+					break;
+				}
 			}
 		}
 	}

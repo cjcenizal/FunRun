@@ -12,40 +12,8 @@ package com.cenizal.physics.collisions
 	 */
 	public class CollisionDetector {
 		
-		public static const TOP:String = "top";
-		public static const BOTTOM:String = "bottom";
-		public static const LEFT:String = "left";
-		public static const RIGHT:String = "right";
-		public static const FRONT:String = "front";
-		public static const BACK:String = "back"; // a is for ass... or aft.
-		public static const ALL:String = "all";
-		
 		private static const BOX:String = "box";
 		private static const FACE:String = "face";
-		
-		/**
-		 * Detect collisions against stored faces, and remove any that don't collide.
-		 * 
-		 * @param minX Min x of player bounds.
-		 * @param minY Min y of player bounds.
-		 * @param minZ Min z of player bounds.
-		 * @param maxX Max x of player bounds.
-		 * @param maxY Max y of player bounds.
-		 * @param maxZ Max z of player bounds.
-		 */
-		/*public function recollideAgainst( minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ):void {
-		var keptCollisions:Array = [];
-		var face:Collision;
-		for ( var i:int = 0; i < _numCollisions; i++ ) {
-		face = _collisions[ i ] as Collision;
-		if ( doCollide( minX, minY, minZ, maxX, maxY, maxZ,
-		face.minX, face.minY, face.minZ, face.maxX, face.maxY, face.maxZ ) ) {
-		keptCollisions.push( face );
-		}
-		}
-		_collisions = keptCollisions;
-		}*/
-		
 		
 		/**
 		 * Detect collisions between collidables.
@@ -111,7 +79,7 @@ package com.cenizal.physics.collisions
 		 * 
 		 * @return An array of faces indicating collisions.
 		 */
-		public static function getCollidingFaces( collider:ICollidable, collidee:ICollidable ):Array {
+		public static function getCollidingFaces( collider:ICollidable, collidee:ICollidable, forced:Boolean = false ):FaceCollisionsVO {
 			
 			var aMinX:Number = collider.x + collider.minX;
 			var aMinY:Number = collider.y + collider.minY;
@@ -128,33 +96,42 @@ package com.cenizal.physics.collisions
 			var bMaxZ:Number = collidee.z + collidee.maxZ;
 			
 			var faces:Array = [];
-			if ( doTheyIntersect( collider, collidee ) ) {
+			if ( forced || doTheyIntersect( collider, collidee ) ) {
 				if ( aMinX <= bMinX && aMaxX >= bMinX ) {
 					// A is left of B, but A's max overlaps B's min: right.
-					faces.push( RIGHT );
+					faces.push( Face.RIGHT );
 				}
 				if ( bMinX <= aMinX && bMaxX >= aMinX ) {
 					// B is left of A, but B's max overlaps A's min: left.
-					faces.push( LEFT );
+					faces.push( Face.LEFT );
 				}
 				if ( aMinY <= bMinY && aMaxY >= bMinY ) {
 					// A is below B, but A's max overlaps B's min: top.
-					faces.push( BOTTOM );
+					faces.push( Face.BOTTOM );
 				}
 				if ( bMinY <= aMinY && bMaxY >= aMinY ) {
 					// B is below A, but B's max overlaps A's min: bottom.
-					faces.push( TOP );
+					faces.push( Face.TOP );
 				}
 				if ( aMinZ <= bMinZ && aMaxZ >= bMinZ ) {
 					// A is in front of B, but A's max overlaps B's min: aft.
-					faces.push( BACK );
+					faces.push( Face.BACK );
 				}
 				if ( bMinZ <= aMinZ && bMaxZ >= aMinZ ) {
 					// B is in front of A, but B's max overlaps A's min: front.
-					faces.push( FRONT );
+					faces.push( Face.FRONT );
 				}
+				// TO-DO: Intersect the two collidables, and get the width, height, and depth of the resulting cube.
+				var xPenetration:Number = getPenetration( aMinX, aMaxX, bMinX, bMaxX );
+				var yPenetration:Number = getPenetration( aMinY, aMaxY, bMinY, bMaxY );
+				var zPenetration:Number = getPenetration( aMinZ, aMaxZ, bMinZ, bMaxZ );
+				return new FaceCollisionsVO( faces, xPenetration, yPenetration, zPenetration );
 			}
-			return faces;
+			return null;
+		}
+		
+		private static function getPenetration( aMin:Number, aMax:Number, bMin:Number, bMax:Number ):Number {
+			return ( aMax < bMax ) ? ( aMax - bMin ) : ( bMax - aMin );
 		}
 		
 		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
