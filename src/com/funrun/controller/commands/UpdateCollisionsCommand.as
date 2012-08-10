@@ -14,6 +14,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.GameState;
+	import com.funrun.model.vo.BlockVO;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
@@ -70,7 +71,7 @@ package com.funrun.controller.commands {
 			collider.maxX = playerModel.bounds.max.x;
 			collider.maxY = playerModel.bounds.max.y;
 			collider.maxZ = playerModel.bounds.max.z;
-			var segments:Array, blocks:Array, faces:FaceCollisionsVO;
+			var segments:Array, blocks:Array, collisions:FaceCollisionsVO;
 			var segmentIndices:Array, blockIndices:Array;
 			for ( var n:int = 0; n < numSteps; n++ ) {
 				collider.x = testPos.x;
@@ -80,69 +81,24 @@ package com.funrun.controller.commands {
 				segments = trackModel.getObstacleArray();
 				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
 				var segment:SegmentVO;
+				var bounds:BoundingBoxVO;
+				var escape:Boolean = false;
 				for ( var i:int = 0; i < segmentIndices.length; i++ ) {
+					// Get all the blocks we're colliding with, sorted by collision volume, descending order.
 					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
-					
-					// Get all the blocks we're colliding with.
-					
-					// Get the blocks we collide with most.
-					
-					// For each of those blocks, get the faces we collide with most.
-					
-					// For each of those faces, test if there is an event on that face.
-					
-					// If there is, resolve collision and react to event, and terminate.
-					
-					// Else, continue.
-					
 					blocks = segment.getBoundingBoxes();
 					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
-					var block:BoundingBoxVO;
-					
 					for ( var j:int = 0; j < blockIndices.length; j++ ) {
-						block = segment.getBoundingBoxAt( blockIndices[ j ] );
-						// Get the faces we're colliding with.
-						var collidee:BoundingBoxVO = block.add( segment ) as BoundingBoxVO;
-						faces = CollisionDetector.getCollidingFaces( collider, collidee );
-						//collide( collider, block, faces );
-						
-						
-						var face:String;
-						for ( var k:int = 0; k < faces.faces.length; k++ ) {
-							face = faces.faces[ k ];
-							// React to collisions with various faces.
-							// - If we land on top of a walkable block, walk on it.
-							// - If we run into the front of a smacking block, die.
-							// TO-DO: Detect which face the COLLIDER is colliding with, too.
-							switch ( face ) {
-								case Face.BOTTOM:
-									if ( playerModel.velocityY > 0 ) {
-										playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
-										playerModel.positionY = block.y + block.minY;
-										playerModel.isAirborne = true;
-										break;
-									}
-								case Face.TOP:
-									if ( playerModel.velocityY <= 0 ) {
-										if ( block.block.getEventAtFace( face ) == Collisions.WALK ) {
-											playerModel.positionY = block.y + block.maxY + Player.HALF_HEIGHT;
-											playerModel.velocityY = 0;
-											playerModel.isAirborne = false;
-											break;
-										}
-									}
-								case Face.FRONT:
-									if ( block.block.getEventAtFace( face ) == Collisions.SMACK ) {
-										playerModel.positionZ = segment.z + block.z + block.minZ - Player.HALF_WIDTH;
-										killPlayerRequest.dispatch( Collisions.SMACK );
-										break;
-									}
-								case Face.LEFT:
-									break;
-								case Face.RIGHT:
-							}
-						}
+						bounds = segment.getBoundingBoxAt( blockIndices[ j ] );
+						// Get the faces we collide with most, sorted by collision axis, descending order.
+						// For each of those faces, test if there is an event on that face.
+						// If there is, resolve collision and react to event, and terminate the collision resolution.
+						var collidee:BoundingBoxVO = bounds.add( segment ) as BoundingBoxVO;
+						collisions = CollisionDetector.getCollidingFaces( collider, collidee );
+						escape = resolveCollisions( segment, bounds, collisions );
+						//if ( escape ) break;
 					}
+					//if ( escape ) break;
 				}
 				if ( segmentIndices.length == 0 ) {
 					// If we're not hitting something, we're airborne.
@@ -161,26 +117,86 @@ package com.funrun.controller.commands {
 			}
 		}
 		
-		
-		private function collide( collider:ICollidable, block:BoundingBoxVO, faces:FaceCollisionsVO ):void {
+		private function resolveCollisions( segment:SegmentVO, bounds:BoundingBoxVO, collisions:FaceCollisionsVO ):Boolean {
 			var axis:String;
-			for ( var k:int = 0; k < faces.faces.length; k++ ) {
-				axis = faces.axes[ k ];
+			var event:String;
+			for ( var k:int = 0; k < collisions.faces.length; k++ ) {
+				axis = collisions.axes[ k ];
 				switch ( axis ) {
 					case Axis.X:
-					if ( faces.contains( Face.LEFT ) ) {
-						
-						return;
-					} else if ( faces.contains( Face.RIGHT ) ) {
-						return;
-					}
-					break;
+						if ( collisions.contains( Face.LEFT ) ) {
+							return true;
+						} else if ( collisions.contains( Face.RIGHT ) ) {
+							return true;
+						}
+						break;
 					case Axis.Y:
-					break;
+						if ( collisions.contains( Face.TOP ) ) {
+							event = bounds.block.getEventAtFace( Face.TOP );
+							switch ( event ) {
+								case Collisions.WALK:
+									playerModel.positionY = bounds.y + bounds.maxY + Player.HALF_HEIGHT;
+									playerModel.velocityY = 0;
+									playerModel.isAirborne = false;
+									break;
+							}
+							return true;
+						} else if ( collisions.contains( Face.BOTTOM ) ) {
+							return true;
+						}
+						break;
 					case Axis.Z:
-					break;
+						if ( collisions.contains( Face.FRONT ) ) {
+							event = bounds.block.getEventAtFace( Face.FRONT );
+							switch ( event ) {
+								case Collisions.SMACK:
+									playerModel.positionZ = segment.z + bounds.z + bounds.minZ - Player.HALF_WIDTH;
+									killPlayerRequest.dispatch( Collisions.SMACK );
+									break;
+							}
+							return true;
+						}
+						break;
 				}
 			}
+			return false;
+			/*
+			var face:String;
+			for ( var k:int = 0; k < faces.faces.length; k++ ) {
+				face = faces.faces[ k ];
+				switch ( face ) {
+					case Face.BOTTOM:
+						if ( playerModel.velocityY > 0 ) {
+							playerModel.velocityY = Track.BOUNCE_OFF_BOTTOM_VELOCITY;
+							playerModel.positionY = block.y + block.minY;
+							playerModel.isAirborne = true;
+							break;
+						}
+					case Face.TOP:
+						if ( playerModel.velocityY <= 0 ) {
+							if ( block.block.getEventAtFace( face ) == Collisions.WALK ) {
+								playerModel.positionY = block.y + block.maxY + Player.HALF_HEIGHT;
+								playerModel.velocityY = 0;
+								playerModel.isAirborne = false;
+								break;
+							}
+						}
+					case Face.FRONT:
+						if ( block.block.getEventAtFace( face ) == Collisions.SMACK ) {
+							playerModel.positionZ = segment.z + block.z + block.minZ - Player.HALF_WIDTH;
+							killPlayerRequest.dispatch( Collisions.SMACK );
+							break;
+						}
+					case Face.LEFT:
+						break;
+					case Face.RIGHT:
+				}
+			}*/
+		}
+		
+		
+		private function collide( collider:ICollidable, block:BoundingBoxVO, faces:FaceCollisionsVO ):void {
+			
 		}
 	}
 }
