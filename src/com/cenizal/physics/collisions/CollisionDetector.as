@@ -45,8 +45,12 @@ package com.cenizal.physics.collisions
 				// Optimize by checking against obstacle bounds first.
 				var volume:Number = getIntersectionVolume( collider, collidee );
 				if ( volume > 0 ) {
-					collisions.push( i );
+					collisions.push( { "index ": i, "volume" : volume } );
 				}
+			}
+			collisions.sortOn( "volume", Array.NUMERIC | Array.DESCENDING );
+			for ( var i:int = 0; i < collisions.length; i++ ) {
+				collisions[ i ] = collisions[ i ][ "index" ];
 			}
 			return collisions;
 		}
@@ -121,13 +125,12 @@ package com.cenizal.physics.collisions
 					// B is in front of A, but B's max overlaps A's min: front.
 					faces.push( Face.FRONT );
 				}
-				// Intersect the two collidables, and get the width, height, and depth of the resulting cube.
-				var xPenetration:Number = getIntersectionDistance( aMinX, aMaxX, bMinX, bMaxX );
-				var yPenetration:Number = getIntersectionDistance( aMinY, aMaxY, bMinY, bMaxY );
-				var zPenetration:Number = getIntersectionDistance( aMinZ, aMaxZ, bMinZ, bMaxZ );
-				return new FaceCollisionsVO( faces, xPenetration, yPenetration, zPenetration );
 			}
-			return null;
+			// Intersect the two collidables, and get the width, height, and depth of the resulting cube.
+			var xPenetration:Number = getIntersectionDistance( aMinX, aMaxX, bMinX, bMaxX );
+			var yPenetration:Number = getIntersectionDistance( aMinY, aMaxY, bMinY, bMaxY );
+			var zPenetration:Number = getIntersectionDistance( aMinZ, aMaxZ, bMinZ, bMaxZ );
+			return new FaceCollisionsVO( faces, xPenetration, yPenetration, zPenetration );
 		}
 		
 		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {

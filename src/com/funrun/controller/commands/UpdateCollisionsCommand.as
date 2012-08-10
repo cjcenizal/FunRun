@@ -102,9 +102,10 @@ package com.funrun.controller.commands {
 						block = segment.getBoundingBoxAt( blockIndices[ j ] );
 						// Get the faces we're colliding with.
 						faces = CollisionDetector.getCollidingFaces( collider, block.add( segment ) );
-						collide( collider, block, faces );
+						//collide( collider, block, faces );
 						
-						/*
+						
+						trace(faces.faces.length);
 						var face:String;
 						for ( var k:int = 0; k < faces.faces.length; k++ ) {
 							face = faces.faces[ k ];
@@ -139,7 +140,7 @@ package com.funrun.controller.commands {
 									break;
 								case Face.RIGHT:
 							}
-						}*/
+						}
 					}
 				}
 				if ( segmentIndices.length == 0 ) {
