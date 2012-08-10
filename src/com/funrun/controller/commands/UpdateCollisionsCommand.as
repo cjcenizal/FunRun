@@ -96,6 +96,7 @@ package com.funrun.controller.commands {
 						var collidee:BoundingBoxVO = bounds.add( segment ) as BoundingBoxVO;
 						collisions = CollisionDetector.getCollidingFaces( collider, collidee );
 						escape = resolveCollisions( segment, bounds, collisions );
+						// Maybe we just want to escape from the innermost loop?
 						//if ( escape ) break;
 					}
 					//if ( escape ) break;

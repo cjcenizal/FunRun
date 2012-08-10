@@ -18,7 +18,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.InterpolationModel;
-	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.TimeModel;
@@ -44,9 +43,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var cameraModel:View3DModel;
-		
-		[Inject]
-		public var keyboardModel:KeyboardModel;
 		
 		[Inject]
 		public var interpolationModel:InterpolationModel;
@@ -86,10 +82,6 @@ package com.funrun.controller.commands {
 			pointsModel.assign( 4, 4 );
 			pointsModel.assign( 5, 2 );
 			pointsModel.assign( 6, 1 );
-			
-			// Keyboard.
-			keyboardModel.stage = contextView.stage;
-			keyboardModel.init();
 			
 			// Interpolation.
 			interpolationModel.setIncrement( Time.INTERPOLATION_INCREMENT );

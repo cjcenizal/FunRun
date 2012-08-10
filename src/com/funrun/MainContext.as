@@ -49,10 +49,10 @@ package com.funrun {
 	import com.funrun.controller.commands.StoreFloorCommand;
 	import com.funrun.controller.commands.StoreObstacleCommand;
 	import com.funrun.controller.commands.UpdateAiCompetitorsCommand;
+	import com.funrun.controller.commands.UpdateCollisionsCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateNametagsCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
-	import com.funrun.controller.commands.UpdateCollisionsCommand;
 	import com.funrun.controller.commands.UpdateTrackCommand;
 	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.AddCompetitorRequest;
@@ -116,12 +116,12 @@ package com.funrun {
 	import com.funrun.controller.signals.StoreObstacleRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
+	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.controller.signals.UpdateNametagsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
-	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CompetitorsModel;
@@ -129,7 +129,6 @@ package com.funrun {
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.InterpolationModel;
-	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
@@ -218,7 +217,6 @@ package com.funrun {
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( DelayedCommandsModel );
 			injector.mapSingleton( InterpolationModel );
-			injector.mapSingleton( KeyboardModel );
 			injector.mapSingleton( LightsModel );
 			injector.mapSingleton( NametagsModel );
 			injector.mapSingleton( ObserverModel );
