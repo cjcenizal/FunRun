@@ -45,7 +45,7 @@ package com.cenizal.physics.collisions
 				// Optimize by checking against obstacle bounds first.
 				var volume:Number = getIntersectionVolume( collider, collidee );
 				if ( volume > 0 ) {
-					collisions.push( { "index ": i, "volume" : volume } );
+					collisions.push( { "index": i, "volume" : volume } );
 				}
 			}
 			collisions.sortOn( "volume", Array.NUMERIC | Array.DESCENDING );

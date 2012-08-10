@@ -98,14 +98,15 @@ package com.funrun.controller.commands {
 					blocks = segment.getBoundingBoxes();
 					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
 					var block:BoundingBoxVO;
+					
 					for ( var j:int = 0; j < blockIndices.length; j++ ) {
 						block = segment.getBoundingBoxAt( blockIndices[ j ] );
 						// Get the faces we're colliding with.
-						faces = CollisionDetector.getCollidingFaces( collider, block.add( segment ) );
+						var collidee:BoundingBoxVO = block.add( segment ) as BoundingBoxVO;
+						faces = CollisionDetector.getCollidingFaces( collider, collidee );
 						//collide( collider, block, faces );
 						
 						
-						trace(faces.faces.length);
 						var face:String;
 						for ( var k:int = 0; k < faces.faces.length; k++ ) {
 							face = faces.faces[ k ];
