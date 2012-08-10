@@ -34,12 +34,6 @@ package com.funrun.controller.commands {
 				case Keyboard.UP:
 					playerModel.isJumping = false;
 					break;
-				case Keyboard.LEFT:
-					playerModel.stopMovingLeft( Player.LATERAL_SPEED );
-					break;
-				case Keyboard.RIGHT:
-					playerModel.stopMovingRight( Player.LATERAL_SPEED );
-					break;
 				case Keyboard.DOWN:
 					playerModel.isDucking = false;;
 					break;

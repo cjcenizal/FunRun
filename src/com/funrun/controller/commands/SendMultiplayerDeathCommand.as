@@ -28,9 +28,9 @@ package com.funrun.controller.commands {
 			if ( onlineState.isOnline ) {
 				multiplayerService.send(
 					Messages.DEATH,
-					playerModel.positionX,
-					playerModel.positionY,
-					playerModel.positionZ
+					playerModel.position.x,
+					playerModel.position.y,
+					playerModel.position.z
 				);
 			}
 		}

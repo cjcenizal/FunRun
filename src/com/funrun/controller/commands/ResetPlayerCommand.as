@@ -16,14 +16,14 @@ package com.funrun.controller.commands {
 			playerModel.isDead = false;
 			playerModel.isAirborne = true;
 			playerModel.isDucking = false;
-			playerModel.isJumping = false;
-			playerModel.cancelMovement();
-			playerModel.velocityZ = playerModel.velocityX = 0;
-			playerModel.velocityY = 50;
+	//		playerModel.isJumping = false;
+	//		playerModel.cancelMovement();
+			playerModel.velocity.z = playerModel.velocity.x = 0;
+			playerModel.velocity.y = 50;
 			var width:Number = Track.WIDTH * .8;
-			playerModel.positionX = Math.random() * width;
-			playerModel.positionY = 300;
-			playerModel.positionZ = Math.random() * 100;
+			playerModel.position.x = Math.random() * width;
+			playerModel.position.y = 300;
+			playerModel.position.z = Math.random() * 100;
 			playerModel.updateMeshPosition();
 		}
 	}

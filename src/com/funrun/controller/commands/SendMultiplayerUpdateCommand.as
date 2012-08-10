@@ -29,9 +29,9 @@ package com.funrun.controller.commands {
 				// Update server with position and velocity.
 				multiplayerService.send(
 					Messages.UPDATE,
-					playerModel.positionX,
-					playerModel.positionY,
-					playerModel.positionZ,
+					playerModel.position.x,
+					playerModel.position.y,
+					playerModel.position.z,
 					playerModel.isDucking
 				);
 			}

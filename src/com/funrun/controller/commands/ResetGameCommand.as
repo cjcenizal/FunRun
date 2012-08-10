@@ -79,13 +79,13 @@ package com.funrun.controller.commands {
 			nametagsModel.reset();
 			countdownModel.reset();
 			// Reset distance.
-			playerModel.positionZ = 0;
+			playerModel.position.z = 0;
 			displayDistanceRequest.dispatch( playerModel.distanceString );
 			// Reset player.
 			resetPlayerRequest.dispatch();
 			// Reset floor and obstacles.
 			addFloorRequest.dispatch();
-			addObstaclesRequest.dispatch( playerModel.positionZ );
+			addObstaclesRequest.dispatch( playerModel.position.z );
 			// Reset camera.
 			view3DModel.cameraX = 0;
 			view3DModel.cameraY = Camera.Y;

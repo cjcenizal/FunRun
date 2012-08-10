@@ -1,4 +1,12 @@
 package com.funrun {
+
+	/*
+		TO-DO:
+		- Full-screen, or fluid 100% window size.
+		- Nice UI with comfy pressable buttons.
+		- Economy
+		- Foody red/yellow/white color scheme
+	*/
 	
 	import com.funrun.controller.commands.AddAiCompetitorsCommand;
 	import com.funrun.controller.commands.AddCompetitorCommand;
@@ -53,6 +61,7 @@ package com.funrun {
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateNametagsCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
+	import com.funrun.controller.commands.UpdatePlayerCommand;
 	import com.funrun.controller.commands.UpdateTrackCommand;
 	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.AddCompetitorRequest;
@@ -122,6 +131,7 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.controller.signals.UpdateNametagsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
+	import com.funrun.controller.signals.UpdatePlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CompetitorsModel;
@@ -129,6 +139,7 @@ package com.funrun {
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.InterpolationModel;
+	import com.funrun.model.KeysModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
@@ -217,6 +228,7 @@ package com.funrun {
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( DelayedCommandsModel );
 			injector.mapSingleton( InterpolationModel );
+			injector.mapSingleton( KeysModel );
 			injector.mapSingleton( LightsModel );
 			injector.mapSingleton( NametagsModel );
 			injector.mapSingleton( ObserverModel );
@@ -303,6 +315,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( UpdateAiCompetitorsRequest,			UpdateAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateNametagsRequest,					UpdateNametagsCommand );
+			signalCommandMap.mapSignalClass( UpdatePlayerRequest,					UpdatePlayerCommand );
 			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );
 			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
 			signalCommandMap.mapSignalClass( UpdateCollisionsRequest,			UpdateCollisionsCommand );

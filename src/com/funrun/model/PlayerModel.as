@@ -24,22 +24,22 @@ package com.funrun.model {
 		private var _properties:Object;
 		
 		// Physical state.
-		private var _position:Vector3D;
+		public var position:Vector3D;
 		private var _prevPosition:Vector3D;
-		private var _velocity:Vector3D;
+		public var velocity:Vector3D;
 		private var _isMovingLeft:Boolean = false;
 		private var _isMovingRight:Boolean = false;
 		private var _place:int = 0;
 		public var isDucking:Boolean = false;
 		public var isAirborne:Boolean = false;
 		public var isDead:Boolean = false;
-		public var isJumping:Boolean = false;
+	//	public var isJumping:Boolean = false;
 
 		public function PlayerModel() {
 			super();
 			_properties = {};
-			_velocity = new Vector3D();
-			_position = new Vector3D();
+			velocity = new Vector3D();
+			position = new Vector3D();
 			_prevPosition = new Vector3D();
 			resetInGameId();
 		}
@@ -47,7 +47,7 @@ package com.funrun.model {
 		public function resetInGameId():void {
 			_inGameId = -1;
 		}
-		
+		/*
 		public function startMovingLeft( speed:Number ):void {
 			if ( _isMovingRight ) {
 				stopMovingRight( speed );
@@ -84,27 +84,27 @@ package com.funrun.model {
 
 		public function cancelMovement():void {
 			_isMovingRight = _isMovingLeft = false;
-		}
+		}*/
 		
-		public function getPositionClone():Vector3D {
+	/*	public function getPositionClone():Vector3D {
 			return _position.clone();
-		}
+		}*/
 		
 		public function getPreviousPositionClone():Vector3D {
 			return _prevPosition.clone();
 		}
 		
 		public function getDistanceFromPreviousPosition():Number {
-			return _position.subtract( _prevPosition ).length;
+			return position.subtract( _prevPosition ).length;
 		}
 		
 		public function updateMeshPosition():void {
-			_mesh.x = _position.x;
-			_mesh.y = _position.y;
-			_mesh.z = _position.z;
-			_prevPosition.x = _position.x;
-			_prevPosition.y = _position.y;
-			_prevPosition.z = _position.z;
+			_mesh.x = position.x;
+			_mesh.y = position.y;
+			_mesh.z = position.z;
+			_prevPosition.x = position.x;
+			_prevPosition.y = position.y;
+			_prevPosition.z = position.z;
 		}
 		
 		public function getMeshPosition():Vector3D {
@@ -112,7 +112,7 @@ package com.funrun.model {
 		}
 		
 		public function get distance():Number {
-			return _position.z;
+			return position.z;
 		}
 		
 		public function get distanceInFeet():int {
@@ -134,7 +134,7 @@ package com.funrun.model {
 		public function set mesh( m:Mesh ):void {
 			_mesh = m;
 		}
-		
+		/*
 		public function get velocityX():Number {
 			return _velocity.x;
 		}
@@ -182,7 +182,7 @@ package com.funrun.model {
 		public function set positionZ( value:Number ):void {
 			_position.z = value;
 		}
-		
+		*/
 		public function get bounds():BoundingVolumeBase {
 			return _mesh.bounds;
 		}

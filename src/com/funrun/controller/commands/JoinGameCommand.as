@@ -60,7 +60,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.onConnectedSignal.add( onConnected );
-			multiplayerService.connect( loginService.client, Rooms.GAME, { name: playerModel.name, x: playerModel.positionX, y: playerModel.positionY }, roomId );
+			multiplayerService.connect( loginService.client, Rooms.GAME, { name: playerModel.name, x: playerModel.position.x, y: playerModel.position.y }, roomId );
 		}
 		
 		private function onConnected():void {

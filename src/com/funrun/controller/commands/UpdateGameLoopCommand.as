@@ -7,11 +7,12 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
+	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateNametagsRequest;
 	import com.funrun.controller.signals.UpdatePlacesRequest;
-	import com.funrun.controller.signals.UpdateCollisionsRequest;
+	import com.funrun.controller.signals.UpdatePlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.CountdownModel;
@@ -67,6 +68,9 @@ package com.funrun.controller.commands {
 		public var updateTrackRequest:UpdateTrackRequest;
 		
 		[Inject]
+		public var updatePlayerRequest:UpdatePlayerRequest;
+		
+		[Inject]
 		public var updateCollisionsRequest:UpdateCollisionsRequest;
 		
 		[Inject]
@@ -110,72 +114,27 @@ package com.funrun.controller.commands {
 					updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
 				}
 				
-				if ( playerModel.isDead ) {
-					// Slow down when you're dead.
-					playerModel.velocityX *= .6;
-					playerModel.velocityZ *= .7;
-				} else {
-					if ( gameState.gameState == GameState.RUNNING ) {
-						// Update speed when you're alive.
-						if ( Math.abs( playerModel.velocityX ) > 0 ) {
-							if ( playerModel.velocityZ > Player.SLOWED_DIAGONAL_SPEED ) {
-								playerModel.velocityZ--;
-							}
-						} else if ( playerModel.velocityZ < Player.MAX_FORWARD_VELOCITY ) {
-							playerModel.velocityZ += Player.FOWARD_ACCELERATION;
-						}
-					}
-					// Update jumping.
-					if ( playerModel.isJumping && !playerModel.isAirborne ) {
-						playerModel.velocityY += Player.JUMP_SPEED;
-						playerModel.isAirborne = true;
-					}
-					// Update lateral position.
-					playerModel.positionX += playerModel.velocityX;
-				}
-				
-				// Run forward.
-				playerModel.positionZ += playerModel.velocityZ;
-				
-				// Update gravity.
-				playerModel.velocityY += Player.GRAVITY;
-				playerModel.positionY += playerModel.velocityY;
-				
-				// Apply ducking state.
-				if ( playerModel.isDucking ) {
-					if ( playerModel.scaleY != .25 ) {
-						playerModel.scaleY = .25;
-						playerModel.bounds.min.y *= .25;
-						playerModel.bounds.max.y *= .25;
-					}
-				} else {
-					if ( playerModel.scaleY != 1 ) {
-						playerModel.scaleY = 1;
-						playerModel.bounds.min.y /= .25;
-						playerModel.bounds.max.y /= .25;
-					}
-				}
+				// Move player.
+				updatePlayerRequest.dispatch();
 				
 				// Detect collisions.
-				updateCollisionsRequest.dispatch();
+				//updateCollisionsRequest.dispatch();
 			}
 			
 			// Update camera before updating competitors.
-			view3DModel.cameraX = playerModel.positionX;
-			var followFactor:Number = ( Camera.Y + playerModel.positionY < view3DModel.cameraY ) ? .3 : .1;
+			view3DModel.cameraX = playerModel.position.x;
+			var followFactor:Number = ( Camera.Y + playerModel.position.y < view3DModel.cameraY ) ? .3 : .1;
 			// We'll try easing to follow the player instead of being locked.
-			view3DModel.cameraY += ( ( Camera.Y + playerModel.positionY ) - view3DModel.cameraY ) * followFactor;
-			view3DModel.cameraZ += ( ( playerModel.positionZ + Camera.Z ) - view3DModel.cameraZ ) * .65;
+			view3DModel.cameraY += ( ( Camera.Y + playerModel.position.y ) - view3DModel.cameraY ) * followFactor;
+			view3DModel.cameraZ += ( ( playerModel.position.z + Camera.Z ) - view3DModel.cameraZ ) * .65;
 			view3DModel.update();
 			
 			// Update light.
 			var light:LightBase = lightsModel.getLight( LightsModel.SPOTLIGHT );
-			light.z = playerModel.positionZ;
+			light.z = playerModel.position.z;
 			
 			// Set position to mesh.
 			playerModel.updateMeshPosition();
-			
-			// TO-DO: Update lights.
 			
 			// Update competitors' positions.
 			updateCompetitorsRequest.dispatch();

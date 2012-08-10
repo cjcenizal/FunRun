@@ -54,15 +54,15 @@ package com.funrun.controller.commands {
 			var targetInterpolationDist:Number = Block.SIZE;
 			var numSteps:Number = Math.ceil( playerModel.getDistanceFromPreviousPosition() / targetInterpolationDist );
 			var interpolationVector:Vector3D = new Vector3D(
-				( playerModel.positionX - testPos.x ) / numSteps,
-				( playerModel.positionY - testPos.y ) / numSteps,
+				( playerModel.position.x - testPos.x ) / numSteps,
+				( playerModel.position.y - testPos.y ) / numSteps,
 				1 / numSteps
 			);
 			
 			if ( numSteps == 1 ) {
-				testPos.x = playerModel.positionX;
-				testPos.y = playerModel.positionY;
-				testPos.z = playerModel.positionZ;
+				testPos.x = playerModel.position.x;
+				testPos.y = playerModel.position.y;
+				testPos.z = playerModel.position.z;
 			}
 			var collider:CollidableVO = new CollidableVO();
 			collider.minX = playerModel.bounds.min.x;
@@ -104,7 +104,7 @@ package com.funrun.controller.commands {
 				if ( segmentIndices.length == 0 ) {
 					// If we're not hitting something, we're airborne.
 					playerModel.isAirborne = true;
-					if ( playerModel.positionY < Track.FALL_DEATH_HEIGHT ) {
+					if ( playerModel.position.y < Track.FALL_DEATH_HEIGHT ) {
 						if ( gameState.gameState == GameState.WAITING_FOR_PLAYERS ) {
 							resetPlayerRequest.dispatch();
 						} else if ( gameState.gameState == GameState.RUNNING ) {
@@ -136,8 +136,8 @@ package com.funrun.controller.commands {
 							event = bounds.block.getEventAtFace( Face.TOP );
 							switch ( event ) {
 								case Collisions.WALK:
-									playerModel.positionY = bounds.y + bounds.maxY + Player.HALF_HEIGHT;
-									playerModel.velocityY = 0;
+									playerModel.position.y = bounds.y + bounds.maxY + Player.HALF_HEIGHT;
+									playerModel.velocity.y = 0;
 									playerModel.isAirborne = false;
 									break;
 							}
@@ -151,7 +151,7 @@ package com.funrun.controller.commands {
 							event = bounds.block.getEventAtFace( Face.FRONT );
 							switch ( event ) {
 								case Collisions.SMACK:
-									playerModel.positionZ = segment.z + bounds.z + bounds.minZ - Player.HALF_WIDTH;
+									playerModel.position.z = segment.z + bounds.z + bounds.minZ - Player.HALF_WIDTH;
 									killPlayerRequest.dispatch( Collisions.SMACK );
 									break;
 							}

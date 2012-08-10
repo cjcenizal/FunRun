@@ -45,7 +45,7 @@ package com.funrun.controller.commands {
 				// Only show nametag if the competitor is in front of the player.
 				nametag = nametagsModel.getWithId( competitor.id.toString() );
 				if ( nametag ) {
-					if ( playerModel.positionZ - competitor.position.z < 300 ) {
+					if ( playerModel.position.z - competitor.position.z < 300 ) {
 						var pos:Point = view3DModel.get2DFrom3D( competitor.mesh.position );
 						nametag.x = pos.x;
 						nametag.y = pos.y;
