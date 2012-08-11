@@ -51,7 +51,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			var initialPos:Vector3D = playerModel.prevPosition.clone();
-			var targetInterpolationDist:Number = 30;
+			var targetInterpolationDist:Number = 100;
 			var numSteps:Number = Math.ceil( playerModel.getDistanceFromPreviousPosition() / targetInterpolationDist );
 			var interpolationVector:Vector3D = new Vector3D(
 				( playerModel.position.x - initialPos.x ) / numSteps,
@@ -77,7 +77,6 @@ package com.funrun.controller.commands {
 			}
 			var segments:Array, blocks:Array, collisions:FaceCollisionsVO;
 			var segmentIndices:Array, blockIndices:Array;
-			trace("step")
 			for ( var n:int = 0; n < numSteps; n++ ) {
 				// Get all the segments we're colliding with.
 				segments = trackModel.getObstacleArray();
@@ -107,7 +106,6 @@ package com.funrun.controller.commands {
 						solveForY( collider, blockIndices, segment );
 						//solveForZ( collider, blockIndices, segment );
 						//solveForX( collider, blockIndices, segment );
-						playerModel.position.y = collider.y;
 						
 						//playerModel.position.x = collider.x;
 						//playerModel.position.z = collider.z;
@@ -154,6 +152,7 @@ package com.funrun.controller.commands {
 					if ( CollisionDetector.collidesWithFace( collider, bounds, Face.TOP ) ) {
 						collider.y = bounds.worldMaxY + Math.abs( collider.minY );
 						playerModel.velocity.y = 0;
+						playerModel.position.y = collider.y;
 						playerModel.isAirborne = false;
 					}
 				}
