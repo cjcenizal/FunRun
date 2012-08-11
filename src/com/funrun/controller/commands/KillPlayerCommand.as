@@ -58,7 +58,6 @@
 						playerModel.velocity.z = Track.HEAD_ON_SMACK_SPEED;
 						break;
 					case Collisions.FALL:
-						trace(this, "Fell to death");
 						break;
 				}
 				// Update server.

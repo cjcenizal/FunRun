@@ -5,15 +5,15 @@ package com.funrun.model.vo
 	public class CollidableVO implements ICollidable
 	{
 		
-		private var _x:Number;
-		private var _y:Number;
-		private var _z:Number;
-		private var _minX:Number;
-		private var _minY:Number;
-		private var _minZ:Number;
-		private var _maxX:Number;
-		private var _maxY:Number;
-		private var _maxZ:Number;
+		protected var _x:Number;
+		protected var _y:Number;
+		protected var _z:Number;
+		protected var _minX:Number;
+		protected var _minY:Number;
+		protected var _minZ:Number;
+		protected var _maxX:Number;
+		protected var _maxY:Number;
+		protected var _maxZ:Number;
 		
 		public function CollidableVO( x:Number = 0, y:Number = 0, z:Number = 0, minX:Number = 0, minY:Number = 0, minZ:Number = 0, maxX:Number = 0, maxY:Number = 0, maxZ:Number = 0 )
 		{
@@ -26,6 +26,10 @@ package com.funrun.model.vo
 			_maxX = maxX;
 			_maxY = maxY;
 			_maxZ = maxZ;
+		}
+		
+		public function toString():String {
+			return "(" + Math.round(worldMinX) + ", " + Math.round(worldMinY) + ", " + Math.round(worldMinZ) + ") - (" + Math.round(worldMaxX) + ", " + Math.round(worldMaxY) + ", " + Math.round(worldMaxZ) + ")";
 		}
 		
 		public function add( collidable:ICollidable ):ICollidable {
@@ -80,6 +84,36 @@ package com.funrun.model.vo
 		public function get maxZ():Number
 		{
 			return _maxZ;
+		}
+		
+		public function get worldMinX():Number
+		{
+			return _x + _minX;
+		}
+		
+		public function get worldMinY():Number
+		{
+			return _y + _minY;
+		}
+		
+		public function get worldMinZ():Number
+		{
+			return _z + _minZ;
+		}
+		
+		public function get worldMaxX():Number
+		{
+			return _x + _maxX;
+		}
+		
+		public function get worldMaxY():Number
+		{
+			return _y + _maxY;
+		}
+		
+		public function get worldMaxZ():Number
+		{
+			return _z + _maxZ;
 		}
 		
 		public function set x( x:Number ):void {

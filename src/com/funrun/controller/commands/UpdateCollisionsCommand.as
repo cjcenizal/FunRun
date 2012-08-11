@@ -73,6 +73,7 @@ package com.funrun.controller.commands {
 			collider.maxZ = playerModel.bounds.max.z;
 			var segments:Array, blocks:Array, collisions:FaceCollisionsVO;
 			var segmentIndices:Array, blockIndices:Array;
+			trace("step");
 			for ( var n:int = 0; n < numSteps; n++ ) {
 				collider.x = testPos.x;
 				collider.y = testPos.y;
@@ -82,25 +83,6 @@ package com.funrun.controller.commands {
 				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
 				var segment:SegmentVO;
 				var bounds:BoundingBoxVO;
-				var escape:Boolean = false;
-				for ( var i:int = 0; i < segmentIndices.length; i++ ) {
-					// Get all the blocks we're colliding with, sorted by collision volume, descending order.
-					segment = trackModel.getObstacleAt( segmentIndices[ i ] );
-					blocks = segment.getBoundingBoxes();
-					blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
-					for ( var j:int = 0; j < blockIndices.length; j++ ) {
-						bounds = segment.getBoundingBoxAt( blockIndices[ j ] );
-						// Get the faces we collide with most, sorted by collision axis, descending order.
-						// For each of those faces, test if there is an event on that face.
-						// If there is, resolve collision and react to event, and terminate the collision resolution.
-						var collidee:BoundingBoxVO = bounds.add( segment ) as BoundingBoxVO;
-						collisions = CollisionDetector.getCollidingFaces( collider, collidee );
-						escape = resolveCollisions( segment, bounds, collisions );
-						// Maybe we just want to escape from the innermost loop?
-						//if ( escape ) break;
-					}
-					//if ( escape ) break;
-				}
 				if ( segmentIndices.length == 0 ) {
 					// If we're not hitting something, we're airborne.
 					playerModel.isAirborne = true;
@@ -111,16 +93,75 @@ package com.funrun.controller.commands {
 							killPlayerRequest.dispatch( Collisions.FALL );
 						}
 					}
+				} else {
+					// We have segments, so find block collisions.
+					for ( var i:int = 0; i < segmentIndices.length; i++ ) {
+						// Get all the blocks we're colliding with, sorted by collision volume, descending order.
+						segment = trackModel.getObstacleAt( segmentIndices[ i ] );
+						blocks = segment.getBoundingBoxes();
+						blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
+						// Stop interpolation, because we've hit something here.
+						if ( blockIndices.length > 0 ) n = numSteps;
+						// Solve for y, z, and then x.
+						solveForY( collider, blockIndices, segment );
+						playerModel.position.y = collider.y;
+						
+						
+						
+						/*
+						for ( var j:int = 0; j < blockIndices.length; j++ ) {
+							bounds = segment.getBoundingBoxAt( blockIndices[ j ] );
+							// Get the faces we collide with most, sorted by collision axis, descending order.
+							// For each of those faces, test if there is an event on that face.
+							// If there is, resolve collision and react to event, and terminate the collision resolution.
+							var collidee:BoundingBoxVO = bounds.add( segment ) as BoundingBoxVO;
+							//trace(j,"block : (",collidee.worldMinX,collidee.worldMinY,collidee.worldMinZ,"), (",collidee.worldMaxX,collidee.worldMaxY,collidee.worldMaxZ,")");
+							//trace("  player",collider.worldMinX,collider.worldMinY,collider.worldMinZ,"), (",collider.worldMaxX,collider.worldMaxY,collider.worldMaxZ,")");
+							collisions = CollisionDetector.getCollidingFaces( collider, collidee );
+							trace(collisions)
+						}*/
+					}
 				}
+				
+				// Continue interpolation.
 				testPos.x += interpolationVector.x;
 				testPos.y += interpolationVector.y;
 				testPos.z += interpolationVector.z;
 			}
 		}
 		
-		private function resolveCollisions( segment:SegmentVO, bounds:BoundingBoxVO, collisions:FaceCollisionsVO ):Boolean {
+		
+		private function solveForY( collider:ICollidable, blockIndices:Array, segment:SegmentVO ):void {
+			var bounds:BoundingBoxVO;
+			if ( playerModel.velocity.y > 0 ) {
+				// If moving down, solve with collision for bottom.
+				for ( var i:int = 0; i < blockIndices.length; i++ ) {
+					if ( CollisionDetector.collidesWithFace( collider, segment.getBoundingBoxAt( i ).add( segment ), Face.BOTTOM ) ) {
+						
+					}
+				}
+			} else {
+				// If moving down, solve with collision for top.
+				trace(" ",blockIndices.length);
+				for ( var i:int = 0; i < blockIndices.length; i++ ) {
+					bounds = segment.getBoundingBoxAt( blockIndices[ i ] ).add( segment ) as BoundingBoxVO;
+					trace("  player:",collider);
+					trace("  bounds:",bounds);
+					if ( CollisionDetector.collidesWithFace( collider, bounds, Face.TOP ) ) {
+						collider.y = bounds.worldMaxY + Math.abs( collider.minY );
+						trace("    walk", collider.y);
+						playerModel.velocity.y = 0;
+						playerModel.isAirborne = false;
+					}
+				}
+			}
+		}
+		
+		private function resolveCollisions( collider:ICollidable, segment:SegmentVO, bounds:BoundingBoxVO, collisions:FaceCollisionsVO ):Boolean {
 			var axis:String;
 			var event:String;
+			trace(collisions)
+			/*
 			for ( var k:int = 0; k < collisions.faces.length; k++ ) {
 				axis = collisions.axes[ k ];
 				switch ( axis ) {
@@ -128,6 +169,7 @@ package com.funrun.controller.commands {
 						if ( collisions.contains( Face.LEFT ) ) {
 							return true;
 						} else if ( collisions.contains( Face.RIGHT ) ) {
+							trace(Math.random(),"right");
 							return true;
 						}
 						break;
@@ -136,7 +178,7 @@ package com.funrun.controller.commands {
 							event = bounds.block.getEventAtFace( Face.TOP );
 							switch ( event ) {
 								case Collisions.WALK:
-									playerModel.position.y = bounds.y + bounds.maxY + Player.HALF_HEIGHT;
+									collider.y = playerModel.position.y = bounds.y + bounds.maxY + Player.HALF_HEIGHT;
 									playerModel.velocity.y = 0;
 									playerModel.isAirborne = false;
 									break;
@@ -151,7 +193,7 @@ package com.funrun.controller.commands {
 							event = bounds.block.getEventAtFace( Face.FRONT );
 							switch ( event ) {
 								case Collisions.SMACK:
-									playerModel.position.z = segment.z + bounds.z + bounds.minZ - Player.HALF_WIDTH;
+									collider.z = playerModel.position.z = segment.z + bounds.z + bounds.minZ - Player.HALF_WIDTH;
 									killPlayerRequest.dispatch( Collisions.SMACK );
 									break;
 							}
@@ -159,7 +201,9 @@ package com.funrun.controller.commands {
 						}
 						break;
 				}
-			}
+			}*/
+			
+			
 			return false;
 			/*
 			var face:String;

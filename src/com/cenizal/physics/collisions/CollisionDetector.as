@@ -6,7 +6,7 @@ package com.cenizal.physics.collisions
 	 * on which faces of an obstacle a player
 	 * has collided with.
 	 * 
-	 * It gives information on the faces
+	 * Reference: http://higherorderfun.com/blog/2012/05/20/the-guide-to-implementing-2d-platformers/
 	 * 
 	 * @author CJ Cenizal
 	 */
@@ -24,12 +24,12 @@ package com.cenizal.physics.collisions
 			var collisions:Array = [];
 			var count:int = collidees.length;
 			var collidee:ICollidable;
-			var minX:Number = collider.x + collider.minX;
-			var minY:Number = collider.y + collider.minY;
-			var minZ:Number = collider.z + collider.minZ;
-			var maxX:Number = collider.x + collider.maxX;
-			var maxY:Number = collider.y + collider.maxY;
-			var maxZ:Number = collider.z + collider.maxZ;
+			var minX:Number = collider.worldMinX;
+			var minY:Number = collider.worldMinY;
+			var minZ:Number = collider.worldMinZ;
+			var maxX:Number = collider.worldMaxX;
+			var maxY:Number = collider.worldMaxY;
+			var maxZ:Number = collider.worldMaxZ;
 			var x:Number, y:Number, z:Number;
 			
 			var fail:Boolean = true;
@@ -56,20 +56,18 @@ package com.cenizal.physics.collisions
 		}
 		
 		private static function output( collider:ICollidable, collidee:ICollidable ):void {
-			var aMinX:Number = collider.x + collider.minX;
-			var aMinY:Number = collider.y + collider.minY;
-			var aMinZ:Number = collider.z + collider.minZ;
-			var aMaxX:Number = collider.x + collider.maxX;
-			var aMaxY:Number = collider.y + collider.maxY;
-			var aMaxZ:Number = collider.z + collider.maxZ;
-			
-			var bMinX:Number = collidee.x + collidee.minX;
-			var bMinY:Number = collidee.y + collidee.minY;
-			var bMinZ:Number = collidee.z + collidee.minZ;
-			var bMaxX:Number = collidee.x + collidee.maxX;
-			var bMaxY:Number = collidee.y + collidee.maxY;
-			var bMaxZ:Number = collidee.z + collidee.maxZ;
-			
+			var aMinX:Number = collider.worldMinX;
+			var aMinY:Number = collider.worldMinY;
+			var aMinZ:Number = collider.worldMinZ;
+			var aMaxX:Number = collider.worldMaxX;
+			var aMaxY:Number = collider.worldMaxY;
+			var aMaxZ:Number = collider.worldMaxZ;
+			var bMinX:Number = collidee.worldMinX;
+			var bMinY:Number = collidee.worldMinY;
+			var bMinZ:Number = collidee.worldMinZ;
+			var bMaxX:Number = collidee.worldMaxX;
+			var bMaxY:Number = collidee.worldMaxY;
+			var bMaxZ:Number = collidee.worldMaxZ;
 			trace("a: min(",aMinX, aMinY, aMinZ, "), max(",aMaxX, aMaxY, aMaxZ,")");
 			trace("b: min(", bMinX, bMinY, bMinZ, "), max(",bMaxX, bMaxY, bMaxZ,")");
 		}
@@ -83,31 +81,30 @@ package com.cenizal.physics.collisions
 		 * 
 		 * @return An array of faces indicating collisions.
 		 */
-		public static function getCollidingFaces( collider:ICollidable, collidee:ICollidable, forced:Boolean = false ):FaceCollisionsVO {
+		public static function getCollidingFaces( collider:ICollidable, collidee:ICollidable ):FaceCollisionsVO {
+			var aMinX:Number = collider.worldMinX;
+			var aMinY:Number = collider.worldMinY;
+			var aMinZ:Number = collider.worldMinZ;
+			var aMaxX:Number = collider.worldMaxX;
+			var aMaxY:Number = collider.worldMaxY;
+			var aMaxZ:Number = collider.worldMaxZ;
 			
-			var aMinX:Number = collider.x + collider.minX;
-			var aMinY:Number = collider.y + collider.minY;
-			var aMinZ:Number = collider.z + collider.minZ;
-			var aMaxX:Number = collider.x + collider.maxX;
-			var aMaxY:Number = collider.y + collider.maxY;
-			var aMaxZ:Number = collider.z + collider.maxZ;
-			
-			var bMinX:Number = collidee.x + collidee.minX;
-			var bMinY:Number = collidee.y + collidee.minY;
-			var bMinZ:Number = collidee.z + collidee.minZ;
-			var bMaxX:Number = collidee.x + collidee.maxX;
-			var bMaxY:Number = collidee.y + collidee.maxY;
-			var bMaxZ:Number = collidee.z + collidee.maxZ;
+			var bMinX:Number = collidee.worldMinX;
+			var bMinY:Number = collidee.worldMinY;
+			var bMinZ:Number = collidee.worldMinZ;
+			var bMaxX:Number = collidee.worldMaxX;
+			var bMaxY:Number = collidee.worldMaxY;
+			var bMaxZ:Number = collidee.worldMaxZ;
 			
 			var faces:Array = [];
-			if ( forced || doTheyIntersect( collider, collidee ) ) {
+			if ( doTheyIntersect( collider, collidee ) ) {
 				if ( aMinX <= bMinX && aMaxX >= bMinX ) {
 					// A is left of B, but A's max overlaps B's min: right.
-					faces.push( Face.RIGHT );
+					faces.push( Face.LEFT );
 				}
 				if ( bMinX <= aMinX && bMaxX >= aMinX ) {
 					// B is left of A, but B's max overlaps A's min: left.
-					faces.push( Face.LEFT );
+					faces.push( Face.RIGHT );
 				}
 				if ( aMinY <= bMinY && aMaxY >= bMinY ) {
 					// A is below B, but A's max overlaps B's min: top.
@@ -119,11 +116,11 @@ package com.cenizal.physics.collisions
 				}
 				if ( aMinZ <= bMinZ && aMaxZ >= bMinZ ) {
 					// A is in front of B, but A's max overlaps B's min: aft.
-					faces.push( Face.BACK );
+					faces.push( Face.FRONT );
 				}
 				if ( bMinZ <= aMinZ && bMaxZ >= aMinZ ) {
 					// B is in front of A, but B's max overlaps A's min: front.
-					faces.push( Face.FRONT );
+					faces.push( Face.BACK );
 				}
 			}
 			// Intersect the two collidables, and get the width, height, and depth of the resulting cube.
@@ -133,20 +130,73 @@ package com.cenizal.physics.collisions
 			return new FaceCollisionsVO( faces, xPenetration, yPenetration, zPenetration );
 		}
 		
+		/**
+		 * Check whether two objects collide on a specific face.
+		 * The face indicates the face of the collidee,
+		 * not the collider.
+		 * 
+		 * @return Boolean.
+		 */
+		public static function collidesWithFace( collider:ICollidable, collidee:ICollidable, face:String, checkIntersection:Boolean = true ):Boolean {
+			if ( checkIntersection && doTheyIntersect( collider, collidee ) ) {
+				var aMin:Number, aMax:Number, bMin:Number, bMax:Number;
+				switch ( face ) {
+					case Face.LEFT:
+						aMin = collider.worldMinX;
+						aMax = collider.worldMaxX;
+						bMin = collidee.worldMinX;
+						bMax = collidee.worldMaxX;
+						break;
+					case Face.RIGHT:
+						aMin = collidee.worldMinX;
+						aMax = collidee.worldMaxX;
+						bMin = collider.worldMinX;
+						bMax = collider.worldMaxX;
+						break;
+					case Face.BOTTOM:
+						aMin = collider.worldMinY;
+						aMax = collider.worldMaxY;
+						bMin = collidee.worldMinY;
+						bMax = collidee.worldMaxY;
+						break;
+					case Face.TOP:
+						aMin = collidee.worldMinY;
+						aMax = collidee.worldMaxY;
+						bMin = collider.worldMinY;
+						bMax = collider.worldMaxY;
+						break;
+					case Face.FRONT:
+						aMin = collider.worldMinZ;
+						aMax = collider.worldMaxZ;
+						bMin = collidee.worldMinZ;
+						bMax = collidee.worldMaxZ;
+						break;
+					case Face.BACK:
+						aMin = collidee.worldMinZ;
+						aMax = collidee.worldMaxZ;
+						bMin = collider.worldMinZ;
+						bMax = collider.worldMaxZ;
+						break;
+				}
+				return ( aMin <= bMin && aMax >= bMin );
+			}
+			return false;
+		}
+		
 		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
-			var aMinX:Number = collider.x + collider.minX;
-			var aMinY:Number = collider.y + collider.minY;
-			var aMinZ:Number = collider.z + collider.minZ;
-			var aMaxX:Number = collider.x + collider.maxX;
-			var aMaxY:Number = collider.y + collider.maxY;
-			var aMaxZ:Number = collider.z + collider.maxZ;
+			var aMinX:Number = collider.worldMinX;
+			var aMinY:Number = collider.worldMinY;
+			var aMinZ:Number = collider.worldMinZ;
+			var aMaxX:Number = collider.worldMaxX;
+			var aMaxY:Number = collider.worldMaxY;
+			var aMaxZ:Number = collider.worldMaxZ;
 			
-			var bMinX:Number = collidee.x + collidee.minX;
-			var bMinY:Number = collidee.y + collidee.minY;
-			var bMinZ:Number = collidee.z + collidee.minZ;
-			var bMaxX:Number = collidee.x + collidee.maxX;
-			var bMaxY:Number = collidee.y + collidee.maxY;
-			var bMaxZ:Number = collidee.z + collidee.maxZ;
+			var bMinX:Number = collidee.worldMinX;
+			var bMinY:Number = collidee.worldMinY;
+			var bMinZ:Number = collidee.worldMinZ;
+			var bMaxX:Number = collidee.worldMaxX;
+			var bMaxY:Number = collidee.worldMaxY;
+			var bMaxZ:Number = collidee.worldMaxZ;
 			
 			if ( aMinX > bMaxX || bMinX > aMaxX ) {
 				return false;
@@ -161,19 +211,19 @@ package com.cenizal.physics.collisions
 		}
 		
 		private static function getIntersectionVolume( collider:ICollidable, collidee:ICollidable ):Number {
-			var aMinX:Number = collider.x + collider.minX;
-			var aMinY:Number = collider.y + collider.minY;
-			var aMinZ:Number = collider.z + collider.minZ;
-			var aMaxX:Number = collider.x + collider.maxX;
-			var aMaxY:Number = collider.y + collider.maxY;
-			var aMaxZ:Number = collider.z + collider.maxZ;
+			var aMinX:Number = collider.worldMinX;
+			var aMinY:Number = collider.worldMinY;
+			var aMinZ:Number = collider.worldMinZ;
+			var aMaxX:Number = collider.worldMaxX;
+			var aMaxY:Number = collider.worldMaxY;
+			var aMaxZ:Number = collider.worldMaxZ;
 			
-			var bMinX:Number = collidee.x + collidee.minX;
-			var bMinY:Number = collidee.y + collidee.minY;
-			var bMinZ:Number = collidee.z + collidee.minZ;
-			var bMaxX:Number = collidee.x + collidee.maxX;
-			var bMaxY:Number = collidee.y + collidee.maxY;
-			var bMaxZ:Number = collidee.z + collidee.maxZ;
+			var bMinX:Number = collidee.worldMinX;
+			var bMinY:Number = collidee.worldMinY;
+			var bMinZ:Number = collidee.worldMinZ;
+			var bMaxX:Number = collidee.worldMaxX;
+			var bMaxY:Number = collidee.worldMaxY;
+			var bMaxZ:Number = collidee.worldMaxZ;
 			
 			if ( aMinX > bMaxX || bMinX > aMaxX ) {
 				return 0;

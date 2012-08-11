@@ -116,6 +116,36 @@ package com.funrun.model.vo {
 			return _maxZ;
 		}
 		
+		public function get worldMinX():Number
+		{
+			return x + _minX;
+		}
+		
+		public function get worldMinY():Number
+		{
+			return y + _minY;
+		}
+		
+		public function get worldMinZ():Number
+		{
+			return z + _minZ;
+		}
+		
+		public function get worldMaxX():Number
+		{
+			return x + _maxX;
+		}
+		
+		public function get worldMaxY():Number
+		{
+			return y + _maxY;
+		}
+		
+		public function get worldMaxZ():Number
+		{
+			return z + _maxZ;
+		}
+		
 		public function set x( x:Number ):void {
 			( useBoundsMesh ) ? _boundsMesh.x = x : _mesh.x = x;
 		}

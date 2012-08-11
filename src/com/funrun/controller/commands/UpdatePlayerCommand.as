@@ -103,6 +103,11 @@ package com.funrun.controller.commands
 			// Update gravity.
 			playerModel.velocity.y += Player.GRAVITY;
 			playerModel.position.y += playerModel.velocity.y;
+			/*
+			if ( playerModel.position.y < Player.HALF_HEIGHT + 20 ) {
+				playerModel.position.y = Player.HALF_HEIGHT + 20;
+				playerModel.velocity.y = 0;
+			}*/
 			
 		}
 	}

@@ -14,6 +14,12 @@ package com.cenizal.physics.collisions
 		function get maxX():Number;
 		function get maxY():Number;
 		function get maxZ():Number;
+		function get worldMinX():Number;
+		function get worldMinY():Number;
+		function get worldMinZ():Number;
+		function get worldMaxX():Number;
+		function get worldMaxY():Number;
+		function get worldMaxZ():Number;
 		function add( collidable:ICollidable ):ICollidable;
 	}
 }
