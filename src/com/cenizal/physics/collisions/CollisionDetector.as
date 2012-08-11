@@ -22,30 +22,18 @@ package com.cenizal.physics.collisions
 		 */
 		public static function getCollidingIndices( collider:ICollidable, collidees:Array, collideeOffset:ICollidable = null ):Array {
 			var collisions:Array = [];
-			var count:int = collidees.length;
 			var collidee:ICollidable;
-			var minX:Number = collider.worldMinX;
-			var minY:Number = collider.worldMinY;
-			var minZ:Number = collider.worldMinZ;
-			var maxX:Number = collider.worldMaxX;
-			var maxY:Number = collider.worldMaxY;
-			var maxZ:Number = collider.worldMaxZ;
-			var x:Number, y:Number, z:Number;
-			
-			var fail:Boolean = true;
-			
+			var count:int = collidees.length;
 			for ( var i:int = 0; i < count; i++ ) {
 				collidee = collidees[ i ];
 				if ( collideeOffset ) {
 					collidee = collidee.add( collideeOffset );
 				}
-				x = collidee.x;
-				y = collidee.y;
-				z = collidee.z;
-				// Optimize by checking against obstacle bounds first.
-				var volume:Number = getIntersectionVolume( collider, collidee );
-				if ( volume > 0 ) {
-					collisions.push( { "index": i, "volume" : volume } );
+				if ( doTheyIntersect( collider, collidee ) ) {
+					var volume:Number = getIntersectionVolume( collider, collidee );
+					if ( volume > 0 ) {
+						collisions.push( { "index": i, "volume" : volume } );
+					}
 				}
 			}
 			collisions.sortOn( "volume", Array.NUMERIC | Array.DESCENDING );
@@ -53,6 +41,165 @@ package com.cenizal.physics.collisions
 				collisions[ i ] = collisions[ i ][ "index" ];
 			}
 			return collisions;
+		}
+		
+		/**
+		 * Get the faces we've collided with.
+		 * The face indicates the face of the collidee,
+		 * not the collider. Faces are sorted in order
+		 * of increasingly deeper penetration.
+		 * 
+		 * @return An array of faces indicating collisions.
+		 */
+		public static function getCollidingFaces( collider:ICollidable, collidee:ICollidable ):FaceCollisionsVO {
+			// Get faces.
+			var faces:Array = [];
+			var amounts:Array = [];
+			// Use intersection distances to order faces by shallowness.
+			var xPenetration:Number = getFaceIntersection( collider, collidee, Axis.X );
+			var yPenetration:Number = getFaceIntersection( collider, collidee, Axis.Y );
+			var zPenetration:Number = getFaceIntersection( collider, collidee, Axis.Z );
+			
+			if ( Math.abs( xPenetration ) > 0) {
+				faces.push( {
+					"face" : ( xPenetration > 0 ) ? Face.LEFT : Face.RIGHT,
+					"amount" : Math.abs( xPenetration )
+				} );
+			}
+			if ( Math.abs( yPenetration ) > 0 ) {
+				faces.push( {
+					"face" : ( yPenetration > 0 ) ? Face.TOP : Face.BOTTOM,
+					"amount" : Math.abs( yPenetration )
+				} );
+			}
+			if ( Math.abs( zPenetration ) > 0 ) {
+				faces.push( {
+					"face" : ( zPenetration > 0 ) ? Face.FRONT : Face.BACK,
+					"amount" : Math.abs( zPenetration )
+				} );
+			}
+			faces.sortOn( "amount", Array.NUMERIC );
+			for ( var i:int = 0; i < faces.length; i++ ) {
+				amounts.push( faces[ i ][ "amount" ] );
+				faces[ i ] = faces[ i ][ "face" ];
+			}
+			return new FaceCollisionsVO( faces, amounts );
+		}
+		
+		/**
+		 * Get the distance and sign by which two objects intersect.
+		 * This is the value relative to the collidee, not the collider.
+		 * A larger magnitude value (e.g. Math.abs([returned value]))
+		 * indicates the absolute intersection distance. This can be
+		 * used to determine if certain intersections are deeper or
+		 * shallow than others.
+		 * 
+		 * A positive returned value indicates that the collidee is
+		 * positioned lower/less than the collider, while negative
+		 * indicates the opposite.
+		 * 
+		 * Be sure to check if objects are even intersecting before
+		 * getting intersection distance.
+		 * 
+		 * @return Boolean.
+		 */
+		private static function getFaceIntersection( collider:ICollidable, collidee:ICollidable, axis:String ):Number {
+			var aMin:Number = ( axis == Axis.X ) ? collider.worldMinX : ( axis == Axis.Y ) ? collider.worldMinY : collider.worldMinZ;
+			var aMax:Number = ( axis == Axis.X ) ? collider.worldMaxX : ( axis == Axis.Y ) ? collider.worldMaxY : collider.worldMaxZ;
+			var bMin:Number = ( axis == Axis.X ) ? collidee.worldMinX : ( axis == Axis.Y ) ? collidee.worldMinY : collidee.worldMinZ;
+			var bMax:Number = ( axis == Axis.X ) ? collidee.worldMaxX : ( axis == Axis.Y ) ? collidee.worldMaxY : collidee.worldMaxZ;
+			var smallMin:Number, smallMax:Number, bigMin:Number, bigMax:Number;
+			if ( ( aMax - aMin ) <= ( bMax - bMin ) ) {
+				smallMin = aMin;
+				smallMax = aMax;
+				bigMin = bMin;
+				bigMax = bMax;
+			} else {
+				smallMin = bMin;
+				smallMax = bMax;
+				bigMin = aMin;
+				bigMax = aMax;
+			}
+			// Small is contained inside big.
+			if ( bigMin <= smallMin && bigMax >= smallMax ) {
+				if ( bigMax - smallMax > smallMin - bigMin ) {
+					// It's near the greater end.
+					return bigMax - smallMax;
+				} else {
+					// It's near the lesser end.
+					return bigMin - smallMin;
+				}
+			}
+			// Small intersects the lesser end of big.
+			if ( smallMin < bigMin && smallMax > bigMin ) {
+				return smallMax - bigMin;
+			}
+			// Small intersects the greater end of big.
+			if ( smallMin < bigMax && smallMax > bigMax ) {
+				return smallMin - bigMax;
+			}
+			// They intersect exactly on one another.
+			return 0;
+		}
+		
+		private static function getPenetration( collider:ICollidable, collidee:ICollidable, axis:String ):Number {
+			var aMin:Number = ( axis == Axis.X ) ? collider.worldMinX : ( axis == Axis.Y ) ? collider.worldMinY : collider.worldMinZ;
+			var aMax:Number = ( axis == Axis.X ) ? collider.worldMaxX : ( axis == Axis.Y ) ? collider.worldMaxY : collider.worldMaxZ;
+			var bMin:Number = ( axis == Axis.X ) ? collidee.worldMinX : ( axis == Axis.Y ) ? collidee.worldMinY : collidee.worldMinZ;
+			var bMax:Number = ( axis == Axis.X ) ? collidee.worldMaxX : ( axis == Axis.Y ) ? collidee.worldMaxY : collidee.worldMaxZ;
+			var smallMin:Number, smallMax:Number, bigMin:Number, bigMax:Number;
+			if ( ( aMax - aMin ) <= ( bMax - bMin ) ) {
+				smallMin = aMin;
+				smallMax = aMax;
+				bigMin = bMin;
+				bigMax = bMax;
+			} else {
+				smallMin = bMin;
+				smallMax = bMax;
+				bigMin = aMin;
+				bigMax = aMax;
+			}
+			// They don't intersect.
+			if ( smallMax < bigMin || smallMin > bigMax ) {
+				return 0;
+			}
+			// It's contained inside.
+			if ( smallMin < bigMin && smallMax > bigMax ) {
+				return smallMax - smallMin;
+			}
+			// It intersects the small end.
+			if ( smallMin < bigMin && smallMax > bigMin ) {
+				return smallMax - bigMin;
+			}
+			// It intersects the big end.
+			if ( smallMin < bigMax && smallMax > bigMax ) {
+				return bigMax - smallMin;
+			}
+			// They intersect exactly on one another.
+			return smallMax - smallMin;
+		}
+		
+		public static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
+			if ( collider.worldMinX >= collidee.worldMaxX || collidee.worldMinX >= collider.worldMaxX ) {
+				return false;
+			}
+			if ( collider.worldMinY >= collidee.worldMaxY || collidee.worldMinY >= collider.worldMaxY ) {
+				return false;
+			}
+			if ( collider.worldMinZ >= collidee.worldMaxZ || collidee.worldMinZ >= collider.worldMaxZ ) {
+				return false;
+			}
+			return true;
+		}
+		
+		private static function getIntersectionVolume( collider:ICollidable, collidee:ICollidable ):Number {		
+			if ( doTheyIntersect( collider, collidee ) ) {
+				var xPenetration:Number = getPenetration( collider, collidee, Axis.X );
+				var yPenetration:Number = getPenetration( collider, collidee, Axis.Y );
+				var zPenetration:Number = getPenetration( collider, collidee, Axis.Z );
+				return xPenetration * yPenetration * zPenetration;
+			}
+			return 0;
 		}
 		
 		private static function output( collider:ICollidable, collidee:ICollidable ):void {
@@ -70,174 +217,6 @@ package com.cenizal.physics.collisions
 			var bMaxZ:Number = collidee.worldMaxZ;
 			trace("a: min(",aMinX, aMinY, aMinZ, "), max(",aMaxX, aMaxY, aMaxZ,")");
 			trace("b: min(", bMinX, bMinY, bMinZ, "), max(",bMaxX, bMaxY, bMaxZ,")");
-		}
-		
-		/**
-		 * Get the faces we've collided with.
-		 * Pass in the obstacle's arguments first:
-		 * a is the obstacle, and b is the player.
-		 * The face indicates the face of the collidee,
-		 * not the collider.
-		 * 
-		 * @return An array of faces indicating collisions.
-		 */
-		public static function getCollidingFaces( collider:ICollidable, collidee:ICollidable ):FaceCollisionsVO {
-			var aMinX:Number = collider.worldMinX;
-			var aMinY:Number = collider.worldMinY;
-			var aMinZ:Number = collider.worldMinZ;
-			var aMaxX:Number = collider.worldMaxX;
-			var aMaxY:Number = collider.worldMaxY;
-			var aMaxZ:Number = collider.worldMaxZ;
-			
-			var bMinX:Number = collidee.worldMinX;
-			var bMinY:Number = collidee.worldMinY;
-			var bMinZ:Number = collidee.worldMinZ;
-			var bMaxX:Number = collidee.worldMaxX;
-			var bMaxY:Number = collidee.worldMaxY;
-			var bMaxZ:Number = collidee.worldMaxZ;
-			
-			var faces:Array = [];
-			if ( doTheyIntersect( collider, collidee ) ) {
-				if ( aMinX <= bMinX && aMaxX >= bMinX ) {
-					// A is left of B, but A's max overlaps B's min: right.
-					faces.push( Face.LEFT );
-				}
-				if ( bMinX <= aMinX && bMaxX >= aMinX ) {
-					// B is left of A, but B's max overlaps A's min: left.
-					faces.push( Face.RIGHT );
-				}
-				if ( aMinY <= bMinY && aMaxY >= bMinY ) {
-					// A is below B, but A's max overlaps B's min: top.
-					faces.push( Face.BOTTOM );
-				}
-				if ( bMinY <= aMinY && bMaxY >= aMinY ) {
-					// B is below A, but B's max overlaps A's min: bottom.
-					faces.push( Face.TOP );
-				}
-				if ( aMinZ <= bMinZ && aMaxZ >= bMinZ ) {
-					// A is in front of B, but A's max overlaps B's min: aft.
-					faces.push( Face.FRONT );
-				}
-				if ( bMinZ <= aMinZ && bMaxZ >= aMinZ ) {
-					// B is in front of A, but B's max overlaps A's min: front.
-					faces.push( Face.BACK );
-				}
-			}
-			// Intersect the two collidables, and get the width, height, and depth of the resulting cube.
-			var xPenetration:Number = getIntersectionDistance( aMinX, aMaxX, bMinX, bMaxX );
-			var yPenetration:Number = getIntersectionDistance( aMinY, aMaxY, bMinY, bMaxY );
-			var zPenetration:Number = getIntersectionDistance( aMinZ, aMaxZ, bMinZ, bMaxZ );
-			return new FaceCollisionsVO( faces, xPenetration, yPenetration, zPenetration );
-		}
-		
-		/**
-		 * Check whether two objects collide on a specific face.
-		 * The face indicates the face of the collidee,
-		 * not the collider.
-		 * 
-		 * @return Boolean.
-		 */
-		public static function collidesWithFace( collider:ICollidable, collidee:ICollidable, face:String, checkIntersection:Boolean = true ):Boolean {
-			if ( checkIntersection && doTheyIntersect( collider, collidee ) ) {
-				var min:Number, max:Number, test:Number;
-				switch ( face ) {
-					case Face.LEFT:
-						min = collider.worldMinX;
-						max = collider.worldMaxX;
-						test = collidee.worldMinX;
-						break;
-					case Face.RIGHT:
-						min = collider.worldMinX;
-						max = collider.worldMaxX;
-						test = collidee.worldMaxX;
-						break;
-					case Face.BOTTOM:
-						min = collider.worldMinY;
-						max = collider.worldMaxY;
-						test = collidee.worldMinY;
-						break;
-					case Face.TOP:
-						min = collider.worldMinY;
-						max = collider.worldMaxY;
-						test = collidee.worldMaxY;
-						break;
-					case Face.FRONT:
-						min = collider.worldMinZ;
-						max = collider.worldMaxZ;
-						test = collidee.worldMinZ;
-						break;
-					case Face.BACK:
-						min = collider.worldMinZ;
-						max = collider.worldMaxZ;
-						test = collidee.worldMaxZ;
-						break;
-				}
-				return ( min <= test && max >= test );
-			}
-			return false;
-		}
-		
-		public static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
-			var aMinX:Number = collider.worldMinX;
-			var aMinY:Number = collider.worldMinY;
-			var aMinZ:Number = collider.worldMinZ;
-			var aMaxX:Number = collider.worldMaxX;
-			var aMaxY:Number = collider.worldMaxY;
-			var aMaxZ:Number = collider.worldMaxZ;
-			
-			var bMinX:Number = collidee.worldMinX;
-			var bMinY:Number = collidee.worldMinY;
-			var bMinZ:Number = collidee.worldMinZ;
-			var bMaxX:Number = collidee.worldMaxX;
-			var bMaxY:Number = collidee.worldMaxY;
-			var bMaxZ:Number = collidee.worldMaxZ;
-			
-			if ( aMinX > bMaxX || bMinX > aMaxX ) {
-				return false;
-			}
-			if ( aMinY > bMaxY || bMinY > aMaxY ) {
-				return false;
-			}
-			if ( aMinZ > bMaxZ || bMinZ > aMaxZ ) {
-				return false;
-			}
-			return true;
-		}
-		
-		private static function getIntersectionVolume( collider:ICollidable, collidee:ICollidable ):Number {
-			var aMinX:Number = collider.worldMinX;
-			var aMinY:Number = collider.worldMinY;
-			var aMinZ:Number = collider.worldMinZ;
-			var aMaxX:Number = collider.worldMaxX;
-			var aMaxY:Number = collider.worldMaxY;
-			var aMaxZ:Number = collider.worldMaxZ;
-			
-			var bMinX:Number = collidee.worldMinX;
-			var bMinY:Number = collidee.worldMinY;
-			var bMinZ:Number = collidee.worldMinZ;
-			var bMaxX:Number = collidee.worldMaxX;
-			var bMaxY:Number = collidee.worldMaxY;
-			var bMaxZ:Number = collidee.worldMaxZ;
-			
-			if ( aMinX > bMaxX || bMinX > aMaxX ) {
-				return 0;
-			}
-			if ( aMinY > bMaxY || bMinY > aMaxY ) {
-				return 0;
-			}
-			if ( aMinZ > bMaxZ || bMinZ > aMaxZ ) {
-				return 0;
-			}
-			
-			var xPenetration:Number = Math.max( 0, getIntersectionDistance( aMinX, aMaxX, bMinX, bMaxX ) );
-			var yPenetration:Number = Math.max( 0, getIntersectionDistance( aMinY, aMaxY, bMinY, bMaxY ) );
-			var zPenetration:Number = Math.max( 0, getIntersectionDistance( aMinZ, aMaxZ, bMinZ, bMaxZ ) );
-			
-			return xPenetration * yPenetration * zPenetration;
-		}
-		
-		private static function getIntersectionDistance( aMin:Number, aMax:Number, bMin:Number, bMax:Number ):Number {
-			return ( aMax < bMax ) ? ( aMax - bMin ) : ( bMax - aMin );
 		}
 		
 	}

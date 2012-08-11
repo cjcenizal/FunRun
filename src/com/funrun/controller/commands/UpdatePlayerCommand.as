@@ -104,8 +104,8 @@ package com.funrun.controller.commands
 			playerModel.velocity.y += Player.GRAVITY;
 			playerModel.position.y += playerModel.velocity.y;
 			/*
-			if ( playerModel.position.y < Player.HALF_HEIGHT + 20 ) {
-				playerModel.position.y = Player.HALF_HEIGHT + 20;
+			if ( playerModel.position.y < 50 ) {
+				playerModel.position.y = 50;
 				playerModel.velocity.y = 0;
 			}*/
 			
