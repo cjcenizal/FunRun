@@ -3,11 +3,12 @@ package com.funrun.controller.commands
 	import com.funrun.model.KeysModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Player;
+	import com.funrun.model.state.ExplorationState;
 	import com.funrun.model.state.GameState;
 	
-	import org.robotlegs.mvcs.Command;
-	
 	import flash.ui.Keyboard;
+	
+	import org.robotlegs.mvcs.Command;
 	
 	public class UpdatePlayerCommand extends Command
 	{
@@ -16,6 +17,9 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var gameState:GameState;
+		
+		[Inject]
+		public var explorationState:ExplorationState;
 		
 		// Models.
 		
@@ -41,26 +45,36 @@ package com.funrun.controller.commands
 					playerModel.velocity.x += Player.LATERAL_SPEED;
 				}
 				
-				// Update y velocity.
-				if ( keysModel.isDown( Keyboard.SPACE ) || keysModel.isDown( Keyboard.UP ) ) {
-					
-					trace(playerModel.isAirborne)
-					//if ( !playerModel.isAirborne ) {
-						trace("jump");
-						playerModel.velocity.y += Player.JUMP_SPEED;
-						playerModel.isAirborne = true;
-					//}
+				// Explore.
+				if ( explorationState.isFree ) {
+					if ( keysModel.isDown( Keyboard.UP ) ) {
+						playerModel.velocity.z += 10;
+					}
+					if ( keysModel.isDown( Keyboard.DOWN ) ) {
+						playerModel.velocity.z -= 10;
+					}	
+					playerModel.velocity.z *= .9;
 				}
 				
-				// Update z velocity.
-				if ( gameState.gameState == GameState.RUNNING ) {
-					// Update speed when you're alive.
-					if ( Math.abs( playerModel.velocity.x ) > 0 ) {
-						if ( playerModel.velocity.z > Player.SLOWED_DIAGONAL_SPEED ) {
-							playerModel.velocity.z--;
+				// Move forward according to game logic.
+				if ( !explorationState.isFree ) {
+					if ( gameState.gameState == GameState.RUNNING ) {
+						// Update speed when you're alive.
+						if ( Math.abs( playerModel.velocity.x ) > 0 ) {
+							if ( playerModel.velocity.z > Player.SLOWED_DIAGONAL_SPEED ) {
+								playerModel.velocity.z--;
+							}
+						} else if ( playerModel.velocity.z < Player.MAX_FORWARD_VELOCITY ) {
+							playerModel.velocity.z += Player.FOWARD_ACCELERATION;
 						}
-					} else if ( playerModel.velocity.z < Player.MAX_FORWARD_VELOCITY ) {
-						playerModel.velocity.z += Player.FOWARD_ACCELERATION;
+					}
+				}
+				
+				// Jumping.
+				if ( keysModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keysModel.isDown( Keyboard.UP ) ) ) {
+					if ( !playerModel.isAirborne ) {
+						playerModel.velocity.y += Player.JUMP_SPEED;
+						playerModel.isAirborne = true;
 					}
 				}
 				
@@ -87,13 +101,8 @@ package com.funrun.controller.commands
 			playerModel.position.z += playerModel.velocity.z;
 			
 			// Update gravity.
-			trace(playerModel.velocity.y);
 			playerModel.velocity.y += Player.GRAVITY;
 			playerModel.position.y += playerModel.velocity.y;
-			if ( playerModel.position.y < 0 ) {
-				playerModel.position.y = 0;
-				playerModel.velocity.y = 0;
-			}
 			
 		}
 	}

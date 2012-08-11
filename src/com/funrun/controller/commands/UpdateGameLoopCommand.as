@@ -118,7 +118,7 @@ package com.funrun.controller.commands {
 				updatePlayerRequest.dispatch();
 				
 				// Detect collisions.
-				//updateCollisionsRequest.dispatch();
+				updateCollisionsRequest.dispatch();
 			}
 			
 			// Update camera before updating competitors.

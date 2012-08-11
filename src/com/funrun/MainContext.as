@@ -6,6 +6,10 @@ package com.funrun {
 		- Nice UI with comfy pressable buttons.
 		- Economy
 		- Foody red/yellow/white color scheme
+		- Use models and animation
+		- Collectibles
+		- Sound
+		- Away3D gold
 	*/
 	
 	import com.funrun.controller.commands.AddAiCompetitorsCommand;
@@ -151,6 +155,7 @@ package com.funrun {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.state.GameState;
+	import com.funrun.model.state.ExplorationState;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.state.ShowBoundsState;
@@ -204,12 +209,14 @@ package com.funrun {
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
+			var explorationState:ExplorationState	= new ExplorationState( true );
 			var gameState:GameState = new GameState();
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
 			injector.mapValue( ProductionState, productionState );
 			injector.mapValue( ShowBoundsState, showBoundsState );
+			injector.mapValue( ExplorationState, explorationState );
 			injector.mapValue( GameState, gameState );
 			
 			// Apply whitelist switch.
