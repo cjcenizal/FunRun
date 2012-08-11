@@ -1,17 +1,5 @@
 package com.funrun {
 
-	/*
-		TO-DO:
-		- Full-screen, or fluid 100% window size.
-		- Nice UI with comfy pressable buttons.
-		- Economy
-		- Foody red/yellow/white color scheme
-		- Use models and animation
-		- Collectibles
-		- Sound
-		- Away3D gold
-	*/
-	
 	import com.funrun.controller.commands.AddAiCompetitorsCommand;
 	import com.funrun.controller.commands.AddCompetitorCommand;
 	import com.funrun.controller.commands.AddDelayedCommandCommand;

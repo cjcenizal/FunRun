@@ -139,51 +139,45 @@ package com.cenizal.physics.collisions
 		 */
 		public static function collidesWithFace( collider:ICollidable, collidee:ICollidable, face:String, checkIntersection:Boolean = true ):Boolean {
 			if ( checkIntersection && doTheyIntersect( collider, collidee ) ) {
-				var aMin:Number, aMax:Number, bMin:Number, bMax:Number;
+				var min:Number, max:Number, test:Number;
 				switch ( face ) {
 					case Face.LEFT:
-						aMin = collider.worldMinX;
-						aMax = collider.worldMaxX;
-						bMin = collidee.worldMinX;
-						bMax = collidee.worldMaxX;
+						min = collider.worldMinX;
+						max = collider.worldMaxX;
+						test = collidee.worldMinX;
 						break;
 					case Face.RIGHT:
-						aMin = collidee.worldMinX;
-						aMax = collidee.worldMaxX;
-						bMin = collider.worldMinX;
-						bMax = collider.worldMaxX;
+						min = collider.worldMinX;
+						max = collider.worldMaxX;
+						test = collidee.worldMaxX;
 						break;
 					case Face.BOTTOM:
-						aMin = collider.worldMinY;
-						aMax = collider.worldMaxY;
-						bMin = collidee.worldMinY;
-						bMax = collidee.worldMaxY;
+						min = collider.worldMinY;
+						max = collider.worldMaxY;
+						test = collidee.worldMinY;
 						break;
 					case Face.TOP:
-						aMin = collidee.worldMinY;
-						aMax = collidee.worldMaxY;
-						bMin = collider.worldMinY;
-						bMax = collider.worldMaxY;
+						min = collider.worldMinY;
+						max = collider.worldMaxY;
+						test = collidee.worldMaxY;
 						break;
 					case Face.FRONT:
-						aMin = collider.worldMinZ;
-						aMax = collider.worldMaxZ;
-						bMin = collidee.worldMinZ;
-						bMax = collidee.worldMaxZ;
+						min = collider.worldMinZ;
+						max = collider.worldMaxZ;
+						test = collidee.worldMinZ;
 						break;
 					case Face.BACK:
-						aMin = collidee.worldMinZ;
-						aMax = collidee.worldMaxZ;
-						bMin = collider.worldMinZ;
-						bMax = collider.worldMaxZ;
+						min = collider.worldMinZ;
+						max = collider.worldMaxZ;
+						test = collidee.worldMaxZ;
 						break;
 				}
-				return ( aMin <= bMin && aMax >= bMin );
+				return ( min <= test && max >= test );
 			}
 			return false;
 		}
 		
-		private static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
+		public static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
 			var aMinX:Number = collider.worldMinX;
 			var aMinY:Number = collider.worldMinY;
 			var aMinZ:Number = collider.worldMinZ;

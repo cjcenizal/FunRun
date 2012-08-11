@@ -50,20 +50,15 @@ package com.funrun.controller.commands {
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		override public function execute():void {
-			var testPos:Vector3D = playerModel.getPreviousPositionClone();
-			var targetInterpolationDist:Number = Block.SIZE;
+			var initialPos:Vector3D = playerModel.prevPosition.clone();
+			var targetInterpolationDist:Number = 30;
 			var numSteps:Number = Math.ceil( playerModel.getDistanceFromPreviousPosition() / targetInterpolationDist );
 			var interpolationVector:Vector3D = new Vector3D(
-				( playerModel.position.x - testPos.x ) / numSteps,
-				( playerModel.position.y - testPos.y ) / numSteps,
+				( playerModel.position.x - initialPos.x ) / numSteps,
+				( playerModel.position.y - initialPos.y ) / numSteps,
 				1 / numSteps
 			);
 			
-			if ( numSteps == 1 ) {
-				testPos.x = playerModel.position.x;
-				testPos.y = playerModel.position.y;
-				testPos.z = playerModel.position.z;
-			}
 			var collider:CollidableVO = new CollidableVO();
 			collider.minX = playerModel.bounds.min.x;
 			collider.minY = playerModel.bounds.min.y;
@@ -71,13 +66,19 @@ package com.funrun.controller.commands {
 			collider.maxX = playerModel.bounds.max.x;
 			collider.maxY = playerModel.bounds.max.y;
 			collider.maxZ = playerModel.bounds.max.z;
+			if ( numSteps == 1 ) {
+				collider.x = playerModel.position.x;
+				collider.y = playerModel.position.y;
+				collider.z = playerModel.position.z;
+			} else {
+				collider.x = playerModel.prevPosition.x;
+				collider.y = playerModel.prevPosition.y;
+				collider.z = playerModel.prevPosition.z;
+			}
 			var segments:Array, blocks:Array, collisions:FaceCollisionsVO;
 			var segmentIndices:Array, blockIndices:Array;
-			trace("step");
+			trace("step")
 			for ( var n:int = 0; n < numSteps; n++ ) {
-				collider.x = testPos.x;
-				collider.y = testPos.y;
-				collider.z = testPos.z;
 				// Get all the segments we're colliding with.
 				segments = trackModel.getObstacleArray();
 				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
@@ -104,7 +105,12 @@ package com.funrun.controller.commands {
 						if ( blockIndices.length > 0 ) n = numSteps;
 						// Solve for y, z, and then x.
 						solveForY( collider, blockIndices, segment );
+						//solveForZ( collider, blockIndices, segment );
+						//solveForX( collider, blockIndices, segment );
 						playerModel.position.y = collider.y;
+						
+						//playerModel.position.x = collider.x;
+						//playerModel.position.z = collider.z;
 						
 						
 						
@@ -124,9 +130,9 @@ package com.funrun.controller.commands {
 				}
 				
 				// Continue interpolation.
-				testPos.x += interpolationVector.x;
-				testPos.y += interpolationVector.y;
-				testPos.z += interpolationVector.z;
+				collider.x += interpolationVector.x;
+				collider.y += interpolationVector.y;
+				collider.z += interpolationVector.z;
 			}
 		}
 		
@@ -136,22 +142,39 @@ package com.funrun.controller.commands {
 			if ( playerModel.velocity.y > 0 ) {
 				// If moving down, solve with collision for bottom.
 				for ( var i:int = 0; i < blockIndices.length; i++ ) {
-					if ( CollisionDetector.collidesWithFace( collider, segment.getBoundingBoxAt( i ).add( segment ), Face.BOTTOM ) ) {
+					bounds = segment.getBoundingBoxAt( blockIndices[ i ] ).add( segment ) as BoundingBoxVO;
+					if ( CollisionDetector.collidesWithFace( collider, bounds, Face.BOTTOM ) ) {
 						
 					}
 				}
 			} else {
 				// If moving down, solve with collision for top.
-				trace(" ",blockIndices.length);
 				for ( var i:int = 0; i < blockIndices.length; i++ ) {
 					bounds = segment.getBoundingBoxAt( blockIndices[ i ] ).add( segment ) as BoundingBoxVO;
-					trace("  player:",collider);
-					trace("  bounds:",bounds);
 					if ( CollisionDetector.collidesWithFace( collider, bounds, Face.TOP ) ) {
 						collider.y = bounds.worldMaxY + Math.abs( collider.minY );
-						trace("    walk", collider.y);
 						playerModel.velocity.y = 0;
 						playerModel.isAirborne = false;
+					}
+				}
+			}
+		}
+		
+		private function solveForZ( collider:ICollidable, blockIndices:Array, segment:SegmentVO ):void {
+			var bounds:BoundingBoxVO;
+			if ( playerModel.velocity.z > 0 ) {
+				// If moving forward, solve with collision for front.
+				for ( var i:int = 0; i < blockIndices.length; i++ ) {
+					bounds = segment.getBoundingBoxAt( blockIndices[ i ] ).add( segment ) as BoundingBoxVO;
+					if ( CollisionDetector.collidesWithFace( collider, bounds, Face.FRONT ) ) {
+					}
+				}
+			} else {
+				// If moving down, solve with collision for back.
+				for ( var i:int = 0; i < blockIndices.length; i++ ) {
+					bounds = segment.getBoundingBoxAt( blockIndices[ i ] ).add( segment ) as BoundingBoxVO;
+					if ( CollisionDetector.collidesWithFace( collider, bounds, Face.BACK ) ) {
+						
 					}
 				}
 			}

@@ -25,7 +25,7 @@ package com.funrun.model {
 		
 		// Physical state.
 		public var position:Vector3D;
-		private var _prevPosition:Vector3D;
+		public var prevPosition:Vector3D;
 		public var velocity:Vector3D;
 		private var _place:int = 0;
 		public var isDucking:Boolean = false;
@@ -37,7 +37,7 @@ package com.funrun.model {
 			_properties = {};
 			velocity = new Vector3D();
 			position = new Vector3D();
-			_prevPosition = new Vector3D();
+			prevPosition = new Vector3D();
 			resetInGameId();
 		}
 		
@@ -45,21 +45,17 @@ package com.funrun.model {
 			_inGameId = -1;
 		}
 		
-		public function getPreviousPositionClone():Vector3D {
-			return _prevPosition.clone();
-		}
-		
 		public function getDistanceFromPreviousPosition():Number {
-			return position.subtract( _prevPosition ).length;
+			return position.subtract( prevPosition ).length;
 		}
 		
 		public function updateMeshPosition():void {
 			_mesh.x = position.x;
 			_mesh.y = position.y;
 			_mesh.z = position.z;
-			_prevPosition.x = position.x;
-			_prevPosition.y = position.y;
-			_prevPosition.z = position.z;
+			prevPosition.x = position.x;
+			prevPosition.y = position.y;
+			prevPosition.z = position.z;
 		}
 		
 		public function getMeshPosition():Vector3D {

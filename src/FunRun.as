@@ -20,6 +20,22 @@ package {
 	 */
 	public class FunRun extends Sprite {
 		
+		
+		/*
+		TO-DO:
+		- Full-screen, or fluid 100% window size.
+		- Nice UI with comfy pressable buttons.
+		- Economy
+		- Foody red/yellow/white color scheme
+		- Use models and animation
+		- Collectibles
+		- Sound
+		- Away3D gold
+		- 2 hitboxes: normal and ducking
+		- Make sure hitboxes are SMALLER than the model
+		*/
+		
+		
 		private var _mainContext:MainContext;
 		private var _mainView:MainView;
 		
