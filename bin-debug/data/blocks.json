@@ -10,17 +10,6 @@
         }
       },
     {
-      "id" : "001",
-      "filename" : "001_brick_block.obj",
-      "faces" : {
-          "t" : "walk",
-          "b" : "hit",
-          "l" : "hit",
-          "r" : "hit",
-          "f" : "smack"
-        }
-      },
-    {
       "id" : "000",
       "filename" : "001_brick_block.obj",
       "faces" : {
@@ -32,14 +21,17 @@
         }
       },
     {
+      "id" : "001",
+      "filename" : "001_brick_block.obj",
+      "faces" : {
+          "t" : "walk"
+        }
+      },
+    {
       "id" : "002",
       "filename" : "002_warning_block.obj",
       "faces" : {
-          "t" : "walk",
-          "b" : "hit",
-          "l" : "hit",
-          "r" : "hit",
-          "f" : "smack"
+          "t" : "jump"
         }
       }
   ]

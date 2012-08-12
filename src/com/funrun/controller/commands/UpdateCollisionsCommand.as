@@ -8,6 +8,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Collisions;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.state.GameState;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
@@ -110,6 +111,12 @@ package com.funrun.controller.commands {
 													if ( event == Collisions.WALK ) {
 														collider.y = bounds.worldMaxY + Math.abs( collider.minY );
 														playerModel.velocity.y = 0;
+														playerModel.position.y = collider.y;
+														playerModel.isOnTheGround = true;
+														break CollisionLoop;
+													} else if ( event == Collisions.JUMP ) {
+														collider.y = bounds.worldMaxY + Math.abs( collider.minY );
+														playerModel.velocity.y = Player.LAUNCH_SPEED;
 														playerModel.position.y = collider.y;
 														playerModel.isOnTheGround = true;
 														break CollisionLoop;
