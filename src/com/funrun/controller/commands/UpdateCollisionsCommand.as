@@ -1,20 +1,14 @@
 package com.funrun.controller.commands {
 	
-	import com.cenizal.physics.collisions.Axis;
 	import com.cenizal.physics.collisions.CollisionDetector;
 	import com.cenizal.physics.collisions.Face;
 	import com.cenizal.physics.collisions.FaceCollisionsVO;
-	import com.cenizal.physics.collisions.ICollidable;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Collisions;
-	import com.funrun.model.constants.Player;
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.GameState;
-	import com.funrun.model.vo.BlockVO;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
@@ -77,74 +71,64 @@ package com.funrun.controller.commands {
 			}
 			var segments:Array, blocks:Array, collisions:FaceCollisionsVO;
 			var segmentIndices:Array, blockIndices:Array;
-			trace("-- numSteps:",numSteps);
-			if ( numSteps > 1 ) trace(" ====================================================================================================" );
 			for ( var n:int = 0; n < numSteps; n++ ) {
-				// Get all the segments we're colliding with.
-				segments = trackModel.getObstacleArray();
-				segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
+				var count:int = 0;
+				var limit:int = 4;
 				var segment:SegmentVO;
 				var bounds:BoundingBoxVO;
-				if ( segmentIndices.length == 0 ) {
-					// If we're not hitting something, we're airborne.
-					playerModel.isAirborne = true;
-					if ( playerModel.position.y < Track.FALL_DEATH_HEIGHT ) {
-						if ( gameState.gameState == GameState.WAITING_FOR_PLAYERS ) {
-							resetPlayerRequest.dispatch();
-						} else if ( gameState.gameState == GameState.RUNNING ) {
-							killPlayerRequest.dispatch( Collisions.FALL );
-						}
-					}
-				} else {
-					// We have segments, so find block collisions.
-					for ( var i:int = 0; i < segmentIndices.length; i++ ) {
-						// Get all the blocks we're colliding with, sorted by collision volume, descending order.
-						segment = trackModel.getObstacleAt( segmentIndices[ i ] );
+				segments = trackModel.getObstacleArray();
+				while ( count < limit ) {
+					segmentIndices = CollisionDetector.getCollidingIndices( collider, segments );
+					if ( segmentIndices.length == 0 ) {
+						count = limit;
+					} else {
+						segment = trackModel.getObstacleAt( segmentIndices[ 0 ] );
 						blocks = segment.getBoundingBoxes();
 						blockIndices = CollisionDetector.getCollidingIndices( collider, blocks, segment );
-						// Stop interpolation, because we've hit something here.
-						if ( blockIndices.length > 0 ) n = numSteps;
-						
-						// For each block, for each face, solve the collision.
 						var event:String;
-						for ( var j:int = 0; j < blockIndices.length; j++ ) {
-							bounds = segment.getBoundingBoxAt( blockIndices[ j ] ).add( segment ) as BoundingBoxVO;
-							collisions = CollisionDetector.getCollidingFaces( collider, bounds );
+						bounds = segment.getBoundingBoxAt( blockIndices[ 0 ] ).add( segment ) as BoundingBoxVO;
+						collisions = CollisionDetector.getCollidingFaces( collider, bounds );
+						if ( collisions.count == 0 ) {
+							count = limit;
+						} else {
+							n = numSteps; // We don't need to keep interpolating for collisions.
 							if ( CollisionDetector.doTheyIntersect( collider, bounds ) ) {
 								// Only react to shallowest collision.
-								var face:String = collisions.getAt( 0 );
-								switch ( face ) {
-									case Face.TOP:
-										if ( playerModel.velocity.y <= 0 ) {
-											event = bounds.block.getEventAtFace( face );
-											if ( event == Collisions.WALK ) {
-												collider.y = bounds.worldMaxY + Math.abs( collider.minY );
-												playerModel.velocity.y = 0;
-												playerModel.position.y = collider.y;
-												playerModel.isAirborne = false;
-												break;
+								CollisionLoop: for ( var k:int = 0; k < collisions.count; k++ ) {
+									var face:String = collisions.getAt( k );
+									switch ( face ) {
+										case Face.TOP:
+											if ( playerModel.velocity.y <= 0 ) {
+												event = bounds.block.getEventAtFace( face );
+												if ( event == Collisions.WALK ) {
+													collider.y = bounds.worldMaxY + Math.abs( collider.minY );
+													playerModel.velocity.y = 0;
+													playerModel.position.y = collider.y;
+													playerModel.isAirborne = false;
+													break CollisionLoop;
+												}
 											}
-										}
-									case Face.BOTTOM:
-										if ( playerModel.velocity.y > 0 ) {
-											break;
-										}
-									case Face.FRONT:
-										if ( playerModel.velocity.z > 0 ) {
-											event = bounds.block.getEventAtFace( face );
-											if ( event == Collisions.SMACK ) {
-												collider.z = bounds.worldMinZ + collider.minY;
-												playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
-												playerModel.position.z = collider.z;
-												break;
+										case Face.BOTTOM:
+											if ( playerModel.velocity.y > 0 ) {
+												//break;
 											}
-										}
+										case Face.FRONT:
+											if ( playerModel.velocity.z > 0 ) {
+												event = bounds.block.getEventAtFace( face );
+												if ( event == Collisions.SMACK ) {
+													collider.z = bounds.worldMinZ + collider.minY;
+													playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
+													playerModel.position.z = collider.z;
+													break CollisionLoop;
+												}
+											}
+									}
 								}
 							}
+							count++;
 						}
 					}
 				}
-				
 				// Continue interpolation.
 				collider.x += interpolationVector.x;
 				collider.y += interpolationVector.y;

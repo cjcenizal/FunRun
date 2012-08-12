@@ -7,6 +7,7 @@ package com.cenizal.physics.collisions
 	 * has collided with.
 	 * 
 	 * Reference: http://higherorderfun.com/blog/2012/05/20/the-guide-to-implementing-2d-platformers/
+	 * Reference: http://stackoverflow.com/questions/6673822/collision-reaction-in-a-2d-side-scroller-game-similar-to-mario
 	 * 
 	 * @author CJ Cenizal
 	 */

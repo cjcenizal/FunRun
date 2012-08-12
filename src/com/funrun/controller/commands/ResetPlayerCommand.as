@@ -19,7 +19,7 @@ package com.funrun.controller.commands {
 	//		playerModel.isJumping = false;
 	//		playerModel.cancelMovement();
 			playerModel.velocity.z = playerModel.velocity.x = 0;
-			playerModel.velocity.y = 50;
+			playerModel.velocity.y = 100;
 			var width:Number = Track.WIDTH * .8;
 			playerModel.position.x = Math.random() * width;
 			playerModel.position.y = 300;
