@@ -79,17 +79,15 @@ package com.funrun.controller.commands
 				}
 				
 				// Apply ducking state.
-				if ( playerModel.isDucking ) {
+				if ( keysModel.isDown( Keyboard.DOWN ) ) {
+					playerModel.isDucking = true;
 					if ( playerModel.scaleY != .25 ) {
 						playerModel.scaleY = .25;
-						playerModel.bounds.min.y *= .25;
-						playerModel.bounds.max.y *= .25;
 					}
 				} else {
+					playerModel.isDucking = false;
 					if ( playerModel.scaleY != 1 ) {
 						playerModel.scaleY = 1;
-						playerModel.bounds.min.y /= .25;
-						playerModel.bounds.max.y /= .25;
 					}
 				}
 			}

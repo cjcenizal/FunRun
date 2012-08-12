@@ -6,6 +6,7 @@ package com.funrun.model {
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Stats;
+	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.IPlaceable;
 	
 	import flash.geom.Vector3D;
@@ -14,7 +15,7 @@ package com.funrun.model {
 
 	public class PlayerModel extends Actor implements IPlaceable {
 		
-		// Player geometry.
+		// Mesh.
 		private var _mesh:Mesh;
 		
 		// Player properties.
@@ -22,15 +23,21 @@ package com.funrun.model {
 		public var name:String;
 		private var _inGameId:int;
 		private var _properties:Object;
+		private var _place:int = 0;
 		
-		// Physical state.
+		// Physics.
 		public var position:Vector3D;
 		public var prevPosition:Vector3D;
 		public var velocity:Vector3D;
-		private var _place:int = 0;
+		
+		// Physical state.
 		public var isDucking:Boolean = false;
 		public var isOnTheGround:Boolean = true;
 		public var isDead:Boolean = false;
+		
+		// Bounds.
+		public var normalBounds:CollidableVO;
+		public var duckingBounds:CollidableVO;
 
 		public function PlayerModel() {
 			super();
@@ -38,6 +45,8 @@ package com.funrun.model {
 			velocity = new Vector3D();
 			position = new Vector3D();
 			prevPosition = new Vector3D();
+			normalBounds = new CollidableVO();
+			duckingBounds = new CollidableVO();
 			resetInGameId();
 		}
 		
@@ -84,10 +93,6 @@ package com.funrun.model {
 		
 		public function set mesh( m:Mesh ):void {
 			_mesh = m;
-		}
-		
-		public function get bounds():BoundingVolumeBase {
-			return _mesh.bounds;
 		}
 		
 		public function get scaleY():Number {

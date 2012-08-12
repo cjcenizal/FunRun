@@ -23,16 +23,19 @@ package {
 		
 		/*
 		TO-DO:
-		- Full-screen, or fluid 100% window size.
-		- Nice UI with comfy pressable buttons.
-		- Economy
-		- Foody red/yellow/white color scheme
-		- Use models and animation
-		- Collectibles
-		- Sound
-		- Away3D gold
+		- Fix bug where I am able to jump through stairs
+			- Especially in ducking state
 		- 2 hitboxes: normal and ducking
 		- Make sure hitboxes are SMALLER than the model
+		- Away3D gold
+		- Economy
+		- Collectibles (food?)
+		- Use models and animation (players are food? Food Run?)
+		- Nice UI with comfy pressable buttons.
+		- Foody red/yellow/white color scheme
+		- Sound fx
+		- Music
+		- Full-screen, or fluid 100% window size.
 		*/
 		
 		

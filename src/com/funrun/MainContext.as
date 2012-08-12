@@ -8,7 +8,6 @@ package com.funrun {
 	import com.funrun.controller.commands.AddObjectToSceneCommand;
 	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
-	import com.funrun.controller.commands.AddPlayerCommand;
 	import com.funrun.controller.commands.AddSegmentCommand;
 	import com.funrun.controller.commands.CompleteAppCommand;
 	import com.funrun.controller.commands.CullSegmentsCommand;
@@ -64,7 +63,6 @@ package com.funrun {
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
-	import com.funrun.controller.signals.AddPlayerRequest;
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
@@ -142,8 +140,8 @@ package com.funrun {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.ExplorationState;
+	import com.funrun.model.state.GameState;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.state.ShowBoundsState;
@@ -197,7 +195,7 @@ package com.funrun {
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
-			var explorationState:ExplorationState	= new ExplorationState( true );
+			var explorationState:ExplorationState	= new ExplorationState( false );
 			var gameState:GameState = new GameState();
 			
 			// Map switches.
@@ -269,7 +267,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddSegmentRequest,						AddSegmentCommand );
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
-			signalCommandMap.mapSignalClass( AddPlayerRequest,						AddPlayerCommand );
 			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );
 			signalCommandMap.mapSignalClass( CullSegmentsRequest,					CullSegmentsCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );

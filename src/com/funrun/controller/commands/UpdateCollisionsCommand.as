@@ -55,12 +55,7 @@ package com.funrun.controller.commands {
 			);
 			
 			var collider:CollidableVO = new CollidableVO();
-			collider.minX = playerModel.bounds.min.x;
-			collider.minY = playerModel.bounds.min.y;
-			collider.minZ = playerModel.bounds.min.z;
-			collider.maxX = playerModel.bounds.max.x;
-			collider.maxY = playerModel.bounds.max.y;
-			collider.maxZ = playerModel.bounds.max.z;
+			collider.copyFrom( ( playerModel.isDucking ) ? playerModel.duckingBounds : playerModel.normalBounds );
 			if ( numSteps == 1 ) {
 				collider.x = playerModel.position.x;
 				collider.y = playerModel.position.y;

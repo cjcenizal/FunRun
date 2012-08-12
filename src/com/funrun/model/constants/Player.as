@@ -1,5 +1,7 @@
 package com.funrun.model.constants
 {
+	import flash.geom.Vector3D;
+
 	public class Player
 	{
 		// Player movement constants.
@@ -16,6 +18,10 @@ package com.funrun.model.constants
 		public static const WIDTH:Number = 100;
 		public static const HALF_WIDTH:Number = WIDTH * .5;
 		public static const HALF_HEIGHT:Number = HEIGHT * .5 - 5;
+		
+		// Bounds.
+		public static const NORMAL_BOUNDS:Vector3D = new Vector3D( 100, 180, 60 );
+		public static const DUCKING_BOUNDS:Vector3D = new Vector3D( 100, 80, 60 );
 		
 	}
 }

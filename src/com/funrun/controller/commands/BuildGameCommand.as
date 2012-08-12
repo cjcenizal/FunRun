@@ -3,31 +3,33 @@ package com.funrun.controller.commands {
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.View3D;
+	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.lightpickers.StaticLightPicker;
-	import away3d.materials.methods.FilteredShadowMapMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
-	import away3d.materials.methods.HardShadowMapMethod;
 	import away3d.materials.methods.SoftShadowMapMethod;
-	import away3d.materials.methods.TripleFilteredShadowMapMethod;
+	import away3d.primitives.CubeGeometry;
 	
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
-	import com.funrun.controller.signals.AddPlayerRequest;
+	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.Camera;
 	import com.funrun.model.constants.Materials;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Time;
 	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
+
 	
 	public class BuildGameCommand extends Command {
 		
@@ -53,6 +55,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var pointsModel:PointsModel;
 		
+		[Inject]
+		public var playerModel:PlayerModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -62,13 +67,14 @@ package com.funrun.controller.commands {
 		public var addLightRequest:AddLightRequest;
 		
 		[Inject]
-		public var addPlayerRequest:AddPlayerRequest;
-		
-		[Inject]
 		public var addView3DRequest:AddView3DRequest;
 		
 		[Inject]
 		public var showStatsRequest:ShowStatsRequest;
+		
+		[Inject]
+		public var addPlaceableRequest:AddPlaceableRequest;
+		
 		
 		override public function execute():void {
 			// Show stats if we're in development.
@@ -160,7 +166,23 @@ package com.funrun.controller.commands {
 			addObjectToSceneRequest.dispatch( spotlight );
 			
 			// Add player to track.
-			addPlayerRequest.dispatch();
+			addPlaceableRequest.dispatch( playerModel );
+			var geometry:CubeGeometry = new CubeGeometry( Player.WIDTH, Player.HEIGHT, Player.WIDTH );
+			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
+			playerModel.mesh = player;
+			playerModel.normalBounds.minX = Player.NORMAL_BOUNDS.x * -.5;
+			playerModel.normalBounds.minY = Player.NORMAL_BOUNDS.y * -.5;
+			playerModel.normalBounds.minZ = Player.NORMAL_BOUNDS.z * -.5;
+			playerModel.normalBounds.maxX = Player.NORMAL_BOUNDS.x * .5;
+			playerModel.normalBounds.maxY = Player.NORMAL_BOUNDS.y * .5;
+			playerModel.normalBounds.maxZ = Player.NORMAL_BOUNDS.z * .5;
+			playerModel.duckingBounds.minX = Player.DUCKING_BOUNDS.x * -.5;
+			playerModel.duckingBounds.minY = Player.DUCKING_BOUNDS.y * -.5;
+			playerModel.duckingBounds.minZ = Player.DUCKING_BOUNDS.z * -.5;
+			playerModel.duckingBounds.maxX = Player.DUCKING_BOUNDS.x * .5;
+			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
+			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
+			addObjectToSceneRequest.dispatch( player );
 		
 		}
 	}

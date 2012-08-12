@@ -2,6 +2,7 @@
   "doc" : "These are the obstacles constrcuted from models.",
   "author" : "CJ Cenizal",
   "list" : [
-      "stairs.json"
+      "stairs.json",
+      "test.json"
     ]
 }

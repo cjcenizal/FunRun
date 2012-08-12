@@ -41,6 +41,18 @@ package com.funrun.model.vo
 				_maxX, _maxY, maxZ );
 		}
 		
+		public function copyFrom( collidable:ICollidable ):void {
+			_x = collidable.x;
+			_y = collidable.y;
+			_z = collidable.z;
+			_minX = collidable.minX;
+			_minY = collidable.minY;
+			_minZ = collidable.minZ;
+			_maxX = collidable.maxX;
+			_maxY = collidable.maxY;
+			_maxZ = collidable.maxZ;
+		}
+		
 		public function get x():Number
 		{
 			return _x;
