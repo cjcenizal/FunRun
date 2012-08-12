@@ -8,7 +8,6 @@ package com.cenizal.physics.collisions
 		public static const RIGHT:String = "right";
 		public static const FRONT:String = "front";
 		public static const BACK:String = "back"; // a is for ass... or aft.
-		public static const ALL:String = "all";
 		
 	}
 }
