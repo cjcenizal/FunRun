@@ -96,10 +96,10 @@ package com.funrun.controller.commands {
 								// Only react to shallowest collision.
 								CollisionLoop: for ( var k:int = 0; k < collisions.count; k++ ) {
 									var face:String = collisions.getAt( k );
+									event = bounds.block.getEventAtFace( face );
 									switch ( face ) {
 										case Face.TOP:
 											if ( playerModel.velocity.y <= 0 ) {
-												event = bounds.block.getEventAtFace( face );
 												if ( event == Collisions.WALK ) {
 													collider.y = bounds.worldMaxY + Math.abs( collider.minY );
 													playerModel.velocity.y = 0;
@@ -109,16 +109,33 @@ package com.funrun.controller.commands {
 												}
 											}
 										case Face.BOTTOM:
-											if ( playerModel.velocity.y > 0 ) {
+											if ( playerModel.velocity.y >= 0 ) {
 												//break;
 											}
 										case Face.FRONT:
-											if ( playerModel.velocity.z > 0 ) {
-												event = bounds.block.getEventAtFace( face );
+											if ( playerModel.velocity.z >= 0 ) {
 												if ( event == Collisions.SMACK ) {
 													collider.z = bounds.worldMinZ + collider.minY;
 													playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
 													playerModel.position.z = collider.z;
+													break CollisionLoop;
+												}
+											}
+										case Face.LEFT:
+											if ( playerModel.velocity.x >= 0 ) {
+												if ( event == Collisions.HIT ) {
+													collider.x = bounds.worldMinX + collider.minX;
+													playerModel.velocity.x = 0;
+													playerModel.position.x = collider.x;
+													break CollisionLoop;
+												}
+											}
+										case Face.RIGHT:
+											if ( playerModel.velocity.x <= 0 ) {
+												if ( event == Collisions.HIT ) {
+													collider.x = bounds.worldMaxX + Math.abs( collider.minX );
+													playerModel.velocity.x = 0;
+													playerModel.position.x = collider.x;
 													break CollisionLoop;
 												}
 											}
