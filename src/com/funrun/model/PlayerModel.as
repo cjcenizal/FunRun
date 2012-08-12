@@ -29,7 +29,7 @@ package com.funrun.model {
 		public var velocity:Vector3D;
 		private var _place:int = 0;
 		public var isDucking:Boolean = false;
-		public var isAirborne:Boolean = false;
+		public var isOnTheGround:Boolean = true;
 		public var isDead:Boolean = false;
 
 		public function PlayerModel() {

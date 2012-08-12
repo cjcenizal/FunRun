@@ -72,9 +72,9 @@ package com.funrun.controller.commands
 				
 				// Jumping.
 				if ( keysModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keysModel.isDown( Keyboard.UP ) ) ) {
-					if ( !playerModel.isAirborne ) {
+					if ( playerModel.isOnTheGround ) {
 						playerModel.velocity.y += Player.JUMP_SPEED;
-						playerModel.isAirborne = true;
+						playerModel.isOnTheGround = false;
 					}
 				}
 				
@@ -103,12 +103,6 @@ package com.funrun.controller.commands
 			// Update gravity.
 			playerModel.velocity.y += Player.GRAVITY;
 			playerModel.position.y += playerModel.velocity.y;
-			/*
-			if ( playerModel.position.y < 50 ) {
-				playerModel.position.y = 50;
-				playerModel.velocity.y = 0;
-			}*/
-			
 		}
 	}
 }

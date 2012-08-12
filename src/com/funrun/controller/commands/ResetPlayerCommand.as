@@ -14,7 +14,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			playerModel.isDead = false;
-			playerModel.isAirborne = true;
+			playerModel.isOnTheGround = false;
 			playerModel.isDucking = false;
 	//		playerModel.isJumping = false;
 	//		playerModel.cancelMovement();

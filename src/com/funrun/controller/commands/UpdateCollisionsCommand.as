@@ -91,59 +91,67 @@ package com.funrun.controller.commands {
 						if ( collisions.count == 0 ) {
 							count = limit;
 						} else {
-							n = numSteps; // We don't need to keep interpolating for collisions.
-							if ( CollisionDetector.doTheyIntersect( collider, bounds ) ) {
-								// Only react to shallowest collision.
-								CollisionLoop: for ( var k:int = 0; k < collisions.count; k++ ) {
-									var face:String = collisions.getAt( k );
-									event = bounds.block.getEventAtFace( face );
-									switch ( face ) {
-										case Face.TOP:
-											if ( playerModel.velocity.y <= 0 ) {
-												if ( event == Collisions.WALK ) {
-													collider.y = bounds.worldMaxY + Math.abs( collider.minY );
-													playerModel.velocity.y = 0;
-													playerModel.position.y = collider.y;
-													playerModel.isAirborne = false;
-													break CollisionLoop;
+							if ( bounds.block.id == "floor" ) {
+								// Just cheat floor collisions since we're falling through it randomly so often.
+								collider.y = bounds.worldMaxY + Math.abs( collider.minY );
+								playerModel.velocity.y = 0;
+								playerModel.position.y = collider.y;
+								playerModel.isOnTheGround = true;
+							} else {
+								n = numSteps; // We don't need to keep interpolating for collisions.
+								if ( CollisionDetector.doTheyIntersect( collider, bounds ) ) {
+									// Only react to shallowest collision.
+									CollisionLoop: for ( var k:int = 0; k < collisions.count; k++ ) {
+										var face:String = collisions.getAt( k );
+										event = bounds.block.getEventAtFace( face );
+										switch ( face ) {
+											case Face.TOP:
+												if ( playerModel.velocity.y <= 0 ) {
+													if ( event == Collisions.WALK ) {
+														collider.y = bounds.worldMaxY + Math.abs( collider.minY );
+														playerModel.velocity.y = 0;
+														playerModel.position.y = collider.y;
+														playerModel.isOnTheGround = true;
+														break CollisionLoop;
+													}
 												}
-											}
-										case Face.BOTTOM:
-											if ( playerModel.velocity.y >= 0 ) {
-												if ( event == Collisions.HIT ) {
-													collider.y = bounds.worldMinY + collider.minY;
-													playerModel.velocity.y = 0;
-													playerModel.position.y = collider.y;
-													break CollisionLoop;
+											case Face.BOTTOM:
+												if ( playerModel.velocity.y >= 0 ) {
+													if ( event == Collisions.HIT ) {
+														collider.y = bounds.worldMinY + collider.minY;
+														playerModel.velocity.y = 0;
+														playerModel.position.y = collider.y;
+														break CollisionLoop;
+													}
 												}
-											}
-										case Face.FRONT:
-											if ( playerModel.velocity.z >= 0 ) {
-												if ( event == Collisions.SMACK ) {
-													collider.z = bounds.worldMinZ + collider.minY;
-													playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
-													playerModel.position.z = collider.z;
-													break CollisionLoop;
+											case Face.FRONT:
+												if ( playerModel.velocity.z >= 0 ) {
+													if ( event == Collisions.SMACK ) {
+														collider.z = bounds.worldMinZ + collider.minY;
+														playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
+														playerModel.position.z = collider.z;
+														break CollisionLoop;
+													}
 												}
-											}
-										case Face.LEFT:
-											if ( playerModel.velocity.x >= 0 ) {
-												if ( event == Collisions.HIT ) {
-													collider.x = bounds.worldMinX + collider.minX;
-													playerModel.velocity.x = 0;
-													playerModel.position.x = collider.x;
-													break CollisionLoop;
+											case Face.LEFT:
+												if ( playerModel.velocity.x >= 0 ) {
+													if ( event == Collisions.HIT ) {
+														collider.x = bounds.worldMinX + collider.minX;
+														playerModel.velocity.x = 0;
+														playerModel.position.x = collider.x;
+														break CollisionLoop;
+													}
 												}
-											}
-										case Face.RIGHT:
-											if ( playerModel.velocity.x <= 0 ) {
-												if ( event == Collisions.HIT ) {
-													collider.x = bounds.worldMaxX + Math.abs( collider.minX );
-													playerModel.velocity.x = 0;
-													playerModel.position.x = collider.x;
-													break CollisionLoop;
+											case Face.RIGHT:
+												if ( playerModel.velocity.x <= 0 ) {
+													if ( event == Collisions.HIT ) {
+														collider.x = bounds.worldMaxX + Math.abs( collider.minX );
+														playerModel.velocity.x = 0;
+														playerModel.position.x = collider.x;
+														break CollisionLoop;
+													}
 												}
-											}
+										}
 									}
 								}
 							}

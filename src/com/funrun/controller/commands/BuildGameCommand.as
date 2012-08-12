@@ -114,7 +114,7 @@ package com.funrun.controller.commands {
 			
 			
 			// Add lights.
-			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -1 );
+			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -.5 );
 			sunlight.ambient = .05; // Higher = "brighter"
 			sunlight.diffuse = .1; // Higher = "brighter"
 			sunlight.z = 2000;
