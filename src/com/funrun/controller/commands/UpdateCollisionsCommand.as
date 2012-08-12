@@ -110,7 +110,12 @@ package com.funrun.controller.commands {
 											}
 										case Face.BOTTOM:
 											if ( playerModel.velocity.y >= 0 ) {
-												//break;
+												if ( event == Collisions.HIT ) {
+													collider.y = bounds.worldMinY + collider.minY;
+													playerModel.velocity.y = 0;
+													playerModel.position.y = collider.y;
+													break CollisionLoop;
+												}
 											}
 										case Face.FRONT:
 											if ( playerModel.velocity.z >= 0 ) {
