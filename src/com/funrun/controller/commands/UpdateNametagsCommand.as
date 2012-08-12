@@ -46,7 +46,7 @@ package com.funrun.controller.commands {
 				nametag = nametagsModel.getWithId( competitor.id.toString() );
 				if ( nametag ) {
 					if ( playerModel.position.z - competitor.position.z < 300 ) {
-						var pos:Point = view3DModel.get2DFrom3D( competitor.mesh.position );
+						var pos:Point = view3DModel.project( competitor.mesh.position );
 						nametag.x = pos.x;
 						nametag.y = pos.y;
 					} else {

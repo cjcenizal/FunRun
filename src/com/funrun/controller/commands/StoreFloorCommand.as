@@ -8,11 +8,11 @@ package com.funrun.controller.commands
 	
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.SegmentsModel;
-	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.constants.Block;
-	import com.funrun.model.constants.Segment;
 	import com.funrun.model.constants.Materials;
+	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
+	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.SegmentVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -34,7 +34,7 @@ package com.funrun.controller.commands
 		public var showBoundsState:ShowBoundsState;
 		
 		override public function execute():void {
-			var floorMesh:Mesh = new Mesh();
+			var floorMesh:Mesh = new Mesh( new Geometry() );
 			var merge:Merge = new Merge( true );
 			var boundingBoxes:Array = [];
 			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "floor" ).mesh;
@@ -69,7 +69,7 @@ package com.funrun.controller.commands
 			// Add a bounds indicator.
 			var boundsMesh:Mesh = null;
 			if ( showBoundsState.showBounds ) {
-				boundsMesh = new Mesh();
+				boundsMesh = new Mesh( new Geometry() );
 				var blockGeo:Geometry = new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE );
 				var len:int = boundingBoxes.length;
 				var box:BoundingBoxVO;

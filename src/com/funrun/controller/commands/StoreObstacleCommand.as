@@ -48,7 +48,7 @@ package com.funrun.controller.commands
 			var blockData:ObstacleBlockVO;
 			var block:BlockVO;
 			var blockMesh:Mesh;
-			var obstacleMesh:Mesh = new Mesh();
+			var obstacleMesh:Mesh = new Mesh( new Geometry() );
 			var merge:Merge = new Merge( true );
 			var boundingBoxes:Array = [];
 			
@@ -118,7 +118,7 @@ package com.funrun.controller.commands
 			// Add a bounds indicator.
 			var boundsMesh:Mesh = null;
 			if ( showBoundsState.showBounds ) {
-				boundsMesh = new Mesh();
+				boundsMesh = new Mesh( new Geometry() );
 				var blockGeo:Geometry = new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE );
 				var len:int = boundingBoxes.length;
 				var box:BoundingBoxVO;

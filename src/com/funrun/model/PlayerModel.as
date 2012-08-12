@@ -67,10 +67,6 @@ package com.funrun.model {
 			prevPosition.z = position.z;
 		}
 		
-		public function getMeshPosition():Vector3D {
-			return _mesh.position;
-		}
-		
 		public function get distance():Number {
 			return position.z;
 		}
@@ -91,8 +87,8 @@ package com.funrun.model {
 			return _place;
 		}
 		
-		public function set mesh( m:Mesh ):void {
-			_mesh = m;
+		public function set mesh( mesh:Mesh ):void {
+			_mesh = mesh;
 		}
 		
 		public function get scaleY():Number {
