@@ -5,51 +5,32 @@ package com.funrun.model.vo {
 	
 	import com.cenizal.physics.collisions.ICollidable;
 
-	public class SegmentVO implements ICollidable{
+	public class SegmentVO extends CollidableVO implements ICollidable {
 		
 		public static var useBoundsMesh:Boolean = false;
 		
-		private var _id:String;
 		private var _mesh:Mesh;
 		private var _boundsMesh:Mesh;
 		private var _boundingBoxes:Array;
 		private var _numBoundingBoxes:int;
-		private var _z:Number = 0;
-		private var _minX:Number;
-		private var _minY:Number;
-		private var _minZ:Number;
-		private var _maxX:Number;
-		private var _maxY:Number;
-		private var _maxZ:Number;
 
-		public function SegmentVO( id:String, mesh:Mesh, boundsMesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
-			_id = id;
+		public function SegmentVO( mesh:Mesh, boundsMesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+			super( 0, 0, 0, minX, minY, minZ, maxX, maxY, maxZ );
 			_mesh = mesh;
 			_boundsMesh = boundsMesh;
 			_boundingBoxes = boundingBoxes;
 			_numBoundingBoxes = ( _boundingBoxes ) ? _boundingBoxes.length : 0;
-			_minX = minX;
-			_minY = minY;
-			_minZ = minZ;
-			_maxX = maxX;
-			_maxY = maxY;
-			_maxZ = maxZ;
 		}
 		
-		public function add( collidable:ICollidable ):ICollidable {
+		override public function add( collidable:ICollidable ):ICollidable {
 			return new SegmentVO(
-				_id, _mesh, _boundsMesh, _boundingBoxes,
+				_mesh, _boundsMesh, _boundingBoxes,
 				_minX, _minY, minZ,
 				_maxX, _maxY, maxZ );
 		}
 		
-		
 		public function clone():SegmentVO {
-			return new SegmentVO( _id, _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
-		}
-		
-		public function get id():String {
-			return _id;
+			return new SegmentVO( _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
 		}
 		
 		/**
@@ -75,87 +56,26 @@ package com.funrun.model.vo {
 		public function getBoundingBoxAt( index:int ):BoundingBoxVO {
 			return _boundingBoxes[ index ];
 		}
-
-		public function get x():Number {
-			return ( useBoundsMesh ) ? _boundsMesh.x : _mesh.x;
+		
+		override public function set x( val:Number ):void {
+			super.x = val;
+			_mesh.x = val;
+			if ( _boundsMesh ) {
+				_boundsMesh.x = val;
+			}
 		}
 		
-		public function get y():Number {
-			return ( useBoundsMesh ) ? _boundsMesh.y : _mesh.y;
+		override public function set y( val:Number ):void {
+			super.y = val;
+			_mesh.y = val;
+			if ( _boundsMesh ) {
+				_boundsMesh.y = val;
+			}
 		}
 		
-		public function get z():Number {
-			return ( useBoundsMesh ) ? _boundsMesh.z : _z;
-		}
-		
-		public function get bounds():BoundingVolumeBase {
-			return _mesh.bounds;
-		}
-		
-		public function get minX():Number {
-			return _minX;
-		}
-		
-		public function get minY():Number {
-			return _minY;
-		}
-		
-		public function get minZ():Number {
-			return _minZ;
-		}
-		
-		public function get maxX():Number {
-			return _maxX;
-		}
-		
-		public function get maxY():Number {
-			return _maxY;
-		}
-		
-		public function get maxZ():Number {
-			return _maxZ;
-		}
-		
-		public function get worldMinX():Number
-		{
-			return x + _minX;
-		}
-		
-		public function get worldMinY():Number
-		{
-			return y + _minY;
-		}
-		
-		public function get worldMinZ():Number
-		{
-			return z + _minZ;
-		}
-		
-		public function get worldMaxX():Number
-		{
-			return x + _maxX;
-		}
-		
-		public function get worldMaxY():Number
-		{
-			return y + _maxY;
-		}
-		
-		public function get worldMaxZ():Number
-		{
-			return z + _maxZ;
-		}
-		
-		public function set x( x:Number ):void {
-			( useBoundsMesh ) ? _boundsMesh.x = x : _mesh.x = x;
-		}
-		
-		public function set y( y:Number ):void {
-			( useBoundsMesh ) ? _boundsMesh.y = y : _mesh.y = y;
-		}
-		
-		public function set z( val:Number ):void {
-			_mesh.z = _z = val;
+		override public function set z( val:Number ):void {
+			super.z = val;
+			_mesh.z = val;
 			if ( _boundsMesh ) {
 				_boundsMesh.z = val;
 			}

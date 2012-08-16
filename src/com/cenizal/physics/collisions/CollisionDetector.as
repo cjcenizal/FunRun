@@ -62,20 +62,31 @@ package com.cenizal.physics.collisions
 			var zPenetration:Number = getFaceIntersection( collider, collidee, Axis.Z );
 			
 			if ( Math.abs( xPenetration ) > 0) {
+				var smaller:Boolean = ( ( collider.maxX - collider.minX ) <= ( collidee.maxX - collidee.minX ) );
 				faces.push( {
-					"face" : ( xPenetration > 0 ) ? Face.LEFT : Face.RIGHT,
+					"face" : ( smaller )
+					? ( ( xPenetration < 0 ) ? Face.RIGHT : Face.LEFT )
+					: ( ( xPenetration > 0 ) ? Face.RIGHT : Face.LEFT ),
 					"amount" : Math.abs( xPenetration )
 				} );
 			}
 			if ( Math.abs( yPenetration ) > 0 ) {
+				var smaller:Boolean = ( ( collider.maxY - collider.minY ) <= ( collidee.maxY - collidee.minY ) );
 				faces.push( {
-					"face" : ( yPenetration > 0 ) ? Face.TOP : Face.BOTTOM,
+					"face" : ( smaller )
+					? ( ( yPenetration < 0 ) ? Face.TOP : Face.BOTTOM )
+					: ( ( yPenetration > 0 ) ? Face.TOP : Face.BOTTOM ),
 					"amount" : Math.abs( yPenetration )
 				} );
+				getFaceIntersection( collider, collidee, Axis.Y );
+				
 			}
 			if ( Math.abs( zPenetration ) > 0 ) {
+				var smaller:Boolean = ( ( collider.maxZ - collider.minZ ) <= ( collidee.maxZ - collidee.minZ ) );
 				faces.push( {
-					"face" : ( zPenetration > 0 ) ? Face.FRONT : Face.BACK,
+					"face" : ( smaller )
+					? ( ( zPenetration < 0 ) ? Face.BACK : Face.FRONT )
+					: ( ( zPenetration > 0 ) ? Face.BACK : Face.FRONT ),
 					"amount" : Math.abs( zPenetration )
 				} );
 			}
@@ -104,18 +115,25 @@ package com.cenizal.physics.collisions
 		 * 
 		 * @return Boolean.
 		 */
-		private static function getFaceIntersection( collider:ICollidable, collidee:ICollidable, axis:String ):Number {
+		private static function getFaceIntersection( collider:ICollidable, collidee:ICollidable, axis:String, debug:Boolean = false ):Number {
 			var aMin:Number = ( axis == Axis.X ) ? collider.worldMinX : ( axis == Axis.Y ) ? collider.worldMinY : collider.worldMinZ;
 			var aMax:Number = ( axis == Axis.X ) ? collider.worldMaxX : ( axis == Axis.Y ) ? collider.worldMaxY : collider.worldMaxZ;
 			var bMin:Number = ( axis == Axis.X ) ? collidee.worldMinX : ( axis == Axis.Y ) ? collidee.worldMinY : collidee.worldMinZ;
 			var bMax:Number = ( axis == Axis.X ) ? collidee.worldMaxX : ( axis == Axis.Y ) ? collidee.worldMaxY : collidee.worldMaxZ;
 			var smallMin:Number, smallMax:Number, bigMin:Number, bigMax:Number;
+			if ( debug ) trace(aMin,aMax,bMin,bMax);
 			if ( ( aMax - aMin ) <= ( bMax - bMin ) ) {
+				if ( debug ) {
+					trace("collider is small");
+				}
 				smallMin = aMin;
 				smallMax = aMax;
 				bigMin = bMin;
 				bigMax = bMax;
 			} else {
+				if ( debug ) {
+					trace("collider is big");
+				}
 				smallMin = bMin;
 				smallMax = bMax;
 				bigMin = aMin;
@@ -123,23 +141,29 @@ package com.cenizal.physics.collisions
 			}
 			// Small is contained inside big.
 			if ( bigMin <= smallMin && bigMax >= smallMax ) {
+				if ( debug ) trace("small is inside the big");
 				if ( bigMax - smallMax > smallMin - bigMin ) {
 					// It's near the greater end.
+					if ( debug ) trace("greater end");
 					return bigMax - smallMax;
 				} else {
+					if ( debug ) trace("lesser end");
 					// It's near the lesser end.
 					return bigMin - smallMin;
 				}
 			}
 			// Small intersects the lesser end of big.
 			if ( smallMin < bigMin && smallMax > bigMin ) {
+				if ( debug ) trace("intersects lesser end");
 				return smallMax - bigMin;
 			}
 			// Small intersects the greater end of big.
 			if ( smallMin < bigMax && smallMax > bigMax ) {
+				if ( debug ) trace("intersects greater end");
 				return smallMin - bigMax;
 			}
 			// They intersect exactly on one another.
+			if ( debug ) trace("intersect perfectly");
 			return 0;
 		}
 		
@@ -181,13 +205,13 @@ package com.cenizal.physics.collisions
 		}
 		
 		public static function doTheyIntersect( collider:ICollidable, collidee:ICollidable ):Boolean {
-			if ( collider.worldMinX >= collidee.worldMaxX || collidee.worldMinX >= collider.worldMaxX ) {
+			if ( collider.worldMinX > collidee.worldMaxX || collidee.worldMinX > collider.worldMaxX ) {
 				return false;
 			}
-			if ( collider.worldMinY >= collidee.worldMaxY || collidee.worldMinY >= collider.worldMaxY ) {
+			if ( collider.worldMinY > collidee.worldMaxY || collidee.worldMinY > collider.worldMaxY ) {
 				return false;
 			}
-			if ( collider.worldMinZ >= collidee.worldMaxZ || collidee.worldMinZ >= collider.worldMaxZ ) {
+			if ( collider.worldMinZ > collidee.worldMaxZ || collidee.worldMinZ > collider.worldMaxZ ) {
 				return false;
 			}
 			return true;

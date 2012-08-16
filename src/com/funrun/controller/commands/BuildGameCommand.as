@@ -167,9 +167,6 @@ package com.funrun.controller.commands {
 			
 			// Add player to track.
 			addPlaceableRequest.dispatch( playerModel );
-			var geometry:CubeGeometry = new CubeGeometry( Player.WIDTH, Player.HEIGHT, Player.WIDTH );
-			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
-			playerModel.mesh = player;
 			playerModel.normalBounds.minX = Player.NORMAL_BOUNDS.x * -.5;
 			playerModel.normalBounds.minY = Player.NORMAL_BOUNDS.y * -.5;
 			playerModel.normalBounds.minZ = Player.NORMAL_BOUNDS.z * -.5;
@@ -182,6 +179,9 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxX = Player.DUCKING_BOUNDS.x * .5;
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
+			var geometry:CubeGeometry = new CubeGeometry( Player.DUCKING_BOUNDS.x, Player.DUCKING_BOUNDS.y, Player.DUCKING_BOUNDS.z );
+			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
+			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 		
 		}

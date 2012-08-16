@@ -37,5 +37,14 @@ package com.funrun.model.vo {
 			var face:String = TRANSLATIONS[ f ];
 			return _faces[ face ] || _faces[ 'all' ];
 		}
+		
+		public function toString():String {
+			var str:String = _id + ": {";
+			for ( var key:String in _faces ) {
+				str += " " + key + " : " + _faces[ key ] + " ,";
+			}
+			str += "}";
+			return str;
+		}
 	}
 }

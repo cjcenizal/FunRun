@@ -84,8 +84,8 @@ package com.funrun.controller.commands {
 			// Reset player.
 			resetPlayerRequest.dispatch();
 			// Reset floor and obstacles.
-			addFloorRequest.dispatch();
-			addObstaclesRequest.dispatch( playerModel.position.z );
+		//	addFloorRequest.dispatch();
+		//	addObstaclesRequest.dispatch( playerModel.position.z );
 			// Reset camera.
 			view3DModel.cameraX = 0;
 			view3DModel.cameraY = Camera.Y;

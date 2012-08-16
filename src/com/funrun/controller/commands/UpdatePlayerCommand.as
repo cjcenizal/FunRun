@@ -79,7 +79,7 @@ package com.funrun.controller.commands
 				}
 				
 				// Apply ducking state.
-				if ( keysModel.isDown( Keyboard.DOWN ) ) {
+			/*	if ( keysModel.isDown( Keyboard.DOWN ) ) {
 					playerModel.isDucking = true;
 					if ( playerModel.scaleY != .25 ) {
 						playerModel.scaleY = .25;
@@ -89,9 +89,11 @@ package com.funrun.controller.commands
 					if ( playerModel.scaleY != 1 ) {
 						playerModel.scaleY = 1;
 					}
-				}
+				}*/
+				//if ( playerModel.scaleY != .444 ) {
+				//	playerModel.scaleY = .444;
+				//}
 			}
-			
 			// Update lateral position.
 			playerModel.position.x += playerModel.velocity.x;
 			

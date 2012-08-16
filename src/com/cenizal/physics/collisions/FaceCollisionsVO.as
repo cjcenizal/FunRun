@@ -28,7 +28,12 @@ package com.cenizal.physics.collisions
 		}
 		
 		public function toString():String {
-			return _faces.toString() + " (" + _amounts.toString() + ")";
+			var str:String = "Face collisions: ";
+			for ( var i:int = 0; i < _faces.length; i++ ) {
+				str += _faces[ i ] + " (" + _amounts[ i ] + " amt)";
+				if ( i < _faces.length - 1 ) str += ", ";
+			}
+			return str;
 		}
 	}
 }

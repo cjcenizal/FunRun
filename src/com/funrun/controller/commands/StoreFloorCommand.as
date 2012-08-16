@@ -41,9 +41,9 @@ package com.funrun.controller.commands
 			var floorBlockMesh:Mesh;
 			var posX:Number, posZ:Number;
 			for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
-				posX = x + .5;
+				posX = x;// + .5;
 				for ( var z:int = 0; z < Segment.DEPTH_BLOCKS; z++ ) {
-					posZ = z + .5;
+					posZ = z;// + .5;
 					// Put floor blocks everywhere.
 					// Create a floor block mesh in the appropriate place.
 					floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
@@ -84,10 +84,10 @@ package com.funrun.controller.commands
 				}
 			}
 			
-			var floor:SegmentVO = new SegmentVO( "floor", floorMesh, boundsMesh, boundingBoxes,
+			var floor:SegmentVO = new SegmentVO( floorMesh, boundsMesh, boundingBoxes,
 				floorMesh.bounds.min.x, floorMesh.bounds.min.y, floorMesh.bounds.min.z,
 				floorMesh.bounds.max.x, floorMesh.bounds.max.y, floorMesh.bounds.max.z );
-			segmentsModel.storeFloor( floor );
+		//	segmentsModel.storeFloor( floor );
 		}
 	}
 }

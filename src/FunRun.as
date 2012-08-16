@@ -25,13 +25,13 @@ package {
 		TO-DO:
 		- Fix bug where I am able to jump through stairs
 			- Especially in ducking state
-		- Away3D gold
+			- And hitting the side of some obstacles triggers a smack instead of hit.
+		- Use models and animation (players are food? Food Run?)
+		- Make sure hitboxes are SMALLER than the model
 		- Economy
 			- http://conversionxl.com/pricing-experiments-you-might-not-know-but-can-learn-from/
 			- http://news.ycombinator.com/item?id=4370904
 		- Collectibles (food?)
-		- Use models and animation (players are food? Food Run?)
-			- Make sure hitboxes are SMALLER than the model
 		- Nice UI with comfy pressable buttons.
 		- Foody red/yellow/white color scheme
 		- Sound fx

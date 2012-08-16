@@ -82,7 +82,8 @@ package com.funrun.controller.commands
 				// If the block is below ground-level, it signals a pit.
 				if ( blockData.y < 0 ) {
 					// So mark it as positive in the pitmap.
-					markPitAt( pitMap, blockData.x - .5, blockData.z - .5 );
+					//markPitAt( pitMap, blockData.x - .5, blockData.z - .5 );
+					markPitAt( pitMap, blockData.x, blockData.z );
 				}
 			}
 			
@@ -95,7 +96,7 @@ package com.funrun.controller.commands
 					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
 						// Create a floor block mesh in the appropriate place.
 						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
-						floorBlockMesh.x = x * Block.SIZE + Block.HALF_SIZE;
+						floorBlockMesh.x = x * Block.SIZE;// + Block.HALF_SIZE;
 						floorBlockMesh.y = -1 * Block.SIZE;
 						floorBlockMesh.z = z * Block.SIZE;
 						// Merge it into the obstacle.
@@ -133,9 +134,9 @@ package com.funrun.controller.commands
 				}
 			}
 			
-			var obstacle:SegmentVO = new SegmentVO( blockData.id, obstacleMesh, boundsMesh, boundingBoxes,
-			obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
-			obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
+			var obstacle:SegmentVO = new SegmentVO( obstacleMesh, boundsMesh, boundingBoxes,
+				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
+				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 			segmentsModel.storeObstacle( obstacle );
 		}
 		

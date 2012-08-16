@@ -46,7 +46,7 @@ package com.funrun.controller.commands {
 			// Avoid adding accidental duplicates.
 			if ( !competitorsModel.getWithId( competitor.id ) ) {
 				// Add mesh.
-				var mesh:Mesh = new Mesh( new CubeGeometry( Player.WIDTH, Player.HEIGHT, Player.WIDTH ), Materials.DEBUG_PLAYER );
+				var mesh:Mesh = new Mesh( new CubeGeometry( Player.NORMAL_BOUNDS.x, Player.NORMAL_BOUNDS.y, Player.NORMAL_BOUNDS.z ), Materials.DEBUG_PLAYER );
 				competitor.mesh = mesh;
 				if ( competitor.isDucking ) {
 					if ( competitor.mesh.scaleY != .25 ) {
