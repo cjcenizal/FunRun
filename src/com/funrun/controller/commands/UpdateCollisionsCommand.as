@@ -47,158 +47,242 @@ package com.funrun.controller.commands {
 		// Local vars.
 		
 		private var _collider:CollidableVO;
-		
+		private var _targetInterpolationDist:Number;
+		private var _interpolationStepLimit:Number;
+		private var _interpolationStepCount:int;
+		private var _interpolationVector:Vector3D;
+		private var _resolutionStepLimit:int = 4;
+		private var _resolutionStepCount:int;
+		private var _segmentsArr:Array;
+		private var _collidingSegmentIndicesArr:Array;
+		private var _firstCollidingSegment:SegmentVO;
+		private var _firstCollidingSegmentBoundingBoxesArr:Array;
+		private var _collidingBoundingBoxIndicesArr:Array;
+		private var _firstCollidingBoundingBox:BoundingBoxVO;
+		private var _collidingFaces:FaceCollisionsVO;
+		private var _collidingFace:String;
+		private var _collisionEvent:String;
 		
 		// Plan:
-		// - Translate vars to be local vars.
-		// - Break things out into smaller methods.
-		// - Step through logic to see where it breaks down.
+		// - X Translate vars to be local vars.
+		// - X Break things out into smaller methods.
+		// - > Step through logic to see where it breaks down.
+		
 		// Once fixed:
 		// - Put floor back in SegmentsModel and StoreFloorCommand.
 		// - Test quiitting a game and restarting; see if putting back "add floor" etc in ResetGameCommand matters.
 		// - Test initial floor z in Segment.
 		
 		override public function execute():void {
-			_collider = new CollidableVO();
-			_collider.copyFrom( ( playerModel.isDucking ) ? playerModel.duckingBounds : playerModel.normalBounds );
+			setupCollider();
+			setupInterpolation();
+			getAllSegments();
 			
-			// Interpolate half the side of the _collider's height, from its prev pos to its current pos.
-			var targetInterpolationDist:Number = ( _collider.maxY - _collider.minY ) * .5;
-			var numSteps:Number = Math.min( Math.ceil( playerModel.getDistanceFromPreviousPosition() / targetInterpolationDist ), 5 );
-			var interpolationVector:Vector3D = new Vector3D(
-				( playerModel.position.x - playerModel.prevPosition.x ) / numSteps,
-				( playerModel.position.y - playerModel.prevPosition.y ) / numSteps,
-				( playerModel.position.z - playerModel.prevPosition.z ) / numSteps
-			);
-			
-			// If we aren't doing any interpolation, just set the _collider to the current position.
-			if ( numSteps == 1 ) {
-				_collider.x = playerModel.position.x;
-				_collider.y = playerModel.position.y;
-				_collider.z = playerModel.position.z;
-			} else {
-				_collider.x = playerModel.prevPosition.x;
-				_collider.y = playerModel.prevPosition.y;
-				_collider.z = playerModel.prevPosition.z;
-			}
-			
-			var segments:Array, blocks:Array, collisions:FaceCollisionsVO;
-			var segmentIndices:Array, blockIndices:Array;
-			trace("-------------------------------------------------------");
-			trace("_collider:", _collider);
-			for ( var n:int = 0; n < numSteps; n++ ) {
-				var count:int = 0;
-				var limit:int = 4;
-				var segment:SegmentVO;
-				var bounds:BoundingBoxVO;
-				segments = trackModel.getObstacleArray();
-				while ( count < limit ) {
-		//			trace("   count",count);
-					segmentIndices = CollisionDetector.getCollidingIndices( _collider, segments );
-					trace("segmentIndices",segmentIndices);
-					if ( segmentIndices.length == 0 ) {
-						// Terminate collision resolution.
-						count = limit;
+			// Interpolate the collider from previous position to current position.
+			for ( _interpolationStepCount = 0; _interpolationStepCount < _interpolationStepLimit; _interpolationStepCount++ ) {
+				
+				resetResolutionStepCount();
+				
+				while ( _resolutionStepCount < _resolutionStepLimit ) {
+					
+					getCollidingSegmentIndices();
+					
+					if ( noCollidingSegments() ) {
+						
+						stopResolvingCollisions();
+						
 					} else {
-						segment = trackModel.getObstacleAt( segmentIndices[ 0 ] );
-						blocks = segment.getBoundingBoxes();
-						blockIndices = CollisionDetector.getCollidingIndices( _collider, blocks, segment ); // Why does this return blocks when it shouldn't? BUG HERE TOO I BET!
-						trace("blockIndices",blockIndices);
-/*						if ( blockIndices.length > 0 ) {
-							trace("blockIndices",blockIndices);
-							for ( var i:int = 0; i < blockIndices.length; i++ ) {
-								trace("    ",(segment.getBoundingBoxAt( blockIndices[ i ] ).add( segment ) as BoundingBoxVO));
-								trace("    ",segment.getBoundingBoxAt( blockIndices[ i ] ).block);
-							}
-						}
-						var event:String;
-						bounds = segment.getBoundingBoxAt( blockIndices[ 0 ] ).add( segment ) as BoundingBoxVO; // THE BUG IS HERE!
-						collisions = CollisionDetector.getCollidingFaces( _collider, bounds );
-				//		trace("  ",collisions);
-						if ( collisions.count == 0 ) {
-							// Terminate collision resolution.
-							count = limit;
+						
+						getFirstCollidingSegmentAndBoundingBoxes();
+						getFirstCollidingBoundingBox();
+						getFacesCollidingWithFirstBoundingBox();
+						
+						if ( noCollidingFaces() ) {
+							
+							stopResolvingCollisions();
+						
 						} else {
-							n = numSteps; // We don't need to keep interpolating for collisions.
-							if ( !CollisionDetector.doTheyIntersect( _collider, bounds ) ) trace( "===== ERROR WITH COLLISION DETECTION ======");
+							
+							stopInterpolating();
+				//			if ( !CollisionDetector.doTheyIntersect( _collider, _firstCollidingBoundingBox ) ) trace( "===== ERROR WITH COLLISION DETECTION ======");
+							
 							// Only react to shallowest collision.
-							CollisionLoop: for ( var k:int = 0; k < collisions.count; k++ ) {
-								var face:String = collisions.getAt( k );
-								event = bounds.block.getEventAtFace( face );
-				//				trace("     colliding with " + face + ", event:",event);
-								switch ( face ) {
+							CollisionLoop: for ( var k:int = 0; k < _collidingFaces.count; k++ ) {
+								
+								_collidingFace = _collidingFaces.getAt( k );
+								
+								getCollisionEventAtFirstCollidingBoundingBox();
+								
+								switch ( _collidingFace ) {
 									case Face.TOP:
-										if ( playerModel.velocity.y <= 0 ) {
-											if ( event == Collisions.WALK ) {
-												trace("         walk");
-												_collider.y = bounds.worldMaxY + Math.abs( _collider.minY ) + 1;
-												playerModel.velocity.y = 0;
-												playerModel.position.y = _collider.y;
-												playerModel.isOnTheGround = true;
-												break CollisionLoop;
-											} else if ( event == Collisions.JUMP ) {
-				//								trace("         jump");
-												_collider.y = bounds.worldMaxY + Math.abs( _collider.minY );
-												playerModel.velocity.y = Player.LAUNCH_SPEED;
-												playerModel.position.y = _collider.y;
-												playerModel.isOnTheGround = true;
-												break CollisionLoop;
-											}
-										}
+										if ( isTopCollision() ) break CollisionLoop;
 									case Face.BOTTOM:
-										if ( playerModel.velocity.y >= 0 ) {
-											if ( event == Collisions.HIT ) {
-				//								trace("         hit");
-												_collider.y = bounds.worldMinY + _collider.minY;
-												playerModel.velocity.y = 0;
-												playerModel.position.y = _collider.y;
-												break CollisionLoop;
-											}
-										}
+										if ( isBottomCollision() ) break CollisionLoop;
 									case Face.FRONT:
-										if ( playerModel.velocity.z >= 0 ) {
-											if ( event == Collisions.SMACK ) {
-												trace("         smack");
-												_collider.z = bounds.worldMinZ + _collider.minY;
-												playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
-												playerModel.position.z = _collider.z;
-												break CollisionLoop;
-											}
-										}
+										if ( isFrontCollision() ) break CollisionLoop;
 									case Face.LEFT:
-										if ( playerModel.velocity.x >= 0 ) {
-											if ( event == Collisions.HIT ) {
-				//								trace("         hit left");
-												_collider.x = bounds.worldMinX + _collider.minX;
-												playerModel.velocity.x = 0;
-												playerModel.position.x = _collider.x;
-												break CollisionLoop;
-											}
-										}
+										if ( isLeftCollision() ) break CollisionLoop;
 									case Face.RIGHT:
-										if ( playerModel.velocity.x <= 0 ) {
-											if ( event == Collisions.HIT ) {
-				//								trace("         hit right");
-												_collider.x = bounds.worldMaxX + Math.abs( _collider.minX );
-												playerModel.velocity.x = 0;
-												playerModel.position.x = _collider.x;
-												break CollisionLoop;
-											}
-										}
+										if ( isRightCollision() ) break CollisionLoop;
 								}
 							}
-							count++;
-						}*/
+							_resolutionStepCount++;
+						}
 					}
 				}
-				// Continue interpolation.
-				_collider.x += interpolationVector.x;
-				_collider.y += interpolationVector.y;
-				_collider.z += interpolationVector.z;
+				stepInterpolation();
 			}
-			
-	//		trace("pos: " + playerModel.position.y);
 		}
 		
+		private function setupCollider():void {
+			_collider = new CollidableVO();
+			_collider.copyFrom( ( playerModel.isDucking ) ? playerModel.duckingBounds : playerModel.normalBounds );
+		}
+		
+		private function setupInterpolation():void {
+			// Interpolate half the side of the _collider's height, from its prev pos to its current pos.
+			// TO-DO: Check this logic.
+			_targetInterpolationDist = ( _collider.maxY - _collider.minY ) * .5;
+			_interpolationStepLimit = Math.min( Math.ceil( playerModel.getDistanceFromPreviousPosition() / _targetInterpolationDist ), 5 );
+			_interpolationVector = new Vector3D(
+				( playerModel.position.x - playerModel.prevPosition.x ) / _interpolationStepLimit,
+				( playerModel.position.y - playerModel.prevPosition.y ) / _interpolationStepLimit,
+				( playerModel.position.z - playerModel.prevPosition.z ) / _interpolationStepLimit
+			);
+			if ( interpolationIsNecessary() ) {
+				setColliderPositionTo( playerModel.prevPosition );
+			} else {
+				setColliderPositionTo( playerModel.position );
+			}
+		}
+		
+		private function getAllSegments():void {
+			_segmentsArr = trackModel.getObstacleArray();
+		}
+		
+		private function interpolationIsNecessary():Boolean {
+			return ( _interpolationStepLimit > 1 );
+		}
+		
+		private function setColliderPositionTo( pos:Vector3D ):void {
+			_collider.x = pos.x;
+			_collider.y = pos.y;
+			_collider.z = pos.z;
+		}
+		
+		private function resetResolutionStepCount():void {
+			_resolutionStepCount = 0;
+		}
+		
+		private function stopResolvingCollisions():void {
+			_resolutionStepCount = _resolutionStepLimit;
+		}
+		
+		private function stopInterpolating():void {
+			_interpolationStepCount = _interpolationStepLimit;
+		}
+		
+		private function getCollidingSegmentIndices():void {
+			_collidingSegmentIndicesArr = CollisionDetector.getCollidingIndices( _collider, _segmentsArr );
+		}
+		
+		private function noCollidingSegments():Boolean {
+			return ( _collidingSegmentIndicesArr.length == 0 );
+		}
+		
+		private function getFirstCollidingSegmentAndBoundingBoxes():void {
+			_firstCollidingSegment = trackModel.getObstacleAt( _collidingSegmentIndicesArr[ 0 ] );
+			_firstCollidingSegmentBoundingBoxesArr = _firstCollidingSegment.getBoundingBoxes();
+			_collidingBoundingBoxIndicesArr = CollisionDetector.getCollidingIndices( _collider, _firstCollidingSegmentBoundingBoxesArr, _firstCollidingSegment ); // Why does this return blocks when it shouldn't? BUG HERE TOO I BET!
+		}
+		
+		private function getFirstCollidingBoundingBox():void {	
+			_firstCollidingBoundingBox = _firstCollidingSegment.getBoundingBoxAt( _collidingBoundingBoxIndicesArr[ 0 ] ).add( _firstCollidingSegment ) as BoundingBoxVO; // THE BUG IS HERE!
+		}
+		
+		private function getFacesCollidingWithFirstBoundingBox():void {	
+			_collidingFaces = CollisionDetector.getCollidingFaces( _collider, _firstCollidingBoundingBox );
+		}
+		
+		private function noCollidingFaces():Boolean {
+			return ( _collidingFaces.count == 0 );
+		}
+		
+		private function getCollisionEventAtFirstCollidingBoundingBox():void {
+			_collisionEvent = _firstCollidingBoundingBox.block.getEventAtFace( _collidingFace );
+		}
+		
+		private function isTopCollision():Boolean {
+			if ( playerModel.velocity.y <= 0 ) {
+				if ( _collisionEvent == Collisions.WALK ) {
+					_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY ) + 1;
+					playerModel.velocity.y = 0;
+					playerModel.position.y = _collider.y;
+					playerModel.isOnTheGround = true;
+					return true;
+				} else if ( _collisionEvent == Collisions.JUMP ) {
+					_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
+					playerModel.velocity.y = Player.LAUNCH_SPEED;
+					playerModel.position.y = _collider.y;
+					playerModel.isOnTheGround = true;
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private function isBottomCollision():Boolean {
+			if ( playerModel.velocity.y >= 0 ) {
+				if ( _collisionEvent == Collisions.HIT ) {
+					_collider.y = _firstCollidingBoundingBox.worldMinY + _collider.minY;
+					playerModel.velocity.y = 0;
+					playerModel.position.y = _collider.y;
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private function isFrontCollision():Boolean {
+			if ( playerModel.velocity.z >= 0 ) {
+				if ( _collisionEvent == Collisions.SMACK ) {
+					_collider.z = _firstCollidingBoundingBox.worldMinZ + _collider.minY;
+					playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
+					playerModel.position.z = _collider.z;
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private function isLeftCollision():Boolean {
+			if ( playerModel.velocity.x >= 0 ) {
+				if ( _collisionEvent == Collisions.HIT ) {
+					_collider.x = _firstCollidingBoundingBox.worldMinX + _collider.minX;
+					playerModel.velocity.x = 0;
+					playerModel.position.x = _collider.x;
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private function isRightCollision():Boolean {
+			if ( playerModel.velocity.x <= 0 ) {
+				if ( _collisionEvent == Collisions.HIT ) {
+					_collider.x = _firstCollidingBoundingBox.worldMaxX + Math.abs( _collider.minX );
+					playerModel.velocity.x = 0;
+					playerModel.position.x = _collider.x;
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private function stepInterpolation():void {
+			_collider.x += _interpolationVector.x;
+			_collider.y += _interpolationVector.y;
+			_collider.z += _interpolationVector.z;
+		}
 	}
 }
