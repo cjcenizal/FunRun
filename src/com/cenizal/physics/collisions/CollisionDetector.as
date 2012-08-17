@@ -35,6 +35,12 @@ package com.cenizal.physics.collisions
 				}
 				if ( doTheyIntersect( collider, collidee ) ) {
 					var volume:Number = getIntersectionVolume( collider, collidee );
+					trace("   - Intersection (volume " + volume + "):");
+					trace("     x: " + getPenetration( collider, collidee, Axis.X));
+					trace("     y: " + getPenetration( collider, collidee, Axis.Y));
+					trace("     z: " + getPenetration( collider, collidee, Axis.Z));
+					trace("       collider: " + collider);
+					trace("       collidee: " + collidee);
 					if ( volume > 0 ) {
 						collisions.push( { "index": i, "volume" : volume } );
 					}

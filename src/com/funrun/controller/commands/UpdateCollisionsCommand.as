@@ -83,7 +83,7 @@ package com.funrun.controller.commands {
 			
 			// Interpolate the collider from previous position to current position.
 			for ( _interpolationStepCount = 0; _interpolationStepCount < _numberOfStepsToInterpolate; _interpolationStepCount++ ) {
-				
+				trace("Interpolation step " + _interpolationStepCount);
 				resetResolution();
 				
 				// Resolve collisions.
@@ -141,6 +141,9 @@ package com.funrun.controller.commands {
 				}
 				stepInterpolation();
 			}
+			trace("Finished:");
+			trace("  player: " + playerModel.position);
+			trace("  collider:" + _collider);
 		}
 		
 		private function setupCollider():void {
@@ -161,6 +164,7 @@ package com.funrun.controller.commands {
 				_numberOfStepsToInterpolate = Math.ceil( distanceTraveled / _interpolationStepDistance );
 			}
 			if ( interpolationIsNecessary() ) {
+				trace("Interpolation is necessary.");
 				// Prepare to interpolate.
 				setColliderPositionTo( playerModel.prevPosition );
 				_interpolationVector = new Vector3D(
@@ -169,6 +173,7 @@ package com.funrun.controller.commands {
 					( playerModel.position.z - playerModel.prevPosition.z ) / _numberOfStepsToInterpolate
 				);
 			} else {
+				trace("Interpolation is not needed.");
 				// Don't interpolate, just use the current player's position.
 				setColliderPositionTo( playerModel.position );
 				_interpolationVector = new Vector3D();
@@ -187,6 +192,7 @@ package com.funrun.controller.commands {
 			_collider.x = pos.x;
 			_collider.y = pos.y;
 			_collider.z = pos.z;
+			trace("Collider set to: " + _collider);
 		}
 		
 		private function resetResolution():void {
@@ -227,7 +233,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getFirstCollidingBoundingBox():void {
-			_firstCollidingBoundingBox = _firstCollidingSegment.getBoundingBoxAt( _collidingBoundingBoxIndicesArr[ 0 ] ).add( _firstCollidingSegment ) as BoundingBoxVO; // THE BUG IS HERE!
+			_firstCollidingBoundingBox = _firstCollidingSegment.getBoundingBoxAt( _collidingBoundingBoxIndicesArr[ 0 ] ).add( _firstCollidingSegment ) as BoundingBoxVO;
 		}
 		
 		private function getFacesCollidingWithFirstBoundingBox():void {	
@@ -243,11 +249,15 @@ package com.funrun.controller.commands {
 		}
 		
 		private function isTopCollision():Boolean {
+			trace("    isTopCollision");
+			trace("      velocity: " + playerModel.velocity.y );
 			if ( playerModel.velocity.y <= 0 ) {
 				if ( _collisionEvent == Collisions.WALK ) {
-					_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY ) + 1;
+					_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
+					trace("      place collider at: " + _collider);
 					playerModel.velocity.y = 0;
 					playerModel.position.y = _collider.y;
+					trace("      match player at: " + playerModel.position);
 					playerModel.isOnTheGround = true;
 					return true;
 				} else if ( _collisionEvent == Collisions.JUMP ) {
