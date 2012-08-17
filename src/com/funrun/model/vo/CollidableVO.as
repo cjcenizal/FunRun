@@ -29,8 +29,7 @@ package com.funrun.model.vo
 		}
 		
 		public function toString():String {
-			return "(X: " + Math.round(worldMinX) + ", " + Math.round(worldMaxX) + "), (Y: " + Math.round(worldMinY) + ", " + Math.round(worldMaxY) + "), (Z: " + Math.round(worldMinZ) + ", " + Math.round(worldMaxZ) + ")";
-			//return "(" + Math.round(worldMinX) + ", " + Math.round(worldMinY) + ", " + Math.round(worldMinZ) + ") - (" + Math.round(worldMaxX) + ", " + Math.round(worldMaxY) + ", " + Math.round(worldMaxZ) + ")";
+			return "(" + _x + ", " + _y + ", " + _z + ") - (X: " + Math.round(worldMinX) + ", " + Math.round(worldMaxX) + "), (Y: " + Math.round(worldMinY) + ", " + Math.round(worldMaxY) + "), (Z: " + Math.round(worldMinZ) + ", " + Math.round(worldMaxZ) + ")";
 		}
 		
 		public function add( collidable:ICollidable ):ICollidable {

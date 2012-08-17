@@ -86,6 +86,7 @@ package com.funrun.controller.commands {
 				
 				resetResolution();
 				
+				// Resolve collisions.
 				while ( _resolutionStepCount < _numberOfStepsToResolveCollisions ) {
 					
 					// OK.
@@ -95,39 +96,43 @@ package com.funrun.controller.commands {
 						stopResolvingCollisions();	
 					} else {
 						
-						// Suspect.
-						getFirstCollidingSegmentAndBoundingBoxes();
+						// Suspect, but seems to be fixed now.
+						getFirstCollidingSegment();
+						getCollidingBoundingBoxes();
 						
-						// Suspect.
-						getFirstCollidingBoundingBox();
-						
-						getFacesCollidingWithFirstBoundingBox();
-						
-						if ( noCollidingFaces() ) {
+						if ( noCollidingBoundingBoxes() ) {
 							stopResolvingCollisions();
-						
 						} else {
-							stopInterpolating();
-				//			if ( !CollisionDetector.doTheyIntersect( _collider, _firstCollidingBoundingBox ) ) trace( "===== ERROR WITH COLLISION DETECTION ======");
 							
-							// Only react to shallowest collision.
-							CollisionLoop: for ( var k:int = 0; k < _collidingFaces.count; k++ ) {
+							getFirstCollidingBoundingBox();
+							getFacesCollidingWithFirstBoundingBox();
+							
+							if ( noCollidingFaces() ) {
+								stopResolvingCollisions();
+							
+							} else {
+								stopInterpolating();
+					//			if ( !CollisionDetector.doTheyIntersect( _collider, _firstCollidingBoundingBox ) ) trace( "===== ERROR WITH COLLISION DETECTION ======");
 								
-								_collidingFace = _collidingFaces.getAt( k );
-								
-								getCollisionEventAtFirstCollidingBoundingBox();
-								
-								switch ( _collidingFace ) {
-									case Face.TOP:
-										if ( isTopCollision() ) break CollisionLoop;
-									case Face.BOTTOM:
-										if ( isBottomCollision() ) break CollisionLoop;
-									case Face.FRONT:
-										if ( isFrontCollision() ) break CollisionLoop;
-									case Face.LEFT:
-										if ( isLeftCollision() ) break CollisionLoop;
-									case Face.RIGHT:
-										if ( isRightCollision() ) break CollisionLoop;
+								// Only react to shallowest collision.
+								CollisionLoop: for ( var k:int = 0; k < _collidingFaces.count; k++ ) {
+									
+									_collidingFace = _collidingFaces.getAt( k );
+									
+									getCollisionEventAtFirstCollidingBoundingBox();
+									
+									switch ( _collidingFace ) {
+										case Face.TOP:
+											if ( isTopCollision() ) break CollisionLoop;
+										case Face.BOTTOM:
+											if ( isBottomCollision() ) break CollisionLoop;
+										case Face.FRONT:
+											if ( isFrontCollision() ) break CollisionLoop;
+										case Face.LEFT:
+											if ( isLeftCollision() ) break CollisionLoop;
+										case Face.RIGHT:
+											if ( isRightCollision() ) break CollisionLoop;
+									}
 								}
 							}
 						}
@@ -208,13 +213,20 @@ package com.funrun.controller.commands {
 			return ( _collidingSegmentIndicesArr.length == 0 );
 		}
 		
-		private function getFirstCollidingSegmentAndBoundingBoxes():void {
+		private function getFirstCollidingSegment():void {
 			_firstCollidingSegment = trackModel.getObstacleAt( _collidingSegmentIndicesArr[ 0 ] );
-			_firstCollidingSegmentBoundingBoxesArr = _firstCollidingSegment.getBoundingBoxes();
-			_collidingBoundingBoxIndicesArr = CollisionDetector.getCollidingIndices( _collider, _firstCollidingSegmentBoundingBoxesArr, _firstCollidingSegment ); // Why does this return blocks when it shouldn't? BUG HERE TOO I BET!
 		}
 		
-		private function getFirstCollidingBoundingBox():void {	
+		private function getCollidingBoundingBoxes():void {
+			_firstCollidingSegmentBoundingBoxesArr = _firstCollidingSegment.getBoundingBoxes();
+			_collidingBoundingBoxIndicesArr = CollisionDetector.getCollidingIndices( _collider, _firstCollidingSegmentBoundingBoxesArr, _firstCollidingSegment );
+		}
+		
+		private function noCollidingBoundingBoxes():Boolean {
+			return ( _collidingBoundingBoxIndicesArr.length == 0 );
+		}
+		
+		private function getFirstCollidingBoundingBox():void {
 			_firstCollidingBoundingBox = _firstCollidingSegment.getBoundingBoxAt( _collidingBoundingBoxIndicesArr[ 0 ] ).add( _firstCollidingSegment ) as BoundingBoxVO; // THE BUG IS HERE!
 		}
 		

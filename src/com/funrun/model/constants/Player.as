@@ -10,7 +10,7 @@ package com.funrun.model.constants
 		public static const FOWARD_ACCELERATION:Number = 1;
 		public static const JUMP_SPEED:Number = 90;//84;
 		public static const LATERAL_SPEED:Number = 30;
-		public static const GRAVITY:Number = -.5;// -8;
+		public static const GRAVITY:Number = -8;
 		public static const LAUNCH_SPEED:Number = 150;
 		
 		// Bounds.

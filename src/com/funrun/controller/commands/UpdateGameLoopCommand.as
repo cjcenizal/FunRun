@@ -108,8 +108,8 @@ package com.funrun.controller.commands {
 			// Target 30 frames per second.
 			var framesElapsed:int = Math.round( .03 * timeEvent.delta );
 			trace("===========================================================");
-			for ( var f:int = 0; f < framesElapsed; f++ ) {
-				trace("frame",f);
+			//for ( var f:int = 0; f < framesElapsed; f++ ) {
+			//	trace("frame",f);
 				if ( gameState.gameState == GameState.RUNNING ) {
 					// Update obstacles.
 					updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
@@ -120,7 +120,7 @@ package com.funrun.controller.commands {
 				
 				// Detect collisions.
 				updateCollisionsRequest.dispatch();
-			}
+			//}
 			
 			// Update camera before updating competitors.
 			view3DModel.cameraX = playerModel.position.x;

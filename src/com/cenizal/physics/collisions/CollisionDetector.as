@@ -23,12 +23,15 @@ package com.cenizal.physics.collisions
 		 */
 		public static function getCollidingIndices( collider:ICollidable, collidees:Array, collideeOffset:ICollidable = null ):Array {
 			var collisions:Array = [];
+			var ogCollidee:ICollidable;
 			var collidee:ICollidable;
 			var count:int = collidees.length;
 			for ( var i:int = 0; i < count; i++ ) {
-				collidee = collidees[ i ];
+				ogCollidee = collidees[ i ];
 				if ( collideeOffset ) {
-					collidee = collidee.add( collideeOffset );
+					collidee = ogCollidee.add( collideeOffset );
+				} else {
+					collidee = ogCollidee;
 				}
 				if ( doTheyIntersect( collider, collidee ) ) {
 					var volume:Number = getIntersectionVolume( collider, collidee );
