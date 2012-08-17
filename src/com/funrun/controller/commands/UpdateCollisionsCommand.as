@@ -47,11 +47,11 @@ package com.funrun.controller.commands {
 		// Local vars.
 		
 		private var _collider:CollidableVO;
-		private var _targetInterpolationDist:Number;
-		private var _interpolationStepLimit:Number;
+		private var _interpolationStepDistance:Number;
+		private var _numberOfStepsToInterpolate:Number = 5;
 		private var _interpolationStepCount:int;
 		private var _interpolationVector:Vector3D;
-		private var _resolutionStepLimit:int = 4;
+		private var _numberOfStepsToResolveCollisions:int = 4;
 		private var _resolutionStepCount:int;
 		private var _segmentsArr:Array;
 		private var _collidingSegmentIndicesArr:Array;
@@ -68,6 +68,9 @@ package com.funrun.controller.commands {
 		// - X Break things out into smaller methods.
 		// - > Step through logic to see where it breaks down.
 		
+		// Secondary:
+		// - Test the frame interpolation algo and figure out how it imapcts this algo and can cause a positive feedback loop.
+		
 		// Once fixed:
 		// - Put floor back in SegmentsModel and StoreFloorCommand.
 		// - Test quiitting a game and restarting; see if putting back "add floor" etc in ResetGameCommand matters.
@@ -79,30 +82,31 @@ package com.funrun.controller.commands {
 			getAllSegments();
 			
 			// Interpolate the collider from previous position to current position.
-			for ( _interpolationStepCount = 0; _interpolationStepCount < _interpolationStepLimit; _interpolationStepCount++ ) {
+			for ( _interpolationStepCount = 0; _interpolationStepCount < _numberOfStepsToInterpolate; _interpolationStepCount++ ) {
 				
-				resetResolutionStepCount();
+				resetResolution();
 				
-				while ( _resolutionStepCount < _resolutionStepLimit ) {
+				while ( _resolutionStepCount < _numberOfStepsToResolveCollisions ) {
 					
+					// OK.
 					getCollidingSegmentIndices();
 					
 					if ( noCollidingSegments() ) {
-						
-						stopResolvingCollisions();
-						
+						stopResolvingCollisions();	
 					} else {
 						
+						// Suspect.
 						getFirstCollidingSegmentAndBoundingBoxes();
+						
+						// Suspect.
 						getFirstCollidingBoundingBox();
+						
 						getFacesCollidingWithFirstBoundingBox();
 						
 						if ( noCollidingFaces() ) {
-							
 							stopResolvingCollisions();
 						
 						} else {
-							
 							stopInterpolating();
 				//			if ( !CollisionDetector.doTheyIntersect( _collider, _firstCollidingBoundingBox ) ) trace( "===== ERROR WITH COLLISION DETECTION ======");
 							
@@ -126,9 +130,9 @@ package com.funrun.controller.commands {
 										if ( isRightCollision() ) break CollisionLoop;
 								}
 							}
-							_resolutionStepCount++;
 						}
 					}
+					stepResolution();
 				}
 				stepInterpolation();
 			}
@@ -140,19 +144,29 @@ package com.funrun.controller.commands {
 		}
 		
 		private function setupInterpolation():void {
-			// Interpolate half the side of the _collider's height, from its prev pos to its current pos.
-			// TO-DO: Check this logic.
-			_targetInterpolationDist = ( _collider.maxY - _collider.minY ) * .5;
-			_interpolationStepLimit = Math.min( Math.ceil( playerModel.getDistanceFromPreviousPosition() / _targetInterpolationDist ), 5 );
-			_interpolationVector = new Vector3D(
-				( playerModel.position.x - playerModel.prevPosition.x ) / _interpolationStepLimit,
-				( playerModel.position.y - playerModel.prevPosition.y ) / _interpolationStepLimit,
-				( playerModel.position.z - playerModel.prevPosition.z ) / _interpolationStepLimit
-			);
-			if ( interpolationIsNecessary() ) {
-				setColliderPositionTo( playerModel.prevPosition );
+			// Use the collider's height as the yardstick for interpolation.
+			_interpolationStepDistance = ( _collider.maxY - _collider.minY ) * .5;
+			var distanceTraveled:Number = playerModel.getDistanceFromPreviousPosition();
+			if ( distanceTraveled == 0 ) {
+				// If we haven't traveled any distance, then we don't need to resolve any collisions and we can go home.
+				_numberOfStepsToInterpolate = 1;
+				stopInterpolating();
+				stopResolvingCollisions();
 			} else {
+				_numberOfStepsToInterpolate = Math.ceil( distanceTraveled / _interpolationStepDistance );
+			}
+			if ( interpolationIsNecessary() ) {
+				// Prepare to interpolate.
+				setColliderPositionTo( playerModel.prevPosition );
+				_interpolationVector = new Vector3D(
+					( playerModel.position.x - playerModel.prevPosition.x ) / _numberOfStepsToInterpolate,
+					( playerModel.position.y - playerModel.prevPosition.y ) / _numberOfStepsToInterpolate,
+					( playerModel.position.z - playerModel.prevPosition.z ) / _numberOfStepsToInterpolate
+				);
+			} else {
+				// Don't interpolate, just use the current player's position.
 				setColliderPositionTo( playerModel.position );
+				_interpolationVector = new Vector3D();
 			}
 		}
 		
@@ -161,7 +175,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function interpolationIsNecessary():Boolean {
-			return ( _interpolationStepLimit > 1 );
+			return ( _numberOfStepsToInterpolate > 1 );
 		}
 		
 		private function setColliderPositionTo( pos:Vector3D ):void {
@@ -170,16 +184,20 @@ package com.funrun.controller.commands {
 			_collider.z = pos.z;
 		}
 		
-		private function resetResolutionStepCount():void {
+		private function resetResolution():void {
 			_resolutionStepCount = 0;
 		}
 		
+		private function stepResolution():void {
+			_resolutionStepCount++;
+		}
+		
 		private function stopResolvingCollisions():void {
-			_resolutionStepCount = _resolutionStepLimit;
+			_numberOfStepsToResolveCollisions = 0;
 		}
 		
 		private function stopInterpolating():void {
-			_interpolationStepCount = _interpolationStepLimit;
+			_numberOfStepsToInterpolate = 0;
 		}
 		
 		private function getCollidingSegmentIndices():void {
@@ -280,7 +298,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function stepInterpolation():void {
-			_collider.x += _interpolationVector.x;
+ 			_collider.x += _interpolationVector.x;
 			_collider.y += _interpolationVector.y;
 			_collider.z += _interpolationVector.z;
 		}

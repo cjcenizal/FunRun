@@ -43,6 +43,13 @@ package com.funrun.model {
 			return Track.DEPTH;
 		}
 		
+		public function getDepthOfObstacleAt( index:int ):Number {
+			if ( _obstacles.length >= index ) {
+				return ( _obstacles[ index ] as SegmentVO ).z;
+			}
+			return 0;
+		}
+		
 		public function get depthOfFirstObstacle():Number {
 			if ( _obstacles.length > 0 ) {
 				return ( _obstacles[ 0 ] as SegmentVO ).z;

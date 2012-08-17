@@ -37,6 +37,8 @@ package {
 		- Sound fx
 		- Music
 		- Full-screen, or fluid 100% window size.
+		- Anti-gravity / low-gravity / side-gravity obstacles.
+		- Free exploration mode when you're dead, and faster speeds.
 		*/
 		
 		
