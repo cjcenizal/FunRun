@@ -23,6 +23,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.Camera;
+	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Time;
@@ -118,6 +119,9 @@ package com.funrun.controller.commands {
 			
 			//loadSegmentsRequest.dispatch();
 			
+			// Reference.
+			var ref:Mesh = new Mesh( new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE ), Materials.DEBUG_TEST );
+			addObjectToSceneRequest.dispatch( ref );
 			
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -.5 );
@@ -160,6 +164,12 @@ package com.funrun.controller.commands {
 			Materials.DEBUG_BLOCK.specular = .25;
 			Materials.DEBUG_BLOCK.gloss = 20;
 			Materials.DEBUG_BLOCK.specularMethod = specularMethod;
+			
+			Materials.DEBUG_TEST.lightPicker = lightPicker;
+			Materials.DEBUG_TEST.shadowMethod = shadowMethod;
+			Materials.DEBUG_TEST.specular = .25;
+			Materials.DEBUG_TEST.gloss = 20;
+			Materials.DEBUG_TEST.specularMethod = specularMethod;
 			
 			// Add lights to track.
 			addObjectToSceneRequest.dispatch( sunlight );
