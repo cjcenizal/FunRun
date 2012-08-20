@@ -212,7 +212,9 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getCollidingSegmentIndices():void {
+			trace("Get segment collision.");
 			_collidingSegmentIndicesArr = CollisionDetector.getCollidingIndices( _collider, _segmentsArr );
+			trace("Done with segment collision.");
 		}
 		
 		private function noCollidingSegments():Boolean {
@@ -224,8 +226,11 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getCollidingBoundingBoxes():void {
+			trace("Get bounding box collisions.");
+			// There's a bug here. Penetration isn't being calculated correctly.
 			_firstCollidingSegmentBoundingBoxesArr = _firstCollidingSegment.getBoundingBoxes();
 			_collidingBoundingBoxIndicesArr = CollisionDetector.getCollidingIndices( _collider, _firstCollidingSegmentBoundingBoxesArr, _firstCollidingSegment );
+			trace("Done with bounding box collisions.");
 		}
 		
 		private function noCollidingBoundingBoxes():Boolean {

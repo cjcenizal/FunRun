@@ -119,10 +119,6 @@ package com.funrun.controller.commands {
 			
 			//loadSegmentsRequest.dispatch();
 			
-			// Reference.
-			var ref:Mesh = new Mesh( new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE ), Materials.DEBUG_TEST );
-			addObjectToSceneRequest.dispatch( ref );
-			
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -.5 );
 			sunlight.ambient = .05; // Higher = "brighter"

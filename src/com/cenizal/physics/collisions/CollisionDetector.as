@@ -182,6 +182,7 @@ package com.cenizal.physics.collisions
 			var bMin:Number = ( axis == Axis.X ) ? collidee.worldMinX : ( axis == Axis.Y ) ? collidee.worldMinY : collidee.worldMinZ;
 			var bMax:Number = ( axis == Axis.X ) ? collidee.worldMaxX : ( axis == Axis.Y ) ? collidee.worldMaxY : collidee.worldMaxZ;
 			var smallMin:Number, smallMax:Number, bigMin:Number, bigMax:Number;
+			trace("Get penetration for " + axis + ":");
 			if ( ( aMax - aMin ) <= ( bMax - bMin ) ) {
 				smallMin = aMin;
 				smallMax = aMax;
@@ -193,8 +194,9 @@ package com.cenizal.physics.collisions
 				bigMin = aMin;
 				bigMax = aMax;
 			}
+			trace("  min/maxes:", smallMin, smallMax, bigMin, bigMax);
 			// They don't intersect.
-			if ( smallMax < bigMin || smallMin > bigMax ) {
+			if ( smallMax <= bigMin || smallMin >= bigMax ) {
 				return 0;
 			}
 			// It's contained inside.
