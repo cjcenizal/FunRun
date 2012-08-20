@@ -35,12 +35,12 @@ package com.cenizal.physics.collisions
 				}
 				if ( doTheyIntersect( collider, collidee ) ) {
 					var volume:Number = getIntersectionVolume( collider, collidee );
-					trace("   - Intersection (volume " + volume + "):");
-					trace("     x: " + getPenetration( collider, collidee, Axis.X));
-					trace("     y: " + getPenetration( collider, collidee, Axis.Y));
-					trace("     z: " + getPenetration( collider, collidee, Axis.Z));
-					trace("       collider: " + collider);
-					trace("       collidee: " + collidee);
+	//				trace("   - Intersection (volume " + volume + "):");
+	//				trace("     collider: " + collider);
+	//				trace("     collidee: " + collidee);
+	//				trace("         x: " + getPenetration( collider, collidee, Axis.X));
+	//				trace("         y: " + getPenetration( collider, collidee, Axis.Y));
+	//				trace("         z: " + getPenetration( collider, collidee, Axis.Z));
 					if ( volume > 0 ) {
 						collisions.push( { "index": i, "volume" : volume } );
 					}
@@ -182,7 +182,7 @@ package com.cenizal.physics.collisions
 			var bMin:Number = ( axis == Axis.X ) ? collidee.worldMinX : ( axis == Axis.Y ) ? collidee.worldMinY : collidee.worldMinZ;
 			var bMax:Number = ( axis == Axis.X ) ? collidee.worldMaxX : ( axis == Axis.Y ) ? collidee.worldMaxY : collidee.worldMaxZ;
 			var smallMin:Number, smallMax:Number, bigMin:Number, bigMax:Number;
-			trace("Get penetration for " + axis + ":");
+	//		trace("      Get penetration for " + axis + ":");
 			if ( ( aMax - aMin ) <= ( bMax - bMin ) ) {
 				smallMin = aMin;
 				smallMax = aMax;
@@ -194,7 +194,7 @@ package com.cenizal.physics.collisions
 				bigMin = aMin;
 				bigMax = aMax;
 			}
-			trace("  min/maxes:", smallMin, smallMax, bigMin, bigMax);
+	//		trace("        min/maxes:", smallMin, smallMax, bigMin, bigMax);
 			// They don't intersect.
 			if ( smallMax <= bigMin || smallMin >= bigMax ) {
 				return 0;
