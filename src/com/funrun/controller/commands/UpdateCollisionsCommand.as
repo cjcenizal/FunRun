@@ -83,11 +83,10 @@ package com.funrun.controller.commands {
 			
 			// Interpolate the collider from previous position to current position.
 			for ( _interpolationStepCount = 0; _interpolationStepCount < _numberOfStepsToInterpolate; _interpolationStepCount++ ) {
-				trace("");
-				trace("Interpolation step " + _interpolationStepCount); // This is where the jittering bug lies. Are we interpolating correctly?
-				trace("Starting:");
-				trace("player: " + playerModel.position + ", _collider: " + _collider);
+				
+				stepInterpolation();
 				resetResolution();
+				
 				// Resolve collisions.
 				while ( _resolutionStepCount < _numberOfStepsToResolveCollisions ) {
 					// OK.
@@ -113,7 +112,6 @@ package com.funrun.controller.commands {
 							
 							} else {
 								stopInterpolating();
-					//			if ( !CollisionDetector.doTheyIntersect( _collider, _firstCollidingBoundingBox ) ) trace( "===== ERROR WITH COLLISION DETECTION ======");
 								
 								// Only react to shallowest collision.
 								CollisionLoop: for ( var k:int = 0; k < _collidingFaces.count; k++ ) {
@@ -125,7 +123,6 @@ package com.funrun.controller.commands {
 									switch ( _collidingFace ) {
 										case Face.TOP:
 											if ( isTopCollision() ) {
-												trace("      HIT TOP");
 												break CollisionLoop;
 											}
 										case Face.BOTTOM:
@@ -151,11 +148,7 @@ package com.funrun.controller.commands {
 					}
 					stepResolution();
 				}
-				stepInterpolation();
 			}
-			trace("Finished:");
-			trace("  player: " + playerModel.position);
-			trace("  collider:" + _collider);
 		}
 		
 		private function setupCollider():void {
@@ -176,7 +169,6 @@ package com.funrun.controller.commands {
 				_numberOfStepsToInterpolate = Math.ceil( distanceTraveled / _interpolationStepDistance );
 			}
 			if ( interpolationIsNecessary() ) {
-				trace("Interpolation is necessary. " + _numberOfStepsToInterpolate + " steps.");
 				// Prepare to interpolate.
 				setColliderPositionTo( playerModel.prevPosition );
 				_interpolationVector = new Vector3D(
@@ -185,7 +177,6 @@ package com.funrun.controller.commands {
 					( playerModel.position.z - playerModel.prevPosition.z ) / _numberOfStepsToInterpolate
 				);
 			} else {
-				trace("Interpolation is not needed.");
 				// Don't interpolate, just use the current player's position.
 				setColliderPositionTo( playerModel.position );
 				_interpolationVector = new Vector3D();
@@ -224,11 +215,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getCollidingSegmentIndices():void {
-	//		trace("      Get segment collisions.");
 			_collidingSegmentIndicesArr = CollisionDetector.getCollidingIndices( _collider, _segmentsArr );
-	//		trace("        indices: " + _collidingSegmentIndicesArr);
-	//		trace("      Done with segment collisions.");
-	//		trace("");
 		}
 		
 		private function noCollidingSegments():Boolean {
@@ -240,12 +227,8 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getCollidingBoundingBoxes():void {
-	//		trace("      Get bounding box collisions.");
-			// There's a bug here. Penetration isn't being calculated correctly.
 			_firstCollidingSegmentBoundingBoxesArr = _firstCollidingSegment.getBoundingBoxes();
 			_collidingBoundingBoxIndicesArr = CollisionDetector.getCollidingIndices( _collider, _firstCollidingSegmentBoundingBoxesArr, _firstCollidingSegment );
-	//		trace("        indices: " + _collidingBoundingBoxIndicesArr);
-	//		trace("      Done with bounding box collisions.");
 		}
 		
 		private function noCollidingBoundingBoxes():Boolean {
@@ -269,15 +252,11 @@ package com.funrun.controller.commands {
 		}
 		
 		private function isTopCollision():Boolean {
-	//		trace("    isTopCollision");
-	//		trace("      velocity: " + playerModel.velocity.y );
 			if ( playerModel.velocity.y <= 0 ) {
 				if ( _collisionEvent == Collisions.WALK ) {
 					_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
-	//				trace("      place collider at: " + _collider);
 					playerModel.velocity.y = 0;
 					playerModel.position.y = _collider.y;
-	//				trace("      match player at: " + playerModel.position);
 					playerModel.isOnTheGround = true;
 					return true;
 				} else if ( _collisionEvent == Collisions.JUMP ) {
@@ -340,12 +319,9 @@ package com.funrun.controller.commands {
 		}
 		
 		private function stepInterpolation():void {
-			trace("stepInterpolation from: " + _collider);
  			_collider.x += _interpolationVector.x;
 			_collider.y += _interpolationVector.y;
 			_collider.z += _interpolationVector.z;
-			trace("  add " + _interpolationVector.x,_interpolationVector.y,_interpolationVector.z);
-			trace("  to get " + _collider);
 		}
 	}
 }
