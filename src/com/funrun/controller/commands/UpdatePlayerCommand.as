@@ -48,16 +48,14 @@ package com.funrun.controller.commands
 				// Explore.
 				if ( explorationState.isFree ) {
 					if ( keysModel.isDown( Keyboard.UP ) ) {
-						playerModel.velocity.z += 10;
+						playerModel.velocity.z += Player.FREE_RUN_SPEED;
 					}
 					if ( keysModel.isDown( Keyboard.DOWN ) ) {
-						playerModel.velocity.z -= 10;
+						playerModel.velocity.z -= Player.FREE_RUN_SPEED;
 					}	
-					playerModel.velocity.z *= .9;
-				}
-				
-				// Move forward according to game logic.
-				if ( !explorationState.isFree ) {
+					playerModel.velocity.z *= Player.FRICTION;
+				} else  {
+					// Move forward according to game logic.
 					if ( gameState.gameState == GameState.RUNNING ) {
 						// Update speed when you're alive.
 						if ( Math.abs( playerModel.velocity.x ) > 0 ) {
@@ -79,7 +77,7 @@ package com.funrun.controller.commands
 				}
 				
 				// Apply ducking state.
-			/*	if ( keysModel.isDown( Keyboard.DOWN ) ) {
+				if ( keysModel.isDown( Keyboard.DOWN ) ) {
 					playerModel.isDucking = true;
 					if ( playerModel.scaleY != .25 ) {
 						playerModel.scaleY = .25;
@@ -89,10 +87,7 @@ package com.funrun.controller.commands
 					if ( playerModel.scaleY != 1 ) {
 						playerModel.scaleY = 1;
 					}
-				}*/
-				//if ( playerModel.scaleY != .444 ) {
-				//	playerModel.scaleY = .444;
-				//}
+				}
 			}
 			// Update lateral position.
 			playerModel.position.x += playerModel.velocity.x;

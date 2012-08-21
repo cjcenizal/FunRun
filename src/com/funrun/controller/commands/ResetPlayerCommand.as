@@ -15,9 +15,9 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			playerModel.isDead = false;
 			playerModel.isOnTheGround = false;
-			playerModel.isDucking = true;// false;
+			playerModel.isDucking = false;
 			playerModel.velocity.z = playerModel.velocity.x = 0;
-			playerModel.velocity.y = 0;//100;
+			playerModel.velocity.y = 100;
 			var width:Number = Track.WIDTH * .8;
 			playerModel.position.x = 0;//Math.random() * width;
 			playerModel.position.y = 100;//-10;

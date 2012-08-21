@@ -13,7 +13,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
-	
+	import com.cenizal.physics.collisions.Axis;
 	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
@@ -89,6 +89,7 @@ package com.funrun.controller.commands {
 				
 				// Resolve collisions.
 				while ( _resolutionStepCount < _numberOfStepsToResolveCollisions ) {
+					
 					// OK.
 					getCollidingSegmentIndices();
 					
@@ -119,7 +120,6 @@ package com.funrun.controller.commands {
 									_collidingFace = _collidingFaces.getAt( k );
 									
 									getCollisionEventAtFirstCollidingBoundingBox();
-									
 									switch ( _collidingFace ) {
 										case Face.TOP:
 											if ( isTopCollision() ) {
@@ -141,6 +141,8 @@ package com.funrun.controller.commands {
 											if ( isRightCollision() ){
 												break CollisionLoop;
 											}
+										default:
+											break;
 									}
 								}
 							}
@@ -252,7 +254,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function isTopCollision():Boolean {
-			if ( playerModel.velocity.y <= 0 ) {
+			//if ( playerModel.velocity.y <= 0 ) {
 				if ( _collisionEvent == Collisions.WALK ) {
 					_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
 					playerModel.velocity.y = 0;
@@ -266,55 +268,55 @@ package com.funrun.controller.commands {
 					playerModel.isOnTheGround = true;
 					return true;
 				}
-			}
+			//}
 			return false;
 		}
 		
 		private function isBottomCollision():Boolean {
-			if ( playerModel.velocity.y >= 0 ) {
+			//if ( playerModel.velocity.y >= 0 ) {
 				if ( _collisionEvent == Collisions.HIT ) {
 					_collider.y = _firstCollidingBoundingBox.worldMinY + _collider.minY;
 					playerModel.velocity.y = 0;
 					playerModel.position.y = _collider.y;
 					return true;
 				}
-			}
+			//}
 			return false;
 		}
 		
 		private function isFrontCollision():Boolean {
-			if ( playerModel.velocity.z >= 0 ) {
+			//if ( playerModel.velocity.z >= 0 ) {
 				if ( _collisionEvent == Collisions.SMACK ) {
 					_collider.z = _firstCollidingBoundingBox.worldMinZ + _collider.minY;
 					playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
 					playerModel.position.z = _collider.z;
 					return true;
 				}
-			}
+			//}
 			return false;
 		}
 		
 		private function isLeftCollision():Boolean {
-			if ( playerModel.velocity.x >= 0 ) {
+			//if ( playerModel.velocity.x >= 0 ) {
 				if ( _collisionEvent == Collisions.HIT ) {
 					_collider.x = _firstCollidingBoundingBox.worldMinX + _collider.minX;
 					playerModel.velocity.x = 0;
 					playerModel.position.x = _collider.x;
 					return true;
 				}
-			}
+			//}
 			return false;
 		}
 		
 		private function isRightCollision():Boolean {
-			if ( playerModel.velocity.x <= 0 ) {
+			//if ( playerModel.velocity.x <= 0 ) {
 				if ( _collisionEvent == Collisions.HIT ) {
 					_collider.x = _firstCollidingBoundingBox.worldMaxX + Math.abs( _collider.minX );
 					playerModel.velocity.x = 0;
 					playerModel.position.x = _collider.x;
 					return true;
 				}
-			}
+			//}
 			return false;
 		}
 		

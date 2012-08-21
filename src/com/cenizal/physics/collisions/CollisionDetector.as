@@ -124,7 +124,7 @@ package com.cenizal.physics.collisions
 		 * 
 		 * @return Boolean.
 		 */
-		private static function getFaceIntersection( collider:ICollidable, collidee:ICollidable, axis:String, debug:Boolean = false ):Number {
+		public static function getFaceIntersection( collider:ICollidable, collidee:ICollidable, axis:String, debug:Boolean = false ):Number {
 			var aMin:Number = ( axis == Axis.X ) ? collider.worldMinX : ( axis == Axis.Y ) ? collider.worldMinY : collider.worldMinZ;
 			var aMax:Number = ( axis == Axis.X ) ? collider.worldMaxX : ( axis == Axis.Y ) ? collider.worldMaxY : collider.worldMaxZ;
 			var bMin:Number = ( axis == Axis.X ) ? collidee.worldMinX : ( axis == Axis.Y ) ? collidee.worldMinY : collidee.worldMinZ;
@@ -176,7 +176,7 @@ package com.cenizal.physics.collisions
 			return 0;
 		}
 		
-		private static function getPenetration( collider:ICollidable, collidee:ICollidable, axis:String ):Number {
+		public static function getPenetration( collider:ICollidable, collidee:ICollidable, axis:String ):Number {
 			var aMin:Number = ( axis == Axis.X ) ? collider.worldMinX : ( axis == Axis.Y ) ? collider.worldMinY : collider.worldMinZ;
 			var aMax:Number = ( axis == Axis.X ) ? collider.worldMaxX : ( axis == Axis.Y ) ? collider.worldMaxY : collider.worldMaxZ;
 			var bMin:Number = ( axis == Axis.X ) ? collidee.worldMinX : ( axis == Axis.Y ) ? collidee.worldMinY : collidee.worldMinZ;
