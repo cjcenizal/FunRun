@@ -18,7 +18,7 @@
           "b" : "put_bottom",
           "l" : "put_left",
           "r" : "put_right",
-          "f" : "put_front",
+          "f" : "smack",
           "a" : "put_back"
         }
       },

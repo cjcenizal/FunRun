@@ -14,6 +14,7 @@ package com.funrun.model.constants
 		public static const LAUNCH_SPEED:Number = 150;
 		public static const FRICTION:Number = .9;
 		public static const FREE_RUN_SPEED:Number = 10;
+		public static const SMACK_SPEED:Number = -30;
 		
 		// Bounds.
 		public static const NORMAL_BOUNDS:Vector3D = new Vector3D( 100, 180, 60 );
