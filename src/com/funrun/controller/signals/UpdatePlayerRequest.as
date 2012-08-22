@@ -6,7 +6,7 @@ package com.funrun.controller.signals
 	{
 		public function UpdatePlayerRequest()
 		{
-			super();
+			super( int );
 		}
 	}
 }

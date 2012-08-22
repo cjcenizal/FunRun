@@ -19,7 +19,7 @@
           "l" : "put_left",
           "r" : "put_right",
           "f" : "smack",
-          "a" : "put_back"
+          "a" : "put_top"
         }
       },
     {

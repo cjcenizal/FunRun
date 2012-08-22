@@ -65,9 +65,6 @@ package com.funrun.controller.commands {
 		private var _collisionEvent:String;
 		private var _hasBeenPlacedOnGround:Boolean = false;
 		
-		// Secondary:
-		// - Test the frame interpolation algo and figure out how it imapcts this algo and can cause a positive feedback loop.
-		
 		// Once fixed:
 		// - Put floor back in SegmentsModel and StoreFloorCommand.
 		// - Test quitting a game and restarting; see if putting back "add floor" etc in ResetGameCommand matters.

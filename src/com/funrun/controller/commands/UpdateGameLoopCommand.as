@@ -105,21 +105,17 @@ package com.funrun.controller.commands {
 				}
 			}
 			
-			// Target 30 frames per second.
-			//var framesElapsed:int = Math.round( .03 * timeEvent.delta );
-			//for ( var f:int = 0; f < framesElapsed; f++ ) {
-			//	trace("frame",f);
-				if ( gameState.gameState == GameState.RUNNING ) {
-					// Update obstacles.
-					updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
-				}
+			// Target 30 frames per second and move the player.
+			var framesElapsed:int = Math.round( .03 * timeEvent.delta );
+			updatePlayerRequest.dispatch( framesElapsed );
 				
-				// Move player.
-				updatePlayerRequest.dispatch();
+			if ( gameState.gameState == GameState.RUNNING ) {
+				// Update obstacles.
+				updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
+			}
 				
-				// Detect collisions.
-				updateCollisionsRequest.dispatch();
-			//}
+			// Detect collisions.
+			updateCollisionsRequest.dispatch();
 			
 			// Update camera before updating competitors.
 			view3DModel.cameraX = playerModel.position.x;
@@ -155,8 +151,6 @@ package com.funrun.controller.commands {
 			
 			// Render.
 			renderSceneRequest.dispatch();
-			
-			trace(playerModel.isOnTheGround);
 		}
 	}
 }
