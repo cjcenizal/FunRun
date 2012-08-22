@@ -1,5 +1,6 @@
 package com.funrun.controller.commands {
 	
+	import com.cenizal.physics.collisions.Axis;
 	import com.cenizal.physics.collisions.CollisionDetector;
 	import com.cenizal.physics.collisions.Face;
 	import com.cenizal.physics.collisions.FaceCollisionsVO;
@@ -13,7 +14,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
-	import com.cenizal.physics.collisions.Axis;
+	
 	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
@@ -60,6 +61,7 @@ package com.funrun.controller.commands {
 		private var _collidingBoundingBoxIndicesArr:Array;
 		private var _firstCollidingBoundingBox:BoundingBoxVO;
 		private var _collidingFaces:FaceCollisionsVO;
+		private var _sortedFaces:Array;
 		private var _collidingFace:String;
 		private var _collisionEvent:String;
 		
@@ -114,12 +116,47 @@ package com.funrun.controller.commands {
 							} else {
 								stopInterpolating();
 								
+								//sortCollidingFacesByVector();
+								
 								// Only react to shallowest collision.
 								CollisionLoop: for ( var k:int = 0; k < _collidingFaces.count; k++ ) {
+								//CollisionLoop: for ( var k:int = 0; k < _sortedFaces.length; k++ ) {
+									
+									// Use another switch/case here to determine if face and direction of travel makes sense.
+									// This might be unnecessary optimization though.
+									// if ( collisionAtFace( _collidingFaces.getAt( k ) )
+									
+									// Instead, we shouldn't necessarily rank penetrations based on depth,
+									// we should rank them according to our velocity's vector.
 									
 									_collidingFace = _collidingFaces.getAt( k );
+									//_collidingFace = _sortedFaces[ k ];
 									
-									getCollisionEventAtFirstCollidingBoundingBox();
+									getCollisionEventAtCollidingFace();
+									
+									switch ( _collisionEvent ) {
+										case Collisions.PUT_BACK:
+											putAtBack();
+											break CollisionLoop;
+										case Collisions.PUT_FRONT:
+											putAtFront();
+											break CollisionLoop;
+										case Collisions.PUT_LEFT:
+											putAtLeft();
+											break CollisionLoop;
+										case Collisions.PUT_RIGHT:
+											putAtRight();
+											break CollisionLoop;
+										case Collisions.PUT_TOP:
+											putAtTop();
+											break CollisionLoop;
+										case Collisions.PUT_BOTTOM:
+											putAtBottom();
+											break CollisionLoop;
+									}
+									
+									
+									/*
 									switch ( _collidingFace ) {
 										case Face.TOP:
 											if ( isTopCollision() ) {
@@ -138,12 +175,12 @@ package com.funrun.controller.commands {
 												break CollisionLoop;
 											}
 										case Face.RIGHT:
-											if ( isRightCollision() ){
+											if ( isRightCollision() ) {
 												break CollisionLoop;
 											}
 										default:
 											break;
-									}
+									}*/
 								}
 							}
 						}
@@ -245,13 +282,100 @@ package com.funrun.controller.commands {
 			_collidingFaces = CollisionDetector.getCollidingFaces( _collider, _firstCollidingBoundingBox );
 		}
 		
+		private function sortCollidingFacesByVector():void {
+			var vectors:Array = [];
+			vectors.push( { "axis" : Axis.Y, "amount" : Math.abs( playerModel.velocity.y ) } );
+			vectors.push( { "axis" : Axis.Z, "amount" : Math.abs( playerModel.velocity.z ) } );
+			vectors.push( { "axis" : Axis.X, "amount" : Math.abs( playerModel.velocity.x ) } );
+			//vectors.sortOn( "amount", Array.NUMERIC | Array.DESCENDING );
+			_sortedFaces = [];
+			for ( var i:int = 0; i < vectors.length; i++ ) {
+				switch ( vectors[ i ][ "axis" ] ) {
+					case Axis.X:
+						storeFace( _sortedFaces, Face.LEFT );
+						storeFace( _sortedFaces, Face.RIGHT );
+						break;
+					case Axis.Y:
+						storeFace( _sortedFaces, Face.TOP );
+						storeFace( _sortedFaces, Face.BOTTOM );
+						break;
+					case Axis.Z:
+						storeFace( _sortedFaces, Face.FRONT );
+						storeFace( _sortedFaces, Face.BACK );
+						break;
+				}
+			}
+			trace(_collidingFaces);
+			trace("Vel: " + playerModel.velocity);
+			trace("Sorted: " + _sortedFaces);
+			trace("--------------------------------------------------------------------------------");
+		}
+		
+		private function storeFace( dest:Array, face:String ):void {
+			if ( _collidingFaces.contains( face ) ) {
+				dest.push( face );
+			}
+		}
+		
 		private function noCollidingFaces():Boolean {
 			return ( _collidingFaces.count == 0 );
 		}
 		
-		private function getCollisionEventAtFirstCollidingBoundingBox():void {
+		private function getCollisionEventAtCollidingFace():void {
 			_collisionEvent = _firstCollidingBoundingBox.block.getEventAtFace( _collidingFace );
 		}
+		
+		
+		
+		
+		
+		private function putAtBack():void {
+			trace("PUT AT BACK");
+			_collider.z = _firstCollidingBoundingBox.worldMaxZ + Math.abs( _collider.minZ );
+			playerModel.velocity.z = 0;
+			playerModel.position.z = _collider.z;
+		}
+		
+		private function putAtFront():void {
+			trace("PUT AT FRONT");
+			_collider.z = _firstCollidingBoundingBox.worldMinZ + _collider.minZ;
+			playerModel.velocity.z = 0;
+			playerModel.position.z = _collider.z;
+		}
+		
+		private function putAtLeft():void {
+			trace("PUT AT LEFT");
+			_collider.x = _firstCollidingBoundingBox.worldMinX + _collider.minX;
+			playerModel.velocity.x = 0;
+			playerModel.position.x = _collider.x;
+		}
+
+		private function putAtRight():void {
+			trace("PUT AT RIGHT");
+			_collider.x = _firstCollidingBoundingBox.worldMaxX + Math.abs( _collider.minX );
+			playerModel.velocity.x = 0;
+			playerModel.position.x = _collider.x;
+		}
+		
+		private function putAtTop():void {
+			trace("PUT AT TOP");
+			_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
+			playerModel.velocity.y = 0;
+			playerModel.position.y = _collider.y;
+			playerModel.isOnTheGround = true;
+		}
+		
+		private function putAtBottom():void {
+			trace("PUT AT BOTTOM");
+			_collider.y = _firstCollidingBoundingBox.worldMinY + _collider.minY;
+			playerModel.velocity.y = 0;
+			playerModel.position.y = _collider.y;
+		}
+		
+		
+		
+		
+		
 		
 		private function isTopCollision():Boolean {
 			//if ( playerModel.velocity.y <= 0 ) {
@@ -287,7 +411,7 @@ package com.funrun.controller.commands {
 		private function isFrontCollision():Boolean {
 			//if ( playerModel.velocity.z >= 0 ) {
 				if ( _collisionEvent == Collisions.SMACK ) {
-					_collider.z = _firstCollidingBoundingBox.worldMinZ + _collider.minY;
+					_collider.z = _firstCollidingBoundingBox.worldMinZ + _collider.minZ;
 					playerModel.velocity.z = Math.abs( playerModel.velocity.z ) * -.5;
 					playerModel.position.z = _collider.z;
 					return true;

@@ -45,8 +45,8 @@ package com.funrun.controller.commands
 					playerModel.velocity.x += Player.LATERAL_SPEED;
 				}
 				
-				// Explore.
 				if ( explorationState.isFree ) {
+					// Explore freely, moving forward and backward.
 					if ( keysModel.isDown( Keyboard.UP ) ) {
 						playerModel.velocity.z += Player.FREE_RUN_SPEED;
 					}
@@ -66,6 +66,19 @@ package com.funrun.controller.commands
 							playerModel.velocity.z += Player.FOWARD_ACCELERATION;
 						}
 					}
+					
+					// Apply ducking state.
+					if ( keysModel.isDown( Keyboard.DOWN ) ) {
+						playerModel.isDucking = true;
+						if ( playerModel.scaleY != .25 ) {
+							playerModel.scaleY = .25;
+						}
+					} else {
+						playerModel.isDucking = false;
+						if ( playerModel.scaleY != 1 ) {
+							playerModel.scaleY = 1;
+						}
+					}
 				}
 				
 				// Jumping.
@@ -76,18 +89,6 @@ package com.funrun.controller.commands
 					}
 				}
 				
-				// Apply ducking state.
-				if ( keysModel.isDown( Keyboard.DOWN ) ) {
-					playerModel.isDucking = true;
-					if ( playerModel.scaleY != .25 ) {
-						playerModel.scaleY = .25;
-					}
-				} else {
-					playerModel.isDucking = false;
-					if ( playerModel.scaleY != 1 ) {
-						playerModel.scaleY = 1;
-					}
-				}
 			}
 			// Update lateral position.
 			playerModel.position.x += playerModel.velocity.x;

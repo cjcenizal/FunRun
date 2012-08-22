@@ -6,7 +6,7 @@
       "id" : "floor",
       "filename" : "001_brick_block.obj",
       "faces" : {
-          "t" : "put_top"
+          "t" : "walk"
         }
       },
     {

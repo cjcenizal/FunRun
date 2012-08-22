@@ -1,7 +1,7 @@
 {
-  "doc" : "These are the obstacles constrcuted from models.",
+  "doc" : "These are the obstacles constructed from blocks.",
   "author" : "CJ Cenizal",
   "list" : [
-      "stairs.json"
+      "one_block.json"
     ]
 }

@@ -12,7 +12,7 @@ package com.funrun.model.constants
 		public static const LATERAL_SPEED:Number = 30;
 		public static const GRAVITY:Number = -8;
 		public static const LAUNCH_SPEED:Number = 150;
-		public static const FRICTION:Number = .5;
+		public static const FRICTION:Number = .9;
 		public static const FREE_RUN_SPEED:Number = 10;
 		
 		// Bounds.
