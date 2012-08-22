@@ -155,6 +155,8 @@ package com.funrun.controller.commands {
 			
 			// Render.
 			renderSceneRequest.dispatch();
+			
+			trace(playerModel.isOnTheGround);
 		}
 	}
 }

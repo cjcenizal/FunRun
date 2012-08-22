@@ -63,6 +63,7 @@ package com.funrun.controller.commands {
 		private var _collidingFaces:FaceCollisionsVO;
 		private var _collidingFace:String;
 		private var _collisionEvent:String;
+		private var _hasBeenPlacedOnGround:Boolean = false;
 		
 		// Secondary:
 		// - Test the frame interpolation algo and figure out how it imapcts this algo and can cause a positive feedback loop.
@@ -90,7 +91,10 @@ package com.funrun.controller.commands {
 					getCollidingSegmentIndices();
 					
 					if ( noCollidingSegments() ) {
+						
+						putPlayerOnGround( false );
 						stopResolvingCollisions();	
+						
 					} else {
 						
 						// Suspect, but seems to be fixed now.
@@ -98,9 +102,13 @@ package com.funrun.controller.commands {
 						getCollidingBoundingBoxes();
 						
 						if ( noCollidingBoundingBoxes() ) {
+							
+							putPlayerOnGround( false );
 							stopResolvingCollisions();
+							
 						} else {
 							
+							putPlayerOnGround( true );
 							getFirstCollidingBoundingBox();
 							getFacesCollidingWithFirstBoundingBox();
 							
@@ -252,6 +260,13 @@ package com.funrun.controller.commands {
 			_collisionEvent = _firstCollidingBoundingBox.block.getEventAtFace( _collidingFace );
 		}
 		
+		private function putPlayerOnGround( onGround:Boolean ):void {
+			if ( !_hasBeenPlacedOnGround ) {
+				_hasBeenPlacedOnGround = onGround;
+				playerModel.isOnTheGround = onGround;
+			}
+		}
+		
 		private function putAtBack():void {
 			_collider.z = _firstCollidingBoundingBox.worldMaxZ + Math.abs( _collider.minZ );
 			playerModel.velocity.z = 0;
@@ -280,7 +295,7 @@ package com.funrun.controller.commands {
 			_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
 			playerModel.velocity.y = 0;
 			playerModel.position.y = _collider.y;
-			playerModel.isOnTheGround = true;
+		//	playerModel.isOnTheGround = true;
 		}
 		
 		private function putAtBottom():void {

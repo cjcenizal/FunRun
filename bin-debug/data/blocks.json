@@ -40,7 +40,12 @@
       "name" : "launcher",
       "filename" : "002_warning_block.obj",
       "faces" : {
-          "t" : "jump"
+          "t" : "jump",
+          "b" : "put_top",
+          "l" : "put_top",
+          "r" : "put_top",
+          "f" : "put_top",
+          "a" : "put_top"
         }
       }
   ]
