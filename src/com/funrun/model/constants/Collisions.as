@@ -6,7 +6,6 @@ package com.funrun.model.constants
 		public static const FALL:String = "fall";
 		public static const JUMP:String = "jump";
 		
-		
 		public static const PUT_TOP:String = "put_top";
 		public static const PUT_BOTTOM:String = "put_bottom";
 		public static const PUT_LEFT:String = "put_left";

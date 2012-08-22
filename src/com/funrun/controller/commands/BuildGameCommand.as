@@ -186,7 +186,6 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
 			var geometry:CubeGeometry = new CubeGeometry( Player.NORMAL_BOUNDS.x, Player.NORMAL_BOUNDS.y, Player.NORMAL_BOUNDS.z );
-			//var geometry:CubeGeometry = new CubeGeometry( Player.DUCKING_BOUNDS.x, Player.DUCKING_BOUNDS.y, Player.DUCKING_BOUNDS.z );
 			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );

@@ -19,9 +19,9 @@ package com.funrun.controller.commands {
 			playerModel.velocity.z = playerModel.velocity.x = 0;
 			playerModel.velocity.y = 100;
 			var width:Number = Track.WIDTH * .8;
-			playerModel.position.x = 0;//Math.random() * width;
-			playerModel.position.y = 100;//-10;
-			playerModel.position.z = 1;//Math.random() * 100;
+			playerModel.position.x = Math.random() * width +  Track.WIDTH * .1;
+			playerModel.position.y = 100;
+			playerModel.position.z = Math.random() * 100 + 50;
 			playerModel.updateMeshPosition();
 		}
 	}

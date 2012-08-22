@@ -2,7 +2,6 @@ package com.funrun.controller.commands
 {
 	import away3d.core.base.Geometry;
 	import away3d.entities.Mesh;
-	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
 	import away3d.tools.commands.Merge;
 	
@@ -87,7 +86,7 @@ package com.funrun.controller.commands
 			var floor:SegmentVO = new SegmentVO( floorMesh, boundsMesh, boundingBoxes,
 				floorMesh.bounds.min.x, floorMesh.bounds.min.y, floorMesh.bounds.min.z,
 				floorMesh.bounds.max.x, floorMesh.bounds.max.y, floorMesh.bounds.max.z );
-		//	segmentsModel.storeFloor( floor );
+			segmentsModel.storeFloor( floor );
 		}
 	}
 }

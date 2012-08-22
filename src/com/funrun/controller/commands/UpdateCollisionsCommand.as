@@ -66,7 +66,6 @@ package com.funrun.controller.commands {
 		private var _hasBeenPlacedOnGround:Boolean = false;
 		
 		// Once fixed:
-		// - Put floor back in SegmentsModel and StoreFloorCommand.
 		// - Test quitting a game and restarting; see if putting back "add floor" etc in ResetGameCommand matters.
 		// - Test initial floor z in Segment.
 		
