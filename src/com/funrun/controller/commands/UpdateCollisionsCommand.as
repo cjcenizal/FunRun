@@ -1,8 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.cenizal.physics.collisions.Axis;
 	import com.cenizal.physics.collisions.CollisionDetector;
-	import com.cenizal.physics.collisions.Face;
 	import com.cenizal.physics.collisions.FaceCollisionsVO;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
@@ -64,10 +62,6 @@ package com.funrun.controller.commands {
 		private var _collidingFace:String;
 		private var _collisionEvent:String;
 		private var _hasBeenPlacedOnGround:Boolean = false;
-		
-		// Once fixed:
-		// - Test quitting a game and restarting; see if putting back "add floor" etc in ResetGameCommand matters.
-		// - Test initial floor z in Segment.
 		
 		override public function execute():void {
 			setupCollider();
