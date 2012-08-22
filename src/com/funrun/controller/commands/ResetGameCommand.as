@@ -13,8 +13,9 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.constants.Camera;
+	import com.funrun.model.constants.Track;
+	import com.funrun.model.state.ShowBoundsState;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -40,6 +41,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
 		
+		[Inject]
+		public var view3DModel:View3DModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -60,15 +64,17 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var displayDistanceRequest:DisplayDistanceRequest;
 		
+		// State.
+		
 		[Inject]
-		public var view3DModel:View3DModel;
+		public var showBoundsState:ShowBoundsState;
 		
 		override public function execute():void {
 			// Reset time.
 			timeModel.reset();
 			// Remove all existing obstacles.
 			while ( trackModel.numObstacles > 0 ) {
-				removeObjectFromSceneRequest.dispatch( trackModel.getObstacleAt( 0 ).mesh );
+				removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? trackModel.getObstacleAt( 0 ).boundsMesh : trackModel.getObstacleAt( 0 ).mesh );
 				trackModel.removeObstacleAt( 0 );
 			}
 			// Remove competitors.
