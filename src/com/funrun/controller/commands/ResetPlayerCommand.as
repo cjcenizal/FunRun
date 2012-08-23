@@ -3,8 +3,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Track;
 	
-	import flash.geom.Vector3D;
-	
 	import org.robotlegs.mvcs.Command;
 	
 	public class ResetPlayerCommand extends Command {

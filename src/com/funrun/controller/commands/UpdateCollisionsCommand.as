@@ -83,7 +83,7 @@ package com.funrun.controller.commands {
 					if ( noCollidingSegments() ) {
 						
 						putPlayerOnGround( false );
-						stopResolvingCollisions();	
+						stopResolvingCollisions();
 						
 					} else {
 						
@@ -285,7 +285,6 @@ package com.funrun.controller.commands {
 			_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
 			playerModel.velocity.y = 0;
 			playerModel.position.y = _collider.y;
-		//	playerModel.isOnTheGround = true;
 		}
 		
 		private function putAtBottom():void {

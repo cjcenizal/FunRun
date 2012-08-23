@@ -1,7 +1,6 @@
 package com.funrun.controller.commands {
 	
 	import away3d.lights.LightBase;
-	import away3d.lights.PointLight;
 	
 	import com.funrun.controller.signals.DisplayDistanceRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
@@ -21,7 +20,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.Camera;
-	import com.funrun.model.constants.Player;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.GameState;
 	
