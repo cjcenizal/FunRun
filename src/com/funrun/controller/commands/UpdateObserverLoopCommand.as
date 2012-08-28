@@ -5,8 +5,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
-	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
+	import com.funrun.controller.signals.UpdateUiRequest;
 	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ObserverModel;
@@ -41,7 +41,7 @@ package com.funrun.controller.commands {
 		public var updateCompetitorsRequest:UpdateCompetitorsRequest;
 		
 		[Inject]
-		public var updatePlacesRequest:UpdatePlacesRequest;
+		public var updateUiRequest:UpdateUiRequest;
 		
 		[Inject]
 		public var followNewCompetitorRequest:FollowNewCompetitorRequest;
@@ -57,8 +57,9 @@ package com.funrun.controller.commands {
 			// TO-DO: Implement a timer to watch a dead competitor for a few seconds before switching.
 			
 			var competitor:CompetitorVO = competitorsModel.getWithId( observerModel.competitorId );
+			var date:Date = new Date();
 			if ( !competitor ||
-				( competitor.isDead && ( new Date().getTime() - competitor.deathTime > 1500 ) ) ) {
+				( competitor.isDead && ( date.getTime() - competitor.deathTime > 1500 ) ) ) {
 				// Else, try to follow a new competitor.
 				if ( competitorsModel.numLiveCompetitors > 0 ) {
 					followNewCompetitorRequest.dispatch( 1 );
@@ -78,7 +79,7 @@ package com.funrun.controller.commands {
 				updateTrackRequest.dispatch( new UpdateTrackPayload( competitor.mesh.position.z ) );
 				
 				// Update places.
-				updatePlacesRequest.dispatch();
+				updateUiRequest.dispatch();
 				
 				// Update camera.
 				view3DModel.cameraZ = observerModel.z;

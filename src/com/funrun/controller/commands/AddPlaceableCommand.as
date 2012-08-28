@@ -1,6 +1,5 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.model.vo.IPlaceable;
 	import com.funrun.model.PlacesModel;
 
@@ -20,12 +19,12 @@ package com.funrun.controller.commands {
 
 		// Commands.
 
-		[Inject]
-		public var updatePlacesRequest:UpdatePlacesRequest;
+	//	[Inject]
+	//	public var updatePlacesRequest:UpdatePlacesRequest;
 
 		override public function execute():void {
 			placesModel.add( placeable );
-			updatePlacesRequest.dispatch();
+	//		updatePlacesRequest.dispatch();
 		}
 	}
 }

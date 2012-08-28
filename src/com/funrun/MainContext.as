@@ -50,11 +50,10 @@ package com.funrun {
 	import com.funrun.controller.commands.UpdateAiCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateCollisionsCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
-	import com.funrun.controller.commands.UpdateCountdownCommand;
-	import com.funrun.controller.commands.UpdateNametagsCommand;
-	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.UpdatePlayerCommand;
 	import com.funrun.controller.commands.UpdateTrackCommand;
+	import com.funrun.controller.commands.UpdateUiCommand;
+	import com.funrun.controller.commands.UpdateViewCommand;
 	import com.funrun.controller.signals.AddAiCompetitorsRequest;
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.AddDelayedCommandRequest;
@@ -119,12 +118,11 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
-	import com.funrun.controller.signals.UpdateCountdownRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
-	import com.funrun.controller.signals.UpdateNametagsRequest;
-	import com.funrun.controller.signals.UpdatePlacesRequest;
 	import com.funrun.controller.signals.UpdatePlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
+	import com.funrun.controller.signals.UpdateUiRequest;
+	import com.funrun.controller.signals.UpdateViewRequest;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
@@ -307,13 +305,12 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StoreFloorRequest,						StoreFloorCommand );
 			signalCommandMap.mapSignalClass( StoreObstacleRequest,					StoreObstacleCommand );
 			signalCommandMap.mapSignalClass( UpdateAiCompetitorsRequest,			UpdateAiCompetitorsCommand );
+			signalCommandMap.mapSignalClass( UpdateCollisionsRequest,				UpdateCollisionsCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
-			signalCommandMap.mapSignalClass( UpdateCountdownRequest,				UpdateCountdownCommand );
-			signalCommandMap.mapSignalClass( UpdateNametagsRequest,					UpdateNametagsCommand );
 			signalCommandMap.mapSignalClass( UpdatePlayerRequest,					UpdatePlayerCommand );
 			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );
-			signalCommandMap.mapSignalClass( UpdatePlacesRequest,					UpdatePlacesCommand );
-			signalCommandMap.mapSignalClass( UpdateCollisionsRequest,			UpdateCollisionsCommand );
+			signalCommandMap.mapSignalClass( UpdateUiRequest,						UpdateUiCommand );
+			signalCommandMap.mapSignalClass( UpdateViewRequest,						UpdateViewCommand );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );

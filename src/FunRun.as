@@ -23,6 +23,11 @@ package {
 		
 		/*
 		TO-DO:
+		- Game design
+			- Put together references, direction, deliverables, and contract for Heather
+			- Implement cool obstacles
+			- Test multiplayer to make sure it still works
+			- Test performance on baby laptop
 		- Game logic
 			- Extrapolate targeted fps to give proper increment and accel/decel amounts in UpdatePlayerCommand
 		- Virtual goods visibility
