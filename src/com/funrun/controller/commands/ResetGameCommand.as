@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddFloorRequest;
 	import com.funrun.controller.signals.AddObstaclesRequest;
-	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.DrawDistanceRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
@@ -62,7 +62,7 @@ package com.funrun.controller.commands {
 		public var removeCompetitorRequest:RemoveCompetitorRequest;
 		
 		[Inject]
-		public var displayDistanceRequest:DisplayDistanceRequest;
+		public var displayDistanceRequest:DrawDistanceRequest;
 		
 		// State.
 		

@@ -2,7 +2,8 @@ package com.funrun.controller.commands {
 	
 	import away3d.lights.LightBase;
 	
-	import com.funrun.controller.signals.DisplayDistanceRequest;
+	import com.funrun.controller.signals.DrawCountdownRequest;
+	import com.funrun.controller.signals.DrawDistanceRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
@@ -51,19 +52,10 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var lightsModel:LightsModel;
 		
-		[Inject]
-		public var countdownModel:CountdownModel;
-		
 		// Commands.
 		
 		[Inject]
 		public var startRunningRequest:StartRunningRequest;
-		
-		[Inject]
-		public var updateCountdownRequest:UpdateCountdownRequest;
-		
-		[Inject]
-		public var updateTrackRequest:UpdateTrackRequest;
 		
 		[Inject]
 		public var updatePlayerRequest:UpdatePlayerRequest;
@@ -75,7 +67,7 @@ package com.funrun.controller.commands {
 		public var renderSceneRequest:RenderSceneRequest;
 		
 		[Inject]
-		public var displayDistanceRequest:DisplayDistanceRequest;
+		public var drawDistanceRequest:DrawDistanceRequest;
 		
 		[Inject]
 		public var sendMultiplayerUpdateRequest:SendMultiplayerUpdateRequest;
@@ -89,28 +81,14 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var updatePlacesRequest:UpdatePlacesRequest;
 		
+		[Inject]
+		public var updateCountdownRequest:UpdateCountdownRequest;
+		
 		override public function execute():void {
-			
-			// Update countdown if necessary.
-			if ( gameState.gameState == GameState.WAITING_FOR_PLAYERS ) {
-				if ( countdownModel.isRunning ) {
-					if ( countdownModel.secondsRemaining > 0 ) {
-						updateCountdownRequest.dispatch( countdownModel.secondsRemaining.toString() );
-					} else {
-						// Start running.
-						startRunningRequest.dispatch();
-					}
-				}
-			}
 			
 			// Target 30 frames per second and move the player.
 			var framesElapsed:int = Math.round( .03 * timeEvent.delta );
 			updatePlayerRequest.dispatch( framesElapsed );
-				
-			if ( gameState.gameState == GameState.RUNNING ) {
-				// Update obstacles.
-				updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
-			}
 				
 			// Detect collisions.
 			updateCollisionsRequest.dispatch();
@@ -138,17 +116,23 @@ package com.funrun.controller.commands {
 			
 			// Update distance counter.
 			if ( gameState.gameState == GameState.RUNNING ) {
-				displayDistanceRequest.dispatch( playerModel.distanceString + " feet" );
+				drawDistanceRequest.dispatch( playerModel.distanceString + " feet" );
 			}
 			
-			// Update other players with our position.
-			sendMultiplayerUpdateRequest.dispatch();
+			// Update countdown if necessary.
+			if ( gameState.gameState == GameState.WAITING_FOR_PLAYERS ) {
+				updateCountdownRequest.dispatch();
+			}
 			
 			// Update places.
 			updatePlacesRequest.dispatch();
 			
 			// Render.
 			renderSceneRequest.dispatch();
+			
+			// Update other players with our position.
+			sendMultiplayerUpdateRequest.dispatch();
+			
 		}
 	}
 }

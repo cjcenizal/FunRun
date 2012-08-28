@@ -2,9 +2,9 @@ package com.funrun.controller.signals
 {
 	import org.osflash.signals.Signal;
 	
-	public class DisplayDistanceRequest extends Signal
+	public class DrawPlaceRequest extends Signal
 	{
-		public function DisplayDistanceRequest()
+		public function DrawPlaceRequest()
 		{
 			super( String );
 		}

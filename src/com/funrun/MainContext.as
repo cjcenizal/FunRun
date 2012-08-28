@@ -50,6 +50,7 @@ package com.funrun {
 	import com.funrun.controller.commands.UpdateAiCompetitorsCommand;
 	import com.funrun.controller.commands.UpdateCollisionsCommand;
 	import com.funrun.controller.commands.UpdateCompetitorsCommand;
+	import com.funrun.controller.commands.UpdateCountdownCommand;
 	import com.funrun.controller.commands.UpdateNametagsCommand;
 	import com.funrun.controller.commands.UpdatePlacesCommand;
 	import com.funrun.controller.commands.UpdatePlayerCommand;
@@ -68,9 +69,10 @@ package com.funrun {
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.CompleteAppRequest;
 	import com.funrun.controller.signals.CullSegmentsRequest;
-	import com.funrun.controller.signals.DisplayDistanceRequest;
-	import com.funrun.controller.signals.DisplayMessageRequest;
-	import com.funrun.controller.signals.DisplayPlaceRequest;
+	import com.funrun.controller.signals.DrawCountdownRequest;
+	import com.funrun.controller.signals.DrawDistanceRequest;
+	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.DrawPlaceRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
@@ -245,9 +247,9 @@ package com.funrun {
 			injector.mapSingleton( AddNametagRequest );
 			injector.mapSingleton( AddPopupRequest );
 			injector.mapSingleton( AddView3DRequest );
-			injector.mapSingleton( DisplayDistanceRequest );
-			injector.mapSingleton( DisplayMessageRequest );
-			injector.mapSingleton( DisplayPlaceRequest );
+			injector.mapSingleton( DrawDistanceRequest );
+			injector.mapSingleton( DrawMessageRequest );
+			injector.mapSingleton( DrawPlaceRequest );
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
@@ -256,7 +258,7 @@ package com.funrun {
 			injector.mapSingleton( ShowScreenRequest );
 			injector.mapSingleton( ShowStatsRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
-			injector.mapSingleton( UpdateCountdownRequest );
+			injector.mapSingleton( DrawCountdownRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			signalCommandMap.mapSignalClass( AddAiCompetitorsRequest,				AddAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
@@ -306,6 +308,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( StoreObstacleRequest,					StoreObstacleCommand );
 			signalCommandMap.mapSignalClass( UpdateAiCompetitorsRequest,			UpdateAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( UpdateCompetitorsRequest,				UpdateCompetitorsCommand );
+			signalCommandMap.mapSignalClass( UpdateCountdownRequest,				UpdateCountdownCommand );
 			signalCommandMap.mapSignalClass( UpdateNametagsRequest,					UpdateNametagsCommand );
 			signalCommandMap.mapSignalClass( UpdatePlayerRequest,					UpdatePlayerCommand );
 			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );

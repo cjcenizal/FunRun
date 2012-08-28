@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.DisplayMessageRequest;
+	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.vo.CompetitorVO;
@@ -27,7 +27,7 @@ package com.funrun.controller.commands {
 		public var removeCompetitorRequest:RemoveCompetitorRequest;
 		
 		[Inject]
-		public var displayMessageRequest:DisplayMessageRequest;
+		public var displayMessageRequest:DrawMessageRequest;
 		
 		override public function execute():void {
 			var competitor:CompetitorVO = competitorsModel.getWithId( message.getInt( 0 ) );

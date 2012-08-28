@@ -23,9 +23,20 @@ package {
 		
 		/*
 		TO-DO:
-		- Fix bug where I am able to jump through stairs
-			- Especially in ducking state
-			- And hitting the side of some obstacles triggers a smack instead of hit.
+		- Game logic
+			- Extrapolate targeted fps to give proper increment and accel/decel amounts in UpdatePlayerCommand
+		- Virtual goods visibility
+			- Players join game facing backwards and then turn around, so you see them and they see you
+				- On join game, check if # players > 0
+				- If no other players, start facing forwards
+				- Else, start in front of other players, facing them, with interaction disabled
+					- Camera is locked to player rotation
+				- Rotate player, move them back to their correct starting place, enable interaction
+				- Move overall camera position farther back, so we can see more context of other players
+			- Portraits of players when see the results of a run
+			- Camera shows front during observer mode, look around with mouse
+		
+		
 		- Use models and animation (players are food? Food Run?)
 		- Make sure hitboxes are SMALLER than the model
 		- Economy

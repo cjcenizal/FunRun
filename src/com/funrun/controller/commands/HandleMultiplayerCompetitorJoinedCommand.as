@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddCompetitorRequest;
-	import com.funrun.controller.signals.DisplayMessageRequest;
+	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
@@ -27,7 +27,7 @@ package com.funrun.controller.commands {
 		public var addCompetitorRequest:AddCompetitorRequest;
 		
 		[Inject]
-		public var displayMessageRequest:DisplayMessageRequest;
+		public var displayMessageRequest:DrawMessageRequest;
 		
 		override public function execute():void {
 			// We receive ourselves as new players, so screen ourselves out.

@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.DisplayMessageRequest;
+	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.TimeModel;
@@ -20,7 +20,7 @@ package com.funrun.controller.commands {
 		public var interpolationModel:InterpolationModel;
 		
 		[Inject]
-		public var displayMessageRequest:DisplayMessageRequest;
+		public var displayMessageRequest:DrawMessageRequest;
 		
 		[Inject]
 		public var timeModel:TimeModel;

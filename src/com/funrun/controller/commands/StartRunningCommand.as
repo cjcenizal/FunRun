@@ -1,8 +1,8 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.DisplayMessageRequest;
+	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
-	import com.funrun.controller.signals.UpdateCountdownRequest;
+	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.model.state.GameState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -20,10 +20,10 @@ package com.funrun.controller.commands {
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
 		[Inject]
-		public var updateCountdownRequest:UpdateCountdownRequest;
+		public var updateCountdownRequest:DrawCountdownRequest;
 		
 		[Inject]
-		public var displayMessageRequest:DisplayMessageRequest;
+		public var displayMessageRequest:DrawMessageRequest;
 		
 		override public function execute():void {
 			// Stop countdown.

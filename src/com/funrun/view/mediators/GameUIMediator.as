@@ -1,11 +1,11 @@
 package com.funrun.view.mediators {
 	
-	import com.funrun.controller.signals.DisplayDistanceRequest;
-	import com.funrun.controller.signals.DisplayMessageRequest;
-	import com.funrun.controller.signals.DisplayPlaceRequest;
+	import com.funrun.controller.signals.DrawDistanceRequest;
+	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.DrawPlaceRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
-	import com.funrun.controller.signals.UpdateCountdownRequest;
+	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.view.components.GameUIView;
 	
 	import org.robotlegs.core.IMediator;
@@ -17,16 +17,16 @@ package com.funrun.view.mediators {
 		public var view:GameUIView;
 		
 		[Inject]
-		public var displayPlaceRequest:DisplayPlaceRequest;
+		public var drawPlaceRequest:DrawPlaceRequest;
 		
 		[Inject]
-		public var displayDistanceRequest:DisplayDistanceRequest;
+		public var drawDistanceRequest:DrawDistanceRequest;
 		
 		[Inject]
-		public var displayMessageRequest:DisplayMessageRequest;
+		public var drawMessageRequest:DrawMessageRequest;
 		
 		[Inject]
-		public var updateCountdownRequest:UpdateCountdownRequest;
+		public var drawCountdownRequest:DrawCountdownRequest;
 		
 		[Inject]
 		public var toggleCountdownRequest:ToggleCountdownRequest;
@@ -37,22 +37,22 @@ package com.funrun.view.mediators {
 		override public function onRegister():void {
 			view.init();
 			view.onClickQuitGameButtonSignal.add( onQuitGameClicked );
-			displayDistanceRequest.add( onDisplayDistanceRequested );
-			displayPlaceRequest.add( onDisplayPlaceRequested );
-			displayMessageRequest.add( onDisplayMessageRequested );
-			updateCountdownRequest.add( onUpdateCountdown );
+			drawDistanceRequest.add( onDrawDistanceRequested );
+			drawPlaceRequest.add( onDrawPlaceRequested );
+			drawMessageRequest.add( onDrawMessageRequested );
+			drawCountdownRequest.add( onUpdateCountdown );
 			toggleCountdownRequest.add( onToggleCountdown );
 		}
 		
-		private function onDisplayDistanceRequested( distance:String ):void {
+		private function onDrawDistanceRequested( distance:String ):void {
 			view.showDistance( distance );
 		}
 		
-		private function onDisplayPlaceRequested( place:String ):void {
+		private function onDrawPlaceRequested( place:String ):void {
 			view.showPlace( place );
 		}
 		
-		private function onDisplayMessageRequested( message:String ):void {
+		private function onDrawMessageRequested( message:String ):void {
 			view.showMessage( message );
 		}
 		

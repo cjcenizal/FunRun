@@ -2,9 +2,9 @@ package com.funrun.controller.signals {
 
 	import org.osflash.signals.Signal;
 
-	public class DisplayMessageRequest extends Signal {
+	public class DrawMessageRequest extends Signal {
 		
-		public function DisplayMessageRequest() {
+		public function DrawMessageRequest() {
 			super( String );
 		}
 	}

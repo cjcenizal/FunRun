@@ -1,5 +1,7 @@
 package com.funrun.controller.commands
 {
+	import com.funrun.controller.signals.UpdateTrackRequest;
+	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.KeysModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Player;
@@ -33,6 +35,11 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var keysModel:KeysModel;
+		
+		// Commands.
+		
+		[Inject]
+		public var updateTrackRequest:UpdateTrackRequest;
 		
 		override public function execute():void {
 			
@@ -106,6 +113,11 @@ package com.funrun.controller.commands
 				// Update gravity.
 				playerModel.velocity.y += Player.GRAVITY;
 				playerModel.position.y += playerModel.velocity.y;
+			}
+			
+			if ( gameState.gameState == GameState.RUNNING ) {
+				// Update obstacles.
+				updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
 			}
 		}
 	}

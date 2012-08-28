@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.DisplayPlaceRequest;
+	import com.funrun.controller.signals.DrawPlaceRequest;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.services.OrdinalizeNumberService;
@@ -25,7 +25,7 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var displayPlaceRequest:DisplayPlaceRequest;
+		public var displayPlaceRequest:DrawPlaceRequest;
 		
 		override public function execute():void {
 			placesModel.sortPlaces();
