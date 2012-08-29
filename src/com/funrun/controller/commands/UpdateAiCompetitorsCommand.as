@@ -5,11 +5,17 @@ package com.funrun.controller.commands {
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.constants.Player;
+	import com.funrun.model.state.GameState;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
 	
 	public class UpdateAiCompetitorsCommand extends Command {
+		
+		// State.
+		
+		[Inject]
+		public var gameState:GameState;
 		
 		// Models.
 		
@@ -26,19 +32,21 @@ package com.funrun.controller.commands {
 		public var timeModel:TimeModel;
 		
 		override public function execute():void {
-			// Update positions.
-			interpolationModel.reset();
-			var competitor:CompetitorVO;
-			var killed:Boolean = false;
-			for ( var i:int = 0; i < competitorsModel.numCompetitors; i++ ) {
-				competitor = competitorsModel.getAt( i );
-				if ( !competitor.isDead ) {
-					if ( !killed && timeModel.ticks > ( 30 * 4 ) && timeModel.ticks % 200 == 0 ) {
-						competitorsModel.kill( competitor.id );
-						displayMessageRequest.dispatch( competitor.name + " just died!" );
-						killed = true;
-					} else {
-						competitor.updatePosition( competitor.position.x, competitor.position.y, competitor.position.z + Math.random() * Player.MAX_FORWARD_VELOCITY + Player.MAX_FORWARD_VELOCITY * .25 );
+			if ( gameState.gameState == GameState.RUNNING ) {
+				// Update positions.
+				interpolationModel.reset();
+				var competitor:CompetitorVO;
+				var killed:Boolean = false;
+				for ( var i:int = 0; i < competitorsModel.numCompetitors; i++ ) {
+					competitor = competitorsModel.getAt( i );
+					if ( !competitor.isDead ) {
+						if ( !killed && timeModel.ticks > ( 30 * 4 ) && timeModel.ticks % 200 == 0 ) {
+							competitorsModel.kill( competitor.id );
+							displayMessageRequest.dispatch( competitor.name + " just died!" );
+							killed = true;
+						} else {
+							competitor.updatePosition( competitor.position.x, competitor.position.y, competitor.position.z + Math.random() * Player.MAX_FORWARD_VELOCITY + Player.MAX_FORWARD_VELOCITY * .25 );
+						}
 					}
 				}
 			}

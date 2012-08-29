@@ -31,7 +31,7 @@ package com.funrun.controller.commands {
 		public var renderSceneRequest:RenderSceneRequest;
 		
 		[Inject]
-		public var connectMultiplayerRequest:JoinMatchmakingRequest;
+		public var joinMatchmakingRequest:JoinMatchmakingRequest;
 		
 		[Inject]
 		public var startOfflineGameRequest:StartOfflineGameRequest;
@@ -45,7 +45,7 @@ package com.funrun.controller.commands {
 			renderSceneRequest.dispatch();
 			// Connect to a game.
 			if ( onlineState.isOnline ) {
-				connectMultiplayerRequest.dispatch();
+				joinMatchmakingRequest.dispatch();
 			} else {
 				startOfflineGameRequest.dispatch();
 			}

@@ -11,7 +11,8 @@ package com.funrun.model {
 		public function start( msRemaining:Number ):void {
 			_isRunning = true;
 			_msRemaining = msRemaining;
-			_startTime = new Date().getTime();
+			var date:Date = new Date();
+			_startTime = date.getTime();
 		}
 		
 		public function reset():void {
@@ -23,7 +24,8 @@ package com.funrun.model {
 		}
 		
 		private function get msElapsed():Number {
-			return ( new Date().getTime() ) - _startTime;
+			var date:Date = new Date();
+			return ( date.getTime() ) - _startTime;
 		}
 		
 		public function get isRunning():Boolean {

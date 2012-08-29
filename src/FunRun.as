@@ -29,6 +29,7 @@ package {
 			- Put together references, direction, deliverables, and contract for Heather
 			- Implement cool obstacles
 			- Test multiplayer to make sure it still works
+			- Performance gets pretty choppy
 			- Test performance on baby laptop
 		- Virtual goods visibility
 			- Players join game facing backwards and then turn around, so you see them and they see you

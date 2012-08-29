@@ -1,10 +1,12 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddAiCompetitorsRequest;
+	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Stats;
+	import com.funrun.model.state.ExplorationState;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -15,6 +17,11 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var playerModel:PlayerModel;
 		
+		// State.
+		
+		[Inject]
+		public var explorationState:ExplorationState;
+		
 		// Commands.
 		
 		[Inject]
@@ -22,7 +29,10 @@ package com.funrun.controller.commands {
 
 		[Inject]
 		public var startRunningRequest:StartRunningRequest;
-
+		
+		[Inject]
+		public var startCountdownRequest:StartCountdownRequest;
+		
 		[Inject]
 		public var addAiCompetitorsRequest:AddAiCompetitorsRequest;
 
@@ -32,8 +42,12 @@ package com.funrun.controller.commands {
 				key = Stats.KEYS[ i ];
 				playerModel.properties[ key ] = Stats.DEFAULTS[ key ];
 			}
+			if ( explorationState.isFree ) {
+				startRunningRequest.dispatch();
+			} else {
+				startCountdownRequest.dispatch( 3000 );
+			}
 			startGameLoopRequest.dispatch();
-			startRunningRequest.dispatch();
 			addAiCompetitorsRequest.dispatch( 4 );
 		}
 	}

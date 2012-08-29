@@ -5,8 +5,11 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdatePlayerRequest;
+	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
 	import com.funrun.controller.signals.UpdateViewRequest;
+	import com.funrun.controller.signals.payload.UpdateTrackPayload;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.events.TimeEvent;
 	
@@ -23,6 +26,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var timeModel:TimeModel;
+		
+		[Inject]
+		public var playerModel:PlayerModel;
 		
 		// Commands.
 		
@@ -47,6 +53,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var sendMultiplayerUpdateRequest:SendMultiplayerUpdateRequest;
 		
+		[Inject]
+		public var updateTrackRequest:UpdateTrackRequest;
+		
 		override public function execute():void {
 			
 			// Target 30 frames per second and move the player.
@@ -54,6 +63,8 @@ package com.funrun.controller.commands {
 			updatePlayerRequest.dispatch( framesElapsed );
 			
 			updateCollisionsRequest.dispatch();
+			
+			updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
 			
 			updateViewRequest.dispatch();
 			

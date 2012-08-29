@@ -117,11 +117,6 @@ package com.funrun.controller.commands
 				playerModel.velocity.y += Player.GRAVITY;
 				playerModel.position.y += playerModel.velocity.y;
 			}
-			
-			// Update obstacles.
-			if ( gameState.gameState == GameState.RUNNING ) {
-				updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
-			}
 		}
 	}
 }
