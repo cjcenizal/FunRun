@@ -22,14 +22,14 @@ package {
 		
 		
 		/*
+		- Search for TO-DOs
 		TO-DO:
+		- Make GameState use multiple bit flags.
 		- Game design
 			- Put together references, direction, deliverables, and contract for Heather
 			- Implement cool obstacles
 			- Test multiplayer to make sure it still works
 			- Test performance on baby laptop
-		- Game logic
-			- Extrapolate targeted fps to give proper increment and accel/decel amounts in UpdatePlayerCommand
 		- Virtual goods visibility
 			- Players join game facing backwards and then turn around, so you see them and they see you
 				- On join game, check if # players > 0

@@ -43,8 +43,32 @@ package com.funrun.controller.commands
 		
 		override public function execute():void {
 			
+			// Apply ducking state.
+			if ( explorationState.isFree ) {
+			} else {
+				if ( keysModel.isDown( Keyboard.DOWN ) ) {
+					playerModel.isDucking = true;
+					if ( playerModel.scaleY != .25 ) {
+						playerModel.scaleY = .25;
+					}
+				} else {
+					playerModel.isDucking = false;
+					if ( playerModel.scaleY != 1 ) {
+						playerModel.scaleY = 1;
+					}
+				}
+			}
+			
+			// Jumping.
+			if ( keysModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keysModel.isDown( Keyboard.UP ) ) ) {
+				if ( playerModel.isOnTheGround ) {
+					playerModel.velocity.y += Player.JUMP_SPEED;
+					playerModel.isOnTheGround = false;
+				}
+			}
+			
+			// Apply acceleration and velocity updates for each targeted frame.
 			for ( var i:int = 0; i < framesElapsed; i++ ) {
-				
 				if ( playerModel.isDead ) {
 					// Slow down when you're dead.
 					playerModel.velocity.x *= .6;
@@ -80,30 +104,9 @@ package com.funrun.controller.commands
 								playerModel.velocity.z += Player.FOWARD_ACCELERATION;
 							}
 						}
-						
-						// Apply ducking state.
-						if ( keysModel.isDown( Keyboard.DOWN ) ) {
-							playerModel.isDucking = true;
-							if ( playerModel.scaleY != .25 ) {
-								playerModel.scaleY = .25;
-							}
-						} else {
-							playerModel.isDucking = false;
-							if ( playerModel.scaleY != 1 ) {
-								playerModel.scaleY = 1;
-							}
-						}
 					}
-					
-					// Jumping.
-					if ( keysModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keysModel.isDown( Keyboard.UP ) ) ) {
-						if ( playerModel.isOnTheGround ) {
-							playerModel.velocity.y += Player.JUMP_SPEED;
-							playerModel.isOnTheGround = false;
-						}
-					}
-					
 				}
+				
 				// Update lateral position.
 				playerModel.position.x += playerModel.velocity.x;
 				
@@ -115,8 +118,8 @@ package com.funrun.controller.commands
 				playerModel.position.y += playerModel.velocity.y;
 			}
 			
+			// Update obstacles.
 			if ( gameState.gameState == GameState.RUNNING ) {
-				// Update obstacles.
 				updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
 			}
 		}
