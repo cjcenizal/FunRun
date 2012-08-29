@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.View3D;
+	import away3d.controllers.HoverController;
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
@@ -23,7 +24,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.Camera;
-	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Time;
@@ -45,7 +45,7 @@ package com.funrun.controller.commands {
 		public var lightsModel:LightsModel;
 		
 		[Inject]
-		public var cameraModel:View3DModel;
+		public var view3dModel:View3DModel;
 		
 		[Inject]
 		public var interpolationModel:InterpolationModel;
@@ -105,8 +105,23 @@ package com.funrun.controller.commands {
 			view.width = contextView.stage.stageWidth;
 			view.height = contextView.stage.stageHeight;
 			view.backgroundColor = 0xffffff;
-			cameraModel.setView( view );
+			view3dModel.setView( view );
 			addView3DRequest.dispatch( view );
+			
+			// Add camera target.
+			view3dModel.target = new Mesh( new CubeGeometry( 1, 1, 1 ), null );
+			addObjectToSceneRequest.dispatch( view3dModel.target );
+			view3dModel.ease.x = 1;
+			view3dModel.ease.y = .2;
+			view3dModel.ease.z = .65;
+			
+			// Add camera controller.
+			var panAngle:Number = 180;
+			var tiltAngle:Number = 10;
+			var distance:Number = 1500;
+			var cameraController:HoverController = new HoverController( camera, view3dModel.target, panAngle, tiltAngle, distance );
+			cameraController.steps = 1;
+			view3dModel.cameraController = cameraController;
 			
 			// Add materials.
 			/*
@@ -189,7 +204,7 @@ package com.funrun.controller.commands {
 			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
-		
+			
 		}
 	}
 }

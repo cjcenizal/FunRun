@@ -1,7 +1,5 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.AddFloorRequest;
-	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.DrawDistanceRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
@@ -14,7 +12,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.constants.Camera;
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.ShowBoundsState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -50,12 +47,6 @@ package com.funrun.controller.commands {
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		[Inject]
-		public var addObstaclesRequest:AddObstaclesRequest;
-		
-		[Inject]
-		public var addFloorRequest:AddFloorRequest;
-		
-		[Inject]
 		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
 		[Inject]
@@ -89,17 +80,8 @@ package com.funrun.controller.commands {
 			displayDistanceRequest.dispatch( playerModel.distanceString );
 			// Reset player.
 			resetPlayerRequest.dispatch();
-			// Reset floor and obstacles.
-		//	addFloorRequest.dispatch();
-		//	addObstaclesRequest.dispatch( playerModel.position.z );
 			// Reset camera.
-			view3DModel.cameraX = 0;
-			view3DModel.cameraY = Camera.Y;
-			view3DModel.cameraZ = Camera.Z;
-			view3DModel.cameraRotationX = Camera.TILT;
-			view3DModel.cameraRotationY = 0;
-			view3DModel.cameraRotationZ = 0;
-			view3DModel.update();
+			view3DModel.setCameraPosition( 0, Camera.Y, Camera.Z );
 		}
 	}
 }

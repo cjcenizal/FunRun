@@ -82,8 +82,7 @@ package com.funrun.controller.commands {
 				updateUiRequest.dispatch();
 				
 				// Update camera.
-				view3DModel.cameraZ = observerModel.z;
-				view3DModel.update();
+				view3DModel.setCameraPosition( NaN, NaN, observerModel.z );
 				view3DModel.lookAt( competitor.mesh.position );
 				
 				// Render.

@@ -6,7 +6,6 @@ package com.funrun.controller.commands
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.Camera;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -35,11 +34,7 @@ package com.funrun.controller.commands
 		}
 		
 		private function updateCamera():void {
-			view3DModel.cameraX = playerModel.position.x;
-			var followFactor:Number = ( Camera.Y + playerModel.position.y < view3DModel.cameraY ) ? .3 : .1;
-			// We'll try easing to follow the player instead of being locked.
-			view3DModel.cameraY += ( ( Camera.Y + playerModel.position.y ) - view3DModel.cameraY ) * followFactor;
-			view3DModel.cameraZ += ( ( playerModel.position.z + Camera.Z ) - view3DModel.cameraZ ) * .65;
+			view3DModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
 			view3DModel.update();
 		}
 		

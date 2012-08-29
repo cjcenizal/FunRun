@@ -13,8 +13,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.model.vo.CompetitorVO;
 	
-	import flash.events.KeyboardEvent;
-	
 	import org.robotlegs.mvcs.Command;
 	
 	public class StartObserverLoopCommand extends Command {
@@ -67,10 +65,7 @@ package com.funrun.controller.commands {
 			observerModel.z = ObserverConstants.CAM_Z;
 			
 			// Set camera.
-			view3DModel.cameraX = observerModel.x;
-			view3DModel.cameraY = observerModel.y;
-			view3DModel.cameraZ = observerModel.z;
-			view3DModel.update();
+			view3DModel.setCameraPosition( observerModel.x, observerModel.y, observerModel.z );
 			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateObserverLoopCommand, TimeEvent );
