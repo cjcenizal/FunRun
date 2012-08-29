@@ -8,7 +8,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.ObserverConstants;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.model.vo.CompetitorVO;
@@ -60,12 +59,9 @@ package com.funrun.controller.commands {
 			
 			// Set up observer.
 			observerModel.reset();
-			observerModel.x = ObserverConstants.CAM_X;
-			observerModel.y = ObserverConstants.CAM_Y;
-			observerModel.z = ObserverConstants.CAM_Z;
 			
 			// Set camera.
-			view3DModel.setCameraPosition( observerModel.x, observerModel.y, observerModel.z );
+			view3DModel.cameraController.panAngle = 45;
 			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateObserverLoopCommand, TimeEvent );

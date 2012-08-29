@@ -116,10 +116,7 @@ package com.funrun.controller.commands {
 			view3dModel.ease.z = .65;
 			
 			// Add camera controller.
-			var panAngle:Number = 180;
-			var tiltAngle:Number = 10;
-			var distance:Number = 1500;
-			var cameraController:HoverController = new HoverController( camera, view3dModel.target, panAngle, tiltAngle, distance );
+			var cameraController:HoverController = new HoverController( camera, view3dModel.target );
 			cameraController.steps = 1;
 			view3dModel.cameraController = cameraController;
 			

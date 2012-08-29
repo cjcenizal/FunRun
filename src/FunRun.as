@@ -28,8 +28,7 @@ package {
 			- Should blocks be bigger? Yes, make them 200px.
 			- Implement cool obstacles
 			- Test multiplayer to make sure it still works
-			- Performance gets pretty choppy
-				- What's causing it? Is it the network communication? Updating/drawing competitors? Interpolation?
+			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
 			- Test performance on baby laptop
 		- Virtual goods visibility

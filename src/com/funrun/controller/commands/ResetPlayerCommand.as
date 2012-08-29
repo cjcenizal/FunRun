@@ -7,13 +7,22 @@ package com.funrun.controller.commands {
 	
 	public class ResetPlayerCommand extends Command {
 		
+		// Arguments.
+		
+		[Inject]
+		public var doResetState:Boolean;
+		
+		// Models.
+		
 		[Inject]
 		public var playerModel:PlayerModel;
 		
 		override public function execute():void {
-			playerModel.isDead = false;
-			playerModel.isOnTheGround = false;
-			playerModel.isDucking = false;
+			if ( doResetState ) {
+				playerModel.isDead = false;
+				playerModel.isOnTheGround = false;
+				playerModel.isDucking = false;
+			}
 			playerModel.velocity.z = playerModel.velocity.x = 0;
 			playerModel.velocity.y = 100;
 			var width:Number = Track.WIDTH * .8;

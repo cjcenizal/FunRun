@@ -8,7 +8,7 @@
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Collisions;
-	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.state.ExplorationState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -55,14 +55,15 @@
 				}
 				switch ( death ) {
 					case Collisions.SMACK:
-						playerModel.velocity.z = Track.HEAD_ON_SMACK_SPEED;
+						playerModel.velocity.z = Player.HEAD_ON_SMACK_SPEED;
 						break;
 					case Collisions.FALL:
 						break;
 				}
 				// Update server.
 				sendMultiplayerDeathRequest.dispatch();
-				// Wait before we take action on the death.
+				
+				// TO-DO: Wait before we take action on the death.
 				
 				// If there are any surviving competitors, observe them.
 				if ( !explorationState.isFree ) {

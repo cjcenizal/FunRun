@@ -11,7 +11,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.Camera;
 	import com.funrun.model.state.ShowBoundsState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -79,9 +78,13 @@ package com.funrun.controller.commands {
 			playerModel.position.z = 0;
 			displayDistanceRequest.dispatch( playerModel.distanceString );
 			// Reset player.
-			resetPlayerRequest.dispatch();
+			resetPlayerRequest.dispatch( true );
 			// Reset camera.
-			view3DModel.setCameraPosition( 0, Camera.Y, Camera.Z );
+			view3DModel.cameraController.panAngle = 180;
+			view3DModel.cameraController.tiltAngle = 10;
+			view3DModel.cameraController.distance = 1500;
+			view3DModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
+			view3DModel.update( true );
 		}
 	}
 }

@@ -11,7 +11,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.constants.ObserverConstants;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -54,8 +53,6 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			
-			// TO-DO: Implement a timer to watch a dead competitor for a few seconds before switching.
-			
 			var competitor:CompetitorVO = competitorsModel.getWithId( observerModel.competitorId );
 			var date:Date = new Date();
 			if ( !competitor ||
@@ -72,9 +69,6 @@ package com.funrun.controller.commands {
 				// Update competitors' positions.
 				updateCompetitorsRequest.dispatch();
 				
-				// Match competitor's z position.
-				observerModel.z = competitor.mesh.position.z + ObserverConstants.CAM_Z;
-				
 				// Cull + rebuild track.
 				updateTrackRequest.dispatch( new UpdateTrackPayload( competitor.mesh.position.z ) );
 				
@@ -82,8 +76,8 @@ package com.funrun.controller.commands {
 				updateUiRequest.dispatch();
 				
 				// Update camera.
-				view3DModel.setCameraPosition( NaN, NaN, observerModel.z );
-				view3DModel.lookAt( competitor.mesh.position );
+				view3DModel.setCameraPosition( competitor.position.x, competitor.position.y, competitor.position.z );
+				view3DModel.update();
 				
 				// Render.
 				renderSceneRequest.dispatch();

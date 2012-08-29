@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ObserverModel;
+	import com.funrun.model.View3DModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -21,6 +22,8 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
 
+		[Inject]
+		public var view3DModel:View3DModel;
 
 		override public function execute():void {
 			var competitor:CompetitorVO = competitorsModel.getWithId( observerModel.competitorId );
@@ -36,6 +39,8 @@ package com.funrun.controller.commands {
 				competitor = competitorsModel.getLiveCompetitorAt( index );
 			}
 			observerModel.competitorId = competitor.id;
+			view3DModel.setCameraPosition( competitor.position.x, competitor.position.y, competitor.position.z );
+			view3DModel.update( true );
 		}
 	}
 }

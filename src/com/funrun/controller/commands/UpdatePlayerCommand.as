@@ -1,12 +1,16 @@
 package com.funrun.controller.commands
 {
+	import com.funrun.controller.signals.KillPlayerRequest;
+	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.payload.UpdateTrackPayload;
 	import com.funrun.model.KeysModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.Player;
-	import com.funrun.model.state.ExplorationState;
 	import com.funrun.model.StateModel;
+	import com.funrun.model.constants.Collisions;
+	import com.funrun.model.constants.Player;
+	import com.funrun.model.constants.Track;
+	import com.funrun.model.state.ExplorationState;
 	
 	import flash.ui.Keyboard;
 	
@@ -40,6 +44,12 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var updateTrackRequest:UpdateTrackRequest;
+		
+		[Inject]
+		public var killPlayerRequest:KillPlayerRequest;
+		
+		[Inject]
+		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		override public function execute():void {
 			
@@ -116,6 +126,15 @@ package com.funrun.controller.commands
 				// Update gravity.
 				playerModel.velocity.y += Player.GRAVITY;
 				playerModel.position.y += playerModel.velocity.y;
+				
+				// Check for falling death.
+				if ( playerModel.position.y <= Player.FALL_DEATH_HEIGHT ) {
+					if ( stateModel.isRunning() ) {
+						killPlayerRequest.dispatch( Collisions.FALL );
+					} else if ( stateModel.isWaitingForPlayers() ) {
+						resetPlayerRequest.dispatch( false );
+					}
+				}
 			}
 		}
 	}

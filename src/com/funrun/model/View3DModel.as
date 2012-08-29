@@ -34,10 +34,16 @@ package com.funrun.model {
 			_camera = _view.camera;
 		}
 		
-		public function update():void {
-			target.x += ( _dest.x - target.x ) * ease.x;
-			target.y += ( _dest.y - target.y ) * ease.y;
-			target.z += ( _dest.z - target.z ) * ease.z;
+		public function update( immediate:Boolean = false ):void {
+			if ( immediate ) {
+				target.x = _dest.x;
+				target.y = _dest.y;
+				target.z = _dest.z;
+			} else {
+				target.x += ( _dest.x - target.x ) * ease.x;
+				target.y += ( _dest.y - target.y ) * ease.y;
+				target.z += ( _dest.z - target.z ) * ease.z;
+			}
 		}
 		
 		public function render():void {
@@ -65,10 +71,6 @@ package com.funrun.model {
 		public function project( position:Vector3D ):Point {
 			var pos:Vector3D = _view.project( position );
 			return new Point( pos.x, pos.y );
-		}
-		
-		public function lookAt( target:Vector3D ):void {
-			_camera.lookAt( target );
 		}
 		
 		public function setCameraPosition( x:Number, y:Number, z:Number ):void {

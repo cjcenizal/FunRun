@@ -3,12 +3,10 @@ package com.funrun.controller.commands {
 	import com.cenizal.physics.collisions.CollisionDetector;
 	import com.cenizal.physics.collisions.FaceCollisionsVO;
 	import com.funrun.controller.signals.KillPlayerRequest;
-	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.StateModel;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
@@ -32,16 +30,10 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var playerModel:PlayerModel;
 		
-		[Inject]
-		public var gameState:StateModel;
-		
 		// Commands.
 		
 		[Inject]
 		public var killPlayerRequest:KillPlayerRequest;
-		
-		[Inject]
-		public var resetPlayerRequest:ResetPlayerRequest;
 		
 		// Local vars.
 		

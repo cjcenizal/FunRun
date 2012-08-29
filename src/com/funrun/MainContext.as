@@ -196,14 +196,12 @@ package com.funrun {
 			var productionState:ProductionState 	= new ProductionState( false );
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
 			var explorationState:ExplorationState	= new ExplorationState( false );
-			var gameState:StateModel = new StateModel();
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
 			injector.mapValue( ProductionState, productionState );
 			injector.mapValue( ShowBoundsState, showBoundsState );
 			injector.mapValue( ExplorationState, explorationState );
-			injector.mapValue( StateModel, gameState );
 			
 			// Apply whitelist switch.
 			if ( useWhitelist ) {
@@ -229,6 +227,7 @@ package com.funrun {
 			injector.mapSingleton( PlayerModel );
 			injector.mapSingleton( PointsModel );
 			injector.mapSingleton( SegmentsModel );
+			injector.mapSingleton( StateModel );
 			injector.mapSingleton( TimeModel );
 			injector.mapSingleton( TrackModel );
 			injector.mapSingleton( View3DModel );
