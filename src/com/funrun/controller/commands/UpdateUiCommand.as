@@ -13,7 +13,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.View3DModel;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.vo.CompetitorVO;
 	import com.funrun.services.OrdinalizeNumberService;
 	
@@ -24,12 +24,10 @@ package com.funrun.controller.commands
 	public class UpdateUiCommand extends Command
 	{
 		
-		// State.
+		// Models.
 		
 		[Inject]
-		public var gameState:GameState;
-		
-		// Models.
+		public var stateModel:StateModel;
 		
 		[Inject]
 		public var countdownModel:CountdownModel;
@@ -79,7 +77,7 @@ package com.funrun.controller.commands
 		}
 		
 		private function updateCountdown():void {
-			if ( gameState.gameState == GameState.WAITING_FOR_PLAYERS ) {
+			if ( stateModel.isWaitingForPlayers() ) {
 				if ( countdownModel.isRunning ) {
 					if ( countdownModel.secondsRemaining > 0 ) {
 						// Continue the countdown.
@@ -120,7 +118,7 @@ package com.funrun.controller.commands
 		
 		private function updateDistance():void {
 			// Update distance counter.
-			if ( gameState.gameState == GameState.RUNNING ) {
+			if ( stateModel.isRunning() ) {
 				drawDistanceRequest.dispatch( playerModel.distanceString + " feet" );
 			}
 		}

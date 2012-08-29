@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -21,7 +21,7 @@ package com.funrun.controller.commands {
 		// State.
 		
 		[Inject]
-		public var gameState:GameState;
+		public var gameState:StateModel;
 		
 		// Models.
 		

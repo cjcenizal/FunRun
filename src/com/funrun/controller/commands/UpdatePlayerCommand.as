@@ -6,7 +6,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.state.ExplorationState;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	
 	import flash.ui.Keyboard;
 	
@@ -23,12 +23,12 @@ package com.funrun.controller.commands
 		// State.
 		
 		[Inject]
-		public var gameState:GameState;
-		
-		[Inject]
 		public var explorationState:ExplorationState;
 		
 		// Models.
+		
+		[Inject]
+		public var stateModel:StateModel;
 		
 		[Inject]
 		public var playerModel:PlayerModel;
@@ -94,7 +94,7 @@ package com.funrun.controller.commands
 						playerModel.velocity.z *= Player.FRICTION;
 					} else  {
 						// Move forward according to game logic.
-						if ( gameState.gameState == GameState.RUNNING ) {
+						if ( stateModel.isRunning() ) {
 							// Update speed when you're alive.
 							if ( Math.abs( playerModel.velocity.x ) > 0 ) {
 								if ( playerModel.velocity.z > Player.SLOWED_DIAGONAL_SPEED ) {

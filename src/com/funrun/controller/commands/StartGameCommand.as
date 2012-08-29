@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.StartOfflineGameRequest;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.state.OnlineState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -19,8 +19,10 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var onlineState:OnlineState;
 		
+		// Models.
+		
 		[Inject]
-		public var gameState:GameState;
+		public var stateModel:StateModel;
 		
 		// Commands.
 		
@@ -38,7 +40,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Set game state.
-			gameState.gameState = GameState.WAITING_FOR_PLAYERS;
+			stateModel.waitForPlayers();
 			// Reset game.
 			resetGameRequest.dispatch();
 			// Render to clear the view.

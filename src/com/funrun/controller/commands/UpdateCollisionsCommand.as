@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.vo.BoundingBoxVO;
 	import com.funrun.model.vo.CollidableVO;
 	import com.funrun.model.vo.SegmentVO;
@@ -33,7 +33,7 @@ package com.funrun.controller.commands {
 		public var playerModel:PlayerModel;
 		
 		[Inject]
-		public var gameState:GameState;
+		public var gameState:StateModel;
 		
 		// Commands.
 		

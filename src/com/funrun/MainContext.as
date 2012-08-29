@@ -141,7 +141,7 @@ package com.funrun {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.state.ExplorationState;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.state.ShowBoundsState;
@@ -196,14 +196,14 @@ package com.funrun {
 			var productionState:ProductionState 	= new ProductionState( false );
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
 			var explorationState:ExplorationState	= new ExplorationState( false );
-			var gameState:GameState = new GameState();
+			var gameState:StateModel = new StateModel();
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
 			injector.mapValue( ProductionState, productionState );
 			injector.mapValue( ShowBoundsState, showBoundsState );
 			injector.mapValue( ExplorationState, explorationState );
-			injector.mapValue( GameState, gameState );
+			injector.mapValue( StateModel, gameState );
 			
 			// Apply whitelist switch.
 			if ( useWhitelist ) {

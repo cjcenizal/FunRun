@@ -6,7 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
@@ -23,10 +23,8 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var delayedCommandsModel:DelayedCommandsModel;
 		
-		// State.
-		
 		[Inject]
-		public var gameState:GameState;
+		public var stateModel:StateModel;
 		
 		// Commands.
 		
@@ -60,7 +58,7 @@ package com.funrun.controller.commands {
 			// Reset in-game ID.
 			playerModel.resetInGameId();
 			// Update state.
-			gameState.gameState = GameState.MAIN_MENU;
+			stateModel.showMainMenu();
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
 			showScreenRequest.dispatch( ScreenState.MAIN_MENU );

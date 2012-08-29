@@ -24,12 +24,13 @@ package {
 		/*
 		- Search for TO-DOs
 		TO-DO:
-		- Make GameState use multiple bit flags.
 		- Game design
-			- Put together references, direction, deliverables, and contract for Heather
+			- Should blocks be bigger? Yes, make them 200px.
 			- Implement cool obstacles
 			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy
+				- What's causing it? Is it the network communication? Updating/drawing competitors? Interpolation?
+				- Can we send and receive Booleans as bytes?
 			- Test performance on baby laptop
 		- Virtual goods visibility
 			- Players join game facing backwards and then turn around, so you see them and they see you

@@ -3,16 +3,16 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.DrawCountdownRequest;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	
 	import org.robotlegs.mvcs.Command;
 
 	public class StartRunningCommand extends Command {
 		
-		// State.
+		// Models.
 		
 		[Inject]
-		public var gameState:GameState;
+		public var stateModel:StateModel;
 		
 		// Commands.
 		
@@ -30,7 +30,7 @@ package com.funrun.controller.commands {
 			updateCountdownRequest.dispatch( "" );
 			toggleCountdownRequest.dispatch( false );
 			// Set game state.
-			gameState.gameState = GameState.RUNNING;
+			stateModel.startRunning();
 			displayMessageRequest.dispatch( "Go!" );
 		}
 	}

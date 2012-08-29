@@ -5,19 +5,17 @@ package com.funrun.controller.commands {
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.state.GameState;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
 	
 	public class UpdateAiCompetitorsCommand extends Command {
 		
-		// State.
+		// Models.
 		
 		[Inject]
-		public var gameState:GameState;
-		
-		// Models.
+		public var stateModel:StateModel;
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
@@ -32,7 +30,7 @@ package com.funrun.controller.commands {
 		public var timeModel:TimeModel;
 		
 		override public function execute():void {
-			if ( gameState.gameState == GameState.RUNNING ) {
+			if ( stateModel.isRunning() ) {
 				// Update positions.
 				interpolationModel.reset();
 				var competitor:CompetitorVO;
