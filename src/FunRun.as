@@ -22,8 +22,11 @@ package {
 		
 		
 		/*
-		- Search for TO-DOs
+		BUGS:
+		- Pushing up against side of one block and jumping results in a super jump!
+		
 		TO-DO:
+		- Search for TO-DOs
 		- Game design
 			- Should blocks be bigger? Yes, make them 200px.
 			- Implement cool obstacles

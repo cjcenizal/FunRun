@@ -137,11 +137,11 @@ package com.funrun {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.SegmentsModel;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3DModel;
 	import com.funrun.model.state.ExplorationState;
-	import com.funrun.model.StateModel;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.state.ShowBoundsState;
@@ -195,7 +195,7 @@ package com.funrun {
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
-			var explorationState:ExplorationState	= new ExplorationState( false );
+			var explorationState:ExplorationState	= new ExplorationState( true );
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
