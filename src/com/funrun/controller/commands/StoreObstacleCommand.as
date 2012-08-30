@@ -93,7 +93,7 @@ package com.funrun.controller.commands
 			for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
 				for ( var z:int = 0; z < Segment.DEPTH_BLOCKS; z++ ) {
 					// Put floor blocks wherever the pit map is negative.
-					if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
+					//if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
 						// Create a floor block mesh in the appropriate place.
 						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
 						floorBlockMesh.x = x * Block.SIZE;// + Block.HALF_SIZE;
@@ -112,7 +112,7 @@ package com.funrun.controller.commands
 							Block.HALF_SIZE,
 							Block.HALF_SIZE
 						) );
-					}
+					//}
 				}
 			}
 			
