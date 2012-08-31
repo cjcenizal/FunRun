@@ -79,15 +79,6 @@ package com.funrun.controller.commands {
 			displayDistanceRequest.dispatch( playerModel.distanceString );
 			// Reset player.
 			resetPlayerRequest.dispatch( true );
-			// Reset camera.
-			view3dModel.cameraController.panAngle = 180;
-			view3dModel.cameraController.tiltAngle = 10;
-			view3dModel.cameraController.distance = 1500;
-			view3dModel.ease.x = 1;
-			view3dModel.ease.y = .2;
-			view3dModel.ease.z = .65;
-			view3dModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
-			view3dModel.update( true );
 		}
 	}
 }

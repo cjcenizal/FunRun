@@ -22,6 +22,8 @@ package {
 		
 		
 		/*
+		BUGS:
+		- Smack is way too forgiving on a one-block
 		
 		TO-DO:
 		- Search for TO-DOs

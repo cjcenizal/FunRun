@@ -269,7 +269,9 @@ package com.funrun.controller.commands {
 		}
 		
 		private function putAtTop():void {
-			if ( playerModel.velocity.y < 0 ) {
+			// Without this velocity check, we stick against the tops of blocks when
+			// we push against them sideways and jump.
+			if ( playerModel.velocity.y <= 0 ) {
 				_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
 				playerModel.velocity.y = 0;
 				playerModel.position.y = _collider.y;

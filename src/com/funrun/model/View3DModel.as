@@ -18,6 +18,10 @@ package com.funrun.model {
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
 		public var cameraController:HoverController;
+		public var targetTilt:Number = 0;
+		public var targetPan:Number = 0;
+		public var targetDistance:Number = 0;
+		public var easeHover:Number = 1;
 		public var target:Mesh;
 		public var ease:Vector3D;
 		private var _dest:Vector3D;
@@ -39,10 +43,16 @@ package com.funrun.model {
 				target.x = _dest.x;
 				target.y = _dest.y;
 				target.z = _dest.z;
+				cameraController.panAngle = targetPan;
+				cameraController.tiltAngle = targetTilt;
+				cameraController.distance = targetDistance;
 			} else {
 				target.x += ( _dest.x - target.x ) * ease.x;
 				target.y += ( _dest.y - target.y ) * ease.y;
 				target.z += ( _dest.z - target.z ) * ease.z;
+				cameraController.panAngle += ( targetPan - cameraController.panAngle ) * easeHover;
+				cameraController.tiltAngle += ( targetTilt - cameraController.tiltAngle ) * easeHover;
+				cameraController.distance += ( targetDistance - cameraController.distance ) * easeHover;
 			}
 		}
 		

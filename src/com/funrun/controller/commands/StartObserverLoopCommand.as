@@ -61,10 +61,11 @@ package com.funrun.controller.commands {
 			observerModel.reset();
 			
 			// Set camera.
-			view3dModel.cameraController.panAngle = 45;
 			view3dModel.ease.x = .1;
 			view3dModel.ease.y = .1;
 			view3dModel.ease.z = .1;
+			view3dModel.easeHover = .5;
+			view3dModel.targetPan = 25;
 			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateObserverLoopCommand, TimeEvent );
