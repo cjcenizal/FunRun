@@ -72,6 +72,8 @@ package com.funrun.controller.commands
 			// Jumping.
 			if ( keysModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keysModel.isDown( Keyboard.UP ) ) ) {
 				if ( playerModel.isOnTheGround ) {
+					keysModel.up( Keyboard.SPACE );
+					if ( !explorationState.isFree ) keysModel.up( Keyboard.UP );
 					playerModel.velocity.y += Player.JUMP_SPEED;
 					playerModel.isOnTheGround = false;
 				}

@@ -22,14 +22,11 @@ package {
 		
 		
 		/*
-		BUGS:
-		- Pushing up against side of one block and jumping results in a super jump!
 		
 		TO-DO:
 		- Search for TO-DOs
-		- Ease camera target from place to place when observing; be able to change ease amount easily.
+		- Cull obstacles based on camera target position, not observed competitor position.
 		- Game design
-			- Should blocks be bigger? Yes, make them 200px.
 			- Implement cool obstacles
 			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system

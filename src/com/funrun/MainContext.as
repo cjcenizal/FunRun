@@ -195,7 +195,7 @@ package com.funrun {
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( true );
-			var explorationState:ExplorationState	= new ExplorationState( false );
+			var explorationState:ExplorationState	= new ExplorationState( true );
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );

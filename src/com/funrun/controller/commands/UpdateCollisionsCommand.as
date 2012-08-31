@@ -53,12 +53,12 @@ package com.funrun.controller.commands {
 		private var _collidingFaces:FaceCollisionsVO;
 		private var _collidingFace:String;
 		private var _collisionEvent:String;
-		private var _hasBeenPlacedOnGround:Boolean = false;
 		
 		override public function execute():void {
 			setupCollider();
 			setupInterpolation();
 			getAllSegments();
+			putPlayerOnGround( false );
 			
 			// Interpolate the collider from previous position to current position.
 			for ( _interpolationStepCount = 0; _interpolationStepCount < _numberOfStepsToInterpolate; _interpolationStepCount++ ) {
@@ -74,7 +74,6 @@ package com.funrun.controller.commands {
 					
 					if ( noCollidingSegments() ) {
 						
-						putPlayerOnGround( false );
 						stopResolvingCollisions();
 						
 					} else {
@@ -85,12 +84,10 @@ package com.funrun.controller.commands {
 						
 						if ( noCollidingBoundingBoxes() ) {
 							
-							putPlayerOnGround( false );
 							stopResolvingCollisions();
 							
 						} else {
 							
-							putPlayerOnGround( true );
 							getFirstCollidingBoundingBox();
 							getFacesCollidingWithFirstBoundingBox();
 							
@@ -121,6 +118,7 @@ package com.funrun.controller.commands {
 											putAtRight();
 											break CollisionLoop;
 										case Collisions.PUT_TOP:
+											putPlayerOnGround( true );
 											putAtTop();
 											break CollisionLoop;
 										case Collisions.PUT_BOTTOM:
@@ -243,10 +241,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function putPlayerOnGround( onGround:Boolean ):void {
-			if ( !_hasBeenPlacedOnGround ) {
-				_hasBeenPlacedOnGround = onGround;
-				playerModel.isOnTheGround = onGround;
-			}
+			playerModel.isOnTheGround = onGround;
 		}
 		
 		private function putAtBack():void {
@@ -274,9 +269,11 @@ package com.funrun.controller.commands {
 		}
 		
 		private function putAtTop():void {
-			_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
-			playerModel.velocity.y = 0;
-			playerModel.position.y = _collider.y;
+			if ( playerModel.velocity.y < 0 ) {
+				_collider.y = _firstCollidingBoundingBox.worldMaxY + Math.abs( _collider.minY );
+				playerModel.velocity.y = 0;
+				playerModel.position.y = _collider.y;
+			}
 		}
 		
 		private function putAtBottom():void {
