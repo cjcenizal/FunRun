@@ -23,7 +23,7 @@ package {
 		
 		/*
 		BUGS:
-		- Smack is way too forgiving on a one-block
+		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 		
 		TO-DO:
 		- Search for TO-DOs

@@ -101,7 +101,6 @@ package com.funrun.controller.commands {
 								CollisionLoop: for ( var k:int = 0; k < _collidingFaces.count; k++ ) {
 									
 									_collidingFace = _collidingFaces.getAt( k );
-									
 									getCollisionEventAtCollidingFace();
 									
 									switch ( _collisionEvent ) {

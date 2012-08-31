@@ -20,7 +20,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var view3DModel:View3DModel;
+		public var view3dModel:View3DModel;
 		
 		[Inject]
 		public var observerModel:ObserverModel;
@@ -70,14 +70,14 @@ package com.funrun.controller.commands {
 				updateCompetitorsRequest.dispatch();
 				
 				// Cull + rebuild track.
-				updateTrackRequest.dispatch( new UpdateTrackPayload( competitor.mesh.position.z ) );
+				updateTrackRequest.dispatch( new UpdateTrackPayload( view3dModel.target.position.z ) );
 				
 				// Update places.
 				updateUiRequest.dispatch();
 				
 				// Update camera.
-				view3DModel.setCameraPosition( competitor.position.x, competitor.position.y, competitor.position.z );
-				view3DModel.update();
+				view3dModel.setCameraPosition( competitor.position.x, competitor.position.y, competitor.position.z );
+				view3dModel.update();
 				
 				// Render.
 				renderSceneRequest.dispatch();
