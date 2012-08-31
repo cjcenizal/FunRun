@@ -19,7 +19,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var view3DModel:View3DModel;
+		public var view3dModel:View3DModel;
 		
 		[Inject]
 		public var observerModel:ObserverModel;
@@ -61,7 +61,10 @@ package com.funrun.controller.commands {
 			observerModel.reset();
 			
 			// Set camera.
-			view3DModel.cameraController.panAngle = 45;
+			view3dModel.cameraController.panAngle = 45;
+			view3dModel.ease.x = .1;
+			view3dModel.ease.y = .1;
+			view3dModel.ease.z = .1;
 			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateObserverLoopCommand, TimeEvent );

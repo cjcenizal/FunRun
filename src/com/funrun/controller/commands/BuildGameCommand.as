@@ -111,9 +111,6 @@ package com.funrun.controller.commands {
 			// Add camera target.
 			view3dModel.target = new Mesh( new CubeGeometry( 1, 1, 1 ), null );
 			addObjectToSceneRequest.dispatch( view3dModel.target );
-			view3dModel.ease.x = 1;
-			view3dModel.ease.y = .2;
-			view3dModel.ease.z = .65;
 			
 			// Add camera controller.
 			var cameraController:HoverController = new HoverController( camera, view3dModel.target );

@@ -38,7 +38,7 @@ package com.funrun.controller.commands {
 		public var competitorsModel:CompetitorsModel;
 		
 		[Inject]
-		public var view3DModel:View3DModel;
+		public var view3dModel:View3DModel;
 		
 		// Commands.
 		
@@ -80,11 +80,14 @@ package com.funrun.controller.commands {
 			// Reset player.
 			resetPlayerRequest.dispatch( true );
 			// Reset camera.
-			view3DModel.cameraController.panAngle = 180;
-			view3DModel.cameraController.tiltAngle = 10;
-			view3DModel.cameraController.distance = 1500;
-			view3DModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
-			view3DModel.update( true );
+			view3dModel.cameraController.panAngle = 180;
+			view3dModel.cameraController.tiltAngle = 10;
+			view3dModel.cameraController.distance = 1500;
+			view3dModel.ease.x = 1;
+			view3dModel.ease.y = .2;
+			view3dModel.ease.z = .65;
+			view3dModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
+			view3dModel.update( true );
 		}
 	}
 }

@@ -27,6 +27,7 @@ package {
 		
 		TO-DO:
 		- Search for TO-DOs
+		- Ease camera target from place to place when observing; be able to change ease amount easily.
 		- Game design
 			- Should blocks be bigger? Yes, make them 200px.
 			- Implement cool obstacles

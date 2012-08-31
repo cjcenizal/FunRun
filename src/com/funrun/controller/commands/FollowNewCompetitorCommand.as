@@ -40,7 +40,7 @@ package com.funrun.controller.commands {
 			}
 			observerModel.competitorId = competitor.id;
 			view3DModel.setCameraPosition( competitor.position.x, competitor.position.y, competitor.position.z );
-			view3DModel.update( true );
+			view3DModel.update();
 		}
 	}
 }
