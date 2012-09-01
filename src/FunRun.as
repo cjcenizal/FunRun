@@ -25,11 +25,21 @@ package {
 		BUGS:
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 		
+		BUILDER:
+		- Store floor as part of obstacle.
+			- This might cause performance problems. Can meshes be merged and still be interactive?
+		- Make colored blocks that represent each type of block we need
+			- Represent with matching colored bounding boxes
+		- Build cool obstacles
+		
 		TO-DO:
 		- Search for TO-DOs
 		- Cull obstacles based on camera target position, not observed competitor position.
 		- Game design
-			- Implement cool obstacles
+			- Add back cycling through competitors.
+				- Display their attire in the UI
+			- Add back fog
+			- Build stubbed store functionality
 			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?

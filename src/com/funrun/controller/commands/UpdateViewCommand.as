@@ -6,6 +6,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.View3DModel;
+	import com.funrun.model.constants.Camera;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -18,7 +19,7 @@ package com.funrun.controller.commands
 		public var playerModel:PlayerModel;
 		
 		[Inject]
-		public var view3DModel:View3DModel;
+		public var view3dModel:View3DModel;
 		
 		[Inject]
 		public var lightsModel:LightsModel;
@@ -34,8 +35,15 @@ package com.funrun.controller.commands
 		}
 		
 		private function updateCamera():void {
-			view3DModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
-			view3DModel.update();
+			if ( playerModel.isDucking ) {
+				view3dModel.targetTilt = Camera.DUCKING_TILT;
+				view3dModel.targetDistance = Camera.DUCKING_DISTANCE;
+			} else {
+				view3dModel.targetTilt = Camera.RUNNING_TILT;
+				view3dModel.targetDistance = Camera.RUNNING_DISTANCE;
+			}
+			view3dModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
+			view3dModel.update();
 		}
 		
 		private function updateLights():void {
