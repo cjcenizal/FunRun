@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.StateModel;
+	import nl.ronvalstar.math.Perlin;
 	import com.funrun.model.vo.CompetitorVO;
 	
 	import org.robotlegs.mvcs.Command;
@@ -43,7 +44,9 @@ package com.funrun.controller.commands {
 							displayMessageRequest.dispatch( competitor.name + " just died!" );
 							killed = true;
 						} else {
-							competitor.updatePosition( competitor.position.x, competitor.position.y, competitor.position.z + Math.random() * Player.MAX_FORWARD_VELOCITY + Player.MAX_FORWARD_VELOCITY * .25 );
+							var rand:Number = Perlin.noise( i * 2, timeModel.ticks * .01 );
+							var speed:Number = rand * ( Player.MAX_FORWARD_VELOCITY * 2 );
+							competitor.updatePosition( competitor.position.x, competitor.position.y, competitor.position.z + speed );
 						}
 					}
 				}

@@ -36,6 +36,8 @@ package {
 		- Search for TO-DOs
 		- Cull obstacles based on camera target position, not observed competitor position.
 		- Game design
+			- Fix lights
+			- Would a bouncing ball be cool?
 			- Add back cycling through competitors.
 				- Display their attire in the UI
 			- Add back fog

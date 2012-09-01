@@ -56,10 +56,11 @@ package com.funrun.controller.commands
 			// Apply ducking state.
 			if ( explorationState.isFree ) {
 			} else {
+				var scale:Number = Player.DUCKING_BOUNDS.y / Player.NORMAL_BOUNDS.y;
 				if ( keysModel.isDown( Keyboard.DOWN ) ) {
 					playerModel.isDucking = true;
-					if ( playerModel.scaleY != .25 ) {
-						playerModel.scaleY = .25;
+					if ( playerModel.scaleY != scale ) {
+						playerModel.scaleY = scale;
 					}
 				} else {
 					playerModel.isDucking = false;

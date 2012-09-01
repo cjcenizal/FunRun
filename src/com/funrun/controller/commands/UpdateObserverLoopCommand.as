@@ -76,7 +76,7 @@ package com.funrun.controller.commands {
 				updateUiRequest.dispatch();
 				
 				// Update camera.
-				view3dModel.setCameraPosition( competitor.position.x, competitor.position.y, competitor.position.z );
+				view3dModel.setCameraPosition( competitor.position.x, competitor.position.y, competitor.position.z + 900 );
 				view3dModel.update();
 				
 				// Render.

@@ -27,6 +27,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Time;
+	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -134,12 +135,13 @@ package com.funrun.controller.commands {
 			sunlight.diffuse = .1; // Higher = "brighter"
 			sunlight.z = 2000;
 			var spotlight:PointLight = new PointLight();
+			spotlight.x = Track.WIDTH * .5;
 			spotlight.y = 700;
 			spotlight.color = 0xffffff;
 			spotlight.diffuse = 1;
 			spotlight.specular = 1;
-			spotlight.radius = 800;
-			spotlight.fallOff = 2000;
+			spotlight.radius = 1200;
+			spotlight.fallOff = 8000;
 			spotlight.ambientColor = 0xa0a0c0;
 			spotlight.ambient = .5;
 			addLightRequest.dispatch( LightsModel.SUN, sunlight );
