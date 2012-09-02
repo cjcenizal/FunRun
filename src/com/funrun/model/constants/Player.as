@@ -24,5 +24,8 @@ package com.funrun.model.constants
 		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;
 		public static const HEAD_ON_SMACK_SPEED:Number = -160;
 		public static const FALL_DEATH_HEIGHT:Number = -1500;
+		
+		// AI.
+		public static const NUM_AI_COMPETITORS:int = 10;
 	}
 }

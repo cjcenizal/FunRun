@@ -34,18 +34,16 @@ package {
 		
 		TO-DO:
 		- Search for TO-DOs
-		- Cull obstacles based on camera target position, not observed competitor position.
 		- Game design
-			- Fix lights
-			- Would a bouncing ball be cool?
-			- Add back cycling through competitors.
-				- Display their attire in the UI
-			- Add back fog
 			- Build stubbed store functionality
 			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
 			- Test performance on baby laptop
+			- Observer loop:
+				- Display their attire in the UI
+				- Allow point and click to navigate through competitors
+				- Add back fog
 		- Virtual goods visibility
 			- Players join game facing backwards and then turn around, so you see them and they see you
 				- On join game, check if # players > 0

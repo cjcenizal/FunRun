@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Stats;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.state.ExplorationState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -48,7 +49,7 @@ package com.funrun.controller.commands {
 				startCountdownRequest.dispatch( 3000 );
 			}
 			startGameLoopRequest.dispatch();
-			addAiCompetitorsRequest.dispatch( 4 );
+			addAiCompetitorsRequest.dispatch( Player.NUM_AI_COMPETITORS );
 		}
 	}
 }

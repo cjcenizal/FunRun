@@ -8,6 +8,7 @@ package com.funrun.controller.commands {
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
 	import away3d.materials.lightpickers.StaticLightPicker;
+	import away3d.materials.methods.FogMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	import away3d.materials.methods.SoftShadowMapMethod;
 	import away3d.primitives.CubeGeometry;
@@ -147,10 +148,7 @@ package com.funrun.controller.commands {
 			addLightRequest.dispatch( LightsModel.SUN, sunlight );
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
 			
-			
-			//var shadowMethod:HardShadowMapMethod = new HardShadowMapMethod( sunlight );
 			var shadowMethod:SoftShadowMapMethod = new SoftShadowMapMethod( sunlight );
-			//var shadowMethod:FilteredShadowMapMethod = new FilteredShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			var lightPicker:StaticLightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			
@@ -160,17 +158,12 @@ package com.funrun.controller.commands {
 			Materials.DEBUG_PLAYER.gloss = 20;
 			Materials.DEBUG_PLAYER.specularMethod = specularMethod;
 			
-		/*	floorMaterial.lightPicker = lightPicker;
-			floorMaterial.shadowMethod = shadowMethod;
-			floorMaterial.specular = .25;
-			floorMaterial.gloss = 20;
-			floorMaterial.specularMethod = specularMethod;*/
-			
 			Materials.DEBUG_BLOCK.lightPicker = lightPicker;
 			Materials.DEBUG_BLOCK.shadowMethod = shadowMethod;
 			Materials.DEBUG_BLOCK.specular = .25;
 			Materials.DEBUG_BLOCK.gloss = 20;
 			Materials.DEBUG_BLOCK.specularMethod = specularMethod;
+		//	Materials.DEBUG_BLOCK.addMethod( new FogMethod( 1000, 0xffffff ) );
 			
 			Materials.DEBUG_TEST.lightPicker = lightPicker;
 			Materials.DEBUG_TEST.shadowMethod = shadowMethod;
