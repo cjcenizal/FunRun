@@ -5,7 +5,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -48,7 +48,7 @@ package com.funrun.controller.commands {
 				// Add pre-existing competitors.
 				for ( var i:int = 1; i < message.length; i += 6 ) {
 					if ( message.getInt( i ) != playerModel.inGameId ) {
-						var competitor:CompetitorVO = new CompetitorVO(
+						var competitor:CompetitorVo = new CompetitorVo(
 							message.getInt( i ),
 							message.getString( i + 1 )
 						);

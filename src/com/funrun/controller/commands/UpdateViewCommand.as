@@ -5,7 +5,7 @@ package com.funrun.controller.commands
 	
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.View3DModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.constants.Camera;
 	
 	import org.robotlegs.mvcs.Command;
@@ -19,7 +19,7 @@ package com.funrun.controller.commands
 		public var playerModel:PlayerModel;
 		
 		[Inject]
-		public var view3dModel:View3DModel;
+		public var view3dModel:View3dModel;
 		
 		[Inject]
 		public var lightsModel:LightsModel;

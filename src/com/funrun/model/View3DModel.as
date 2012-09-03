@@ -12,7 +12,7 @@ package com.funrun.model {
 	
 	import org.robotlegs.mvcs.Actor;
 	
-	public class View3DModel extends Actor {
+	public class View3dModel extends Actor {
 		
 		private var _view:View3D;
 		private var _scene:Scene3D;
@@ -26,7 +26,7 @@ package com.funrun.model {
 		public var ease:Vector3D;
 		private var _dest:Vector3D;
 		
-		public function View3DModel() {
+		public function View3dModel() {
 			super();
 			_dest = new Vector3D();
 			ease = new Vector3D();

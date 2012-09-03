@@ -3,7 +3,7 @@ package com.funrun.view.components {
 	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.ui.DummyButton;
 	import com.cenizal.utils.Center;
-	import com.funrun.model.vo.ResultsPopupVO;
+	import com.funrun.model.vo.ResultsPopupVo;
 	
 	import flash.events.MouseEvent;
 	
@@ -11,12 +11,12 @@ package com.funrun.view.components {
 
 	public class ResultsPopup extends Popup {
 		
-		private var _vo:ResultsPopupVO;
+		private var _vo:ResultsPopupVo;
 		private var _messageLabel:AbstractLabel;
 		private var _button:DummyButton;
 		public var onClickMainMenuSignal:Signal;
 		
-		public function ResultsPopup( vo:ResultsPopupVO ) {
+		public function ResultsPopup( vo:ResultsPopupVo ) {
 			super( null, 0, 0, 600, 500 );
 			_vo = vo;
 		}

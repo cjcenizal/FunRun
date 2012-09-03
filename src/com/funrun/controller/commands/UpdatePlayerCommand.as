@@ -3,7 +3,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
-	import com.funrun.controller.signals.payload.UpdateTrackPayload;
+	import com.funrun.model.vo.UpdateTrackVo;
 	import com.funrun.model.KeysModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;

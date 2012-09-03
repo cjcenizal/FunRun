@@ -140,7 +140,7 @@ package com.funrun {
 	import com.funrun.model.StateModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.View3DModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.state.ExplorationState;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
@@ -230,7 +230,7 @@ package com.funrun {
 			injector.mapSingleton( StateModel );
 			injector.mapSingleton( TimeModel );
 			injector.mapSingleton( TrackModel );
-			injector.mapSingleton( View3DModel );
+			injector.mapSingleton( View3dModel );
 			
 			// Map services.
 			injector.mapSingleton( MatchmakingService );

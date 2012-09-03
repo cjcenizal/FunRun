@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.TimeModel;
-	import com.funrun.model.View3DModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.constants.Camera;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
@@ -47,7 +47,7 @@ package com.funrun.controller.commands {
 		public var lightsModel:LightsModel;
 		
 		[Inject]
-		public var view3dModel:View3DModel;
+		public var view3dModel:View3dModel;
 		
 		[Inject]
 		public var interpolationModel:InterpolationModel;

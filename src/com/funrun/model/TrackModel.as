@@ -1,11 +1,11 @@
 package com.funrun.model {
 	
 	import com.funrun.model.constants.Track;
-	import com.funrun.model.vo.SegmentVO;
+	import com.funrun.model.vo.SegmentVo;
 	
 	import org.robotlegs.mvcs.Actor;
 	
-	public class TrackModel extends Actor implements IObstacleProvider {
+	public class TrackModel extends Actor {
 		
 		private var _obstacles:Array;
 		
@@ -14,7 +14,7 @@ package com.funrun.model {
 			_obstacles = [];
 		}
 		
-		public function addSegment( obstacle:SegmentVO ):void {
+		public function addSegment( obstacle:SegmentVo ):void {
 			_obstacles.push( obstacle );
 			var len:int = _obstacles.length;
 			_obstacles.sortOn( "z", [ Array.NUMERIC ] );
@@ -24,7 +24,7 @@ package com.funrun.model {
 			_obstacles.splice( index, 1 );
 		}
 		
-		public function getObstacleAt( index:int ):SegmentVO {
+		public function getObstacleAt( index:int ):SegmentVo {
 			return _obstacles[ index ];
 		}
 		
@@ -38,21 +38,21 @@ package com.funrun.model {
 		
 		public function get depthOfLastObstacle():Number {
 			if ( _obstacles.length > 0 ) {
-				return ( _obstacles[ _obstacles.length - 1 ] as SegmentVO ).z;
+				return ( _obstacles[ _obstacles.length - 1 ] as SegmentVo ).z;
 			}
 			return Track.DEPTH;
 		}
 		
 		public function getDepthOfObstacleAt( index:int ):Number {
 			if ( _obstacles.length >= index ) {
-				return ( _obstacles[ index ] as SegmentVO ).z;
+				return ( _obstacles[ index ] as SegmentVo ).z;
 			}
 			return 0;
 		}
 		
 		public function get depthOfFirstObstacle():Number {
 			if ( _obstacles.length > 0 ) {
-				return ( _obstacles[ 0 ] as SegmentVO ).z;
+				return ( _obstacles[ 0 ] as SegmentVo ).z;
 			}
 			return 0;
 		}

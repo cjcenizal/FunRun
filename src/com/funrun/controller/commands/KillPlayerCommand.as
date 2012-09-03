@@ -4,7 +4,7 @@
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
-	import com.funrun.controller.signals.payload.AddDelayedCommandPayload;
+	import com.funrun.model.vo.AddDelayedCommandVo;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Collisions;
@@ -68,9 +68,9 @@
 				// If there are any surviving competitors, observe them.
 				if ( !explorationState.isFree ) {
 					if ( competitorsModel.numLiveCompetitors > 0 ) {
-						addDelayedCommandRequest.dispatch( new AddDelayedCommandPayload( startObserverLoopRequest, 1500 ) );
+						addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( startObserverLoopRequest, 1500 ) );
 					} else {
-						addDelayedCommandRequest.dispatch( new AddDelayedCommandPayload( endRoundRequest, 1500 ) );
+						addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( endRoundRequest, 1500 ) );
 					}
 				}
 			}

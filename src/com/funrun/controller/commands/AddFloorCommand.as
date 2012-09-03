@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.state.ShowBoundsState;
-	import com.funrun.model.vo.SegmentVO;
+	import com.funrun.model.vo.SegmentVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -29,7 +29,7 @@ package com.funrun.controller.commands {
 		public var showBoundsState:ShowBoundsState;
 		
 		override public function execute():void {
-			var floor:SegmentVO = segmentsModel.getAt( 0 );
+			var floor:SegmentVo = segmentsModel.getAt( 0 );
 			trackModel.addSegment( floor );
 			addObjectToSceneRequest.dispatch( ( showBoundsState.showBounds ) ? floor.boundsMesh : floor.mesh );
 		}

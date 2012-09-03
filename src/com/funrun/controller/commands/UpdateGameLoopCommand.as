@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
 	import com.funrun.controller.signals.UpdateViewRequest;
-	import com.funrun.controller.signals.payload.UpdateTrackPayload;
+	import com.funrun.model.vo.UpdateTrackVo;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.events.TimeEvent;
@@ -64,7 +64,7 @@ package com.funrun.controller.commands {
 			
 			updateCollisionsRequest.dispatch();
 			
-			updateTrackRequest.dispatch( new UpdateTrackPayload( playerModel.distance ) );
+			updateTrackRequest.dispatch( new UpdateTrackVo( playerModel.distance ) );
 			
 			updateViewRequest.dispatch();
 			

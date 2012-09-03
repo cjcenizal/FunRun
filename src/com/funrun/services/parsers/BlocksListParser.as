@@ -1,5 +1,5 @@
 package com.funrun.services.parsers {
-	import com.funrun.model.vo.BlockVO;
+	import com.funrun.model.vo.BlockVo;
 	
 	public class BlocksListParser extends AbstractParser {
 		
@@ -9,7 +9,7 @@ package com.funrun.services.parsers {
 			super( data );
 		}
 		
-		public function getAt( index:int ):BlockVO {
+		public function getAt( index:int ):BlockVo {
 			return new BlockParser().parse( data[ LIST ][ index ] );
 		}
 		

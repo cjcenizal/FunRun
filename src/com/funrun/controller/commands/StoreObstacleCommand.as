@@ -8,14 +8,14 @@ package com.funrun.controller.commands
 	
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.SegmentsModel;
-	import com.funrun.model.vo.BoundingBoxVO;
+	import com.funrun.model.vo.BoundingBoxVo;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
-	import com.funrun.model.vo.BlockVO;
-	import com.funrun.model.vo.ObstacleBlockVO;
-	import com.funrun.model.vo.SegmentVO;
+	import com.funrun.model.vo.BlockVo;
+	import com.funrun.model.vo.ObstacleBlockVo;
+	import com.funrun.model.vo.SegmentVo;
 	import com.funrun.services.parsers.ObstacleParser;
 	
 	import org.robotlegs.mvcs.Command;
@@ -45,8 +45,8 @@ package com.funrun.controller.commands
 			var obstacleData:ObstacleParser = new ObstacleParser( json );
 			
 			// Set up obstacle mesh vars.
-			var blockData:ObstacleBlockVO;
-			var block:BlockVO;
+			var blockData:ObstacleBlockVo;
+			var block:BlockVo;
 			var blockMesh:Mesh;
 			var obstacleMesh:Mesh = new Mesh( new Geometry() );
 			var merge:Merge = new Merge( true );
@@ -69,7 +69,7 @@ package com.funrun.controller.commands
 				// Merge the block mesh into the obstacle mesh.
 				merge.apply( obstacleMesh, blockMesh );
 				// Add a bounding box so we can collide with the obstacle.
-				boundingBoxes.push( new BoundingBoxVO(
+				boundingBoxes.push( new BoundingBoxVo(
 					block,
 					blockMesh.x, blockMesh.y, blockMesh.z,
 					-Block.HALF_SIZE,
@@ -102,7 +102,7 @@ package com.funrun.controller.commands
 						// Merge it into the obstacle.
 						merge.apply( obstacleMesh, floorBlockMesh );
 						// Add a bounding box so we can collide with the floor.
-						boundingBoxes.push( new BoundingBoxVO(
+						boundingBoxes.push( new BoundingBoxVo(
 							blocksModel.getBlock( "floor" ),
 							floorBlockMesh.x, floorBlockMesh.y, floorBlockMesh.z,
 							-Block.HALF_SIZE,
@@ -122,7 +122,7 @@ package com.funrun.controller.commands
 				boundsMesh = new Mesh( new Geometry() );
 				var blockGeo:Geometry = new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE );
 				var len:int = boundingBoxes.length;
-				var box:BoundingBoxVO;
+				var box:BoundingBoxVo;
 				var indicator:Mesh;
 				for ( var i:int = 0; i < len; i++ ) {
 					box = boundingBoxes[ i ];
@@ -134,7 +134,7 @@ package com.funrun.controller.commands
 				}
 			}
 			
-			var obstacle:SegmentVO = new SegmentVO( obstacleMesh, boundsMesh, boundingBoxes,
+			var obstacle:SegmentVo = new SegmentVo( obstacleMesh, boundsMesh, boundingBoxes,
 				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
 				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 			segmentsModel.storeObstacle( obstacle );

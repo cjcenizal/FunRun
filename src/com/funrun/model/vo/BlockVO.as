@@ -2,7 +2,7 @@ package com.funrun.model.vo {
 	
 	import away3d.entities.Mesh;
 	
-	public class BlockVO {
+	public class BlockVo {
 		
 		private static const TRANSLATIONS:Object = {};
 		TRANSLATIONS[ 'front' ] = 'f';
@@ -19,7 +19,7 @@ package com.funrun.model.vo {
 		//public var geo:PrimitiveBase;
 		public var mesh:Mesh;
 		
-		public function BlockVO( id:String, filename:String, faces:Object ) {
+		public function BlockVo( id:String, filename:String, faces:Object ) {
 			_id = id;
 			_filename = filename;
 			_faces = faces;

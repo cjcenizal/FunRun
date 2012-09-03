@@ -1,6 +1,6 @@
 package com.funrun.model {
 	
-	import com.funrun.model.vo.BlockVO;
+	import com.funrun.model.vo.BlockVo;
 	
 	import org.robotlegs.mvcs.Actor;
 	
@@ -13,11 +13,11 @@ package com.funrun.model {
 			_blocks = {};
 		}
 		
-		public function addBlock( block:BlockVO ):void {
+		public function addBlock( block:BlockVo ):void {
 			_blocks[ block.id ] = block;
 		}
 		
-		public function getBlock( id:String ):BlockVO {
+		public function getBlock( id:String ):BlockVo {
 			return _blocks[ id ];
 		}
 	}

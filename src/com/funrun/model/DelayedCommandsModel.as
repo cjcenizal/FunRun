@@ -1,6 +1,6 @@
 package com.funrun.model {
 
-	import com.funrun.model.vo.DelayedCommandVO;
+	import com.funrun.model.vo.DelayedCommandVo;
 	
 	import org.osflash.signals.Signal;
 	import org.robotlegs.mvcs.Actor;
@@ -15,7 +15,7 @@ package com.funrun.model {
 		}
 		
 		public function add( signal:Signal, delayMs:int, arg:* = null ):void {
-			var callback:Function = function( command:DelayedCommandVO ):void {
+			var callback:Function = function( command:DelayedCommandVo ):void {
 				if ( arg ) {
 					var type:Class = Object( arg ).constructor;
 					signal.dispatch.call( null, arg as type );
@@ -24,10 +24,10 @@ package com.funrun.model {
 				}
 				remove( command );
 			}
-			_delayedCommands.push( new DelayedCommandVO( delayMs, callback ) );
+			_delayedCommands.push( new DelayedCommandVo( delayMs, callback ) );
 		}
 		
-		public function remove( command:DelayedCommandVO ):void {
+		public function remove( command:DelayedCommandVo ):void {
 			command.destroy();
 			for ( var i:int = 0; i < _delayedCommands.length; i++ ) {
 				if ( _delayedCommands[ i ] == command ) {
@@ -39,7 +39,7 @@ package com.funrun.model {
 		
 		public function removeAll():void {
 			while ( _delayedCommands.length > 0 ) {
-				remove( _delayedCommands[ 0 ] as DelayedCommandVO );
+				remove( _delayedCommands[ 0 ] as DelayedCommandVo );
 			}
 		}
 	}

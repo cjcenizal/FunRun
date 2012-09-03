@@ -3,7 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.model.constants.Track;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -24,7 +24,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			for ( var i:int = 0; i < numCompetitors; i++ ) {
-				var competitor:CompetitorVO = new CompetitorVO( i, "Bot_" + i.toString() );
+				var competitor:CompetitorVo = new CompetitorVo( i, "Bot_" + i.toString() );
 				var width:Number = Track.WIDTH * .8;
 				competitor.updatePosition(  Math.random() * width, 0, Math.random() * 300 );
 				addCompetitorRequest.dispatch( competitor );

@@ -7,7 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
-	import com.funrun.model.vo.ResultsPopupVO;
+	import com.funrun.model.vo.ResultsPopupVo;
 	import com.funrun.view.components.ResultsPopup;
 	
 	import org.robotlegs.mvcs.Command;
@@ -51,7 +51,7 @@ package com.funrun.controller.commands {
 				message += "<br>Your best distance so far is " + playerModel.bestDistance.toString();
 			}
 			addPopupRequest.dispatch( new ResultsPopup(
-				new ResultsPopupVO( message ) ) );
+				new ResultsPopupVo( message ) ) );
 			
 			// Show places.
 			var orderedByPlace:Array = [];

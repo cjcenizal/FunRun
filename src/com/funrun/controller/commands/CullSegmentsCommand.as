@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
-	import com.funrun.model.vo.SegmentVO;
+	import com.funrun.model.vo.SegmentVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -32,7 +32,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			for ( var i:int = 0; i < trackModel.numObstacles; i++ ) {
-				var obstacle:SegmentVO = trackModel.getObstacleAt( i );
+				var obstacle:SegmentVo = trackModel.getObstacleAt( i );
 				if ( obstacle.z < positionZ + Segment.CULL_DEPTH_NEAR
 					|| obstacle.z > positionZ + Segment.CULL_DEPTH_FAR ) {
 					removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? obstacle.boundsMesh : obstacle.mesh );

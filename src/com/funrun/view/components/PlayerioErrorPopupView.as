@@ -2,7 +2,7 @@ package com.funrun.view.components {
 	
 	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.utils.Center;
-	import com.funrun.model.vo.PlayerioErrorVO;
+	import com.funrun.model.vo.PlayerioErrorVo;
 	
 	import playerio.PlayerIOError;
 	
@@ -11,7 +11,7 @@ package com.funrun.view.components {
 		private var _error:PlayerIOError;
 		private var _messageLabel:AbstractLabel;
 		
-		public function PlayerioErrorPopupView( vo:PlayerioErrorVO ) {
+		public function PlayerioErrorPopupView( vo:PlayerioErrorVo ) {
 			super( null, 0, 0, 600, 500 );
 			_error = vo.error;
 		}

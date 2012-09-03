@@ -11,8 +11,8 @@ package com.funrun.controller.commands
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
-	import com.funrun.model.vo.BoundingBoxVO;
-	import com.funrun.model.vo.SegmentVO;
+	import com.funrun.model.vo.BoundingBoxVo;
+	import com.funrun.model.vo.SegmentVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -52,7 +52,7 @@ package com.funrun.controller.commands
 					// Merge it into the obstacle.
 					merge.apply( floorMesh, floorBlockMesh );
 					// Add a bounding box so we can collide with the floor.
-					boundingBoxes.push( new BoundingBoxVO(
+					boundingBoxes.push( new BoundingBoxVo(
 						blocksModel.getBlock( "floor" ),
 						floorBlockMesh.x, floorBlockMesh.y, floorBlockMesh.z,
 						-Block.HALF_SIZE,
@@ -71,7 +71,7 @@ package com.funrun.controller.commands
 				boundsMesh = new Mesh( new Geometry() );
 				var blockGeo:Geometry = new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE );
 				var len:int = boundingBoxes.length;
-				var box:BoundingBoxVO;
+				var box:BoundingBoxVo;
 				var indicator:Mesh;
 				for ( var i:int = 0; i < len; i++ ) {
 					box = boundingBoxes[ i ];
@@ -83,7 +83,7 @@ package com.funrun.controller.commands
 				}
 			}
 			
-			var floor:SegmentVO = new SegmentVO( floorMesh, boundsMesh, boundingBoxes,
+			var floor:SegmentVo = new SegmentVo( floorMesh, boundsMesh, boundingBoxes,
 				floorMesh.bounds.min.x, floorMesh.bounds.min.y, floorMesh.bounds.min.z,
 				floorMesh.bounds.max.x, floorMesh.bounds.max.y, floorMesh.bounds.max.z );
 			segmentsModel.storeFloor( floor );

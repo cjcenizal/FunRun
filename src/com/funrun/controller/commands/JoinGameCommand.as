@@ -9,7 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
-	import com.funrun.model.vo.PlayerioErrorVO;
+	import com.funrun.model.vo.PlayerioErrorVo;
 	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
@@ -80,7 +80,7 @@ package com.funrun.controller.commands {
 		
 		private function onError():void {
 			trace(this, "error");
-			showPlayerioErrorPopupRequest.dispatch( PlayerioErrorVO( multiplayerService.error ) );
+			showPlayerioErrorPopupRequest.dispatch( PlayerioErrorVo( multiplayerService.error ) );
 		}
 		
 		private function onInit( message:Message ):void {

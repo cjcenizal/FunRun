@@ -3,7 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -29,7 +29,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			interpolationModel.reset();
-			var competitor:CompetitorVO;
+			var competitor:CompetitorVo;
 			for ( var i:int = 0; i < message.length; i += 5 ) {
 				if ( message.getInt( i ) != playerModel.inGameId ) {
 					competitor = competitorsModel.getWithId( message.getInt( i ) );

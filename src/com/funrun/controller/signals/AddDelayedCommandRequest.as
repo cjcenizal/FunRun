@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.controller.signals.payload.AddDelayedCommandPayload;
+	import com.funrun.model.vo.AddDelayedCommandVo;
 	
 	import org.osflash.signals.Signal;
 	
@@ -8,7 +8,7 @@ package com.funrun.controller.signals
 	{
 		public function AddDelayedCommandRequest()
 		{
-			super( AddDelayedCommandPayload );
+			super( AddDelayedCommandVo );
 		}
 	}
 }

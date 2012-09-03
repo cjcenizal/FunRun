@@ -7,12 +7,12 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
-	import com.funrun.controller.signals.payload.UpdateTrackPayload;
+	import com.funrun.model.vo.UpdateTrackVo;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.KeysModel;
 	import com.funrun.model.ObserverModel;
-	import com.funrun.model.View3DModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.View3dModel;
+	import com.funrun.model.vo.CompetitorVo;
 	import flash.ui.Keyboard;
 	import org.robotlegs.mvcs.Command;
 	
@@ -21,7 +21,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var view3dModel:View3DModel;
+		public var view3dModel:View3dModel;
 		
 		[Inject]
 		public var observerModel:ObserverModel;
@@ -57,7 +57,7 @@ package com.funrun.controller.commands {
 		
 		// Private vars.
 		
-		private var _competitor:CompetitorVO;
+		private var _competitor:CompetitorVo;
 		
 		override public function execute():void {
 			
@@ -90,7 +90,7 @@ package com.funrun.controller.commands {
 			updateCompetitorsRequest.dispatch();
 			
 			// Cull + rebuild track.
-			updateTrackRequest.dispatch( new UpdateTrackPayload( view3dModel.target.position.z ) );
+			updateTrackRequest.dispatch( new UpdateTrackVo( view3dModel.target.position.z ) );
 			
 			// Update places.
 			updateUiRequest.dispatch();

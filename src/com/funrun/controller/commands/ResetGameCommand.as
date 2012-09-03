@@ -10,7 +10,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.View3DModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.state.ShowBoundsState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -38,7 +38,7 @@ package com.funrun.controller.commands {
 		public var competitorsModel:CompetitorsModel;
 		
 		[Inject]
-		public var view3dModel:View3DModel;
+		public var view3dModel:View3dModel;
 		
 		// Commands.
 		

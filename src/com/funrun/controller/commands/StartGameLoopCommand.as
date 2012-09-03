@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.View3DModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.constants.Camera;
 	import com.funrun.model.state.ScreenState;
@@ -16,7 +16,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var view3dModel:View3DModel;
+		public var view3dModel:View3dModel;
 		
 		[Inject]
 		public var playerModel:PlayerModel;

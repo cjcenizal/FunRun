@@ -5,7 +5,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.state.OnlineState;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -37,7 +37,7 @@ package com.funrun.controller.commands {
 			
 			// Interpolate competitor position.
 			var len:int = competitorsModel.numCompetitors;
-			var competitor:CompetitorVO;
+			var competitor:CompetitorVo;
 			var nametag:AbstractLabel;
 			for ( var i:int = 0; i < len; i++ ) {
 				competitor = competitorsModel.getAt( i );

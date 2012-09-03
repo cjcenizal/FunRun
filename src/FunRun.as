@@ -36,6 +36,9 @@ package {
 		- Search for TO-DOs
 		- Game design
 			- Build stubbed store functionality
+			- Collect points
+			- Keep and display scores
+			- Add social sharing
 			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
@@ -61,9 +64,7 @@ package {
 		- Economy
 			- http://conversionxl.com/pricing-experiments-you-might-not-know-but-can-learn-from/
 			- http://news.ycombinator.com/item?id=4370904
-		- Collectibles (food?)
 		- Nice UI with comfy pressable buttons.
-		- Foody red/yellow/white color scheme
 		- Sound fx
 		- Music
 		- Full-screen, or fluid 100% window size.

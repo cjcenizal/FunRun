@@ -2,7 +2,7 @@ package com.funrun.model.vo
 {
 	import com.cenizal.physics.collisions.ICollidable;
 	
-	public class CollidableVO implements ICollidable
+	public class CollidableVo implements ICollidable
 	{
 		
 		protected var _x:Number;
@@ -15,7 +15,7 @@ package com.funrun.model.vo
 		protected var _maxY:Number;
 		protected var _maxZ:Number;
 		
-		public function CollidableVO( x:Number = 0, y:Number = 0, z:Number = 0, minX:Number = 0, minY:Number = 0, minZ:Number = 0, maxX:Number = 0, maxY:Number = 0, maxZ:Number = 0 )
+		public function CollidableVo( x:Number = 0, y:Number = 0, z:Number = 0, minX:Number = 0, minY:Number = 0, minZ:Number = 0, maxX:Number = 0, maxY:Number = 0, maxZ:Number = 0 )
 		{
 			_x = x;
 			_y = y;
@@ -33,7 +33,7 @@ package com.funrun.model.vo
 		}
 		
 		public function add( collidable:ICollidable ):ICollidable {
-			return new CollidableVO(
+			return new CollidableVo(
 				_x + collidable.x,
 				_y + collidable.y,
 				_z + collidable.z,

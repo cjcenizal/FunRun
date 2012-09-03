@@ -1,6 +1,6 @@
 package com.funrun.model {
 
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Actor;
 
@@ -15,7 +15,7 @@ package com.funrun.model {
 			reset();
 		}
 		
-		public function add( competitor:CompetitorVO ):void {
+		public function add( competitor:CompetitorVo ):void {
 			_competitors[ competitor.id ] = competitor;
 			_competitorsArray.push( competitor );
 			if ( !competitor.isDead ) {
@@ -25,14 +25,14 @@ package com.funrun.model {
 		}
 		
 		public function remove( id:int ):void {
-			var competitor:CompetitorVO = getWithId( id );
+			var competitor:CompetitorVo = getWithId( id );
 			for ( var i:int = 0; i < _liveCompetitorsArray.length; i++ ) {
 				if ( _liveCompetitorsArray[ i ] == competitor ) {
 					_liveCompetitorsArray.splice( i, 1 );
 					i--;
 				}
 				if ( i >= 0 ) {
-					( _liveCompetitorsArray[ i ] as CompetitorVO ).liveIndex = i;
+					( _liveCompetitorsArray[ i ] as CompetitorVo ).liveIndex = i;
 				}
 			}
 			delete _competitors[ id ];
@@ -45,7 +45,7 @@ package com.funrun.model {
 		}
 		
 		public function kill( id:int ):void {
-			var competitor:CompetitorVO = getWithId( id );
+			var competitor:CompetitorVo = getWithId( id );
 			if ( competitor ) {
 				competitor.kill();
 				for ( var i:int = 0; i < _liveCompetitorsArray.length; i++ ) {
@@ -54,7 +54,7 @@ package com.funrun.model {
 						i--;
 					}
 					if ( i >= 0 ) {
-						( _liveCompetitorsArray[ i ] as CompetitorVO ).liveIndex = i;
+						( _liveCompetitorsArray[ i ] as CompetitorVo ).liveIndex = i;
 					}
 				}
 			}
@@ -66,15 +66,15 @@ package com.funrun.model {
 			_liveCompetitorsArray = [];
 		}
 		
-		public function getWithId( id:int ):CompetitorVO {
+		public function getWithId( id:int ):CompetitorVo {
 			return _competitors[ id ];
 		}
 		
-		public function getAt( i:int ):CompetitorVO {
+		public function getAt( i:int ):CompetitorVo {
 			return _competitorsArray[ i ];
 		}
 		
-		public function getLiveCompetitorAt( i:int ):CompetitorVO {
+		public function getLiveCompetitorAt( i:int ):CompetitorVo {
 			return _liveCompetitorsArray[ i ];
 		}
 		

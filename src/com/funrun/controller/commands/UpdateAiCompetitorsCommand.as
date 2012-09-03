@@ -7,7 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.StateModel;
 	import nl.ronvalstar.math.Perlin;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -34,7 +34,7 @@ package com.funrun.controller.commands {
 			if ( stateModel.isRunning() ) {
 				// Update positions.
 				interpolationModel.reset();
-				var competitor:CompetitorVO;
+				var competitor:CompetitorVo;
 				var killed:Boolean = false;
 				for ( var i:int = 0; i < competitorsModel.numCompetitors; i++ ) {
 					competitor = competitorsModel.getAt( i );

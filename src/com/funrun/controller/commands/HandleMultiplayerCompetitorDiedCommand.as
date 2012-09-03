@@ -3,7 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -32,7 +32,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			var id:int = message.getInt( 0 );
 			if ( id != playerModel.inGameId ) {
-				var competitor:CompetitorVO = competitorsModel.getWithId( id );
+				var competitor:CompetitorVo = competitorsModel.getWithId( id );
 				competitorsModel.kill( competitor.id );
 				displayMessageRequest.dispatch( competitor.name + " just died!" );
 			}

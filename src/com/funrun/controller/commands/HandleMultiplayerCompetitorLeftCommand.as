@@ -3,7 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.model.CompetitorsModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -30,7 +30,7 @@ package com.funrun.controller.commands {
 		public var displayMessageRequest:DrawMessageRequest;
 		
 		override public function execute():void {
-			var competitor:CompetitorVO = competitorsModel.getWithId( message.getInt( 0 ) );
+			var competitor:CompetitorVo = competitorsModel.getWithId( message.getInt( 0 ) );
 			removeCompetitorRequest.dispatch( competitor );
 			displayMessageRequest.dispatch( competitor.name + " has left the game." );
 		}

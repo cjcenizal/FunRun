@@ -5,7 +5,7 @@ package com.funrun.model.vo {
 	
 	import com.cenizal.physics.collisions.ICollidable;
 
-	public class SegmentVO extends CollidableVO implements ICollidable {
+	public class SegmentVo extends CollidableVo implements ICollidable {
 		
 		public static var useBoundsMesh:Boolean = false;
 		
@@ -14,7 +14,7 @@ package com.funrun.model.vo {
 		private var _boundingBoxes:Array;
 		private var _numBoundingBoxes:int;
 
-		public function SegmentVO( mesh:Mesh, boundsMesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+		public function SegmentVo( mesh:Mesh, boundsMesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
 			super( 0, 0, 0, minX, minY, minZ, maxX, maxY, maxZ );
 			_mesh = mesh;
 			_boundsMesh = boundsMesh;
@@ -23,14 +23,14 @@ package com.funrun.model.vo {
 		}
 		
 		override public function add( collidable:ICollidable ):ICollidable {
-			return new SegmentVO(
+			return new SegmentVo(
 				_mesh, _boundsMesh, _boundingBoxes,
 				_minX, _minY, minZ,
 				_maxX, _maxY, maxZ );
 		}
 		
-		public function clone():SegmentVO {
-			return new SegmentVO( _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+		public function clone():SegmentVo {
+			return new SegmentVo( _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
 		}
 		
 		/**
@@ -53,7 +53,7 @@ package com.funrun.model.vo {
 			return _boundingBoxes;
 		}
 		
-		public function getBoundingBoxAt( index:int ):BoundingBoxVO {
+		public function getBoundingBoxAt( index:int ):BoundingBoxVo {
 			return _boundingBoxes[ index ];
 		}
 		

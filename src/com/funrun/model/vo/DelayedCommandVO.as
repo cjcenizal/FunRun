@@ -5,12 +5,12 @@ package com.funrun.model.vo {
 
 	import org.osflash.signals.Signal;
 
-	public class DelayedCommandVO {
+	public class DelayedCommandVo {
 
 		private var _timer:Timer;
 		public var callback:Function;
 
-		public function DelayedCommandVO( delayMs:int, callback:Function ) {
+		public function DelayedCommandVo( delayMs:int, callback:Function ) {
 			this.callback = callback;
 			_timer = new Timer( delayMs );
 			_timer.addEventListener( TimerEvent.TIMER, onTimerComplete );

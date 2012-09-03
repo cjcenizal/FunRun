@@ -7,7 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
-	import com.funrun.model.vo.PlayerioErrorVO;
+	import com.funrun.model.vo.PlayerioErrorVo;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
@@ -73,7 +73,7 @@ package com.funrun.controller.commands {
 		
 		private function onError():void {
 			trace(this, "error");
-			showPlayerioErrorPopupRequest.dispatch( new PlayerioErrorVO( matchmakingService.error ) );
+			showPlayerioErrorPopupRequest.dispatch( new PlayerioErrorVo( matchmakingService.error ) );
 		}
 		
 		private function onJoinGame( message:Message ):void {

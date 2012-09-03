@@ -3,7 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -32,7 +32,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// We receive ourselves as new players, so screen ourselves out.
 			if ( message.getInt( 0 ) != playerModel.inGameId ) {
-				var competitor:CompetitorVO = new CompetitorVO(
+				var competitor:CompetitorVo = new CompetitorVo(
 					message.getInt( 0 ),
 					message.getString( 1 )
 				);

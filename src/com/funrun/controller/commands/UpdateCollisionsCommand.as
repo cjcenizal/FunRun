@@ -7,9 +7,9 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.vo.BoundingBoxVO;
-	import com.funrun.model.vo.CollidableVO;
-	import com.funrun.model.vo.SegmentVO;
+	import com.funrun.model.vo.BoundingBoxVo;
+	import com.funrun.model.vo.CollidableVo;
+	import com.funrun.model.vo.SegmentVo;
 	
 	import flash.geom.Vector3D;
 	
@@ -37,7 +37,7 @@ package com.funrun.controller.commands {
 		
 		// Local vars.
 		
-		private var _collider:CollidableVO;
+		private var _collider:CollidableVo;
 		private var _interpolationStepDistance:Number;
 		private var _numberOfStepsToInterpolate:Number = 5;
 		private var _interpolationStepCount:int;
@@ -46,10 +46,10 @@ package com.funrun.controller.commands {
 		private var _resolutionStepCount:int;
 		private var _segmentsArr:Array;
 		private var _collidingSegmentIndicesArr:Array;
-		private var _firstCollidingSegment:SegmentVO;
+		private var _firstCollidingSegment:SegmentVo;
 		private var _firstCollidingSegmentBoundingBoxesArr:Array;
 		private var _collidingBoundingBoxIndicesArr:Array;
-		private var _firstCollidingBoundingBox:BoundingBoxVO;
+		private var _firstCollidingBoundingBox:BoundingBoxVo;
 		private var _collidingFaces:FaceCollisionsVO;
 		private var _collidingFace:String;
 		private var _collisionEvent:String;
@@ -140,7 +140,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function setupCollider():void {
-			_collider = new CollidableVO();
+			_collider = new CollidableVo();
 			_collider.copyFrom( ( playerModel.isDucking ) ? playerModel.duckingBounds : playerModel.normalBounds );
 		}
 		
@@ -224,7 +224,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getFirstCollidingBoundingBox():void {
-			_firstCollidingBoundingBox = _firstCollidingSegment.getBoundingBoxAt( _collidingBoundingBoxIndicesArr[ 0 ] ).add( _firstCollidingSegment ) as BoundingBoxVO;
+			_firstCollidingBoundingBox = _firstCollidingSegment.getBoundingBoxAt( _collidingBoundingBoxIndicesArr[ 0 ] ).add( _firstCollidingSegment ) as BoundingBoxVo;
 		}
 		
 		private function getFacesCollidingWithFirstBoundingBox():void {	

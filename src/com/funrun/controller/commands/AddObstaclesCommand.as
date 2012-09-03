@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.AddSegmentRequest;
-	import com.funrun.controller.signals.payload.AddSegmentPayload;
+	import com.funrun.model.vo.AddSegmentVo;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Segment;
 	
@@ -33,7 +33,7 @@ package com.funrun.controller.commands {
 				if ( index < 0 ) {
 					break;
 				}
-				addSegmentRequest.dispatch( new AddSegmentPayload( index ) );
+				addSegmentRequest.dispatch( new AddSegmentVo( index ) );
 			}
 			
 			// Fill up track on the far side.
@@ -42,7 +42,7 @@ package com.funrun.controller.commands {
 				if ( index < 0 ) {
 					break;
 				}
-				addSegmentRequest.dispatch( new AddSegmentPayload( index ) );
+				addSegmentRequest.dispatch( new AddSegmentVo( index ) );
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.controller.signals.payload.AddSegmentPayload;
+	import com.funrun.model.vo.AddSegmentVo;
 	
 	import org.osflash.signals.Signal;
 	
@@ -8,7 +8,7 @@ package com.funrun.controller.signals
 	{
 		public function AddSegmentRequest()
 		{
-			super( AddSegmentPayload );
+			super( AddSegmentVo );
 		}
 	}
 }

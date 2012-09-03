@@ -12,9 +12,9 @@ package com.funrun.controller.commands
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.View3DModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.StateModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	import com.funrun.services.OrdinalizeNumberService;
 	
 	import flash.geom.Point;
@@ -45,7 +45,7 @@ package com.funrun.controller.commands
 		public var nametagsModel:NametagsModel;
 		
 		[Inject]
-		public var view3DModel:View3DModel;
+		public var view3DModel:View3dModel;
 		
 		// Services.
 		
@@ -98,7 +98,7 @@ package com.funrun.controller.commands
 		private function updateNametags():void {
 			// Interpolate competitor position.
 			var len:int = competitorsModel.numCompetitors;
-			var competitor:CompetitorVO;
+			var competitor:CompetitorVo;
 			var nametag:AbstractLabel;
 			for ( var i:int = 0; i < len; i++ ) {
 				competitor = competitorsModel.getAt( i );

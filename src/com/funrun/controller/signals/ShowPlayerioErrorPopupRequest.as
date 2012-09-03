@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.PlayerioErrorVO;
+	import com.funrun.model.vo.PlayerioErrorVo;
 	
 	import org.osflash.signals.Signal;
 	
@@ -10,7 +10,7 @@ package com.funrun.controller.signals
 	{
 		public function ShowPlayerioErrorPopupRequest()
 		{
-			super( PlayerioErrorVO );
+			super( PlayerioErrorVo );
 		}
 	}
 }

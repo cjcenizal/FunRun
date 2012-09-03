@@ -6,7 +6,7 @@ package com.funrun.model {
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Stats;
-	import com.funrun.model.vo.CollidableVO;
+	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.IPlaceable;
 	
 	import flash.geom.Vector3D;
@@ -36,8 +36,8 @@ package com.funrun.model {
 		public var isDead:Boolean = false;
 		
 		// Bounds.
-		public var normalBounds:CollidableVO;
-		public var duckingBounds:CollidableVO;
+		public var normalBounds:CollidableVo;
+		public var duckingBounds:CollidableVo;
 
 		public function PlayerModel() {
 			super();
@@ -45,8 +45,8 @@ package com.funrun.model {
 			velocity = new Vector3D();
 			position = new Vector3D();
 			prevPosition = new Vector3D();
-			normalBounds = new CollidableVO();
-			duckingBounds = new CollidableVO();
+			normalBounds = new CollidableVo();
+			duckingBounds = new CollidableVo();
 			resetInGameId();
 		}
 		

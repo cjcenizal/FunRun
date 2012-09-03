@@ -5,7 +5,7 @@ package com.funrun.model.vo {
 	
 	import flash.geom.Vector3D;
 
-	public class CompetitorVO implements IPlaceable {
+	public class CompetitorVo implements IPlaceable {
 
 		public var mesh:Mesh;
 		public var isDucking:Boolean;
@@ -18,7 +18,7 @@ package com.funrun.model.vo {
 		private var _isDead:Boolean = false;
 		private var _deathTime:Number = 0;
 		
-		public function CompetitorVO( id:int, name:String ) {
+		public function CompetitorVo( id:int, name:String ) {
 			_id = id;
 			_name = name;
 			_oldPosition = new Vector3D();

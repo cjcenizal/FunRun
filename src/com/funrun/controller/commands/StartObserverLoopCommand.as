@@ -7,10 +7,10 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
-	import com.funrun.model.View3DModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.state.ScreenState;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -19,7 +19,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var view3dModel:View3DModel;
+		public var view3dModel:View3dModel;
 		
 		[Inject]
 		public var observerModel:ObserverModel;
@@ -47,7 +47,7 @@ package com.funrun.controller.commands {
 			
 			// Move nametags out of the way.
 			var len:int = competitorsModel.numCompetitors;
-			var competitor:CompetitorVO;
+			var competitor:CompetitorVo;
 			var nametag:AbstractLabel;
 			for ( var i:int = 0; i < len; i++ ) {
 				competitor = competitorsModel.getAt( i );

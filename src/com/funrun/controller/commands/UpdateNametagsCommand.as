@@ -5,8 +5,8 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.View3DModel;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.View3dModel;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import flash.geom.Point;
 	

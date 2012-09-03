@@ -11,7 +11,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.vo.CompetitorVO;
+	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -21,7 +21,7 @@ package com.funrun.controller.commands {
 		// Arguments.
 		
 		[Inject]
-		public var competitor:CompetitorVO;
+		public var competitor:CompetitorVo;
 		
 		// Models.
 		

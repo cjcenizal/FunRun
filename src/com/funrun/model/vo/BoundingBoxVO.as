@@ -2,18 +2,18 @@ package com.funrun.model.vo
 {
 	import com.cenizal.physics.collisions.ICollidable;
 	
-	public class BoundingBoxVO extends CollidableVO implements ICollidable
+	public class BoundingBoxVo extends CollidableVo implements ICollidable
 	{
-		public var block:BlockVO;
+		public var block:BlockVo;
 		
-		public function BoundingBoxVO( block:BlockVO, x:Number, y:Number, z:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
+		public function BoundingBoxVo( block:BlockVo, x:Number, y:Number, z:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
 		{
 			this.block = block;
 			super( x, y, z, minX, minY, minZ, maxX, maxY, maxZ );
 		}
 		
 		override public function add( collidable:ICollidable ):ICollidable {
-			return new BoundingBoxVO( block,
+			return new BoundingBoxVo( block,
 				_x + collidable.x,
 				_y + collidable.y,
 				_z + collidable.z,

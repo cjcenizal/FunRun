@@ -1,6 +1,6 @@
 package com.funrun.services.parsers {
 	
-	import com.funrun.model.vo.ObstacleBlockVO;
+	import com.funrun.model.vo.ObstacleBlockVo;
 
 	public class ObstacleParser {
 		
@@ -17,7 +17,7 @@ package com.funrun.services.parsers {
 			var block:Object;
 			for ( var i:int = 0; i < len; i++ ) {
 				block = objects[ i ];
-				_blocks.push( new ObstacleBlockVO(
+				_blocks.push( new ObstacleBlockVo(
 						block[ ID ],
 						block[ X ],
 						block[ Y ],
@@ -30,7 +30,7 @@ package com.funrun.services.parsers {
 			return _blocks.length;
 		}
 		
-		public function getAt( index:int ):ObstacleBlockVO {
+		public function getAt( index:int ):ObstacleBlockVo {
 			return _blocks[ index ];
 		}
 	}

@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.CullSegmentsRequest;
-	import com.funrun.controller.signals.payload.UpdateTrackPayload;
+	import com.funrun.model.vo.UpdateTrackVo;
 	import com.funrun.model.TrackModel;
 	
 	import org.robotlegs.mvcs.Command;
@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 		// Arguments.
 		
 		[Inject]
-		public var payload:UpdateTrackPayload;
+		public var payload:UpdateTrackVo;
 		
 		// Models.
 		

@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.controller.signals.payload.UpdateTrackPayload;
+	import com.funrun.model.vo.UpdateTrackVo;
 	
 	import org.osflash.signals.Signal;
 	
@@ -8,7 +8,7 @@ package com.funrun.controller.signals
 	{
 		public function UpdateTrackRequest()
 		{
-			super( UpdateTrackPayload );
+			super( UpdateTrackVo );
 		}
 	}
 }

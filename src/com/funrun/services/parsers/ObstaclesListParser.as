@@ -1,5 +1,5 @@
 package com.funrun.services.parsers {
-	import com.funrun.model.vo.BlockVO;
+	import com.funrun.model.vo.BlockVo;
 	
 	public class ObstaclesListParser extends AbstractParser {
 		
