@@ -33,6 +33,7 @@ package com.funrun.controller.commands {
 		private var _countLoaded:int = 0;
 		
 		override public function execute():void {
+			// TO-DO: Eventually this will be encoded externally just like all other obstacles.
 			// Store floor first.
 			storeFloorRequest.dispatch();
 			

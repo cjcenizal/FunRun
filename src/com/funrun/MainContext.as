@@ -37,6 +37,7 @@ package com.funrun {
 	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
+	import com.funrun.controller.commands.ShowStoreCommand;
 	import com.funrun.controller.commands.StartCountdownCommand;
 	import com.funrun.controller.commands.StartGameCommand;
 	import com.funrun.controller.commands.StartGameLoopCommand;
@@ -104,6 +105,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
+	import com.funrun.controller.signals.ShowStoreRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartGameRequest;
@@ -123,6 +125,7 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
 	import com.funrun.controller.signals.UpdateViewRequest;
+	import com.funrun.model.AccountModel;
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
@@ -138,6 +141,7 @@ package com.funrun {
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.StateModel;
+	import com.funrun.model.StoreModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3dModel;
@@ -213,6 +217,7 @@ package com.funrun {
 			}
 			
 			// Map models.
+			injector.mapSingleton( AccountModel );
 			injector.mapSingleton( BlocksModel );
 			injector.mapSingleton( CompetitorsModel );
 			injector.mapSingleton( ConfigurationModel );
@@ -228,6 +233,7 @@ package com.funrun {
 			injector.mapSingleton( PointsModel );
 			injector.mapSingleton( SegmentsModel );
 			injector.mapSingleton( StateModel );
+			injector.mapSingleton( StoreModel );
 			injector.mapSingleton( TimeModel );
 			injector.mapSingleton( TrackModel );
 			injector.mapSingleton( View3dModel );
@@ -293,6 +299,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
 			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );
+			signalCommandMap.mapSignalClass( ShowStoreRequest,						ShowStoreCommand );
 			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
 			signalCommandMap.mapSignalClass( StartGameRequest,						StartGameCommand );
 			signalCommandMap.mapSignalClass( StartGameLoopRequest,					StartGameLoopCommand );

@@ -9,6 +9,8 @@ package com.funrun.controller.commands {
 			addCommand( LoadBlocksCommand );
 			// Load list of obstacles, and then load each obstacle.
 			addCommand( LoadObstaclesCommand );
+			// Load store.
+			addCommand( LoadStoreCommand );
 		}
 	}
 }

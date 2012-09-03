@@ -1,8 +1,10 @@
 package com.funrun.controller.commands
 {
+	import com.funrun.controller.signals.DrawItemRequest;
 	import com.funrun.controller.signals.ToggleStoreRequest;
 	import com.funrun.model.AccountModel;
 	import com.funrun.model.StoreModel;
+	import com.funrun.model.vo.DrawItemVo;
 	import com.funrun.model.vo.VirtualGoodCategoryVo;
 	import com.funrun.model.vo.VirtualGoodVo;
 	
@@ -24,6 +26,9 @@ package com.funrun.controller.commands
 		[Inject]
 		public var toggleStoreRequest:ToggleStoreRequest;
 		
+		[Inject]
+		public var drawItemRequest:DrawItemRequest;
+		
 		override public function execute():void {
 			
 			// Show the store UI.
@@ -35,13 +40,11 @@ package com.funrun.controller.commands
 				category = storeModel.getCategoryAt( i );
 				for ( var j:int = 0; j < category.count; j++ ) {
 					item = category.getAt( j );
-					displayItemRequest.dispatch(
-						category.id,
-						category.name,
-						item.name,
-						item.cost,
+					drawItemRequest.dispatch( new DrawItemVo(
+						category,
+						item,
 						accountModel.owns( item.id ),
-						accountModel.wears( item.id ) );
+						accountModel.wears( item.id ) ) );
 				}
 			}
 			

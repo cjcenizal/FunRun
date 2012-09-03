@@ -8,5 +8,13 @@ package com.funrun.model
 		{
 			super();
 		}
+		
+		public function owns( id:String ):Boolean {
+			return false;
+		}
+		
+		public function wears( id:String ):Boolean {
+			return false;
+		}
 	}
 }
