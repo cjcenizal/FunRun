@@ -1,11 +1,14 @@
 package com.funrun.controller.commands
 {
-	import org.robotlegs.mvcs.Command;
+	import com.funrun.services.JsonService;
+	import com.funrun.services.parsers.StoreParser;
+	
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
 	import org.osflash.signals.Signal;
+	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
 	
 	public class LoadStoreCommand extends AsyncCommand
@@ -24,6 +27,10 @@ package com.funrun.controller.commands
 		
 		private function onLoadComplete( e:Event ):void {
 			var data:String = ( e.target as URLLoader ).data;
+			var parsedStore:StoreParser = new StoreParser( new JsonService().readString( data ) );
+			trace(data);
+			trace(parsedStore.getWithId( "eyes" ) );
+			
 			// Parse this intelligently, expecting certain categories, and ways to implement their schemas.
 			// Use a switch-case? Or just proactively seek out the data?
 			/*

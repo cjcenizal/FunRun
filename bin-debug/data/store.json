@@ -1,8 +1,8 @@
 {
   "doc" : "These are the game's virtual goods.",
   "author" : "CJ Cenizal",
-  "list" : [
-    { "id" : "color",
+  "list" : {
+    "color" : {
       "name" : "Color",
       "list" : [
         { "id" : "red",
@@ -15,35 +15,35 @@
           "name" : "Green",
           "color" : "#00ff00" }
       ] },
-    { "id" : "hair",
+    "hair" : {
       "name" : "Hair",
       "list" : [
         { "id" : "mohawk",
           "name" : "Mohawk" },
         { "id" : "dreads",
-          "name" : "Dreadlocks" }
+          "name" : "Dreadlocks" },
         { "id" : "pony",
           "name" : "Ponytail" }
       ] },
-    { "id" : "eyes",
+    "eyes" : {
       "name" : "Eyes",
       "list" : [
         { "id" : "normal",
           "name" : "Normal" },
         { "id" : "angry",
-        "name" : "Angry" },
+          "name" : "Angry" },
         { "id" : "girly",
-         "name" : "Girly" }
+          "name" : "Girly" }
       ] },
-    { "id" : "mouth",
+    "mouth" : {
       "name" : "Mouth",
       "list" : [
         { "id" : "normal",
           "name" : "Normal" },
         { "id" : "angry",
-        "name" : "Angry" },
+          "name" : "Angry" },
         { "id" : "girly",
-         "name" : "Girly" }
+          "name" : "Girly" }
       ] }
-  ]
+  }
 }

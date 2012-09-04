@@ -30,6 +30,7 @@ package {
 			- This might cause performance problems. Can meshes be merged and still be interactive?
 		- Make colored blocks that represent each type of block we need
 			- Represent with matching colored bounding boxes
+		- Add points block
 		- Build cool obstacles
 		
 		TO-DO:
