@@ -12,6 +12,7 @@ package com.funrun.controller.commands {
 	import away3d.materials.methods.FresnelSpecularMethod;
 	import away3d.materials.methods.SoftShadowMapMethod;
 	import away3d.primitives.CubeGeometry;
+	import away3d.primitives.SphereGeometry;
 	
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
@@ -189,7 +190,7 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxX = Player.DUCKING_BOUNDS.x * .5;
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
-			var geometry:CubeGeometry = new CubeGeometry( Player.NORMAL_BOUNDS.x, Player.NORMAL_BOUNDS.y, Player.NORMAL_BOUNDS.z );
+			var geometry:SphereGeometry = new SphereGeometry( Player.NORMAL_BOUNDS.x );
 			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
