@@ -3,16 +3,19 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
-	import com.funrun.model.vo.UpdateTrackVo;
 	import com.funrun.model.KeysModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;
+	import com.funrun.model.TimeModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.ExplorationState;
+	import com.funrun.model.vo.UpdateTrackVo;
 	
 	import flash.ui.Keyboard;
+	
+	import nl.ronvalstar.math.Perlin;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -39,6 +42,9 @@ package com.funrun.controller.commands
 		
 		[Inject]
 		public var keysModel:KeysModel;
+		
+		[Inject]
+		public var timeModel:TimeModel;
 		
 		// Commands.
 		
@@ -109,14 +115,9 @@ package com.funrun.controller.commands
 					} else  {
 						// Move forward according to game logic.
 						if ( stateModel.isRunning() ) {
-							// Update speed when you're alive.
-							if ( Math.abs( playerModel.velocity.x ) > 0 ) {
-								if ( playerModel.velocity.z > Player.SLOWED_DIAGONAL_SPEED ) {
-									playerModel.velocity.z--;
-								}
-							} else if ( playerModel.velocity.z < Player.MAX_FORWARD_VELOCITY ) {
-								playerModel.velocity.z += Player.FOWARD_ACCELERATION;
-							}
+							// Speed is perlinized.
+							var rand:Number = Perlin.noise( playerModel.inGameId * 2, timeModel.ticks * .01 );
+							playerModel.velocity.z = rand * ( Player.MAX_FORWARD_VELOCITY * 2 );
 						}
 					}
 				}
