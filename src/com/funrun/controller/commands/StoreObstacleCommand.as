@@ -52,10 +52,7 @@ package com.funrun.controller.commands
 			var merge:Merge = new Merge( true );
 			var boundingBoxes:Array = [];
 			
-			// A map of all pit locations in the obstacle.
-			var pitMap:Object = makePitMap();
-			
-			// Traverse block data and construct an obstacle mesh, filling in floors where necessary.
+			// Traverse block data and construct an obstacle mesh.
 			var len:int = obstacleData.numBlockData;
 			for ( var i:int = 0; i < len; i++ ) {
 				// Get position and mesh data for particular block.
@@ -79,41 +76,6 @@ package com.funrun.controller.commands
 					Block.HALF_SIZE,
 					Block.HALF_SIZE
 				) );
-				// If the block is below ground-level, it signals a pit.
-				if ( blockData.y < 0 ) {
-					// So mark it as positive in the pitmap.
-					//markPitAt( pitMap, blockData.x - .5, blockData.z - .5 );
-					markPitAt( pitMap, blockData.x, blockData.z );
-				}
-			}
-			
-			//  Fill in floors where necessary.
-			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "floor" ).mesh;
-			var floorBlockMesh:Mesh;
-			for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
-				for ( var z:int = 0; z < Segment.DEPTH_BLOCKS; z++ ) {
-					// Put floor blocks wherever the pit map is negative.
-					//if ( !pitMap[ x ] || !pitMap[ x ][ z ] ) {
-						// Create a floor block mesh in the appropriate place.
-						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
-						floorBlockMesh.x = x * Block.SIZE;// + Block.HALF_SIZE;
-						floorBlockMesh.y = -1 * Block.SIZE;
-						floorBlockMesh.z = z * Block.SIZE;
-						// Merge it into the obstacle.
-						merge.apply( obstacleMesh, floorBlockMesh );
-						// Add a bounding box so we can collide with the floor.
-						boundingBoxes.push( new BoundingBoxVo(
-							blocksModel.getBlock( "floor" ),
-							floorBlockMesh.x, floorBlockMesh.y, floorBlockMesh.z,
-							-Block.HALF_SIZE,
-							-Block.HALF_SIZE,
-							-Block.HALF_SIZE,
-							Block.HALF_SIZE,
-							Block.HALF_SIZE,
-							Block.HALF_SIZE
-						) );
-					//}
-				}
 			}
 			
 			// Add a bounds indicator.
@@ -139,22 +101,5 @@ package com.funrun.controller.commands
 				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
 			segmentsModel.storeObstacle( obstacle );
 		}
-		
-		private function makePitMap():Object {
-			var pitMap:Object = {};
-			for ( var x:Number = 0; x < 12; x++ ) {
-				pitMap[ x ] = {};
-				for ( var z:Number = 0; z < 24; z++ ) {
-					pitMap[ x ][ z ] = false;
-				}
-			}
-			return pitMap;
-		}
-		
-		private function markPitAt( pitMap:Object, posX:Number, posZ:Number ):void {
-			pitMap[ Math.round( posX ) ][ Math.round( posZ ) ] = true;
-		}
-		
-		
 	}
 }

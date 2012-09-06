@@ -2,6 +2,6 @@
   "doc" : "These are the obstacles constructed from blocks.",
   "author" : "CJ Cenizal",
   "list" : [
-      "one_block.json"
+      "platform.json"
     ]
 }

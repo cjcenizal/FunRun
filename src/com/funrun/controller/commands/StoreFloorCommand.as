@@ -40,15 +40,15 @@ package com.funrun.controller.commands
 			var floorBlockMesh:Mesh;
 			var posX:Number, posZ:Number;
 			for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
-				posX = x;// + .5;
+				posX = x;
 				for ( var z:int = 0; z < Segment.DEPTH_BLOCKS; z++ ) {
-					posZ = z;// + .5;
+					posZ = z;
 					// Put floor blocks everywhere.
 					// Create a floor block mesh in the appropriate place.
 					floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
-					floorBlockMesh.x = posX * Block.SIZE;
+					floorBlockMesh.x = posX * Block.SIZE + .5 * Block.SIZE;
 					floorBlockMesh.y = -1 * Block.SIZE;
-					floorBlockMesh.z = posZ * Block.SIZE;
+					floorBlockMesh.z = posZ * Block.SIZE + .5 * Block.SIZE;
 					// Merge it into the obstacle.
 					merge.apply( floorMesh, floorBlockMesh );
 					// Add a bounding box so we can collide with the floor.

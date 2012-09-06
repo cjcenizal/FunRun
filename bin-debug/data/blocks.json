@@ -4,15 +4,14 @@
   "list" : [
     {
       "id" : "floor",
-      "filename" : "001_brick_block.obj",
+      "filename" : "floor.obj",
       "faces" : {
           "t" : "put_top"
         }
       },
     {
-      "id" : "000",
-      "name" : "block",
-      "filename" : "001_brick_block.obj",
+      "id" : "basic",
+      "filename" : "basic.obj",
       "faces" : {
           "t" : "put_top",
           "b" : "put_bottom",
@@ -23,9 +22,20 @@
         }
       },
     {
-      "id" : "001",
-      "name" : "stair",
-      "filename" : "001_brick_block.obj",
+      "id" : "launcher",
+      "filename" : "launcher.obj",
+      "faces" : {
+          "t" : "jump",
+          "b" : "put_top",
+          "l" : "put_top",
+          "r" : "put_top",
+          "f" : "put_top",
+          "a" : "put_top"
+        }
+      },
+    {
+      "id" : "stairs",
+      "filename" : "stairs.obj",
       "faces" : {
           "t" : "put_top",
           "b" : "put_top",
@@ -36,17 +46,8 @@
         }
       },
     {
-      "id" : "002",
-      "name" : "launcher",
-      "filename" : "002_warning_block.obj",
-      "faces" : {
-          "t" : "jump",
-          "b" : "put_top",
-          "l" : "put_top",
-          "r" : "put_top",
-          "f" : "put_top",
-          "a" : "put_top"
-        }
+      "id" : "point",
+      "filename" : "point.obj"
       }
   ]
 }
