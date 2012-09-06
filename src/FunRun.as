@@ -33,6 +33,7 @@ package {
 		TO-DO:
 		- Search for TO-DOs
 		- Game design
+			- Add bounds in JSON so points can have smaller bounds
 			- Collect points
 			- Keep and display scores
 			- Add social sharing
