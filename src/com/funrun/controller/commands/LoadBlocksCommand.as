@@ -7,8 +7,10 @@ package com.funrun.controller.commands {
 	import away3d.loaders.misc.AssetLoaderContext;
 	import away3d.loaders.misc.AssetLoaderToken;
 	import away3d.loaders.parsers.OBJParser;
+	import away3d.materials.TextureMaterial;
 	
 	import com.funrun.model.BlocksModel;
+	import com.funrun.model.LightsModel;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.vo.BlockVo;
 	import com.funrun.services.JsonService;
@@ -18,6 +20,8 @@ package com.funrun.controller.commands {
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
+	import old.OBJParser;
+	
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
 
 	public class LoadBlocksCommand extends AsyncCommand {
@@ -26,6 +30,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var blocksModel:BlocksModel;
+		
+		[Inject]
+		public var lightsModel:LightsModel;
 		
 		// Private vars.
 		
@@ -60,7 +67,7 @@ package com.funrun.controller.commands {
 					// Store in model.
 					blocksModel.addBlock( blockData );
 					// Load it.
-					var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( _filePath + blockData.filename ), context, blockData.id, new OBJParser() );
+					var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( _filePath + blockData.filename ), context, blockData.id, new old.OBJParser() );
 					token.addEventListener( AssetEvent.ASSET_COMPLETE, getOnAssetComplete( blockData ) );
 				}
 			}
@@ -76,7 +83,6 @@ package com.funrun.controller.commands {
 					// Treat and assign mesh to block.
 					var mesh:Mesh = event.asset as Mesh;
 					mesh.geometry.scale(  Block.SIZE ); // Note: scale cannot be performed on mesh when using sub-surface diffuse method.
-					//mesh.y = -50;
 					mesh.rotationY = 180;
 					blockData.mesh = mesh;
 					// Increment complete count and check if we're done.

@@ -26,17 +26,13 @@ package {
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 		
 		BUILDER:
-		- Store floor as part of obstacle.
-			- This might cause performance problems. Can meshes be merged and still be interactive?
-		- Make colored blocks that represent each type of block we need
-			- Represent with matching colored bounding boxes
+		- Add shadows and lights to block materials
 		- Add points block
 		- Build cool obstacles
 		
 		TO-DO:
 		- Search for TO-DOs
 		- Game design
-			- Build stubbed store functionality
 			- Collect points
 			- Keep and display scores
 			- Add social sharing
@@ -44,6 +40,11 @@ package {
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
 			- Test performance on baby laptop
+			- Metrics?
+			- Basic animation, music, and sound?
+			- Test MVP
+		
+			- Build stubbed store functionality
 			- Observer loop:
 				- Display their attire in the UI
 				- Allow point and click to navigate through competitors

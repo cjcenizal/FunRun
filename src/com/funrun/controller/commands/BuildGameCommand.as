@@ -7,6 +7,7 @@ package com.funrun.controller.commands {
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
+	import away3d.materials.TextureMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FogMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
@@ -19,6 +20,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
+	import com.funrun.model.BlocksModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.PlayerModel;
@@ -61,6 +63,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var blocksModel:BlocksModel;
 		
 		// Commands.
 		
@@ -149,28 +154,38 @@ package com.funrun.controller.commands {
 			addLightRequest.dispatch( LightsModel.SUN, sunlight );
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
 			
-			var shadowMethod:SoftShadowMapMethod = new SoftShadowMapMethod( sunlight );
+			lightsModel.shadowMethod = new SoftShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
-			var lightPicker:StaticLightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
+			lightsModel.lightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			
-			Materials.DEBUG_PLAYER.lightPicker = lightPicker;
-			Materials.DEBUG_PLAYER.shadowMethod = shadowMethod;
+			Materials.DEBUG_PLAYER.lightPicker = lightsModel.lightPicker;
+			Materials.DEBUG_PLAYER.shadowMethod = lightsModel.shadowMethod;
 			Materials.DEBUG_PLAYER.specular = .25;
 			Materials.DEBUG_PLAYER.gloss = 20;
 			Materials.DEBUG_PLAYER.specularMethod = specularMethod;
 			
-			Materials.DEBUG_BLOCK.lightPicker = lightPicker;
-			Materials.DEBUG_BLOCK.shadowMethod = shadowMethod;
+			Materials.DEBUG_BLOCK.lightPicker = lightsModel.lightPicker;
+			Materials.DEBUG_BLOCK.shadowMethod = lightsModel.shadowMethod;
 			Materials.DEBUG_BLOCK.specular = .25;
 			Materials.DEBUG_BLOCK.gloss = 20;
 			Materials.DEBUG_BLOCK.specularMethod = specularMethod;
 		//	Materials.DEBUG_BLOCK.addMethod( new FogMethod( 1000, 0xffffff ) );
 			
-			Materials.DEBUG_TEST.lightPicker = lightPicker;
-			Materials.DEBUG_TEST.shadowMethod = shadowMethod;
+			Materials.DEBUG_TEST.lightPicker = lightsModel.lightPicker;
+			Materials.DEBUG_TEST.shadowMethod = lightsModel.shadowMethod;
 			Materials.DEBUG_TEST.specular = .25;
 			Materials.DEBUG_TEST.gloss = 20;
 			Materials.DEBUG_TEST.specularMethod = specularMethod;
+			
+			// Apply to blocks.
+			for ( var i:int = 0; i < blocksModel.count; i++ ) {
+				var material:TextureMaterial = blocksModel.getBlockAt( i ).mesh.material as TextureMaterial;
+				material.lightPicker = lightsModel.lightPicker;
+				material.shadowMethod = lightsModel.shadowMethod;
+				material.specular = .25;
+				material.gloss = 20;
+				material.specularMethod = specularMethod;
+			}
 			
 			// Add lights to track.
 			addObjectToSceneRequest.dispatch( sunlight );

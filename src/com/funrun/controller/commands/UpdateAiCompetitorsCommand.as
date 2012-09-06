@@ -46,7 +46,7 @@ package com.funrun.controller.commands {
 						} else {
 							var rand:Number = Perlin.noise( i * 2, timeModel.ticks * .01 );
 							var speed:Number = rand * ( Player.MAX_FORWARD_VELOCITY * 2 );
-							competitor.updatePosition( competitor.position.x, competitor.position.y, competitor.position.z + speed );
+							competitor.updatePosition( competitor.position.x, -Player.NORMAL_BOUNDS.y * .25, competitor.position.z + speed );
 						}
 					}
 				}
