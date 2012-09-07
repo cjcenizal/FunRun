@@ -14,5 +14,9 @@ package com.funrun.model.constants
 		
 		// Culling.
 		public static const CULL_FLOOR:int = -100000;
+		public static const CULL_DEPTH_NEAR:Number = -Track.DEPTH - DEPTH;
+		public static const CULL_DEPTH_FAR:Number = Track.DEPTH + DEPTH;
+		public static const ADD_DEPTH_NEAR:Number = DEPTH + CULL_DEPTH_NEAR;
+		public static const ADD_DEPTH_FAR:Number = Track.DEPTH;
 	}
 }

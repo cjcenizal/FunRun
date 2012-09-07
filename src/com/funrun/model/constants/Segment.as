@@ -9,11 +9,6 @@ package com.funrun.model.constants
 		public static const HALF_WIDTH:Number = WIDTH * .5;
 		public static const HALF_DEPTH:Number = DEPTH * .5;
 		
-		public static const CULL_DEPTH_NEAR:Number = -Track.DEPTH - DEPTH;
-		public static const CULL_DEPTH_FAR:Number = Track.DEPTH + DEPTH;
-		public static const ADD_DEPTH_NEAR:Number = DEPTH + CULL_DEPTH_NEAR;
-		public static const ADD_DEPTH_FAR:Number = Track.DEPTH;
-		
 		public static const GAP_BETWEEN_SEGMENTS:Number = 0;
 	}
 }

@@ -4,6 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.vo.AddSegmentVo;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Segment;
+	import com.funrun.model.constants.Track;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -28,7 +29,7 @@ package com.funrun.controller.commands {
 			var index:int;
 			
 			// Fill up track on the near side.
-			while ( trackModel.depthOfFirstObstacle > positionZ + Segment.ADD_DEPTH_NEAR ) {
+			while ( trackModel.depthOfFirstObstacle > positionZ + Track.ADD_DEPTH_NEAR ) {
 				index = Math.floor( trackModel.depthOfFirstObstacle / Segment.DEPTH ) - 1;
 				if ( index < 0 ) {
 					break;
@@ -37,7 +38,7 @@ package com.funrun.controller.commands {
 			}
 			
 			// Fill up track on the far side.
-			while ( trackModel.depthOfLastObstacle < positionZ + Segment.ADD_DEPTH_FAR ) {
+			while ( trackModel.depthOfLastObstacle < positionZ + Track.ADD_DEPTH_FAR ) {
 				index = Math.floor( trackModel.depthOfLastObstacle / Segment.DEPTH ) + 1;
 				if ( index < 0 ) {
 					break;

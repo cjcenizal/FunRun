@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddObstaclesRequest;
-	import com.funrun.controller.signals.CullSegmentsRequest;
+	import com.funrun.controller.signals.CullTrackRequest;
 	import com.funrun.model.vo.UpdateTrackVo;
 	import com.funrun.model.TrackModel;
 	
@@ -22,7 +22,7 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var cullSegmentsRequest:CullSegmentsRequest;
+		public var cullSegmentsRequest:CullTrackRequest;
 		
 		[Inject]
 		public var addObstaclesRequest:AddObstaclesRequest;

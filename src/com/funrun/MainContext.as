@@ -11,7 +11,7 @@ package com.funrun {
 	import com.funrun.controller.commands.AddSegmentCommand;
 	import com.funrun.controller.commands.CollectPointCommand;
 	import com.funrun.controller.commands.CompleteAppCommand;
-	import com.funrun.controller.commands.CullSegmentsCommand;
+	import com.funrun.controller.commands.CullTrackCommand;
 	import com.funrun.controller.commands.EndRoundCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorDiedCommand;
@@ -70,7 +70,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.CollectPointRequest;
 	import com.funrun.controller.signals.CompleteAppRequest;
-	import com.funrun.controller.signals.CullSegmentsRequest;
+	import com.funrun.controller.signals.CullTrackRequest;
 	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.controller.signals.DrawDistanceRequest;
 	import com.funrun.controller.signals.DrawMessageRequest;
@@ -278,7 +278,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( CollectPointRequest,					CollectPointCommand );
 			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );
-			signalCommandMap.mapSignalClass( CullSegmentsRequest,					CullSegmentsCommand );
+			signalCommandMap.mapSignalClass( CullTrackRequest,					CullTrackCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );

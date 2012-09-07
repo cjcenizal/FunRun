@@ -34,7 +34,7 @@ package {
 		- Game design
 			- Collect points
 				- Randomly make points accessible on a per segment basis
-					- Add point culling
+					- Addition of points needs to be deterministic
 					- Add point collection based on visibility
 					- Be smarter about selecting how many points are visible
 				- As you collect points make them fly into your points counter

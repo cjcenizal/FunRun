@@ -1,5 +1,7 @@
 package com.funrun.model.vo
 {
+	import away3d.entities.Mesh;
+
 	public class PointVo
 	{
 		
@@ -9,6 +11,8 @@ package com.funrun.model.vo
 		public var y:Number;
 		public var z:Number;
 		
+		public var mesh:Mesh;
+		
 		public function PointVo( id:int, block:BlockVo, x:Number, y:Number, z:Number )
 		{
 			this.id = id;
@@ -16,6 +20,14 @@ package com.funrun.model.vo
 			this.x = x;
 			this.y = y;
 			this.z = z;
+		}
+		
+		public function clone():PointVo {
+			return new PointVo( id, block, x, y, z );
+		}
+		
+		public function get meshZ():Number {
+			return mesh.z;
 		}
 	}
 }

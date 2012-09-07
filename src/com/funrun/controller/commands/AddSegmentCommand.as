@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import away3d.entities.Mesh;
 	
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.model.PointsModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Segment;
@@ -34,6 +35,11 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
+		// Models.
+		
+		[Inject]
+		public var pointsModel:PointsModel;
+		
 		// State.
 		
 		[Inject]
@@ -46,16 +52,16 @@ package com.funrun.controller.commands {
 			segment.z = payload.index * ( Segment.DEPTH + Segment.GAP_BETWEEN_SEGMENTS );
 			// Decorate with points.
 			var point:PointVo;
-			var pointMesh:Mesh;
 			for ( var i:int = 0; i < segment.numPoints; i++ ) {
-				point = segment.getPointAt( i );
+				point = segment.getPointAt( i ).clone();
 				if ( Math.random() < .5 ) {
 					//segment.addPointAt( i );
-					pointMesh = point.block.mesh.clone() as Mesh;
-					pointMesh.x = segment.x + point.x;
-					pointMesh.y = segment.y + point.y;
-					pointMesh.z = segment.z + point.z;
-					addObjectToSceneRequest.dispatch( pointMesh );
+					point.mesh = point.block.mesh.clone() as Mesh;
+					point.mesh.x = segment.x + point.x;
+					point.mesh.y = segment.y + point.y;
+					point.mesh.z = segment.z + point.z;
+					pointsModel.addPoint( point );
+					addObjectToSceneRequest.dispatch( point.mesh );
 				}
 			}
 			// Add it to the track.
