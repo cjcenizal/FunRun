@@ -53,6 +53,36 @@ package com.funrun.model.vo
 			_maxZ = collidable.maxZ;
 		}
 		
+		public function takeMinFrom( collidable:ICollidable ):void {
+			if ( collidable.worldMinX < this.worldMinX ) {
+				_x = collidable.x;
+				_minX = collidable.minX;
+			}
+			if ( collidable.worldMinY < this.worldMinY ) {
+				_y = collidable.y;
+				_minY = collidable.minY;
+			}
+			if ( collidable.worldMinZ < this.worldMinZ ) {
+				_z = collidable.z;
+				_minZ = collidable.minZ;
+			}
+		}
+		
+		public function takeMaxFrom( collidable:ICollidable ):void {
+			if ( collidable.worldMaxX > this.worldMaxX ) {
+				_x = collidable.x;
+				_maxX = collidable.maxX;
+			}
+			if ( collidable.worldMaxY > this.worldMaxY ) {
+				_y = collidable.y;
+				_maxY = collidable.maxY;
+			}
+			if ( collidable.worldMaxZ > this.worldMaxZ ) {
+				_z = collidable.z;
+				_maxZ = collidable.maxZ;
+			}
+		}
+		
 		public function get x():Number
 		{
 			return _x;

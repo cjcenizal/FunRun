@@ -8,12 +8,13 @@ package com.funrun.controller.commands
 	
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.SegmentsModel;
-	import com.funrun.model.vo.BoundingBoxVo;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.BlockVo;
+	import com.funrun.model.vo.BoundingBoxVo;
+	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.ObstacleBlockVo;
 	import com.funrun.model.vo.SegmentVo;
 	import com.funrun.services.parsers.ObstacleParser;
@@ -52,6 +53,10 @@ package com.funrun.controller.commands
 			var merge:Merge = new Merge( true );
 			var boundingBoxes:Array = [];
 			
+			// Store min/max.
+			var min:CollidableVo = new CollidableVo();
+			var max:CollidableVo = new CollidableVo();
+			
 			// Traverse block data and construct an obstacle mesh.
 			var len:int = obstacleData.numBlockData;
 			for ( var i:int = 0; i < len; i++ ) {
@@ -66,7 +71,7 @@ package com.funrun.controller.commands
 				// Merge the block mesh into the obstacle mesh.
 				merge.apply( obstacleMesh, blockMesh );
 				// Add a bounding box so we can collide with the obstacle.
-				boundingBoxes.push( new BoundingBoxVo(
+				var box:BoundingBoxVo = new BoundingBoxVo(
 					block,
 					blockMesh.x, blockMesh.y, blockMesh.z,
 					-Block.HALF_SIZE,
@@ -75,7 +80,10 @@ package com.funrun.controller.commands
 					Block.HALF_SIZE,
 					Block.HALF_SIZE,
 					Block.HALF_SIZE
-				) );
+				);
+				boundingBoxes.push( box );
+				min.takeMinFrom( box );
+				max.takeMaxFrom( box );
 			}
 			
 			// Add a bounds indicator.
@@ -97,8 +105,8 @@ package com.funrun.controller.commands
 			}
 			
 			var obstacle:SegmentVo = new SegmentVo( obstacleMesh, boundsMesh, boundingBoxes,
-				obstacleMesh.bounds.min.x, obstacleMesh.bounds.min.y, obstacleMesh.bounds.min.z,
-				obstacleMesh.bounds.max.x, obstacleMesh.bounds.max.y, obstacleMesh.bounds.max.z );
+				min.worldMinX, min.worldMinY, min.worldMinZ,
+				max.worldMaxX, max.worldMaxY, max.worldMaxZ );
 			segmentsModel.storeObstacle( obstacle );
 		}
 	}

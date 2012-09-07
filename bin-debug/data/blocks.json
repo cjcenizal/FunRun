@@ -47,7 +47,15 @@
       },
     {
       "id" : "point",
-      "filename" : "point.obj"
+      "filename" : "point.obj",
+      "faces" : {
+          "t" : "point",
+          "b" : "point",
+          "l" : "point",
+          "r" : "point",
+          "f" : "point",
+          "a" : "point"
+        }
       }
   ]
 }
