@@ -10,13 +10,17 @@ package com.funrun.model.vo {
 		public static var useBoundsMesh:Boolean = false;
 		
 		public var id:int;
+		private var _filename:String;
 		private var _mesh:Mesh;
 		private var _boundsMesh:Mesh;
 		private var _boundingBoxes:Array;
 		private var _numBoundingBoxes:int;
+		private var _points:Array;
+		private var _pointsObj:Object;
 
-		public function SegmentVo( mesh:Mesh, boundsMesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
+		public function SegmentVo( filename:String, mesh:Mesh, boundsMesh:Mesh, boundingBoxes:Array, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number ) {
 			super( 0, 0, 0, minX, minY, minZ, maxX, maxY, maxZ );
+			_filename = filename;
 			_mesh = mesh;
 			_boundsMesh = boundsMesh;
 			_boundingBoxes = boundingBoxes;
@@ -25,13 +29,15 @@ package com.funrun.model.vo {
 		
 		override public function add( collidable:ICollidable ):ICollidable {
 			return new SegmentVo(
-				_mesh, _boundsMesh, _boundingBoxes,
+				_filename, _mesh, _boundsMesh, _boundingBoxes,
 				_minX, _minY, minZ,
 				_maxX, _maxY, maxZ );
 		}
 		
 		public function clone():SegmentVo {
-			return new SegmentVo( _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+			var segment:SegmentVo = new SegmentVo( _filename, _mesh.clone() as Mesh, ( _boundsMesh ) ? _boundsMesh.clone() as Mesh : null, _boundingBoxes, _minX, _minY, _minZ, _maxX, _maxY, _maxZ );
+			segment.storePoints( _points );
+			return segment;
 		}
 		
 		/**
@@ -56,6 +62,31 @@ package com.funrun.model.vo {
 		
 		public function getBoundingBoxAt( index:int ):BoundingBoxVo {
 			return _boundingBoxes[ index ];
+		}
+		
+		public function storePoints( points:Array ):void {
+			_points = points;
+			_pointsObj = {};
+			for ( var i:int = 0; i < numPoints; i++ ) {
+				var point:PointVo = getPointAt( i );
+				_pointsObj[ point.id ] = point;
+			}
+		}
+		
+		public function get numPoints():int {
+			return ( _points ) ? _points.length : 0;
+		}
+		
+		public function getPointAt( index:int ):PointVo {
+			return _points[ index ];
+		}
+		
+		public function getPoint( id:int ):PointVo {
+			return _pointsObj[ id ];
+		}
+		
+		public function get filename():String {
+			return _filename;
 		}
 		
 		override public function set x( val:Number ):void {

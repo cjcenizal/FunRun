@@ -28,8 +28,8 @@ package com.funrun.controller.commands
 		private function onLoadComplete( e:Event ):void {
 			var data:String = ( e.target as URLLoader ).data;
 			var parsedStore:StoreParser = new StoreParser( new JsonService().readString( data ) );
-			trace(data);
-			trace(parsedStore.getWithId( "eyes" ) );
+		//	trace(data);
+		//	trace(parsedStore.getWithId( "eyes" ) );
 			dispatchComplete( true );
 			// Parse this intelligently, expecting certain categories, and ways to implement their schemas.
 			// Use a switch-case? Or just proactively seek out the data?

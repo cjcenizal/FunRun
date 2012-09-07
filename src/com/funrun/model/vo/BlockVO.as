@@ -51,6 +51,17 @@ package com.funrun.model.vo {
 			return _faces[ face ] || _faces[ 'all' ];
 		}
 		
+		public function hasAnyEvent( events:Array ):Boolean {
+			for ( var i:int = 0; i < events.length; i++ ) {
+				for ( var face:String in _faces ) {
+					if ( events[ i ] == _faces[ face ] ) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		
 		public function toString():String {
 			var str:String = _id + ": {";
 			for ( var key:String in _faces ) {

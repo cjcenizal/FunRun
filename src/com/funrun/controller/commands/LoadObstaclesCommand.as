@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.StoreFloorRequest;
 	import com.funrun.controller.signals.StoreObstacleRequest;
+	import com.funrun.model.vo.StoreObstacleVo;
 	import com.funrun.services.JsonService;
 	import com.funrun.services.parsers.ObstaclesListParser;
 	
@@ -68,7 +69,7 @@ package com.funrun.controller.commands {
 				var data:String = ( e.target as URLLoader ).data;
 				var json:Object = new JsonService().readString( data );
 				// Construct and store obstacle.
-				storeObstacleRequest.dispatch( json );
+				storeObstacleRequest.dispatch( new StoreObstacleVo( filename, json ) );
 				// Increment complete count and check if we're done.
 				_countLoaded++;
 				if ( _countLoaded == _countTotal ) {

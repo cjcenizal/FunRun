@@ -83,7 +83,7 @@ package com.funrun.controller.commands
 				}
 			}
 			
-			var floor:SegmentVo = new SegmentVo( floorMesh, boundsMesh, boundingBoxes,
+			var floor:SegmentVo = new SegmentVo( "floor", floorMesh, boundsMesh, boundingBoxes,
 				floorMesh.bounds.min.x, floorMesh.bounds.min.y, floorMesh.bounds.min.z,
 				floorMesh.bounds.max.x, floorMesh.bounds.max.y, floorMesh.bounds.max.z );
 			segmentsModel.storeFloor( floor );

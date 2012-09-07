@@ -9,6 +9,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.constants.Block;
+	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
@@ -16,8 +17,12 @@ package com.funrun.controller.commands
 	import com.funrun.model.vo.BoundingBoxVo;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.ObstacleBlockVo;
+	import com.funrun.model.vo.PointVo;
 	import com.funrun.model.vo.SegmentVo;
+	import com.funrun.model.vo.StoreObstacleVo;
 	import com.funrun.services.parsers.ObstacleParser;
+	
+	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -27,7 +32,7 @@ package com.funrun.controller.commands
 		// Arguments.
 		
 		[Inject]
-		public var json:Array;
+		public var vo:StoreObstacleVo;
 		
 		// Models.
 		
@@ -43,7 +48,7 @@ package com.funrun.controller.commands
 		public var showBoundsState:ShowBoundsState;
 		
 		override public function execute():void {
-			var obstacleData:ObstacleParser = new ObstacleParser( json );
+			var obstacleData:ObstacleParser = new ObstacleParser( vo.blocks );
 			
 			// Set up obstacle mesh vars.
 			var blockData:ObstacleBlockVo;
@@ -57,19 +62,27 @@ package com.funrun.controller.commands
 			var min:CollidableVo = new CollidableVo();
 			var max:CollidableVo = new CollidableVo();
 			
+			// Points.
+			var points:Array = new Array();
+			
 			// Traverse block data and construct an obstacle mesh.
 			var len:int = obstacleData.numBlockData;
 			for ( var i:int = 0; i < len; i++ ) {
 				// Get position and mesh data for particular block.
 				blockData = obstacleData.getAt( i );
 				block = blocksModel.getBlock( blockData.id );
-				// Create and position a mesh from data.
-				blockMesh = block.mesh.clone() as Mesh;
-				blockMesh.x = blockData.x * Block.SIZE;
-				blockMesh.y = blockData.y * Block.SIZE;
-				blockMesh.z = blockData.z * Block.SIZE;
-				// Merge the block mesh into the obstacle mesh.
-				merge.apply( obstacleMesh, blockMesh );
+				if ( block.id == "point" ) {
+					// Store points internally.
+					points.push( new PointVo( i, block, blockData.x * Block.SIZE, blockData.y * Block.SIZE, blockData.z * Block.SIZE ) );
+				} else {
+					// Create and position a mesh from data.
+					blockMesh = block.mesh.clone() as Mesh;
+					blockMesh.x = blockData.x * Block.SIZE;
+					blockMesh.y = blockData.y * Block.SIZE;
+					blockMesh.z = blockData.z * Block.SIZE;
+					// Merge the block mesh into the obstacle mesh.
+					merge.apply( obstacleMesh, blockMesh );
+				}
 				// Add a bounding box so we can collide with the obstacle.
 				var box:BoundingBoxVo = new BoundingBoxVo(
 					i, block,
@@ -100,9 +113,10 @@ package com.funrun.controller.commands
 				}
 			}
 			
-			var obstacle:SegmentVo = new SegmentVo( obstacleMesh, boundsMesh, boundingBoxes,
+			var obstacle:SegmentVo = new SegmentVo( vo.filename, obstacleMesh, boundsMesh, boundingBoxes,
 				min.worldMinX, min.worldMinY, min.worldMinZ,
 				max.worldMaxX, max.worldMaxY, max.worldMaxZ );
+			obstacle.storePoints( points );
 			segmentsModel.storeObstacle( obstacle );
 		}
 	}

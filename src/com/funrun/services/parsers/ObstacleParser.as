@@ -33,5 +33,6 @@ package com.funrun.services.parsers {
 		public function getAt( index:int ):ObstacleBlockVo {
 			return _blocks[ index ];
 		}
+		
 	}
 }
