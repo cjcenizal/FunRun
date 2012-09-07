@@ -24,7 +24,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.PointsModel;
+	import com.funrun.model.RewardsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3dModel;
 	import com.funrun.model.constants.Camera;
@@ -59,7 +59,7 @@ package com.funrun.controller.commands {
 		public var timeModel:TimeModel;
 		
 		[Inject]
-		public var pointsModel:PointsModel;
+		public var rewardsModel:RewardsModel;
 		
 		[Inject]
 		public var playerModel:PlayerModel;
@@ -90,13 +90,13 @@ package com.funrun.controller.commands {
 			showStatsRequest.dispatch( !productionState.isProduction );
 			
 			// Assign points to places.
-			pointsModel.assign( 0, 10 );
-			pointsModel.assign( 1, 9 );
-			pointsModel.assign( 2, 8 );
-			pointsModel.assign( 3, 6 );
-			pointsModel.assign( 4, 4 );
-			pointsModel.assign( 5, 2 );
-			pointsModel.assign( 6, 1 );
+			rewardsModel.assignRewardFor( 0, 10 );
+			rewardsModel.assignRewardFor( 1, 9 );
+			rewardsModel.assignRewardFor( 2, 8 );
+			rewardsModel.assignRewardFor( 3, 6 );
+			rewardsModel.assignRewardFor( 4, 4 );
+			rewardsModel.assignRewardFor( 5, 2 );
+			rewardsModel.assignRewardFor( 6, 1 );
 			
 			// Interpolation.
 			interpolationModel.setIncrement( Time.INTERPOLATION_INCREMENT );

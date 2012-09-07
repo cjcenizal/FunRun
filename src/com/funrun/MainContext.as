@@ -141,6 +141,7 @@ package com.funrun {
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
+	import com.funrun.model.RewardsModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.StateModel;
 	import com.funrun.model.StoreModel;
@@ -233,6 +234,7 @@ package com.funrun {
 			injector.mapSingleton( PlacesModel );
 			injector.mapSingleton( PlayerModel );
 			injector.mapSingleton( PointsModel );
+			injector.mapSingleton( RewardsModel );
 			injector.mapSingleton( SegmentsModel );
 			injector.mapSingleton( StateModel );
 			injector.mapSingleton( StoreModel );

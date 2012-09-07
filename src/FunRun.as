@@ -35,7 +35,8 @@ package {
 			- Collect points
 				- Add points model and collect point command
 				- Make points persistent on the server
-				- Randomly make points accessible
+				- Randomly make points accessible on a per segment basis
+				- How do we differentiate between points gained while running, and the rewards for getting 1st, 2nd, 3rd place? Badges? Trophies? Something just fun and silly?
 			- Keep and display scores
 			- Add social sharing
 			- Test multiplayer to make sure it still works

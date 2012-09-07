@@ -1,32 +1,35 @@
-package com.funrun.model {
-
+package com.funrun.model
+{
 	import org.robotlegs.mvcs.Actor;
-
-	public class PointsModel extends Actor {
+	
+	public class PointsModel extends Actor
+	{
 		
-		private var _placeValues:Object;
-		private var _minValue:Number = 100000;
+		private var _amount:int;
+		private var _collected:Object;
 		
-		public function PointsModel() {
+		public function PointsModel()
+		{
 			super();
-			_placeValues = {};
 		}
 		
-		public function assign( place:int, value:Number ):void {
-			_placeValues[ place ] = value;
-			if ( value < _minValue ) _minValue = value;
+		public function reset():void {
+			_amount = 0;
+			_collected = {};
 		}
 		
-		public function retrieveValue( place:int ):Number {
-			return _placeValues[ place ];
+		public function collectFor( segmentId:int, blockId:int, amount:int ):Boolean {
+			var key:String = segmentId.toString() + "-" + blockId.toString();
+			if ( !_collected[ key ] ) {
+				_collected[ key ] = true;
+				_amount += amount;
+				return true;
+			}
+			return false;
 		}
 		
-		public function hasValue( place:int ):Boolean {
-			return _placeValues[ place ];
-		}
-		
-		public function get minValue():Number {
-			return _minValue;
+		public function get amount():int {
+			return _amount;
 		}
 	}
 }

@@ -6,7 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.PointsModel;
+	import com.funrun.model.RewardsModel;
 	import com.funrun.model.vo.ResultsPopupVo;
 	import com.funrun.view.components.ResultsPopup;
 	
@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 		public var placesModel:PlacesModel;
 		
 		[Inject]
-		public var pointsModel:PointsModel;
+		public var rewardsModel:RewardsModel;
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
@@ -69,7 +69,7 @@ package com.funrun.controller.commands {
 			if ( playerModel.distanceInFeet > playerModel.bestDistance ) {
 				playerModel.bestDistance = playerModel.distanceInFeet;
 			}
-			playerModel.points += pointsModel.retrieveValue( playerModel.place - 1 );
+			playerModel.points += rewardsModel.retrieveRewardFor( playerModel.place - 1 );
 			savePlayerObjectRequest.dispatch();
 		}
 	}

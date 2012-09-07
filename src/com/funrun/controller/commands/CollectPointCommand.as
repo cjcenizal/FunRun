@@ -1,5 +1,6 @@
 package com.funrun.controller.commands
 {
+	import com.funrun.model.PointsModel;
 	import com.funrun.model.vo.CollectPointVo;
 	
 	import org.robotlegs.mvcs.Command;
@@ -12,8 +13,16 @@ package com.funrun.controller.commands
 		[Inject]
 		public var vo:CollectPointVo;
 		
+		// Models.
+		
+		[Inject]
+		public var pointsModel:PointsModel;
+		
 		override public function execute():void {
-			trace(vo.segmentId, vo.blockId);
+			if ( pointsModel.collectFor( vo.segmentId, vo.blockId, 1 ) ) {
+				trace(pointsModel.amount);
+				// Dispatch UI update.
+			}
 		}
 	}
 }
