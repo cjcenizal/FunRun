@@ -80,17 +80,5 @@ package com.funrun.model.vo {
 				_boundsMesh.z = val;
 			}
 		}
-		
-		public function get width():Number {
-			return _maxX - _minX;
-		}
-
-		public function get height():Number {
-			return _maxY - _minY;
-		}
-		
-		public function get depth():Number {
-			return _maxZ - _minZ;
-		}
 	}
 }

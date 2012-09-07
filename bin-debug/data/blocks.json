@@ -7,7 +7,11 @@
       "filename" : "floor.obj",
       "faces" : {
           "t" : "put_top"
-        }
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ]
       },
     {
       "id" : "basic",
@@ -19,7 +23,11 @@
           "r" : "put_right",
           "f" : "smack",
           "a" : "put_top"
-        }
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ]
       },
     {
       "id" : "launcher",
@@ -31,7 +39,11 @@
           "r" : "put_top",
           "f" : "put_top",
           "a" : "put_top"
-        }
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ]
       },
     {
       "id" : "stairs",
@@ -43,7 +55,11 @@
           "r" : "put_top",
           "f" : "put_top",
           "a" : "put_top"
-        }
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ]
       },
     {
       "id" : "point",
@@ -55,7 +71,11 @@
           "r" : "point",
           "f" : "point",
           "a" : "point"
-        }
+        },
+      "bounds" : [
+          -0.5, -0.5, -0.5,
+          0.5, 0.5, 0.5
+        ]
       }
   ]
 }

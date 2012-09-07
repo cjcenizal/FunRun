@@ -74,12 +74,8 @@ package com.funrun.controller.commands
 				var box:BoundingBoxVo = new BoundingBoxVo(
 					block,
 					blockMesh.x, blockMesh.y, blockMesh.z,
-					-Block.HALF_SIZE,
-					-Block.HALF_SIZE,
-					-Block.HALF_SIZE,
-					Block.HALF_SIZE,
-					Block.HALF_SIZE,
-					Block.HALF_SIZE
+					block.boundsMin.x, block.boundsMin.y, block.boundsMin.z,
+					block.boundsMax.x, block.boundsMax.y, block.boundsMax.z
 				);
 				boundingBoxes.push( box );
 				min.takeMinFrom( box );
@@ -90,12 +86,12 @@ package com.funrun.controller.commands
 			var boundsMesh:Mesh = null;
 			if ( showBoundsState.showBounds ) {
 				boundsMesh = new Mesh( new Geometry() );
-				var blockGeo:Geometry = new CubeGeometry( Block.SIZE, Block.SIZE, Block.SIZE );
 				var len:int = boundingBoxes.length;
 				var box:BoundingBoxVo;
 				var indicator:Mesh;
 				for ( var i:int = 0; i < len; i++ ) {
 					box = boundingBoxes[ i ];
+					var blockGeo:Geometry = new CubeGeometry( box.width, box.height, box.depth );
 					indicator = new Mesh( blockGeo, Materials.DEBUG_BLOCK );
 					indicator.x = box.x;
 					indicator.y = box.y;

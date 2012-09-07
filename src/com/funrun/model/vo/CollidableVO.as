@@ -189,8 +189,21 @@ package com.funrun.model.vo
 		public function set maxY( maxY:Number ):void {
 			this._maxY = maxY;
 		}
+		
 		public function set maxZ( maxZ:Number ):void {
 			this._maxZ = maxZ;
+		}
+		
+		public function get width():Number {
+			return this._maxX - this.minX;
+		}
+		
+		public function get height():Number {
+			return this._maxY - this.minY;
+		}
+		
+		public function get depth():Number {
+			return this._maxZ - this.minZ;
 		}
 	}
 }

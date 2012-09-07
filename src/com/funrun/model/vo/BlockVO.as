@@ -2,6 +2,8 @@ package com.funrun.model.vo {
 	
 	import away3d.entities.Mesh;
 	
+	import flash.geom.Vector3D;
+	
 	public class BlockVo {
 		
 		private static const TRANSLATIONS:Object = {};
@@ -15,14 +17,17 @@ package com.funrun.model.vo {
 		private var _id:String;
 		private var _filename:String;
 		private var _faces:Object;
+		private var _boundsMin:Vector3D;
+		private var _boundsMax:Vector3D;
 		
-		//public var geo:PrimitiveBase;
 		public var mesh:Mesh;
 		
-		public function BlockVo( id:String, filename:String, faces:Object ) {
+		public function BlockVo( id:String, filename:String, faces:Object, boundsMin:Vector3D, boundsMax:Vector3D ) {
 			_id = id;
 			_filename = filename;
 			_faces = faces;
+			_boundsMin = boundsMin;
+			_boundsMax = boundsMax;
 		}
 		
 		public function get id():String {
@@ -31,6 +36,14 @@ package com.funrun.model.vo {
 		
 		public function get filename():String {
 			return _filename;
+		}
+		
+		public function get boundsMin():Vector3D {
+			return _boundsMin;
+		}
+		
+		public function get boundsMax():Vector3D {
+			return _boundsMax;
 		}
 		
 		public function getEventAtFace( f:String ):String {
@@ -46,5 +59,6 @@ package com.funrun.model.vo {
 			str += "}";
 			return str;
 		}
+		
 	}
 }

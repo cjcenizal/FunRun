@@ -26,15 +26,16 @@ package {
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 		
 		BUILDER:
-		- Add shadows and lights to block materials
-		- Add points block
 		- Build cool obstacles
+		- HTML5 and fun UI: http://www.buildwithchrome.com/static/builder#pos=950513x618389&load=ahFzfmJ1aWxkd2l0aGNocm9tZXIsCxIFQnVpbGQiIXRpbGV4Xzk1MDUxM190aWxleV82MTgzODlfem9vbV8yMAw
 		
 		TO-DO:
 		- Search for TO-DOs
 		- Game design
 			- Add bounds in JSON so points can have smaller bounds
 			- Collect points
+				- Add points model and action
+				- Make points persistent on the server
 			- Keep and display scores
 			- Add social sharing
 			- Test multiplayer to make sure it still works
@@ -44,6 +45,9 @@ package {
 			- Metrics?
 			- Basic animation, music, and sound?
 			- Test MVP
+		
+			- Make ball look like it's rolling
+				- Add some squash and stretch to jumping and turning
 		
 			- Build stubbed store functionality
 			- Observer loop:
