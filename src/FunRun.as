@@ -35,8 +35,8 @@ package {
 			- Collect points
 				- Randomly make points accessible on a per segment basis
 					- Addition of points needs to be deterministic
-					- Add point collection based on visibility
 					- Be smarter about selecting how many points are visible
+					- Remove all points from view on reset or game end
 				- As you collect points make them fly into your points counter
 				- Make points persistent on the server
 				- How do we differentiate between points gained while running, and the rewards for getting 1st, 2nd, 3rd place? Badges? Trophies? Something just fun and silly?

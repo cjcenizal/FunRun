@@ -12,6 +12,7 @@ package com.funrun.model.vo
 		public var z:Number;
 		
 		public var mesh:Mesh;
+		public var segmentId:int;
 		
 		public function PointVo( id:int, block:BlockVo, x:Number, y:Number, z:Number )
 		{

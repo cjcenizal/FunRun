@@ -11,6 +11,7 @@ package com.funrun.model
 		private var _collected:Object;
 		
 		private var _points:Array;
+		private var _pointsObj:Object;
 		
 		public function PointsModel()
 		{
@@ -21,6 +22,7 @@ package com.funrun.model
 			_amount = 0;
 			_collected = {};
 			_points = [];
+			_pointsObj = {};
 		}
 		
 		public function collectFor( segmentId:int, blockId:int, amount:int ):Boolean {
@@ -37,6 +39,7 @@ package com.funrun.model
 			_points.push( point );
 			var len:int = _points.length;
 			_points.sortOn( "meshZ", [ Array.NUMERIC ] );
+			_pointsObj[ point.segmentId.toString() + "-" + point.id.toString() ] = point;
 		}
 		
 		public function getPointAt( index:int ):PointVo {
@@ -44,7 +47,13 @@ package com.funrun.model
 		}
 		
 		public function removePointAt( index:int ):void {
+			var point:PointVo = getPointAt( index );
+			delete _pointsObj[ point.segmentId.toString() + "-" + point.id.toString() ];
 			_points.splice( index, 1 );
+		}
+		
+		public function hasPointFor( segmentId:int, pointId:int ):Boolean {
+			return _pointsObj[ segmentId.toString() + "-" + pointId.toString() ];
 		}
 		
 		public function get numPoints():int {

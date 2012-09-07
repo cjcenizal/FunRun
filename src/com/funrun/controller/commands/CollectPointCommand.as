@@ -19,9 +19,11 @@ package com.funrun.controller.commands
 		public var pointsModel:PointsModel;
 		
 		override public function execute():void {
-			if ( pointsModel.collectFor( vo.segmentId, vo.blockId, 1 ) ) {
-				trace(pointsModel.amount);
-				// Dispatch UI update.
+			if ( pointsModel.hasPointFor( vo.segmentId, vo.blockId ) ) {
+				if ( pointsModel.collectFor( vo.segmentId, vo.blockId, 1 ) ) {
+					trace(pointsModel.amount);
+					// Dispatch UI update.
+				}
 			}
 		}
 	}

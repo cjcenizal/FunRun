@@ -86,7 +86,7 @@ package com.funrun.controller.commands
 				// Add a bounding box so we can collide with the obstacle.
 				var box:BoundingBoxVo = new BoundingBoxVo(
 					i, block,
-					blockMesh.x, blockMesh.y, blockMesh.z,
+					blockData.x * Block.SIZE, blockData.y * Block.SIZE, blockData.z * Block.SIZE,
 					block.boundsMin.x, block.boundsMin.y, block.boundsMin.z,
 					block.boundsMax.x, block.boundsMax.y, block.boundsMax.z
 				);
