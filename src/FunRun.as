@@ -33,9 +33,12 @@ package {
 		- Search for TO-DOs
 		- Game design
 			- Collect points
-				- Add points model and collect point command
-				- Make points persistent on the server
 				- Randomly make points accessible on a per segment basis
+					- Remove point from block mesh, but include it in defining general segment bounds
+					- As a segment is pulled, dynamically assign point visibilities
+					- Need some logic for updating position of points
+				- As you collect points make them fly into your points counter
+				- Make points persistent on the server
 				- How do we differentiate between points gained while running, and the rewards for getting 1st, 2nd, 3rd place? Badges? Trophies? Something just fun and silly?
 			- Keep and display scores
 			- Add social sharing
