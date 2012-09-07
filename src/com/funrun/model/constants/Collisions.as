@@ -12,5 +12,7 @@ package com.funrun.model.constants
 		public static const PUT_RIGHT:String = "put_right";
 		public static const PUT_FRONT:String = "put_front";
 		public static const PUT_BACK:String = "put_back";
+		
+		public static const POINT:String = "point";
 	}
 }

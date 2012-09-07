@@ -2,12 +2,14 @@ package com.funrun.controller.commands {
 	
 	import com.cenizal.physics.collisions.CollisionDetector;
 	import com.cenizal.physics.collisions.FaceCollisionsVO;
+	import com.funrun.controller.signals.CollectPointRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.BoundingBoxVo;
+	import com.funrun.model.vo.CollectPointVo;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.SegmentVo;
 	
@@ -34,6 +36,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var killPlayerRequest:KillPlayerRequest;
+		
+		[Inject]
+		public var collectPointRequest:CollectPointRequest;
 		
 		// Local vars.
 		
@@ -128,6 +133,9 @@ package com.funrun.controller.commands {
 											break CollisionLoop;
 										case Collisions.SMACK:
 											smack();
+											break CollisionLoop;
+										case Collisions.POINT:
+											point();
 											break CollisionLoop;
 									}
 								}
@@ -294,6 +302,10 @@ package com.funrun.controller.commands {
 			playerModel.velocity.z = Player.SMACK_SPEED;
 			playerModel.position.z = _collider.z;
 			killPlayerRequest.dispatch( Collisions.SMACK );
+		}
+		
+		private function point():void {
+			collectPointRequest.dispatch( new CollectPointVo( _firstCollidingSegment.id, _firstCollidingBoundingBox.id ) );
 		}
 		
 		private function stepInterpolation():void {

@@ -53,7 +53,7 @@ package com.funrun.controller.commands
 					merge.apply( floorMesh, floorBlockMesh );
 					// Add a bounding box so we can collide with the floor.
 					boundingBoxes.push( new BoundingBoxVo(
-						blocksModel.getBlock( "floor" ),
+						i, blocksModel.getBlock( "floor" ),
 						floorBlockMesh.x, floorBlockMesh.y, floorBlockMesh.z,
 						-Block.HALF_SIZE,
 						-Block.HALF_SIZE,

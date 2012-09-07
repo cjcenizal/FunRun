@@ -9,6 +9,7 @@ package com.funrun.model.vo {
 		
 		public static var useBoundsMesh:Boolean = false;
 		
+		public var id:int;
 		private var _mesh:Mesh;
 		private var _boundsMesh:Mesh;
 		private var _boundingBoxes:Array;

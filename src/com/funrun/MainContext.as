@@ -9,6 +9,7 @@ package com.funrun {
 	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
 	import com.funrun.controller.commands.AddSegmentCommand;
+	import com.funrun.controller.commands.CollectPointCommand;
 	import com.funrun.controller.commands.CompleteAppCommand;
 	import com.funrun.controller.commands.CullSegmentsCommand;
 	import com.funrun.controller.commands.EndRoundCommand;
@@ -67,6 +68,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.AddSegmentRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
+	import com.funrun.controller.signals.CollectPointRequest;
 	import com.funrun.controller.signals.CompleteAppRequest;
 	import com.funrun.controller.signals.CullSegmentsRequest;
 	import com.funrun.controller.signals.DrawCountdownRequest;
@@ -272,6 +274,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddSegmentRequest,						AddSegmentCommand );
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
+			signalCommandMap.mapSignalClass( CollectPointRequest,					CollectPointCommand );
 			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );
 			signalCommandMap.mapSignalClass( CullSegmentsRequest,					CullSegmentsCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
