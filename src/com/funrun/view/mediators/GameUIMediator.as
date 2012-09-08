@@ -1,11 +1,10 @@
 package com.funrun.view.mediators {
 	
-	import com.funrun.controller.signals.DrawDistanceRequest;
+	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.controller.signals.DrawMessageRequest;
-	import com.funrun.controller.signals.DrawPlaceRequest;
+	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
-	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.view.components.GameUIView;
 	
 	import org.robotlegs.core.IMediator;
@@ -13,14 +12,15 @@ package com.funrun.view.mediators {
 	
 	public class GameUIMediator extends Mediator implements IMediator {
 		
+		// View.
+		
 		[Inject]
 		public var view:GameUIView;
 		
-		[Inject]
-		public var drawPlaceRequest:DrawPlaceRequest;
+		// Commands.
 		
 		[Inject]
-		public var drawDistanceRequest:DrawDistanceRequest;
+		public var drawPointsRequest:DrawPointsRequest;
 		
 		[Inject]
 		public var drawMessageRequest:DrawMessageRequest;
@@ -37,23 +37,18 @@ package com.funrun.view.mediators {
 		override public function onRegister():void {
 			view.init();
 			view.onClickQuitGameButtonSignal.add( onQuitGameClicked );
-			drawDistanceRequest.add( onDrawDistanceRequested );
-			drawPlaceRequest.add( onDrawPlaceRequested );
+			drawPointsRequest.add( onDrawPointsRequested );
 			drawMessageRequest.add( onDrawMessageRequested );
 			drawCountdownRequest.add( onUpdateCountdown );
 			toggleCountdownRequest.add( onToggleCountdown );
 		}
 		
-		private function onDrawDistanceRequested( distance:String ):void {
-			view.showDistance( distance );
-		}
-		
-		private function onDrawPlaceRequested( place:String ):void {
-			view.showPlace( place );
+		private function onDrawPointsRequested( distance:String ):void {
+			view.drawPoints( distance );
 		}
 		
 		private function onDrawMessageRequested( message:String ):void {
-			view.showMessage( message );
+			view.drawMessage( message );
 		}
 		
 		private function onUpdateCountdown( message:String ):void {

@@ -13,12 +13,8 @@ package com.funrun.view.components {
 	public class GameUIView extends AbstractComponent {
 
 		// Distance.
-		private var _distanceLabel:AbstractLabel;
-		private var _distanceCountLabel:AbstractLabel;
-		
-		// Place.
-		private var _placeLabel:AbstractLabel;
-		private var _placeCountLabel:AbstractLabel;
+		private var _pointsLabel:AbstractLabel;
+		private var _pointsCountLabel:AbstractLabel;
 		
 		// Countdown.
 		private var _countdownLabel:AbstractLabel;
@@ -41,22 +37,13 @@ package com.funrun.view.components {
 			_messagesList.y = stage.stageHeight - 40;
 			
 			// Distance.
-			_distanceLabel = new AbstractLabel( this, 0, 0, "Distance", 12, 0 );
-			_distanceCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
-			_distanceLabel.draw();
-			_distanceCountLabel.draw();
-			_distanceLabel.x = _distanceCountLabel.x = 20;
-			_distanceCountLabel.y = stage.stageHeight - _distanceCountLabel.height - 20;
-			_distanceLabel.y = _distanceCountLabel.y - _distanceLabel.height;
-			
-			// Place.
-			_placeLabel = new AbstractLabel( this, 0, 0, "Place", 12, 0 );
-			_placeCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
-			_placeLabel.draw();
-			_placeCountLabel.draw();
-			_placeLabel.x = _placeCountLabel.x = 20;
-			_placeCountLabel.y = _distanceLabel.y - _distanceLabel.height - 20;
-			_placeLabel.y = _placeCountLabel.y - _distanceLabel.height;
+			_pointsLabel = new AbstractLabel( this, 0, 0, "Points", 12, 0 );
+			_pointsCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
+			_pointsLabel.draw();
+			_pointsCountLabel.draw();
+			_pointsLabel.x = _pointsCountLabel.x = 20;
+			_pointsCountLabel.y = stage.stageHeight - _pointsCountLabel.height - 20;
+			_pointsLabel.y = _pointsCountLabel.y - _pointsLabel.height;
 			
 			// Countdown.
 			_countdownLabel = new AbstractLabel( this, 0, 0, "", 110, 0xe0920b );
@@ -68,17 +55,12 @@ package com.funrun.view.components {
 			onClickQuitGameButtonSignal = new Signal();
 		}
 
-		public function showDistance( distance:String ):void {
-			_distanceCountLabel.text = distance;
-			_distanceCountLabel.draw();
+		public function drawPoints( points:String ):void {
+			_pointsCountLabel.text = points;
+			_pointsCountLabel.draw();
 		}
 		
-		public function showPlace( place:String ):void {
-			_placeCountLabel.text = place;
-			_placeCountLabel.draw();
-		}
-		
-		public function showMessage( message:String ):void {
+		public function drawMessage( message:String ):void {
 			_messagesList.add( message );
 		}
 		

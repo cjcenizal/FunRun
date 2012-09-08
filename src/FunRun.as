@@ -33,20 +33,21 @@ package {
 		- Search for TO-DOs
 		- Game design
 			- Collect points
-				- Randomly make points accessible on a per segment basis
-					- Be smarter about selecting how many points are visible
-					- Remove all points from view on reset or game end
+				- Points counter (place at top, along with messages)
 				- As you collect points make them fly into your points counter
 				- Make points persistent on the server
-				- How do we differentiate between points gained while running, and the rewards for getting 1st, 2nd, 3rd place? Badges? Trophies? Something just fun and silly?
-			- Keep and display scores
+				- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
+				- Be smarter about selecting how many points are visible
+			- Design and implement glue screens
+				- Home
+				- Results screen showing personal bests, rewards
 			- Lock light to target
-			- Fix UI
+			- Sound fx and music
+			- Design a decent UI
 			- Add social sharing
 			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
-			- Test performance on baby laptop
 			- Metrics?
 			- Basic animation, music, and sound?
 			- Test MVP
@@ -77,8 +78,6 @@ package {
 			- http://conversionxl.com/pricing-experiments-you-might-not-know-but-can-learn-from/
 			- http://news.ycombinator.com/item?id=4370904
 		- Nice UI with comfy pressable buttons.
-		- Sound fx
-		- Music
 		- Full-screen, or fluid 100% window size.
 		- Anti-gravity / low-gravity / side-gravity obstacles.
 		- Free exploration mode when you're dead, and faster speeds.

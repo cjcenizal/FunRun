@@ -1,5 +1,7 @@
 package com.funrun.controller.commands {
 	
+	import away3d.lights.LightBase;
+	
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.RenderSceneRequest;
@@ -7,13 +9,16 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
-	import com.funrun.model.vo.UpdateTrackVo;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.KeysModel;
+	import com.funrun.model.LightsModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3dModel;
 	import com.funrun.model.vo.CompetitorVo;
+	import com.funrun.model.vo.UpdateTrackVo;
+	
 	import flash.ui.Keyboard;
+	
 	import org.robotlegs.mvcs.Command;
 	
 	public class UpdateObserverLoopCommand extends Command {
@@ -31,6 +36,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var keysModel:KeysModel;
+		
+		[Inject]
+		public var lightsModel:LightsModel;
 		
 		// Commands.
 		
@@ -100,6 +108,10 @@ package com.funrun.controller.commands {
 				view3dModel.setCameraPosition( _competitor.position.x, _competitor.position.y, _competitor.position.z + 900 );
 			}
 			view3dModel.update();
+			
+			// Update lights.
+			var light:LightBase = lightsModel.getLight( LightsModel.SPOTLIGHT );
+			light.z = view3dModel.target.z;
 			
 			// Render.
 			renderSceneRequest.dispatch();

@@ -3,8 +3,7 @@ package com.funrun.controller.commands
 	
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.DrawCountdownRequest;
-	import com.funrun.controller.signals.DrawDistanceRequest;
-	import com.funrun.controller.signals.DrawPlaceRequest;
+	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.model.CompetitorsModel;
@@ -12,8 +11,9 @@ package com.funrun.controller.commands
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.View3dModel;
+	import com.funrun.model.PointsModel;
 	import com.funrun.model.StateModel;
+	import com.funrun.model.View3dModel;
 	import com.funrun.model.vo.CompetitorVo;
 	import com.funrun.services.OrdinalizeNumberService;
 	
@@ -47,6 +47,9 @@ package com.funrun.controller.commands
 		[Inject]
 		public var view3DModel:View3dModel;
 		
+		[Inject]
+		public var pointsModel:PointsModel;
+		
 		// Services.
 		
 		[Inject]
@@ -64,16 +67,13 @@ package com.funrun.controller.commands
 		public var startRunningRequest:StartRunningRequest;
 		
 		[Inject]
-		public var drawPlacesRequest:DrawPlaceRequest;
-		
-		[Inject]
-		public var drawDistanceRequest:DrawDistanceRequest;
+		public var drawPointsRequest:DrawPointsRequest;
 		
 		override public function execute():void {
 			updateCountdown();
 			updatePlaces();
 			updateNametags();
-			updateDistance();
+			updatePoints();
 		}
 		
 		private function updateCountdown():void {
@@ -91,8 +91,8 @@ package com.funrun.controller.commands
 		}
 		
 		private function updatePlaces():void {
+			// TO-DO: Is this necessary?
 			placesModel.sortPlaces();
-			drawPlacesRequest.dispatch( ordinalizeNumberService.ordinalize( playerModel.place ) );
 		}
 		
 		private function updateNametags():void {
@@ -116,10 +116,9 @@ package com.funrun.controller.commands
 			}
 		}
 		
-		private function updateDistance():void {
-			// Update distance counter.
+		private function updatePoints():void {
 			if ( stateModel.isRunning() ) {
-				drawDistanceRequest.dispatch( playerModel.distanceString + " feet" );
+				drawPointsRequest.dispatch( pointsModel.amount.toString() );
 			}
 		}
 	}

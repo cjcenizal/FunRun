@@ -87,7 +87,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Show stats if we're in development.
-			showStatsRequest.dispatch( !productionState.isProduction );
+			showStatsRequest.dispatch( productionState.showStats );
 			
 			// Assign points to places.
 			rewardsModel.assignRewardFor( 0, 10 );

@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.DrawDistanceRequest;
+	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
@@ -60,7 +60,7 @@ package com.funrun.controller.commands {
 		public var removeCompetitorRequest:RemoveCompetitorRequest;
 		
 		[Inject]
-		public var displayDistanceRequest:DrawDistanceRequest;
+		public var drawPointsRequest:DrawPointsRequest;
 		
 		// State.
 		
@@ -91,7 +91,7 @@ package com.funrun.controller.commands {
 			segmentModel.reset();
 			// Reset distance.
 			playerModel.position.z = 0;
-			displayDistanceRequest.dispatch( playerModel.distanceString );
+			drawPointsRequest.dispatch( "0" );
 			// Reset player.
 			resetPlayerRequest.dispatch( true );
 		}

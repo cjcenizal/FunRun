@@ -72,9 +72,8 @@ package com.funrun {
 	import com.funrun.controller.signals.CompleteAppRequest;
 	import com.funrun.controller.signals.CullTrackRequest;
 	import com.funrun.controller.signals.DrawCountdownRequest;
-	import com.funrun.controller.signals.DrawDistanceRequest;
 	import com.funrun.controller.signals.DrawMessageRequest;
-	import com.funrun.controller.signals.DrawPlaceRequest;
+	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
@@ -201,6 +200,7 @@ package com.funrun {
 			var useWhitelist:Boolean 				= true;
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
+			productionState.showStats 				= false;
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( false );
 			var explorationState:ExplorationState	= new ExplorationState( false );
 			
@@ -254,9 +254,8 @@ package com.funrun {
 			injector.mapSingleton( AddNametagRequest );
 			injector.mapSingleton( AddPopupRequest );
 			injector.mapSingleton( AddView3DRequest );
-			injector.mapSingleton( DrawDistanceRequest );
 			injector.mapSingleton( DrawMessageRequest );
-			injector.mapSingleton( DrawPlaceRequest );
+			injector.mapSingleton( DrawPointsRequest );
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			injector.mapSingleton( RemovePopupRequest );

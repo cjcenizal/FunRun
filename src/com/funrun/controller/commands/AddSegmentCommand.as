@@ -9,7 +9,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.AddSegmentVo;
-	import com.funrun.model.vo.BlockVo;
 	import com.funrun.model.vo.PointVo;
 	import com.funrun.model.vo.SegmentVo;
 	
