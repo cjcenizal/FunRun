@@ -75,6 +75,11 @@ package com.funrun.controller.commands {
 				removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? trackModel.getObstacleAt( 0 ).boundsMesh : trackModel.getObstacleAt( 0 ).mesh );
 				trackModel.removeObstacleAt( 0 );
 			}
+			// Remove points.
+			while ( pointsModel.numPoints > 0 ) {
+				removeObjectFromSceneRequest.dispatch( pointsModel.getPointAt( 0 ).mesh );
+				pointsModel.removePointAt( 0 );
+			}
 			// Remove competitors.
 			while ( competitorsModel.numCompetitors > 0 ) {
 				removeCompetitorRequest.dispatch( competitorsModel.getAt( 0 ) );

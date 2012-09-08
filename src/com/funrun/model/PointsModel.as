@@ -21,6 +21,7 @@ package com.funrun.model
 		{
 			super();
 			_random = new Rndm( Math.floor( Math.random() * 100 ) );
+			reset();
 		}
 		
 		public function reset():void {
@@ -62,7 +63,8 @@ package com.funrun.model
 			return _pointsObj[ segmentId.toString() + "-" + pointId.toString() ];
 		}
 		
-		public function shouldHavePointFor( segmentId:int, pointId:int ):Boolean {
+		public function shouldHavePointFor( segmentId:int, pointId:int, numPoints:Number ):Boolean {
+			var chance:Number = .5;
 			if ( !_history[ segmentId ] ) _history[ segmentId ] = {};
 			if ( !_history[ segmentId ][ pointId ] ) _history[ segmentId ][ pointId ] = ( _random.random() < .5 );
 			return _history[ segmentId ][ pointId ];
