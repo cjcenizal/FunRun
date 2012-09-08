@@ -30,15 +30,13 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var trackModel:TrackModel;
 		
+		[Inject]
+		public var pointsModel:PointsModel;
+		
 		// Commands.
 		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
-		
-		// Models.
-		
-		[Inject]
-		public var pointsModel:PointsModel;
 		
 		// State.
 		
@@ -54,7 +52,7 @@ package com.funrun.controller.commands {
 			var point:PointVo;
 			for ( var i:int = 0; i < segment.numPoints; i++ ) {
 				point = segment.getPointAt( i ).clone();
-				if ( Math.random() < .5 ) {
+				if ( pointsModel.shouldHavePointFor( segment.id, point.id ) ) {
 					point.mesh = point.block.mesh.clone() as Mesh;
 					point.mesh.x = segment.x + point.x;
 					point.mesh.y = segment.y + point.y;

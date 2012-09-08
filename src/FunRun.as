@@ -34,7 +34,6 @@ package {
 		- Game design
 			- Collect points
 				- Randomly make points accessible on a per segment basis
-					- Addition of points needs to be deterministic
 					- Be smarter about selecting how many points are visible
 					- Remove all points from view on reset or game end
 				- As you collect points make them fly into your points counter

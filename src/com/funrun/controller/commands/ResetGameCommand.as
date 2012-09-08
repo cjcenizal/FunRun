@@ -9,6 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
+	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3dModel;
@@ -43,6 +44,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var pointsModel:PointsModel;
+		
+		[Inject]
+		public var segmentModel:SegmentsModel;
 		
 		// Commands.
 		
@@ -79,6 +83,7 @@ package com.funrun.controller.commands {
 			nametagsModel.reset();
 			countdownModel.reset();
 			pointsModel.reset();
+			segmentModel.reset();
 			// Reset distance.
 			playerModel.position.z = 0;
 			displayDistanceRequest.dispatch( playerModel.distanceString );
