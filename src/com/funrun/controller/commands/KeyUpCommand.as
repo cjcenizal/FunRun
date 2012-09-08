@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.model.KeysModel;
+	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Player;
 	
@@ -19,7 +19,7 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var keysModel:KeysModel;
+		public var keysModel:KeyboardModel;
 		
 		[Inject]
 		public var playerModel:PlayerModel;

@@ -45,10 +45,10 @@ package com.funrun.controller.commands {
 			
 			// Show popup.
 			var message:String = "You ran " + playerModel.distanceString + " feet!";
-			if ( playerModel.distanceInFeet > playerModel.bestDistance ) {
+			if ( playerModel.distanceInFeet > playerModel.highScore ) {
 				message += "<br>This is your new best distance!";
 			} else {
-				message += "<br>Your best distance so far is " + playerModel.bestDistance.toString();
+				message += "<br>Your best distance so far is " + playerModel.highScore.toString();
 			}
 			addPopupRequest.dispatch( new ResultsPopup(
 				new ResultsPopupVo( message ) ) );
@@ -66,8 +66,8 @@ package com.funrun.controller.commands {
 			}
 			
 			// Assign new best distance, points, and save.
-			if ( playerModel.distanceInFeet > playerModel.bestDistance ) {
-				playerModel.bestDistance = playerModel.distanceInFeet;
+			if ( playerModel.distanceInFeet > playerModel.highScore ) {
+				playerModel.highScore = playerModel.distanceInFeet;
 			}
 			playerModel.points += rewardsModel.retrieveRewardFor( playerModel.place - 1 );
 			savePlayerObjectRequest.dispatch();

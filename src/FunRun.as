@@ -33,21 +33,19 @@ package {
 		- Search for TO-DOs
 		- Game design
 			- Collect points
-				- Points counter (place at top, along with messages)
-				- As you collect points make them fly into your points counter
-				- Make points persistent on the server
 				- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
+				- Make points persistent on the server
 				- Be smarter about selecting how many points are visible
 			- Design and implement glue screens
 				- Home
 				- Results screen showing personal bests, rewards
-			- Lock light to target
 			- Sound fx and music
 			- Design a decent UI
 			- Add social sharing
 			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
+			- Chat
 			- Metrics?
 			- Basic animation, music, and sound?
 			- Test MVP
@@ -81,6 +79,7 @@ package {
 		- Full-screen, or fluid 100% window size.
 		- Anti-gravity / low-gravity / side-gravity obstacles.
 		- Free exploration mode when you're dead, and faster speeds.
+		- As you collect points make them fly into your points counter
 		
 		
 		// "Thank you! Just for playing, you get 50 credits for free!"

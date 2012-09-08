@@ -3,7 +3,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
-	import com.funrun.model.KeysModel;
+	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;
 	import com.funrun.model.TimeModel;
@@ -41,7 +41,7 @@ package com.funrun.controller.commands
 		public var playerModel:PlayerModel;
 		
 		[Inject]
-		public var keysModel:KeysModel;
+		public var keysModel:KeyboardModel;
 		
 		[Inject]
 		public var timeModel:TimeModel;

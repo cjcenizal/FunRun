@@ -7,6 +7,7 @@ package com.funrun.controller.commands {
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
+	import away3d.materials.ColorMaterial;
 	import away3d.materials.TextureMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FogMethod;
@@ -21,8 +22,10 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.BlocksModel;
+	import com.funrun.model.ColorsModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
+	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.RewardsModel;
 	import com.funrun.model.TimeModel;
@@ -66,6 +69,12 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var blocksModel:BlocksModel;
+		
+		[Inject]
+		public var colorsModel:ColorsModel;
+		
+		[Inject]
+		public var materialsModel:MaterialsModel;
 		
 		// Commands.
 		
@@ -158,11 +167,11 @@ package com.funrun.controller.commands {
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			lightsModel.lightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			
-			Materials.DEBUG_PLAYER.lightPicker = lightsModel.lightPicker;
-			Materials.DEBUG_PLAYER.shadowMethod = lightsModel.shadowMethod;
-			Materials.DEBUG_PLAYER.specular = .25;
-			Materials.DEBUG_PLAYER.gloss = 20;
-			Materials.DEBUG_PLAYER.specularMethod = specularMethod;
+			materialsModel.lightPicker = lightsModel.lightPicker;
+			materialsModel.shadowMethod = lightsModel.shadowMethod;
+			materialsModel.specularMethod = specularMethod;
+			materialsModel.specular = .25;
+			materialsModel.gloss = 20;
 			
 			Materials.DEBUG_BLOCK.lightPicker = lightsModel.lightPicker;
 			Materials.DEBUG_BLOCK.shadowMethod = lightsModel.shadowMethod;
@@ -179,12 +188,12 @@ package com.funrun.controller.commands {
 			
 			// Apply to blocks.
 			for ( var i:int = 0; i < blocksModel.count; i++ ) {
-				var material:TextureMaterial = blocksModel.getBlockAt( i ).mesh.material as TextureMaterial;
-				material.lightPicker = lightsModel.lightPicker;
-				material.shadowMethod = lightsModel.shadowMethod;
-				material.specular = .25;
-				material.gloss = 20;
-				material.specularMethod = specularMethod;
+				var mat:TextureMaterial = blocksModel.getBlockAt( i ).mesh.material as TextureMaterial;
+				mat.lightPicker = lightsModel.lightPicker;
+				mat.shadowMethod = lightsModel.shadowMethod;
+				mat.specular = .25;
+				mat.gloss = 20;
+				mat.specularMethod = specularMethod;
 			}
 			
 			// Add lights to track.
@@ -206,7 +215,8 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
 			var geometry:SphereGeometry = new SphereGeometry( Player.NORMAL_BOUNDS.x );
-			var player:Mesh = new Mesh( geometry, Materials.DEBUG_PLAYER );
+			var material:ColorMaterial = materialsModel.getColorMaterial( colorsModel.getColor( playerModel.color ) );
+			var player:Mesh = new Mesh( geometry, material );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 			

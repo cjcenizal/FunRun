@@ -41,9 +41,9 @@ package com.funrun.view.components {
 			_pointsCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
 			_pointsLabel.draw();
 			_pointsCountLabel.draw();
-			_pointsLabel.x = _pointsCountLabel.x = 20;
-			_pointsCountLabel.y = stage.stageHeight - _pointsCountLabel.height - 20;
-			_pointsLabel.y = _pointsCountLabel.y - _pointsLabel.height;
+			_pointsCountLabel.x = 10;
+			_pointsCountLabel.y = 0;
+			_pointsLabel.y = _pointsCountLabel.y + _pointsCountLabel.height - _pointsLabel.height - 3;
 			
 			// Countdown.
 			_countdownLabel = new AbstractLabel( this, 0, 0, "", 110, 0xe0920b );
@@ -58,6 +58,7 @@ package com.funrun.view.components {
 		public function drawPoints( points:String ):void {
 			_pointsCountLabel.text = points;
 			_pointsCountLabel.draw();
+			_pointsLabel.x = _pointsCountLabel.x + _pointsCountLabel.width;
 		}
 		
 		public function drawMessage( message:String ):void {

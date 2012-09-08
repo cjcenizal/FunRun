@@ -1,16 +1,17 @@
 package com.funrun.controller.commands {
 	
 	import away3d.entities.Mesh;
-	import away3d.primitives.CubeGeometry;
+	import away3d.materials.ColorMaterial;
 	import away3d.primitives.SphereGeometry;
 	
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.AddNametagRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
+	import com.funrun.model.ColorsModel;
 	import com.funrun.model.CompetitorsModel;
+	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.NametagsModel;
-	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.CompetitorVo;
 	
@@ -32,6 +33,12 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var nametagsModel:NametagsModel;
 		
+		[Inject]
+		public var materialsModel:MaterialsModel;
+		
+		[Inject]
+		public var colorsModel:ColorsModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -47,7 +54,9 @@ package com.funrun.controller.commands {
 			// Avoid adding accidental duplicates.
 			if ( !competitorsModel.getWithId( competitor.id ) ) {
 				// Add mesh.
-				var mesh:Mesh = new Mesh( new SphereGeometry( Player.NORMAL_BOUNDS.x ), Materials.DEBUG_PLAYER );
+				var color:uint = colorsModel.getColorAt( Math.floor( Math.random() * colorsModel.numColors ) );
+				var material:ColorMaterial = materialsModel.getColorMaterial( color );
+				var mesh:Mesh = new Mesh( new SphereGeometry( Player.NORMAL_BOUNDS.x ), material );
 				competitor.mesh = mesh;
 				if ( competitor.isDucking ) {
 					if ( competitor.mesh.scaleY != .25 ) {

@@ -10,7 +10,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
 	import com.funrun.model.CompetitorsModel;
-	import com.funrun.model.KeysModel;
+	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3dModel;
@@ -35,7 +35,7 @@ package com.funrun.controller.commands {
 		public var competitorsModel:CompetitorsModel;
 		
 		[Inject]
-		public var keysModel:KeysModel;
+		public var keysModel:KeyboardModel;
 		
 		[Inject]
 		public var lightsModel:LightsModel;

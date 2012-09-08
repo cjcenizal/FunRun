@@ -2,12 +2,12 @@ package com.funrun.model
 {
 	import org.robotlegs.mvcs.Actor;
 	
-	public class KeysModel extends Actor
+	public class KeyboardModel extends Actor
 	{
 		
 		private var _pressedKeys:Object
 		
-		public function KeysModel()
+		public function KeyboardModel()
 		{
 			super();
 			_pressedKeys = {};

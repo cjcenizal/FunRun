@@ -5,7 +5,7 @@ package com.funrun.model {
 	
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.Block;
-	import com.funrun.model.constants.Stats;
+	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.IPlaceable;
 	
@@ -99,7 +99,7 @@ package com.funrun.model {
 			_mesh.scaleY = value;
 		}
 		
-		public function set inGameId( val:int ) {
+		public function set inGameId( val:int ):void {
 			_inGameId = val;
 		}
 		
@@ -111,20 +111,28 @@ package com.funrun.model {
 			return _properties;
 		}
 		
-		public function get bestDistance():Number {
-			return _properties[ Stats.BEST_DISTANCE ];
+		public function get highScore():Number {
+			return _properties[ PlayerProperties.HIGH_SCORE ];
 		}
 		
-		public function set bestDistance( val:Number ) {
-			_properties[ Stats.BEST_DISTANCE ] = val;
+		public function set highScore( val:Number ):void {
+			_properties[ PlayerProperties.HIGH_SCORE ] = val;
 		}
 		
 		public function get points():Number {
-			return _properties[ Stats.POINTS ];
+			return _properties[ PlayerProperties.POINTS ];
 		}
 		
-		public function set points( val:Number ) {
-			_properties[ Stats.POINTS ] = val;
+		public function set points( val:Number ):void {
+			_properties[ PlayerProperties.POINTS ] = val;
+		}
+		
+		public function get color():String {
+			return _properties[ PlayerProperties.COLOR ];
+		}
+		
+		public function set color( val:String ):void {
+			_properties[ PlayerProperties.COLOR ] = val;
 		}
 	}
 }

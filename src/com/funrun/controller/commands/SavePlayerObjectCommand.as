@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.Stats;
+	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.PlayerioPlayerObjectService;
 	
@@ -26,8 +26,8 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			if ( onlineState.isOnline ) {
 				var key:String, val:*;
-				for ( var i:int = 0; i < Stats.KEYS.length; i++ ) {
-					key = Stats.KEYS[ i ];
+				for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {
+					key = PlayerProperties.KEYS[ i ];
 					playerioPlayerObjectService.playerObject[ key ] = playerModel.properties[ key ];
 				}
 				playerioPlayerObjectService.save();
