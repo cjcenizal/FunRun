@@ -168,8 +168,8 @@ package com.funrun.controller.commands {
 			lightsModel.lightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			
 			materialsModel.lightPicker = lightsModel.lightPicker;
-			materialsModel.shadowMethod = lightsModel.shadowMethod;
-			materialsModel.specularMethod = specularMethod;
+		//	materialsModel.shadowMethod = lightsModel.shadowMethod;
+		//	materialsModel.specularMethod = specularMethod;
 			materialsModel.specular = .25;
 			materialsModel.gloss = 20;
 			
