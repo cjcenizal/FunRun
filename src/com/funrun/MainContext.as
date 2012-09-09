@@ -26,6 +26,7 @@ package com.funrun {
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
+	import com.funrun.controller.commands.PlaySoundCommand;
 	import com.funrun.controller.commands.RemoveCompetitorCommand;
 	import com.funrun.controller.commands.RemoveObjectFromSceneCommand;
 	import com.funrun.controller.commands.RemovePlaceableCommand;
@@ -89,6 +90,7 @@ package com.funrun {
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
+	import com.funrun.controller.signals.PlaySoundRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
 	import com.funrun.controller.signals.RemoveNametagRequest;
@@ -145,6 +147,7 @@ package com.funrun {
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.RewardsModel;
 	import com.funrun.model.SegmentsModel;
+	import com.funrun.model.SoundsModel;
 	import com.funrun.model.StateModel;
 	import com.funrun.model.StoreModel;
 	import com.funrun.model.TimeModel;
@@ -241,6 +244,7 @@ package com.funrun {
 			injector.mapSingleton( PointsModel );
 			injector.mapSingleton( RewardsModel );
 			injector.mapSingleton( SegmentsModel );
+			injector.mapSingleton( SoundsModel );
 			injector.mapSingleton( StateModel );
 			injector.mapSingleton( StoreModel );
 			injector.mapSingleton( TimeModel );
@@ -297,6 +301,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
+			signalCommandMap.mapSignalClass( PlaySoundRequest,						PlaySoundCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );
 			signalCommandMap.mapSignalClass( RemovePlaceableRequest,				RemovePlaceableCommand );
