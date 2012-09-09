@@ -2,9 +2,9 @@ package com.funrun.controller.signals
 {
 	import org.osflash.signals.Signal;
 	
-	public class DrawPointsRequest extends Signal
+	public class DrawSpeedRequest extends Signal
 	{
-		public function DrawPointsRequest()
+		public function DrawSpeedRequest()
 		{
 			super( Number );
 		}

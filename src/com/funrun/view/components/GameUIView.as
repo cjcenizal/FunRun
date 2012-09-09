@@ -12,9 +12,13 @@ package com.funrun.view.components {
 
 	public class GameUIView extends AbstractComponent {
 
-		// Distance.
-		private var _pointsLabel:AbstractLabel;
+		// Points.
 		private var _pointsCountLabel:AbstractLabel;
+		private var _pointsLabel:AbstractLabel;
+		
+		// Speed.
+		private var _speedCountLabel:AbstractLabel;
+		private var _speedLabel:AbstractLabel;
 		
 		// Countdown.
 		private var _countdownLabel:AbstractLabel;
@@ -36,7 +40,7 @@ package com.funrun.view.components {
 			_messagesList.x = 170;
 			_messagesList.y = stage.stageHeight - 40;
 			
-			// Distance.
+			// Points.
 			_pointsLabel = new AbstractLabel( this, 0, 0, "Points", 12, 0 );
 			_pointsCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
 			_pointsLabel.draw();
@@ -44,6 +48,15 @@ package com.funrun.view.components {
 			_pointsCountLabel.x = 10;
 			_pointsCountLabel.y = 0;
 			_pointsLabel.y = _pointsCountLabel.y + _pointsCountLabel.height - _pointsLabel.height - 3;
+			
+			// Speed.
+			_speedLabel = new AbstractLabel( this, 0, 0, "MPH", 12, 0 );
+			_speedCountLabel = new AbstractLabel( this, 0, 0, "0", 24, 0 );
+			_speedLabel.draw();
+			_speedCountLabel.draw();
+			_speedCountLabel.x = 10;
+			_speedCountLabel.y = 0;
+			_speedLabel.y = _speedCountLabel.y + _speedCountLabel.height - _speedLabel.height - 3;
 			
 			// Countdown.
 			_countdownLabel = new AbstractLabel( this, 0, 0, "", 110, 0xe0920b );
@@ -55,10 +68,17 @@ package com.funrun.view.components {
 			onClickQuitGameButtonSignal = new Signal();
 		}
 
-		public function drawPoints( points:String ):void {
-			_pointsCountLabel.text = points;
+		public function drawPoints( val:Number ):void {
+			_pointsCountLabel.text = val.toString();
 			_pointsCountLabel.draw();
 			_pointsLabel.x = _pointsCountLabel.x + _pointsCountLabel.width;
+			_speedCountLabel.x = _pointsLabel.x + _pointsLabel.width + 20;
+		}
+		
+		public function drawSpeed( val:Number ):void {
+			_speedCountLabel.text = val.toString();
+			_speedCountLabel.draw();
+			_speedLabel.x = _speedCountLabel.x + _speedCountLabel.width;
 		}
 		
 		public function drawMessage( message:String ):void {

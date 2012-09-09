@@ -124,7 +124,7 @@ package com.funrun.controller.commands
 				
 				// Cap forward speed.
 				if ( playerModel.velocity.z > Player.CAP_SPEED ) playerModel.velocity.z = Player.CAP_SPEED;
-				trace("speed:" + playerModel.velocity.z);
+				
 				// Update lateral position.
 				playerModel.position.x += playerModel.velocity.x;
 				

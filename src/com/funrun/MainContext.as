@@ -74,6 +74,7 @@ package com.funrun {
 	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.controller.signals.DrawPointsRequest;
+	import com.funrun.controller.signals.DrawSpeedRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
@@ -260,6 +261,7 @@ package com.funrun {
 			injector.mapSingleton( AddView3DRequest );
 			injector.mapSingleton( DrawMessageRequest );
 			injector.mapSingleton( DrawPointsRequest );
+			injector.mapSingleton( DrawSpeedRequest );
 			injector.mapSingleton( EnableMainMenuRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			injector.mapSingleton( RemovePopupRequest );

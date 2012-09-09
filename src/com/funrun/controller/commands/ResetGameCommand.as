@@ -91,7 +91,7 @@ package com.funrun.controller.commands {
 			segmentModel.reset();
 			// Reset distance.
 			playerModel.position.z = 0;
-			drawPointsRequest.dispatch( "0" );
+			drawPointsRequest.dispatch( 0 );
 			// Reset player.
 			resetPlayerRequest.dispatch( true );
 		}
