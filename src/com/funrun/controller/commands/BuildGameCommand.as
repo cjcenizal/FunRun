@@ -28,6 +28,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.MaterialsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.RewardsModel;
+	import com.funrun.model.SoundsModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.View3dModel;
 	import com.funrun.model.constants.Camera;
@@ -35,6 +36,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Time;
 	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.Sounds;
 	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -75,6 +77,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var materialsModel:MaterialsModel;
+		
+		[Inject]
+		public var soundsModel:SoundsModel;
 		
 		// Commands.
 		
@@ -163,10 +168,10 @@ package com.funrun.controller.commands {
 			addLightRequest.dispatch( LightsModel.SUN, sunlight );
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
 			
+			// Set up lighting and materials methods.
 			lightsModel.shadowMethod = new SoftShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			lightsModel.lightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
-			
 			materialsModel.lightPicker = lightsModel.lightPicker;
 		//	materialsModel.shadowMethod = lightsModel.shadowMethod;
 		//	materialsModel.specularMethod = specularMethod;
@@ -195,6 +200,13 @@ package com.funrun.controller.commands {
 				mat.gloss = 20;
 				mat.specularMethod = specularMethod;
 			}
+			
+			// Set up sounds.
+			soundsModel.folder = "audio/";
+			soundsModel.add( Sounds.JUMP, "jump.mp3" );
+			soundsModel.add( Sounds.POINT, "point1.mp3" );
+			soundsModel.add( Sounds.POINT, "point2.mp3" );
+			soundsModel.add( Sounds.POINT, "point3.mp3" );
 			
 			// Add lights to track.
 			addObjectToSceneRequest.dispatch( sunlight );

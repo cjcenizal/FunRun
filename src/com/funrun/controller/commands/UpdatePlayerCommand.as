@@ -1,6 +1,7 @@
 package com.funrun.controller.commands
 {
 	import com.funrun.controller.signals.KillPlayerRequest;
+	import com.funrun.controller.signals.PlaySoundRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.model.KeyboardModel;
@@ -9,6 +10,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
+	import com.funrun.model.constants.Sounds;
 	import com.funrun.model.state.ExplorationState;
 	
 	import flash.ui.Keyboard;
@@ -53,6 +55,9 @@ package com.funrun.controller.commands
 		[Inject]
 		public var resetPlayerRequest:ResetPlayerRequest;
 		
+		[Inject]
+		public var playSoundRequest:PlaySoundRequest;
+		
 		override public function execute():void {
 			
 			// Apply ducking state.
@@ -80,6 +85,7 @@ package com.funrun.controller.commands
 					}
 					playerModel.velocity.y += Player.JUMP_SPEED;
 					playerModel.isOnTheGround = false;
+					playSoundRequest.dispatch( Sounds.JUMP );
 				}
 			}
 			

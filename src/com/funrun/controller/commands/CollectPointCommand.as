@@ -1,6 +1,8 @@
 package com.funrun.controller.commands
 {
+	import com.funrun.controller.signals.PlaySoundRequest;
 	import com.funrun.model.PointsModel;
+	import com.funrun.model.constants.Sounds;
 	import com.funrun.model.vo.CollectPointVo;
 	
 	import org.robotlegs.mvcs.Command;
@@ -18,10 +20,15 @@ package com.funrun.controller.commands
 		[Inject]
 		public var pointsModel:PointsModel;
 		
+		// Commands.
+		
+		[Inject]
+		public var playSoundRequest:PlaySoundRequest;
+		
 		override public function execute():void {
 			if ( pointsModel.hasPointFor( vo.segmentId, vo.blockId ) ) {
 				if ( pointsModel.collectFor( vo.segmentId, vo.blockId, 1 ) ) {
-					// TO-DO: Dispatch sound effect.
+					playSoundRequest.dispatch( Sounds.POINT );
 				}
 			}
 		}

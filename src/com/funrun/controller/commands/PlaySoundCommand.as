@@ -2,6 +2,9 @@ package com.funrun.controller.commands
 {
 	import com.funrun.model.SoundsModel;
 	
+	import flash.media.Sound;
+	import flash.net.URLRequest;
+	
 	import org.robotlegs.mvcs.Command;
 	
 	public class PlaySoundCommand extends Command
@@ -19,7 +22,9 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			
+			var filepath:String = soundsModel.getFilepath( id );
+			var sound:Sound = new Sound( new URLRequest( filepath ) );
+			sound.play();
 		}
 	}
 }
