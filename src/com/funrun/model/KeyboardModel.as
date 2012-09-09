@@ -11,6 +11,10 @@ package com.funrun.model
 		public function KeyboardModel()
 		{
 			super();
+			reset();
+		}
+		
+		public function reset():void {
 			_pressedKeys = {};
 			_blockedKeys = {};
 		}

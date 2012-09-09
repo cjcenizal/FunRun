@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
+	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
@@ -48,6 +49,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var segmentModel:SegmentsModel;
 		
+		[Inject]
+		public var keyboardModel:KeyboardModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -84,6 +88,7 @@ package com.funrun.controller.commands {
 			while ( competitorsModel.numCompetitors > 0 ) {
 				removeCompetitorRequest.dispatch( competitorsModel.getAt( 0 ) );
 			}
+			keyboardModel.reset();
 			competitorsModel.reset();
 			nametagsModel.reset();
 			countdownModel.reset();
