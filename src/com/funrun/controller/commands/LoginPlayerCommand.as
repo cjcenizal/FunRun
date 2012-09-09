@@ -15,7 +15,7 @@ package com.funrun.controller.commands {
 	
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
 
-	public class InitUserCommand extends AsyncCommand {
+	public class LoginPlayerCommand extends AsyncCommand {
 
 		// State.
 
@@ -55,7 +55,7 @@ package com.funrun.controller.commands {
 			if ( onlineState.isOnline ) {
 				attemptLogin();
 			} else {
-				playerModel.color = "red";
+				playerModel.color = "blue";
 				dispatchComplete( true );
 			}
 		}

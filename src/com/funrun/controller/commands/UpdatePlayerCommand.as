@@ -9,13 +9,9 @@ package com.funrun.controller.commands
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.ExplorationState;
-	import com.funrun.model.vo.UpdateTrackVo;
 	
 	import flash.ui.Keyboard;
-	
-	import nl.ronvalstar.math.Perlin;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -41,7 +37,7 @@ package com.funrun.controller.commands
 		public var playerModel:PlayerModel;
 		
 		[Inject]
-		public var keysModel:KeyboardModel;
+		public var keyboardModel:KeyboardModel;
 		
 		[Inject]
 		public var timeModel:TimeModel;
@@ -63,7 +59,7 @@ package com.funrun.controller.commands
 			if ( explorationState.isFree ) {
 			} else {
 				var scale:Number = Player.DUCKING_BOUNDS.y / Player.NORMAL_BOUNDS.y;
-				if ( keysModel.isDown( Keyboard.DOWN ) ) {
+				if ( keyboardModel.isDown( Keyboard.DOWN ) ) {
 					playerModel.isDucking = true;
 					if ( playerModel.scaleY != scale ) {
 						playerModel.scaleY = scale;
@@ -77,11 +73,11 @@ package com.funrun.controller.commands
 			}
 			
 			// Jumping.
-			if ( keysModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keysModel.isDown( Keyboard.UP ) ) ) {
+			if ( keyboardModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keyboardModel.isDown( Keyboard.UP ) ) ) {
 				if ( playerModel.isOnTheGround ) {
-					// End jump input once we jump.
-					keysModel.up( Keyboard.SPACE );
-					if ( !explorationState.isFree ) keysModel.up( Keyboard.UP );
+					if ( stateModel.isRunning() ) {
+						playerModel.velocity.z += Player.JUMP_FORWARD_BOOST;
+					}
 					playerModel.velocity.y += Player.JUMP_SPEED;
 					playerModel.isOnTheGround = false;
 				}
@@ -96,32 +92,39 @@ package com.funrun.controller.commands
 				} else {
 					// Update x velocity.
 					playerModel.velocity.x = 0;
-					if ( keysModel.isDown( Keyboard.LEFT ) ) {
+					if ( keyboardModel.isDown( Keyboard.LEFT ) ) {
 						playerModel.velocity.x -= Player.LATERAL_SPEED;
 					}
-					if ( keysModel.isDown( Keyboard.RIGHT ) ) {
+					if ( keyboardModel.isDown( Keyboard.RIGHT ) ) {
 						playerModel.velocity.x += Player.LATERAL_SPEED;
 					}
 					
 					if ( explorationState.isFree ) {
 						// Explore freely, moving forward and backward.
-						if ( keysModel.isDown( Keyboard.UP ) ) {
+						if ( keyboardModel.isDown( Keyboard.UP ) ) {
 							playerModel.velocity.z += Player.FREE_RUN_SPEED;
 						}
-						if ( keysModel.isDown( Keyboard.DOWN ) ) {
+						if ( keyboardModel.isDown( Keyboard.DOWN ) ) {
 							playerModel.velocity.z -= Player.FREE_RUN_SPEED;
 						}	
 						playerModel.velocity.z *= Player.FRICTION;
 					} else  {
 						// Move forward according to game logic.
 						if ( stateModel.isRunning() ) {
-							// Speed is perlinized.
-							var rand:Number = Perlin.noise( playerModel.inGameId * 2, timeModel.ticks * .01 );
-							playerModel.velocity.z = rand * ( Player.MAX_FORWARD_VELOCITY * 2 );
+							// Slow down or speed up depending on whether we're turning or not.
+							if ( keyboardModel.isDown( Keyboard.LEFT ) || keyboardModel.isDown( Keyboard.RIGHT ) ) {
+								if ( playerModel.velocity.z < Player.MAX_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
+							} else {
+								if ( playerModel.velocity.z > Player.MIN_SPEED ) playerModel.velocity.z -= Player.DECELERATION;
+								else if ( playerModel.velocity.z < Player.MIN_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
+							}
 						}
 					}
 				}
 				
+				// Cap forward speed.
+				if ( playerModel.velocity.z > Player.CAP_SPEED ) playerModel.velocity.z = Player.CAP_SPEED;
+				trace("speed:" + playerModel.velocity.z);
 				// Update lateral position.
 				playerModel.position.x += playerModel.velocity.x;
 				

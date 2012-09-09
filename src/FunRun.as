@@ -32,6 +32,7 @@ package {
 		TO-DO:
 		- Search for TO-DOs
 		- Game design
+			- Add a speedometer
 			- Collect points
 				- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
 				- Make points persistent on the server

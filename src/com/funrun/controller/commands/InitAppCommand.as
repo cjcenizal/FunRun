@@ -17,7 +17,7 @@ package com.funrun.controller.commands {
 			// Show the user something while initializing the app.
 			addCommand( InitViewCommand );
 			// Start the login process, and getting user account data.
-			addCommand( InitUserCommand );
+			addCommand( LoginPlayerCommand );
 			// Build everyhing that the game needs.
 			addCommand( InitGameCommand );
 		}

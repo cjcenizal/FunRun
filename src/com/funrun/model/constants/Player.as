@@ -5,10 +5,13 @@ package com.funrun.model.constants
 	public class Player
 	{
 		// Player movement constants.
-		public static const MAX_FORWARD_VELOCITY:Number = 90;
-		public static const SLOWED_DIAGONAL_SPEED:Number = 55;//45;
-		public static const FOWARD_ACCELERATION:Number = 10;
-		public static const JUMP_SPEED:Number = 90;//84;
+		public static const MAX_SPEED:Number = 98;
+		public static const MIN_SPEED:Number = 90;
+		public static const CAP_SPEED:Number = 120;
+		public static const JUMP_FORWARD_BOOST:Number = 10;
+		public static const ACCELERATION:Number = 2;
+		public static const DECELERATION:Number = .5;
+		public static const JUMP_SPEED:Number = 90;
 		public static const LATERAL_SPEED:Number = 30;
 		public static const GRAVITY:Number = -8;
 		public static const LAUNCH_SPEED:Number = 150;
@@ -27,5 +30,9 @@ package com.funrun.model.constants
 		
 		// AI.
 		public static const NUM_AI_COMPETITORS:int = 10;
+		
+		// Position.
+		public static const START_POSITION_RANGE:Number = 400;
+		public static const START_POSITION_MIN:Number = 100;
 	}
 }

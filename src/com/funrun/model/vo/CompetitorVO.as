@@ -2,7 +2,6 @@ package com.funrun.model.vo {
 
 	import away3d.entities.Mesh;
 	
-	
 	import flash.geom.Vector3D;
 
 	public class CompetitorVo implements IPlaceable {
@@ -17,6 +16,7 @@ package com.funrun.model.vo {
 		private var _place:int = 0;
 		private var _isDead:Boolean = false;
 		private var _deathTime:Number = 0;
+		public var aiVelocity:Vector3D;
 		
 		public function CompetitorVo( id:int, name:String ) {
 			_id = id;

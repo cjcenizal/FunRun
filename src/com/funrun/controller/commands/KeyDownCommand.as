@@ -1,11 +1,8 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.model.KeyboardModel;
-	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.Player;
 	
 	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -19,45 +16,11 @@ package com.funrun.controller.commands {
 		// Models.
 		
 		[Inject]
-		public var keysModel:KeyboardModel;
-		
-		[Inject]
-		public var playerModel:PlayerModel;
+		public var keyboardModel:KeyboardModel;
 		
 		override public function execute():void {
 			var key:uint = event.keyCode;
-			keysModel.down( key );
-			
-			/*
-			switch ( event.keyCode ) {
-				case Keyboard.SPACE:
-				case Keyboard.UP:
-					playerModel.isJumping = true;
-					break;
-				case Keyboard.DOWN:
-					playerModel.isDucking = true;
-					break;
-			}
-			*/
-			
-			/*
-			switch ( event.keyCode ) {
-				case Keyboard.SPACE:
-					followNewCompetitorRequest.dispatch( 1 );
-				case Keyboard.UP:
-					followNewCompetitorRequest.dispatch( 1 );
-					break;
-				case Keyboard.LEFT:
-					followNewCompetitorRequest.dispatch( -1 );
-					break;
-				case Keyboard.RIGHT:
-					followNewCompetitorRequest.dispatch( 1 );
-					break;
-				case Keyboard.DOWN:
-					followNewCompetitorRequest.dispatch( -1 );
-					break;
-			}
-			*/
+			keyboardModel.down( key );
 		}
 	}
 }

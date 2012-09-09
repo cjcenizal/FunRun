@@ -3,11 +3,12 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.DrawMessageRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.InterpolationModel;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.StateModel;
-	import nl.ronvalstar.math.Perlin;
 	import com.funrun.model.vo.CompetitorVo;
+	
+	import nl.ronvalstar.math.Perlin;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -44,9 +45,11 @@ package com.funrun.controller.commands {
 							displayMessageRequest.dispatch( competitor.name + " just died!" );
 							killed = true;
 						} else {
-							var rand:Number = Perlin.noise( i * 2, timeModel.ticks * .01 );
-							var speed:Number = rand * ( Player.MAX_FORWARD_VELOCITY * 2 );
-							competitor.updatePosition( competitor.position.x, -Player.NORMAL_BOUNDS.y * .25, competitor.position.z + speed );
+							if ( competitor.aiVelocity.z < Player.MIN_SPEED ) {
+								competitor.aiVelocity.z += Player.ACCELERATION;
+							}
+							competitor.aiVelocity.x = ( Perlin.noise( i, competitor.position.z * .0001 ) - .5 ) * 100;
+							competitor.updatePosition( competitor.position.x + competitor.aiVelocity.x, -Player.NORMAL_BOUNDS.y * .25, competitor.position.z + competitor.aiVelocity.z );
 						}
 					}
 				}

@@ -14,6 +14,8 @@ package com.funrun.controller.commands {
 		public var enableMainMenuRequest:EnableMainMenuRequest;
 		
 		override public function execute():void {
+			
+			// Enable main menu.
 			enableMainMenuRequest.dispatch( true );
 			
 			// Respond to keyboard input.
