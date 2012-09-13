@@ -128,7 +128,7 @@ package com.funrun.model {
 		}
 		
 		public function get color():String {
-			return _properties[ PlayerProperties.COLOR ];
+			return _properties[ PlayerProperties.COLOR ] || "red";
 		}
 		
 		public function set color( val:String ):void {

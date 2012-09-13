@@ -5,13 +5,13 @@ package com.funrun.model.constants
 	public class Player
 	{
 		// Player movement constants.
-		public static const MAX_SPEED:Number = 78;
-		public static const MIN_SPEED:Number = 70;
-		public static const CAP_SPEED:Number = 100;
+		public static const MAX_SPEED:Number = 98;
+		public static const MIN_SPEED:Number = 90;
+		public static const CAP_SPEED:Number = 110;
 		public static const JUMP_FORWARD_BOOST:Number = 6;
 		public static const ACCELERATION:Number = 2;
 		public static const DECELERATION:Number = .5;
-		public static const JUMP_SPEED:Number = 90;
+		public static const JUMP_SPEED:Number = 100;
 		public static const LATERAL_SPEED:Number = 30;
 		public static const GRAVITY:Number = -8;
 		public static const LAUNCH_SPEED:Number = 150;

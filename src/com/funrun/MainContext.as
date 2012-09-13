@@ -204,8 +204,8 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean 				= true;
-			var onlineState:OnlineState 			= new OnlineState( false );
-			var productionState:ProductionState 	= new ProductionState( false );
+			var onlineState:OnlineState 			= new OnlineState( true );
+			var productionState:ProductionState 	= new ProductionState( true );
 			productionState.showStats 				= false;
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( false );
 			var explorationState:ExplorationState	= new ExplorationState( false );
