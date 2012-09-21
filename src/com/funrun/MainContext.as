@@ -1,5 +1,6 @@
 package com.funrun {
 
+	import com.cenizal.utils.Console;
 	import com.funrun.controller.commands.AddAiCompetitorsCommand;
 	import com.funrun.controller.commands.AddCompetitorCommand;
 	import com.funrun.controller.commands.AddDelayedCommandCommand;
@@ -204,11 +205,11 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean 				= true;
-			var onlineState:OnlineState 			= new OnlineState( true );
-			var productionState:ProductionState 	= new ProductionState( true );
+			var onlineState:OnlineState 			= new OnlineState( false );
+			var productionState:ProductionState 	= new ProductionState( false );
 			productionState.showStats 				= false;
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( false );
-			var explorationState:ExplorationState	= new ExplorationState( false );
+			var explorationState:ExplorationState	= new ExplorationState( true );
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
@@ -332,6 +333,9 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( UpdateTrackRequest,					UpdateTrackCommand );
 			signalCommandMap.mapSignalClass( UpdateUiRequest,						UpdateUiCommand );
 			signalCommandMap.mapSignalClass( UpdateViewRequest,						UpdateViewCommand );
+			
+			// Map singleton views.
+			injector.mapSingleton( Console );
 			
 			// Map views to mediators.
 			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
