@@ -41,7 +41,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// TO-DO: Check game state. If in a game already, ignore all of this.
-			//if ( gameState.inGame ) {
+			//if ( !gameState.inGame ) {
 				// Store id so we can ignore updates we originated.
 				playerModel.inGameId = message.getInt( 0 );
 				

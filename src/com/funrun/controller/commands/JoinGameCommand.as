@@ -1,14 +1,16 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
-	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
+	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorLeftRequest;
+	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
+	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
+	import com.funrun.model.vo.LogMessageVo;
 	import com.funrun.model.vo.PlayerioErrorVo;
 	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.PlayerioFacebookLoginService;
@@ -57,6 +59,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var handleMultiplayerCompetitorDiedRequest:HandleMultiplayerCompetitorDiedRequest;
 		
+		[Inject]
+		public var logMessageRequest:LogMessageRequest;
+		
 		override public function execute():void {
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.onConnectedSignal.add( onConnected );
@@ -64,7 +69,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onConnected():void {
-			trace(this, "connected");
+			logMessageRequest.dispatch( new LogMessageVo( this, "Connected to game." ) );
 			multiplayerService.onServerDisconnectSignal.add( onDisconnected );
 			multiplayerService.addMessageHandler( Messages.INIT, onInit );
 			multiplayerService.addMessageHandler( Messages.UPDATE, onUpdate );
@@ -74,16 +79,17 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onDisconnected():void {
-			trace(this, "disconnected");
+			logMessageRequest.dispatch( new LogMessageVo( this, "Disconnected from game." ) );
 			multiplayerService.reset();
 		}
 		
 		private function onError():void {
-			trace(this, "error");
+			logMessageRequest.dispatch( new LogMessageVo( this, "Error connecting to game." ) );
 			showPlayerioErrorPopupRequest.dispatch( PlayerioErrorVo( multiplayerService.error ) );
 		}
 		
 		private function onInit( message:Message ):void {
+			logMessageRequest.dispatch( new LogMessageVo( this, "Game init. Message is: " + message ) );
 			multiplayerService.removeMessageHandler( Messages.INIT, onInit );
 			handleMultiplayerInitRequest.dispatch( message );
 		}

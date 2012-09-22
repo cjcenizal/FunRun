@@ -27,6 +27,7 @@ package com.funrun {
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
+	import com.funrun.controller.commands.LogMessageCommand;
 	import com.funrun.controller.commands.PlaySoundCommand;
 	import com.funrun.controller.commands.RemoveCompetitorCommand;
 	import com.funrun.controller.commands.RemoveObjectFromSceneCommand;
@@ -91,6 +92,7 @@ package com.funrun {
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
+	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.PlaySoundRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
@@ -302,6 +304,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
+			signalCommandMap.mapSignalClass( LogMessageRequest, 						LogMessageCommand );
 			signalCommandMap.mapSignalClass( PlaySoundRequest,						PlaySoundCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );
