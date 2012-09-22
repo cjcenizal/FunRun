@@ -54,6 +54,7 @@ package com.funrun.controller.commands {
 		public var logMessageRequest:LogMessageRequest;
 		
 		override public function execute():void {
+			logMessageRequest.dispatch( new LogMessageVo( this, "Connecting to matchmaking service..." ) );
 			// Hide view and block interaction.
 			showFindingGamePopupRequest.dispatch();
 			// First we need to get matched up with other players.

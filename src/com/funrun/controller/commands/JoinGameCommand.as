@@ -63,6 +63,7 @@ package com.funrun.controller.commands {
 		public var logMessageRequest:LogMessageRequest;
 		
 		override public function execute():void {
+			logMessageRequest.dispatch( new LogMessageVo( this, "Joining a game..." ) );
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.onConnectedSignal.add( onConnected );
 			multiplayerService.connect( loginService.client, Rooms.GAME, { name: playerModel.name, x: playerModel.position.x, y: playerModel.position.y }, roomId );

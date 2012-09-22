@@ -1,9 +1,11 @@
 package com.funrun.controller.commands {
 	
+	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVo;
+	import com.funrun.model.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -26,6 +28,11 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		// Commands.
+		
+		[Inject]
+		public var logMessageRequest:LogMessageRequest;
 		
 		override public function execute():void {
 			interpolationModel.reset();
@@ -51,6 +58,8 @@ package com.funrun.controller.commands {
 								competitor.mesh.scaleY = 1;
 							}
 						}
+					} else {
+						logMessageRequest.dispatch( new LogMessageVo( this, "Competitor is null with id: " +  message.getInt( i ) ) );
 					}
 				}
 			}

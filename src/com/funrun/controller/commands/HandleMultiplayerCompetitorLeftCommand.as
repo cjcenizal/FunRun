@@ -1,9 +1,11 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.vo.CompetitorVo;
+	import com.funrun.model.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -29,10 +31,14 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var displayMessageRequest:DrawMessageRequest;
 		
+		[Inject]
+		public var logMessageRequest:LogMessageRequest;
+		
 		override public function execute():void {
 			var competitor:CompetitorVo = competitorsModel.getWithId( message.getInt( 0 ) );
 			removeCompetitorRequest.dispatch( competitor );
 			displayMessageRequest.dispatch( competitor.name + " has left the game." );
+			logMessageRequest.dispatch( new LogMessageVo( this, "Competitor " + competitor.id + " (" + competitor.name + ") left the game." ) );
 		}
 	}
 }

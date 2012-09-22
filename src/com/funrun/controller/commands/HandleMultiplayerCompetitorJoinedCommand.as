@@ -2,8 +2,10 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVo;
+	import com.funrun.model.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -29,6 +31,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var displayMessageRequest:DrawMessageRequest;
 		
+		[Inject]
+		public var logMessageRequest:LogMessageRequest;
+		
 		override public function execute():void {
 			// We receive ourselves as new players, so screen ourselves out.
 			if ( message.getInt( 0 ) != playerModel.inGameId ) {
@@ -40,6 +45,7 @@ package com.funrun.controller.commands {
 				competitor.isDucking = message.getBoolean( 5 );
 				addCompetitorRequest.dispatch( competitor );
 				displayMessageRequest.dispatch( competitor.name + " has joined the game." );
+				logMessageRequest.dispatch( new LogMessageVo( this, "Competitor " + competitor.id + " (" + competitor.name + ") joined the game." ) );
 			}
 		}
 	}
