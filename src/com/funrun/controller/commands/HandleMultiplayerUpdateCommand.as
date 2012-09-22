@@ -5,6 +5,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVo;
+	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
@@ -50,8 +51,8 @@ package com.funrun.controller.commands {
 							);
 						competitor.isDucking = message.getBoolean( i + 4 );
 						if ( competitor.isDucking ) {
-							if ( competitor.mesh.scaleY != .25 ) {
-								competitor.mesh.scaleY = .25;
+							if ( competitor.mesh.scaleY != Player.DUCKING_SCALE ) {
+								competitor.mesh.scaleY = Player.DUCKING_SCALE;
 							}
 						} else {
 							if ( competitor.mesh.scaleY != 1 ) {

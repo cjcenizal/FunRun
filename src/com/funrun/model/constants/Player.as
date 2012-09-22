@@ -22,6 +22,7 @@ package com.funrun.model.constants
 		// Bounds.
 		public static const NORMAL_BOUNDS:Vector3D = new Vector3D( 100, 180, 60 );
 		public static const DUCKING_BOUNDS:Vector3D = new Vector3D( 100, 80, 60 );
+		public static const DUCKING_SCALE:Number = DUCKING_BOUNDS.y / NORMAL_BOUNDS.y;
 		
 		// Collision constants.
 		public static const BOUNCE_OFF_BOTTOM_VELOCITY:Number = -4;
