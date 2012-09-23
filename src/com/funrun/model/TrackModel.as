@@ -7,52 +7,52 @@ package com.funrun.model {
 	
 	public class TrackModel extends Actor {
 		
-		private var _obstacles:Array;
+		private var _segments:Array;
 		
 		public function TrackModel() {
 			super();
-			_obstacles = [];
+			_segments = [];
 		}
 		
-		public function addSegment( obstacle:SegmentVo ):void {
-			_obstacles.push( obstacle );
-			var len:int = _obstacles.length;
-			_obstacles.sortOn( "z", [ Array.NUMERIC ] );
+		public function addSegment( segment:SegmentVo ):void {
+			_segments.push( segment );
+			var len:int = _segments.length;
+			_segments.sortOn( "z", [ Array.NUMERIC ] );
 		}
 		
-		public function removeObstacleAt( index:int ):void {
-			_obstacles.splice( index, 1 );
+		public function removeSegmentAt( index:int ):void {
+			_segments.splice( index, 1 );
 		}
 		
-		public function getObstacleAt( index:int ):SegmentVo {
-			return _obstacles[ index ];
+		public function getSegmentAt( index:int ):SegmentVo {
+			return _segments[ index ];
 		}
 		
-		public function getObstacleArray():Array {
-			return _obstacles;
+		public function getSegmentArray():Array {
+			return _segments;
 		}
 		
-		public function get numObstacles():int {
-			return _obstacles.length;
+		public function get numSegments():int {
+			return _segments.length;
 		}
 		
-		public function get depthOfLastObstacle():Number {
-			if ( _obstacles.length > 0 ) {
-				return ( _obstacles[ _obstacles.length - 1 ] as SegmentVo ).z;
+		public function get depthOfLastSegment():Number {
+			if ( _segments.length > 0 ) {
+				return ( _segments[ _segments.length - 1 ] as SegmentVo ).z;
 			}
 			return Track.DEPTH;
 		}
 		
-		public function getDepthOfObstacleAt( index:int ):Number {
-			if ( _obstacles.length >= index ) {
-				return ( _obstacles[ index ] as SegmentVo ).z;
+		public function getDepthOfSegmentAt( index:int ):Number {
+			if ( _segments.length >= index ) {
+				return ( _segments[ index ] as SegmentVo ).z;
 			}
 			return 0;
 		}
 		
-		public function get depthOfFirstObstacle():Number {
-			if ( _obstacles.length > 0 ) {
-				return ( _obstacles[ 0 ] as SegmentVo ).z;
+		public function get depthOfFirstSegment():Number {
+			if ( _segments.length > 0 ) {
+				return ( _segments[ 0 ] as SegmentVo ).z;
 			}
 			return 0;
 		}

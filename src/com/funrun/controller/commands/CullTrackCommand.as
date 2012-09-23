@@ -36,13 +36,14 @@ package com.funrun.controller.commands {
 		public var showBoundsState:ShowBoundsState;
 		
 		override public function execute():void {
+			
 			// Cull segments.
-			for ( var i:int = 0; i < trackModel.numObstacles; i++ ) {
-				var obstacle:SegmentVo = trackModel.getObstacleAt( i );
+			for ( var i:int = 0; i < trackModel.numSegments; i++ ) {
+				var obstacle:SegmentVo = trackModel.getSegmentAt( i );
 				if ( obstacle.z < positionZ + Track.CULL_DEPTH_NEAR
 					|| obstacle.z > positionZ + Track.CULL_DEPTH_FAR ) {
 					removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? obstacle.boundsMesh : obstacle.mesh );
-					trackModel.removeObstacleAt( i );
+					trackModel.removeSegmentAt( i );
 					i--;
 				}
 			}

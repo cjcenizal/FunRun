@@ -34,9 +34,9 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Camera;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
+	import com.funrun.model.constants.Sounds;
 	import com.funrun.model.constants.Time;
 	import com.funrun.model.constants.Track;
-	import com.funrun.model.constants.Sounds;
 	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -139,17 +139,6 @@ package com.funrun.controller.commands {
 			cameraController.steps = 1;
 			view3dModel.cameraController = cameraController;
 			
-			// Add materials.
-			/*
-			TO-DO: Add fog and light picker to all materials.
-			var playerFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
-			var playerMaterial:ColorMaterial = new ColorMaterial( 0x00FF00 );
-			playerMaterial.addMethod( playerFog );
-			var textureFog:FogMethod = new FogMethod( TrackConstants.FOG_NEAR, TrackConstants.FOG_FAR, 0xffffff );
-			*/
-			
-			//loadSegmentsRequest.dispatch();
-			
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -.5 );
 			sunlight.ambient = .05; // Higher = "brighter"
@@ -173,23 +162,23 @@ package com.funrun.controller.commands {
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
 			lightsModel.lightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
 			materialsModel.lightPicker = lightsModel.lightPicker;
-		//	materialsModel.shadowMethod = lightsModel.shadowMethod;
-		//	materialsModel.specularMethod = specularMethod;
 			materialsModel.specular = .25;
 			materialsModel.gloss = 20;
+			materialsModel.fogMethod = new FogMethod( Track.FOG_NEAR, Track.FOG_FAR, Track.FOG_COLOR );
 			
 			Materials.DEBUG_BLOCK.lightPicker = lightsModel.lightPicker;
 			Materials.DEBUG_BLOCK.shadowMethod = lightsModel.shadowMethod;
 			Materials.DEBUG_BLOCK.specular = .25;
 			Materials.DEBUG_BLOCK.gloss = 20;
 			Materials.DEBUG_BLOCK.specularMethod = specularMethod;
-		//	Materials.DEBUG_BLOCK.addMethod( new FogMethod( 1000, 0xffffff ) );
+			Materials.DEBUG_BLOCK.addMethod( materialsModel.fogMethod );
 			
 			Materials.DEBUG_TEST.lightPicker = lightsModel.lightPicker;
 			Materials.DEBUG_TEST.shadowMethod = lightsModel.shadowMethod;
 			Materials.DEBUG_TEST.specular = .25;
 			Materials.DEBUG_TEST.gloss = 20;
 			Materials.DEBUG_TEST.specularMethod = specularMethod;
+			Materials.DEBUG_TEST.addMethod( materialsModel.fogMethod );
 			
 			// Apply to blocks.
 			for ( var i:int = 0; i < blocksModel.count; i++ ) {
@@ -199,6 +188,7 @@ package com.funrun.controller.commands {
 				mat.specular = .25;
 				mat.gloss = 20;
 				mat.specularMethod = specularMethod;
+				mat.addMethod( materialsModel.fogMethod );
 			}
 			
 			// Set up sounds.

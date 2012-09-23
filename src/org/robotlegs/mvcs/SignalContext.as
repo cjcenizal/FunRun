@@ -1,9 +1,10 @@
 package org.robotlegs.mvcs
 {
 	import flash.display.DisplayObjectContainer;
-    import org.robotlegs.base.SignalCommandMap;
-    import org.robotlegs.core.ISignalCommandMap;
-    import org.robotlegs.core.ISignalContext;
+	
+	import org.robotlegs.base.SignalCommandMap;
+	import org.robotlegs.core.ISignalCommandMap;
+	import org.robotlegs.core.ISignalContext;
 
     public class SignalContext extends Context implements ISignalContext
     {

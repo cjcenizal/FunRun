@@ -180,7 +180,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getAllSegments():void {
-			_segmentsArr = trackModel.getObstacleArray();
+			_segmentsArr = trackModel.getSegmentArray();
 		}
 		
 		private function interpolationIsNecessary():Boolean {
@@ -219,7 +219,7 @@ package com.funrun.controller.commands {
 		}
 		
 		private function getFirstCollidingSegment():void {
-			_firstCollidingSegment = trackModel.getObstacleAt( _collidingSegmentIndicesArr[ 0 ] );
+			_firstCollidingSegment = trackModel.getSegmentAt( _collidingSegmentIndicesArr[ 0 ] );
 		}
 		
 		private function getCollidingBoundingBoxes():void {

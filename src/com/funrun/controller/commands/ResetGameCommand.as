@@ -75,9 +75,9 @@ package com.funrun.controller.commands {
 			// Reset time.
 			timeModel.reset();
 			// Remove all existing obstacles.
-			while ( trackModel.numObstacles > 0 ) {
-				removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? trackModel.getObstacleAt( 0 ).boundsMesh : trackModel.getObstacleAt( 0 ).mesh );
-				trackModel.removeObstacleAt( 0 );
+			while ( trackModel.numSegments > 0 ) {
+				removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? trackModel.getSegmentAt( 0 ).boundsMesh : trackModel.getSegmentAt( 0 ).mesh );
+				trackModel.removeSegmentAt( 0 );
 			}
 			// Remove points.
 			while ( pointsModel.numPoints > 0 ) {

@@ -6,11 +6,8 @@ package com.funrun.controller.commands {
 	import away3d.library.assets.AssetType;
 	import away3d.loaders.misc.AssetLoaderContext;
 	import away3d.loaders.misc.AssetLoaderToken;
-	import away3d.loaders.parsers.OBJParser;
-	import away3d.materials.TextureMaterial;
 	
 	import com.funrun.model.BlocksModel;
-	import com.funrun.model.LightsModel;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.vo.BlockVo;
 	import com.funrun.services.JsonService;
@@ -30,9 +27,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var blocksModel:BlocksModel;
-		
-		[Inject]
-		public var lightsModel:LightsModel;
 		
 		// Private vars.
 		

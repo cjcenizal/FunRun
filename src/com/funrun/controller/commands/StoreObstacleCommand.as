@@ -2,16 +2,13 @@ package com.funrun.controller.commands
 {
 	import away3d.core.base.Geometry;
 	import away3d.entities.Mesh;
-	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
 	import away3d.tools.commands.Merge;
 	
 	import com.funrun.model.BlocksModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.constants.Block;
-	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Materials;
-	import com.funrun.model.constants.Segment;
 	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.BlockVo;
 	import com.funrun.model.vo.BoundingBoxVo;
@@ -21,8 +18,6 @@ package com.funrun.controller.commands
 	import com.funrun.model.vo.SegmentVo;
 	import com.funrun.model.vo.StoreObstacleVo;
 	import com.funrun.services.parsers.ObstacleParser;
-	
-	import flash.geom.Vector3D;
 	
 	import org.robotlegs.mvcs.Command;
 	

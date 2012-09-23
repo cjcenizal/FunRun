@@ -29,8 +29,8 @@ package com.funrun.controller.commands {
 			var index:int;
 			
 			// Fill up track on the near side.
-			while ( trackModel.depthOfFirstObstacle > positionZ + Track.ADD_DEPTH_NEAR ) {
-				index = Math.floor( trackModel.depthOfFirstObstacle / Segment.DEPTH ) - 1;
+			while ( trackModel.depthOfFirstSegment > positionZ + Track.CULL_DEPTH_NEAR ) {
+				index = Math.floor( trackModel.depthOfFirstSegment / Segment.DEPTH ) - 1;
 				if ( index < 0 ) {
 					break;
 				}
@@ -38,8 +38,8 @@ package com.funrun.controller.commands {
 			}
 			
 			// Fill up track on the far side.
-			while ( trackModel.depthOfLastObstacle < positionZ + Track.ADD_DEPTH_FAR ) {
-				index = Math.floor( trackModel.depthOfLastObstacle / Segment.DEPTH ) + 1;
+			while ( trackModel.depthOfLastSegment < positionZ + Track.CULL_DEPTH_FAR ) {
+				index = Math.floor( trackModel.depthOfLastSegment / Segment.DEPTH ) + 1;
 				if ( index < 0 ) {
 					break;
 				}
