@@ -156,7 +156,6 @@ package com.funrun {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3dModel;
-	import com.funrun.model.state.ExplorationState;
 	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.state.ShowBoundsState;
@@ -209,15 +208,13 @@ package com.funrun {
 			var useWhitelist:Boolean 				= true;
 			var onlineState:OnlineState 			= new OnlineState( false );
 			var productionState:ProductionState 	= new ProductionState( false );
-			productionState.showStats 				= false;
+			productionState.showStats 				= true;
 			var showBoundsState:ShowBoundsState		= new ShowBoundsState( false );
-			var explorationState:ExplorationState	= new ExplorationState( true );
 			
 			// Map switches.
 			injector.mapValue( OnlineState, onlineState );
 			injector.mapValue( ProductionState, productionState );
 			injector.mapValue( ShowBoundsState, showBoundsState );
-			injector.mapValue( ExplorationState, explorationState );
 			
 			// Apply whitelist switch.
 			if ( useWhitelist ) {

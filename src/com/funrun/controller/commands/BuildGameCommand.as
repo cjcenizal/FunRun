@@ -10,9 +10,13 @@ package com.funrun.controller.commands {
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.TextureMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
+	import away3d.materials.methods.CelDiffuseMethod;
+	import away3d.materials.methods.DitheredShadowMapMethod;
+	import away3d.materials.methods.EffectMethodBase;
 	import away3d.materials.methods.FogMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	import away3d.materials.methods.SoftShadowMapMethod;
+	import away3d.materials.methods.SubsurfaceScatteringDiffuseMethod;
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.SphereGeometry;
 	
@@ -150,17 +154,16 @@ package com.funrun.controller.commands {
 			spotlight.color = 0xffffff;
 			spotlight.diffuse = 1;
 			spotlight.specular = 1;
-			spotlight.radius = 1200;
-			spotlight.fallOff = 8000;
-			spotlight.ambientColor = 0xa0a0c0;
+			spotlight.radius = 300;
+			spotlight.fallOff = 4000;
 			spotlight.ambient = .5;
-			addLightRequest.dispatch( LightsModel.SUN, sunlight );
+		//	addLightRequest.dispatch( LightsModel.SUN, sunlight );
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
 			
 			// Set up lighting and materials methods.
-			lightsModel.shadowMethod = new SoftShadowMapMethod( sunlight );
+			lightsModel.shadowMethod = new DitheredShadowMapMethod( sunlight);// new SoftShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
-			lightsModel.lightPicker = new StaticLightPicker( [ sunlight, spotlight ] );
+			lightsModel.lightPicker = new StaticLightPicker( [ spotlight ] );
 			materialsModel.lightPicker = lightsModel.lightPicker;
 			materialsModel.specular = .25;
 			materialsModel.gloss = 20;
@@ -168,27 +171,27 @@ package com.funrun.controller.commands {
 			
 			Materials.DEBUG_BLOCK.lightPicker = lightsModel.lightPicker;
 			Materials.DEBUG_BLOCK.shadowMethod = lightsModel.shadowMethod;
-			Materials.DEBUG_BLOCK.specular = .25;
-			Materials.DEBUG_BLOCK.gloss = 20;
+			Materials.DEBUG_BLOCK.specular = materialsModel.specular;
+			Materials.DEBUG_BLOCK.gloss = materialsModel.gloss;
 			Materials.DEBUG_BLOCK.specularMethod = specularMethod;
 			Materials.DEBUG_BLOCK.addMethod( materialsModel.fogMethod );
 			
 			Materials.DEBUG_TEST.lightPicker = lightsModel.lightPicker;
 			Materials.DEBUG_TEST.shadowMethod = lightsModel.shadowMethod;
-			Materials.DEBUG_TEST.specular = .25;
-			Materials.DEBUG_TEST.gloss = 20;
+			Materials.DEBUG_TEST.specular = materialsModel.specular;
+			Materials.DEBUG_TEST.gloss = materialsModel.gloss;
 			Materials.DEBUG_TEST.specularMethod = specularMethod;
 			Materials.DEBUG_TEST.addMethod( materialsModel.fogMethod );
 			
 			// Apply to blocks.
 			for ( var i:int = 0; i < blocksModel.count; i++ ) {
-				var mat:TextureMaterial = blocksModel.getBlockAt( i ).mesh.material as TextureMaterial;
-				mat.lightPicker = lightsModel.lightPicker;
-				mat.shadowMethod = lightsModel.shadowMethod;
-				mat.specular = .25;
-				mat.gloss = 20;
-				mat.specularMethod = specularMethod;
-				mat.addMethod( materialsModel.fogMethod );
+				var material:TextureMaterial = blocksModel.getBlockAt( i ).mesh.material as TextureMaterial;
+				material.lightPicker = lightsModel.lightPicker;
+			//	material.shadowMethod = lightsModel.shadowMethod;
+			//	material.specular = materialsModel.specular;
+				material.gloss = materialsModel.gloss;
+				material.specularMethod = specularMethod;
+				material.addMethod( materialsModel.fogMethod );
 			}
 			
 			// Set up sounds.
@@ -197,10 +200,6 @@ package com.funrun.controller.commands {
 			soundsModel.add( Sounds.POINT, "point1.mp3" );
 			soundsModel.add( Sounds.POINT, "point2.mp3" );
 			soundsModel.add( Sounds.POINT, "point3.mp3" );
-			
-			// Add lights to track.
-			addObjectToSceneRequest.dispatch( sunlight );
-			addObjectToSceneRequest.dispatch( spotlight );
 			
 			// Add player to track.
 			addPlaceableRequest.dispatch( playerModel );
@@ -217,8 +216,8 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
 			var geometry:SphereGeometry = new SphereGeometry( Player.NORMAL_BOUNDS.x );
-			var material:ColorMaterial = materialsModel.getColorMaterial( colorsModel.getColor( playerModel.color ) );
-			var player:Mesh = new Mesh( geometry, material );
+			var playerMaterial:ColorMaterial = materialsModel.getColorMaterial( colorsModel.getColor( playerModel.color ) );
+			var player:Mesh = new Mesh( geometry, playerMaterial );
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 			

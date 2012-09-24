@@ -11,7 +11,7 @@ package com.funrun.model.constants
 		public static const RUNNING_TILT:Number = 18;
 		public static const DUCKING_TILT:Number = 2;
 		public static const RUNNING_DISTANCE:Number = 2000;
-		public static const DUCKING_DISTANCE:Number = 1000;
+		public static const DUCKING_DISTANCE:Number = 500;
 		
 	}
 }

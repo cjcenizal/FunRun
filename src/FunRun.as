@@ -24,6 +24,9 @@ package {
 		/*
 		BUGS:
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
+		- There's definitely a memory leak
+		- To optimize against memory deallocation pauses, we can implement an object pool for segments
+		- Points stop appearing
 		
 		BUILDER:
 		- Build cool obstacles
@@ -57,7 +60,6 @@ package {
 			- Observer loop:
 				- Display their attire in the UI
 				- Allow point and click to navigate through competitors
-				- Add back fog
 		- Virtual goods visibility
 			- Players join game facing backwards and then turn around, so you see them and they see you
 				- On join game, check if # players > 0

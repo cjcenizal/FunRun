@@ -5,6 +5,8 @@ package com.funrun.controller.commands {
 	public class BuildGameDataCommand extends SequenceCommand {
 		
 		public function BuildGameDataCommand() {
+			// Load config
+			addCommand( LoadConfigCommand );
 			// Load all blocks.
 			addCommand( LoadBlocksCommand );
 			// Load list of obstacles, and then load each obstacle.

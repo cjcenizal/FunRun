@@ -3,7 +3,8 @@ package com.funrun.model.state {
 	public class ProductionState {
 		
 		public var isProduction:Boolean;
-		public var _showStats:Boolean = false;
+		private var _showStats:Boolean = false;
+		private var _isExploration:Boolean = false;
 		
 		public function ProductionState( isProduction:Boolean ) {
 			this.isProduction = isProduction;
@@ -19,6 +20,18 @@ package com.funrun.model.state {
 		
 		public function get showStats():Boolean {
 			return _showStats;
+		}
+		
+		public function set isExploration( val:Boolean ):void {
+			if ( !this.isProduction ) {
+				_isExploration = val;
+			} else {
+				_isExploration = false;
+			}
+		}
+		
+		public function get isExploration():Boolean {
+			return _isExploration;
 		}
 	}
 }

@@ -4,6 +4,7 @@ package com.funrun.model
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.BasicSpecularMethod;
 	import away3d.materials.methods.FogMethod;
+	import away3d.materials.methods.ShadowMapMethodBase;
 	import away3d.materials.methods.SoftShadowMapMethod;
 	
 	import org.robotlegs.mvcs.Actor;
@@ -13,7 +14,7 @@ package com.funrun.model
 		
 		private var _colorMaterials:Object;
 		public var lightPicker:StaticLightPicker;
-		public var shadowMethod:SoftShadowMapMethod;
+		public var shadowMethod:ShadowMapMethodBase;
 		public var specular:int = -1;
 		public var gloss:int = -1;
 		public var specularMethod:BasicSpecularMethod;

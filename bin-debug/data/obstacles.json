@@ -2,6 +2,7 @@
   "doc" : "These are the obstacles constructed from blocks.",
   "author" : "CJ Cenizal",
   "list" : [
-      "ledge_jump.json"
+      "chasm.json",
+      "tunnel.json"
     ]
 }

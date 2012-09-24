@@ -11,7 +11,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Sounds;
-	import com.funrun.model.state.ExplorationState;
+	import com.funrun.model.state.ProductionState;
 	
 	import flash.ui.Keyboard;
 	
@@ -28,7 +28,7 @@ package com.funrun.controller.commands
 		// State.
 		
 		[Inject]
-		public var explorationState:ExplorationState;
+		public var productionState:ProductionState;
 		
 		// Models.
 		
@@ -61,7 +61,7 @@ package com.funrun.controller.commands
 		override public function execute():void {
 			
 			// Apply ducking state.
-			if ( explorationState.isFree ) {
+			if ( productionState.isExploration ) {
 			} else {
 				if ( keyboardModel.isDown( Keyboard.DOWN ) ) {
 					playerModel.isDucking = true;
@@ -77,7 +77,7 @@ package com.funrun.controller.commands
 			}
 			
 			// Jumping.
-			if ( keyboardModel.isDown( Keyboard.SPACE ) || ( !explorationState.isFree && keyboardModel.isDown( Keyboard.UP ) ) ) {
+			if ( keyboardModel.isDown( Keyboard.SPACE ) || ( !productionState.isExploration && keyboardModel.isDown( Keyboard.UP ) ) ) {
 				if ( playerModel.isOnTheGround ) {
 					if ( stateModel.isRunning() ) {
 						playerModel.velocity.z += Player.JUMP_FORWARD_BOOST;
@@ -104,7 +104,7 @@ package com.funrun.controller.commands
 						playerModel.velocity.x += Player.LATERAL_SPEED;
 					}
 					
-					if ( explorationState.isFree ) {
+					if ( productionState.isExploration ) {
 						// Explore freely, moving forward and backward.
 						if ( keyboardModel.isDown( Keyboard.UP ) ) {
 							playerModel.velocity.z += Player.FREE_RUN_SPEED;

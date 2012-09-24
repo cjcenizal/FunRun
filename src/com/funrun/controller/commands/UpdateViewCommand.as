@@ -48,7 +48,11 @@ package com.funrun.controller.commands
 		
 		private function updateLights():void {
 			var light:LightBase = lightsModel.getLight( LightsModel.SPOTLIGHT );
-			light.z = playerModel.position.z;
+			
+			light.x = playerModel.position.x;
+			light.y = playerModel.position.y + 100;
+			light.z = playerModel.position.z - 100;
+			
 		}
 	}
 }

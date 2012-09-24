@@ -6,7 +6,8 @@
       "id" : "floor",
       "filename" : "floor.obj",
       "faces" : {
-          "t" : "put_top"
+          "t" : "put_top",
+          "b" : "smack"
         },
       "bounds" : [
           -1, -1, -1,

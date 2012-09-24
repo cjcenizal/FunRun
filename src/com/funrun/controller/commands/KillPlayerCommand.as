@@ -4,12 +4,12 @@
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
-	import com.funrun.model.vo.AddDelayedCommandVo;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.state.ExplorationState;
+	import com.funrun.model.state.ProductionState;
+	import com.funrun.model.vo.AddDelayedCommandVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -23,7 +23,7 @@
 		// State.
 		
 		[Inject]
-		public var explorationState:ExplorationState;
+		public var productionState:ProductionState;
 		
 		// Models.
 		
@@ -50,7 +50,7 @@
 		override public function execute():void {
 			if ( !playerModel.isDead ) {
 				// Update the model.
-				if ( !explorationState.isFree ) {
+				if ( !productionState.isExploration ) {
 					playerModel.isDead = true;
 				}
 				switch ( death ) {
@@ -66,7 +66,7 @@
 				// TO-DO: Wait before we take action on the death.
 				
 				// If there are any surviving competitors, observe them.
-				if ( !explorationState.isFree ) {
+				if ( !productionState.isExploration ) {
 					if ( competitorsModel.numLiveCompetitors > 0 ) {
 						addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( startObserverLoopRequest, 1500 ) );
 					} else {

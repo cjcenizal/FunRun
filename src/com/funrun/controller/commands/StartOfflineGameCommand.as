@@ -5,9 +5,9 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.state.ExplorationState;
+	import com.funrun.model.constants.PlayerProperties;
+	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -21,7 +21,7 @@ package com.funrun.controller.commands {
 		// State.
 		
 		[Inject]
-		public var explorationState:ExplorationState;
+		public var productionState:ProductionState;
 		
 		// Commands.
 		
@@ -43,7 +43,7 @@ package com.funrun.controller.commands {
 				key = PlayerProperties.KEYS[ i ];
 				playerModel.properties[ key ] = PlayerProperties.DEFAULTS[ key ];
 			}
-			if ( explorationState.isFree ) {
+			if ( productionState.isExploration ) {
 				startRunningRequest.dispatch();
 			} else {
 				startCountdownRequest.dispatch( 3000 );
