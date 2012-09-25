@@ -11,7 +11,6 @@ package com.funrun.model.constants
 		// Fog.
 		public static const FOG_FAR:Number = 9000;
 		public static const FOG_NEAR:Number = FOG_FAR - 6000;
-		public static const FOG_COLOR:Number = 0xffffff;
 		
 		// Culling.
 		public static const CULL_FLOOR:int = -100000;

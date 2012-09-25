@@ -10,13 +10,9 @@ package com.funrun.controller.commands {
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.TextureMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
-	import away3d.materials.methods.CelDiffuseMethod;
-	import away3d.materials.methods.DitheredShadowMapMethod;
-	import away3d.materials.methods.EffectMethodBase;
 	import away3d.materials.methods.FogMethod;
 	import away3d.materials.methods.FresnelSpecularMethod;
 	import away3d.materials.methods.SoftShadowMapMethod;
-	import away3d.materials.methods.SubsurfaceScatteringDiffuseMethod;
 	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.SphereGeometry;
 	
@@ -41,6 +37,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Sounds;
 	import com.funrun.model.constants.Time;
 	import com.funrun.model.constants.Track;
+	import com.funrun.model.constants.World;
 	import com.funrun.model.state.ProductionState;
 	
 	import org.robotlegs.mvcs.Command;
@@ -130,7 +127,7 @@ package com.funrun.controller.commands {
 			view.antiAlias = 2; // 2, 4, or 16
 			view.width = contextView.stage.stageWidth;
 			view.height = contextView.stage.stageHeight;
-			view.backgroundColor = 0xffffff;
+			view.backgroundColor = World.BACKGROUND_COLOR;
 			view3dModel.setView( view );
 			addView3DRequest.dispatch( view );
 			
@@ -145,9 +142,8 @@ package com.funrun.controller.commands {
 			
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -.5 );
-			sunlight.ambient = .05; // Higher = "brighter"
-			sunlight.diffuse = .1; // Higher = "brighter"
-			sunlight.z = 2000;
+			addLightRequest.dispatch( LightsModel.SUN, sunlight );
+			addObjectToSceneRequest.dispatch( sunlight );
 			var spotlight:PointLight = new PointLight();
 			spotlight.x = Track.WIDTH * .5;
 			spotlight.y = 700;
@@ -157,17 +153,18 @@ package com.funrun.controller.commands {
 			spotlight.radius = 300;
 			spotlight.fallOff = 4000;
 			spotlight.ambient = .5;
-		//	addLightRequest.dispatch( LightsModel.SUN, sunlight );
 			addLightRequest.dispatch( LightsModel.SPOTLIGHT, spotlight );
+			addObjectToSceneRequest.dispatch( spotlight );
 			
 			// Set up lighting and materials methods.
-			lightsModel.shadowMethod = new DitheredShadowMapMethod( sunlight);// new SoftShadowMapMethod( sunlight );
 			var specularMethod:FresnelSpecularMethod = new FresnelSpecularMethod();
-			lightsModel.lightPicker = new StaticLightPicker( [ spotlight ] );
+			lightsModel.lightPicker = new StaticLightPicker( [ spotlight, sunlight ] );
+			lightsModel.shadowMethod = new SoftShadowMapMethod( sunlight );
 			materialsModel.lightPicker = lightsModel.lightPicker;
+			materialsModel.shadowMethod = lightsModel.shadowMethod;
 			materialsModel.specular = .25;
 			materialsModel.gloss = 20;
-			materialsModel.fogMethod = new FogMethod( Track.FOG_NEAR, Track.FOG_FAR, Track.FOG_COLOR );
+			materialsModel.fogMethod = new FogMethod( Track.FOG_NEAR, Track.FOG_FAR, World.BACKGROUND_COLOR );
 			
 			Materials.DEBUG_BLOCK.lightPicker = lightsModel.lightPicker;
 			Materials.DEBUG_BLOCK.shadowMethod = lightsModel.shadowMethod;
@@ -186,9 +183,9 @@ package com.funrun.controller.commands {
 			// Apply to blocks.
 			for ( var i:int = 0; i < blocksModel.count; i++ ) {
 				var material:TextureMaterial = blocksModel.getBlockAt( i ).mesh.material as TextureMaterial;
+				material.shadowMethod = lightsModel.shadowMethod;
 				material.lightPicker = lightsModel.lightPicker;
-			//	material.shadowMethod = lightsModel.shadowMethod;
-			//	material.specular = materialsModel.specular;
+				material.specular = materialsModel.specular;
 				material.gloss = materialsModel.gloss;
 				material.specularMethod = specularMethod;
 				material.addMethod( materialsModel.fogMethod );
@@ -218,6 +215,7 @@ package com.funrun.controller.commands {
 			var geometry:SphereGeometry = new SphereGeometry( Player.NORMAL_BOUNDS.x );
 			var playerMaterial:ColorMaterial = materialsModel.getColorMaterial( colorsModel.getColor( playerModel.color ) );
 			var player:Mesh = new Mesh( geometry, playerMaterial );
+			player.castsShadows = true;
 			playerModel.mesh = player;
 			addObjectToSceneRequest.dispatch( player );
 			

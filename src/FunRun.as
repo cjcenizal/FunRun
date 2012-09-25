@@ -24,9 +24,12 @@ package {
 		/*
 		BUGS:
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
+			- Still collision issues:
+				- Jumping up into the top front edge of a smack block launched me in the air
+				- Jumping into the side of a smack block smacked me instead of blocking me
 		- There's definitely a memory leak
 		- To optimize against memory deallocation pauses, we can implement an object pool for segments
-		- Points stop appearing
+		- Points stop appearing after a few segments
 		
 		BUILDER:
 		- Build cool obstacles
@@ -112,7 +115,6 @@ package {
 		}
 		
 		private function setupStage():void {
-			stage.color = 0xffffff;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.quality = StageQuality.BEST;

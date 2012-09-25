@@ -217,7 +217,7 @@ package com.funrun {
 			injector.mapValue( ShowBoundsState, showBoundsState );
 			
 			// Apply whitelist switch.
-			if ( useWhitelist ) {
+			if ( onlineState.isOnline && useWhitelist ) {
 				// Block non-whitelisted users.
 				injector.mapSingletonOf( IWhitelistService, WhitelistService );
 			} else {
