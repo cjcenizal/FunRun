@@ -23,6 +23,7 @@ package {
 		
 		/*
 		BUGS:
+		- FIX CULLING.  Do it right and use frustum clipping plane distance plus a buffer.
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 			- Still collision issues:
 				- Jumping up into the top front edge of a smack block launched me in the air

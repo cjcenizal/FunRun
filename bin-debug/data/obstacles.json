@@ -2,8 +2,6 @@
   "doc" : "These are the obstacles constructed from blocks.",
   "author" : "CJ Cenizal",
   "list" : [
-      "chasm.json",
-      "hill.json",
-      "hurdle.json"
+      "chasm.json"
     ]
 }

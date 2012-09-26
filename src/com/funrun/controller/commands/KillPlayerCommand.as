@@ -8,7 +8,6 @@
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.state.ProductionState;
 	import com.funrun.model.vo.AddDelayedCommandVo;
 	
 	import org.robotlegs.mvcs.Command;
@@ -19,11 +18,6 @@
 		
 		[Inject]
 		public var death:String;
-		
-		// State.
-		
-		[Inject]
-		public var productionState:ProductionState;
 		
 		// Models.
 		
@@ -50,9 +44,7 @@
 		override public function execute():void {
 			if ( !playerModel.isDead ) {
 				// Update the model.
-				if ( !productionState.isExploration ) {
-					playerModel.isDead = true;
-				}
+				playerModel.isDead = true;
 				switch ( death ) {
 					case Collisions.SMACK:
 						playerModel.velocity.z = Player.HEAD_ON_SMACK_SPEED;
@@ -63,15 +55,11 @@
 				// Update server.
 				sendMultiplayerDeathRequest.dispatch();
 				
-				// TO-DO: Wait before we take action on the death.
-				
 				// If there are any surviving competitors, observe them.
-				if ( !productionState.isExploration ) {
-					if ( competitorsModel.numLiveCompetitors > 0 ) {
-						addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( startObserverLoopRequest, 1500 ) );
-					} else {
-						addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( endRoundRequest, 1500 ) );
-					}
+				if ( competitorsModel.numLiveCompetitors > 0 ) {
+					addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( startObserverLoopRequest, 1500 ) );
+				} else {
+					addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( endRoundRequest, 1500 ) );
 				}
 			}
 		}

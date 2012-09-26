@@ -49,9 +49,11 @@ package com.funrun.controller.commands {
 			segment.z = payload.index * ( Segment.DEPTH + Segment.GAP_BETWEEN_SEGMENTS );
 			// Decorate with points.
 			var point:PointVo;
+		//	trace("Add segment");
 			for ( var i:int = 0; i < segment.numPoints; i++ ) {
 				point = segment.getPointAt( i ).clone();
-				if ( pointsModel.shouldHavePointFor( segment.id, point.id, segment.numPoints ) ) {
+		//		trace("   add point " + i);
+				//if ( pointsModel.shouldHavePointFor( segment.id, point.id, segment.numPoints ) ) {
 					point.mesh = point.block.mesh.clone() as Mesh;
 					point.mesh.x = segment.x + point.x;
 					point.mesh.y = segment.y + point.y;
@@ -59,7 +61,7 @@ package com.funrun.controller.commands {
 					point.segmentId = segment.id;
 					pointsModel.addPoint( point );
 					addObjectToSceneRequest.dispatch( point.mesh );
-				}
+				//}
 			}
 			// Add it to the track.
 			trackModel.addSegment( segment );
