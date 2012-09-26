@@ -3,6 +3,7 @@
   "author" : "CJ Cenizal",
   "list" : [
       "chasm.json",
-      "tunnel.json"
+      "hill.json",
+      "hurdle.json"
     ]
 }

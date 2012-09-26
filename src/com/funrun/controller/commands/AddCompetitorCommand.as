@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
+	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.SphereGeometry;
 	
 	import com.cenizal.ui.AbstractLabel;
@@ -56,7 +57,7 @@ package com.funrun.controller.commands {
 				// Add mesh.
 				var color:uint = colorsModel.getColorAt( Math.floor( Math.random() * colorsModel.numColors ) );
 				var material:ColorMaterial = materialsModel.getColorMaterial( color );
-				var mesh:Mesh = new Mesh( new SphereGeometry( Player.NORMAL_BOUNDS.x ), material );
+				var mesh:Mesh = new Mesh( new CubeGeometry( Player.NORMAL_BOUNDS.x, Player.NORMAL_BOUNDS.y, Player.NORMAL_BOUNDS.z ), material );
 				competitor.mesh = mesh;
 				if ( competitor.isDucking ) {
 					if ( competitor.mesh.scaleY != .25 ) {

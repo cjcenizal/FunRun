@@ -212,7 +212,7 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxX = Player.DUCKING_BOUNDS.x * .5;
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
-			var geometry:SphereGeometry = new SphereGeometry( Player.NORMAL_BOUNDS.x );
+			var geometry:CubeGeometry = new CubeGeometry( Player.NORMAL_BOUNDS.x, Player.NORMAL_BOUNDS.y, Player.NORMAL_BOUNDS.z );
 			var playerMaterial:ColorMaterial = materialsModel.getColorMaterial( colorsModel.getColor( playerModel.color ) );
 			var player:Mesh = new Mesh( geometry, playerMaterial );
 			player.castsShadows = true;

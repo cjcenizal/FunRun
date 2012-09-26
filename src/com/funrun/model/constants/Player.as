@@ -20,8 +20,8 @@ package com.funrun.model.constants
 		public static const SMACK_SPEED:Number = -30;
 		
 		// Bounds.
-		public static const NORMAL_BOUNDS:Vector3D = new Vector3D( 100, 180, 60 );
-		public static const DUCKING_BOUNDS:Vector3D = new Vector3D( 100, 80, 60 );
+		public static const NORMAL_BOUNDS:Vector3D = new Vector3D( 160, 240, 60 );
+		public static const DUCKING_BOUNDS:Vector3D = new Vector3D( 160, 120, 60 );
 		public static const DUCKING_SCALE:Number = DUCKING_BOUNDS.y / NORMAL_BOUNDS.y;
 		
 		// Collision constants.
