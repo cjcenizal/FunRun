@@ -1,6 +1,5 @@
 package com.funrun.model {
 	
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.vo.SegmentVo;
 	
 	import org.robotlegs.mvcs.Actor;
@@ -40,7 +39,7 @@ package com.funrun.model {
 			if ( _segments.length > 0 ) {
 				return ( _segments[ _segments.length - 1 ] as SegmentVo ).z;
 			}
-			return Track.DEPTH;
+			return 0;
 		}
 		
 		public function getDepthOfSegmentAt( index:int ):Number {

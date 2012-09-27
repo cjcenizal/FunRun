@@ -3,8 +3,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.TrackModel;
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.constants.Segment;
+	import com.funrun.model.constants.Track;
 	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.PointVo;
 	import com.funrun.model.vo.SegmentVo;
@@ -36,29 +36,38 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var showBoundsState:ShowBoundsState;
 		
+		// Private vars.
+		
+		private var _nearSide:Number;
+		private var _farSide:Number;
+		private var _nearPointSide:Number;
+		private var _farPointSide:Number;
+		
 		override public function execute():void {
-			
-			var nearSide:Number = positionZ + Track.CULL_DEPTH_NEAR - Segment.DEPTH;
-			var farSide:Number = positionZ + Track.CULL_DEPTH_FAR + Segment.DEPTH;
+			_nearSide = positionZ + Track.CULL_DEPTH_NEAR;
+			_farSide = positionZ + Track.CULL_DEPTH_FAR;
 			
 			// Cull segments.
 			for ( var i:int = 0; i < trackModel.numSegments; i++ ) {
-				var obstacle:SegmentVo = trackModel.getSegmentAt( i );
-				if ( obstacle.z < nearSide
-					|| obstacle.z > farSide ) {
-					removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? obstacle.boundsMesh : obstacle.mesh );
+				var segment:SegmentVo = trackModel.getSegmentAt( i );
+				if ( segment.z < _nearSide
+					|| segment.z > _farSide ) {
+					
+					// Cull points in segment's bounds.
+					_nearPointSide = segment.z;
+					_farPointSide = _nearPointSide + Segment.DEPTH;
+					for ( var j:int = 0; j < pointsModel.numPoints; j++ ) {
+						var point:PointVo = pointsModel.getPointAt( j );
+						if ( point.meshZ > _nearPointSide
+							&& point.meshZ < _farPointSide ) {
+							removeObjectFromSceneRequest.dispatch( point.mesh );
+							pointsModel.removePointAt( j );
+							j--;
+						}
+					}
+					
+					removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? segment.boundsMesh : segment.mesh );
 					trackModel.removeSegmentAt( i );
-					i--;
-				}
-			}
-			
-			// Cull points.
-			for ( var i:int = 0; i < pointsModel.numPoints; i++ ) {
-				var point:PointVo = pointsModel.getPointAt( i );
-				if ( point.meshZ < nearSide
-					|| point.meshZ > farSide ) {
-					removeObjectFromSceneRequest.dispatch( point.mesh );
-					pointsModel.removePointAt( i );
 					i--;
 				}
 			}

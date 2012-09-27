@@ -46,13 +46,11 @@ package com.funrun.controller.commands {
 			// Get a segment from the model for our current position.
 			var segment:SegmentVo = segmentsModel.getAt( payload.index );
 			// Position it.
-			segment.z = payload.index * ( Segment.DEPTH + Segment.GAP_BETWEEN_SEGMENTS );
+			segment.z = payload.index * Segment.DEPTH;
 			// Decorate with points.
 			var point:PointVo;
-		//	trace("Add segment");
 			for ( var i:int = 0; i < segment.numPoints; i++ ) {
 				point = segment.getPointAt( i ).clone();
-		//		trace("   add point " + i);
 				//if ( pointsModel.shouldHavePointFor( segment.id, point.id, segment.numPoints ) ) {
 					point.mesh = point.block.mesh.clone() as Mesh;
 					point.mesh.x = segment.x + point.x;

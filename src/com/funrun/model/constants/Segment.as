@@ -8,7 +8,5 @@ package com.funrun.model.constants
 		public static const DEPTH:int = DEPTH_BLOCKS * Block.SIZE;
 		public static const HALF_WIDTH:Number = WIDTH * .5;
 		public static const HALF_DEPTH:Number = DEPTH * .5;
-		
-		public static const GAP_BETWEEN_SEGMENTS:Number = 0;
 	}
 }

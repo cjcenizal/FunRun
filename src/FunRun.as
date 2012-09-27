@@ -23,7 +23,6 @@ package {
 		
 		/*
 		BUGS:
-		- FIX CULLING.  Do it right and use frustum clipping plane distance plus a buffer.
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 			- Still collision issues:
 				- Jumping up into the top front edge of a smack block launched me in the air
@@ -74,8 +73,11 @@ package {
 				- Move overall camera position farther back, so we can see more context of other players
 			- Portraits of players when see the results of a run
 			- Camera shows front during observer mode, look around with mouse
-		
-		
+		- Analytics / metrics
+			- Chatrooms will let me ask players directly what they think
+			- Measure which blocks of obstacles kill players
+			- If we give players options (play easy or hard obstacles) we can measure which is more popular.
+		- Social sharing!
 		- Use models and animation (players are food? Food Run?)
 		- Make sure hitboxes are SMALLER than the model
 		- Economy

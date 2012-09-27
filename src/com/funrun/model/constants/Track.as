@@ -5,7 +5,7 @@ package com.funrun.model.constants
 		// Sizes.
 		public static const WIDTH_BLOCKS:int = Width.WIDTH_BLOCKS;
 		public static const WIDTH:int = WIDTH_BLOCKS * Block.SIZE;
-		public static const DEPTH:int = Camera.FRUSTUM_DISTANCE;
+		public static const DEPTH:int = Segment.DEPTH * 2;
 		
 		// Fog.
 		public static const FOG_FAR:Number = 9000;
