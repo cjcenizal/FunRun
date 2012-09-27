@@ -118,17 +118,17 @@ package com.funrun.controller.commands
 						if ( stateModel.isRunning() ) {
 							// Slow down or speed up depending on whether we're turning or not.
 							if ( keyboardModel.isDown( Keyboard.LEFT ) || keyboardModel.isDown( Keyboard.RIGHT ) ) {
-								if ( playerModel.velocity.z < Player.MAX_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
+								if ( playerModel.velocity.z < Player.MAX_DODGING_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
 							} else {
-								if ( playerModel.velocity.z > Player.MIN_SPEED ) playerModel.velocity.z -= Player.DECELERATION;
-								else if ( playerModel.velocity.z < Player.MIN_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
+								if ( playerModel.velocity.z > Player.MAX_SPEED ) playerModel.velocity.z -= Player.DECELERATION;
+								else if ( playerModel.velocity.z < Player.MAX_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
 							}
 						}
 					}
 				}
 				
 				// Cap forward speed.
-				if ( playerModel.velocity.z > Player.CAP_SPEED ) playerModel.velocity.z = Player.CAP_SPEED;
+				if ( playerModel.velocity.z > Player.SPEED_CAP ) playerModel.velocity.z = Player.SPEED_CAP;
 				
 				// Update lateral position.
 				playerModel.position.x += playerModel.velocity.x;

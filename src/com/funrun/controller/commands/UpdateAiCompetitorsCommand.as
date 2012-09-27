@@ -45,7 +45,7 @@ package com.funrun.controller.commands {
 							displayMessageRequest.dispatch( competitor.name + " just died!" );
 							killed = true;
 						} else {
-							if ( competitor.aiVelocity.z < Player.MIN_SPEED ) {
+							if ( competitor.aiVelocity.z < Player.MAX_SPEED ) {
 								competitor.aiVelocity.z += Player.ACCELERATION;
 							}
 							competitor.aiVelocity.x = ( Perlin.noise( i, competitor.position.z * .0001 ) - .5 ) * 100;

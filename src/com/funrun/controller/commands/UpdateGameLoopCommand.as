@@ -59,7 +59,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			
 			// Target 30 frames per second and move the player.
-			var framesElapsed:int = Math.round( .03 * timeEvent.delta );
+			var framesElapsed:int = 1;//Math.round( .03 * timeEvent.delta );
 			updatePlayerRequest.dispatch( framesElapsed );
 			
 			updateCollisionsRequest.dispatch();

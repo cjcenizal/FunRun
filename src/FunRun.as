@@ -28,8 +28,9 @@ package {
 				- Jumping up into the top front edge of a smack block launched me in the air
 				- Jumping into the side of a smack block smacked me instead of blocking me
 		- There's definitely a memory leak
+			- If I start profiling, I die somehow.  Too much going on initialization wise?
+			- If I'm dead, there is no mem leak, so it must be caused by GameLoop.
 		- To optimize against memory deallocation pauses, we can implement an object pool for segments
-		- Points stop appearing after a few segments
 		
 		BUILDER:
 		- Build cool obstacles
@@ -55,9 +56,7 @@ package {
 			- Metrics?
 			- Basic animation, music, and sound?
 			- Test MVP
-		
-			- Make ball look like it's rolling
-				- Add some squash and stretch to jumping and turning
+			
 		
 			- Build stubbed store functionality
 			- Observer loop:
@@ -77,8 +76,8 @@ package {
 			- Chatrooms will let me ask players directly what they think
 			- Measure which blocks of obstacles kill players
 			- If we give players options (play easy or hard obstacles) we can measure which is more popular.
-		- Social sharing!
-		- Use models and animation (players are food? Food Run?)
+		
+		- Use models and animation
 		- Make sure hitboxes are SMALLER than the model
 		- Economy
 			- http://conversionxl.com/pricing-experiments-you-might-not-know-but-can-learn-from/
