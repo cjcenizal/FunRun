@@ -25,7 +25,6 @@ package com.funrun.controller.commands
 		public var view3dModel:View3dModel;
 		
 		override public function execute():void {
-			trace("mouse down");
 			mouseModel.setMouseDown( contextView.stage.mouseX, contextView.stage.mouseY );
 			view3dModel.lastPanAngle = view3dModel.panAngle;
 			view3dModel.lastTiltAngle = view3dModel.tiltAngle;

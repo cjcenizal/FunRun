@@ -38,7 +38,6 @@ package com.funrun.view.mediators
 		}
 		
 		private function onMouseDown( e:MouseEvent ):void {
-			trace("onMouseDown");
 			eventDispatcher.dispatchEvent( e );
 		}
 		

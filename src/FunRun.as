@@ -38,7 +38,6 @@ package {
 		
 		TO-DO:
 		- Memory pool for BoundingBoxVos
-		- Add camera control to observer loop
 		- Search for TO-DOs
 		- Game design
 			- Collect points
