@@ -138,7 +138,7 @@ package com.funrun.controller.commands {
 			// Add camera controller.
 			var cameraController:HoverController = new HoverController( camera, view3dModel.target );
 			cameraController.steps = 1;
-			view3dModel.cameraController = cameraController;
+			view3dModel.setCameraController( cameraController );
 			
 			// Add lights.
 			var sunlight:DirectionalLight = new DirectionalLight( .25, -1, -.5 );

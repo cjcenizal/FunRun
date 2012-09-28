@@ -65,7 +65,7 @@ package com.funrun.controller.commands {
 			view3dModel.ease.y = .1;
 			view3dModel.ease.z = .1;
 			view3dModel.easeHover = .5;
-			view3dModel.targetPan = 25;
+			view3dModel.setTargetPerspective( 25, view3dModel.tiltAngle, view3dModel.distance );
 			
 			// Respond to time.
 			commandMap.mapEvent( TimeEvent.TICK, UpdateObserverLoopCommand, TimeEvent );

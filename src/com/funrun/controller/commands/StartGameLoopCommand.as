@@ -37,14 +37,12 @@ package com.funrun.controller.commands {
 			commandMap.mapEvent( TimeEvent.TICK, UpdateGameLoopCommand, TimeEvent );
 			
 			// Set camera.
-			view3dModel.targetPan = 180;
-			view3dModel.targetTilt = Camera.RUNNING_TILT;
-			view3dModel.targetDistance = Camera.RUNNING_DISTANCE;
+			view3dModel.setTargetPerspective( 180, Camera.RUNNING_TILT, Camera.RUNNING_DISTANCE );
 			view3dModel.ease.x = 1;
 			view3dModel.ease.y = .2;
 			view3dModel.ease.z = .65;
 			view3dModel.easeHover = .5;
-			view3dModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
+			view3dModel.setTargetPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
 			view3dModel.update( true );
 			
 			// Show game screen.

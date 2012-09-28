@@ -143,6 +143,7 @@ package com.funrun {
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
+	import com.funrun.model.MouseModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.PlacesModel;
@@ -237,6 +238,7 @@ package com.funrun {
 			injector.mapSingleton( KeyboardModel );
 			injector.mapSingleton( LightsModel );
 			injector.mapSingleton( MaterialsModel );
+			injector.mapSingleton( MouseModel );
 			injector.mapSingleton( NametagsModel );
 			injector.mapSingleton( ObserverModel );
 			injector.mapSingleton( PlacesModel );
@@ -301,7 +303,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
 			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
-			signalCommandMap.mapSignalClass( LogMessageRequest, 						LogMessageCommand );
+			signalCommandMap.mapSignalClass( LogMessageRequest, 					LogMessageCommand );
 			signalCommandMap.mapSignalClass( PlaySoundRequest,						PlaySoundCommand );
 			signalCommandMap.mapSignalClass( RemoveCompetitorRequest,				RemoveCompetitorCommand );
 			signalCommandMap.mapSignalClass( RemoveObjectFromSceneRequest,			RemoveObjectFromSceneCommand );

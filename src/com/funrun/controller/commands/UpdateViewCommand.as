@@ -36,13 +36,11 @@ package com.funrun.controller.commands
 		
 		private function updateCamera():void {
 			if ( playerModel.isDucking ) {
-				view3dModel.targetTilt = Camera.DUCKING_TILT;
-				view3dModel.targetDistance = Camera.DUCKING_DISTANCE;
+				view3dModel.setTargetPerspective( 180, Camera.DUCKING_TILT, Camera.DUCKING_DISTANCE );
 			} else {
-				view3dModel.targetTilt = Camera.RUNNING_TILT;
-				view3dModel.targetDistance = Camera.RUNNING_DISTANCE;
+				view3dModel.setTargetPerspective( 180, Camera.RUNNING_TILT, Camera.RUNNING_DISTANCE );
 			}
-			view3dModel.setCameraPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
+			view3dModel.setTargetPosition( playerModel.position.x, playerModel.position.y, playerModel.position.z );
 			view3dModel.update();
 		}
 		

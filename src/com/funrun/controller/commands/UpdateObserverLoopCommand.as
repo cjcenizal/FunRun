@@ -12,6 +12,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
+	import com.funrun.model.MouseModel;
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3dModel;
 	import com.funrun.model.vo.CompetitorVo;
@@ -39,6 +40,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var lightsModel:LightsModel;
+		
+		[Inject]
+		public var mouseModel:MouseModel;
 		
 		// Commands.
 		
@@ -103,9 +107,15 @@ package com.funrun.controller.commands {
 			// Update places.
 			updateUiRequest.dispatch();
 			
-			// Update camera.
+			// Position the camera.
 			if ( _competitor ) {
-				view3dModel.setCameraPosition( _competitor.position.x, _competitor.position.y, _competitor.position.z + 900 );
+				view3dModel.setTargetPosition( _competitor.position.x, _competitor.position.y, _competitor.position.z + 900 );
+			}
+			// Control the camera.
+			if ( mouseModel.mouseDown ) {
+				view3dModel.setPerspective( .35 * ( contextView.stage.mouseX - view3dModel.lastMouseX ) + view3dModel.lastPanAngle,
+					.35 * ( contextView.stage.mouseY - view3dModel.lastMouseY ) + view3dModel.lastTiltAngle,
+					view3dModel.distance );
 			}
 			view3dModel.update();
 			

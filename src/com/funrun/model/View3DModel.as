@@ -17,14 +17,21 @@ package com.funrun.model {
 		private var _view:View3D;
 		private var _scene:Scene3D;
 		private var _camera:Camera3D;
-		public var cameraController:HoverController;
-		public var targetTilt:Number = 0;
-		public var targetPan:Number = 0;
-		public var targetDistance:Number = 0;
+		private var _cameraController:HoverController;
+		private var _targetTilt:Number = 0;
+		private var _targetPan:Number = 0;
+		private var _targetDistance:Number = 0;
+		private var _isInterpolating:Boolean = false;
 		public var easeHover:Number = 1;
 		public var target:Mesh;
 		public var ease:Vector3D;
 		private var _dest:Vector3D;
+		
+		// Camera control.
+		public var lastPanAngle:Number;
+		public var lastTiltAngle:Number;
+		public var lastMouseX:Number;
+		public var lastMouseY:Number;
 		
 		public function View3dModel() {
 			super();
@@ -38,21 +45,27 @@ package com.funrun.model {
 			_camera = _view.camera;
 		}
 		
+		public function setCameraController( cameraController:HoverController ):void {
+			_cameraController = cameraController;
+		}
+		
 		public function update( immediate:Boolean = false ):void {
 			if ( immediate ) {
 				target.x = _dest.x;
 				target.y = _dest.y;
 				target.z = _dest.z;
-				cameraController.panAngle = targetPan;
-				cameraController.tiltAngle = targetTilt;
-				cameraController.distance = targetDistance;
+				_cameraController.panAngle = _targetTilt;
+				_cameraController.tiltAngle = _targetTilt;
+				_cameraController.distance = _targetDistance;
 			} else {
 				target.x += ( _dest.x - target.x ) * ease.x;
 				target.y += ( _dest.y - target.y ) * ease.y;
 				target.z += ( _dest.z - target.z ) * ease.z;
-				cameraController.panAngle += ( targetPan - cameraController.panAngle ) * easeHover;
-				cameraController.tiltAngle += ( targetTilt - cameraController.tiltAngle ) * easeHover;
-				cameraController.distance += ( targetDistance - cameraController.distance ) * easeHover;
+				if ( _isInterpolating ) {
+					_cameraController.panAngle += ( _targetPan - _cameraController.panAngle ) * easeHover;
+					_cameraController.tiltAngle += ( _targetTilt - _cameraController.tiltAngle ) * easeHover;
+					_cameraController.distance += ( _targetDistance - _cameraController.distance ) * easeHover;
+				}
 			}
 		}
 		
@@ -83,10 +96,48 @@ package com.funrun.model {
 			return new Point( pos.x, pos.y );
 		}
 		
-		public function setCameraPosition( x:Number, y:Number, z:Number ):void {
+		public function setTargetPosition( x:Number, y:Number, z:Number ):void {
 			if ( !isNaN( x ) ) _dest.x = x;
 			if ( !isNaN( y ) ) _dest.y = y;
 			if ( !isNaN( z ) ) _dest.z = z;
+		}
+		
+		public function setTargetPerspective( pan:Number, tilt:Number, distance:Number ):void {
+			_isInterpolating = true;
+			_targetPan = pan;
+			_targetTilt = tilt;
+			_targetDistance = distance;
+		}
+		
+		public function setPerspective( pan:Number, tilt:Number, distance:Number ):void {
+			_isInterpolating = false;
+			_cameraController.panAngle = pan;
+			_cameraController.tiltAngle = tilt;
+			_cameraController.distance = distance;
+		}
+		
+		public function get targetDistance():Number {
+			return _targetDistance;
+		}
+		
+		public function get targetPan():Number {
+			return _targetPan;
+		}
+		
+		public function get targetTilt():Number {
+			return _targetTilt;
+		}
+		
+		public function get panAngle():Number {
+			return _cameraController.panAngle;
+		}
+		
+		public function get tiltAngle():Number {
+			return _cameraController.tiltAngle;
+		}
+		
+		public function get distance():Number {
+			return _cameraController.distance;
 		}
 	}
 }

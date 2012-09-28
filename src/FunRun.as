@@ -37,6 +37,8 @@ package {
 		- HTML5 and fun UI: http://www.buildwithchrome.com/static/builder#pos=950513x618389&load=ahFzfmJ1aWxkd2l0aGNocm9tZXIsCxIFQnVpbGQiIXRpbGV4Xzk1MDUxM190aWxleV82MTgzODlfem9vbV8yMAw
 		
 		TO-DO:
+		- Memory pool for BoundingBoxVos
+		- Add camera control to observer loop
 		- Search for TO-DOs
 		- Game design
 			- Collect points
@@ -78,6 +80,11 @@ package {
 			- If we give players options (play easy or hard obstacles) we can measure which is more popular.
 		
 		- Use models and animation
+		- Chatting in a 3D room
+			- Zoom in if we are standing still, zoom out if we're moving: http://rumpetroll.com/
+		- When we're observing, enable mouse movement and scroll wheel for zooming.
+			- Also enable burping, honking, and raspberrying the observed player.
+			- While you run, enable ghosts so you can see who's watching you.
 		- Make sure hitboxes are SMALLER than the model
 		- Economy
 			- http://conversionxl.com/pricing-experiments-you-might-not-know-but-can-learn-from/
