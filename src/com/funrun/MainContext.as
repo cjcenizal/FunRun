@@ -39,6 +39,7 @@ package com.funrun {
 	import com.funrun.controller.commands.SavePlayerObjectCommand;
 	import com.funrun.controller.commands.SendMultiplayerDeathCommand;
 	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
+	import com.funrun.controller.commands.ShakeCameraCommand;
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
 	import com.funrun.controller.commands.ShowStoreCommand;
@@ -108,6 +109,7 @@ package com.funrun {
 	import com.funrun.controller.signals.SavePlayerObjectRequest;
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
+	import com.funrun.controller.signals.ShakeCameraRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
@@ -315,6 +317,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( SavePlayerObjectRequest,				SavePlayerObjectCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerDeathRequest,			SendMultiplayerDeathCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
+			signalCommandMap.mapSignalClass( ShakeCameraRequest,					ShakeCameraCommand );
 			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
 			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );
 			signalCommandMap.mapSignalClass( ShowStoreRequest,						ShowStoreCommand );
