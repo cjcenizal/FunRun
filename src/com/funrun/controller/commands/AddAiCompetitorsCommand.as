@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddCompetitorRequest;
-	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.CompetitorVo;
@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 		public var addCompetitorRequest:AddCompetitorRequest;
 		
 		[Inject]
-		public var displayMessageRequest:DrawMessageRequest;
+		public var displayMessageRequest:DrawGameMessageRequest;
 		
 		override public function execute():void {
 			for ( var i:int = 0; i < numCompetitors; i++ ) {

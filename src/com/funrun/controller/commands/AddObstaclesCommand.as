@@ -4,7 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.constants.Track;
-	import com.funrun.model.vo.AddSegmentVo;
+	import com.funrun.controller.signals.vo.AddSegmentVo;
 	
 	import org.robotlegs.mvcs.Command;
 

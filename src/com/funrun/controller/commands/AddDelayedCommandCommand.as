@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.model.vo.AddDelayedCommandVo;
+	import com.funrun.controller.signals.vo.AddDelayedCommandVo;
 	import com.funrun.model.DelayedCommandsModel;
 	
 	import org.robotlegs.mvcs.Command;

@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.model.StateModel;
@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 		public var updateCountdownRequest:DrawCountdownRequest;
 		
 		[Inject]
-		public var displayMessageRequest:DrawMessageRequest;
+		public var displayMessageRequest:DrawGameMessageRequest;
 		
 		override public function execute():void {
 			// Stop countdown.

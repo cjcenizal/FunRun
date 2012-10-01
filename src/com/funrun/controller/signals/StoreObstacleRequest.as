@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.StoreObstacleVo;
+	import com.funrun.controller.signals.vo.StoreObstacleVo;
 	
 	import org.osflash.signals.Signal;
 	

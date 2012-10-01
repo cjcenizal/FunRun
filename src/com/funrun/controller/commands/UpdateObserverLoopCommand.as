@@ -16,7 +16,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3dModel;
 	import com.funrun.model.vo.CompetitorVo;
-	import com.funrun.model.vo.UpdateTrackVo;
+	import com.funrun.controller.signals.vo.UpdateTrackVo;
 	
 	import flash.ui.Keyboard;
 	

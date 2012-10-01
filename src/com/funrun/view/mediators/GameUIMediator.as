@@ -1,7 +1,7 @@
 package com.funrun.view.mediators {
 	
 	import com.funrun.controller.signals.DrawCountdownRequest;
-	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
@@ -24,7 +24,7 @@ package com.funrun.view.mediators {
 		public var drawPointsRequest:DrawPointsRequest;
 		
 		[Inject]
-		public var drawMessageRequest:DrawMessageRequest;
+		public var drawMessageRequest:DrawGameMessageRequest;
 		
 		[Inject]
 		public var drawCountdownRequest:DrawCountdownRequest;

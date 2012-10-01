@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.PlayerioErrorVo;
+	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	
 	import org.osflash.signals.Signal;
 	

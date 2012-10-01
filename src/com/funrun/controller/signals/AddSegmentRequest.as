@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.AddSegmentVo;
+	import com.funrun.controller.signals.vo.AddSegmentVo;
 	
 	import org.osflash.signals.Signal;
 	

@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
 	import com.funrun.controller.signals.UpdateViewRequest;
-	import com.funrun.model.vo.UpdateTrackVo;
+	import com.funrun.controller.signals.vo.UpdateTrackVo;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.events.TimeEvent;

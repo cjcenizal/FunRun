@@ -4,7 +4,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.ToggleStoreRequest;
 	import com.funrun.model.AccountModel;
 	import com.funrun.model.StoreModel;
-	import com.funrun.model.vo.DrawItemVo;
+	import com.funrun.controller.signals.vo.DrawItemVo;
 	import com.funrun.model.vo.VirtualGoodCategoryVo;
 	import com.funrun.model.vo.VirtualGoodVo;
 	

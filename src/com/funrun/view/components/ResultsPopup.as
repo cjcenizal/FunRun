@@ -3,7 +3,7 @@ package com.funrun.view.components {
 	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.ui.DummyButton;
 	import com.cenizal.utils.Center;
-	import com.funrun.model.vo.ResultsPopupVo;
+	import com.funrun.controller.signals.vo.ResultsPopupVo;
 	
 	import flash.events.MouseEvent;
 	

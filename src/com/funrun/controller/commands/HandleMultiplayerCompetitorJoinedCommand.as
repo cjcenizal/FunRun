@@ -1,11 +1,11 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddCompetitorRequest;
-	import com.funrun.controller.signals.DrawMessageRequest;
+	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVo;
-	import com.funrun.model.vo.LogMessageVo;
+	import com.funrun.controller.signals.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -29,7 +29,7 @@ package com.funrun.controller.commands {
 		public var addCompetitorRequest:AddCompetitorRequest;
 		
 		[Inject]
-		public var displayMessageRequest:DrawMessageRequest;
+		public var displayMessageRequest:DrawGameMessageRequest;
 		
 		[Inject]
 		public var logMessageRequest:LogMessageRequest;

@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.AddDelayedCommandVo;
+	import com.funrun.controller.signals.vo.AddDelayedCommandVo;
 	
 	import org.osflash.signals.Signal;
 	

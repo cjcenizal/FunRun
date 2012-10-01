@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddPopupRequest;
-	import com.funrun.model.vo.PlayerioErrorVo;
+	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.view.components.PlayerioErrorPopupView;
 	
 	import org.robotlegs.mvcs.Command;

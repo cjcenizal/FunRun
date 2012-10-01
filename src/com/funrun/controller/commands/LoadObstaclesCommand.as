@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.StoreFloorRequest;
 	import com.funrun.controller.signals.StoreObstacleRequest;
-	import com.funrun.model.vo.StoreObstacleVo;
+	import com.funrun.controller.signals.vo.StoreObstacleVo;
 	import com.funrun.services.JsonService;
 	import com.funrun.services.parsers.ObstaclesListParser;
 	

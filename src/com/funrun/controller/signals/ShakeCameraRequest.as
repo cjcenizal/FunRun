@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.ShakeCameraVo;
+	import com.funrun.controller.signals.vo.ShakeCameraVo;
 	
 	import org.osflash.signals.Signal;
 	

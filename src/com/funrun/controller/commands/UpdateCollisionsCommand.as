@@ -9,7 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.BoundingBoxVo;
-	import com.funrun.model.vo.CollectPointVo;
+	import com.funrun.controller.signals.vo.CollectPointVo;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.SegmentVo;
 	

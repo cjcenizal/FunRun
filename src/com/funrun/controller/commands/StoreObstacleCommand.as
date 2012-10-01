@@ -16,7 +16,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.vo.ObstacleBlockVo;
 	import com.funrun.model.vo.PointVo;
 	import com.funrun.model.vo.SegmentVo;
-	import com.funrun.model.vo.StoreObstacleVo;
+	import com.funrun.controller.signals.vo.StoreObstacleVo;
 	import com.funrun.services.parsers.ObstacleParser;
 	
 	import org.robotlegs.mvcs.Command;

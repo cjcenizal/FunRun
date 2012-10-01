@@ -2,7 +2,7 @@ package com.funrun.controller.commands
 {
 	import com.cenizal.utils.Console;
 	import com.funrun.model.state.ProductionState;
-	import com.funrun.model.vo.LogMessageVo;
+	import com.funrun.controller.signals.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
 	

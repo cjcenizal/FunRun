@@ -31,10 +31,19 @@ namespace FunRun {
 		}
 		
 		public override void UserJoined( Player player ) {
+			// Assign user-provided data.
+			player.name = player.JoinData[ "name" ];
+			// Create join message.
+			Message joinMessage = Message.Create( "j" );
+			joinMessage.Add( player.name );
+			Broadcast( joinMessage );
 		}
 		
 		public override void UserLeft( Player player ) {
-
+			// Create leave message.
+			Message leaveMessage = Message.Create( "l" );
+			leaveMessage.Add( player.name );
+			Broadcast( leaveMessage );
 		}
 		
 		public override void GotMessage( Player player, Message message ) {
@@ -45,7 +54,6 @@ namespace FunRun {
 					string name = message.GetString( 0 );
 					string msg = message.GetString( 1 );
 					chatMessage.Add( name, msg );
-					// Broadcast message to all players.
 					Broadcast( chatMessage );
 					break;
 			}

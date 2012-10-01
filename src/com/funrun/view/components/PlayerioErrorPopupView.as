@@ -2,7 +2,7 @@ package com.funrun.view.components {
 	
 	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.utils.Center;
-	import com.funrun.model.vo.PlayerioErrorVo;
+	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	
 	import playerio.PlayerIOError;
 	

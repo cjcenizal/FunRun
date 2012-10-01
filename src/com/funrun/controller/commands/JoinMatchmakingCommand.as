@@ -8,8 +8,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
-	import com.funrun.model.vo.LogMessageVo;
-	import com.funrun.model.vo.PlayerioErrorVo;
+	import com.funrun.controller.signals.vo.LogMessageVo;
+	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	

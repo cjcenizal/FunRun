@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.CollectPointVo;
+	import com.funrun.controller.signals.vo.CollectPointVo;
 	
 	import org.osflash.signals.Signal;
 	

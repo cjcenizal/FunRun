@@ -6,7 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVo;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.vo.LogMessageVo;
+	import com.funrun.controller.signals.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
 	

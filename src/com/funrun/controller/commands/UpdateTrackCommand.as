@@ -2,7 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddObstaclesRequest;
 	import com.funrun.controller.signals.CullTrackRequest;
-	import com.funrun.model.vo.UpdateTrackVo;
+	import com.funrun.controller.signals.vo.UpdateTrackVo;
 	import com.funrun.model.TrackModel;
 	
 	import org.robotlegs.mvcs.Command;

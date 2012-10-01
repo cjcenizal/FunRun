@@ -3,7 +3,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.PlaySoundRequest;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.constants.Sounds;
-	import com.funrun.model.vo.CollectPointVo;
+	import com.funrun.controller.signals.vo.CollectPointVo;
 	
 	import org.robotlegs.mvcs.Command;
 	

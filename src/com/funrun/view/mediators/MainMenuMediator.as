@@ -1,6 +1,6 @@
 package com.funrun.view.mediators {
 
-	import com.funrun.controller.signals.ClickJoinLobbyRequest;
+	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.ClickStartGameRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.view.components.MainMenuView;
@@ -17,7 +17,7 @@ package com.funrun.view.mediators {
 		public var enableMainMenuRequest:EnableMainMenuRequest;
 		
 		[Inject]
-		public var clickJoinLobbyRequest:ClickJoinLobbyRequest;
+		public var clickJoinLobbyRequest:JoinLobbyRequest;
 		
 		override public function onRegister():void {
 			// Build our view.

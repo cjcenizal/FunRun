@@ -1,6 +1,6 @@
 package com.funrun.controller.commands
 {
-	import com.funrun.model.vo.ShakeCameraVo;
+	import com.funrun.controller.signals.vo.ShakeCameraVo;
 	
 	import org.robotlegs.mvcs.Command;
 	

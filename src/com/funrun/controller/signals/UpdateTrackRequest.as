@@ -1,6 +1,6 @@
 package com.funrun.controller.signals
 {
-	import com.funrun.model.vo.UpdateTrackVo;
+	import com.funrun.controller.signals.vo.UpdateTrackVo;
 	
 	import org.osflash.signals.Signal;
 	

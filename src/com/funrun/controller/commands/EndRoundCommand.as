@@ -7,7 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlacesModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.RewardsModel;
-	import com.funrun.model.vo.ResultsPopupVo;
+	import com.funrun.controller.signals.vo.ResultsPopupVo;
 	import com.funrun.view.components.ResultsPopup;
 	
 	import org.robotlegs.mvcs.Command;

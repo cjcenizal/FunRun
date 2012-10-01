@@ -40,6 +40,12 @@ package {
 		- HTML5 and fun UI: http://www.buildwithchrome.com/static/builder#pos=950513x618389&load=ahFzfmJ1aWxkd2l0aGNocm9tZXIsCxIFQnVpbGQiIXRpbGV4Xzk1MDUxM190aWxleV82MTgzODlfem9vbV8yMAw
 		
 		TO-DO:
+		- New multiplayer process
+			- Lobby (solve problem with name collisions)
+			- Click join game
+			- Wait for 4 people to join and click ready
+			- Start game
+			- Add "leave lobby" button
 		- Memory pool for BoundingBoxVos
 		- Send dash and jump via network so we can have sound fx
 		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack
