@@ -68,7 +68,9 @@ package com.funrun.controller.commands
 			// Join the lobby.
 			lobbyService.onErrorSignal.add( onError );
 			lobbyService.onConnectedSignal.add( onConnected );
-			var userJoinData:Object = { "name" : playerModel.name };
+			var userJoinData:Object = {
+				name: playerModel.name,
+				id: loginService.userId };
 			lobbyService.connect( loginService.client, Rooms.LOBBY, userJoinData );
 		}
 		

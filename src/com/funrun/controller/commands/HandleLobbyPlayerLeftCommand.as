@@ -1,6 +1,7 @@
 package com.funrun.controller.commands
 {
 	import com.funrun.controller.signals.DrawLobbyPlayerLeftRequest;
+	import com.funrun.controller.signals.vo.DrawLobbyPlayerLeftVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -21,7 +22,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			drawLobbyPlayerLeftRequest.dispatch( message.getString( 0 ) );
+			drawLobbyPlayerLeftRequest.dispatch( new DrawLobbyPlayerLeftVo( message.getString( 0 ), message.getString( 1 ) ) );
 		}
 	}
 }

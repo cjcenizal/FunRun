@@ -85,12 +85,12 @@ package com.funrun.view.components {
 			_chatList.addItem( source + ": " + message );
 		}
 		
-		public function addPerson( name:String ):void {
-			_peopleList.addItem( name );
+		public function addPerson( id:String, name:String ):void {
+			_peopleList.addItem( { id: id, name: name } );
 		}
 		
-		public function removePerson( name:String ):void {
-			_peopleList.removeItem( name );
+		public function removePerson( id:String, name:String ):void {
+			_peopleList.removeItem( { id: id, name: name } );
 		}
 		
 		public function getChat():String {

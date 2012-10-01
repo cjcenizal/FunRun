@@ -5,6 +5,8 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.DrawLobbyPlayerLeftRequest;
 	import com.funrun.controller.signals.SendLobbyChatRequest;
 	import com.funrun.controller.signals.vo.DrawLobbyChatVo;
+	import com.funrun.controller.signals.vo.DrawLobbyPlayerJoinedVo;
+	import com.funrun.controller.signals.vo.DrawLobbyPlayerLeftVo;
 	import com.funrun.view.components.LobbyView;
 	
 	import org.robotlegs.core.IMediator;
@@ -48,12 +50,12 @@ package com.funrun.view.mediators {
 			view.addChat( vo.source, vo.message );
 		}
 		
-		private function onDrawLobbyPlayerJoinedRequested( name:String ):void {
-			view.addPerson( name );
+		private function onDrawLobbyPlayerJoinedRequested( vo:DrawLobbyPlayerJoinedVo ):void {
+			view.addPerson( vo.id, vo.name );
 		}
 		
-		private function onDrawLobbyPlayerLeftRequested( name:String ):void {
-			view.removePerson( name );
+		private function onDrawLobbyPlayerLeftRequested( vo:DrawLobbyPlayerLeftVo ):void {
+			view.removePerson( vo.id, vo.name );
 		}
 	}
 }

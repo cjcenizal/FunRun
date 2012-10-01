@@ -10,6 +10,7 @@ namespace FunRun {
 	// Each player that joins the game will have these attributes.
 	public class Player : BasePlayer {
 		public string name = "Anonymous";
+		public string id = "id";
 		public double x = 0;
 		public double y = 0;
 		public double z = 0;
@@ -33,9 +34,11 @@ namespace FunRun {
 		public override void UserJoined( Player player ) {
 			// Assign user-provided data.
 			player.name = player.JoinData[ "name" ];
+			player.id = player.JoinData[ "id" ];
 			// Create join message.
 			Message joinMessage = Message.Create( "j" );
 			joinMessage.Add( player.name );
+			joinMessage.Add( player.id );
 			Broadcast( joinMessage );
 		}
 		
@@ -43,6 +46,7 @@ namespace FunRun {
 			// Create leave message.
 			Message leaveMessage = Message.Create( "l" );
 			leaveMessage.Add( player.name );
+			leaveMessage.Add( player.id );
 			Broadcast( leaveMessage );
 		}
 		
@@ -170,6 +174,7 @@ namespace FunRun {
 		public override void UserJoined( Player player ) {
 			// Assign user-provided data.
 			player.name = player.JoinData[ "name" ];
+			player.id = player.JoinData[ "id" ];
 			player.x = Convert.ToDouble( player.JoinData[ "x" ] );
 			player.y = Convert.ToDouble( player.JoinData[ "y" ] );
 

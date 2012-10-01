@@ -1,6 +1,7 @@
 package com.funrun.controller.commands
 {
 	import com.funrun.controller.signals.DrawLobbyPlayerJoinedRequest;
+	import com.funrun.controller.signals.vo.DrawLobbyPlayerJoinedVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -20,7 +21,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			drawLobbyPlayerJoinedRequest.dispatch( message.getString( 0 ) );
+			drawLobbyPlayerJoinedRequest.dispatch( new DrawLobbyPlayerJoinedVo( message.getString( 0 ), message.getString( 1 ) ) );
 		}
 	}
 }

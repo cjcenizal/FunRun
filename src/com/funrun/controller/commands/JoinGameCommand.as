@@ -7,11 +7,11 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
+	import com.funrun.controller.signals.vo.LogMessageVo;
+	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
-	import com.funrun.controller.signals.vo.LogMessageVo;
-	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.services.MultiplayerService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
@@ -66,7 +66,12 @@ package com.funrun.controller.commands {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Joining a game..." ) );
 			multiplayerService.onErrorSignal.add( onError );
 			multiplayerService.onConnectedSignal.add( onConnected );
-			multiplayerService.connect( loginService.client, Rooms.GAME, { name: playerModel.name, x: playerModel.position.x, y: playerModel.position.y }, roomId );
+			var userJoinData:Object = {
+				name: playerModel.name,
+				id: loginService.userId,
+				x: playerModel.position.x,
+				y: playerModel.position.y };
+			multiplayerService.connect( loginService.client, Rooms.GAME, userJoinData, roomId );
 		}
 		
 		private function onConnected():void {
