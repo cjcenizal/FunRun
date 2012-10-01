@@ -61,18 +61,16 @@ package com.funrun.controller.commands
 		override public function execute():void {
 			
 			// Apply ducking state.
-			if ( productionState.isExploration ) {
+			var duckingKey:uint = ( productionState.isExploration ) ? Keyboard.D : Keyboard.DOWN;
+			if ( keyboardModel.isDown( duckingKey ) ) {
+				playerModel.isDucking = true;
+				if ( playerModel.scaleY != Player.DUCKING_SCALE ) {
+					playerModel.scaleY = Player.DUCKING_SCALE;
+				}
 			} else {
-				if ( keyboardModel.isDown( Keyboard.DOWN ) ) {
-					playerModel.isDucking = true;
-					if ( playerModel.scaleY != Player.DUCKING_SCALE ) {
-						playerModel.scaleY = Player.DUCKING_SCALE;
-					}
-				} else {
-					playerModel.isDucking = false;
-					if ( playerModel.scaleY != 1 ) {
-						playerModel.scaleY = 1;
-					}
+				playerModel.isDucking = false;
+				if ( playerModel.scaleY != 1 ) {
+					playerModel.scaleY = 1;
 				}
 			}
 			

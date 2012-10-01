@@ -23,6 +23,9 @@ package {
 		
 		/*
 		BUGS:
+		- Networking problems
+			- Ian couldn't move, but it seems to work now
+			- Show information about who is online, and add chatrooms
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 			- Still collision issues:
 				- Jumping up into the top front edge of a smack block launched me in the air
@@ -38,6 +41,12 @@ package {
 		
 		TO-DO:
 		- Memory pool for BoundingBoxVos
+		- Send dash and jump via network so we can have sound fx
+		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack
+		- Add dash
+			- Rechargeable meter
+		- Add duck during exploration mode
+		- Make points exist in long rows
 		- Search for TO-DOs
 		- Game design
 			- Collect points

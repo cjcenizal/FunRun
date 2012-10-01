@@ -26,6 +26,9 @@ package com.funrun.view.mediators {
 				case ScreenState.MAIN_MENU:
 					view.showMainMenu();
 					break;
+				case ScreenState.LOBBY:
+					view.showLobby();
+					break;
 				case ScreenState.MULTIPLAYER_GAME:
 					view.showGame();
 					break;

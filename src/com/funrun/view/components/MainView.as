@@ -3,11 +3,15 @@ package com.funrun.view.components {
 	import com.cenizal.ui.AbstractComponent;
 	
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 
 	public class MainView extends AbstractComponent {
 		
-		private var _mainMenu:MainMenuView;
-		private var _game:GameView;
+		private const MAIN:String = "main";
+		private const LOBBY:String = "lobby";
+		private const GAME:String = "game";
+		
+		private var _views:Object;
 		private var _popups:PopupsView;
 		
 		public function MainView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
@@ -15,24 +19,33 @@ package com.funrun.view.components {
 		}
 
 		public function init():void {
-			_mainMenu = new MainMenuView( this );
-			_game = new GameView( this );
+			_views = {};
+			_views[ MAIN ] = new MainMenuView( this );
+			_views[ LOBBY ] = new LobbyView( this );
+			_views[ GAME ] = new GameView( this );
 			_popups = new PopupsView( this );
 		}
 		
 		public function hideAll():void {
-			_mainMenu.visible = false;
-			_game.visible = false;
+			show( null );
 		}
 		
 		public function showGame():void {
-			_mainMenu.visible = false;
-			_game.visible = true;
+			show( GAME );
+		}
+		
+		public function showLobby():void {
+			show( LOBBY );
 		}
 		
 		public function showMainMenu():void {
-			_mainMenu.visible = true;
-			_game.visible = false;
+			show( MAIN );
+		}
+		
+		private function show( id:String ):void {
+			for ( var key:String in _views ) {
+				( _views[ key ] as Sprite ).visible = ( key == id );
+			}
 		}
 	}
 }

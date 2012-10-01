@@ -2,6 +2,9 @@ package com.funrun.model.constants {
 
 	public class Messages {
 
+		// Lobby.
+		public static const CHAT:String = "c";
+		
 		// Matchmaking.
 		public static const JOIN_GAME:String = "j";
 		public static const START_COUNTDOWN:String = "s";

@@ -3,12 +3,14 @@
 	import com.funrun.controller.signals.AddDelayedCommandRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
+	import com.funrun.controller.signals.ShakeCameraRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.vo.AddDelayedCommandVo;
+	import com.funrun.model.vo.ShakeCameraVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -41,6 +43,9 @@
 		[Inject]
 		public var addDelayedCommandRequest:AddDelayedCommandRequest;
 		
+		[Inject]
+		public var shakeCameraRequest:ShakeCameraRequest;
+		
 		override public function execute():void {
 			if ( !playerModel.isDead ) {
 				// Update the model.
@@ -48,6 +53,7 @@
 				switch ( death ) {
 					case Collisions.SMACK:
 						playerModel.velocity.z = Player.HEAD_ON_SMACK_SPEED;
+						shakeCameraRequest.dispatch( new ShakeCameraVo( 100, 100, 100, 1 ) );
 						break;
 					case Collisions.FALL:
 						break;

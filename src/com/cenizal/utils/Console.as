@@ -5,6 +5,7 @@ package com.cenizal.utils
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.text.TextField;
+	import flash.system.System;
 
 	public class Console extends Sprite
 	{
@@ -32,6 +33,7 @@ package com.cenizal.utils
 			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
 			g.endFill();
 			_text.width = stage.stageWidth - stage.x * 2;
+			_text.height = stage.stageHeight;
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 		}
@@ -49,6 +51,7 @@ package com.cenizal.utils
 		
 		private function open():void {
 			_isOpen = true;
+			System.setClipboard( _text.text );
 		}
 		
 		private function close():void {

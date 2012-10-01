@@ -20,18 +20,18 @@ package com.funrun.view.components {
 		private var Logo:Class;
 		
 		private var _logo:Bitmap;
-		private var _startGameButton:DummyButton;
-		private var _instructionsLabel:AbstractLabel;
+		private var _joinLobbyButton:DummyButton;
+		//private var _instructionsLabel:AbstractLabel;
 		private var _loginStatus:LoginStatusView;
 		
-		public var onStartGameButtonClick:Signal;
+		public var onJoinLobbyClick:Signal;
 		
 		public function MainMenuView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
 		}
 		
 		public function init():void {
-			onStartGameButtonClick = new Signal();
+			onJoinLobbyClick = new Signal();
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -51,32 +51,33 @@ package com.funrun.view.components {
 			_logo.y = 20;
 			
 			// Start game button.
-			_startGameButton = new DummyButton( this, 0, _logo.y + _logo.height + 40, onClick, "Start game", 0xaaaaaa );
-			_startGameButton.draw();
-			Center.horizontal( _startGameButton, stage );
+			_joinLobbyButton = new DummyButton( this, 0, _logo.y + _logo.height + 40, onClick, "Join lobby", 0xaaaaaa );
+			_joinLobbyButton.draw();
+			Center.horizontal( _joinLobbyButton, stage );
 			
+			/*
 			// Instructions.
 			var instructionText:String = "Use arrow keys to move left and right, duck, and jump."
-			_instructionsLabel = new AbstractLabel( this, 0, _startGameButton.y + _startGameButton.height + 40, instructionText, 14 );
+			_instructionsLabel = new AbstractLabel( this, 0, _joinLobbyButton.y + _joinLobbyButton.height + 40, instructionText, 14 );
 			_instructionsLabel.draw();
 			Center.horizontal( _instructionsLabel, stage );
-			
+			*/
 			// Login status.
 			_loginStatus = new LoginStatusView( this );
 			_loginStatus.draw();
 		}
 		
 		private function onClick( e:MouseEvent ):void {
-			onStartGameButtonClick.dispatch();
+			onJoinLobbyClick.dispatch();
 		}
 		
 		public function set optionsEnabled( enabled:Boolean ):void {
 			if ( enabled ) {
 				_logo.alpha = 1;
-				_startGameButton.visible = true;
+				_joinLobbyButton.visible = true;
 			} else {
 				_logo.alpha = .2;
-				_startGameButton.visible = false;
+				_joinLobbyButton.visible = false;
 			}
 		}
 	}

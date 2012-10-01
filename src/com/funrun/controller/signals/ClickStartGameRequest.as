@@ -2,9 +2,9 @@ package com.funrun.controller.signals
 {
 	import org.osflash.signals.Signal;
 	
-	public class StartGameRequest extends Signal
+	public class ClickStartGameRequest extends Signal
 	{
-		public function StartGameRequest()
+		public function ClickStartGameRequest()
 		{
 			super();
 		}

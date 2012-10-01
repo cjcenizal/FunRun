@@ -18,6 +18,42 @@ namespace FunRun {
 		public Player() {
 		}
 	}
+	
+	[RoomType("Lobby")]
+	public class Lobby : Game<Player> {
+
+		public override void GameStarted() {
+
+		}
+		
+		public override bool AllowUserJoin( Player player ) {
+			return true;
+		}
+		
+		public override void UserJoined( Player player ) {
+		}
+		
+		public override void UserLeft( Player player ) {
+
+		}
+		
+		public override void GotMessage( Player player, Message message ) {
+			switch ( message.Type ) {
+				case "c": // Chat.
+					// Create chat message.
+					Message chatMessage = Message.Create( "c" );
+					string name = message.GetString( 0 );
+					string msg = message.GetString( 1 );
+					chatMessage.Add( name, msg );
+					// Broadcast message to all players.
+					Broadcast( chatMessage );
+					break;
+			}
+		}
+		
+		public override void GameClosed() {
+		}
+	}
 
 	[RoomType("Matchmaking")]
 	public class MatchmakingCode : Game<Player> {
@@ -79,14 +115,14 @@ namespace FunRun {
 		public override void UserLeft( Player player ) {
 			// Restart countdown if we've started counting down,
 			// but the number of players has dropped below minimum.
-			if ( PlayerCount < MIN_REQUIRED_NUM_PLAYERS ) {
+			/*if ( PlayerCount < MIN_REQUIRED_NUM_PLAYERS ) {
 				currentState = ( int ) State.WAITING_FOR_PLAYERS;
 				// Tell everybody.
 				Message resetMessage = Message.Create( "r" );
 				UpdateRemainingMs();
 				resetMessage.Add( remainingMs );
 				Broadcast( resetMessage );
-			}
+			}*/
 		}
 		
 		public override void GotMessage( Player player, Message message ) {

@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 	/**
 	 * StartGameCommand starts the main game loop.
 	 */
-	public class StartGameCommand extends Command {
+	public class ClickStartGameCommand extends Command {
 		
 		// State.
 		

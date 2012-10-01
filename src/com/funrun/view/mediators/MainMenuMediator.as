@@ -1,7 +1,8 @@
 package com.funrun.view.mediators {
 
+	import com.funrun.controller.signals.ClickJoinLobbyRequest;
+	import com.funrun.controller.signals.ClickStartGameRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
-	import com.funrun.controller.signals.StartGameRequest;
 	import com.funrun.view.components.MainMenuView;
 	
 	import org.robotlegs.core.IMediator;
@@ -16,7 +17,7 @@ package com.funrun.view.mediators {
 		public var enableMainMenuRequest:EnableMainMenuRequest;
 		
 		[Inject]
-		public var startGameRequest:StartGameRequest;
+		public var clickJoinLobbyRequest:ClickJoinLobbyRequest;
 		
 		override public function onRegister():void {
 			// Build our view.
@@ -26,15 +27,15 @@ package com.funrun.view.mediators {
 			enableMainMenuRequest.add( onEnableMainMenuRequested );
 			
 			// Listen for view events.
-			view.onStartGameButtonClick.add( onStartGameButtonClick );
+			view.onJoinLobbyClick.add( onJoinLobbyClick );
 		}
 		
 		private function onEnableMainMenuRequested( enabled:Boolean ):void {
 			view.optionsEnabled = enabled;
 		}
 
-		private function onStartGameButtonClick():void {
-			startGameRequest.dispatch();
+		private function onJoinLobbyClick():void {
+			clickJoinLobbyRequest.dispatch();
 		}
 
 	}
