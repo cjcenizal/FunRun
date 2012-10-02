@@ -34,6 +34,6 @@ package com.funrun.model.constants
 		
 		// Position.
 		public static const START_POSITION_RANGE:Number = 400;
-		public static const START_POSITION_MIN:Number = 100;
+		public static const START_POSITION_MIN:Number = 1600;
 	}
 }

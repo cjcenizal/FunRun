@@ -24,11 +24,15 @@ package com.funrun.view.components {
 		private var _countdownLabel:AbstractLabel;
 		
 		// Messages.
-		public var _messagesList:MessagesList;
+		private var _messagesList:MessagesList;
+		
+		// Ready.
+		private var _readyButton:DummyButton;
+		public var onClickReadySignal:Signal;
 		
 		// Quit game.
-		private var _button:DummyButton;
-		public var onClickQuitGameButtonSignal:Signal;
+		private var _quitButton:DummyButton;
+		public var onClickQuitSignal:Signal;
 		
 		public function GameUIView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
@@ -61,11 +65,18 @@ package com.funrun.view.components {
 			// Countdown.
 			_countdownLabel = new AbstractLabel( this, 0, 0, "", 110, 0xe0920b );
 			
-			// Quit game.
-			_button = new DummyButton( this, 0, 0, onClickQuitGameButton, "Quit game", 0x0000ff, 12 );
-			_button.draw();
-			_button.x = stage.stageWidth - _button.width - 10;
-			onClickQuitGameButtonSignal = new Signal();
+			// Quit button.
+			_quitButton = new DummyButton( this, 0, 0, onClickQuit, "Quit game", 0x0000ff, 12 );
+			_quitButton.draw();
+			_quitButton.x = stage.stageWidth - _quitButton.width - 10;
+			onClickQuitSignal = new Signal();
+			
+			// Ready button.
+			_readyButton = new DummyButton( this, 0, 0, onClickReady, "Ready", 0x0000ff, 12 );
+			_readyButton.draw();
+			Center.horizontal( _readyButton, stage );
+			_readyButton.y = stage.stageHeight * .75;
+			onClickReadySignal = new Signal();
 		}
 
 		public function drawPoints( val:Number ):void {
@@ -91,16 +102,28 @@ package com.funrun.view.components {
 			Center.bothVals( _countdownLabel, stage.stageWidth, stage.stageHeight );
 		}
 		
-		public function enableCountdown():void {
+		public function showCountdown():void {
 			_countdownLabel.visible = true;
 		}
 		
-		public function disableCountdown():void {
+		public function hideCountdown():void {
 			_countdownLabel.visible = false;
 		}
 		
-		private function onClickQuitGameButton( e:MouseEvent ):void {
-			onClickQuitGameButtonSignal.dispatch();
+		public function showReadyButton():void {
+			_readyButton.visible = true;
+		}
+		
+		public function hideReadyButton():void {
+			_readyButton.visible = false;
+		}
+		
+		private function onClickQuit( e:MouseEvent ):void {
+			onClickQuitSignal.dispatch();
+		}
+		
+		private function onClickReady( e:MouseEvent ):void {
+			onClickReadySignal.dispatch();
 		}
 	}
 }

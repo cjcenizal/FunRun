@@ -40,7 +40,7 @@ package com.funrun.view.mediators {
 		
 		override public function onRegister():void {
 			view.init();
-			view.onClickQuitGameButtonSignal.add( onQuitGameClicked );
+			view.onClickQuitSignal.add( onQuitGameClicked );
 			drawPointsRequest.add( onDrawPointsRequested );
 			drawSpeedRequest.add( onDrawSpeedRequested );
 			drawMessageRequest.add( onDrawMessageRequested );
@@ -66,9 +66,9 @@ package com.funrun.view.mediators {
 		
 		private function onToggleCountdown( visible:Boolean ):void {
 			if ( visible ) {
-				view.enableCountdown();
+				view.showCountdown();
 			} else {
-				view.disableCountdown();
+				view.hideCountdown();
 			}
 		}
 		
