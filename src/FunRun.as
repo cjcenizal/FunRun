@@ -45,6 +45,7 @@ package {
 				- Wait for 4 people to join and click ready
 			- Start game
 			- Add "leave lobby" button
+			- Exit game boots back to lobby
 		- Memory pool for BoundingBoxVos
 		- Send dash and jump via network so we can have sound fx
 		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack

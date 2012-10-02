@@ -4,12 +4,14 @@ package com.funrun.view.components {
 	import com.bit101.components.List;
 	import com.cenizal.ui.AbstractComponent;
 	import com.cenizal.ui.AbstractLabel;
+	import com.cenizal.ui.DummyButton;
 	import com.cenizal.utils.Center;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
 	
 	import org.osflash.signals.Signal;
@@ -26,10 +28,12 @@ package com.funrun.view.components {
 		private var _chatList:List;
 		private var _peopleList:List;
 		private var _input:InputText;
+		private var _joinGameButton:DummyButton;
 		
 		// Signals.
 		
 		public var onSendChatSignal:Signal;
+		public var onClickJoinGameSignal:Signal;
 		
 		public function LobbyView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
@@ -38,6 +42,7 @@ package com.funrun.view.components {
 		
 		public function init():void {
 			onSendChatSignal = new Signal();
+			onClickJoinGameSignal = new Signal();
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -53,7 +58,7 @@ package com.funrun.view.components {
 			// Title.
 			_title = new AbstractLabel( this, 0, 0, "Lobby", 18 );
 			_title.draw();
-			_title.x = ( stage.stageWidth - _title.width ) * .5;
+			Center.horizontal( _title, stage );
 			
 			// Lists.
 			_chatList = new List( this, 0, 0 );
@@ -75,8 +80,18 @@ package com.funrun.view.components {
 			_input.width = 400;
 			_input.height = 30;
 			_input.draw();
-			_input.x = ( stage.stageWidth - _input.width ) * .5;
+			Center.horizontal( _input, stage );
 			_input.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+			
+			// Start game button.
+			_joinGameButton = new DummyButton( this, 0, _input.y + _input.height + 40, onClick, "Find a game!", 0xaaaaaa );
+			_joinGameButton.draw();
+			Center.horizontal( _joinGameButton, stage );
+			
+		}
+		
+		private function onClick( e:MouseEvent ):void {
+			onClickJoinGameSignal.dispatch();
 		}
 		
 		private function onKeyDown( e:KeyboardEvent ):void {
