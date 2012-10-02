@@ -16,6 +16,10 @@ package com.funrun.view.components {
 	
 	public class LobbyView extends AbstractComponent {
 		
+		// Data.
+		
+		private var _people:Object = {};
+		
 		// UI.
 		
 		private var _title:AbstractLabel;
@@ -86,11 +90,17 @@ package com.funrun.view.components {
 		}
 		
 		public function addPerson( id:String, name:String ):void {
-			_peopleList.addItem( { id: id, name: name } );
+			if ( !_people[ id ] ) {
+				_people[ id ] = new LobbyPerson( id, name );
+				_peopleList.addItem( _people[ id ] );
+			}
 		}
 		
-		public function removePerson( id:String, name:String ):void {
-			_peopleList.removeItem( { id: id, name: name } );
+		public function removePerson( id:String ):void {
+			if ( _people[ id ] ) {
+				_peopleList.removeItem( _people[ id ] );
+				delete _people[ id ];
+			}
 		}
 		
 		public function getChat():String {

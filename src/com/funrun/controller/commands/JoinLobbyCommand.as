@@ -3,6 +3,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.HandleLobbyChatRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
+	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
 	import com.funrun.controller.signals.RemoveJoiningLobbyPopupRequest;
 	import com.funrun.controller.signals.ShowJoiningLobbyPopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
@@ -56,6 +57,9 @@ package com.funrun.controller.commands
 		public var handleLobbyPlayerJoinedRequest:HandleLobbyPlayerJoinedRequest;
 		
 		[Inject]
+		public var handleLobbyWelcomeRequest:HandleLobbyWelcomeRequest;
+		
+		[Inject]
 		public var removeJoiningLobbyPopupRequest:RemoveJoiningLobbyPopupRequest;
 		
 		[Inject]
@@ -80,6 +84,7 @@ package com.funrun.controller.commands
 			lobbyService.addMessageHandler( Messages.CHAT, onChat );
 			lobbyService.addMessageHandler( Messages.JOIN, onJoin );
 			lobbyService.addMessageHandler( Messages.LEAVE, onLeave );
+			lobbyService.addMessageHandler( Messages.WELCOME, onWelcome );
 			// Show lobby.
 			removeJoiningLobbyPopupRequest.dispatch();
 			showScreenRequest.dispatch( ScreenState.LOBBY );
@@ -103,6 +108,10 @@ package com.funrun.controller.commands
 		
 		private function onLeave( message:Message ):void {
 			handleLobbyPlayerLeftRequest.dispatch( message );
+		}
+		
+		private function onWelcome( message:Message ):void {
+			handleLobbyWelcomeRequest.dispatch( message );
 		}
 	}
 }

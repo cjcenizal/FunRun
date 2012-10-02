@@ -55,7 +55,7 @@ package com.funrun.view.mediators {
 		}
 		
 		private function onDrawLobbyPlayerLeftRequested( vo:DrawLobbyPlayerLeftVo ):void {
-			view.removePerson( vo.id, vo.name );
+			view.removePerson( vo.id );
 		}
 	}
 }

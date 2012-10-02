@@ -19,6 +19,7 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleLobbyChatCommand;
 	import com.funrun.controller.commands.HandleLobbyPlayerJoinedCommand;
 	import com.funrun.controller.commands.HandleLobbyPlayerLeftCommand;
+	import com.funrun.controller.commands.HandleLobbyWelcomeCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorDiedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorJoinedCommand;
 	import com.funrun.controller.commands.HandleMultiplayerCompetitorLeftCommand;
@@ -95,6 +96,7 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleLobbyChatRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
+	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
 	import com.funrun.controller.signals.HandleMultiplayerCompetitorLeftRequest;
@@ -325,6 +327,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleLobbyChatRequest,				HandleLobbyChatCommand );
 			signalCommandMap.mapSignalClass( HandleLobbyPlayerJoinedRequest,		HandleLobbyPlayerJoinedCommand );
 			signalCommandMap.mapSignalClass( HandleLobbyPlayerLeftRequest,			HandleLobbyPlayerLeftCommand );
+			signalCommandMap.mapSignalClass( HandleLobbyWelcomeRequest,				HandleLobbyWelcomeCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerInitRequest,			HandleMultiplayerInitCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerJoinGameRequest,		HandleMultiplayerJoinGameCommand );
 			signalCommandMap.mapSignalClass( HandleMultiplayerCompetitorJoinedRequest,HandleMultiplayerCompetitorJoinedCommand );

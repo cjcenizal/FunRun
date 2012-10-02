@@ -6,6 +6,7 @@ package com.funrun.model.constants {
 		public static const CHAT:String = "c";
 		public static const JOIN:String = "j";
 		public static const LEAVE:String = "l";
+		public static const WELCOME:String = "w";
 		
 		// Matchmaking.
 		public static const JOIN_GAME:String = "j";

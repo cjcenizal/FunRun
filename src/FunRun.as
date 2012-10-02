@@ -24,8 +24,7 @@ package {
 		/*
 		BUGS:
 		- Networking problems
-			- Ian couldn't move, but it seems to work now
-			- Show information about who is online, and add chatrooms
+			- Ian couldn't move because a resetTimer message was sent. The logc is wonky there.
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 			- Still collision issues:
 				- Jumping up into the top front edge of a smack block launched me in the air
@@ -41,9 +40,9 @@ package {
 		
 		TO-DO:
 		- New multiplayer process
-			- Lobby (solve problem with name collisions)
 			- Click join game
-			- Wait for 4 people to join and click ready
+				- Float in space with a "ready" button in front of you
+				- Wait for 4 people to join and click ready
 			- Start game
 			- Add "leave lobby" button
 		- Memory pool for BoundingBoxVos

@@ -35,11 +35,17 @@ namespace FunRun {
 			// Assign user-provided data.
 			player.name = player.JoinData[ "name" ];
 			player.id = player.JoinData[ "id" ];
-			// Create join message.
+			// Tell everyone who's here.
 			Message joinMessage = Message.Create( "j" );
 			joinMessage.Add( player.name );
 			joinMessage.Add( player.id );
 			Broadcast( joinMessage );
+			// Tell the new guy who's already here.
+			Message welcomeMessage = Message.Create( "w" );
+			foreach ( Player p in Players ) {
+				welcomeMessage.Add( p.name, p.id );
+			}
+			player.Send( welcomeMessage );
 		}
 		
 		public override void UserLeft( Player player ) {

@@ -262,6 +262,7 @@ package com.bit101.components
 			if(index < 0 || index >= _items.length) return;
 			_items.splice(index, 1);
 			invalidate();
+			makeListItems();
             fillItems();
 		}
 		
@@ -272,6 +273,7 @@ package com.bit101.components
 		{
 			_items.length = 0;
 			invalidate();
+			makeListItems();
             fillItems();
 		}
 		
