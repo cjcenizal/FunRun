@@ -44,6 +44,7 @@ package com.funrun {
 	import com.funrun.controller.commands.ResetPlayerCommand;
 	import com.funrun.controller.commands.SavePlayerObjectCommand;
 	import com.funrun.controller.commands.SendLobbyChatCommand;
+	import com.funrun.controller.commands.SendMatchmakingReadyCommand;
 	import com.funrun.controller.commands.SendMultiplayerDeathCommand;
 	import com.funrun.controller.commands.SendMultiplayerUpdateCommand;
 	import com.funrun.controller.commands.ShakeCameraCommand;
@@ -125,6 +126,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.SavePlayerObjectRequest;
 	import com.funrun.controller.signals.SendLobbyChatRequest;
+	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
 	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
 	import com.funrun.controller.signals.ShakeCameraRequest;
@@ -350,6 +352,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );
 			signalCommandMap.mapSignalClass( SavePlayerObjectRequest,				SavePlayerObjectCommand );
 			signalCommandMap.mapSignalClass( SendLobbyChatRequest,					SendLobbyChatCommand );
+			signalCommandMap.mapSignalClass( SendMatchmakingReadyRequest,			SendMatchmakingReadyCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerDeathRequest,			SendMultiplayerDeathCommand );
 			signalCommandMap.mapSignalClass( SendMultiplayerUpdateRequest,			SendMultiplayerUpdateCommand );
 			signalCommandMap.mapSignalClass( ShakeCameraRequest,					ShakeCameraCommand );

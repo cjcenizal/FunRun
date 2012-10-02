@@ -118,16 +118,6 @@ namespace FunRun {
 
 			// Send message to player.
 			player.Send( joinGameMessage );
-
-			// Start countdown if we have enough players.
-			if ( PlayerCount == MIN_REQUIRED_NUM_PLAYERS ) {
-				currentState = ( int ) State.COUNTING_DOWN;
-				countdownStartTime = DateTime.UtcNow;
-				// Tell everyone we can start the countdown.
-				Message startCountdownMessage = Message.Create( "s" );
-				startCountdownMessage.Add( remainingMs );
-				Broadcast( startCountdownMessage );
-			}
 		}
 
 		public override void UserLeft( Player player ) {
@@ -160,6 +150,18 @@ namespace FunRun {
 						p.Disconnect();
 					}
 				}
+			}
+		}
+
+		private void OnPlayerReady() {
+			// Start countdown if everyone is ready.
+			if ( PlayerCount == MIN_REQUIRED_NUM_PLAYERS ) {
+				currentState = ( int ) State.COUNTING_DOWN;
+				countdownStartTime = DateTime.UtcNow;
+				// Tell everyone we can start the countdown.
+				Message startCountdownMessage = Message.Create( "s" );
+				startCountdownMessage.Add( remainingMs );
+				Broadcast( startCountdownMessage );
 			}
 		}
 	}

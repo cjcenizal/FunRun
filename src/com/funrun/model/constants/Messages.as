@@ -11,7 +11,7 @@ package com.funrun.model.constants {
 		// Matchmaking.
 		public static const JOIN_GAME:String = "j";
 		public static const START_COUNTDOWN:String = "s";
-		public static const RESET_COUNTDOWN:String = "r";
+		//public static const RESET_COUNTDOWN:String = "r";
 
 		// Game.
 		public static const DEATH:String = "d";

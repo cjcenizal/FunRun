@@ -47,8 +47,8 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var startCountdownRequest:StartCountdownRequest;
 		
-		[Inject]
-		public var resetCountdownRequest:ResetCountdownRequest;
+	//	[Inject]
+	//	public var resetCountdownRequest:ResetCountdownRequest;
 		
 		[Inject]
 		public var logMessageRequest:LogMessageRequest;
@@ -69,7 +69,7 @@ package com.funrun.controller.commands {
 			matchmakingService.onServerDisconnectSignal.add( onDisconnected );
 			matchmakingService.addMessageHandler( Messages.JOIN_GAME, onJoinGame );
 			matchmakingService.addMessageHandler( Messages.START_COUNTDOWN, onStartCountdown );
-			matchmakingService.addMessageHandler( Messages.RESET_COUNTDOWN, onResetCountdown );
+			//matchmakingService.addMessageHandler( Messages.RESET_COUNTDOWN, onResetCountdown );
 		}
 		
 		private function onDisconnected():void {
@@ -93,9 +93,9 @@ package com.funrun.controller.commands {
 			startCountdownRequest.dispatch( message.getNumber( 0 ) );
 		}
 		
-		private function onResetCountdown( message:Message ):void {
+	/*	private function onResetCountdown( message:Message ):void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Reset countdown. Message is: " + message ) );
 			resetCountdownRequest.dispatch();
-		}
+		}*/
 	}
 }
