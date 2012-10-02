@@ -34,6 +34,7 @@ package com.funrun.services {
 		public function disconnectAndReset():void {
 			if ( _connection ) {
 				_connection.disconnect();
+				_onServerDisconnectSignal.dispatch();
 			}
 			reset();
 		}

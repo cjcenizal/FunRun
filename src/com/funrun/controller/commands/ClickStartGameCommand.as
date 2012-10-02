@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartOfflineGameRequest;
 	import com.funrun.model.StateModel;
 	import com.funrun.model.state.OnlineState;
+	import com.funrun.services.LobbyService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -18,6 +19,11 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var onlineState:OnlineState;
+		
+		// Services.
+		
+		[Inject]
+		public var lobbyService:LobbyService;
 		
 		// Models.
 		
@@ -39,6 +45,8 @@ package com.funrun.controller.commands {
 		public var startOfflineGameRequest:StartOfflineGameRequest;
 		
 		override public function execute():void {
+			// Disconnect from lobby.
+			lobbyService.disconnectAndReset();
 			// Set game state.
 			stateModel.waitForPlayers();
 			// Reset game.

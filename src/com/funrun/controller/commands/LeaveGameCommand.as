@@ -1,13 +1,12 @@
 package com.funrun.controller.commands {
 
+	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
-	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;
-	import com.funrun.model.state.ScreenState;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.MultiplayerService;
 	
@@ -26,6 +25,14 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var stateModel:StateModel;
 		
+		// Services.
+		
+		[Inject]
+		public var multiplayerService:MultiplayerService;
+		
+		[Inject]
+		public var matchmakingService:MatchmakingService;
+		
 		// Commands.
 		
 		[Inject]
@@ -35,16 +42,10 @@ package com.funrun.controller.commands {
 		public var stopObserverLoopRequest:StopObserverLoopRequest;
 		
 		[Inject]
-		public var showScreenRequest:ShowScreenRequest;
-		
-		[Inject]
 		public var removeResultsPopupRequest:RemoveResultsPopupRequest;
 		
 		[Inject]
-		public var multiplayerService:MultiplayerService;
-		
-		[Inject]
-		public var matchmakingService:MatchmakingService;
+		public var joinLobbyRequest:JoinLobbyRequest;
 
 		override public function execute():void {
 			// Remove delayed commands.
@@ -61,7 +62,7 @@ package com.funrun.controller.commands {
 			stateModel.showMainMenu();
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
-			showScreenRequest.dispatch( ScreenState.MAIN_MENU );
+			joinLobbyRequest.dispatch();
 		}
 	}
 }

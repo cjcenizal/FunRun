@@ -31,6 +31,7 @@ package {
 				- Jumping into the side of a smack block smacked me instead of blocking me
 		- There's definitely a memory leak
 			- If I start profiling, I die somehow.  Too much going on initialization wise?
+			- Maybe the commands being called over and over are causing it?
 			- If I'm dead, there is no mem leak, so it must be caused by GameLoop.
 		- To optimize against memory deallocation pauses, we can implement an object pool for segments
 		

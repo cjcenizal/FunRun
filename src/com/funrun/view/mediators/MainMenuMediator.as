@@ -1,8 +1,7 @@
 package com.funrun.view.mediators {
 
-	import com.funrun.controller.signals.JoinLobbyRequest;
-	import com.funrun.controller.signals.ClickStartGameRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.view.components.MainMenuView;
 	
 	import org.robotlegs.core.IMediator;
