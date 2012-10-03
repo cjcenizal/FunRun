@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	
 	import playerio.Message;
 
-	public class HandleMultiplayerJoinGameCommand extends Command {
+	public class HandleMatchmakingJoinCommand extends Command {
 		
 		// Arguments.
 		

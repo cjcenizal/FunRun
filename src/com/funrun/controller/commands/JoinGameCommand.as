@@ -1,10 +1,10 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.HandleMultiplayerCompetitorDiedRequest;
-	import com.funrun.controller.signals.HandleMultiplayerCompetitorJoinedRequest;
-	import com.funrun.controller.signals.HandleMultiplayerCompetitorLeftRequest;
-	import com.funrun.controller.signals.HandleMultiplayerInitRequest;
-	import com.funrun.controller.signals.HandleMultiplayerUpdateRequest;
+	import com.funrun.controller.signals.HandleGameCompetitorDiedRequest;
+	import com.funrun.controller.signals.HandleGameCompetitorJoinedRequest;
+	import com.funrun.controller.signals.HandleGameCompetitorLeftRequest;
+	import com.funrun.controller.signals.HandleGameInitRequest;
+	import com.funrun.controller.signals.HandleGameUpdateRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.vo.LogMessageVo;
@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
-	import com.funrun.services.MultiplayerService;
+	import com.funrun.services.GameService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -37,7 +37,7 @@ package com.funrun.controller.commands {
 		public var loginService:PlayerioFacebookLoginService;
 		
 		[Inject]
-		public var multiplayerService:MultiplayerService;
+		public var multiplayerService:GameService;
 		
 		// Commands.
 		
@@ -45,19 +45,19 @@ package com.funrun.controller.commands {
 		public var showPlayerioErrorPopupRequest:ShowPlayerioErrorPopupRequest;
 		
 		[Inject]
-		public var handleMultiplayerInitRequest:HandleMultiplayerInitRequest;
+		public var handleGameInitRequest:HandleGameInitRequest;
 		
 		[Inject]
-		public var handleMultiplayerUpdateRequest:HandleMultiplayerUpdateRequest;
+		public var handleGameUpdateRequest:HandleGameUpdateRequest;
 		
 		[Inject]
-		public var handleMultiplayerCompetitorJoinedRequest:HandleMultiplayerCompetitorJoinedRequest;
+		public var handleGameCompetitorJoinedRequest:HandleGameCompetitorJoinedRequest;
 		
 		[Inject]
-		public var handleMultiplayerCompetitorLeftRequest:HandleMultiplayerCompetitorLeftRequest;
+		public var handleGameCompetitorLeftRequest:HandleGameCompetitorLeftRequest;
 		
 		[Inject]
-		public var handleMultiplayerCompetitorDiedRequest:HandleMultiplayerCompetitorDiedRequest;
+		public var handleGameCompetitorDiedRequest:HandleGameCompetitorDiedRequest;
 		
 		[Inject]
 		public var logMessageRequest:LogMessageRequest;
@@ -97,23 +97,23 @@ package com.funrun.controller.commands {
 		private function onInit( message:Message ):void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Game init. Message is: " + message ) );
 			multiplayerService.removeMessageHandler( Messages.INIT, onInit );
-			handleMultiplayerInitRequest.dispatch( message );
+			handleGameInitRequest.dispatch( message );
 		}
 		
 		private function onUpdate( message:Message ):void {
-			handleMultiplayerUpdateRequest.dispatch( message );
+			handleGameUpdateRequest.dispatch( message );
 		}
 		
 		private function onNewPlayerJoined( message:Message ):void {
-			handleMultiplayerCompetitorJoinedRequest.dispatch( message );
+			handleGameCompetitorJoinedRequest.dispatch( message );
 		}
 		
 		private function onPlayerLeft( message:Message ):void {
-			handleMultiplayerCompetitorLeftRequest.dispatch( message );
+			handleGameCompetitorLeftRequest.dispatch( message );
 		}
 		
 		private function onPlayerDied( message:Message ):void {
-			handleMultiplayerCompetitorDiedRequest.dispatch( message );
+			handleGameCompetitorDiedRequest.dispatch( message );
 		}
 	}
 }

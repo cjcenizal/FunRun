@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 	
 	import playerio.Message;
 	
-	public class HandleMultiplayerUpdateCommand extends Command {
+	public class HandleGameUpdateCommand extends Command {
 		
 		// Arguments.
 		

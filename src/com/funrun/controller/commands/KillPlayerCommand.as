@@ -2,7 +2,7 @@
 	
 	import com.funrun.controller.signals.AddDelayedCommandRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
-	import com.funrun.controller.signals.SendMultiplayerDeathRequest;
+	import com.funrun.controller.signals.SendGameDeathRequest;
 	import com.funrun.controller.signals.ShakeCameraRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
 	import com.funrun.model.CompetitorsModel;
@@ -35,7 +35,7 @@
 		public var endRoundRequest:EndRoundRequest;
 		
 		[Inject]
-		public var sendMultiplayerDeathRequest:SendMultiplayerDeathRequest;
+		public var sendMultiplayerDeathRequest:SendGameDeathRequest;
 		
 		[Inject]
 		public var startObserverLoopRequest:StartObserverLoopRequest;

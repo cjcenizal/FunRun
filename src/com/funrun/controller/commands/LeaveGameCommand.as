@@ -8,7 +8,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;
 	import com.funrun.services.MatchmakingService;
-	import com.funrun.services.MultiplayerService;
+	import com.funrun.services.GameService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -28,7 +28,7 @@ package com.funrun.controller.commands {
 		// Services.
 		
 		[Inject]
-		public var multiplayerService:MultiplayerService;
+		public var multiplayerService:GameService;
 		
 		[Inject]
 		public var matchmakingService:MatchmakingService;

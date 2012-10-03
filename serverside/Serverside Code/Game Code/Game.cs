@@ -134,6 +134,14 @@ namespace FunRun {
 		}
 		
 		public override void GotMessage( Player player, Message message ) {
+			switch ( message.Type ) {
+				case "r": // Ready.
+					Message readyMessage = Message.Create( "r" );
+					uint inGameId = message.GetUInt( 0 );
+					readyMessage.Add( inGameId );
+					Broadcast( readyMessage );
+					break;
+			}
 		}
 
 		public override void GameClosed() {

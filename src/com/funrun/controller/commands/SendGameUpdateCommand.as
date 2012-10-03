@@ -3,11 +3,11 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.state.OnlineState;
-	import com.funrun.services.MultiplayerService;
+	import com.funrun.services.GameService;
 	
 	import org.robotlegs.mvcs.Command;
 
-	public class SendMultiplayerUpdateCommand extends Command {
+	public class SendGameUpdateCommand extends Command {
 		
 		// State.
 		
@@ -22,7 +22,7 @@ package com.funrun.controller.commands {
 		// Services.
 		
 		[Inject]
-		public var multiplayerService:MultiplayerService;
+		public var multiplayerService:GameService;
 		
 		override public function execute():void {
 			if ( onlineState.isOnline ) {

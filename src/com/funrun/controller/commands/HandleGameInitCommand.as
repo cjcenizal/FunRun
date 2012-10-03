@@ -11,7 +11,7 @@ package com.funrun.controller.commands {
 	
 	import playerio.Message;
 
-	public class HandleMultiplayerInitCommand extends Command {
+	public class HandleGameInitCommand extends Command {
 		
 		// Arguments.
 		

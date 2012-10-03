@@ -1,8 +1,9 @@
 package com.funrun.controller.commands
 {
-	import com.funrun.services.MatchmakingService;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.state.OnlineState;
+	import com.funrun.services.MatchmakingService;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -14,6 +15,11 @@ package com.funrun.controller.commands
 		[Inject]
 		public var onlineState:OnlineState;
 		
+		// Models.
+		
+		[Inject]
+		public var playerModel:PlayerModel;
+		
 		// Services.
 		
 		[Inject]
@@ -21,7 +27,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			
+			matchmakingService.send( Messages.READY, playerModel.inGameId );
 		}
 	}
 }

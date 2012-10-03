@@ -2,9 +2,9 @@ package com.funrun.controller.signals
 {
 	import org.osflash.signals.Signal;
 	
-	public class ResetCountdownRequest extends Signal
+	public class SendGameUpdateRequest extends Signal
 	{
-		public function ResetCountdownRequest()
+		public function SendGameUpdateRequest()
 		{
 			super();
 		}

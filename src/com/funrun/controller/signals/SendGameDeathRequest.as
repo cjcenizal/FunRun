@@ -2,9 +2,9 @@ package com.funrun.controller.signals
 {
 	import org.osflash.signals.Signal;
 	
-	public class SendMultiplayerDeathRequest extends Signal
+	public class SendGameDeathRequest extends Signal
 	{
-		public function SendMultiplayerDeathRequest()
+		public function SendGameDeathRequest()
 		{
 			super();
 		}

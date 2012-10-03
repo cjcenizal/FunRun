@@ -5,6 +5,7 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
 	import com.funrun.controller.signals.LeaveGameRequest;
+	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.view.components.GameUIView;
 	
@@ -38,9 +39,13 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var leaveGameRequest:LeaveGameRequest;
 		
+		[Inject]
+		public var sendMatchmakingReadyRequest:SendMatchmakingReadyRequest;
+		
 		override public function onRegister():void {
 			view.init();
-			view.onClickQuitSignal.add( onQuitGameClicked );
+			view.onClickQuitSignal.add( onClickQuit );
+			view.onClickReadySignal.add( onClickReady );
 			drawPointsRequest.add( onDrawPointsRequested );
 			drawSpeedRequest.add( onDrawSpeedRequested );
 			drawMessageRequest.add( onDrawMessageRequested );
@@ -72,8 +77,12 @@ package com.funrun.view.mediators {
 			}
 		}
 		
-		private function onQuitGameClicked():void {
+		private function onClickQuit():void {
 			leaveGameRequest.dispatch();
+		}
+		
+		private function onClickReady():void {
+			sendMatchmakingReadyRequest.dispatch();
 		}
 	}
 }

@@ -1,15 +1,14 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.HandleMultiplayerJoinGameRequest;
+	import com.funrun.controller.signals.HandleMatchmakingJoinRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
-	import com.funrun.controller.signals.ResetCountdownRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
-	import com.funrun.model.constants.Messages;
-	import com.funrun.model.constants.Rooms;
 	import com.funrun.controller.signals.vo.LogMessageVo;
 	import com.funrun.controller.signals.vo.PlayerioErrorVo;
+	import com.funrun.model.constants.Messages;
+	import com.funrun.model.constants.Rooms;
 	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
@@ -42,13 +41,10 @@ package com.funrun.controller.commands {
 		public var showPlayerioErrorPopupRequest:ShowPlayerioErrorPopupRequest;
 		
 		[Inject]
-		public var handleMultiplayerJoinGameRequest:HandleMultiplayerJoinGameRequest;
+		public var handleMatchmakingJoinGameRequest:HandleMatchmakingJoinRequest;
 		
 		[Inject]
 		public var startCountdownRequest:StartCountdownRequest;
-		
-	//	[Inject]
-	//	public var resetCountdownRequest:ResetCountdownRequest;
 		
 		[Inject]
 		public var logMessageRequest:LogMessageRequest;
@@ -68,8 +64,8 @@ package com.funrun.controller.commands {
 			// Listen for disconnect.
 			matchmakingService.onServerDisconnectSignal.add( onDisconnected );
 			matchmakingService.addMessageHandler( Messages.JOIN_GAME, onJoinGame );
+			matchmakingService.addMessageHandler( Messages.READY, onPlayerReady );
 			matchmakingService.addMessageHandler( Messages.START_COUNTDOWN, onStartCountdown );
-			//matchmakingService.addMessageHandler( Messages.RESET_COUNTDOWN, onResetCountdown );
 		}
 		
 		private function onDisconnected():void {
@@ -85,17 +81,16 @@ package com.funrun.controller.commands {
 		private function onJoinGame( message:Message ):void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Joined a game. Message is: " + message ) );
 			matchmakingService.removeMessageHandler( Messages.JOIN_GAME, onJoinGame );
-			handleMultiplayerJoinGameRequest.dispatch( message );
+			handleMatchmakingJoinGameRequest.dispatch( message );
+		}
+		
+		private function onPlayerReady( message:Message ):void {
+			var inGameId:uint = message.getUInt( 0 );
 		}
 		
 		private function onStartCountdown( message:Message ):void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Started countdown. Message is: " + message ) );
 			startCountdownRequest.dispatch( message.getNumber( 0 ) );
 		}
-		
-	/*	private function onResetCountdown( message:Message ):void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Reset countdown. Message is: " + message ) );
-			resetCountdownRequest.dispatch();
-		}*/
 	}
 }

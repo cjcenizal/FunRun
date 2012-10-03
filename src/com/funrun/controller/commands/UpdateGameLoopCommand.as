@@ -1,7 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.RenderSceneRequest;
-	import com.funrun.controller.signals.SendMultiplayerUpdateRequest;
+	import com.funrun.controller.signals.SendGameUpdateRequest;
 	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
 	import com.funrun.controller.signals.UpdatePlayerRequest;
@@ -51,7 +51,7 @@ package com.funrun.controller.commands {
 		public var renderSceneRequest:RenderSceneRequest;
 		
 		[Inject]
-		public var sendMultiplayerUpdateRequest:SendMultiplayerUpdateRequest;
+		public var sendMultiplayerUpdateRequest:SendGameUpdateRequest;
 		
 		[Inject]
 		public var updateTrackRequest:UpdateTrackRequest;
