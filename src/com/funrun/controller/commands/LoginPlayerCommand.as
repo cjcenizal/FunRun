@@ -5,10 +5,10 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.UpdateLoginStatusRequest;
 	import com.funrun.model.ConfigurationModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.constants.Login;
 	import com.funrun.model.constants.PlayerProperties;
-	import com.funrun.model.state.LoginState;
-	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioPlayerObjectService;
@@ -17,11 +17,6 @@ package com.funrun.controller.commands {
 
 	public class LoginPlayerCommand extends AsyncCommand {
 
-		// State.
-
-		[Inject]
-		public var onlineState:OnlineState;
-		
 		// Models.
 		
 		[Inject]
@@ -29,6 +24,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var gameModel:GameModel;
 		
 		// Commands.
 		
@@ -52,7 +50,7 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// Configure the app and login.
 			loadConfigurationRequest.dispatch();
-			if ( onlineState.isOnline ) {
+			if ( gameModel.isOnline ) {
 				attemptLogin();
 			} else {
 				playerModel.color = "blue";
@@ -61,18 +59,18 @@ package com.funrun.controller.commands {
 		}
 		
 		private function attemptLogin():void {
-			updateLoginStatus.dispatch( LoginState.LOGGING_IN );
+			updateLoginStatus.dispatch( Login.LOGGING_IN );
 			playerioFacebookLoginService.onConnectedSignal.add( onLoginConnected );
 			playerioFacebookLoginService.onErrorSignal.add( onLoginError );
 			playerioFacebookLoginService.connect( this.contextView.stage, configurationModel.fbAccessToken, configurationModel.playerioGameId, configurationModel.playerioPartnerId );
 		}
 		
 		private function onLoginError():void {
-			updateLoginStatus.dispatch( LoginState.PLAYERIO_FAILURE );
+			updateLoginStatus.dispatch( Login.PLAYERIO_FAILURE );
 		}
 		
 		private function onLoginConnected():void {
-			updateLoginStatus.dispatch( LoginState.CONNECTING_TO_FB );
+			updateLoginStatus.dispatch( Login.CONNECTING_TO_FB );
 			// If we've received a new token, store it in the model.
 			configurationModel.fbAccessToken = playerioFacebookLoginService.fbAccessToken;
 			FB.init( { access_token: configurationModel.fbAccessToken, app_id: configurationModel.fbAppId, debug: true } );
@@ -91,22 +89,22 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onWhitelistFailed():void {
-			updateLoginStatus.dispatch( LoginState.WHITELIST_FAILED );
+			updateLoginStatus.dispatch( Login.WHITELIST_FAILED );
 		}
 		
 		private function onWhitelistPassed():void {
-			updateLoginStatus.dispatch( LoginState.WHITELIST_PASSED );
+			updateLoginStatus.dispatch( Login.WHITELIST_PASSED );
 			playerioPlayerObjectService.onLoadedSignal.add( onPlayerObjectLoaded );
 			playerioPlayerObjectService.onErrorSignal.add( onPlayerObjectError );
 			playerioPlayerObjectService.connect( playerioFacebookLoginService.client );
 		}
 		
 		private function onPlayerObjectError():void {
-			updateLoginStatus.dispatch( LoginState.PLAYER_OBJECT_ERROR );
+			updateLoginStatus.dispatch( Login.PLAYER_OBJECT_ERROR );
 		}
 		
 		private function onPlayerObjectLoaded():void {
-			updateLoginStatus.dispatch( LoginState.PLAYER_OBJECT_LOADED );
+			updateLoginStatus.dispatch( Login.PLAYER_OBJECT_LOADED );
 			// Read properties from the database.
 			var key:String, val:*;
 			for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {

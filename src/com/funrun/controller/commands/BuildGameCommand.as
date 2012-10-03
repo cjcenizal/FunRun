@@ -38,7 +38,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Time;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.constants.World;
-	import com.funrun.model.state.ProductionState;
+	import com.funrun.model.GameModel;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -48,7 +48,7 @@ package com.funrun.controller.commands {
 		// State.
 		
 		[Inject]
-		public var productionState:ProductionState;
+		public var productionState:GameModel;
 		
 		// Models.
 		

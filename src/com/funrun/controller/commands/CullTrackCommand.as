@@ -1,11 +1,11 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Segment;
 	import com.funrun.model.constants.Track;
-	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.PointVo;
 	import com.funrun.model.vo.SegmentVo;
 	
@@ -34,7 +34,7 @@ package com.funrun.controller.commands {
 		// State.
 		
 		[Inject]
-		public var showBoundsState:ShowBoundsState;
+		public var gameModel:GameModel;
 		
 		// Private vars.
 		
@@ -66,7 +66,7 @@ package com.funrun.controller.commands {
 						}
 					}
 					
-					removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? segment.boundsMesh : segment.mesh );
+					removeObjectFromSceneRequest.dispatch( ( gameModel.showBounds ) ? segment.boundsMesh : segment.mesh );
 					trackModel.removeSegmentAt( i );
 					i--;
 				}

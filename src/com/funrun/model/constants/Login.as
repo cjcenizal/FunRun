@@ -1,6 +1,6 @@
-package com.funrun.model.state
+package com.funrun.model.constants
 {
-	public class LoginState
+	public class Login
 	{
 		public static const LOGGING_IN:String = "Logging in...";
 		public static const CONNECTING_TO_FB:String = "Connecting to FB...";

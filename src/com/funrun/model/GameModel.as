@@ -1,13 +1,19 @@
-package com.funrun.model.state {
+package com.funrun.model {
+	import org.robotlegs.mvcs.Actor;
 	
-	public class ProductionState {
+	public class GameModel extends Actor {
 		
 		public var isProduction:Boolean;
+		public var isOnline:Boolean;
+		public var showBounds:Boolean;
 		private var _showStats:Boolean = false;
 		private var _isExploration:Boolean = false;
 		
-		public function ProductionState( isProduction:Boolean ) {
+		public function GameModel( isProduction:Boolean, isOnline:Boolean, showBounds:Boolean = false ) {
+			super();
 			this.isProduction = isProduction;
+			this.isOnline = isOnline;
+			this.showBounds = showBounds;
 		}
 		
 		public function set showStats( val:Boolean ):void {
@@ -33,5 +39,6 @@ package com.funrun.model.state {
 		public function get isExploration():Boolean {
 			return _isExploration;
 		}
+		
 	}
 }

@@ -9,7 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.ObserverModel;
 	import com.funrun.model.View3dModel;
 	import com.funrun.model.events.TimeEvent;
-	import com.funrun.model.state.ScreenState;
+	import com.funrun.model.constants.Screen;
 	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
@@ -72,7 +72,7 @@ package com.funrun.controller.commands {
 			
 			// TEMP: Show game screen.
 			removeFindingGamePopupRequest.dispatch();
-			showScreenRequest.dispatch( ScreenState.MULTIPLAYER_GAME );
+			showScreenRequest.dispatch( Screen.MULTIPLAYER_GAME );
 		}
 	}
 }

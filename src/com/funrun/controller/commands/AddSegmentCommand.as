@@ -3,12 +3,12 @@ package com.funrun.controller.commands {
 	import away3d.entities.Mesh;
 	
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.controller.signals.vo.AddSegmentVo;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.constants.Segment;
-	import com.funrun.model.state.ShowBoundsState;
-	import com.funrun.controller.signals.vo.AddSegmentVo;
 	import com.funrun.model.vo.PointVo;
 	import com.funrun.model.vo.SegmentVo;
 	
@@ -32,15 +32,15 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var pointsModel:PointsModel;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		// Commands.
 		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
 		
 		// State.
-		
-		[Inject]
-		public var showBoundsState:ShowBoundsState;
 		
 		override public function execute():void {
 			// Get a segment from the model for our current position.
@@ -64,7 +64,7 @@ package com.funrun.controller.commands {
 			// Add it to the track.
 			trackModel.addSegment( segment );
 			// Add its mesh to the view.
-			var mesh:Mesh = ( showBoundsState.showBounds ) ? segment.boundsMesh : segment.mesh;
+			var mesh:Mesh = ( gameModel.showBounds ) ? segment.boundsMesh : segment.mesh;
 			addObjectToSceneRequest.dispatch( mesh );
 		}
 	}

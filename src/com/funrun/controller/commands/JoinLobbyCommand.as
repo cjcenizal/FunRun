@@ -10,11 +10,11 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.vo.PlayerioErrorVo;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
-	import com.funrun.model.state.OnlineState;
-	import com.funrun.model.state.ScreenState;
+	import com.funrun.model.constants.Screen;
 	import com.funrun.services.LobbyService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	
@@ -31,7 +31,7 @@ package com.funrun.controller.commands
 		// State.
 		
 		[Inject]
-		public var onlineState:OnlineState;
+		public var gameModel:GameModel;
 		
 		// Services.
 		
@@ -77,7 +77,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			if ( onlineState.isOnline ) {
+			if ( gameModel.isOnline ) {
 				// Hide view and block interaction.
 				showJoiningLobbyPopupRequest.dispatch();
 				// Join the lobby.
@@ -102,7 +102,7 @@ package com.funrun.controller.commands
 			lobbyService.addMessageHandler( Messages.WELCOME, onWelcome );
 			// Show lobby.
 			removeJoiningLobbyPopupRequest.dispatch();
-			showScreenRequest.dispatch( ScreenState.LOBBY );
+			showScreenRequest.dispatch( Screen.LOBBY );
 		}
 		
 		private function onDisconnected():void {

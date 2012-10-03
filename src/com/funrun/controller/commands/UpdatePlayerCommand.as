@@ -11,7 +11,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Sounds;
-	import com.funrun.model.state.ProductionState;
+	import com.funrun.model.GameModel;
 	
 	import flash.ui.Keyboard;
 	
@@ -28,7 +28,7 @@ package com.funrun.controller.commands
 		// State.
 		
 		[Inject]
-		public var productionState:ProductionState;
+		public var productionState:GameModel;
 		
 		// Models.
 		

@@ -5,18 +5,18 @@ package com.funrun.controller.commands
 	import away3d.primitives.CubeGeometry;
 	import away3d.tools.commands.Merge;
 	
+	import com.funrun.controller.signals.vo.StoreObstacleVo;
 	import com.funrun.model.BlocksModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Materials;
-	import com.funrun.model.state.ShowBoundsState;
 	import com.funrun.model.vo.BlockVo;
 	import com.funrun.model.vo.BoundingBoxVo;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.ObstacleBlockVo;
 	import com.funrun.model.vo.PointVo;
 	import com.funrun.model.vo.SegmentVo;
-	import com.funrun.controller.signals.vo.StoreObstacleVo;
 	import com.funrun.services.parsers.ObstacleParser;
 	
 	import org.robotlegs.mvcs.Command;
@@ -37,10 +37,8 @@ package com.funrun.controller.commands
 		[Inject]
 		public var segmentsModel:SegmentsModel;
 		
-		// State.
-		
 		[Inject]
-		public var showBoundsState:ShowBoundsState;
+		public var gameModel:GameModel;
 		
 		override public function execute():void {
 			var obstacleData:ObstacleParser = new ObstacleParser( vo.blocks );
@@ -92,7 +90,7 @@ package com.funrun.controller.commands
 			
 			// Add a bounds indicator.
 			var boundsMesh:Mesh = null;
-			if ( showBoundsState.showBounds ) {
+			if ( gameModel.showBounds ) {
 				boundsMesh = new Mesh( new Geometry() );
 				var len:int = boundingBoxes.length;
 				var box:BoundingBoxVo;

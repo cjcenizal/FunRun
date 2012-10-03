@@ -4,8 +4,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.StartOfflineGameRequest;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.StateModel;
-	import com.funrun.model.state.OnlineState;
 	import com.funrun.services.LobbyService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -15,17 +15,15 @@ package com.funrun.controller.commands {
 	 */
 	public class ClickStartGameCommand extends Command {
 		
-		// State.
-		
-		[Inject]
-		public var onlineState:OnlineState;
-		
 		// Services.
 		
 		[Inject]
 		public var lobbyService:LobbyService;
 		
 		// Models.
+		
+		[Inject]
+		public var gameModel:GameModel;
 		
 		[Inject]
 		public var stateModel:StateModel;
@@ -54,7 +52,7 @@ package com.funrun.controller.commands {
 			// Render to clear the view.
 			renderSceneRequest.dispatch();
 			// Connect to a game.
-			if ( onlineState.isOnline ) {
+			if ( gameModel.isOnline ) {
 				joinMatchmakingRequest.dispatch();
 			} else {
 				startOfflineGameRequest.dispatch();

@@ -1,7 +1,7 @@
 package com.funrun.view.mediators {
 	
 	import com.funrun.controller.signals.ShowScreenRequest;
-	import com.funrun.model.state.ScreenState;
+	import com.funrun.model.constants.Screen;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
@@ -23,13 +23,13 @@ package com.funrun.view.mediators {
 		
 		private function onShowScreenRequested( screen:String ):void {
 			switch ( screen ) {
-				case ScreenState.MAIN_MENU:
+				case Screen.MAIN_MENU:
 					view.showMainMenu();
 					break;
-				case ScreenState.LOBBY:
+				case Screen.LOBBY:
 					view.showLobby();
 					break;
-				case ScreenState.MULTIPLAYER_GAME:
+				case Screen.MULTIPLAYER_GAME:
 					view.showGame();
 					break;
 			}

@@ -1,7 +1,7 @@
 package com.funrun.controller.commands
 {
 	import com.cenizal.utils.Console;
-	import com.funrun.model.state.ProductionState;
+	import com.funrun.model.GameModel;
 	import com.funrun.controller.signals.vo.LogMessageVo;
 	
 	import org.robotlegs.mvcs.Command;
@@ -17,7 +17,7 @@ package com.funrun.controller.commands
 		// State.
 		
 		[Inject]
-		public var productionState:ProductionState;
+		public var productionState:GameModel;
 		
 		// Services.
 		

@@ -1,6 +1,6 @@
-package com.funrun.model.state
+package com.funrun.model.constants
 {
-	public class ScreenState
+	public class Screen
 	{
 		public static const MAIN_MENU:String = "MAIN_MENU";
 		public static const LOBBY:String = "LOBBY";

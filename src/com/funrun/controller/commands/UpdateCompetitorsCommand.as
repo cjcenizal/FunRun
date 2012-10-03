@@ -3,20 +3,18 @@ package com.funrun.controller.commands {
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.model.CompetitorsModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
-	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
 	
 	public class UpdateCompetitorsCommand extends Command {
 		
-		// State.
+		// Models.
 		
 		[Inject]
-		public var onlineState:OnlineState;
-		
-		// Models.
+		public var gameModel:GameModel;
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
@@ -31,7 +29,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Update AI.
-			if ( !onlineState.isOnline ) {
+			if ( !gameModel.isOnline ) {
 				updateAiCompetitorsRequest.dispatch();
 			}
 			

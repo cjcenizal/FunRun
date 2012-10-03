@@ -7,7 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.PlayerProperties;
-	import com.funrun.model.state.ProductionState;
+	import com.funrun.model.GameModel;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -21,7 +21,7 @@ package com.funrun.controller.commands {
 		// State.
 		
 		[Inject]
-		public var productionState:ProductionState;
+		public var productionState:GameModel;
 		
 		// Commands.
 		

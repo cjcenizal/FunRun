@@ -16,16 +16,16 @@ package com.funrun {
 	import com.funrun.controller.commands.CullTrackCommand;
 	import com.funrun.controller.commands.EndRoundCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
-	import com.funrun.controller.commands.HandleLobbyChatCommand;
-	import com.funrun.controller.commands.HandleLobbyPlayerJoinedCommand;
-	import com.funrun.controller.commands.HandleLobbyPlayerLeftCommand;
-	import com.funrun.controller.commands.HandleLobbyWelcomeCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorDiedCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorJoinedCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorLeftCommand;
 	import com.funrun.controller.commands.HandleGameInitCommand;
-	import com.funrun.controller.commands.HandleMatchmakingJoinCommand;
 	import com.funrun.controller.commands.HandleGameUpdateCommand;
+	import com.funrun.controller.commands.HandleLobbyChatCommand;
+	import com.funrun.controller.commands.HandleLobbyPlayerJoinedCommand;
+	import com.funrun.controller.commands.HandleLobbyPlayerLeftCommand;
+	import com.funrun.controller.commands.HandleLobbyWelcomeCommand;
+	import com.funrun.controller.commands.HandleMatchmakingJoinCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinLobbyCommand;
@@ -42,10 +42,10 @@ package com.funrun {
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
 	import com.funrun.controller.commands.SavePlayerObjectCommand;
-	import com.funrun.controller.commands.SendLobbyChatCommand;
-	import com.funrun.controller.commands.SendMatchmakingReadyCommand;
 	import com.funrun.controller.commands.SendGameDeathCommand;
 	import com.funrun.controller.commands.SendGameUpdateCommand;
+	import com.funrun.controller.commands.SendLobbyChatCommand;
+	import com.funrun.controller.commands.SendMatchmakingReadyCommand;
 	import com.funrun.controller.commands.ShakeCameraCommand;
 	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
 	import com.funrun.controller.commands.ShowJoiningLobbyPopupCommand;
@@ -93,16 +93,16 @@ package com.funrun {
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
-	import com.funrun.controller.signals.HandleLobbyChatRequest;
-	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
-	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
-	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorDiedRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorJoinedRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorLeftRequest;
 	import com.funrun.controller.signals.HandleGameInitRequest;
-	import com.funrun.controller.signals.HandleMatchmakingJoinRequest;
 	import com.funrun.controller.signals.HandleGameUpdateRequest;
+	import com.funrun.controller.signals.HandleLobbyChatRequest;
+	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
+	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
+	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
+	import com.funrun.controller.signals.HandleMatchmakingJoinRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
@@ -123,10 +123,10 @@ package com.funrun {
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.SavePlayerObjectRequest;
-	import com.funrun.controller.signals.SendLobbyChatRequest;
-	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.SendGameDeathRequest;
 	import com.funrun.controller.signals.SendGameUpdateRequest;
+	import com.funrun.controller.signals.SendLobbyChatRequest;
+	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.ShakeCameraRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowJoiningLobbyPopupRequest;
@@ -159,6 +159,7 @@ package com.funrun {
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.DelayedCommandsModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.LightsModel;
@@ -177,13 +178,10 @@ package com.funrun {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3dModel;
-	import com.funrun.model.state.OnlineState;
-	import com.funrun.model.state.ProductionState;
-	import com.funrun.model.state.ShowBoundsState;
+	import com.funrun.services.GameService;
 	import com.funrun.services.IWhitelistService;
 	import com.funrun.services.LobbyService;
 	import com.funrun.services.MatchmakingService;
-	import com.funrun.services.GameService;
 	import com.funrun.services.OrdinalizeNumberService;
 	import com.funrun.services.PlayerioFacebookLoginService;
 	import com.funrun.services.PlayerioMultiplayerService;
@@ -232,18 +230,17 @@ package com.funrun {
 		override public function startup():void {
 			// Switches.
 			var useWhitelist:Boolean 				= false;
-			var onlineState:OnlineState 			= new OnlineState( true );
-			var productionState:ProductionState 	= new ProductionState( false );
-			productionState.showStats 				= false;
-			var showBoundsState:ShowBoundsState		= new ShowBoundsState( false );
+			var isProduction:Boolean				= false;
+			var isOnline:Boolean					= true;
+			var showBounds:Boolean					= false;
+			var gameModel:GameModel = new GameModel( isProduction, isOnline, showBounds );
+			gameModel.showStats 					= false;
 			
 			// Map switches.
-			injector.mapValue( OnlineState, onlineState );
-			injector.mapValue( ProductionState, productionState );
-			injector.mapValue( ShowBoundsState, showBoundsState );
+			injector.mapValue( GameModel, gameModel );
 			
 			// Apply whitelist switch.
-			if ( onlineState.isOnline && useWhitelist ) {
+			if ( gameModel.isOnline && useWhitelist ) {
 				// Block non-whitelisted users.
 				injector.mapSingletonOf( IWhitelistService, WhitelistService );
 			} else {

@@ -6,6 +6,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.NametagsModel;
 	import com.funrun.model.PlayerModel;
@@ -14,7 +15,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3dModel;
-	import com.funrun.model.state.ShowBoundsState;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -52,6 +52,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var keyboardModel:KeyboardModel;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -66,17 +69,12 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var drawPointsRequest:DrawPointsRequest;
 		
-		// State.
-		
-		[Inject]
-		public var showBoundsState:ShowBoundsState;
-		
 		override public function execute():void {
 			// Reset time.
 			timeModel.reset();
 			// Remove all existing obstacles.
 			while ( trackModel.numSegments > 0 ) {
-				removeObjectFromSceneRequest.dispatch( ( showBoundsState.showBounds ) ? trackModel.getSegmentAt( 0 ).boundsMesh : trackModel.getSegmentAt( 0 ).mesh );
+				removeObjectFromSceneRequest.dispatch( ( gameModel.showBounds ) ? trackModel.getSegmentAt( 0 ).boundsMesh : trackModel.getSegmentAt( 0 ).mesh );
 				trackModel.removeSegmentAt( 0 );
 			}
 			// Remove points.
