@@ -1,5 +1,6 @@
 package com.funrun.controller.commands
 {
+	import com.funrun.controller.signals.ClickStartGameRequest;
 	import com.funrun.controller.signals.HandleLobbyChatRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
@@ -12,6 +13,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
+	import com.funrun.model.state.OnlineState;
 	import com.funrun.model.state.ScreenState;
 	import com.funrun.services.LobbyService;
 	import com.funrun.services.PlayerioFacebookLoginService;
@@ -25,6 +27,11 @@ package com.funrun.controller.commands
 	 */
 	public class JoinLobbyCommand extends Command
 	{
+		
+		// State.
+		
+		[Inject]
+		public var onlineState:OnlineState;
 		
 		// Services.
 		
@@ -40,6 +47,9 @@ package com.funrun.controller.commands
 		public var playerModel:PlayerModel;
 		
 		// Commands.
+		
+		[Inject]
+		public var clickStartGameRequest:ClickStartGameRequest;
 		
 		[Inject]
 		public var showJoiningLobbyPopupRequest:ShowJoiningLobbyPopupRequest;
@@ -67,15 +77,20 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			// Hide view and block interaction.
-			showJoiningLobbyPopupRequest.dispatch();
-			// Join the lobby.
-			lobbyService.onErrorSignal.add( onError );
-			lobbyService.onConnectedSignal.add( onConnected );
-			var userJoinData:Object = {
-				name: playerModel.name,
-				id: loginService.userId };
-			lobbyService.connect( loginService.client, Rooms.LOBBY, userJoinData );
+			if ( onlineState.isOnline ) {
+				// Hide view and block interaction.
+				showJoiningLobbyPopupRequest.dispatch();
+				// Join the lobby.
+				lobbyService.onErrorSignal.add( onError );
+				lobbyService.onConnectedSignal.add( onConnected );
+				var userJoinData:Object = {
+					name: playerModel.name,
+					id: loginService.userId };
+				lobbyService.connect( loginService.client, Rooms.LOBBY, userJoinData );
+			} else {
+				// Stubbed offline behavior is to just start a game.
+				clickStartGameRequest.dispatch();
+			}
 		}
 		
 		private function onConnected():void {
