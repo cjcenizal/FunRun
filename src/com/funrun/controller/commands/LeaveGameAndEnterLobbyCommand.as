@@ -12,7 +12,7 @@ package com.funrun.controller.commands {
 	
 	import org.robotlegs.mvcs.Command;
 
-	public class LeaveGameCommand extends Command {
+	public class LeaveGameAndEnterLobbyCommand extends Command {
 
 		// Models.
 		
@@ -59,7 +59,7 @@ package com.funrun.controller.commands {
 			// Reset in-game ID.
 			playerModel.resetInGameId();
 			// Update state.
-			stateModel.showMainMenu();
+			//stateModel.showMainMenu();
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
 			joinLobbyRequest.dispatch();

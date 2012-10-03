@@ -13,7 +13,7 @@ package com.funrun.controller.commands {
 	/**
 	 * StartGameCommand starts the main game loop.
 	 */
-	public class ClickStartGameCommand extends Command {
+	public class LeaveLobbyAndEnterGameCommand extends Command {
 		
 		// Services.
 		
@@ -34,9 +34,6 @@ package com.funrun.controller.commands {
 		public var resetGameRequest:ResetGameRequest;
 		
 		[Inject]
-		public var renderSceneRequest:RenderSceneRequest;
-		
-		[Inject]
 		public var joinMatchmakingRequest:JoinMatchmakingRequest;
 		
 		[Inject]
@@ -45,12 +42,10 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			// Disconnect from lobby.
 			lobbyService.disconnectAndReset();
-			// Set game state.
-			stateModel.waitForPlayers();
 			// Reset game.
 			resetGameRequest.dispatch();
 			// Render to clear the view.
-			renderSceneRequest.dispatch();
+			//renderSceneRequest.dispatch();
 			// Connect to a game.
 			if ( gameModel.isOnline ) {
 				joinMatchmakingRequest.dispatch();

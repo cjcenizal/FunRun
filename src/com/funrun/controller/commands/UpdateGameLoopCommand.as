@@ -9,7 +9,9 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.UpdateUiRequest;
 	import com.funrun.controller.signals.UpdateViewRequest;
 	import com.funrun.controller.signals.vo.UpdateTrackVo;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.events.TimeEvent;
 	
@@ -29,6 +31,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var stateModel:StateModel;
 		
 		// Commands.
 		
@@ -58,11 +63,16 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			
-			// Target 30 frames per second and move the player.
-			var framesElapsed:int = 1;//Math.round( .03 * timeEvent.delta );
-			updatePlayerRequest.dispatch( framesElapsed );
-			
-			updateCollisionsRequest.dispatch();
+		//	switch ( gameModel.state ) {
+		//		case GameModel.READY_TO_RUN:
+					// Target 30 frames per second and move the player.
+					var framesElapsed:int = 1;//Math.round( .03 * timeEvent.delta );
+					updatePlayerRequest.dispatch( framesElapsed );
+					updateCollisionsRequest.dispatch();
+		//			break;
+		//		case GameModel.WAITING_FOR_READY:
+		//			break;
+		//	}
 			
 			updateTrackRequest.dispatch( new UpdateTrackVo( playerModel.distance ) );
 			

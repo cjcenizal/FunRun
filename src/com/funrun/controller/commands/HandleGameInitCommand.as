@@ -21,7 +21,7 @@ package com.funrun.controller.commands {
 		// State.
 		
 		[Inject]
-		public var gameState:StateModel;
+		public var stateModel:StateModel;
 		
 		// Models.
 		

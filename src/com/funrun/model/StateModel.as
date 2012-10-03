@@ -11,12 +11,16 @@ package com.funrun.model
 		private static const SHOWING_RESULTS:String = "SHOWING_RESULTS";
 		
 		private var _gameState:String;
+
+		public var canDie:Boolean = false;
+		public var canMoveForward:Boolean = false;
 		
 		public function StateModel() {
 			super();
 		}
 		
-		public function waitForPlayers():void {
+		
+	/*	public function waitForPlayers():void {
 			_gameState = WAITING_FOR_PLAYERS;
 		}
 		
@@ -49,6 +53,6 @@ package com.funrun.model
 		
 		public function isShowingResults():Boolean {
 			return _gameState == SHOWING_RESULTS;
-		}
+		}*/
 	}
 }

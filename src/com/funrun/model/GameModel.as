@@ -6,6 +6,7 @@ package com.funrun.model {
 		public var isProduction:Boolean;
 		public var isOnline:Boolean;
 		public var showBounds:Boolean;
+		
 		private var _showStats:Boolean = false;
 		private var _isExploration:Boolean = false;
 		

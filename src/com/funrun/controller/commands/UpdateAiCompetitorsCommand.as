@@ -32,7 +32,7 @@ package com.funrun.controller.commands {
 		public var timeModel:TimeModel;
 		
 		override public function execute():void {
-			if ( stateModel.isRunning() ) {
+			if ( stateModel.canMoveForward ) {
 				// Update positions.
 				interpolationModel.reset();
 				var competitor:CompetitorVo;

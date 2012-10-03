@@ -1,12 +1,13 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.HandleMatchmakingJoinRequest;
+	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.vo.LogMessageVo;
 	import com.funrun.controller.signals.vo.PlayerioErrorVo;
+	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
 	import com.funrun.services.MatchmakingService;
@@ -32,6 +33,11 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var matchmakingService:MatchmakingService;
 		
+		// Models.
+		
+		[Inject]
+		public var segmentsModel:SegmentsModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -41,13 +47,13 @@ package com.funrun.controller.commands {
 		public var showPlayerioErrorPopupRequest:ShowPlayerioErrorPopupRequest;
 		
 		[Inject]
-		public var handleMatchmakingJoinGameRequest:HandleMatchmakingJoinRequest;
-		
-		[Inject]
 		public var startCountdownRequest:StartCountdownRequest;
 		
 		[Inject]
 		public var logMessageRequest:LogMessageRequest;
+		
+		[Inject]
+		public var joinGameRequest:JoinGameRequest;
 		
 		override public function execute():void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Connecting to matchmaking service..." ) );
@@ -81,11 +87,21 @@ package com.funrun.controller.commands {
 		private function onJoinGame( message:Message ):void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Joined a game. Message is: " + message ) );
 			matchmakingService.removeMessageHandler( Messages.JOIN_GAME, onJoinGame );
-			handleMatchmakingJoinGameRequest.dispatch( message );
+			
+			var roomIdToJoin:String = message.getString( 0 );
+			var obstacleSeed:Number = message.getInt( 1 );
+			var remainingMsInCountdown:Number = message.getNumber( 2 );
+			
+			// Store random seed.
+			segmentsModel.seed = obstacleSeed;
+			
+			// Connect to game.
+			joinGameRequest.dispatch( roomIdToJoin );
 		}
 		
 		private function onPlayerReady( message:Message ):void {
 			var inGameId:uint = message.getUInt( 0 );
+			// Update visually.
 		}
 		
 		private function onStartCountdown( message:Message ):void {

@@ -77,7 +77,7 @@ package com.funrun.controller.commands
 			// Jumping.
 			if ( keyboardModel.isDown( Keyboard.SPACE ) || ( !productionState.isExploration && keyboardModel.isDown( Keyboard.UP ) ) ) {
 				if ( playerModel.isOnTheGround ) {
-					if ( stateModel.isRunning() ) {
+					if ( stateModel.canMoveForward ) {
 						playerModel.velocity.z += Player.JUMP_FORWARD_BOOST;
 					}
 					playerModel.velocity.y += Player.JUMP_SPEED;
@@ -111,17 +111,6 @@ package com.funrun.controller.commands
 							playerModel.velocity.z -= Player.FREE_RUN_SPEED;
 						}	
 						playerModel.velocity.z *= Player.FRICTION;
-					} else  {
-						// Move forward according to game logic.
-						if ( stateModel.isRunning() ) {
-							// Slow down or speed up depending on whether we're turning or not.
-							if ( keyboardModel.isDown( Keyboard.LEFT ) || keyboardModel.isDown( Keyboard.RIGHT ) ) {
-								if ( playerModel.velocity.z < Player.MAX_DODGING_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
-							} else {
-								if ( playerModel.velocity.z > Player.MAX_SPEED ) playerModel.velocity.z -= Player.DECELERATION;
-								else if ( playerModel.velocity.z < Player.MAX_SPEED ) playerModel.velocity.z += Player.ACCELERATION;
-							}
-						}
 					}
 				}
 				
@@ -140,9 +129,9 @@ package com.funrun.controller.commands
 				
 				// Check for falling death.
 				if ( playerModel.position.y <= Player.FALL_DEATH_HEIGHT ) {
-					if ( stateModel.isRunning() ) {
+					if ( stateModel.canDie ) {
 						killPlayerRequest.dispatch( Collisions.FALL );
-					} else if ( stateModel.isWaitingForPlayers() ) {
+					} else {
 						resetPlayerRequest.dispatch( false );
 					}
 				}
