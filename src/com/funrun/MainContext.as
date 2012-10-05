@@ -312,7 +312,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddSegmentRequest,						AddSegmentCommand );
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
-			signalCommandMap.mapSignalClass( JoinLobbyRequest,					JoinLobbyCommand );
+			signalCommandMap.mapSignalClass( JoinLobbyRequest,						JoinLobbyCommand );
 			signalCommandMap.mapSignalClass( ClickStartGameRequest,					LeaveLobbyAndEnterGameCommand );
 			signalCommandMap.mapSignalClass( CollectPointRequest,					CollectPointCommand );
 			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );

@@ -77,7 +77,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			if ( gameModel.isOnline ) {
+			if ( gameModel.isOnline && !gameModel.isExploration ) {
 				// Hide view and block interaction.
 				showJoiningLobbyPopupRequest.dispatch();
 				// Join the lobby.

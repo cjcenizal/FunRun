@@ -35,6 +35,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var stateModel:StateModel;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -84,7 +87,9 @@ package com.funrun.controller.commands {
 			
 			updateUiRequest.dispatch();
 			
-			sendMultiplayerUpdateRequest.dispatch();
+			if ( gameModel.isOnline ) {
+				sendMultiplayerUpdateRequest.dispatch();
+			}
 		}
 	}
 }

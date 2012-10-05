@@ -1,7 +1,6 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
-	import com.funrun.controller.signals.RenderSceneRequest;
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.StartOfflineGameRequest;
 	import com.funrun.model.GameModel;

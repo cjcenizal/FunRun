@@ -42,12 +42,18 @@ package {
 		TO-DO:
 		- New multiplayer process
 			- Click join game
+				- Server is open
+				- Once min players is reached, start internal counter
+				- If nobody joins, close game and start external timer
+				- If somebody joins, reset internal counter
+				- Once max players is reached, close game and start external timer
 				- Float in space with a "ready" button in front of you
 				- Wait for 4 people to join and click ready
 			- Start game
 			- Add "leave lobby" button
 			- Exit game boots back to lobby
-		- Add "single player" option with instructions
+		- Figure out exploration mode and AI mode later
+			- Add "single player" option with instructions
 		- Memory pool for BoundingBoxVos
 		- Send dash and jump via network so we can have sound fx
 		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack

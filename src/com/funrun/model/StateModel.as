@@ -5,12 +5,12 @@ package com.funrun.model
 	public class StateModel extends Actor
 	{
 		
-		private static const MAIN_MENU:String = "MAIN_MENU";
-		private static const WAITING_FOR_PLAYERS:String = "WAITING_FOR_PLAYERS";
-		private static const RUNNING:String = "RUNNING";
-		private static const SHOWING_RESULTS:String = "SHOWING_RESULTS";
+	//	private static const MAIN_MENU:String = "MAIN_MENU";
+	//	private static const WAITING_FOR_PLAYERS:String = "WAITING_FOR_PLAYERS";
+	//	private static const RUNNING:String = "RUNNING";
+	//	private static const SHOWING_RESULTS:String = "SHOWING_RESULTS";
 		
-		private var _gameState:String;
+	//	private var _gameState:String;
 
 		public var canDie:Boolean = false;
 		public var canMoveForward:Boolean = false;
