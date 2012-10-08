@@ -90,6 +90,7 @@ namespace FunRun {
 
 		// Game state.
 		private int numPlayers = 0;
+		Dictionary<int, Boolean> readyPlayers = new Dictionary<int, Boolean>();
 
 		// Limits.
 		private const int REQUIRED_NUM_PLAYERS = 4;
@@ -103,11 +104,14 @@ namespace FunRun {
 
 		public override void UserJoined( Player player ) {
 			numPlayers++;
+			player.id = player.JoinData[ "id" ];
+			readyPlayers.Add( player.Id, false );
 
 			// Create start message for the joining player.
 			Message joinGameMessage = Message.Create( "j" );
 			joinGameMessage.Add( gameId );
 			joinGameMessage.Add( randomObstacleSeed );
+			joinGameMessage.Add( player.Id );
 			player.Send( joinGameMessage );
 
 			if ( numPlayers == REQUIRED_NUM_PLAYERS ) {
@@ -118,6 +122,31 @@ namespace FunRun {
 		
 		public override void UserLeft( Player player ) {
 			numPlayers--;
+			readyPlayers.Remove( player.Id );
+		}
+		
+		public override void GotMessage( Player player, Message message ) {
+			switch ( message.Type ) {
+				case "r": // Ready.
+					readyPlayers[ player.Id ] = true;
+					if ( numPlayers > 1 && AllPlayersAreReady() ) {
+						StartPlayersCountdown();
+						CloseGame();
+					}
+					Message readyMessage = Message.Create( "r" );
+					readyMessage.Add( player.Id );
+					Broadcast( readyMessage );
+					break;
+			}
+		}
+
+		private Boolean AllPlayersAreReady() {
+			foreach ( KeyValuePair<int, Boolean> player in readyPlayers ) {
+				if ( !player.Value ) {
+					return false;
+				}
+			}
+			return true;
 		}
 
 		private void StartPlayersCountdown() {
@@ -165,9 +194,6 @@ namespace FunRun {
 
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "i" );
-
-			// Tell player their own id, and other initial values.
-			initMessage.Add( player.Id );
 
 			// Add the current state of all players to the init message.
 			foreach ( Player p in Players ) {

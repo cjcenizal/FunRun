@@ -30,11 +30,8 @@ package com.funrun.controller.commands {
 		public var startGameLoopRequest:StartGameLoopRequest;
 		
 		override public function execute():void {
-			// Store id so we can ignore updates we originated.
-			playerModel.inGameId = message.getInt( 0 );
-			
 			// Add pre-existing competitors.
-			for ( var i:int = 1; i < message.length; i += 6 ) {
+			for ( var i:int = 0; i < message.length; i += 6 ) {
 				if ( message.getInt( i ) != playerModel.inGameId ) {
 					var competitor:CompetitorVo = new CompetitorVo(
 						message.getInt( i ),

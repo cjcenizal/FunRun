@@ -7,6 +7,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StartCountdownRequest;
 	import com.funrun.controller.signals.vo.LogMessageVo;
 	import com.funrun.controller.signals.vo.PlayerioErrorVo;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
@@ -38,6 +39,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var segmentsModel:SegmentsModel;
 		
+		[Inject]
+		public var playerModel:PlayerModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -62,7 +66,9 @@ package com.funrun.controller.commands {
 			// First we need to get matched up with other players.
 			matchmakingService.onErrorSignal.add( onError );
 			matchmakingService.onConnectedSignal.add( onConnected );
-			matchmakingService.connect( loginService.client, Rooms.MATCH_MAKING );
+			var userJoinData:Object = {
+				id: loginService.userId };
+			matchmakingService.connect( loginService.client, Rooms.MATCH_MAKING, userJoinData );
 		}
 		
 		private function onConnected():void {
@@ -90,18 +96,21 @@ package com.funrun.controller.commands {
 			
 			var roomIdToJoin:String = message.getString( 0 );
 			var obstacleSeed:Number = message.getInt( 1 );
-			var remainingMsInCountdown:Number = message.getNumber( 2 );
+			var inGameId:Number = message.getInt( 2 );
 			
 			// Store random seed.
 			segmentsModel.seed = obstacleSeed;
 			
 			// Connect to game.
 			joinGameRequest.dispatch( roomIdToJoin );
+			
+			// Store id.
+			playerModel.inGameId = inGameId;
 		}
 		
 		private function onPlayerReady( message:Message ):void {
-			var inGameId:uint = message.getUInt( 0 );
-			// Update visually.
+			var id:int = message.getInt( 0 );
+			trace(id + " is ready");
 		}
 		
 		private function onStartCountdown( message:Message ):void {

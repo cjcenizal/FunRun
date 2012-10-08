@@ -21,7 +21,7 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			matchmakingService.send( Messages.READY, playerModel.inGameId );
+			matchmakingService.send( Messages.READY );
 		}
 	}
 }
