@@ -75,102 +75,71 @@ namespace FunRun {
 
 	[RoomType("Matchmaking")]
 	public class MatchmakingCode : Game<Player> {
-		
-		// Game state.
-		enum State { WAITING_FOR_PLAYERS, COUNTING_DOWN };
-		private int currentState = ( int ) State.WAITING_FOR_PLAYERS;
-		
-		// Requirements.
-		private const int MIN_REQUIRED_NUM_PLAYERS = 2;
 
-		// Countdown.
-		private DateTime countdownStartTime;
-		private int maxMs = 15 * 1000;
-		private int minJoinMs = 5;
-		private double remainingMs = 15 * 1000;
+		/**
+		 * When you join a Matchmaking room, you are assigned
+		 * to join a specific game room.
+		 * 
+		 * The Matchmaking room keeps track of people joining
+		 * and leaving.
+		 * 
+		 * When the game is ready to begin, it tells everyone
+		 * to begin the game, and disconnects everyone
+		 * from the Matchmaking room.
+		 */
+
+		// Game state.
+		private int numPlayers = 0;
+
+		// Limits.
+		private const int REQUIRED_NUM_PLAYERS = 4;
+		private const int countdownSeconds = 5;
 
 		// Obstacle generation.
-		private int randomSeed = ( new Random() ).Next();
+		private int randomObstacleSeed = ( new Random() ).Next();
 
 		// Game ID.
 		private string gameId = System.Guid.NewGuid().ToString();
 
-		public override void GameStarted() {
-			remainingMs = maxMs;
-			AddTimer( delegate {
-				UpdateRemainingMs();
-			}, 100 );
-		}
-
-		public override bool AllowUserJoin( Player player ) {
-			return true;
-		}
-
 		public override void UserJoined( Player player ) {
+			numPlayers++;
+
 			// Create start message for the joining player.
 			Message joinGameMessage = Message.Create( "j" );
-
-			// Give them the game ID to join.
 			joinGameMessage.Add( gameId );
-
-			// Random seed for obstacles.
-			joinGameMessage.Add( randomSeed );
-
-			// Send message to player.
+			joinGameMessage.Add( randomObstacleSeed );
 			player.Send( joinGameMessage );
-		}
 
-		public override void UserLeft( Player player ) {
-			// Restart countdown if we've started counting down,
-			// but the number of players has dropped below minimum.
-			/*if ( PlayerCount < MIN_REQUIRED_NUM_PLAYERS ) {
-				currentState = ( int ) State.WAITING_FOR_PLAYERS;
-				// Tell everybody.
-				Message resetMessage = Message.Create( "r" );
-				UpdateRemainingMs();
-				resetMessage.Add( remainingMs );
-				Broadcast( resetMessage );
-			}*/
+			if ( numPlayers == REQUIRED_NUM_PLAYERS ) {
+				StartPlayersCountdown();
+				CloseGame();
+			}
 		}
 		
-		public override void GotMessage( Player player, Message message ) {
-			switch ( message.Type ) {
-				case "r": // Ready.
-					Message readyMessage = Message.Create( "r" );
-					uint inGameId = message.GetUInt( 0 );
-					readyMessage.Add( inGameId );
-					Broadcast( readyMessage );
-					break;
-			}
+		public override void UserLeft( Player player ) {
+			numPlayers--;
 		}
 
-		public override void GameClosed() {
+		private void StartPlayersCountdown() {
+			// Tell everyone we can start the countdown.
+			Message startCountdownMessage = Message.Create( "s" );
+			startCountdownMessage.Add( countdownSeconds );
+			Broadcast( startCountdownMessage );
+		}
+		
+		private void CloseGame() {
+			DisconnectAllPlayers();
 		}
 
-		private void UpdateRemainingMs() {
-			remainingMs = maxMs;
-			if ( currentState == ( int ) State.COUNTING_DOWN ) {
-				double timeElapsed = ( DateTime.UtcNow - countdownStartTime ).TotalMilliseconds;
-				remainingMs = maxMs - timeElapsed;
-				if ( remainingMs <= minJoinMs ) {
-					// Disconnect everybody.
-					foreach ( Player p in Players ) {
-						p.Disconnect();
-					}
-				}
+		private void DisconnectAllPlayers() {
+			// Disconnect everybody.
+			foreach ( Player p in Players ) {
+				p.Disconnect();
 			}
 		}
-
-		private void OnPlayerReady() {
-			// Start countdown if everyone is ready.
-			if ( PlayerCount == MIN_REQUIRED_NUM_PLAYERS ) {
-				currentState = ( int ) State.COUNTING_DOWN;
-				countdownStartTime = DateTime.UtcNow;
-				// Tell everyone we can start the countdown.
-				Message startCountdownMessage = Message.Create( "s" );
-				startCountdownMessage.Add( remainingMs );
-				Broadcast( startCountdownMessage );
-			}
+		
+		public override bool AllowUserJoin( Player player ) {
+			return true;
 		}
 	}
 

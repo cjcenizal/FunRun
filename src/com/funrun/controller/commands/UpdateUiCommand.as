@@ -81,7 +81,7 @@ package com.funrun.controller.commands
 		}
 		
 		private function updateCountdown():void {
-			//if ( stateModel.isWaitingForPlayers() ) {
+			if ( !stateModel.canMoveForward ) {
 				if ( countdownModel.isRunning ) {
 					if ( countdownModel.secondsRemaining > 0 ) {
 						// Continue the countdown.
@@ -91,7 +91,7 @@ package com.funrun.controller.commands
 						startRunningRequest.dispatch();
 					}
 				}
-			//}
+			}
 			drawSpeedRequest.dispatch( Math.round( playerModel.velocity.z ) );
 		}
 		

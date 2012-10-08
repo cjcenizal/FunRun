@@ -19,7 +19,6 @@ package com.funrun.model
 			super();
 		}
 		
-		
 	/*	public function waitForPlayers():void {
 			_gameState = WAITING_FOR_PLAYERS;
 		}

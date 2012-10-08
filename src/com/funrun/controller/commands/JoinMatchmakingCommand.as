@@ -106,7 +106,8 @@ package com.funrun.controller.commands {
 		
 		private function onStartCountdown( message:Message ):void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Started countdown. Message is: " + message ) );
-			startCountdownRequest.dispatch( message.getNumber( 0 ) );
+			var countdownSeconds:int = message.getNumber( 0 );
+			startCountdownRequest.dispatch( countdownSeconds );
 		}
 	}
 }

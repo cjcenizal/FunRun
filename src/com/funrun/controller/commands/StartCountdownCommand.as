@@ -10,7 +10,7 @@ package com.funrun.controller.commands {
 		// Arguments.
 		
 		[Inject]
-		public var remainingMs:Number;
+		public var remainingSeconds:Number;
 		
 		// Models.
 		
@@ -23,7 +23,7 @@ package com.funrun.controller.commands {
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
 		override public function execute():void {
-			countdownModel.start( remainingMs );
+			countdownModel.start( remainingSeconds * 1000 );
 			toggleCountdownRequest.dispatch( true );
 		}
 	}

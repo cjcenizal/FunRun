@@ -111,6 +111,12 @@ package com.funrun.controller.commands
 							playerModel.velocity.z -= Player.FREE_RUN_SPEED;
 						}	
 						playerModel.velocity.z *= Player.FRICTION;
+					} else {
+						if ( stateModel.canMoveForward ) {
+							if ( playerModel.velocity.z < Player.MAX_SPEED ) {
+								playerModel.velocity.z += Player.ACCELERATION;
+							}
+						}
 					}
 				}
 				

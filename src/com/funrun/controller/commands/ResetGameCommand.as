@@ -12,6 +12,7 @@ package com.funrun.controller.commands {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.PointsModel;
 	import com.funrun.model.SegmentsModel;
+	import com.funrun.model.StateModel;
 	import com.funrun.model.TimeModel;
 	import com.funrun.model.TrackModel;
 	import com.funrun.model.View3dModel;
@@ -55,6 +56,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var gameModel:GameModel;
 		
+		[Inject]
+		public var stateModel:StateModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -70,6 +74,9 @@ package com.funrun.controller.commands {
 		public var drawPointsRequest:DrawPointsRequest;
 		
 		override public function execute():void {
+			stateModel.canMoveForward = false;
+			stateModel.canDie = true;
+			
 			// Reset time.
 			timeModel.reset();
 			// Remove all existing obstacles.

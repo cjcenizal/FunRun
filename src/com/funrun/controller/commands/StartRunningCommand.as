@@ -30,7 +30,7 @@ package com.funrun.controller.commands {
 			updateCountdownRequest.dispatch( "" );
 			toggleCountdownRequest.dispatch( false );
 			// Set game state.
-			//stateModel.startRunning();
+			stateModel.canMoveForward = true;
 			displayMessageRequest.dispatch( "Go!" );
 		}
 	}
