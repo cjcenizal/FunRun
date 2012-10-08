@@ -16,6 +16,7 @@ namespace FunRun {
 		public double z = 0;
 		public bool isDucking = false;
 		public bool isDead = false;
+		public bool isReady = false;
 		public Player() {
 		}
 	}
@@ -74,7 +75,7 @@ namespace FunRun {
 	}
 
 	[RoomType("Matchmaking")]
-	public class MatchmakingCode : Game<Player> {
+	public class MatchmakingCode : Game<BasePlayer> {
 
 		/**
 		 * When you join a Matchmaking room, you are assigned
@@ -102,9 +103,8 @@ namespace FunRun {
 		// Game ID.
 		private string gameId = System.Guid.NewGuid().ToString();
 
-		public override void UserJoined( Player player ) {
+		public override void UserJoined( BasePlayer player ) {
 			numPlayers++;
-			player.id = player.JoinData[ "id" ];
 			readyPlayers.Add( player.Id, false );
 
 			// Create start message for the joining player.
@@ -120,12 +120,12 @@ namespace FunRun {
 			}
 		}
 		
-		public override void UserLeft( Player player ) {
+		public override void UserLeft( BasePlayer player ) {
 			numPlayers--;
 			readyPlayers.Remove( player.Id );
 		}
 		
-		public override void GotMessage( Player player, Message message ) {
+		public override void GotMessage( BasePlayer player, Message message ) {
 			switch ( message.Type ) {
 				case "r": // Ready.
 					readyPlayers[ player.Id ] = true;
@@ -167,7 +167,7 @@ namespace FunRun {
 			}
 		}
 		
-		public override bool AllowUserJoin( Player player ) {
+		public override bool AllowUserJoin( BasePlayer player ) {
 			return true;
 		}
 	}
@@ -197,7 +197,7 @@ namespace FunRun {
 
 			// Add the current state of all players to the init message.
 			foreach ( Player p in Players ) {
-				initMessage.Add( p.Id, p.name, p.x, p.y, p.z, p.isDucking );
+				initMessage.Add( p.Id, p.name, p.x, p.y, p.z, p.isDucking, p.isReady );
 			}
 			
 			// Send init message to player.
@@ -216,6 +216,9 @@ namespace FunRun {
 		
 		public override void GotMessage( Player player, Message message ) {
 			switch ( message.Type ) {
+				case "r": // Ready.
+					player.isReady = true;
+					break;
 				case "u": // Update state.
 					// Update internal representation of player.
 					player.x = message.GetDouble( 0 );

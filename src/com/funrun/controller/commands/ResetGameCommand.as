@@ -1,5 +1,6 @@
 package com.funrun.controller.commands {
 	
+	import com.funrun.controller.signals.ClearReadyListRequest;
 	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
@@ -73,6 +74,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var drawPointsRequest:DrawPointsRequest;
 		
+		[Inject]
+		public var clearReadyListRequest:ClearReadyListRequest;
+		
 		override public function execute():void {
 			stateModel.canMoveForward = false;
 			stateModel.canDie = true;
@@ -104,6 +108,8 @@ package com.funrun.controller.commands {
 			drawPointsRequest.dispatch( 0 );
 			// Reset player.
 			resetPlayerRequest.dispatch( true );
+			// Reset UI.
+			clearReadyListRequest.dispatch();
 		}
 	}
 }

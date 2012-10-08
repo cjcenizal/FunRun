@@ -2,6 +2,7 @@ package com.funrun.controller.commands
 {
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
+	import com.funrun.services.GameService;
 	import com.funrun.services.MatchmakingService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -17,11 +18,15 @@ package com.funrun.controller.commands
 		// Services.
 		
 		[Inject]
+		public var gameService:GameService;
+		
+		[Inject]
 		public var matchmakingService:MatchmakingService;
 		
 		override public function execute():void
 		{
 			matchmakingService.send( Messages.READY );
+			gameService.send( Messages.READY );
 		}
 	}
 }

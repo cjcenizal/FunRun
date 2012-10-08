@@ -10,10 +10,10 @@ package com.funrun {
 	import com.funrun.controller.commands.AddObstaclesCommand;
 	import com.funrun.controller.commands.AddPlaceableCommand;
 	import com.funrun.controller.commands.AddSegmentCommand;
-	import com.funrun.controller.commands.LeaveLobbyAndEnterGameCommand;
 	import com.funrun.controller.commands.CollectPointCommand;
 	import com.funrun.controller.commands.CompleteAppCommand;
 	import com.funrun.controller.commands.CullTrackCommand;
+	import com.funrun.controller.commands.DrawReadyListCommand;
 	import com.funrun.controller.commands.EndRoundCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorDiedCommand;
@@ -31,6 +31,7 @@ package com.funrun {
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LeaveGameAndEnterLobbyCommand;
+	import com.funrun.controller.commands.LeaveLobbyAndEnterGameCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
 	import com.funrun.controller.commands.LogMessageCommand;
 	import com.funrun.controller.commands.PlaySoundCommand;
@@ -77,7 +78,9 @@ package com.funrun {
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddPopupRequest;
 	import com.funrun.controller.signals.AddSegmentRequest;
+	import com.funrun.controller.signals.AddToReadyListRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
+	import com.funrun.controller.signals.ClearReadyListRequest;
 	import com.funrun.controller.signals.ClickStartGameRequest;
 	import com.funrun.controller.signals.CollectPointRequest;
 	import com.funrun.controller.signals.CompleteAppRequest;
@@ -88,6 +91,7 @@ package com.funrun {
 	import com.funrun.controller.signals.DrawLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.DrawLobbyPlayerLeftRequest;
 	import com.funrun.controller.signals.DrawPointsRequest;
+	import com.funrun.controller.signals.DrawReadyListRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
 	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
@@ -142,6 +146,7 @@ package com.funrun {
 	import com.funrun.controller.signals.StoreFloorRequest;
 	import com.funrun.controller.signals.StoreObstacleRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.ToggleReadyListRequest;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
@@ -285,7 +290,10 @@ package com.funrun {
 			// Map signals.
 			injector.mapSingleton( AddNametagRequest );
 			injector.mapSingleton( AddPopupRequest );
+			injector.mapSingleton( AddToReadyListRequest );
 			injector.mapSingleton( AddView3DRequest );
+			injector.mapSingleton( ClearReadyListRequest );
+			injector.mapSingleton( DrawCountdownRequest );
 			injector.mapSingleton( DrawGameMessageRequest );
 			injector.mapSingleton( DrawLobbyChatRequest );
 			injector.mapSingleton( DrawLobbyPlayerJoinedRequest );
@@ -301,7 +309,7 @@ package com.funrun {
 			injector.mapSingleton( ShowScreenRequest );
 			injector.mapSingleton( ShowStatsRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
-			injector.mapSingleton( DrawCountdownRequest );
+			injector.mapSingleton( ToggleReadyListRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			signalCommandMap.mapSignalClass( AddAiCompetitorsRequest,				AddAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
@@ -317,6 +325,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( CollectPointRequest,					CollectPointCommand );
 			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );
 			signalCommandMap.mapSignalClass( CullTrackRequest,						CullTrackCommand );
+			signalCommandMap.mapSignalClass( DrawReadyListRequest,					DrawReadyListCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleGameInitRequest,					HandleGameInitCommand );

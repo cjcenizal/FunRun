@@ -6,9 +6,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.StateModel;
-	import com.funrun.services.MatchmakingService;
 	import com.funrun.services.GameService;
+	import com.funrun.services.MatchmakingService;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -21,9 +20,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var delayedCommandsModel:DelayedCommandsModel;
-		
-		[Inject]
-		public var stateModel:StateModel;
 		
 		// Services.
 		
@@ -58,8 +54,6 @@ package com.funrun.controller.commands {
 			matchmakingService.disconnectAndReset();
 			// Reset in-game ID.
 			playerModel.resetInGameId();
-			// Update state.
-			//stateModel.showMainMenu();
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
 			joinLobbyRequest.dispatch();

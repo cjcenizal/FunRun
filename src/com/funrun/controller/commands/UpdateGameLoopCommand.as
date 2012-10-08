@@ -65,17 +65,11 @@ package com.funrun.controller.commands {
 		public var updateTrackRequest:UpdateTrackRequest;
 		
 		override public function execute():void {
-			
-		//	switch ( gameModel.state ) {
-		//		case GameModel.READY_TO_RUN:
-					// Target 30 frames per second and move the player.
-					var framesElapsed:int = 1;//Math.round( .03 * timeEvent.delta );
-					updatePlayerRequest.dispatch( framesElapsed );
-					updateCollisionsRequest.dispatch();
-		//			break;
-		//		case GameModel.WAITING_FOR_READY:
-		//			break;
-		//	}
+		
+			// Target 30 frames per second and move the player.
+			var framesElapsed:int = 1;//Math.round( .03 * timeEvent.delta );
+			updatePlayerRequest.dispatch( framesElapsed );
+			updateCollisionsRequest.dispatch();
 			
 			updateTrackRequest.dispatch( new UpdateTrackVo( playerModel.distance ) );
 			

@@ -1,5 +1,7 @@
 package com.funrun.view.mediators {
 	
+	import com.funrun.controller.signals.AddToReadyListRequest;
+	import com.funrun.controller.signals.ClearReadyListRequest;
 	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.DrawPointsRequest;
@@ -7,6 +9,8 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.LeaveGameRequest;
 	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.ToggleReadyListRequest;
+	import com.funrun.controller.signals.vo.AddToReadyListVo;
 	import com.funrun.view.components.GameUIView;
 	
 	import org.robotlegs.core.IMediator;
@@ -42,6 +46,15 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var sendMatchmakingReadyRequest:SendMatchmakingReadyRequest;
 		
+		[Inject]
+		public var addToReadyListRequest:AddToReadyListRequest;
+		
+		[Inject]
+		public var clearReadyListRequest:ClearReadyListRequest;
+		
+		[Inject]
+		public var toggleReadyListRequest:ToggleReadyListRequest;
+		
 		override public function onRegister():void {
 			view.init();
 			view.onClickQuitSignal.add( onClickQuit );
@@ -50,7 +63,10 @@ package com.funrun.view.mediators {
 			drawSpeedRequest.add( onDrawSpeedRequested );
 			drawMessageRequest.add( onDrawMessageRequested );
 			drawCountdownRequest.add( onUpdateCountdown );
-			toggleCountdownRequest.add( onToggleCountdown );
+			addToReadyListRequest.add( onAddToReadyListRequested );
+			toggleCountdownRequest.add( onToggleCountdownRequested );
+			toggleReadyListRequest.add( onToggleReadyListRequested );
+			clearReadyListRequest.add( onClearReadyListRequested );
 		}
 		
 		private function onDrawPointsRequested( val:Number ):void {
@@ -69,12 +85,28 @@ package com.funrun.view.mediators {
 			view.countdown = message;
 		}
 		
-		private function onToggleCountdown( visible:Boolean ):void {
+		private function onToggleCountdownRequested( visible:Boolean ):void {
 			if ( visible ) {
 				view.showCountdown();
 			} else {
 				view.hideCountdown();
 			}
+		}
+		
+		private function onClearReadyListRequested():void {
+			view.clearReadyList();
+		}
+		
+		private function onToggleReadyListRequested( visible:Boolean ):void {
+			if ( visible ) {
+				view.showReadyList();
+			} else {
+				view.hideReadyList();
+			}
+		}
+		
+		private function onAddToReadyListRequested( vo:AddToReadyListVo ):void {
+			view.addToReadyList( vo.id, vo.name, vo.isReady );
 		}
 		
 		private function onClickQuit():void {

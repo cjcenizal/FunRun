@@ -9,6 +9,7 @@ package com.funrun.model.vo {
 		public var mesh:Mesh;
 		public var isDucking:Boolean;
 		public var liveIndex:int = 0;
+		public var isReady:Boolean = false;
 		private var _id:int;
 		private var _name:String;
 		private var _oldPosition:Vector3D;

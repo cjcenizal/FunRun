@@ -27,6 +27,7 @@ package com.funrun.view.components {
 		private var _messagesList:MessagesList;
 		
 		// Ready.
+		private var _readyList:ReadyList;
 		private var _readyButton:DummyButton;
 		public var onClickReadySignal:Signal;
 		
@@ -77,6 +78,9 @@ package com.funrun.view.components {
 			Center.horizontal( _readyButton, stage );
 			_readyButton.y = stage.stageHeight * .75;
 			onClickReadySignal = new Signal();
+			
+			// Ready list.
+			_readyList = new ReadyList( this, 0, 0 );
 		}
 
 		public function drawPoints( val:Number ):void {
@@ -124,6 +128,22 @@ package com.funrun.view.components {
 		
 		private function onClickReady( e:MouseEvent ):void {
 			onClickReadySignal.dispatch();
+		}
+		
+		public function showReadyList():void {
+			_readyList.visible = true;
+		}
+		
+		public function hideReadyList():void {
+			_readyList.visible = false;
+		}
+		
+		public function clearReadyList():void {
+			_readyList.clear();
+		}
+		
+		public function addToReadyList( id:int, name:String, isReady:Boolean ):void {
+			_readyList.add( id, name, isReady );
 		}
 	}
 }

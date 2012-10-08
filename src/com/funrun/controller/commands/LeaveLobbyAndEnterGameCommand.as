@@ -4,7 +4,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.StartOfflineGameRequest;
 	import com.funrun.model.GameModel;
-	import com.funrun.model.StateModel;
 	import com.funrun.services.LobbyService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -24,9 +23,6 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var gameModel:GameModel;
 		
-		[Inject]
-		public var stateModel:StateModel;
-		
 		// Commands.
 		
 		[Inject]
@@ -43,8 +39,6 @@ package com.funrun.controller.commands {
 			lobbyService.disconnectAndReset();
 			// Reset game.
 			resetGameRequest.dispatch();
-			// Render to clear the view.
-			//renderSceneRequest.dispatch();
 			// Connect to a game.
 			if ( gameModel.isOnline ) {
 				joinMatchmakingRequest.dispatch();
