@@ -98,9 +98,6 @@ namespace FunRun {
 		private int numPlayers = 0;
 		private Dictionary<int, Boolean> readyPlayers = new Dictionary<int, Boolean>();
 
-		// Obstacle generation.
-		private int randomObstacleSeed = ( new Random() ).Next();
-
 		// Game ID.
 		private string gameId = System.Guid.NewGuid().ToString();
 
@@ -111,8 +108,6 @@ namespace FunRun {
 			// Create start message for the joining player.
 			Message joinGameMessage = Message.Create( "j" );
 			joinGameMessage.Add( gameId );
-			joinGameMessage.Add( randomObstacleSeed );
-			joinGameMessage.Add( player.Id );
 			player.Send( joinGameMessage );
 
 			if ( numPlayers == REQUIRED_NUM_PLAYERS ) {
@@ -129,9 +124,6 @@ namespace FunRun {
 			switch ( message.Type ) {
 				case "r": // Ready.
 					readyPlayers[ player.Id ] = true;
-					Message readyMessage = Message.Create( "r" );
-					readyMessage.Add( player.Id );
-					Broadcast( readyMessage );
 					if ( numPlayers > 1 && AllPlayersAreReady() ) {
 						StartGame();
 					}
@@ -161,7 +153,6 @@ namespace FunRun {
 			// Reset.
 			numPlayers = 0;
 			readyPlayers.Clear();
-			randomObstacleSeed = ( new Random() ).Next();
 			gameId = System.Guid.NewGuid().ToString();
 		}
 		
@@ -172,6 +163,9 @@ namespace FunRun {
 
 	[RoomType("Game")]
 	public class GameCode : Game<Player> {
+		
+		// Obstacle generation.
+		private int randomObstacleSeed = ( new Random() ).Next();
 
 		public override void GameStarted() {
 			AddTimer( delegate {
@@ -192,6 +186,8 @@ namespace FunRun {
 
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "i" );
+			initMessage.Add( player.Id );
+			initMessage.Add( randomObstacleSeed );
 
 			// Add the current state of all players to the init message.
 			foreach ( Player p in Players ) {
@@ -216,6 +212,9 @@ namespace FunRun {
 			switch ( message.Type ) {
 				case "r": // Ready.
 					player.isReady = true;
+					Message readyMessage = Message.Create( "r" );
+					readyMessage.Add( player.Id );
+					Broadcast( readyMessage );
 					break;
 				case "u": // Update state.
 					// Update internal representation of player.

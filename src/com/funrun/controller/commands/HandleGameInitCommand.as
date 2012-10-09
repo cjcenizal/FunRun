@@ -4,6 +4,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.DrawReadyListRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.vo.CompetitorVo;
 	
 	import org.robotlegs.mvcs.Command;
@@ -22,6 +23,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var playerModel:PlayerModel;
 		
+		[Inject]
+		public var segmentsModel:SegmentsModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -34,10 +38,16 @@ package com.funrun.controller.commands {
 		public var drawReadyListRequest:DrawReadyListRequest;
 		
 		override public function execute():void {
+			// Assign init properties.
+			var inGameId:Number = message.getInt( 0 );
+			var obstacleSeed:Number = message.getInt( 1 );
+			playerModel.inGameId = inGameId;
+			segmentsModel.seed = obstacleSeed;
+			
 			// Add pre-existing competitors.
-			for ( var i:int = 0; i < message.length; i += 7 ) {
-				var inGameId:int = message.getInt( i );
-				if ( inGameId != playerModel.inGameId ) {
+			for ( var i:int = 2; i < message.length; i += 7 ) {
+				var id:int = message.getInt( i + 0 );
+				if ( id != playerModel.inGameId ) {
 					var name:String = message.getString( i + 1 );
 					var x:Number = message.getNumber( i + 2 );
 					var y:Number = message.getNumber( i + 3 );

@@ -44,8 +44,6 @@ package {
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		
 		TO-DO:
-		- Still encountered bug where I am playing against myself, fuckkkkk
-		
 		- Add instructions to beginning of gameplay
 		- Design a decent UI
 		- Add social sharing

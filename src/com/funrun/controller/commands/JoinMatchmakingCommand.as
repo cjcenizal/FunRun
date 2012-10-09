@@ -10,8 +10,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.vo.LogMessageVo;
 	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.model.CompetitorsModel;
-	import com.funrun.model.PlayerModel;
-	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
 	import com.funrun.services.MatchmakingService;
@@ -38,12 +36,6 @@ package com.funrun.controller.commands {
 		public var matchmakingService:MatchmakingService;
 		
 		// Models.
-		
-		[Inject]
-		public var segmentsModel:SegmentsModel;
-		
-		[Inject]
-		public var playerModel:PlayerModel;
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
@@ -103,20 +95,12 @@ package com.funrun.controller.commands {
 		
 		private function onJoinGame( message:Message ):void {
 			var roomIdToJoin:String = message.getString( 0 );
-			var obstacleSeed:Number = message.getInt( 1 );
-			var inGameId:Number = message.getInt( 2 );
 			
 			logMessageRequest.dispatch( new LogMessageVo( this, "Joined a game, room " + roomIdToJoin ) );
 			matchmakingService.removeMessageHandler( Messages.JOIN_GAME, onJoinGame );
 			
-			// Store random seed.
-			segmentsModel.seed = obstacleSeed;
-			
 			// Connect to game.
 			joinGameRequest.dispatch( roomIdToJoin );
-			
-			// Store id.
-			playerModel.inGameId = inGameId;
 		}
 		
 		private function onPlayerReady( message:Message ):void {
