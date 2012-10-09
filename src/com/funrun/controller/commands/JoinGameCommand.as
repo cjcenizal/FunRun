@@ -9,6 +9,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.vo.LogMessageVo;
 	import com.funrun.controller.signals.vo.PlayerioErrorVo;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
@@ -39,6 +40,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var gameService:GameService;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -63,6 +67,7 @@ package com.funrun.controller.commands {
 		public var logMessageRequest:LogMessageRequest;
 		
 		override public function execute():void {
+			gameModel.isMultiplayer = true;
 			logMessageRequest.dispatch( new LogMessageVo( this, "Joining a game..." ) );
 			gameService.onErrorSignal.add( onError );
 			gameService.onConnectedSignal.add( onConnected );

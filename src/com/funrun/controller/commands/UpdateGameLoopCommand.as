@@ -81,7 +81,7 @@ package com.funrun.controller.commands {
 			
 			updateUiRequest.dispatch();
 			
-			if ( gameModel.isOnline ) {
+			if ( gameModel.isMultiplayer && gameModel.isOnline ) {
 				sendMultiplayerUpdateRequest.dispatch();
 			}
 		}

@@ -5,12 +5,13 @@
 	import com.funrun.controller.signals.SendGameDeathRequest;
 	import com.funrun.controller.signals.ShakeCameraRequest;
 	import com.funrun.controller.signals.StartObserverLoopRequest;
+	import com.funrun.controller.signals.vo.AddDelayedCommandVo;
+	import com.funrun.controller.signals.vo.ShakeCameraVo;
 	import com.funrun.model.CompetitorsModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
-	import com.funrun.controller.signals.vo.AddDelayedCommandVo;
-	import com.funrun.controller.signals.vo.ShakeCameraVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -28,6 +29,9 @@
 		
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
+		
+		[Inject]
+		public var gameModel:GameModel;
 		
 		// Commands.
 		
@@ -58,9 +62,10 @@
 					case Collisions.FALL:
 						break;
 				}
-				// Update server.
-				sendMultiplayerDeathRequest.dispatch();
-				
+				if ( gameModel.isMultiplayer ) {
+					// Update server.
+					sendMultiplayerDeathRequest.dispatch();
+				}
 				// If there are any surviving competitors, observe them.
 				if ( competitorsModel.numLiveCompetitors > 0 ) {
 					addDelayedCommandRequest.dispatch( new AddDelayedCommandVo( startObserverLoopRequest, 1500 ) );

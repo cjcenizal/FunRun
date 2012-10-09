@@ -1,8 +1,7 @@
 
 package com.funrun.controller.commands
 {
-	import com.funrun.controller.signals.ShowScreenRequest;
-	import com.funrun.model.constants.Screen;
+	import com.funrun.controller.signals.JoinMainMenuRequest;
 	import com.funrun.services.LobbyService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -18,13 +17,12 @@ package com.funrun.controller.commands
 		// Commands.
 		
 		[Inject]
-		public var showScreenRequest:ShowScreenRequest;
+		public var joinMainMenuRequest:JoinMainMenuRequest;
 		
 		override public function execute():void {
 			// Disconnect from lobby.
 			lobbyService.disconnectAndReset();
-			// Show main menu.
-			showScreenRequest.dispatch( Screen.MAIN_MENU );
+			joinMainMenuRequest.dispatch();
 		}
 	}
 }

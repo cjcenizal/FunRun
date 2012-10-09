@@ -24,7 +24,7 @@ package com.funrun.view.components {
 		public function init():void {
 			_messageLabel = new AbstractLabel( this );
 			_messageLabel.text = _vo.distanceMessage;
-			_button = new DummyButton( this, 0, 0, onClick, "Main menu", 0xFFAA00 );
+			_button = new DummyButton( this, 0, 0, onClick, "Leave game", 0xFFAA00 );
 			onClickMainMenuSignal = new Signal();
 		}
 		

@@ -1,8 +1,7 @@
 package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.EnableMainMenuRequest;
-	import com.funrun.controller.signals.ShowScreenRequest;
-	import com.funrun.model.constants.Screen;
+	import com.funrun.controller.signals.JoinMainMenuRequest;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -11,14 +10,14 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var showScreenRequest:ShowScreenRequest;
+		public var joinMainMenuRequest:JoinMainMenuRequest;
 		
 		[Inject]
 		public var enableMainMenuRequest:EnableMainMenuRequest;
 		
 		override public function execute():void {
 			// Show main menu, but disable it.
-			showScreenRequest.dispatch( Screen.MAIN_MENU );
+			joinMainMenuRequest.dispatch();
 			enableMainMenuRequest.dispatch( false );
 		}
 	}

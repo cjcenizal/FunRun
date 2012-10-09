@@ -1,17 +1,19 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.JoinLobbyRequest;
+	import com.funrun.controller.signals.JoinMainMenuRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.model.DelayedCommandsModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.services.GameService;
 	import com.funrun.services.MatchmakingService;
 	
 	import org.robotlegs.mvcs.Command;
 
-	public class LeaveGameAndEnterLobbyCommand extends Command {
+	public class LeaveGameCommand extends Command {
 
 		// Models.
 		
@@ -29,6 +31,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var matchmakingService:MatchmakingService;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -42,6 +47,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var joinLobbyRequest:JoinLobbyRequest;
+		
+		[Inject]
+		public var joinMainMenuRequest:JoinMainMenuRequest;
 
 		override public function execute():void {
 			// Remove delayed commands.
@@ -56,7 +64,11 @@ package com.funrun.controller.commands {
 			playerModel.resetInGameId();
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
-			joinLobbyRequest.dispatch();
+			if ( gameModel.isMultiplayer ) {
+				joinLobbyRequest.dispatch();
+			} else {
+				joinMainMenuRequest.dispatch();
+			}
 		}
 	}
 }

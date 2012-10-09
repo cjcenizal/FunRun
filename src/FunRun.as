@@ -44,10 +44,10 @@ package {
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		
 		TO-DO:
+		- Add instructions to beginning of gameplay
 		- Add dash, like Robot Unicorn Attack
 			- Rechargeable meter
 		- Figure out exploration mode and AI mode later
-			- Add "single player" option with instructions
 		
 		- Send dash and jump via network so we can have sound fx
 		- Memory pool for BoundingBoxVos

@@ -28,9 +28,11 @@ package com.funrun {
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
 	import com.funrun.controller.commands.JoinLobbyCommand;
+	import com.funrun.controller.commands.JoinMainMenuCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
+	import com.funrun.controller.commands.JoinSinglePlayerGameCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
-	import com.funrun.controller.commands.LeaveGameAndEnterLobbyCommand;
+	import com.funrun.controller.commands.LeaveGameCommand;
 	import com.funrun.controller.commands.LeaveLobbyAndEnterGameCommand;
 	import com.funrun.controller.commands.LeaveLobbyAndEnterMainMenuCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
@@ -82,7 +84,6 @@ package com.funrun {
 	import com.funrun.controller.signals.AddToReadyListRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.ClearReadyListRequest;
-	import com.funrun.controller.signals.LeaveLobbyAndEnterGameRequest;
 	import com.funrun.controller.signals.CollectPointRequest;
 	import com.funrun.controller.signals.CompleteAppRequest;
 	import com.funrun.controller.signals.CullTrackRequest;
@@ -108,9 +109,12 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinLobbyRequest;
+	import com.funrun.controller.signals.JoinMainMenuRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
+	import com.funrun.controller.signals.JoinSinglePlayerGameRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
 	import com.funrun.controller.signals.LeaveGameAndEnterLobbyRequest;
+	import com.funrun.controller.signals.LeaveLobbyAndEnterGameRequest;
 	import com.funrun.controller.signals.LeaveLobbyAndEnterMainMenuRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
@@ -281,9 +285,9 @@ package com.funrun {
 			injector.mapSingleton( View3dModel );
 			
 			// Map services.
+			injector.mapSingleton( GameService );
 			injector.mapSingleton( LobbyService );
 			injector.mapSingleton( MatchmakingService );
-			injector.mapSingleton( GameService );
 			injector.mapSingleton( OrdinalizeNumberService );
 			injector.mapSingleton( PlayerioFacebookLoginService );
 			injector.mapSingleton( PlayerioMultiplayerService );
@@ -338,10 +342,12 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleLobbyPlayerJoinedRequest,		HandleLobbyPlayerJoinedCommand );
 			signalCommandMap.mapSignalClass( HandleLobbyPlayerLeftRequest,			HandleLobbyPlayerLeftCommand );
 			signalCommandMap.mapSignalClass( HandleLobbyWelcomeRequest,				HandleLobbyWelcomeCommand );
-			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
+			signalCommandMap.mapSignalClass( JoinMainMenuRequest,					JoinMainMenuCommand );
+			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
+			signalCommandMap.mapSignalClass( JoinSinglePlayerGameRequest,			JoinSinglePlayerGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
-			signalCommandMap.mapSignalClass( LeaveGameAndEnterLobbyRequest,			LeaveGameAndEnterLobbyCommand );
+			signalCommandMap.mapSignalClass( LeaveGameAndEnterLobbyRequest,			LeaveGameCommand );
 			signalCommandMap.mapSignalClass( LeaveLobbyAndEnterGameRequest,			LeaveLobbyAndEnterGameCommand );
 			signalCommandMap.mapSignalClass( LeaveLobbyAndEnterMainMenuRequest,		LeaveLobbyAndEnterMainMenuCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
@@ -356,8 +362,8 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( SavePlayerObjectRequest,				SavePlayerObjectCommand );
 			signalCommandMap.mapSignalClass( SendLobbyChatRequest,					SendLobbyChatCommand );
 			signalCommandMap.mapSignalClass( SendMatchmakingReadyRequest,			SendMatchmakingReadyCommand );
-			signalCommandMap.mapSignalClass( SendGameDeathRequest,			SendGameDeathCommand );
-			signalCommandMap.mapSignalClass( SendGameUpdateRequest,			SendGameUpdateCommand );
+			signalCommandMap.mapSignalClass( SendGameDeathRequest,					SendGameDeathCommand );
+			signalCommandMap.mapSignalClass( SendGameUpdateRequest,					SendGameUpdateCommand );
 			signalCommandMap.mapSignalClass( ShakeCameraRequest,					ShakeCameraCommand );
 			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
 			signalCommandMap.mapSignalClass( ShowJoiningLobbyPopupRequest,			ShowJoiningLobbyPopupCommand );

@@ -20,18 +20,20 @@ package com.funrun.view.components {
 		private var Logo:Class;
 		
 		private var _logo:Bitmap;
-		private var _joinLobbyButton:DummyButton;
-		//private var _instructionsLabel:AbstractLabel;
+		private var _multiplayerButton:DummyButton;
+		private var _singlePlayerButton:DummyButton;
 		private var _loginStatus:LoginStatusView;
 		
-		public var onJoinLobbyClick:Signal;
+		public var onMultiplayerClickSignal:Signal;
+		public var onSinglePlayerClickSignal:Signal;
 		
 		public function MainMenuView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
 		}
 		
 		public function init():void {
-			onJoinLobbyClick = new Signal();
+			onMultiplayerClickSignal = new Signal();
+			onSinglePlayerClickSignal = new Signal();
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -50,34 +52,36 @@ package com.funrun.view.components {
 			Center.horizontal( _logo, stage );
 			_logo.y = 20;
 			
-			// Start game button.
-			_joinLobbyButton = new DummyButton( this, 0, _logo.y + _logo.height + 40, onClick, "Join lobby", 0xaaaaaa );
-			_joinLobbyButton.draw();
-			Center.horizontal( _joinLobbyButton, stage );
+			// Multiplayer game button.
+			_multiplayerButton = new DummyButton( this, 0, _logo.y + _logo.height + 80, onMultiplayerClick, "Multiplayer game", 0xaaaaaa );
+			_multiplayerButton.draw();
+			Center.horizontal( _multiplayerButton, stage );
 			
-			/*
-			// Instructions.
-			var instructionText:String = "Use arrow keys to move left and right, duck, and jump."
-			_instructionsLabel = new AbstractLabel( this, 0, _joinLobbyButton.y + _joinLobbyButton.height + 40, instructionText, 14 );
-			_instructionsLabel.draw();
-			Center.horizontal( _instructionsLabel, stage );
-			*/
+			// Single player game button.
+			_singlePlayerButton = new DummyButton( this, 0, _multiplayerButton.y + _multiplayerButton.height + 20, onSinglePlayerClick, "Single player game", 0xaaaaaa );
+			_singlePlayerButton.draw();
+			Center.horizontal( _singlePlayerButton, stage );
+			
 			// Login status.
 			_loginStatus = new LoginStatusView( this );
 			_loginStatus.draw();
 		}
 		
-		private function onClick( e:MouseEvent ):void {
-			onJoinLobbyClick.dispatch();
+		private function onMultiplayerClick( e:MouseEvent ):void {
+			onMultiplayerClickSignal.dispatch();
+		}
+		
+		private function onSinglePlayerClick( e:MouseEvent ):void {
+			onSinglePlayerClickSignal.dispatch();
 		}
 		
 		public function set optionsEnabled( enabled:Boolean ):void {
 			if ( enabled ) {
 				_logo.alpha = 1;
-				_joinLobbyButton.visible = true;
+				_multiplayerButton.visible = true;
 			} else {
 				_logo.alpha = .2;
-				_joinLobbyButton.visible = false;
+				_multiplayerButton.visible = false;
 			}
 		}
 	}

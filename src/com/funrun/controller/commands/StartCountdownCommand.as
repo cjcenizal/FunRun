@@ -2,8 +2,10 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.model.CountdownModel;
-	import flash.utils.setTimeout;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.constants.Time;
+	
+	import flash.utils.setTimeout;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -14,16 +16,23 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var countdownModel:CountdownModel;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		// Commands.
 		
 		[Inject]
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
 		override public function execute():void {
-			setTimeout( function():void {
+			if ( gameModel.isMultiplayer ) {
+				setTimeout( function():void {
+					countdownModel.start( Time.COUNTDOWN_SECONDS * 1000 );
+					toggleCountdownRequest.dispatch( true );
+				}, Time.COUNTDOWN_WAIT_SECONDS * 1000 );
+			} else {
 				countdownModel.start( Time.COUNTDOWN_SECONDS * 1000 );
-				toggleCountdownRequest.dispatch( true );
-			}, Time.COUNTDOWN_WAIT_SECONDS * 1000 );
+			}
 		}
 	}
 }

@@ -46,7 +46,7 @@ package com.funrun.controller.commands {
 			if ( productionState.isExploration ) {
 				startRunningRequest.dispatch();
 			} else {
-				startCountdownRequest.dispatch( 3000 );
+				startCountdownRequest.dispatch();
 			}
 			startGameLoopRequest.dispatch();
 			addAiCompetitorsRequest.dispatch( Player.NUM_AI_COMPETITORS );
