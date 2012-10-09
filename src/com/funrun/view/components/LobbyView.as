@@ -29,11 +29,13 @@ package com.funrun.view.components {
 		private var _peopleList:List;
 		private var _input:InputText;
 		private var _joinGameButton:DummyButton;
+		private var _leaveLobbyButton:DummyButton;
 		
 		// Signals.
 		
 		public var onSendChatSignal:Signal;
 		public var onClickJoinGameSignal:Signal;
+		public var onClickLeaveSignal:Signal;
 		
 		public function LobbyView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
@@ -43,6 +45,7 @@ package com.funrun.view.components {
 		public function init():void {
 			onSendChatSignal = new Signal();
 			onClickJoinGameSignal = new Signal();
+			onClickLeaveSignal = new Signal();
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -59,6 +62,11 @@ package com.funrun.view.components {
 			_title = new AbstractLabel( this, 0, 0, "Lobby", 18 );
 			_title.draw();
 			Center.horizontal( _title, stage );
+			
+			// Leave button.
+			_leaveLobbyButton = new DummyButton( this, 0, 0, onClickLeave, "Main menu", 0x0000ff, 12 );
+			_leaveLobbyButton.draw();
+			_leaveLobbyButton.x = stage.stageWidth - _leaveLobbyButton.width - 10;
 			
 			// Lists.
 			var peopleListWidth:Number = 140;
@@ -86,13 +94,17 @@ package com.funrun.view.components {
 			_input.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			
 			// Start game button.
-			_joinGameButton = new DummyButton( this, 0, _input.y + _input.height + 40, onClick, "Find a game!", 0xaaaaaa );
+			_joinGameButton = new DummyButton( this, 0, _input.y + _input.height + 40, onClickJoinGame, "Find a game!", 0xaaaaaa );
 			_joinGameButton.draw();
 			Center.horizontal( _joinGameButton, stage );
 			
 		}
 		
-		private function onClick( e:MouseEvent ):void {
+		private function onClickLeave( e:MouseEvent ):void {
+			onClickLeaveSignal.dispatch();
+		}
+		
+		private function onClickJoinGame( e:MouseEvent ):void {
 			onClickJoinGameSignal.dispatch();
 		}
 		

@@ -1,6 +1,6 @@
 package com.funrun.view.mediators {
 
-	import com.funrun.controller.signals.LeaveGameRequest;
+	import com.funrun.controller.signals.LeaveGameAndEnterLobbyRequest;
 	import com.funrun.controller.signals.RemovePopupRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.view.components.ResultsPopup;
@@ -14,7 +14,7 @@ package com.funrun.view.mediators {
 		public var view:ResultsPopup;
 
 		[Inject]
-		public var leaveGameRequest:LeaveGameRequest;
+		public var leaveGameRequest:LeaveGameAndEnterLobbyRequest;
 
 		[Inject]
 		public var removeResultsPopupRequest:RemoveResultsPopupRequest;

@@ -32,6 +32,7 @@ package com.funrun {
 	import com.funrun.controller.commands.KillPlayerCommand;
 	import com.funrun.controller.commands.LeaveGameAndEnterLobbyCommand;
 	import com.funrun.controller.commands.LeaveLobbyAndEnterGameCommand;
+	import com.funrun.controller.commands.LeaveLobbyAndEnterMainMenuCommand;
 	import com.funrun.controller.commands.LoadConfigurationCommand;
 	import com.funrun.controller.commands.LogMessageCommand;
 	import com.funrun.controller.commands.PlaySoundCommand;
@@ -81,7 +82,7 @@ package com.funrun {
 	import com.funrun.controller.signals.AddToReadyListRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.ClearReadyListRequest;
-	import com.funrun.controller.signals.ClickStartGameRequest;
+	import com.funrun.controller.signals.LeaveLobbyAndEnterGameRequest;
 	import com.funrun.controller.signals.CollectPointRequest;
 	import com.funrun.controller.signals.CompleteAppRequest;
 	import com.funrun.controller.signals.CullTrackRequest;
@@ -109,7 +110,8 @@ package com.funrun {
 	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
-	import com.funrun.controller.signals.LeaveGameRequest;
+	import com.funrun.controller.signals.LeaveGameAndEnterLobbyRequest;
+	import com.funrun.controller.signals.LeaveLobbyAndEnterMainMenuRequest;
 	import com.funrun.controller.signals.LoadConfigurationRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.PlaySoundRequest;
@@ -321,7 +323,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
 			signalCommandMap.mapSignalClass( JoinLobbyRequest,						JoinLobbyCommand );
-			signalCommandMap.mapSignalClass( ClickStartGameRequest,					LeaveLobbyAndEnterGameCommand );
 			signalCommandMap.mapSignalClass( CollectPointRequest,					CollectPointCommand );
 			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );
 			signalCommandMap.mapSignalClass( CullTrackRequest,						CullTrackCommand );
@@ -340,7 +341,9 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
-			signalCommandMap.mapSignalClass( LeaveGameRequest,						LeaveGameAndEnterLobbyCommand );
+			signalCommandMap.mapSignalClass( LeaveGameAndEnterLobbyRequest,			LeaveGameAndEnterLobbyCommand );
+			signalCommandMap.mapSignalClass( LeaveLobbyAndEnterGameRequest,			LeaveLobbyAndEnterGameCommand );
+			signalCommandMap.mapSignalClass( LeaveLobbyAndEnterMainMenuRequest,		LeaveLobbyAndEnterMainMenuCommand );
 			signalCommandMap.mapSignalClass( LoadConfigurationRequest, 				LoadConfigurationCommand );
 			signalCommandMap.mapSignalClass( LogMessageRequest, 					LogMessageCommand );
 			signalCommandMap.mapSignalClass( PlaySoundRequest,						PlaySoundCommand );

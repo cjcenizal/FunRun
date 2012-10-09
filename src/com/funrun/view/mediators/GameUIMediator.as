@@ -6,7 +6,7 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
-	import com.funrun.controller.signals.LeaveGameRequest;
+	import com.funrun.controller.signals.LeaveGameAndEnterLobbyRequest;
 	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
 	import com.funrun.controller.signals.ToggleReadyListRequest;
@@ -41,7 +41,7 @@ package com.funrun.view.mediators {
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
 		[Inject]
-		public var leaveGameRequest:LeaveGameRequest;
+		public var leaveGameRequest:LeaveGameAndEnterLobbyRequest;
 		
 		[Inject]
 		public var sendMatchmakingReadyRequest:SendMatchmakingReadyRequest;

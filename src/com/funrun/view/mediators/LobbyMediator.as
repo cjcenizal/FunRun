@@ -1,10 +1,11 @@
 package com.funrun.view.mediators {
 	
-	import com.funrun.controller.signals.ClickStartGameRequest;
 	import com.funrun.controller.signals.DrawLobbyChatRequest;
 	import com.funrun.controller.signals.DrawLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.DrawLobbyPlayerLeftRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
+	import com.funrun.controller.signals.LeaveLobbyAndEnterGameRequest;
+	import com.funrun.controller.signals.LeaveLobbyAndEnterMainMenuRequest;
 	import com.funrun.controller.signals.SendLobbyChatRequest;
 	import com.funrun.controller.signals.vo.DrawLobbyChatVo;
 	import com.funrun.controller.signals.vo.DrawLobbyPlayerJoinedVo;
@@ -36,12 +37,16 @@ package com.funrun.view.mediators {
 		public var sendLobbyChatRequest:SendLobbyChatRequest;
 		
 		[Inject]
-		public var clickStartGameRequest:ClickStartGameRequest;
+		public var leaveLobbyAndEnterGameRequest:LeaveLobbyAndEnterGameRequest;
+		
+		[Inject]
+		public var leaveLobbyAndEnterMainMenuRequest:LeaveLobbyAndEnterMainMenuRequest;
 		
 		override public function onRegister():void {
 			view.init();
 			view.onSendChatSignal.add( onSendChat );
-			view.onClickJoinGameSignal.add( onJoinGameClicked );
+			view.onClickJoinGameSignal.add( onClickJoinGame );
+			view.onClickLeaveSignal.add( onClickLeave );
 			drawLobbyChatRequest.add( onDrawLobbyChatRequested );
 			drawLobbyPlayerJoinedRequest.add( onDrawLobbyPlayerJoinedRequested );
 			drawLobbyPlayerLeftRequest.add( onDrawLobbyPlayerLeftRequested );
@@ -52,8 +57,12 @@ package com.funrun.view.mediators {
 			view.clearChat();
 		}
 		
-		private function onJoinGameClicked():void {
-			clickStartGameRequest.dispatch();
+		private function onClickJoinGame():void {
+			leaveLobbyAndEnterGameRequest.dispatch();
+		}
+		
+		private function onClickLeave():void {
+			leaveLobbyAndEnterMainMenuRequest.dispatch();
 		}
 		
 		private function onDrawLobbyChatRequested( vo:DrawLobbyChatVo ):void {

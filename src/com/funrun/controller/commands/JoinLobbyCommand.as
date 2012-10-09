@@ -1,6 +1,6 @@
 package com.funrun.controller.commands
 {
-	import com.funrun.controller.signals.ClickStartGameRequest;
+	import com.funrun.controller.signals.LeaveLobbyAndEnterGameRequest;
 	import com.funrun.controller.signals.HandleLobbyChatRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
@@ -49,7 +49,7 @@ package com.funrun.controller.commands
 		// Commands.
 		
 		[Inject]
-		public var clickStartGameRequest:ClickStartGameRequest;
+		public var clickStartGameRequest:LeaveLobbyAndEnterGameRequest;
 		
 		[Inject]
 		public var showJoiningLobbyPopupRequest:ShowJoiningLobbyPopupRequest;
