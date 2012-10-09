@@ -1,6 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.ToggleReadyButtonRequest;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.constants.Time;
@@ -24,6 +25,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var toggleCountdownRequest:ToggleCountdownRequest;
 		
+		[Inject]
+		public var toggleReadyButtonRequest:ToggleReadyButtonRequest;
+		
 		override public function execute():void {
 			if ( gameModel.isMultiplayer ) {
 				setTimeout( function():void {
@@ -33,6 +37,7 @@ package com.funrun.controller.commands {
 			} else {
 				countdownModel.start( Time.COUNTDOWN_SECONDS * 1000 );
 			}
+			toggleReadyButtonRequest.dispatch( false );
 		}
 	}
 }

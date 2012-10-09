@@ -5,6 +5,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
+	import com.funrun.controller.signals.ToggleReadyButtonRequest;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.CountdownModel;
 	import com.funrun.model.GameModel;
@@ -77,6 +78,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var clearReadyListRequest:ClearReadyListRequest;
 		
+		[Inject]
+		public var toggleReadyButtonRequest:ToggleReadyButtonRequest;
+		
 		override public function execute():void {
 			stateModel.canMoveForward = false;
 			stateModel.canDie = true;
@@ -110,6 +114,7 @@ package com.funrun.controller.commands {
 			resetPlayerRequest.dispatch( true );
 			// Reset UI.
 			clearReadyListRequest.dispatch();
+			toggleReadyButtonRequest.dispatch( true );
 		}
 	}
 }

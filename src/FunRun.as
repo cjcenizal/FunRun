@@ -47,7 +47,6 @@ package {
 		- Add instructions to beginning of gameplay
 		- Add dash, like Robot Unicorn Attack
 			- Rechargeable meter
-		- Figure out exploration mode and AI mode later
 		
 		- Send dash and jump via network so we can have sound fx
 		- Memory pool for BoundingBoxVos
@@ -73,6 +72,7 @@ package {
 			- Test MVP
 			
 		
+			- Figure out exploration mode and AI mode later
 			- Build stubbed store functionality
 			- Observer loop:
 				- Display their attire in the UI

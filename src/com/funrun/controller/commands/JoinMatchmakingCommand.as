@@ -121,8 +121,10 @@ package com.funrun.controller.commands {
 		
 		private function onPlayerReady( message:Message ):void {
 			var id:int = message.getInt( 0 );
-			competitorsModel.getWithId( id ).isReady = true;
-			drawReadyListRequest.dispatch();
+			if ( competitorsModel.getWithId( id ) ) {
+				competitorsModel.getWithId( id ).isReady = true;
+				drawReadyListRequest.dispatch();
+			}
 		}
 		
 		private function onStartCountdown( message:Message ):void {

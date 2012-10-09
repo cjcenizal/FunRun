@@ -9,6 +9,7 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.LeaveGameAndEnterLobbyRequest;
 	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.ToggleReadyButtonRequest;
 	import com.funrun.controller.signals.ToggleReadyListRequest;
 	import com.funrun.controller.signals.vo.AddToReadyListVo;
 	import com.funrun.view.components.GameUIView;
@@ -55,6 +56,9 @@ package com.funrun.view.mediators {
 		[Inject]
 		public var toggleReadyListRequest:ToggleReadyListRequest;
 		
+		[Inject]
+		public var toggleReadyButtonRequest:ToggleReadyButtonRequest;
+		
 		override public function onRegister():void {
 			view.init();
 			view.onClickQuitSignal.add( onClickQuit );
@@ -66,6 +70,7 @@ package com.funrun.view.mediators {
 			addToReadyListRequest.add( onAddToReadyListRequested );
 			toggleCountdownRequest.add( onToggleCountdownRequested );
 			toggleReadyListRequest.add( onToggleReadyListRequested );
+			toggleReadyButtonRequest.add( onToggleReadyButtonRequested );
 			clearReadyListRequest.add( onClearReadyListRequested );
 		}
 		
@@ -102,6 +107,14 @@ package com.funrun.view.mediators {
 				view.showReadyList();
 			} else {
 				view.hideReadyList();
+			}
+		}
+		
+		private function onToggleReadyButtonRequested( visible:Boolean ):void {
+			if ( visible ) {
+				view.showReadyButton();
+			} else {
+				view.hideReadyButton();
 			}
 		}
 		

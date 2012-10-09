@@ -90,7 +90,7 @@ namespace FunRun {
 		 */
 		
 		// Limits.
-		private const int REQUIRED_NUM_PLAYERS = 2;
+		private const int REQUIRED_NUM_PLAYERS = 4;
 
 		// Game state.
 		private int numPlayers = 0;

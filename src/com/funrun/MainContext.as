@@ -152,6 +152,7 @@ package com.funrun {
 	import com.funrun.controller.signals.StoreFloorRequest;
 	import com.funrun.controller.signals.StoreObstacleRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
+	import com.funrun.controller.signals.ToggleReadyButtonRequest;
 	import com.funrun.controller.signals.ToggleReadyListRequest;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCollisionsRequest;
@@ -315,6 +316,7 @@ package com.funrun {
 			injector.mapSingleton( ShowScreenRequest );
 			injector.mapSingleton( ShowStatsRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
+			injector.mapSingleton( ToggleReadyButtonRequest );
 			injector.mapSingleton( ToggleReadyListRequest );
 			injector.mapSingleton( UpdateLoginStatusRequest );
 			signalCommandMap.mapSignalClass( AddAiCompetitorsRequest,				AddAiCompetitorsCommand );
