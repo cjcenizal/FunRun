@@ -44,8 +44,6 @@ package {
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		
 		TO-DO:
-		- Block screen interaction when popups are up
-		- Add delay to countdown
 		- Add dash, like Robot Unicorn Attack
 			- Rechargeable meter
 		- Figure out exploration mode and AI mode later
