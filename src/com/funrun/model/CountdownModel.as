@@ -1,5 +1,8 @@
 package com.funrun.model {
 	
+	import flash.utils.clearTimeout;
+	import flash.utils.setTimeout;
+	
 	import org.robotlegs.mvcs.Actor;
 	
 	public class CountdownModel extends Actor {
@@ -7,12 +10,28 @@ package com.funrun.model {
 		private var _startTime:Number = 0;
 		private var _msRemaining:Number = 7;
 		private var _isRunning:Boolean = false;
+		private var _delayed:Boolean = false;
+		private var _timeOut:uint;
 		
-		public function start( msRemaining:Number ):void {
+		public function delayedStart( waitSeconds:int, callback:Function ):void {
+			clearDelay();
+			_delayed = true;
+			_timeOut = setTimeout( callback, waitSeconds );
+		}
+		
+		public function start( countdownSeconds:int ):void {
+			clearDelay();
 			_isRunning = true;
-			_msRemaining = msRemaining;
+			_msRemaining = countdownSeconds * 1000;
 			var date:Date = new Date();
 			_startTime = date.getTime();
+		}
+		
+		private function clearDelay():void {
+			if ( _delayed ) {
+				_delayed = false;
+				clearTimeout( _timeOut );
+			}
 		}
 		
 		public function reset():void {

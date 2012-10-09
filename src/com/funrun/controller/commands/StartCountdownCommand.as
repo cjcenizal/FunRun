@@ -6,8 +6,6 @@ package com.funrun.controller.commands {
 	import com.funrun.model.GameModel;
 	import com.funrun.model.constants.Time;
 	
-	import flash.utils.setTimeout;
-	
 	import org.robotlegs.mvcs.Command;
 
 	public class StartCountdownCommand extends Command {
@@ -30,12 +28,12 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			if ( gameModel.isMultiplayer ) {
-				setTimeout( function():void {
-					countdownModel.start( Time.COUNTDOWN_SECONDS * 1000 );
+				countdownModel.delayedStart( Time.COUNTDOWN_WAIT_SECONDS, function():void {
+					countdownModel.start( Time.COUNTDOWN_SECONDS );
 					toggleCountdownRequest.dispatch( true );
-				}, Time.COUNTDOWN_WAIT_SECONDS * 1000 );
+				} );
 			} else {
-				countdownModel.start( Time.COUNTDOWN_SECONDS * 1000 );
+				countdownModel.start( Time.COUNTDOWN_SECONDS );
 			}
 			toggleReadyButtonRequest.dispatch( false );
 		}

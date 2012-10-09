@@ -44,9 +44,18 @@ package {
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		
 		TO-DO:
+		- Still encountered bug where I am playing against myself, fuckkkkk
+		
 		- Add instructions to beginning of gameplay
-		- Add dash, like Robot Unicorn Attack
-			- Rechargeable meter
+		- Design a decent UI
+		- Add social sharing
+		- Collect points
+			- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
+			- Make points persistent on the server
+			- Be smarter about selecting how many points are visible
+		- Design and implement glue screens
+		- Home
+			- Results screen showing personal bests, rewards
 		
 		- Send dash and jump via network so we can have sound fx
 		- Memory pool for BoundingBoxVos
@@ -54,23 +63,19 @@ package {
 		
 		- Search for TO-DOs
 		- Game design
-			- Collect points
-				- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
-				- Make points persistent on the server
-				- Be smarter about selecting how many points are visible
-			- Design and implement glue screens
-				- Home
-				- Results screen showing personal bests, rewards
+			
 			- Sound fx and music
-			- Design a decent UI
-			- Add social sharing
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
 			- Chat
 			- Metrics?
 			- Basic animation, music, and sound?
 			- Test MVP
-			
+				- Create dev and production servers
+				- Get tools for monitoring problems
+		
+			- Add dash, like Robot Unicorn Attack
+				- Rechargeable meter
 		
 			- Figure out exploration mode and AI mode later
 			- Build stubbed store functionality

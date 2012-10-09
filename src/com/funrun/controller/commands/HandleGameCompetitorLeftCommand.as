@@ -41,10 +41,12 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			var inGameId:int = message.getInt( 0 );
 			var competitor:CompetitorVo = competitorsModel.getWithId( inGameId );
-			removeCompetitorRequest.dispatch( competitor );
-			displayMessageRequest.dispatch( competitor.name + " has left the game." );
-			logMessageRequest.dispatch( new LogMessageVo( this, "Competitor " + competitor.id + " (" + competitor.name + ") left the game." ) );
-			drawReadyListRequest.dispatch();
+			if ( competitor ) {
+				removeCompetitorRequest.dispatch( competitor );
+				displayMessageRequest.dispatch( competitor.name + " has left the game." );
+				logMessageRequest.dispatch( new LogMessageVo( this, "Competitor " + competitor.id + " (" + competitor.name + ") left the game." ) );
+				drawReadyListRequest.dispatch();
+			}
 		}
 	}
 }
