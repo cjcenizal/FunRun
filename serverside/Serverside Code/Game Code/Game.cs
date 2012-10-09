@@ -88,14 +88,13 @@ namespace FunRun {
 		 * to begin the game, and disconnects everyone
 		 * from the Matchmaking room.
 		 */
+		
+		// Limits.
+		private const int REQUIRED_NUM_PLAYERS = 2;
 
 		// Game state.
 		private int numPlayers = 0;
-		Dictionary<int, Boolean> readyPlayers = new Dictionary<int, Boolean>();
-
-		// Limits.
-		private const int REQUIRED_NUM_PLAYERS = 4;
-		private const int countdownSeconds = 5;
+		private Dictionary<int, Boolean> readyPlayers = new Dictionary<int, Boolean>();
 
 		// Obstacle generation.
 		private int randomObstacleSeed = ( new Random() ).Next();
@@ -115,8 +114,7 @@ namespace FunRun {
 			player.Send( joinGameMessage );
 
 			if ( numPlayers == REQUIRED_NUM_PLAYERS ) {
-				StartPlayersCountdown();
-				CloseGame();
+				StartGame();
 			}
 		}
 		
@@ -129,13 +127,12 @@ namespace FunRun {
 			switch ( message.Type ) {
 				case "r": // Ready.
 					readyPlayers[ player.Id ] = true;
-					if ( numPlayers > 1 && AllPlayersAreReady() ) {
-						StartPlayersCountdown();
-						CloseGame();
-					}
 					Message readyMessage = Message.Create( "r" );
 					readyMessage.Add( player.Id );
 					Broadcast( readyMessage );
+					if ( numPlayers > 1 && AllPlayersAreReady() ) {
+						StartGame();
+					}
 					break;
 			}
 		}
@@ -149,22 +146,21 @@ namespace FunRun {
 			return true;
 		}
 
-		private void StartPlayersCountdown() {
+		private void StartGame() {
 			// Tell everyone we can start the countdown.
 			Message startCountdownMessage = Message.Create( "s" );
-			startCountdownMessage.Add( countdownSeconds );
 			Broadcast( startCountdownMessage );
-		}
-		
-		private void CloseGame() {
-			DisconnectAllPlayers();
-		}
 
-		private void DisconnectAllPlayers() {
 			// Disconnect everybody.
-			foreach ( Player p in Players ) {
+			foreach ( BasePlayer p in Players ) {
 				p.Disconnect();
 			}
+
+			// Reset.
+			numPlayers = 0;
+			readyPlayers.Clear();
+			randomObstacleSeed = ( new Random() ).Next();
+			gameId = System.Guid.NewGuid().ToString();
 		}
 		
 		public override bool AllowUserJoin( BasePlayer player ) {

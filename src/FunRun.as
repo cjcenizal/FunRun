@@ -38,24 +38,23 @@ package {
 		BUILDER:
 		- Build cool obstacles
 		- HTML5 and fun UI: http://www.buildwithchrome.com/static/builder#pos=950513x618389&load=ahFzfmJ1aWxkd2l0aGNocm9tZXIsCxIFQnVpbGQiIXRpbGV4Xzk1MDUxM190aWxleV82MTgzODlfem9vbV8yMAw
+		- Make points exist in long rows
+			- Diverging and converging obstacles
+		- A block function can be represented by different blocks, this allows easy reskinning
+		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		
 		TO-DO:
-		- New multiplayer process
-			- Add "leave lobby" button
-			- Exit game boots back to lobby
-			- Don't send ready for countdown until our view is ready
-		- Send dash and jump via network so we can have sound fx
-		- Figure out exploration mode and AI mode later
-			- Add "single player" option with instructions
-		- Memory pool for BoundingBoxVos
-		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack
+		- Block screen interaction when popups are up
+		- Add delay to countdown
 		- Add dash, like Robot Unicorn Attack
 			- Rechargeable meter
-		- FunBuilder
-			- A block function can be represented by different blocks, this allows easy reskinning
-			- Should we make the floor the lowest you can go? This could make lava easier to implement.
-		- Add duck during exploration mode
-		- Make points exist in long rows
+		- Figure out exploration mode and AI mode later
+			- Add "single player" option with instructions
+		
+		- Send dash and jump via network so we can have sound fx
+		- Memory pool for BoundingBoxVos
+		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack
+		
 		- Search for TO-DOs
 		- Game design
 			- Collect points
@@ -68,7 +67,6 @@ package {
 			- Sound fx and music
 			- Design a decent UI
 			- Add social sharing
-			- Test multiplayer to make sure it still works
 			- Performance gets pretty choppy, probably because I'm running the game twice on my system
 				- Can we send and receive Booleans as bytes?
 			- Chat

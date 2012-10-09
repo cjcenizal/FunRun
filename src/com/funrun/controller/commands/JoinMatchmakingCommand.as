@@ -78,8 +78,7 @@ package com.funrun.controller.commands {
 			// First we need to get matched up with other players.
 			matchmakingService.onErrorSignal.add( onError );
 			matchmakingService.onConnectedSignal.add( onConnected );
-			var userJoinData:Object = {
-				id: loginService.userId };
+			var userJoinData:Object = { id: loginService.userId };
 			matchmakingService.connect( loginService.client, Rooms.MATCH_MAKING, userJoinData );
 		}
 		
@@ -103,12 +102,12 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onJoinGame( message:Message ):void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Joined a game. Message is: " + message ) );
-			matchmakingService.removeMessageHandler( Messages.JOIN_GAME, onJoinGame );
-			
 			var roomIdToJoin:String = message.getString( 0 );
 			var obstacleSeed:Number = message.getInt( 1 );
 			var inGameId:Number = message.getInt( 2 );
+			
+			logMessageRequest.dispatch( new LogMessageVo( this, "Joined a game, room " + roomIdToJoin ) );
+			matchmakingService.removeMessageHandler( Messages.JOIN_GAME, onJoinGame );
 			
 			// Store random seed.
 			segmentsModel.seed = obstacleSeed;
@@ -128,8 +127,7 @@ package com.funrun.controller.commands {
 		
 		private function onStartCountdown( message:Message ):void {
 			logMessageRequest.dispatch( new LogMessageVo( this, "Started countdown. Message is: " + message ) );
-			var countdownSeconds:int = message.getNumber( 0 );
-			startCountdownRequest.dispatch( countdownSeconds );
+			startCountdownRequest.dispatch();
 		}
 	}
 }
