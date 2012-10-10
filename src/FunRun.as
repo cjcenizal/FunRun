@@ -42,18 +42,19 @@ package {
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		
 		TO-DO:
+		- Abstract the keys that map to certain movements with a KeyMapModel or just in KeysModel
 		- Collect points
 			- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
 			- Make points persistent on the server
 			- Be smarter about selecting how many points are visible
 			- Singleplayer can't earn points
+		
 		- Design a decent UI
 			- Main menu
-				- Show account info (points, personal best distance)
-			- Basic buttons
+					- Show account info (points, personal best distance)
 			- Game UI
 				- Add instructions to beginning of gameplay
-				- Results
+				- Results should look great
 		- Add social sharing
 		
 		- Send dash and jump via network so we can have sound fx
