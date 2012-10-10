@@ -40,7 +40,6 @@ package com.funrun.controller.commands {
 				var competitor:CompetitorVo = competitorsModel.getWithId( id );
 				competitorsModel.kill( competitor.id );
 				displayMessageRequest.dispatch( competitor.name + " just died!" );
-				logMessageRequest.dispatch( new LogMessageVo( this, "Competitor " + competitor.id + " (" + competitor.name + ") died." ) );
 			}
 		}
 	}

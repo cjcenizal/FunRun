@@ -3,7 +3,6 @@ package com.funrun.controller.commands {
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
-	import away3d.primitives.SphereGeometry;
 	
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.AddNametagRequest;

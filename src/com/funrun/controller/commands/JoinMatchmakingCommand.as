@@ -60,7 +60,6 @@ package com.funrun.controller.commands {
 		public var drawReadyListRequest:DrawReadyListRequest;
 		
 		override public function execute():void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Connecting to matchmaking service..." ) );
 			// Hide view and block interaction.
 			showFindingGamePopupRequest.dispatch();
 			// First we need to get matched up with other players.
@@ -71,7 +70,6 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onConnected():void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Connected to matchmaking service." ) );
 			// Listen for disconnect.
 			matchmakingService.onServerDisconnectSignal.add( onDisconnected );
 			matchmakingService.addMessageHandler( Messages.JOIN_GAME, onJoinGame );
@@ -80,7 +78,6 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onDisconnected():void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Disconnected from matchmaking service." ) );
 			matchmakingService.reset();
 		}
 		
@@ -108,7 +105,6 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onStartCountdown( message:Message ):void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Started countdown. Message is: " + message ) );
 			startCountdownRequest.dispatch();
 		}
 	}

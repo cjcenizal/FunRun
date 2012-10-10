@@ -54,7 +54,7 @@ package com.funrun.controller.commands {
 					var z:Number = message.getNumber( i + 4 );
 					var isDucking:Boolean = message.getBoolean( i + 5 );
 					var isReady:Boolean = message.getBoolean( i + 6 );
-					var competitor:CompetitorVo = new CompetitorVo( inGameId, name );
+					var competitor:CompetitorVo = new CompetitorVo( id, name );
 					competitor.updatePosition( x, y, z );
 					competitor.isDucking = isDucking;
 					competitor.isReady = isReady;

@@ -6,12 +6,7 @@ package com.funrun.controller.commands
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.MP3Loader;
 	
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	
-	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
-	
 	
 	public class PreloadCommand extends AsyncCommand
 	{
@@ -38,10 +33,8 @@ package com.funrun.controller.commands
 					onError: errorHandler
 				} );
 			
-			for ( var i:int = 0; i < Sounds.sounds.length; i++ ) {
-				var id:String = Sounds.sounds[ i ];
-				var filepath:String = soundsModel.getFilepath( id );
-				trace(id,filepath);
+			for ( var i:int = 0; i < soundsModel.count; i++ ) {
+				var filepath:String = soundsModel.getAt( i );
 				queue.append( new MP3Loader( filepath ) );
 			}
 			

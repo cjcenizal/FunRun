@@ -2,9 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.DrawReadyListRequest;
-	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
-	import com.funrun.controller.signals.vo.LogMessageVo;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.vo.CompetitorVo;
 	
@@ -33,9 +31,6 @@ package com.funrun.controller.commands {
 		public var displayMessageRequest:DrawGameMessageRequest;
 		
 		[Inject]
-		public var logMessageRequest:LogMessageRequest;
-		
-		[Inject]
 		public var drawReadyListRequest:DrawReadyListRequest;
 		
 		override public function execute():void {
@@ -44,7 +39,6 @@ package com.funrun.controller.commands {
 			if ( competitor ) {
 				removeCompetitorRequest.dispatch( competitor );
 				displayMessageRequest.dispatch( competitor.name + " has left the game." );
-				logMessageRequest.dispatch( new LogMessageVo( this, "Competitor " + competitor.id + " (" + competitor.name + ") left the game." ) );
 				drawReadyListRequest.dispatch();
 			}
 		}

@@ -68,7 +68,6 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			gameModel.isMultiplayer = true;
-			logMessageRequest.dispatch( new LogMessageVo( this, "Joining a game..." ) );
 			gameService.onErrorSignal.add( onError );
 			gameService.onConnectedSignal.add( onConnected );
 			var userJoinData:Object = {
@@ -80,7 +79,6 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onConnected():void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Connected to game." ) );
 			gameService.onServerDisconnectSignal.add( onDisconnected );
 			gameService.addMessageHandler( Messages.INIT, onInit );
 			gameService.addMessageHandler( Messages.UPDATE, onUpdate );
@@ -90,7 +88,6 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onDisconnected():void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Disconnected from game." ) );
 			gameService.reset();
 		}
 		
@@ -100,7 +97,6 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onInit( message:Message ):void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Game init. Message is: " + message ) );
 			gameService.removeMessageHandler( Messages.INIT, onInit );
 			handleGameInitRequest.dispatch( message );
 		}
