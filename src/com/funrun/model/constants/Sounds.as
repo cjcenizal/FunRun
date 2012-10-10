@@ -4,5 +4,10 @@ package com.funrun.model.constants
 	{
 		public static const JUMP:String = "jump";
 		public static const POINT:String = "point";
+		
+		public static const sounds:Array = [
+				JUMP,
+				POINT
+			];
 	}
 }

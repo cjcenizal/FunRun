@@ -191,13 +191,6 @@ package com.funrun.controller.commands {
 				material.addMethod( materialsModel.fogMethod );
 			}
 			
-			// Set up sounds.
-			soundsModel.folder = "audio/";
-			soundsModel.add( Sounds.JUMP, "jump.mp3" );
-			soundsModel.add( Sounds.POINT, "point1.mp3" );
-			soundsModel.add( Sounds.POINT, "point2.mp3" );
-			soundsModel.add( Sounds.POINT, "point3.mp3" );
-			
 			// Add player to track.
 			addPlaceableRequest.dispatch( playerModel );
 			playerModel.normalBounds.minX = Player.NORMAL_BOUNDS.x * -.5;

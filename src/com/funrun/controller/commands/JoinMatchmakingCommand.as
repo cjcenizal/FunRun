@@ -6,7 +6,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
-	import com.funrun.controller.signals.ToggleReadyListRequest;
 	import com.funrun.controller.signals.vo.LogMessageVo;
 	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.model.CompetitorsModel;
@@ -56,9 +55,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var joinGameRequest:JoinGameRequest;
-		
-		[Inject]
-		public var toggleReadyListRequest:ToggleReadyListRequest;
 		
 		[Inject]
 		public var drawReadyListRequest:DrawReadyListRequest;

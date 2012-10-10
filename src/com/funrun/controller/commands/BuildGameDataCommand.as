@@ -13,6 +13,8 @@ package com.funrun.controller.commands {
 			addCommand( LoadObstaclesCommand );
 			// Load store.
 			addCommand( LoadStoreCommand );
+			// Preload.
+			addCommand( PreloadCommand );
 		}
 	}
 }
