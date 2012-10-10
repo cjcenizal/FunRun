@@ -1,11 +1,12 @@
 package com.funrun.model
 {
+	import flash.media.Sound;
+	
 	import org.robotlegs.mvcs.Actor;
 	
 	public class SoundsModel extends Actor
 	{
 		
-		public var folder:String = "";
 		private var _sounds:Object;
 		private var _soundsArr:Array;
 		
@@ -16,26 +17,18 @@ package com.funrun.model
 			_soundsArr = [];
 		}
 		
-		public function add( id:String, filepath:String ):void {
+		public function add( id:String, sound:Sound ):void {
 			if ( !_sounds[ id ] ) _sounds[ id ] = new Array();
-			( _sounds[ id ] as Array ).push( filepath );
-			_soundsArr.push( filepath );
+			( _sounds[ id ] as Array ).push( sound );
+			_soundsArr.push( sound );
 		}
 		
-		public function getFilepath( id:String ):String {
+		public function getWithId( id:String ):Sound {
 			if ( _sounds[ id ] ) {
 				var sounds:Array = _sounds[ id ] as Array;
-				return folder + sounds[ Math.floor( Math.random() * sounds.length ) ];
+				return sounds[ Math.floor( Math.random() * sounds.length ) ];
 			}
 			return null;
-		}
-		
-		public function get count():int {
-			return _soundsArr.length;
-		}
-		
-		public function getAt( index:int ):String {
-			return _soundsArr[ index ];
 		}
 	}
 }

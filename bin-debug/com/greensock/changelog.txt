@@ -1,11 +1,6 @@
 CHANGE LOG : GREENSOCK TWEENING PLATFORM
 ----------------------------------------
 
-2012-06-30
----------------------------------------------
-TimelineLite		1.699
-	- Added logic to TimelineLite/Max so that if you insert/append a child that extends the duration and the timeline had already finished, it will adjust its startTime and resume playback (as long as it wasn't paused of course)
-
 2012-03-29
 ---------------------------------------------
 TimelineLite		1.698

@@ -59,6 +59,7 @@ package {
 		- Send dash and jump via network so we can have sound fx
 		- Memory pool for BoundingBoxVos
 		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack
+		- Pass LoadConfigurationCommand information via PHP.
 		
 		- Search for TO-DOs
 		- Game design

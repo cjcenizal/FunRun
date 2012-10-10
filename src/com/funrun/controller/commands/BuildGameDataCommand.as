@@ -14,7 +14,7 @@ package com.funrun.controller.commands {
 			// Load store.
 			addCommand( LoadStoreCommand );
 			// Preload.
-			addCommand( PreloadCommand );
+			addCommand( PreloadSoundsCommand );
 		}
 	}
 }

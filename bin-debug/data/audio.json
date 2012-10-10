@@ -1,0 +1,23 @@
+{
+  "doc" : "Game audio.",
+  "author" : "CJ Cenizal",
+  "sounds" : {
+      "folder" : "audio",
+      "list" : [
+          {
+              "id" : "jump",
+              "list" : [
+                  "jump.mp3"
+                ]
+            },
+          {
+              "id" : "point",
+              "list" : [
+                  "point1.mp3",
+                  "point2.mp3",
+                  "point3.mp3"
+                ]
+            }
+        ]
+    }
+}

@@ -1,11 +1,5 @@
 CHANGE LOG : GREENSOCK LOADERMAX SYSTEM
 ----------------------------------------
-2012-08-09
-----------------------------------------
-VideoLoader			1.921
-LoaderItem			1.921
-	- Fixed issue that could prevent the BUFFER_EMPTY event from being dispatched if bufferMode is true
-	- Implemented logic that causes a loader's "auditedSize" property to get reset when its "url" is changed.
 
 2012-04-26
 ----------------------------------------

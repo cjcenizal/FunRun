@@ -22,9 +22,8 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			var filepath:String = soundsModel.getFilepath( id );
-			var sound:Sound = new Sound( new URLRequest( filepath ) );
-			sound.play();
+			var sound:Sound = soundsModel.getWithId( id );
+			if ( sound ) sound.play();
 		}
 	}
 }
