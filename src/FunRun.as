@@ -23,8 +23,6 @@ package {
 		
 		/*
 		BUGS:
-		- Networking problems
-			- Ian couldn't move because a resetTimer message was sent. The logc is wonky there.
 		- Smack is way too forgiving on a one-block, but only SOMETIMES!
 			- Still collision issues:
 				- Jumping up into the top front edge of a smack block launched me in the air
@@ -44,16 +42,19 @@ package {
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		
 		TO-DO:
-		- Add instructions to beginning of gameplay
-		- Design a decent UI
-		- Add social sharing
 		- Collect points
 			- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
 			- Make points persistent on the server
 			- Be smarter about selecting how many points are visible
-		- Design and implement glue screens
-		- Home
-			- Results screen showing personal bests, rewards
+			- Singleplayer can't earn points
+		- Design a decent UI
+			- Main menu
+				- Show account info (points, personal best distance)
+			- Basic buttons
+			- Game UI
+				- Add instructions to beginning of gameplay
+				- Results
+		- Add social sharing
 		
 		- Send dash and jump via network so we can have sound fx
 		- Memory pool for BoundingBoxVos

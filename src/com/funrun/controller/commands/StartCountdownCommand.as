@@ -29,10 +29,11 @@ package com.funrun.controller.commands {
 		override public function execute():void {
 			if ( gameModel.isMultiplayer ) {
 				countdownModel.delayedStart( Time.COUNTDOWN_WAIT_SECONDS, function():void {
-					countdownModel.start( Time.COUNTDOWN_SECONDS );
 					toggleCountdownRequest.dispatch( true );
+					countdownModel.start( Time.COUNTDOWN_SECONDS );
 				} );
 			} else {
+				toggleCountdownRequest.dispatch( true );
 				countdownModel.start( Time.COUNTDOWN_SECONDS );
 			}
 			toggleReadyButtonRequest.dispatch( false );
