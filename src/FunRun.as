@@ -34,29 +34,32 @@ package {
 		- To optimize against memory deallocation pauses, we can implement an object pool for segments
 		
 		BUILDER:
+		- Convert to abstract "block type" based building (e.g. center, side, corner, tip, etc), use skins (e.g. Grass, Caves, etc) 
 		- Build cool obstacles
-		- HTML5 and fun UI: http://www.buildwithchrome.com/static/builder#pos=950513x618389&load=ahFzfmJ1aWxkd2l0aGNocm9tZXIsCxIFQnVpbGQiIXRpbGV4Xzk1MDUxM190aWxleV82MTgzODlfem9vbV8yMAw
-		- Make points exist in long rows
-			- Diverging and converging obstacles
-		- A block function can be represented by different blocks, this allows easy reskinning
+			- Alternating converging and diverging
+			- Form points into lines on obstacles
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
+		- HTML5 and fun UI: http://www.buildwithchrome.com/static/builder#pos=950513x618389&load=ahFzfmJ1aWxkd2l0aGNocm9tZXIsCxIFQnVpbGQiIXRpbGV4Xzk1MDUxM190aWxleV82MTgzODlfem9vbV8yMAw
 		
 		TO-DO:
-		- Abstract the keys that map to certain movements with a KeyMapModel or just in KeysModel
+		TEST WITH FRIENDS
+		- Add variable height jumping
 		- Collect points
 			- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
-			- Make points persistent on the server
-			- Be smarter about selecting how many points are visible
-			- Singleplayer can't earn points
-		- Add social sharing
+			- Add unique results popup for single player (main menu, play again)
+		- Top score leaderboard
+			- Among your friends
+			- Globally
 		- Analytics / metrics
 			- Chatrooms will let me ask players directly what they think
 			- Measure which blocks of obstacles kill players
 			- If we give players options (play easy or hard obstacles) we can measure which is more popular.
+		
+		BETA
+		- Add social sharing
 		- Playing with friends
 			- See your friends who are online
 			- Invite them to join a friends-only game
-		- Top score leaderboard
 		
 		- Design a decent UI
 			- Main menu
@@ -64,6 +67,10 @@ package {
 			- Game UI
 				- Add instructions to beginning of gameplay
 				- Results should look great
+		
+		- Add animated character
+		- Add music and sound effects
+		- Abstract the keys that map to certain movements with a KeyMapModel or just in KeysModel
 		
 		- Send dash and jump via network so we can have sound fx
 		- Memory pool for BoundingBoxVos

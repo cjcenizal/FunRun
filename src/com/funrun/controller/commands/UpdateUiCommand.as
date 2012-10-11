@@ -3,7 +3,6 @@ package com.funrun.controller.commands
 	
 	import com.cenizal.ui.AbstractLabel;
 	import com.funrun.controller.signals.DrawCountdownRequest;
-	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
 	import com.funrun.controller.signals.StartRunningRequest;
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
@@ -68,16 +67,12 @@ package com.funrun.controller.commands
 		public var startRunningRequest:StartRunningRequest;
 		
 		[Inject]
-		public var drawPointsRequest:DrawPointsRequest;
-		
-		[Inject]
 		public var drawSpeedRequest:DrawSpeedRequest;
 		
 		override public function execute():void {
 			updateCountdown();
 			updatePlaces();
 			updateNametags();
-			updatePoints();
 		}
 		
 		private function updateCountdown():void {
@@ -119,12 +114,6 @@ package com.funrun.controller.commands
 					}
 				}
 			}
-		}
-		
-		private function updatePoints():void {
-			//if ( stateModel.isRunning() ) {
-				drawPointsRequest.dispatch( pointsModel.amount );
-			//}
 		}
 	}
 }

@@ -8,7 +8,7 @@ package com.funrun.model
 	public class PointsModel extends Actor
 	{
 		
-		private var _amount:int;
+		private var _collectedAmount:int;
 		private var _collected:Object;
 		
 		private var _points:Array;
@@ -25,7 +25,7 @@ package com.funrun.model
 		}
 		
 		public function reset():void {
-			_amount = 0;
+			_collectedAmount = 0;
 			_collected = {};
 			_points = [];
 			_pointsObj = {};
@@ -36,7 +36,7 @@ package com.funrun.model
 			var key:String = segmentId.toString() + "-" + blockId.toString();
 			if ( !_collected[ key ] ) {
 				_collected[ key ] = true;
-				_amount += amount;
+				_collectedAmount += amount;
 				return true;
 			}
 			return false;
@@ -74,8 +74,8 @@ package com.funrun.model
 			return _points.length;
 		}
 		
-		public function get amount():int {
-			return _amount;
+		public function get collectedAmount():int {
+			return _collectedAmount;
 		}
 	}
 }

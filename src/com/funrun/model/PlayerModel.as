@@ -1,6 +1,5 @@
 package com.funrun.model {
 
-	import away3d.bounds.BoundingVolumeBase;
 	import away3d.entities.Mesh;
 	
 	import com.cenizal.utils.Numbers;
