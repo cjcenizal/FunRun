@@ -48,6 +48,15 @@ package {
 			- Make points persistent on the server
 			- Be smarter about selecting how many points are visible
 			- Singleplayer can't earn points
+		- Add social sharing
+		- Analytics / metrics
+			- Chatrooms will let me ask players directly what they think
+			- Measure which blocks of obstacles kill players
+			- If we give players options (play easy or hard obstacles) we can measure which is more popular.
+		- Playing with friends
+			- See your friends who are online
+			- Invite them to join a friends-only game
+		- Top score leaderboard
 		
 		- Design a decent UI
 			- Main menu
@@ -55,7 +64,6 @@ package {
 			- Game UI
 				- Add instructions to beginning of gameplay
 				- Results should look great
-		- Add social sharing
 		
 		- Send dash and jump via network so we can have sound fx
 		- Memory pool for BoundingBoxVos
@@ -93,10 +101,7 @@ package {
 				- Move overall camera position farther back, so we can see more context of other players
 			- Portraits of players when see the results of a run
 			- Camera shows front during observer mode, look around with mouse
-		- Analytics / metrics
-			- Chatrooms will let me ask players directly what they think
-			- Measure which blocks of obstacles kill players
-			- If we give players options (play easy or hard obstacles) we can measure which is more popular.
+		
 		
 		- Use models and animation
 		- Chatting in a 3D room
