@@ -1,0 +1,26 @@
+{
+  "doc" : "These are the actual models that the different styles use for the various block types.",
+  "author" : "CJ Cenizal",
+  "list" : [
+      {
+        "id" : "default",
+        "blocks" : {
+            "floor" : [ "floor.obj" ],
+            "basic" : [ "basic.obj" ],
+            "launcher" : [ "launcher.obj" ],
+            "stairs" : [ "stairs.obj" ],
+            "point" : [ "point.obj" ]
+          }
+        },
+      {
+        "id" : "grass",
+        "blocks" : {
+            "floor" : [ "floor1.obj", "floor2.obj", "floor3.obj" ],
+            "basic" : [ "basic.obj" ],
+            "launcher" : [ "launcher.obj" ],
+            "stairs" : [ "stairs.obj" ],
+            "point" : [ "point.obj" ]
+          }
+        }
+    ]
+}

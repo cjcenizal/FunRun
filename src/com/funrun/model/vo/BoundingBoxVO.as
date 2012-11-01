@@ -5,9 +5,9 @@ package com.funrun.model.vo
 	public class BoundingBoxVo extends CollidableVo implements ICollidable
 	{
 		public var id:int;
-		public var block:BlockVo;
+		public var block:BlockTypeVo;
 		
-		public function BoundingBoxVo( id:int, block:BlockVo, x:Number, y:Number, z:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
+		public function BoundingBoxVo( id:int, block:BlockTypeVo, x:Number, y:Number, z:Number, minX:Number, minY:Number, minZ:Number, maxX:Number, maxY:Number, maxZ:Number )
 		{
 			this.id = id;
 			this.block = block;

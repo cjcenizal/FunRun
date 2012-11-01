@@ -6,7 +6,7 @@ package com.funrun.model.vo
 	{
 		
 		public var id:int;
-		public var block:BlockVo;
+		public var block:BlockTypeVo;
 		public var x:Number;
 		public var y:Number;
 		public var z:Number;
@@ -14,7 +14,7 @@ package com.funrun.model.vo
 		public var mesh:Mesh;
 		public var segmentId:int;
 		
-		public function PointVo( id:int, block:BlockVo, x:Number, y:Number, z:Number )
+		public function PointVo( id:int, block:BlockTypeVo, x:Number, y:Number, z:Number )
 		{
 			this.id = id;
 			this.block = block;

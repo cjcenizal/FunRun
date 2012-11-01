@@ -1,6 +1,5 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.model.BlocksModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.services.JsonService;
 	
@@ -11,11 +10,6 @@ package com.funrun.controller.commands {
 	import org.robotlegs.utilities.macrobot.AsyncCommand;
 	
 	public class LoadConfigCommand extends AsyncCommand {
-		
-		// Models.
-		
-		[Inject]
-		public var blocksModel:BlocksModel;
 		
 		// State.
 		

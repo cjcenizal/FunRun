@@ -5,7 +5,8 @@ package com.funrun.controller.commands
 	import away3d.primitives.CubeGeometry;
 	import away3d.tools.commands.Merge;
 	
-	import com.funrun.model.BlocksModel;
+	import com.funrun.model.BlockStylesModel;
+	import com.funrun.model.BlockTypesModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.constants.Block;
@@ -22,7 +23,10 @@ package com.funrun.controller.commands
 		// Models.
 		
 		[Inject]
-		public var blocksModel:BlocksModel;
+		public var blockStylesModel:BlockStylesModel;
+		
+		[Inject]
+		public var blockTypesModel:BlockTypesModel;
 		
 		[Inject]
 		public var segmentsModel:SegmentsModel;
@@ -34,7 +38,7 @@ package com.funrun.controller.commands
 			var floorMesh:Mesh = new Mesh( new Geometry() );
 			var merge:Merge = new Merge( true );
 			var boundingBoxes:Array = [];
-			var floorBlockRefMesh:Mesh = blocksModel.getBlock( "floor" ).mesh;
+			var floorBlockRefMesh:Mesh = blockStylesModel.getMeshCloneForBlock( "floor" );
 			var floorBlockMesh:Mesh;
 			var posX:Number, posZ:Number;
 			for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
@@ -51,7 +55,7 @@ package com.funrun.controller.commands
 					merge.apply( floorMesh, floorBlockMesh );
 					// Add a bounding box so we can collide with the floor.
 					boundingBoxes.push( new BoundingBoxVo(
-						i, blocksModel.getBlock( "floor" ),
+						i, blockTypesModel.getWithId( "floor" ),
 						floorBlockMesh.x, floorBlockMesh.y, floorBlockMesh.z,
 						-Block.HALF_SIZE,
 						-Block.HALF_SIZE,

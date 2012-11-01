@@ -1,0 +1,81 @@
+{
+  "doc" : "These are the block types that compose obstacles.",
+  "author" : "CJ Cenizal",
+  "list" : [
+    {
+      "id" : "floor",
+      "faces" : {
+          "t" : "put_top"
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ],
+      "color" : "0xb3b3b3"
+      },
+    {
+      "id" : "basic",
+      "faces" : {
+          "t" : "put_top",
+          "b" : "put_bottom",
+          "l" : "put_left",
+          "r" : "put_right",
+          "f" : "smack",
+          "a" : "put_top"
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ],
+        "color" : "0x00ff00"
+      },
+    {
+      "id" : "launcher",
+      "faces" : {
+          "t" : "jump",
+          "b" : "put_top",
+          "l" : "put_top",
+          "r" : "put_top",
+          "f" : "put_top",
+          "a" : "put_top"
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ],
+        "color" : "0xffff00"
+      },
+    {
+      "id" : "stairs",
+      "faces" : {
+          "t" : "put_top",
+          "b" : "put_top",
+          "l" : "put_top",
+          "r" : "put_top",
+          "f" : "put_top",
+          "a" : "put_top"
+        },
+      "bounds" : [
+          -1, -1, -1,
+          1, 1, 1
+        ],
+        "color" : "0x896224"
+      },
+    {
+      "id" : "point",
+      "faces" : {
+          "t" : "point",
+          "b" : "point",
+          "l" : "point",
+          "r" : "point",
+          "f" : "point",
+          "a" : "point"
+        },
+      "bounds" : [
+          -0.5, -0.5, -0.5,
+          0.5, 0.5, 0.5
+        ],
+        "color" : "0x5ce8fd"
+      }
+  ]
+}

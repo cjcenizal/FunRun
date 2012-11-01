@@ -7,8 +7,10 @@ package com.funrun.controller.commands {
 		public function BuildGameDataCommand() {
 			// Load config
 			addCommand( LoadConfigCommand );
-			// Load all blocks.
-			addCommand( LoadBlocksCommand );
+			// Load block types.
+			addCommand( LoadBlockTypesCommand );
+			// Load block styles.
+			addCommand( LoadBlockStylesCommand );
 			// Load list of obstacles, and then load each obstacle.
 			addCommand( LoadObstaclesCommand );
 			// Load store.

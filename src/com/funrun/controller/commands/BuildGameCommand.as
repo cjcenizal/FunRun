@@ -14,15 +14,16 @@ package com.funrun.controller.commands {
 	import away3d.materials.methods.FresnelSpecularMethod;
 	import away3d.materials.methods.SoftShadowMapMethod;
 	import away3d.primitives.CubeGeometry;
-	import away3d.primitives.SphereGeometry;
 	
 	import com.funrun.controller.signals.AddLightRequest;
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
+	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
-	import com.funrun.model.BlocksModel;
+	import com.funrun.model.BlockStylesModel;
 	import com.funrun.model.ColorsModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
 	import com.funrun.model.MaterialsModel;
@@ -34,11 +35,10 @@ package com.funrun.controller.commands {
 	import com.funrun.model.constants.Camera;
 	import com.funrun.model.constants.Materials;
 	import com.funrun.model.constants.Player;
-	import com.funrun.model.constants.Sounds;
 	import com.funrun.model.constants.Time;
 	import com.funrun.model.constants.Track;
 	import com.funrun.model.constants.World;
-	import com.funrun.model.GameModel;
+	import com.funrun.model.vo.BlockStyleVo;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -71,7 +71,7 @@ package com.funrun.controller.commands {
 		public var playerModel:PlayerModel;
 		
 		[Inject]
-		public var blocksModel:BlocksModel;
+		public var blockStylesModel:BlockStylesModel;
 		
 		[Inject]
 		public var colorsModel:ColorsModel;
@@ -86,6 +86,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var addObjectToSceneRequest:AddObjectToSceneRequest;
+		
+		[Inject]
+		public var removeObjectFromSceneRequest:RemoveObjectFromSceneRequest;
 		
 		[Inject]
 		public var addLightRequest:AddLightRequest;
@@ -180,15 +183,21 @@ package com.funrun.controller.commands {
 			Materials.DEBUG_TEST.specularMethod = specularMethod;
 			Materials.DEBUG_TEST.addMethod( materialsModel.fogMethod );
 			
-			// Apply to blocks.
-			for ( var i:int = 0; i < blocksModel.count; i++ ) {
-				var material:TextureMaterial = blocksModel.getBlockAt( i ).mesh.material as TextureMaterial;
-				material.shadowMethod = lightsModel.shadowMethod;
-				material.lightPicker = lightsModel.lightPicker;
-				material.specular = materialsModel.specular;
-				material.gloss = materialsModel.gloss;
-				material.specularMethod = specularMethod;
-				material.addMethod( materialsModel.fogMethod );
+			// Light materials.
+			for ( var i:int = 0; i < blockStylesModel.numStyles; i++ ) {
+				var style:BlockStyleVo = blockStylesModel.getStyleAt( i );
+				for ( var j:int = 0; j < style.length; j++ ) {
+					var mesh:Mesh = style.getMeshAt( j );
+					var material:TextureMaterial = mesh.material as TextureMaterial;
+					material.shadowMethod = lightsModel.shadowMethod;
+					material.lightPicker = lightsModel.lightPicker;
+					material.specular = materialsModel.specular;
+					material.gloss = materialsModel.gloss;
+					material.specularMethod = specularMethod;
+					material.addMethod( materialsModel.fogMethod );
+					addObjectToSceneRequest.dispatch( mesh );
+					removeObjectFromSceneRequest.dispatch( mesh );
+				}
 			}
 			
 			// Add player to track.
