@@ -104,6 +104,8 @@ package com.funrun.controller.commands {
 		
 		
 		override public function execute():void {
+			blockStylesModel.currentStyle = blockStylesModel.getStyle( "grass" );
+			
 			// Show stats if we're in development.
 			showStatsRequest.dispatch( productionState.showStats );
 			

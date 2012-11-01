@@ -1,6 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddObjectToSceneRequest;
+	import com.funrun.model.BlockStylesModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.SegmentsModel;
 	import com.funrun.model.TrackModel;
@@ -11,6 +12,9 @@ package com.funrun.controller.commands {
 	public class AddFloorCommand extends Command {
 		
 		// Models.
+		
+		[Inject]
+		public var blockStylesModel:BlockStylesModel;
 		
 		[Inject]
 		public var segmentsModel:SegmentsModel;
@@ -29,7 +33,7 @@ package com.funrun.controller.commands {
 		// State.
 		
 		override public function execute():void {
-			var floor:SegmentVo = segmentsModel.getAt( 0 );
+			var floor:SegmentVo = segmentsModel.getAt( blockStylesModel.currentStyle.id, 0 );
 			trackModel.addSegment( floor );
 			addObjectToSceneRequest.dispatch( ( gameModel.showBounds ) ? floor.boundsMesh : floor.mesh );
 		}
