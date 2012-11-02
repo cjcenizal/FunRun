@@ -48,8 +48,8 @@ package com.funrun.controller.commands
 		override public function execute():void {
 			var obstacleData:ObstacleParser = new ObstacleParser( vo.blocks );
 			
-			for ( var i:int = 0; i < blockStylesModel.numStyles; i++ ) {
-				var style:BlockStyleVo = blockStylesModel.getStyleAt( i );
+			for ( var j:int = 0; j < blockStylesModel.numStyles; j++ ) {
+				var style:BlockStyleVo = blockStylesModel.getStyleAt( j );
 				blockStylesModel.currentStyle = style;
 			
 				// Set up obstacle mesh vars.

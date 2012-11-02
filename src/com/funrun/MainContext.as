@@ -245,7 +245,7 @@ package com.funrun {
 			var isOnline:Boolean					= false;
 			var showBounds:Boolean					= false;
 			var gameModel:GameModel = new GameModel( isProduction, isOnline, showBounds );
-			gameModel.showStats 					= false;
+			gameModel.showStats 					= true;
 			
 			// Map switches.
 			injector.mapValue( GameModel, gameModel );

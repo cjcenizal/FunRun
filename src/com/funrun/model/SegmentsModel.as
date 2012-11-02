@@ -43,12 +43,8 @@ package com.funrun.model {
 				_history.push( _random.random() );
 			}
 			var arr:Array = _segments[ styleId ];
-			trace(styleId)
-			trace(arr);
-			trace(arr.length);
 			// If index is 0, return a floor. Else, return an obstacle.
 			var index:int = ( pos == 0 ) ? pos : Math.floor( _history[ pos ] * ( arr.length - 1 ) ) + 1;
-			trace("index: " + index);
 			var segment:SegmentVo = ( arr[ index ] as SegmentVo ).clone();
 			segment.id = pos;
 			return segment;
