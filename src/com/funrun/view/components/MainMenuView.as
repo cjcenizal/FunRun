@@ -79,9 +79,11 @@ package com.funrun.view.components {
 			if ( enabled ) {
 				_logo.alpha = 1;
 				_multiplayerButton.visible = true;
+				_singlePlayerButton.visible = true;
 			} else {
 				_logo.alpha = .2;
 				_multiplayerButton.visible = false;
+				_singlePlayerButton.visible = false;
 			}
 		}
 	}
