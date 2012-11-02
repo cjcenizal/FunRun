@@ -43,7 +43,6 @@ package com.funrun.controller.commands
 				var floorMesh:Mesh = new Mesh( new Geometry() );
 				var merge:Merge = new Merge( true );
 				var boundingBoxes:Array = [];
-				var floorBlockRefMesh:Mesh = blockStylesModel.getMeshCloneForBlock( "floor" );
 				var floorBlockMesh:Mesh;
 				var posX:Number, posZ:Number;
 				for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
@@ -52,7 +51,7 @@ package com.funrun.controller.commands
 						posZ = z;
 						// Put floor blocks everywhere.
 						// Create a floor block mesh in the appropriate place.
-						floorBlockMesh = floorBlockRefMesh.clone() as Mesh;
+						floorBlockMesh = blockStylesModel.getMeshCloneForBlock( "floor" );
 						floorBlockMesh.x = posX * Block.SIZE + .5 * Block.SIZE;
 						floorBlockMesh.y = -1 * Block.SIZE;
 						floorBlockMesh.z = posZ * Block.SIZE + .5 * Block.SIZE;

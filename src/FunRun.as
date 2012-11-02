@@ -34,7 +34,6 @@ package {
 		- To optimize against memory deallocation pauses, we can implement an object pool for segments
 		
 		BUILDER:
-		- Convert to abstract "block type" based building (e.g. center, side, corner, tip, etc), use skins (e.g. Grass, Caves, etc) 
 		- Build cool obstacles
 			- Alternating converging and diverging
 			- Form points into lines on obstacles
