@@ -11,13 +11,14 @@ package com.funrun.model.constants
 		public static const JUMP_FORWARD_BOOST:Number = 0;//6;
 		public static const ACCELERATION:Number = 2;
 		public static const DECELERATION:Number = .5;
-		public static const JUMP_SPEED:Number = 110;//100;
+		public static const JUMP_SPEEDS:Array = [ 80, 30, 10 ];
 		public static const LATERAL_SPEED:Number = 30;
 		public static const GRAVITY:Number = -8;
 		public static const LAUNCH_SPEED:Number = 150;
 		public static const FRICTION:Number = .9;
 		public static const FREE_RUN_SPEED:Number = 10;
 		public static const SMACK_SPEED:Number = -30;
+		public static const MAX_JUMPS:Number = JUMP_SPEEDS.length;
 		
 		// Bounds.
 		public static const NORMAL_BOUNDS:Vector3D = new Vector3D( 160, 240, 60 );

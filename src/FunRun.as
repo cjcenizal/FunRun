@@ -42,7 +42,6 @@ package {
 		
 		TO-DO:
 		TEST WITH FRIENDS
-		- Add variable height jumping
 		- Collect points
 			- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
 			- Add unique results popup for single player (main menu, play again)

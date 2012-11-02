@@ -76,13 +76,14 @@ package com.funrun.controller.commands
 			
 			// Jumping.
 			if ( keyboardModel.isDown( Keyboard.SPACE ) || ( !productionState.isExploration && keyboardModel.isDown( Keyboard.UP ) ) ) {
-				if ( playerModel.isOnTheGround ) {
-					if ( stateModel.canMoveForward ) {
-						playerModel.velocity.z += Player.JUMP_FORWARD_BOOST;
+				if ( playerModel.canJump ) {
+					if ( playerModel.isOnTheGround ) {
+						playSoundRequest.dispatch( Sounds.JUMP );
 					}
-					playerModel.velocity.y += Player.JUMP_SPEED;
-					playerModel.isOnTheGround = false;
-					playSoundRequest.dispatch( Sounds.JUMP );
+					//if ( stateModel.canMoveForward ) {
+					//	playerModel.velocity.z += Player.JUMP_FORWARD_BOOST;
+					//}
+					playerModel.velocity.y += Player.JUMP_SPEEDS[ playerModel.jump() ];
 				}
 			}
 			
