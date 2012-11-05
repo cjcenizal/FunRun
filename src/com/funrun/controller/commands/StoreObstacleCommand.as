@@ -73,28 +73,30 @@ package com.funrun.controller.commands
 					// Get position and mesh data for particular block.
 					blockData = obstacleData.getAt( i );
 					blockType = blockTypesModel.getWithId( blockData.id );
-					if ( blockType.id == "point" ) {
-						// Store points internally.
-						points.push( new PointVo( i, blockType, blockData.x * Block.SIZE, blockData.y * Block.SIZE, blockData.z * Block.SIZE ) );
-					} else {
-						// Create and position a mesh from data.
-						blockMesh = blockStylesModel.getMeshCloneForBlock( blockType.id );
-						blockMesh.x = blockData.x * Block.SIZE;
-						blockMesh.y = blockData.y * Block.SIZE;
-						blockMesh.z = blockData.z * Block.SIZE;
-						// Merge the block mesh into the obstacle mesh.
-						merge.apply( obstacleMesh, blockMesh );
+					if ( !( blockType.id == "point" && !gameModel.usePoints ) ) {
+						if ( blockType.id == "point" ) {
+							// Store points internally.
+							points.push( new PointVo( i, blockType, blockData.x * Block.SIZE, blockData.y * Block.SIZE, blockData.z * Block.SIZE ) );
+						} else {
+							// Create and position a mesh from data.
+							blockMesh = blockStylesModel.getMeshCloneForBlock( blockType.id );
+							blockMesh.x = blockData.x * Block.SIZE;
+							blockMesh.y = blockData.y * Block.SIZE;
+							blockMesh.z = blockData.z * Block.SIZE;
+							// Merge the block mesh into the obstacle mesh.
+							merge.apply( obstacleMesh, blockMesh );
+						}
+						// Add a bounding box so we can collide with the obstacle.
+						var box:BoundingBoxVo = new BoundingBoxVo(
+							i, blockType,
+							blockData.x * Block.SIZE, blockData.y * Block.SIZE, blockData.z * Block.SIZE,
+							blockType.boundsMin.x, blockType.boundsMin.y, blockType.boundsMin.z,
+							blockType.boundsMax.x, blockType.boundsMax.y, blockType.boundsMax.z
+						);
+						boundingBoxes.push( box );
+						min.takeMinFrom( box );
+						max.takeMaxFrom( box );
 					}
-					// Add a bounding box so we can collide with the obstacle.
-					var box:BoundingBoxVo = new BoundingBoxVo(
-						i, blockType,
-						blockData.x * Block.SIZE, blockData.y * Block.SIZE, blockData.z * Block.SIZE,
-						blockType.boundsMin.x, blockType.boundsMin.y, blockType.boundsMin.z,
-						blockType.boundsMax.x, blockType.boundsMax.y, blockType.boundsMax.z
-					);
-					boundingBoxes.push( box );
-					min.takeMinFrom( box );
-					max.takeMaxFrom( box );
 				}
 				
 				// Add a bounds indicator.

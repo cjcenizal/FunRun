@@ -7,6 +7,7 @@ package com.funrun.model {
 		public var isOnline:Boolean;
 		public var showBounds:Boolean;
 		public var isMultiplayer:Boolean;
+		public var usePoints:Boolean = true;
 		
 		private var _showStats:Boolean = false;
 		private var _isExploration:Boolean = false;
