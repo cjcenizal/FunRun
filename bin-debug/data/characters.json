@@ -1,0 +1,15 @@
+{
+  "doc" : "These are the characters players can use as avatars.",
+  "author" : "CJ Cenizal",
+  "list" : [
+    {
+        "id" : "Hell Knight",
+        "folder" : "hellknight",
+        "model" : "hellknight.md5mesh",
+        "animations" : {
+          "run" : "walk7.md5anim",
+          "jump" : "leftslash.md5anim"
+        }
+      }
+  ]
+}
