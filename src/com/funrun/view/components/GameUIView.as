@@ -145,5 +145,9 @@ package com.funrun.view.components {
 		public function addToReadyList( id:int, name:String, isReady:Boolean ):void {
 			_readyList.add( id, name, isReady );
 		}
+		
+		public function togglePoints( on:Boolean ):void {
+			_pointsCountLabel.visible = _pointsLabel.visible = on;
+		}
 	}
 }

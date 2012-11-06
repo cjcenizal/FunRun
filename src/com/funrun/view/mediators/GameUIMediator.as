@@ -12,6 +12,7 @@ package com.funrun.view.mediators {
 	import com.funrun.controller.signals.ToggleReadyButtonRequest;
 	import com.funrun.controller.signals.ToggleReadyListRequest;
 	import com.funrun.controller.signals.vo.AddToReadyListVo;
+	import com.funrun.model.GameModel;
 	import com.funrun.view.components.GameUIView;
 	
 	import org.robotlegs.core.IMediator;
@@ -23,6 +24,11 @@ package com.funrun.view.mediators {
 		
 		[Inject]
 		public var view:GameUIView;
+		
+		// Models.
+		
+		[Inject]
+		public var gameModel:GameModel;
 		
 		// Commands.
 		
@@ -72,6 +78,7 @@ package com.funrun.view.mediators {
 			toggleReadyListRequest.add( onToggleReadyListRequested );
 			toggleReadyButtonRequest.add( onToggleReadyButtonRequested );
 			clearReadyListRequest.add( onClearReadyListRequested );
+			view.togglePoints( gameModel.usePoints );
 		}
 		
 		private function onDrawPointsRequested( val:Number ):void {

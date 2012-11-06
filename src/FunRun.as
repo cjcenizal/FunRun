@@ -42,9 +42,6 @@ package {
 		
 		TO-DO:
 		TEST WITH FRIENDS
-		- Collect points
-			- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
-			- Add unique results popup for single player (main menu, play again)
 		- Top score leaderboard
 			- Among your friends
 			- Globally
@@ -88,8 +85,9 @@ package {
 				- Create dev and production servers
 				- Get tools for monitoring problems
 		
-			- Add dash, like Robot Unicorn Attack
-				- Rechargeable meter
+			- Collect points
+				- Rewards for getting 1st, 2nd, 3rd place are fun and silly badges, and a small points bonus.
+				- Add unique results popup for single player (main menu, play again)
 		
 			- Figure out exploration mode and AI mode later
 			- Build stubbed store functionality
