@@ -1,9 +1,24 @@
 package com.funrun.controller.commands
 {
+	import away3d.animators.SkeletonAnimationSet;
+	import away3d.animators.SkeletonAnimationState;
+	import away3d.animators.data.Skeleton;
+	import away3d.entities.Mesh;
+	import away3d.events.AssetEvent;
+	import away3d.library.AssetLibrary;
+	import away3d.library.assets.AssetType;
+	import away3d.loaders.misc.AssetLoaderContext;
+	import away3d.loaders.misc.AssetLoaderToken;
+	import away3d.loaders.parsers.MD5AnimParser;
+	import away3d.loaders.parsers.MD5MeshParser;
+	import away3d.loaders.parsers.ParserBase;
+	
+	import com.funrun.model.CharactersModel;
+	import com.funrun.model.constants.Animations;
+	import com.funrun.model.vo.CharacterVo;
 	import com.funrun.services.JsonService;
 	import com.funrun.services.parsers.CharacterParser;
 	import com.funrun.services.parsers.CharactersListParser;
-	import com.funrun.model.constants.Animations;
 	
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -14,6 +29,10 @@ package com.funrun.controller.commands
 	public class LoadCharactersCommand extends AsyncCommand
 	{
 		
+		// Models.
+		
+		[Inject]
+		public var charactersModel:CharactersModel;
 		
 		// Private vars.
 		
@@ -33,36 +52,78 @@ package com.funrun.controller.commands
 			var parsedCharactersList:CharactersListParser = new CharactersListParser( new JsonService().readString( data ) );
 			// Store a count so we know when we're done loading the block objs.
 			var len:int = parsedCharactersList.length;
-			_countTotal = len;
 			if ( len == 0 ) {
 				dispatchComplete( true );
 			} else {
 				// Load each obstacle, construct it, and store the mesh.
+				var context:AssetLoaderContext = new AssetLoaderContext( true, _filePath );
 				for ( var i:int = 0; i < len; i++ ) {
 					var character:CharacterParser = parsedCharactersList.getAt( i );
+					var vo:CharacterVo = new CharacterVo( character.id );
+					var parser:ParserBase;
+					var basePath:String = _filePath + character.folder + "/";
+					charactersModel.add( vo );
+					// Load model.
+					parser = new MD5MeshParser();
+					load( basePath + character.model, context, character.id, parser, getOnModelLoaded( vo ) );
 					for ( var j:int = 0; j < Animations.IDS.length; j++ ) {
-						var loader:URLLoader = new URLLoader( new URLRequest(
-							_filePath
-							+ character.folder + "/"
-							+ character.getAnimationWithId( Animations.IDS[ j ] ) );
-						loader.addEventListener( Event.COMPLETE, getOnCharacterLoaded( filename ) );
+						// Load animations.
+						parser = new MD5AnimParser();
+						var looping:Boolean = Animations.IS_LOOPING[ Animations.IDS[ j ] ];
+						load( basePath + character.getAnimationWithId( Animations.IDS[ j ] ), context, Animations.IDS[ j ], parser, getOnAnimationLoaded( vo, looping ) );
 					}
 				}
 			}
 		}
 		
-		private function getOnCharacterLoaded( filename:String ):Function {
+		private function load( filename:String, context:AssetLoaderContext, namespace:String, parser:ParserBase, callback:Function ):void {
+			var token:AssetLoaderToken = AssetLibrary.load( new URLRequest( filename ), context, namespace, parser );
+			token.addEventListener( AssetEvent.ASSET_COMPLETE, callback );
+			_countTotal++;
+		}
+		
+		private function getOnModelLoaded( vo:CharacterVo ):Function {
 			var completeCallback:Function = this.dispatchComplete;
-			var storeObstacleRequest:Signal = this.storeObstacleRequest;
-			return function( e:Event ):void {
-				var data:String = ( e.target as URLLoader ).data;
-				var json:Object = new JsonService().readString( data );
-				// Construct and store obstacle.
-				storeObstacleRequest.dispatch( new StoreObstacleVo( filename, json ) );
-				// Increment complete count and check if we're done.
-				_countLoaded++;
-				if ( _countLoaded == _countTotal ) {
-					completeCallback.call( null, true );
+			return function( e:AssetEvent ):void {
+				
+				switch ( e.asset.assetType ) {
+					case AssetType.ANIMATION_SET:
+						var animationSet:SkeletonAnimationSet = e.asset as SkeletonAnimationSet;
+						vo.init( animationSet );
+						break;
+					
+					case AssetType.SKELETON:
+						var skeleton:Skeleton = e.asset as Skeleton;
+						vo.storeSkeleton( skeleton );
+						break;
+					
+					case AssetType.MESH:
+						var mesh:Mesh = e.asset as Mesh;
+						vo.storeMesh( mesh );
+						// Increment complete count and check if we're done.
+						_countLoaded++;
+						if ( _countLoaded == _countTotal ) {
+							completeCallback.call( null, true );
+						}
+						break;
+				}
+			}
+		}
+		
+		private function getOnAnimationLoaded( vo:CharacterVo, looping:Boolean ):Function {
+			var completeCallback:Function = this.dispatchComplete;
+			return function( e:AssetEvent ):void {
+				switch ( e.asset.assetType ) {
+					case AssetType.ANIMATION_STATE:
+						var state:SkeletonAnimationState = e.asset as SkeletonAnimationState;
+						var namespace:String = e.asset.assetNamespace;
+						vo.storeAnimationState( state, namespace, looping );
+						// Increment complete count and check if we're done.
+						_countLoaded++;
+						if ( _countLoaded == _countTotal ) {
+							completeCallback.call( null, true );
+						}
+						break;
 				}
 			}
 		}

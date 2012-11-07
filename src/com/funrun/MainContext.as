@@ -165,6 +165,7 @@ package com.funrun {
 	import com.funrun.model.AccountModel;
 	import com.funrun.model.BlockStylesModel;
 	import com.funrun.model.BlockTypesModel;
+	import com.funrun.model.CharactersModel;
 	import com.funrun.model.ColorsModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
@@ -264,6 +265,7 @@ package com.funrun {
 			injector.mapSingleton( AccountModel );
 			injector.mapSingleton( BlockStylesModel );
 			injector.mapSingleton( BlockTypesModel );
+			injector.mapSingleton( CharactersModel );
 			injector.mapSingleton( CompetitorsModel );
 			injector.mapSingleton( ColorsModel );
 			injector.mapSingleton( ConfigurationModel );

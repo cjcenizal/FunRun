@@ -14,6 +14,8 @@ package com.funrun.controller.commands {
 			// Load list of obstacles, and then load each obstacle.
 			addCommand( LoadObstaclesCommand );
 			// Load store.
+			addCommand( LoadCharactersCommand );
+			// Load store.
 			addCommand( LoadStoreCommand );
 			// Preload.
 			addCommand( PreloadSoundsCommand );
