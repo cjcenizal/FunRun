@@ -71,16 +71,18 @@ package com.funrun.model {
 		}
 		
 		public function updateMeshPosition():void {
+			prevPosition.x = character.mesh.x;
+			prevPosition.y = character.mesh.y;
+			prevPosition.z = character.mesh.z;
 			character.mesh.x = position.x;
 			character.mesh.y = position.y;
 			character.mesh.z = position.z;
-			prevPosition.x = position.x;
-			prevPosition.y = position.y;
-			prevPosition.z = position.z;
+			var angle:Number = Math.sqrt( Math.pow( position.x - prevPosition.x, 2 ) + Math.pow( position.z - prevPosition.z, 2 ) );
+			trace(this,angle)
+			character.mesh.rotationY = angle - 45;
 		}
 		
 		public function run():void {
-			trace(character.getSpeedFor( CharacterAnimations.RUN ));
 			character.animator.playbackSpeed = character.getSpeedFor( CharacterAnimations.RUN );
 			character.animator.play( CharacterAnimations.RUN, _stateTransition );
 		}
@@ -94,7 +96,6 @@ package com.funrun.model {
 		
 		private function playSingleAnimation( id:String ):void {
 			if ( character.animator.animationSet.hasState( id ) ) {
-				trace(character.getSpeedFor( id ));
 				character.animator.playbackSpeed = character.getSpeedFor( id );
 				( character.animator.animationSet.getState( id ) as SkeletonAnimationState ).addEventListener( AnimationStateEvent.PLAYBACK_COMPLETE, onJumpComplete );
 				character.animator.play( id, _stateTransition );

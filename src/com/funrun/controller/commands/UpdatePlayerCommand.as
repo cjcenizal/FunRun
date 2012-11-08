@@ -4,6 +4,7 @@ package com.funrun.controller.commands
 	import com.funrun.controller.signals.PlaySoundRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.KeyboardModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;
@@ -11,7 +12,6 @@ package com.funrun.controller.commands
 	import com.funrun.model.constants.Collisions;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.Sounds;
-	import com.funrun.model.GameModel;
 	
 	import flash.ui.Keyboard;
 	
@@ -96,10 +96,13 @@ package com.funrun.controller.commands
 				} else {
 					// Update x velocity.
 					playerModel.velocity.x = 0;
-					if ( keyboardModel.isDown( Keyboard.LEFT ) ) {
+					var left:Boolean = keyboardModel.isDown( Keyboard.LEFT );
+					var right:Boolean = keyboardModel.isDown( Keyboard.RIGHT );
+					if ( ( left && right ) || ( !left && !right ) ) {
+						playerModel.velocity.x = 0;
+					} else if ( left ) {
 						playerModel.velocity.x -= Player.LATERAL_SPEED;
-					}
-					if ( keyboardModel.isDown( Keyboard.RIGHT ) ) {
+					} else if ( right ) {
 						playerModel.velocity.x += Player.LATERAL_SPEED;
 					}
 					
