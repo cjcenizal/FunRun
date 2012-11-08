@@ -20,6 +20,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddPlaceableRequest;
 	import com.funrun.controller.signals.AddView3DRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.SelectCharacterRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.BlockStylesModel;
 	import com.funrun.model.ColorsModel;
@@ -102,6 +103,8 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var addPlaceableRequest:AddPlaceableRequest;
 		
+		[Inject]
+		public var selectCharacterRequest:SelectCharacterRequest;
 		
 		override public function execute():void {
 			blockStylesModel.currentStyle = blockStylesModel.getStyle( "grass" );
@@ -202,7 +205,7 @@ package com.funrun.controller.commands {
 				}
 			}
 			
-			// Add player to track.
+			// Set up player to track.
 			addPlaceableRequest.dispatch( playerModel );
 			playerModel.normalBounds.minX = Player.NORMAL_BOUNDS.x * -.5;
 			playerModel.normalBounds.minY = Player.NORMAL_BOUNDS.y * -.5;
@@ -216,13 +219,9 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxX = Player.DUCKING_BOUNDS.x * .5;
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
-			var geometry:CubeGeometry = new CubeGeometry( Player.NORMAL_BOUNDS.x, Player.NORMAL_BOUNDS.y, Player.NORMAL_BOUNDS.z );
-			var playerMaterial:ColorMaterial = materialsModel.getColorMaterial( colorsModel.getColor( playerModel.color ) );
-			var player:Mesh = new Mesh( geometry, playerMaterial );
-			player.castsShadows = true;
-			playerModel.mesh = player;
-			addObjectToSceneRequest.dispatch( player );
 			
+			// TO-DO: Make this depend on what's stored in the player object.
+			selectCharacterRequest.dispatch( "Hell Knight" );
 		}
 	}
 }

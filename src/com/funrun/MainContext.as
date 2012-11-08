@@ -45,6 +45,7 @@ package com.funrun {
 	import com.funrun.controller.commands.ResetGameCommand;
 	import com.funrun.controller.commands.ResetPlayerCommand;
 	import com.funrun.controller.commands.SavePlayerObjectCommand;
+	import com.funrun.controller.commands.SelectCharacterCommand;
 	import com.funrun.controller.commands.SendGameDeathCommand;
 	import com.funrun.controller.commands.SendGameUpdateCommand;
 	import com.funrun.controller.commands.SendLobbyChatCommand;
@@ -131,6 +132,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ResetGameRequest;
 	import com.funrun.controller.signals.ResetPlayerRequest;
 	import com.funrun.controller.signals.SavePlayerObjectRequest;
+	import com.funrun.controller.signals.SelectCharacterRequest;
 	import com.funrun.controller.signals.SendGameDeathRequest;
 	import com.funrun.controller.signals.SendGameUpdateRequest;
 	import com.funrun.controller.signals.SendLobbyChatRequest;
@@ -367,6 +369,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( ResetGameRequest,						ResetGameCommand );
 			signalCommandMap.mapSignalClass( ResetPlayerRequest, 					ResetPlayerCommand );
 			signalCommandMap.mapSignalClass( SavePlayerObjectRequest,				SavePlayerObjectCommand );
+			signalCommandMap.mapSignalClass( SelectCharacterRequest,				SelectCharacterCommand );
 			signalCommandMap.mapSignalClass( SendLobbyChatRequest,					SendLobbyChatCommand );
 			signalCommandMap.mapSignalClass( SendMatchmakingReadyRequest,			SendMatchmakingReadyCommand );
 			signalCommandMap.mapSignalClass( SendGameDeathRequest,					SendGameDeathCommand );

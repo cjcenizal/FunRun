@@ -6,6 +6,9 @@
         "id" : "Hell Knight",
         "folder" : "hellknight",
         "model" : "hellknight.md5mesh",
+        "diffuseMap" : "hellknight_diffuse.jpg",
+        "specularMap" : "hellknight_specular.png",
+        "normalsMap" : "hellknight_normals.jpg",
         "animations" : {
           "run" : "walk7.md5anim",
           "jump" : "leftslash.md5anim"

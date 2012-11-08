@@ -79,8 +79,8 @@ package com.funrun.controller.commands
 					var len:int = boundingBoxes.length;
 					var box:BoundingBoxVo;
 					var indicator:Mesh;
-					for ( var i:int = 0; i < len; i++ ) {
-						box = boundingBoxes[ i ];
+					for ( var j:int = 0; j < len; j++ ) {
+						box = boundingBoxes[ j ];
 						indicator = new Mesh( blockGeo, Materials.DEBUG_BLOCK );
 						indicator.x = box.x;
 						indicator.y = box.y;

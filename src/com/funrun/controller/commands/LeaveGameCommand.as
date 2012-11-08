@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.JoinMainMenuRequest;
+	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
@@ -23,6 +24,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var delayedCommandsModel:DelayedCommandsModel;
 		
+		[Inject]
+		public var gameModel:GameModel;
+		
 		// Services.
 		
 		[Inject]
@@ -30,9 +34,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var matchmakingService:MatchmakingService;
-		
-		[Inject]
-		public var gameModel:GameModel;
 		
 		// Commands.
 		

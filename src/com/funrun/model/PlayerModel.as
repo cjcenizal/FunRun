@@ -16,7 +16,7 @@ package com.funrun.model {
 	public class PlayerModel extends Actor implements IPlaceable {
 		
 		// Mesh.
-		private var _mesh:Mesh;
+		public var mesh:Mesh;
 		
 		// Player properties.
 		public var userId:String;
@@ -62,9 +62,9 @@ package com.funrun.model {
 		}
 		
 		public function updateMeshPosition():void {
-			_mesh.x = position.x;
-			_mesh.y = position.y;
-			_mesh.z = position.z;
+			mesh.x = position.x;
+			mesh.y = position.y;
+			mesh.z = position.z;
 			prevPosition.x = position.x;
 			prevPosition.y = position.y;
 			prevPosition.z = position.z;
@@ -113,16 +113,12 @@ package com.funrun.model {
 			return _place;
 		}
 		
-		public function set mesh( mesh:Mesh ):void {
-			_mesh = mesh;
-		}
-		
 		public function get scaleY():Number {
-			return _mesh.scaleY;
+			return mesh.scaleY;
 		}
 		
 		public function set scaleY( value:Number ):void {
-			_mesh.scaleY = value;
+			mesh.scaleY = value;
 		}
 		
 		public function set inGameId( val:int ):void {

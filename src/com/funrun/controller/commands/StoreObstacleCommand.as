@@ -103,16 +103,16 @@ package com.funrun.controller.commands
 				var boundsMesh:Mesh = null;
 				if ( gameModel.showBounds ) {
 					boundsMesh = new Mesh( new Geometry() );
-					var len:int = boundingBoxes.length;
-					var box:BoundingBoxVo;
+					var len2:int = boundingBoxes.length;
+					var box2:BoundingBoxVo;
 					var indicator:Mesh;
-					for ( var i:int = 0; i < len; i++ ) {
-						box = boundingBoxes[ i ];
-						var blockGeo:Geometry = new CubeGeometry( box.width, box.height, box.depth );
+					for ( var k:int = 0; k < len2; k++ ) {
+						box2 = boundingBoxes[ k ];
+						var blockGeo:Geometry = new CubeGeometry( box2.width, box2.height, box2.depth );
 						indicator = new Mesh( blockGeo, Materials.DEBUG_BLOCK );
-						indicator.x = box.x;
-						indicator.y = box.y;
-						indicator.z = box.z;
+						indicator.x = box2.x;
+						indicator.y = box2.y;
+						indicator.z = box2.z;
 						merge.apply( boundsMesh, indicator );
 					}
 				}

@@ -18,5 +18,9 @@ package com.funrun.model
 		public function add( vo:CharacterVo ):void {
 			characters[ vo.id ] = vo;
 		}
+		
+		public function getWithId( id:String ):CharacterVo {
+			return characters[ id ];
+		}
 	}
 }

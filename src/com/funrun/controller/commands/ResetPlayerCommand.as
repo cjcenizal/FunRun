@@ -1,8 +1,9 @@
 package com.funrun.controller.commands {
 	
+	import com.funrun.controller.signals.AddObjectToSceneRequest;
 	import com.funrun.model.PlayerModel;
-	import com.funrun.model.constants.Track;
 	import com.funrun.model.constants.Player;
+	import com.funrun.model.constants.Track;
 	
 	import org.robotlegs.mvcs.Command;
 	
