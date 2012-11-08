@@ -1,13 +1,16 @@
 package com.funrun.model {
 
+	import away3d.animators.transitions.CrossfadeStateTransition;
 	import away3d.entities.Mesh;
 	
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.Block;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.PlayerProperties;
+	import com.funrun.model.vo.CharacterVo;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.IPlaceable;
+	import com.funrun.model.constants.CharacterAnimations;
 	
 	import flash.geom.Vector3D;
 	
@@ -16,7 +19,7 @@ package com.funrun.model {
 	public class PlayerModel extends Actor implements IPlaceable {
 		
 		// Mesh.
-		public var mesh:Mesh;
+		public var character:CharacterVo;
 		
 		// Player properties.
 		public var userId:String;
@@ -41,6 +44,9 @@ package com.funrun.model {
 		// Bounds.
 		public var normalBounds:CollidableVo;
 		public var duckingBounds:CollidableVo;
+		
+		// Animations.
+		private var _stateTransition:CrossfadeStateTransition;
 
 		public function PlayerModel() {
 			super();
@@ -50,6 +56,7 @@ package com.funrun.model {
 			prevPosition = new Vector3D();
 			normalBounds = new CollidableVo();
 			duckingBounds = new CollidableVo();
+			_stateTransition = new CrossfadeStateTransition( 0.5 );
 			resetInGameId();
 		}
 		
@@ -62,12 +69,17 @@ package com.funrun.model {
 		}
 		
 		public function updateMeshPosition():void {
-			mesh.x = position.x;
-			mesh.y = position.y;
-			mesh.z = position.z;
+			character.mesh.x = position.x;
+			character.mesh.y = position.y;
+			character.mesh.z = position.z;
 			prevPosition.x = position.x;
 			prevPosition.y = position.y;
 			prevPosition.z = position.z;
+		}
+		
+		public function run():void {
+			character.animator.playbackSpeed = 3;
+			character.animator.play( CharacterAnimations.RUN, _stateTransition );
 		}
 		
 		public function jump():int {
@@ -111,14 +123,6 @@ package com.funrun.model {
 		
 		public function get place():int {
 			return _place;
-		}
-		
-		public function get scaleY():Number {
-			return mesh.scaleY;
-		}
-		
-		public function set scaleY( value:Number ):void {
-			mesh.scaleY = value;
 		}
 		
 		public function set inGameId( val:int ):void {

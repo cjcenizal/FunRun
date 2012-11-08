@@ -34,13 +34,13 @@ package com.funrun.controller.commands
 		
 		override public function execute():void
 		{
-			if ( playerModel.mesh ) {
-				removeObjectFromSceneRequest.dispatch( playerModel.mesh );
+			if ( playerModel.character ) {
+				removeObjectFromSceneRequest.dispatch( playerModel.character.mesh );
 			}
 			var vo:CharacterVo = charactersModel.getWithId( id );
 			vo.mesh.castsShadows = true;
-			playerModel.mesh = vo.mesh;
-			addObjectToSceneRequest.dispatch( vo.mesh );
+			playerModel.character = vo;
+			addObjectToSceneRequest.dispatch( playerModel.character.mesh );
 		}
 	}
 }

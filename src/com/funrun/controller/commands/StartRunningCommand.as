@@ -1,8 +1,9 @@
 package com.funrun.controller.commands {
 
+	import com.funrun.controller.signals.DrawCountdownRequest;
 	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.ToggleCountdownRequest;
-	import com.funrun.controller.signals.DrawCountdownRequest;
+	import com.funrun.model.PlayerModel;
 	import com.funrun.model.StateModel;
 	
 	import org.robotlegs.mvcs.Command;
@@ -13,6 +14,9 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var stateModel:StateModel;
+		
+		[Inject]
+		public var playerModel:PlayerModel;
 		
 		// Commands.
 		
@@ -32,6 +36,8 @@ package com.funrun.controller.commands {
 			// Set game state.
 			stateModel.canMoveForward = true;
 			displayMessageRequest.dispatch( "Go!" );
+			// Start animation.
+			playerModel.run();
 		}
 	}
 }

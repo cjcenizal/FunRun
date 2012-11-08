@@ -1,6 +1,6 @@
 package com.funrun.model.constants
 {
-	public class Animations
+	public class CharacterAnimations
 	{
 		public static const RUN:String = "run";
 		public static const JUMP:String = "jump";

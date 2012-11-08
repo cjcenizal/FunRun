@@ -72,6 +72,8 @@ package {
 		- Camera: tilt during turn, jitter/rumble on rough surfaces, shake on smack
 		- Pass LoadConfigurationCommand information via PHP.
 		
+		- Add terrain below the track so it's scary when we fall through
+		
 		- Search for TO-DOs
 		- Game design
 			

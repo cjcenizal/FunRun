@@ -14,12 +14,15 @@ package com.funrun.controller.commands
 	import away3d.loaders.parsers.ParserBase;
 	
 	import com.funrun.model.CharactersModel;
-	import com.funrun.model.constants.Animations;
+	import com.funrun.model.constants.CharacterAnimations;
+	import com.funrun.model.constants.CharacterMaps;
 	import com.funrun.model.vo.CharacterVo;
 	import com.funrun.services.JsonService;
 	import com.funrun.services.parsers.CharacterParser;
 	import com.funrun.services.parsers.CharactersListParser;
 	
+	import flash.display.Bitmap;
+	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -59,18 +62,25 @@ package com.funrun.controller.commands
 				var context:AssetLoaderContext = new AssetLoaderContext( true, _filePath );
 				for ( var i:int = 0; i < len; i++ ) {
 					var character:CharacterParser = parsedCharactersList.getAt( i );
-					var vo:CharacterVo = new CharacterVo( character.id );
+					var vo:CharacterVo = new CharacterVo( character.id, character.scale );
 					var parser:ParserBase;
 					var basePath:String = _filePath + character.folder + "/";
 					charactersModel.add( vo );
 					// Load model.
 					parser = new MD5MeshParser();
 					load( basePath + character.model, context, character.id, parser, getOnModelLoaded( vo ) );
-					for ( var j:int = 0; j < Animations.IDS.length; j++ ) {
-						// Load animations.
+					// Load maps.
+					for ( var k:int = 0; k < CharacterMaps.IDS.length; k++ ) {
+						var mapFile:String = basePath + character.getMapWithId( CharacterMaps.IDS[ k ] );
+						var loader:Loader = new Loader();
+						loader.load( new URLRequest( mapFile ) );
+						loader.contentLoaderInfo.addEventListener( Event.COMPLETE, getOnMapLoaded( vo, CharacterMaps.IDS[ k ] ) );
+					}
+					// Load animations.
+					for ( var j:int = 0; j < CharacterAnimations.IDS.length; j++ ) {
 						parser = new MD5AnimParser();
-						var looping:Boolean = Animations.IS_LOOPING[ Animations.IDS[ j ] ];
-						load( basePath + character.getAnimationWithId( Animations.IDS[ j ] ), context, Animations.IDS[ j ], parser, getOnAnimationLoaded( vo, looping ) );
+						var looping:Boolean = CharacterAnimations.IS_LOOPING[ CharacterAnimations.IDS[ j ] ];
+						load( basePath + character.getAnimationWithId( CharacterAnimations.IDS[ j ] ), context, CharacterAnimations.IDS[ j ], parser, getOnAnimationLoaded( vo, looping ) );
 					}
 				}
 			}
@@ -127,5 +137,13 @@ package com.funrun.controller.commands
 				}
 			}
 		}
+		
+		private function getOnMapLoaded( vo:CharacterVo, mapId:String ):Function {
+			return function( e:Event ):void {
+				var bitmap:Bitmap = e.target.content;
+				vo.storeMap( mapId, bitmap.bitmapData );
+			}
+		}
+		
 	}
 }

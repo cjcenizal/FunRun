@@ -6,6 +6,8 @@ package com.funrun.services.parsers
 		private const ID:String = "id";
 		private const FOLDER:String = "folder";
 		private const MODEL:String = "model";
+		private const SCALE:String = "scale";
+		private const MAPS:String = "maps";
 		private const ANIMATIONS:String = "animations";
 		
 		public function CharacterParser( data:Object )
@@ -25,8 +27,16 @@ package com.funrun.services.parsers
 			return data[ MODEL ];
 		}
 		
+		public function get scale():Number {
+			return data[ SCALE ] || 1;
+		}
+		
 		public function getAnimationWithId( id:String ):String {
 			return data[ ANIMATIONS ][ id ];
+		}
+		
+		public function getMapWithId( id:String ):String {
+			return data[ MAPS ][ id ];
 		}
 	}
 }
