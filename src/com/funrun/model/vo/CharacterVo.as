@@ -11,6 +11,7 @@ package com.funrun.model.vo
 	import com.funrun.model.constants.CharacterMaps;
 	
 	import flash.display.BitmapData;
+	import flash.utils.Dictionary;
 
 	public class CharacterVo
 	{
@@ -22,12 +23,14 @@ package com.funrun.model.vo
 		public var mesh:Mesh;
 		private var _scale:Number;
 		private var _material:TextureMaterial;
+		private var _speeds:Dictionary;
 		
 		public function CharacterVo( id:String, scale:Number )
 		{
 			this.id = id;
 			_scale = scale;
 			_material = new TextureMaterial();
+			_speeds = new Dictionary();
 		}
 		
 		public function init( animationSet:SkeletonAnimationSet ):void {
@@ -47,9 +50,14 @@ package com.funrun.model.vo
 			if ( this.animator ) this.mesh.animator = this.animator;
 		}
 		
-		public function storeAnimationState( state:SkeletonAnimationState, namespace:String, looping:Boolean ):void {
+		public function storeAnimationState( state:SkeletonAnimationState, namespace:String, looping:Boolean, speed:Number ):void {
 			this.animationSet.addState( namespace, state );
 			state.looping = looping;
+			_speeds[ namespace ] = speed;
+		}
+		
+		public function getSpeedFor( stateName:String ):Number {
+			return _speeds[ stateName ];
 		}
 		
 		public function storeMap( mapId:String, data:BitmapData ):void {

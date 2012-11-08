@@ -13,8 +13,14 @@
           "normals" : "hellknight_normals.png"
         },
         "animations" : {
-          "run" : "walk7.md5anim",
-          "jump" : "leftslash.md5anim"
+          "run" : {
+              "file" : "walk7.md5anim",
+              "speed" : 3
+            },
+          "jump" : {
+              "file" : "leftslash.md5anim",
+              "speed" : 1
+            }
         }
       }
   ]

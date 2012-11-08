@@ -79,8 +79,10 @@ package com.funrun.controller.commands
 					// Load animations.
 					for ( var j:int = 0; j < CharacterAnimations.IDS.length; j++ ) {
 						parser = new MD5AnimParser();
-						var looping:Boolean = CharacterAnimations.IS_LOOPING[ CharacterAnimations.IDS[ j ] ];
-						load( basePath + character.getAnimationWithId( CharacterAnimations.IDS[ j ] ), context, CharacterAnimations.IDS[ j ], parser, getOnAnimationLoaded( vo, looping ) );
+						var animId:String = CharacterAnimations.IDS[ j ];
+						var looping:Boolean = CharacterAnimations.IS_LOOPING[ animId ];
+						var speed:Number = character.getAnimationSpeedWithId( animId );
+						load( basePath + character.getAnimationFileWithId( animId ), context, animId, parser, getOnAnimationLoaded( vo, looping, speed ) );
 					}
 				}
 			}
@@ -120,14 +122,14 @@ package com.funrun.controller.commands
 			}
 		}
 		
-		private function getOnAnimationLoaded( vo:CharacterVo, looping:Boolean ):Function {
+		private function getOnAnimationLoaded( vo:CharacterVo, looping:Boolean, speed:Number ):Function {
 			var completeCallback:Function = this.dispatchComplete;
 			return function( e:AssetEvent ):void {
 				switch ( e.asset.assetType ) {
 					case AssetType.ANIMATION_STATE:
 						var state:SkeletonAnimationState = e.asset as SkeletonAnimationState;
 						var namespace:String = e.asset.assetNamespace;
-						vo.storeAnimationState( state, namespace, looping );
+						vo.storeAnimationState( state, namespace, looping, speed );
 						// Increment complete count and check if we're done.
 						_countLoaded++;
 						if ( _countLoaded == _countTotal ) {

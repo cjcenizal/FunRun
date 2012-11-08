@@ -64,6 +64,8 @@ package {
 				- Results should look great
 		
 		- Add animated character
+			- Rotate when you turn left and right
+			- Add walking state when you move left and right w/o running
 		- Add music and sound effects
 		- Abstract the keys that map to certain movements with a KeyMapModel or just in KeysModel
 		

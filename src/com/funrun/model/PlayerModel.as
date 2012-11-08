@@ -1,16 +1,18 @@
 package com.funrun.model {
 
+	import away3d.animators.SkeletonAnimationState;
 	import away3d.animators.transitions.CrossfadeStateTransition;
 	import away3d.entities.Mesh;
+	import away3d.events.AnimationStateEvent;
 	
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.Block;
+	import com.funrun.model.constants.CharacterAnimations;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.vo.CharacterVo;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.IPlaceable;
-	import com.funrun.model.constants.CharacterAnimations;
 	
 	import flash.geom.Vector3D;
 	
@@ -78,14 +80,29 @@ package com.funrun.model {
 		}
 		
 		public function run():void {
-			character.animator.playbackSpeed = 3;
+			trace(character.getSpeedFor( CharacterAnimations.RUN ));
+			character.animator.playbackSpeed = character.getSpeedFor( CharacterAnimations.RUN );
 			character.animator.play( CharacterAnimations.RUN, _stateTransition );
 		}
 		
 		public function jump():int {
+			playSingleAnimation( CharacterAnimations.JUMP );
 			isOnTheGround = false;
 			_jumps++;
 			return _jumps - 1;
+		}
+		
+		private function playSingleAnimation( id:String ):void {
+			if ( character.animator.animationSet.hasState( id ) ) {
+				trace(character.getSpeedFor( id ));
+				character.animator.playbackSpeed = character.getSpeedFor( id );
+				( character.animator.animationSet.getState( id ) as SkeletonAnimationState ).addEventListener( AnimationStateEvent.PLAYBACK_COMPLETE, onJumpComplete );
+				character.animator.play( id, _stateTransition );
+			}
+		}
+		
+		private function onJumpComplete( event:AnimationStateEvent ):void {
+			run();
 		}
 		
 		public function get jumps():int {
