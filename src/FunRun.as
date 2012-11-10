@@ -75,6 +75,9 @@ package {
 		
 		- Add terrain below the track so it's scary when we fall through
 		
+		- Derive rotations locally
+		- Send info on character over the network, and store it in PlayerModel
+		
 		- Search for TO-DOs
 		- Game design
 			

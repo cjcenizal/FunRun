@@ -1,6 +1,7 @@
 package com.funrun.model {
 
 	import away3d.animators.SkeletonAnimationState;
+	import away3d.animators.SkeletonAnimator;
 	import away3d.animators.transitions.CrossfadeStateTransition;
 	import away3d.entities.Mesh;
 	import away3d.events.AnimationStateEvent;
@@ -21,7 +22,9 @@ package com.funrun.model {
 	public class PlayerModel extends Actor implements IPlaceable {
 		
 		// Mesh.
-		public var character:CharacterVo;
+		public var mesh:Mesh;
+		private var _character:CharacterVo;
+		private var _animator:SkeletonAnimator;
 		
 		// Player properties.
 		public var userId:String;
@@ -39,6 +42,7 @@ package com.funrun.model {
 		public var isDucking:Boolean = false;
 		private var _isOnTheGround:Boolean = true;
 		public var isDead:Boolean = false;
+		private var _targetRotation:Number = 0;
 		
 		// Jumping.
 		private var _jumps:Number = 0;
@@ -71,20 +75,31 @@ package com.funrun.model {
 		}
 		
 		public function updateMeshPosition():void {
-			prevPosition.x = character.mesh.x;
-			prevPosition.y = character.mesh.y;
-			prevPosition.z = character.mesh.z;
-			character.mesh.x = position.x;
-			character.mesh.y = position.y;
-			character.mesh.z = position.z;
-			var angle:Number = Math.sqrt( Math.pow( position.x - prevPosition.x, 2 ) + Math.pow( position.z - prevPosition.z, 2 ) );
-			trace(this,angle)
-			character.mesh.rotationY = angle - 45;
+			prevPosition.x = mesh.x;
+			prevPosition.y = mesh.y;
+			prevPosition.z = mesh.z;
+			mesh.x = position.x;
+			mesh.y = position.y;
+			mesh.z = position.z;
+			// Rotate.
+			var diff:Vector3D = prevPosition.subtract( position );
+			var atan:Number = Math.atan2( diff.x, diff.z );
+			if ( atan == 0 ) atan = Math.PI;
+			var angle:Number = atan * 180 / Math.PI;
+			_targetRotation = angle - 180;
+			var rotDiff:Number = _targetRotation - mesh.rotationY;
+			if ( rotDiff < 180 ) {
+				mesh.rotationY += ( rotDiff ) * .4;
+			} else {
+				mesh.rotationY -= ( 360 - ( rotDiff ) ) * .4;
+			}
+			// Keep animation stationary within container.
+			_character.mesh.x = _character.mesh.y = _character.mesh.z = 0;
 		}
 		
 		public function run():void {
-			character.animator.playbackSpeed = character.getSpeedFor( CharacterAnimations.RUN );
-			character.animator.play( CharacterAnimations.RUN, _stateTransition );
+			_animator.playbackSpeed = _character.getSpeedFor( CharacterAnimations.RUN );
+			_animator.play( CharacterAnimations.RUN, _stateTransition );
 		}
 		
 		public function jump():int {
@@ -95,15 +110,24 @@ package com.funrun.model {
 		}
 		
 		private function playSingleAnimation( id:String ):void {
-			if ( character.animator.animationSet.hasState( id ) ) {
-				character.animator.playbackSpeed = character.getSpeedFor( id );
-				( character.animator.animationSet.getState( id ) as SkeletonAnimationState ).addEventListener( AnimationStateEvent.PLAYBACK_COMPLETE, onJumpComplete );
-				character.animator.play( id, _stateTransition );
+			if ( _animator.animationSet.hasState( id ) ) {
+				_animator.playbackSpeed = _character.getSpeedFor( id );
+				( _animator.animationSet.getState( id ) as SkeletonAnimationState ).addEventListener( AnimationStateEvent.PLAYBACK_COMPLETE, onJumpComplete );
+				_animator.play( id, _stateTransition );
 			}
 		}
 		
 		private function onJumpComplete( event:AnimationStateEvent ):void {
 			run();
+		}
+		
+		public function setCharacter( character:CharacterVo ):void {
+			if ( _character ) {
+				mesh.removeChild( _character.mesh );
+			}
+			_character = character;
+			_animator = _character.animator;
+			mesh.addChild( _character.mesh );
 		}
 		
 		public function get jumps():int {

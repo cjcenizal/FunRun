@@ -4,6 +4,7 @@ package com.funrun.controller.commands {
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.View3D;
 	import away3d.controllers.HoverController;
+	import away3d.core.base.Geometry;
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
@@ -219,6 +220,8 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxX = Player.DUCKING_BOUNDS.x * .5;
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
+			playerModel.mesh = new Mesh( new Geometry() );
+			addObjectToSceneRequest.dispatch( playerModel.mesh );
 			
 			// TO-DO: Make this depend on what's stored in the player object.
 			selectCharacterRequest.dispatch( "Hell Knight" );
