@@ -53,7 +53,11 @@ package com.funrun.controller.commands {
 			if ( gameModel.isOnline ) {
 				attemptLogin();
 			} else {
-				playerModel.color = "blue";
+				var key:String, val:*;
+				for ( var i:int = 0; i < PlayerProperties.KEYS.length; i++ ) {
+					key = PlayerProperties.KEYS[ i ];
+					playerModel.properties[ key ] = PlayerProperties.DEFAULTS[ key ];
+				}
 				dispatchComplete( true );
 			}
 		}

@@ -24,6 +24,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.SelectCharacterRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.BlockStylesModel;
+	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.ColorsModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
@@ -222,9 +223,6 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
 			playerModel.mesh = new Mesh( new Geometry() );
 			addObjectToSceneRequest.dispatch( playerModel.mesh );
-			
-			// TO-DO: Make this depend on what's stored in the player object.
-			selectCharacterRequest.dispatch( "Hell Knight" );
 		}
 	}
 }

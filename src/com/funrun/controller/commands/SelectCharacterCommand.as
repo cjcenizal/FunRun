@@ -1,5 +1,6 @@
 package com.funrun.controller.commands
 {
+	import com.funrun.controller.signals.SavePlayerObjectRequest;
 	import com.funrun.model.CharactersModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CharacterVo;
@@ -22,11 +23,17 @@ package com.funrun.controller.commands
 		[Inject]
 		public var charactersModel:CharactersModel;
 		
+		// Commands.
+		
+		[Inject]
+		public var savePlayerObjectRequest:SavePlayerObjectRequest;
+		
 		override public function execute():void
 		{
 			var vo:CharacterVo = charactersModel.getWithId( id );
 			vo.mesh.castsShadows = true;
 			playerModel.setCharacter( vo );
+			savePlayerObjectRequest.dispatch();
 		}
 	}
 }

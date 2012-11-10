@@ -3,7 +3,7 @@
   "author" : "CJ Cenizal",
   "list" : [
     {
-        "id" : "Hell Knight",
+        "id" : "0",
         "folder" : "hellknight",
         "model" : "hellknight.md5mesh",
         "scale" : "3.5",
