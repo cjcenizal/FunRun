@@ -8,7 +8,6 @@ package com.funrun.model.vo {
 
 	public class CompetitorVo implements IPlaceable {
 
-		public var mesh:Mesh;
 		public var isDucking:Boolean;
 		public var liveIndex:int = 0;
 		public var isReady:Boolean = false;
@@ -32,6 +31,8 @@ package com.funrun.model.vo {
 		}
 		
 		public function updatePosition( x:Number, y:Number, z:Number ):void {
+			_characterController.updatePosition();
+			
 			_oldPosition.x = _newPosition.x;
 			_oldPosition.y = _newPosition.y;
 			_oldPosition.z = _newPosition.z;
@@ -70,8 +71,8 @@ package com.funrun.model.vo {
 			return _name;
 		}
 		
-		public function get character():String {
-			return _characterId;
+		public function get characterId():String {
+			return _characterController.character.id;
 		}
 		
 		public function get distance():Number {

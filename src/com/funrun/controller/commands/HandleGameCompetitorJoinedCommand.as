@@ -3,6 +3,7 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.controller.signals.DrawReadyListRequest;
+	import com.funrun.model.CharactersModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.vo.CompetitorVo;
@@ -26,6 +27,9 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var competitorsModel:CompetitorsModel;
 		
+		[Inject]
+		public var charactersModel:CharactersModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -48,7 +52,7 @@ package com.funrun.controller.commands {
 				var isDucking:Boolean = message.getBoolean( 5 );
 				var isReady:Boolean = message.getBoolean( 6 );
 				var characterId:String = message.getString( 7 );
-				var competitor:CompetitorVo = new CompetitorVo( inGameId, name, characterId );
+				var competitor:CompetitorVo = new CompetitorVo( inGameId, name, charactersModel.getWithId( characterId ) );
 				competitor.updatePosition( x, y, z );
 				competitor.isDucking = isDucking;
 				competitor.isReady = isReady;

@@ -1,14 +1,9 @@
 package com.funrun.model {
 
-	import away3d.animators.SkeletonAnimationState;
-	import away3d.animators.SkeletonAnimator;
-	import away3d.animators.transitions.CrossfadeStateTransition;
 	import away3d.entities.Mesh;
-	import away3d.events.AnimationStateEvent;
 	
 	import com.cenizal.utils.Numbers;
 	import com.funrun.model.constants.Block;
-	import com.funrun.model.constants.CharacterAnimations;
 	import com.funrun.model.constants.Player;
 	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.vo.CharacterVo;
@@ -22,8 +17,7 @@ package com.funrun.model {
 
 	public class PlayerModel extends Actor implements IPlaceable {
 		
-		// Mesh.
-		public var mesh:Mesh;
+		// Character.
 		private var _characterController:CharacterController;
 		
 		// Player properties.
@@ -32,17 +26,12 @@ package com.funrun.model {
 		private var _inGameId:int;
 		private var _properties:Object;
 		private var _place:int = 0;
-		
-		// Physics.
-		public var position:Vector3D;
-		public var prevPosition:Vector3D;
-		public var velocity:Vector3D;
+		;
 		
 		// Physical state.
 		public var isDucking:Boolean = false;
 		private var _isOnTheGround:Boolean = true;
 		public var isDead:Boolean = false;
-		private var _targetRotation:Number = 0;
 		
 		// Jumping.
 		private var _jumps:Number = 0;
@@ -54,9 +43,6 @@ package com.funrun.model {
 		public function PlayerModel() {
 			super();
 			_properties = {};
-			velocity = new Vector3D();
-			position = new Vector3D();
-			prevPosition = new Vector3D();
 			normalBounds = new CollidableVo();
 			duckingBounds = new CollidableVo();
 			_characterController = new CharacterController();
@@ -68,30 +54,11 @@ package com.funrun.model {
 		}
 		
 		public function getDistanceFromPreviousPosition():Number {
-			return position.subtract( prevPosition ).length;
+			return _characterController.getDistanceFromPreviousPosition();
 		}
 		
-		public function updateMeshPosition():void {
-			prevPosition.x = mesh.x;
-			prevPosition.y = mesh.y;
-			prevPosition.z = mesh.z;
-			mesh.x = position.x;
-			mesh.y = position.y;
-			mesh.z = position.z;
-			// Rotate.
-			var diff:Vector3D = prevPosition.subtract( position );
-			var atan:Number = Math.atan2( diff.x, diff.z );
-			if ( atan == 0 ) atan = Math.PI;
-			var angle:Number = atan * 180 / Math.PI;
-			_targetRotation = angle - 180;
-			var rotDiff:Number = _targetRotation - mesh.rotationY;
-			if ( rotDiff < 180 ) {
-				mesh.rotationY += ( rotDiff ) * .4;
-			} else {
-				mesh.rotationY -= ( 360 - ( rotDiff ) ) * .4;
-			}
-			// Keep animation stationary within container.
-			_characterController.updateLockedPosition();
+		public function updatePosition():void {
+			_characterController.updatePosition();
 		}
 		
 		public function run():void {
@@ -106,11 +73,7 @@ package com.funrun.model {
 		}
 		
 		public function setCharacter( character:CharacterVo ):void {
-			if ( _characterController.mesh ) {
-				mesh.removeChild( _characterController.mesh );
-			}
 			_characterController.setCharacter( character );
-			mesh.addChild( _characterController.mesh );
 		}
 		
 		public function get jumps():int {
@@ -131,7 +94,7 @@ package com.funrun.model {
 		}
 		
 		public function get distance():Number {
-			return position.z;
+			return _characterController.position.z;
 		}
 		
 		public function get distanceInFeet():int {
@@ -188,6 +151,22 @@ package com.funrun.model {
 		
 		public function get characterId():String {
 			return _characterController.character.id;
+		}
+		
+		public function get mesh():Mesh {
+			return _characterController.mesh;
+		}
+		
+		public function get position():Vector3D {
+			return _characterController.position;
+		}
+		
+		public function get prevPosition():Vector3D {
+			return _characterController.prevPosition;
+		}
+		
+		public function get velocity():Vector3D {
+			return _characterController.velocity;
 		}
 	}
 }

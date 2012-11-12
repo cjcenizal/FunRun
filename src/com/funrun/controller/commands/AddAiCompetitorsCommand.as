@@ -2,9 +2,11 @@ package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.AddCompetitorRequest;
 	import com.funrun.controller.signals.DrawGameMessageRequest;
-	import com.funrun.model.constants.Track;
+	import com.funrun.model.CharactersModel;
 	import com.funrun.model.constants.Player;
+	import com.funrun.model.constants.Track;
 	import com.funrun.model.vo.CompetitorVo;
+	import com.funrun.model.constants.PlayerProperties;
 	
 	import flash.geom.Vector3D;
 	
@@ -17,6 +19,11 @@ package com.funrun.controller.commands {
 		[Inject]
 		public var numCompetitors:int;
 		
+		// Models.
+		
+		[Inject]
+		public var charactersModel:CharactersModel;
+		
 		// Commands.
 		
 		[Inject]
@@ -27,7 +34,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			for ( var i:int = 0; i < numCompetitors; i++ ) {
-				var competitor:CompetitorVo = new CompetitorVo( i, "Bot_" + i.toString() );
+				var competitor:CompetitorVo = new CompetitorVo( i, "Bot_" + i.toString(), charactersModel.getWithId( PlayerProperties.DEFAULT_CHARACTER ) );
 				competitor.aiVelocity = new Vector3D();
 				var width:Number = Track.WIDTH * .8;
 				var zPos:Number = Math.random() * Player.START_POSITION_RANGE + Player.START_POSITION_MIN;

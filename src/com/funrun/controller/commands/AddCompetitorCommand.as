@@ -67,7 +67,7 @@ package com.funrun.controller.commands {
 						competitor.mesh.scaleY = 1;
 					}
 				}
-				competitor.hardUpdate();
+				competitor.hardUpdatePosition();
 				competitorsModel.add( competitor );
 				addObjectToSceneRequest.dispatch( mesh );
 				// Add nametag.

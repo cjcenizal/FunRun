@@ -37,7 +37,7 @@ package com.funrun.controller.commands {
 					competitor = competitorsModel.getWithId( id );
 					// Sometimes comp returns null for some reason.
 					if ( competitor ) {
-						competitor.hardUpdate();
+						competitor.hardUpdatePosition();
 						competitor.updatePosition(
 							message.getNumber( i + 1 ),
 							message.getNumber( i + 2 ),

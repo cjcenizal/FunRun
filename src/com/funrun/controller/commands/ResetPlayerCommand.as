@@ -32,7 +32,7 @@ package com.funrun.controller.commands {
 			playerModel.position.x = Math.random() * width +  Track.WIDTH * .1;
 			playerModel.position.y = 100;
 			playerModel.position.z = Math.random() * Player.START_POSITION_RANGE + Player.START_POSITION_MIN;
-			playerModel.updateMeshPosition();
+			playerModel.updatePosition();
 		}
 	}
 }

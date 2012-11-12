@@ -31,7 +31,7 @@ package com.funrun.controller.commands
 			updateLights();
 			
 			// Set position to mesh.
-			playerModel.updateMeshPosition();
+			playerModel.updatePosition();
 		}
 		
 		private function updateCamera():void {

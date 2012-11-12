@@ -2,6 +2,8 @@ package com.funrun.model.constants {
 
 	public class PlayerProperties {
 
+		public static const DEFAULT_CHARACTER:String = "0";
+		
 		public static const HIGH_SCORE:String = "hs";
 		public static const POINTS:String = "pts";
 		public static const COLOR:String = "col";
@@ -16,6 +18,6 @@ package com.funrun.model.constants {
 		DEFAULTS[ HIGH_SCORE	]	= 0,
 		DEFAULTS[ POINTS ]			= 0;
 		DEFAULTS[ COLOR ]			= "red";
-		DEFAULTS[ CHARACTER ]		= "0";
+		DEFAULTS[ CHARACTER ]		= DEFAULT_CHARACTER;
 	}
 }

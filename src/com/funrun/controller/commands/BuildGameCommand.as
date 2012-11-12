@@ -219,7 +219,6 @@ package com.funrun.controller.commands {
 			playerModel.duckingBounds.maxX = Player.DUCKING_BOUNDS.x * .5;
 			playerModel.duckingBounds.maxY = Player.DUCKING_BOUNDS.y * .5;
 			playerModel.duckingBounds.maxZ = Player.DUCKING_BOUNDS.z * .5;
-			playerModel.mesh = new Mesh( new Geometry() );
 			addObjectToSceneRequest.dispatch( playerModel.mesh );
 		}
 	}
