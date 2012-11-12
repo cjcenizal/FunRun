@@ -17,6 +17,7 @@ namespace FunRun {
 		public bool isDucking = false;
 		public bool isDead = false;
 		public bool isReady = false;
+		public string character = "0";
 		public Player() {
 		}
 	}
@@ -183,6 +184,7 @@ namespace FunRun {
 			player.id = player.JoinData[ "id" ];
 			player.x = Convert.ToDouble( player.JoinData[ "x" ] );
 			player.y = Convert.ToDouble( player.JoinData[ "y" ] );
+			player.character = player.JoinData[ "char" ];
 
 			// Create init message for the joining player.
 			Message initMessage = Message.Create( "i" );
@@ -191,7 +193,7 @@ namespace FunRun {
 
 			// Add the current state of all players to the init message.
 			foreach ( Player p in Players ) {
-				initMessage.Add( p.Id, p.name, p.x, p.y, p.z, p.isDucking, p.isReady );
+				initMessage.Add( p.Id, p.name, p.x, p.y, p.z, p.isDucking, p.isReady, p.character );
 			}
 			
 			// Send init message to player.
@@ -199,7 +201,7 @@ namespace FunRun {
 
 			// Let everyone know who's here.
 			Message newPlayerMessage = Message.Create( "n" );
-			newPlayerMessage.Add( player.Id, player.name, player.x, player.y, player.z, player.isDucking );
+			newPlayerMessage.Add( player.Id, player.name, player.x, player.y, player.z, player.isDucking, player.character );
 			Broadcast( newPlayerMessage );
 		}
 

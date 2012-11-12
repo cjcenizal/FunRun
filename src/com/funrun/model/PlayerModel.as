@@ -14,6 +14,7 @@ package com.funrun.model {
 	import com.funrun.model.vo.CharacterVo;
 	import com.funrun.model.vo.CollidableVo;
 	import com.funrun.model.vo.IPlaceable;
+	import com.funrun.services.animation.CharacterController;
 	
 	import flash.geom.Vector3D;
 	
@@ -23,8 +24,7 @@ package com.funrun.model {
 		
 		// Mesh.
 		public var mesh:Mesh;
-		private var _character:CharacterVo;
-		private var _animator:SkeletonAnimator;
+		private var _characterController:CharacterController;
 		
 		// Player properties.
 		public var userId:String;
@@ -50,9 +50,6 @@ package com.funrun.model {
 		// Bounds.
 		public var normalBounds:CollidableVo;
 		public var duckingBounds:CollidableVo;
-		
-		// Animations.
-		private var _stateTransition:CrossfadeStateTransition;
 
 		public function PlayerModel() {
 			super();
@@ -62,7 +59,7 @@ package com.funrun.model {
 			prevPosition = new Vector3D();
 			normalBounds = new CollidableVo();
 			duckingBounds = new CollidableVo();
-			_stateTransition = new CrossfadeStateTransition( 0.5 );
+			_characterController = new CharacterController();
 			resetInGameId();
 		}
 		
@@ -94,40 +91,26 @@ package com.funrun.model {
 				mesh.rotationY -= ( 360 - ( rotDiff ) ) * .4;
 			}
 			// Keep animation stationary within container.
-			_character.mesh.x = _character.mesh.y = _character.mesh.z = 0;
+			_characterController.updateLockedPosition();
 		}
 		
 		public function run():void {
-			_animator.playbackSpeed = _character.getSpeedFor( CharacterAnimations.RUN );
-			_animator.play( CharacterAnimations.RUN, _stateTransition );
+			_characterController.run();
 		}
 		
 		public function jump():int {
-			playSingleAnimation( CharacterAnimations.JUMP );
+			_characterController.jump();
 			isOnTheGround = false;
 			_jumps++;
 			return _jumps - 1;
 		}
 		
-		private function playSingleAnimation( id:String ):void {
-			if ( _animator.animationSet.hasState( id ) ) {
-				_animator.playbackSpeed = _character.getSpeedFor( id );
-				( _animator.animationSet.getState( id ) as SkeletonAnimationState ).addEventListener( AnimationStateEvent.PLAYBACK_COMPLETE, onJumpComplete );
-				_animator.play( id, _stateTransition );
-			}
-		}
-		
-		private function onJumpComplete( event:AnimationStateEvent ):void {
-			run();
-		}
-		
 		public function setCharacter( character:CharacterVo ):void {
-			if ( _character ) {
-				mesh.removeChild( _character.mesh );
+			if ( _characterController.mesh ) {
+				mesh.removeChild( _characterController.mesh );
 			}
-			_character = character;
-			_animator = _character.animator;
-			mesh.addChild( _character.mesh );
+			_characterController.setCharacter( character );
+			mesh.addChild( _characterController.mesh );
 		}
 		
 		public function get jumps():int {
@@ -201,6 +184,10 @@ package com.funrun.model {
 		
 		public function set color( val:String ):void {
 			_properties[ PlayerProperties.COLOR ] = val;
+		}
+		
+		public function get characterId():String {
+			return _characterController.character.id;
 		}
 	}
 }

@@ -45,7 +45,7 @@ package com.funrun.controller.commands {
 			segmentsModel.seed = obstacleSeed;
 			
 			// Add pre-existing competitors.
-			for ( var i:int = 2; i < message.length; i += 7 ) {
+			for ( var i:int = 2; i < message.length; i += 8 ) {
 				var id:int = message.getInt( i + 0 );
 				if ( id != playerModel.inGameId ) {
 					var name:String = message.getString( i + 1 );
@@ -54,7 +54,8 @@ package com.funrun.controller.commands {
 					var z:Number = message.getNumber( i + 4 );
 					var isDucking:Boolean = message.getBoolean( i + 5 );
 					var isReady:Boolean = message.getBoolean( i + 6 );
-					var competitor:CompetitorVo = new CompetitorVo( id, name );
+					var characterId:String = message.getString( i + 7 );
+					var competitor:CompetitorVo = new CompetitorVo( id, name, characterId );
 					competitor.updatePosition( x, y, z );
 					competitor.isDucking = isDucking;
 					competitor.isReady = isReady;

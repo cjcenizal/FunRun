@@ -8,7 +8,6 @@ package com.funrun.controller.commands {
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
-	import away3d.materials.ColorMaterial;
 	import away3d.materials.TextureMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.materials.methods.FogMethod;
@@ -24,7 +23,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.SelectCharacterRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.BlockStylesModel;
-	import com.funrun.model.constants.PlayerProperties;
 	import com.funrun.model.ColorsModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;

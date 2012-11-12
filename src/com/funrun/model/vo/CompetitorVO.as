@@ -2,6 +2,8 @@ package com.funrun.model.vo {
 
 	import away3d.entities.Mesh;
 	
+	import com.funrun.services.animation.CharacterController;
+	
 	import flash.geom.Vector3D;
 
 	public class CompetitorVo implements IPlaceable {
@@ -17,11 +19,14 @@ package com.funrun.model.vo {
 		private var _place:int = 0;
 		private var _isDead:Boolean = false;
 		private var _deathTime:Number = 0;
+		private var _characterController:CharacterController;
 		public var aiVelocity:Vector3D;
 		
-		public function CompetitorVo( id:int, name:String ) {
+		public function CompetitorVo( id:int, name:String, character:CharacterVo ) {
 			_id = id;
 			_name = name;
+			_characterController = new CharacterController();
+			_characterController.setCharacter( character );
 			_oldPosition = new Vector3D();
 			_newPosition = new Vector3D();
 		}
@@ -49,7 +54,8 @@ package com.funrun.model.vo {
 		
 		public function kill():void {
 			_isDead = true;
-			_deathTime = new Date().getTime();
+			var d:Date = new Date();
+			_deathTime = d.getTime();
 		}
 		
 		public function get position():Vector3D {
@@ -62,6 +68,10 @@ package com.funrun.model.vo {
 		
 		public function get name():String {
 			return _name;
+		}
+		
+		public function get character():String {
+			return _characterId;
 		}
 		
 		public function get distance():Number {

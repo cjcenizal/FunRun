@@ -74,11 +74,13 @@ package com.funrun.controller.commands {
 				name: playerModel.name,
 				id: loginService.userId,
 				x: playerModel.position.x,
-				y: playerModel.position.y };
+				y: playerModel.position.y,
+				char: playerModel.characterId };
 			gameService.connect( loginService.client, Rooms.GAME, userJoinData, roomId );
 		}
 		
 		private function onConnected():void {
+			trace("connected");
 			gameService.onServerDisconnectSignal.add( onDisconnected );
 			gameService.addMessageHandler( Messages.INIT, onInit );
 			gameService.addMessageHandler( Messages.UPDATE, onUpdate );
@@ -92,11 +94,13 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onError():void {
+			trace("error");
 			logMessageRequest.dispatch( new LogMessageVo( this, "Error connecting to game." ) );
 			showPlayerioErrorPopupRequest.dispatch( PlayerioErrorVo( gameService.error ) );
 		}
 		
 		private function onInit( message:Message ):void {
+			trace("init");
 			gameService.removeMessageHandler( Messages.INIT, onInit );
 			handleGameInitRequest.dispatch( message );
 		}
