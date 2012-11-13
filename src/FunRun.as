@@ -23,7 +23,7 @@ package {
 		
 		/*
 		BUGS:
-		- Smack is way too forgiving on a one-block, but only SOMETIMES!
+		- 2) Smack is way too forgiving on a one-block, but only SOMETIMES!
 			- Still collision issues:
 				- Jumping up into the top front edge of a smack block launched me in the air
 				- Jumping into the side of a smack block smacked me instead of blocking me
@@ -34,7 +34,7 @@ package {
 		- To optimize against memory deallocation pauses, we can implement an object pool for segments
 		
 		BUILDER:
-		- Build cool obstacles
+		- 1) Build cool obstacles
 			- Alternating converging and diverging
 			- Form points into lines on obstacles
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
@@ -42,7 +42,7 @@ package {
 		
 		TO-DO:
 		TEST WITH FRIENDS
-		- Top score leaderboard
+		- 3) Top score leaderboard
 			- Among your friends
 			- Globally
 		- Analytics / metrics
@@ -63,8 +63,6 @@ package {
 				- Add instructions to beginning of gameplay
 				- Results should look great
 		
-		- Add animated character
-			- Add walking state when you move left and right w/o running
 		- Add music and sound effects
 		- Abstract the keys that map to certain movements with a KeyMapModel or just in KeysModel
 		
