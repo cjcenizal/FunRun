@@ -41,6 +41,11 @@ package com.funrun.controller.commands {
 				competitor = competitorsModel.getAt( i );
 				competitor.interpolateToTargetPosition( interpolationModel.percent );
 				competitor.updatePosition();
+				if ( competitor.prevVector.length > 0 && competitor.vector.length == 0 ) {
+					competitor.stand();
+				} else if ( competitor.prevVector.length == 0 && competitor.vector.length > 0) {
+					competitor.run();
+				}
 			}
 			interpolationModel.increment();
 		}

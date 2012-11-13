@@ -13,11 +13,6 @@ package com.funrun.controller.commands {
 	import org.robotlegs.mvcs.Command;
 
 	public class AddAiCompetitorsCommand extends Command {
-
-		// Arguments.
-		
-		[Inject]
-		public var numCompetitors:int;
 		
 		// Models.
 		
@@ -33,7 +28,7 @@ package com.funrun.controller.commands {
 		public var displayMessageRequest:DrawGameMessageRequest;
 		
 		override public function execute():void {
-			for ( var i:int = 0; i < numCompetitors; i++ ) {
+			for ( var i:int = 0; i < 3; i++ ) {
 				var competitor:CompetitorVo = new CompetitorVo( i, "Bot_" + i.toString(), charactersModel.getWithId( PlayerProperties.DEFAULT_CHARACTER ) );
 				competitor.aiVelocity = new Vector3D();
 				var width:Number = Track.WIDTH * .8;

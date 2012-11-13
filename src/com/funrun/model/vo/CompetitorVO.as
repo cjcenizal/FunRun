@@ -55,6 +55,10 @@ package com.funrun.model.vo {
 			_characterController.position.z = _oldPosition.z + ( _newPosition.z - _oldPosition.z ) * pct;
 		}
 		
+		public function stand():void {
+			_characterController.stand();
+		}
+		
 		public function run():void {
 			_characterController.run();
 		}
@@ -103,6 +107,14 @@ package com.funrun.model.vo {
 		
 		public function get mesh():Mesh {
 			return _characterController.mesh;
+		}
+		
+		public function get vector():Vector3D {
+			return _characterController.vector;
+		}
+		
+		public function get prevVector():Vector3D {
+			return _characterController.prevVector;
 		}
 	}
 }

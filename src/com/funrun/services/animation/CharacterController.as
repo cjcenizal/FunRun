@@ -27,6 +27,8 @@ package com.funrun.services.animation
 		public var prevPosition:Vector3D;
 		public var velocity:Vector3D;
 		private var _targetRotation:Number = 0;
+		public var vector:Vector3D;
+		public var prevVector:Vector3D;
 		
 		public function CharacterController()
 		{
@@ -34,6 +36,8 @@ package com.funrun.services.animation
 			velocity = new Vector3D();
 			position = new Vector3D();
 			prevPosition = new Vector3D();
+			vector = new Vector3D();
+			prevVector = new Vector3D();
 			_mesh = new Mesh( new Geometry() );
 		}
 		
@@ -49,8 +53,9 @@ package com.funrun.services.animation
 			_mesh.y = position.y;
 			_mesh.z = position.z;
 			// Rotate.
-			var diff:Vector3D = prevPosition.subtract( position );
-			var atan:Number = Math.atan2( diff.x, diff.z );
+			prevVector.copyFrom( vector );
+			vector = prevPosition.subtract( position );
+			var atan:Number = Math.atan2( vector.x, vector.z );
 			if ( atan == 0 ) atan = Math.PI;
 			var angle:Number = atan * 180 / Math.PI;
 			_targetRotation = angle - 180;
@@ -69,10 +74,15 @@ package com.funrun.services.animation
 				_mesh.removeChild( _animationMesh );
 			}
 			_character = character;
-			_animator = _character.animator;
+			_animator = _character.getAnimator();
 			_animationMesh = _character.getMeshClone();
+			_animationMesh.animator = _animator;
 			_animationMesh.castsShadows = true;
 			_mesh.addChild( _animationMesh );
+		}
+		
+		public function stand():void {
+			_animator.stop();
 		}
 		
 		public function run():void {

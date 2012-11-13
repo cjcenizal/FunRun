@@ -43,7 +43,7 @@ package com.funrun.controller.commands {
 				startCountdownRequest.dispatch();
 			}
 			startGameLoopRequest.dispatch();
-			addAiCompetitorsRequest.dispatch( Player.NUM_AI_COMPETITORS );
+			addAiCompetitorsRequest.dispatch();
 		}
 	}
 }

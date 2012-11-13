@@ -133,6 +133,13 @@ package com.funrun.controller.commands
 				// Run forward.
 				playerModel.position.z += playerModel.velocity.z;
 				
+				// Running.
+				if ( playerModel.prevVector.length > 0 && playerModel.vector.length == 0 ) {
+					playerModel.stand();
+				} else if ( playerModel.prevVector.length == 0 && playerModel.vector.length > 0) {
+					playerModel.run();
+				}
+				
 				// Update gravity.
 				playerModel.velocity.y += Player.GRAVITY;
 				playerModel.position.y += playerModel.velocity.y;

@@ -18,7 +18,6 @@ package com.funrun.model.vo
 		
 		public var id:String;
 		public var animationSet:SkeletonAnimationSet;
-		public var animator:SkeletonAnimator;
 		public var skeleton:Skeleton;
 		private var _mesh:Mesh;
 		private var _scale:Number;
@@ -35,8 +34,6 @@ package com.funrun.model.vo
 		
 		public function init( animationSet:SkeletonAnimationSet ):void {
 			this.animationSet = animationSet;
-			animator = new SkeletonAnimator( this.animationSet, skeleton );
-			if ( _mesh ) _mesh.animator = animator;
 		}
 		
 		public function storeSkeleton( skeleton:Skeleton ):void {
@@ -47,7 +44,6 @@ package com.funrun.model.vo
 			_mesh = mesh;
 			_mesh.scaleX = _mesh.scaleY = _mesh.scaleZ = _scale;
 			_mesh.material = _material;
-			if ( this.animator ) _mesh.animator = this.animator;
 		}
 		
 		public function storeAnimationState( state:SkeletonAnimationState, namespace:String, looping:Boolean, speed:Number ):void {
@@ -75,7 +71,12 @@ package com.funrun.model.vo
 		}
 		
 		public function getMeshClone():Mesh {
-			return _mesh.clone() as Mesh;
+			var mesh:Mesh = _mesh.clone() as Mesh;
+			return mesh;
+		}
+		
+		public function getAnimator():SkeletonAnimator {
+			return new SkeletonAnimator( this.animationSet, skeleton ); 
 		}
 	}
 }

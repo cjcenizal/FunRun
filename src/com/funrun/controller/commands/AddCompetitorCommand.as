@@ -57,6 +57,7 @@ package com.funrun.controller.commands {
 						competitor.mesh.scaleY = 1;
 					}*/
 				}
+				competitor.run();
 				competitor.hardUpdatePosition();
 				competitorsModel.add( competitor );
 				addObjectToSceneRequest.dispatch( competitor.mesh );

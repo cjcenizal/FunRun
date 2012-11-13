@@ -61,6 +61,10 @@ package com.funrun.model {
 			_characterController.updatePosition();
 		}
 		
+		public function stand():void {
+			_characterController.stand();
+		}
+		
 		public function run():void {
 			_characterController.run();
 		}
@@ -167,6 +171,14 @@ package com.funrun.model {
 		
 		public function get velocity():Vector3D {
 			return _characterController.velocity;
+		}
+		
+		public function get vector():Vector3D {
+			return _characterController.vector;
+		}
+		
+		public function get prevVector():Vector3D {
+			return _characterController.prevVector;
 		}
 	}
 }

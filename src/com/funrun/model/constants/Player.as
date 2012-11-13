@@ -30,9 +30,6 @@ package com.funrun.model.constants
 		public static const HEAD_ON_SMACK_SPEED:Number = -160;
 		public static const FALL_DEATH_HEIGHT:Number = -1500;
 		
-		// AI.
-		public static const NUM_AI_COMPETITORS:int = 10;
-		
 		// Position.
 		public static const START_POSITION_RANGE:Number = 400;
 		public static const START_POSITION_MIN:Number = 1600;
