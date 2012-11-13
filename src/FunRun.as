@@ -110,7 +110,6 @@ package {
 			- Camera shows front during observer mode, look around with mouse
 		
 		
-		- Use models and animation
 		- Chatting in a 3D room
 			- Zoom in if we are standing still, zoom out if we're moving: http://rumpetroll.com/
 		- When we're observing, enable mouse movement and scroll wheel for zooming.

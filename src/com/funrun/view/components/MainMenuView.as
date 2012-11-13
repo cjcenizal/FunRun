@@ -1,10 +1,7 @@
 package com.funrun.view.components {
 
-	import com.cenizal.ui.AbstractButton;
 	import com.cenizal.ui.AbstractComponent;
-	import com.cenizal.ui.AbstractLabel;
-	import com.cenizal.ui.DummyButton;
-	import com.cenizal.utils.Center;
+	import com.cenizal.ui.ImageButton;
 	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
@@ -16,12 +13,24 @@ package com.funrun.view.components {
 
 	public class MainMenuView extends AbstractComponent {
 		
-		[Embed (source="external/embed/images/logo.jpg" )]
-		private var Logo:Class;
+		[Embed (source="embed/home_bg.jpg" )]
+		private var Background:Class;
 		
-		private var _logo:Bitmap;
-		private var _multiplayerButton:DummyButton;
-		private var _singlePlayerButton:DummyButton;
+		[Embed (source="embed/play_multiplayer_button.jpg" )]
+		private var MultiplayerButton:Class;
+		
+		[Embed (source="embed/play_multiplayer_button_hover.jpg" )]
+		private var MultiplayerButtonHover:Class;
+		
+		[Embed (source="embed/play_single_button.jpg" )]
+		private var SingleButton:Class;
+		
+		[Embed (source="embed/play_single_button_hover.jpg" )]
+		private var SingleButtonHover:Class;
+		
+		private var _bg:Bitmap;
+		private var _multiplayerButton:ImageButton;
+		private var _singlePlayerButton:ImageButton;
 		private var _loginStatus:LoginStatusView;
 		
 		public var onMultiplayerClickSignal:Signal;
@@ -47,20 +56,18 @@ package com.funrun.view.components {
 			g.endFill();
 			
 			// Logo.
-			_logo = new Logo();
-			addChild( _logo );
-			Center.horizontal( _logo, stage );
-			_logo.y = 20;
+			_bg = new Background();
+			addChild( _bg );
 			
 			// Multiplayer game button.
-			_multiplayerButton = new DummyButton( this, 0, _logo.y + _logo.height + 80, onMultiplayerClick, "Multiplayer game", 0xaaaaaa );
-			_multiplayerButton.draw();
-			Center.horizontal( _multiplayerButton, stage );
+			_multiplayerButton = new ImageButton( this, 350, 310, onMultiplayerClick );
+			_multiplayerButton.setImages( new MultiplayerButton(), new MultiplayerButtonHover() );
+			_multiplayerButton.rotation = -.8;
 			
 			// Single player game button.
-			_singlePlayerButton = new DummyButton( this, 0, _multiplayerButton.y + _multiplayerButton.height + 20, onSinglePlayerClick, "Single player game", 0xaaaaaa );
-			_singlePlayerButton.draw();
-			Center.horizontal( _singlePlayerButton, stage );
+			_singlePlayerButton = new ImageButton( this, 420, 400, onSinglePlayerClick );
+			_singlePlayerButton.setImages( new SingleButton(), new SingleButtonHover() );
+			_singlePlayerButton.rotation = 1;
 			
 			// Login status.
 			_loginStatus = new LoginStatusView( this );
@@ -77,11 +84,11 @@ package com.funrun.view.components {
 		
 		public function set optionsEnabled( enabled:Boolean ):void {
 			if ( enabled ) {
-				_logo.alpha = 1;
+				_bg.alpha = 1;
 				_multiplayerButton.visible = true;
 				_singlePlayerButton.visible = true;
 			} else {
-				_logo.alpha = .2;
+				_bg.alpha = .2;
 				_multiplayerButton.visible = false;
 				_singlePlayerButton.visible = false;
 			}
