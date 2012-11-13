@@ -2,6 +2,7 @@ package com.funrun.view.components {
 
 	import com.cenizal.ui.AbstractComponent;
 	import com.cenizal.ui.ImageButton;
+	import com.funrun.view.components.ui.FunButton;
 	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
@@ -29,8 +30,8 @@ package com.funrun.view.components {
 		private var SingleButtonHover:Class;
 		
 		private var _bg:Bitmap;
-		private var _multiplayerButton:ImageButton;
-		private var _singlePlayerButton:ImageButton;
+		private var _multiplayerButton:FunButton;
+		private var _singlePlayerButton:FunButton;
 		private var _loginStatus:LoginStatusView;
 		
 		public var onMultiplayerClickSignal:Signal;
@@ -60,12 +61,12 @@ package com.funrun.view.components {
 			addChild( _bg );
 			
 			// Multiplayer game button.
-			_multiplayerButton = new ImageButton( this, 350, 310, onMultiplayerClick );
+			_multiplayerButton = new FunButton( this, 350, 310, onMultiplayerClick );
 			_multiplayerButton.setImages( new MultiplayerButton(), new MultiplayerButtonHover() );
 			_multiplayerButton.rotation = -.8;
 			
 			// Single player game button.
-			_singlePlayerButton = new ImageButton( this, 420, 400, onSinglePlayerClick );
+			_singlePlayerButton = new FunButton( this, 420, 400, onSinglePlayerClick );
 			_singlePlayerButton.setImages( new SingleButton(), new SingleButtonHover() );
 			_singlePlayerButton.rotation = 1;
 			
