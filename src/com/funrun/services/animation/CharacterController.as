@@ -17,6 +17,7 @@ package com.funrun.services.animation
 		
 		// Model animation.
 		private var _mesh:Mesh;
+		private var _animationMesh:Mesh;
 		private var _character:CharacterVo;
 		private var _animator:SkeletonAnimator;
 		private var _stateTransition:CrossfadeStateTransition;
@@ -60,16 +61,18 @@ package com.funrun.services.animation
 				_mesh.rotationY -= ( 360 - ( rotDiff ) ) * .4;
 			}
 			// Keep animation stationary within container.
-			_character.mesh.x = _character.mesh.y = _character.mesh.z = 0;
+			_animationMesh.x = _animationMesh.y = _animationMesh.z = 0;
 		}
 		
 		public function setCharacter( character:CharacterVo ):void {
-			if ( characterMesh ) {
-				_mesh.removeChild( characterMesh );
+			if ( _animationMesh ) {
+				_mesh.removeChild( _animationMesh );
 			}
 			_character = character;
 			_animator = _character.animator;
-			_mesh.addChild( characterMesh );
+			_animationMesh = _character.getMeshClone();
+			_animationMesh.castsShadows = true;
+			_mesh.addChild( _animationMesh );
 		}
 		
 		public function run():void {
@@ -95,10 +98,6 @@ package com.funrun.services.animation
 		
 		public function get character():CharacterVo {
 			return _character;
-		}
-		
-		public function get characterMesh():Mesh {
-			return _character.mesh;
 		}
 		
 		public function get mesh():Mesh {

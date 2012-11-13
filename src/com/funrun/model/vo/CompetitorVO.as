@@ -30,9 +30,11 @@ package com.funrun.model.vo {
 			_newPosition = new Vector3D();
 		}
 		
-		public function updatePosition( x:Number, y:Number, z:Number ):void {
+		public function updatePosition():void {
 			_characterController.updatePosition();
-			
+		}
+		
+		public function setTargetPosition( x:Number, y:Number, z:Number ):void {
 			_oldPosition.x = _newPosition.x;
 			_oldPosition.y = _newPosition.y;
 			_oldPosition.z = _newPosition.z;
@@ -41,16 +43,20 @@ package com.funrun.model.vo {
 			_newPosition.z = z;
 		}
 		
-		public function hardUpdate():void {
-			mesh.x = _oldPosition.x = _newPosition.x;
-			mesh.y = _oldPosition.y = _newPosition.y;
-			mesh.z = _oldPosition.z = _newPosition.z;
+		public function hardUpdatePosition():void {
+			_characterController.mesh.x = _oldPosition.x = _newPosition.x;
+			_characterController.mesh.y = _oldPosition.y = _newPosition.y;
+			_characterController.mesh.z = _oldPosition.z = _newPosition.z;
 		}
 		
-		public function interpolate( pct:Number ):void {
-			mesh.x = _oldPosition.x + ( _newPosition.x - _oldPosition.x ) * pct;
-			mesh.y = _oldPosition.y + ( _newPosition.y - _oldPosition.y ) * pct;
-			mesh.z = _oldPosition.z + ( _newPosition.z - _oldPosition.z ) * pct;
+		public function interpolateToTargetPosition( pct:Number ):void {
+			_characterController.position.x = _oldPosition.x + ( _newPosition.x - _oldPosition.x ) * pct;
+			_characterController.position.y = _oldPosition.y + ( _newPosition.y - _oldPosition.y ) * pct;
+			_characterController.position.z = _oldPosition.z + ( _newPosition.z - _oldPosition.z ) * pct;
+		}
+		
+		public function run():void {
+			_characterController.run();
 		}
 		
 		public function kill():void {
@@ -76,7 +82,7 @@ package com.funrun.model.vo {
 		}
 		
 		public function get distance():Number {
-			return ( mesh ) ? mesh.z : 0;
+			return ( _characterController.mesh ) ? _characterController.mesh.z : 0;
 		}
 		
 		public function set place( val:int ):void {
@@ -93,6 +99,10 @@ package com.funrun.model.vo {
 		
 		public function get deathTime():Number {
 			return _deathTime;
+		}
+		
+		public function get mesh():Mesh {
+			return _characterController.mesh;
 		}
 	}
 }

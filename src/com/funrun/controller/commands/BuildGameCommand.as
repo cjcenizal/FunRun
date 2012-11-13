@@ -4,7 +4,6 @@ package com.funrun.controller.commands {
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.View3D;
 	import away3d.controllers.HoverController;
-	import away3d.core.base.Geometry;
 	import away3d.entities.Mesh;
 	import away3d.lights.DirectionalLight;
 	import away3d.lights.PointLight;
@@ -23,7 +22,6 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.SelectCharacterRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.model.BlockStylesModel;
-	import com.funrun.model.ColorsModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.LightsModel;
@@ -73,9 +71,6 @@ package com.funrun.controller.commands {
 		
 		[Inject]
 		public var blockStylesModel:BlockStylesModel;
-		
-		[Inject]
-		public var colorsModel:ColorsModel;
 		
 		[Inject]
 		public var materialsModel:MaterialsModel;

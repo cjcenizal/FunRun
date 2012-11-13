@@ -31,7 +31,6 @@ package com.funrun.controller.commands
 		override public function execute():void
 		{
 			var vo:CharacterVo = charactersModel.getWithId( id );
-			vo.mesh.castsShadows = true;
 			playerModel.setCharacter( vo );
 			savePlayerObjectRequest.dispatch();
 		}

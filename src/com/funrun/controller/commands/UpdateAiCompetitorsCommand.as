@@ -49,7 +49,7 @@ package com.funrun.controller.commands {
 								competitor.aiVelocity.z += Player.ACCELERATION;
 							}
 							competitor.aiVelocity.x = ( Perlin.noise( i, competitor.position.z * .0001 ) - .5 ) * 100;
-							competitor.updatePosition( competitor.position.x + competitor.aiVelocity.x, -Player.NORMAL_BOUNDS.y * .25, competitor.position.z + competitor.aiVelocity.z );
+							competitor.setTargetPosition( competitor.position.x + competitor.aiVelocity.x, -Player.NORMAL_BOUNDS.y * .25, competitor.position.z + competitor.aiVelocity.z );
 						}
 					}
 				}

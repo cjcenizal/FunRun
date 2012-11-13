@@ -60,7 +60,7 @@ package com.funrun.controller.commands {
 					var isReady:Boolean = message.getBoolean( i + 6 );
 					var characterId:String = message.getString( i + 7 );
 					var competitor:CompetitorVo = new CompetitorVo( id, name, charactersModel.getWithId( characterId ) );
-					competitor.updatePosition( x, y, z );
+					competitor.setTargetPosition( x, y, z );
 					competitor.isDucking = isDucking;
 					competitor.isReady = isReady;
 					addCompetitorRequest.dispatch( competitor );

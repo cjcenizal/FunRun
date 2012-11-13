@@ -39,7 +39,8 @@ package com.funrun.controller.commands {
 			var nametag:AbstractLabel;
 			for ( var i:int = 0; i < len; i++ ) {
 				competitor = competitorsModel.getAt( i );
-				competitor.interpolate( interpolationModel.percent );
+				competitor.interpolateToTargetPosition( interpolationModel.percent );
+				competitor.updatePosition();
 			}
 			interpolationModel.increment();
 		}

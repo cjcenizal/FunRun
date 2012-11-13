@@ -168,7 +168,6 @@ package com.funrun {
 	import com.funrun.model.BlockStylesModel;
 	import com.funrun.model.BlockTypesModel;
 	import com.funrun.model.CharactersModel;
-	import com.funrun.model.ColorsModel;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.ConfigurationModel;
 	import com.funrun.model.CountdownModel;
@@ -245,7 +244,7 @@ package com.funrun {
 			// Switches.
 			var useWhitelist:Boolean 				= false;
 			var isProduction:Boolean				= false;
-			var isOnline:Boolean					= true;
+			var isOnline:Boolean					= false;
 			var showBounds:Boolean					= false;
 			var gameModel:GameModel = new GameModel( isProduction, isOnline, showBounds );
 			gameModel.showStats 					= false;
@@ -269,7 +268,6 @@ package com.funrun {
 			injector.mapSingleton( BlockTypesModel );
 			injector.mapSingleton( CharactersModel );
 			injector.mapSingleton( CompetitorsModel );
-			injector.mapSingleton( ColorsModel );
 			injector.mapSingleton( ConfigurationModel );
 			injector.mapSingleton( CountdownModel );
 			injector.mapSingleton( DelayedCommandsModel );

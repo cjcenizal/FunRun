@@ -38,7 +38,7 @@ package com.funrun.controller.commands {
 					// Sometimes comp returns null for some reason.
 					if ( competitor ) {
 						competitor.hardUpdatePosition();
-						competitor.updatePosition(
+						competitor.setTargetPosition(
 							message.getNumber( i + 1 ),
 							message.getNumber( i + 2 ),
 							message.getNumber( i + 3 )

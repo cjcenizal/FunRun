@@ -38,7 +38,7 @@ package com.funrun.controller.commands {
 				competitor.aiVelocity = new Vector3D();
 				var width:Number = Track.WIDTH * .8;
 				var zPos:Number = Math.random() * Player.START_POSITION_RANGE + Player.START_POSITION_MIN;
-				competitor.updatePosition(  Math.random() * width, 0, zPos );
+				competitor.setTargetPosition(  Math.random() * width, 0, zPos );
 				addCompetitorRequest.dispatch( competitor );
 				displayMessageRequest.dispatch( competitor.name + " has joined the game." );
 			}

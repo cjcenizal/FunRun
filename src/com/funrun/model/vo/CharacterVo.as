@@ -20,7 +20,7 @@ package com.funrun.model.vo
 		public var animationSet:SkeletonAnimationSet;
 		public var animator:SkeletonAnimator;
 		public var skeleton:Skeleton;
-		public var mesh:Mesh;
+		private var _mesh:Mesh;
 		private var _scale:Number;
 		private var _material:TextureMaterial;
 		private var _speeds:Dictionary;
@@ -36,7 +36,7 @@ package com.funrun.model.vo
 		public function init( animationSet:SkeletonAnimationSet ):void {
 			this.animationSet = animationSet;
 			animator = new SkeletonAnimator( this.animationSet, skeleton );
-			if ( this.mesh ) this.mesh.animator = animator;
+			if ( _mesh ) _mesh.animator = animator;
 		}
 		
 		public function storeSkeleton( skeleton:Skeleton ):void {
@@ -44,10 +44,10 @@ package com.funrun.model.vo
 		}
 		
 		public function storeMesh( mesh:Mesh ):void {
-			this.mesh = mesh;
-			this.mesh.scaleX = this.mesh.scaleY = this.mesh.scaleZ = _scale;
-			this.mesh.material = _material;
-			if ( this.animator ) this.mesh.animator = this.animator;
+			_mesh = mesh;
+			_mesh.scaleX = _mesh.scaleY = _mesh.scaleZ = _scale;
+			_mesh.material = _material;
+			if ( this.animator ) _mesh.animator = this.animator;
 		}
 		
 		public function storeAnimationState( state:SkeletonAnimationState, namespace:String, looping:Boolean, speed:Number ):void {
@@ -72,6 +72,10 @@ package com.funrun.model.vo
 					_material.specularMap = Cast.bitmapTexture( data );
 					break;
 			}
+		}
+		
+		public function getMeshClone():Mesh {
+			return _mesh.clone() as Mesh;
 		}
 	}
 }
