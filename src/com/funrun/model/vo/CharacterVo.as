@@ -23,6 +23,7 @@ package com.funrun.model.vo
 		private var _scale:Number;
 		private var _material:TextureMaterial;
 		private var _speeds:Dictionary;
+		private var _animationStatesBuffer:Array;
 		
 		public function CharacterVo( id:String, scale:Number )
 		{
@@ -34,6 +35,12 @@ package com.funrun.model.vo
 		
 		public function init( animationSet:SkeletonAnimationSet ):void {
 			this.animationSet = animationSet;
+			if ( _animationStatesBuffer ) {
+				for ( var i:int = _animationStatesBuffer.length - 1; i >= 0; i-- ) {
+					animationSet.addState( _animationStatesBuffer[ i ].namespace, _animationStatesBuffer[ i ].state );
+					_animationStatesBuffer.pop();
+				}
+			}
 		}
 		
 		public function storeSkeleton( skeleton:Skeleton ):void {
@@ -47,7 +54,12 @@ package com.funrun.model.vo
 		}
 		
 		public function storeAnimationState( state:SkeletonAnimationState, namespace:String, looping:Boolean, speed:Number ):void {
-			this.animationSet.addState( namespace, state );
+			if ( animationSet ) {
+				animationSet.addState( namespace, state );
+			} else {
+				_animationStatesBuffer = _animationStatesBuffer || [];
+				_animationStatesBuffer.push( { namespace: namespace, state: state } );
+			}
 			state.looping = looping;
 			_speeds[ namespace ] = speed;
 		}
