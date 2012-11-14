@@ -37,8 +37,10 @@ package {
 		- 1) Build cool obstacles
 			- Alternating converging and diverging
 			- Form points into lines on obstacles
+		- Derive block type and assign numerical ID (i.e. in a 3x3 cube of blocks, which type of block is it); we'll need models for each type of block in the styles
 		- Should we make the floor the lowest you can go? This could make lava easier to implement.
 		- HTML5 and fun UI: http://www.buildwithchrome.com/static/builder#pos=950513x618389&load=ahFzfmJ1aWxkd2l0aGNocm9tZXIsCxIFQnVpbGQiIXRpbGV4Xzk1MDUxM190aWxleV82MTgzODlfem9vbV8yMAw
+		
 		
 		TO-DO:
 		TEST WITH FRIENDS

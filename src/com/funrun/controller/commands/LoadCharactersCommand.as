@@ -71,6 +71,7 @@ package com.funrun.controller.commands
 					load( basePath + character.model, context, character.id, parser, getOnModelLoaded( vo ) );
 					// Load maps.
 					for ( var k:int = 0; k < CharacterMaps.IDS.length; k++ ) {
+						_countTotal++;
 						var mapFile:String = basePath + character.getMapWithId( CharacterMaps.IDS[ k ] );
 						var loader:Loader = new Loader();
 						loader.load( new URLRequest( mapFile ) );
@@ -97,11 +98,10 @@ package com.funrun.controller.commands
 		private function getOnModelLoaded( vo:CharacterVo ):Function {
 			var completeCallback:Function = this.dispatchComplete;
 			return function( e:AssetEvent ):void {
-				
 				switch ( e.asset.assetType ) {
 					case AssetType.ANIMATION_SET:
 						var animationSet:SkeletonAnimationSet = e.asset as SkeletonAnimationSet;
-						vo.init( animationSet );
+						vo.storeAnimationSet( animationSet );
 						break;
 					
 					case AssetType.SKELETON:
@@ -141,9 +141,14 @@ package com.funrun.controller.commands
 		}
 		
 		private function getOnMapLoaded( vo:CharacterVo, mapId:String ):Function {
+			var completeCallback:Function = this.dispatchComplete;
 			return function( e:Event ):void {
 				var bitmap:Bitmap = e.target.content;
 				vo.storeMap( mapId, bitmap.bitmapData );
+				_countLoaded++;
+				if ( _countLoaded == _countTotal ) {
+					completeCallback.call( null, true );
+				}
 			}
 		}
 		

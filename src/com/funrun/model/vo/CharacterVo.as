@@ -33,7 +33,7 @@ package com.funrun.model.vo
 			_speeds = new Dictionary();
 		}
 		
-		public function init( animationSet:SkeletonAnimationSet ):void {
+		public function storeAnimationSet( animationSet:SkeletonAnimationSet ):void {
 			this.animationSet = animationSet;
 			if ( _animationStatesBuffer ) {
 				for ( var i:int = _animationStatesBuffer.length - 1; i >= 0; i-- ) {
