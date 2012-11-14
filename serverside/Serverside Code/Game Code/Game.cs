@@ -201,7 +201,7 @@ namespace FunRun {
 
 			// Let everyone know who's here.
 			Message newPlayerMessage = Message.Create( "n" );
-			newPlayerMessage.Add( player.Id, player.name, player.x, player.y, player.z, player.isDucking, player.character );
+			newPlayerMessage.Add( player.Id, player.name, player.x, player.y, player.z, player.isDucking, player.isReady, player.character );
 			Broadcast( newPlayerMessage );
 		}
 
