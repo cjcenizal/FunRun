@@ -1,7 +1,6 @@
 package com.funrun.view.components {
 
 	import com.cenizal.ui.AbstractComponent;
-	import com.cenizal.ui.ImageButton;
 	import com.funrun.view.components.ui.FunButton;
 	
 	import flash.display.Bitmap;
@@ -32,7 +31,6 @@ package com.funrun.view.components {
 		private var _bg:Bitmap;
 		private var _multiplayerButton:FunButton;
 		private var _singlePlayerButton:FunButton;
-		private var _loginStatus:LoginStatusView;
 		
 		public var onMultiplayerClickSignal:Signal;
 		public var onSinglePlayerClickSignal:Signal;
@@ -69,10 +67,6 @@ package com.funrun.view.components {
 			_singlePlayerButton = new FunButton( this, 420, 400, onSinglePlayerClick );
 			_singlePlayerButton.setImages( new SingleButton(), new SingleButtonHover() );
 			_singlePlayerButton.rotation = 1;
-			
-			// Login status.
-			_loginStatus = new LoginStatusView( this );
-			_loginStatus.draw();
 		}
 		
 		private function onMultiplayerClick( e:MouseEvent ):void {
@@ -81,18 +75,6 @@ package com.funrun.view.components {
 		
 		private function onSinglePlayerClick( e:MouseEvent ):void {
 			onSinglePlayerClickSignal.dispatch();
-		}
-		
-		public function set optionsEnabled( enabled:Boolean ):void {
-			if ( enabled ) {
-				_bg.alpha = 1;
-				_multiplayerButton.visible = true;
-				_singlePlayerButton.visible = true;
-			} else {
-				_bg.alpha = .2;
-				_multiplayerButton.visible = false;
-				_singlePlayerButton.visible = false;
-			}
 		}
 	}
 }

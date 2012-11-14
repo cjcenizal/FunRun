@@ -27,6 +27,7 @@ package {
 			- Still collision issues:
 				- Jumping up into the top front edge of a smack block launched me in the air
 				- Jumping into the side of a smack block smacked me instead of blocking me
+		- Some bugs persist with getting stuck in one direction
 		- There's definitely a memory leak
 			- If I start profiling, I die somehow.  Too much going on initialization wise?
 			- Maybe the commands being called over and over are causing it?

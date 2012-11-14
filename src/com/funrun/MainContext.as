@@ -96,7 +96,6 @@ package com.funrun {
 	import com.funrun.controller.signals.DrawPointsRequest;
 	import com.funrun.controller.signals.DrawReadyListRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
-	import com.funrun.controller.signals.EnableMainMenuRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorDiedRequest;
@@ -108,6 +107,7 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
+	import com.funrun.controller.signals.HideLoadingRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.JoinMainMenuRequest;
@@ -140,6 +140,7 @@ package com.funrun {
 	import com.funrun.controller.signals.ShakeCameraRequest;
 	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
 	import com.funrun.controller.signals.ShowJoiningLobbyPopupRequest;
+	import com.funrun.controller.signals.ShowLoadingRequest;
 	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
@@ -159,7 +160,7 @@ package com.funrun {
 	import com.funrun.controller.signals.UpdateAiCompetitorsRequest;
 	import com.funrun.controller.signals.UpdateCollisionsRequest;
 	import com.funrun.controller.signals.UpdateCompetitorsRequest;
-	import com.funrun.controller.signals.UpdateLoginStatusRequest;
+	import com.funrun.controller.signals.UpdateLoadingRequest;
 	import com.funrun.controller.signals.UpdatePlayerRequest;
 	import com.funrun.controller.signals.UpdateTrackRequest;
 	import com.funrun.controller.signals.UpdateUiRequest;
@@ -205,8 +206,8 @@ package com.funrun {
 	import com.funrun.view.components.GameUIView;
 	import com.funrun.view.components.GameView;
 	import com.funrun.view.components.JoiningLobbyPopup;
+	import com.funrun.view.components.LoadingView;
 	import com.funrun.view.components.LobbyView;
-	import com.funrun.view.components.LoginStatusView;
 	import com.funrun.view.components.MainMenuView;
 	import com.funrun.view.components.MainView;
 	import com.funrun.view.components.NametagsView;
@@ -219,8 +220,8 @@ package com.funrun {
 	import com.funrun.view.mediators.GameMediator;
 	import com.funrun.view.mediators.GameUIMediator;
 	import com.funrun.view.mediators.JoiningLobbyPopupMediator;
+	import com.funrun.view.mediators.LoadingMediator;
 	import com.funrun.view.mediators.LobbyMediator;
-	import com.funrun.view.mediators.LoginStatusMediator;
 	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
 	import com.funrun.view.mediators.NametagsMediator;
@@ -312,18 +313,19 @@ package com.funrun {
 			injector.mapSingleton( DrawLobbyPlayerLeftRequest );
 			injector.mapSingleton( DrawPointsRequest );
 			injector.mapSingleton( DrawSpeedRequest );
-			injector.mapSingleton( EnableMainMenuRequest );
+			injector.mapSingleton( HideLoadingRequest );
 			injector.mapSingleton( RemoveFindingGamePopupRequest );
 			injector.mapSingleton( RemoveJoiningLobbyPopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
 			injector.mapSingleton( RemoveResultsPopupRequest );
 			injector.mapSingleton( RemoveNametagRequest );
+			injector.mapSingleton( ShowLoadingRequest );
 			injector.mapSingleton( ShowScreenRequest );
 			injector.mapSingleton( ShowStatsRequest );
 			injector.mapSingleton( ToggleCountdownRequest );
 			injector.mapSingleton( ToggleReadyButtonRequest );
 			injector.mapSingleton( ToggleReadyListRequest );
-			injector.mapSingleton( UpdateLoginStatusRequest );
+			injector.mapSingleton( UpdateLoadingRequest );
 			signalCommandMap.mapSignalClass( AddAiCompetitorsRequest,				AddAiCompetitorsCommand );
 			signalCommandMap.mapSignalClass( AddCompetitorRequest,					AddCompetitorCommand );
 			signalCommandMap.mapSignalClass( AddDelayedCommandRequest,				AddDelayedCommandCommand );
@@ -402,8 +404,8 @@ package com.funrun {
 			mediatorMap.mapView( GameUIView,				GameUIMediator );
 			mediatorMap.mapView( GameView,					GameMediator );
 			mediatorMap.mapView( JoiningLobbyPopup,			JoiningLobbyPopupMediator );
+			mediatorMap.mapView( LoadingView, 				LoadingMediator );
 			mediatorMap.mapView( LobbyView, 				LobbyMediator );
-			mediatorMap.mapView( LoginStatusView, 			LoginStatusMediator );
 			mediatorMap.mapView( MainView, 					MainMediator );
 			mediatorMap.mapView( MainMenuView,				MainMenuMediator );
 			mediatorMap.mapView( NametagsView,				NametagsMediator );

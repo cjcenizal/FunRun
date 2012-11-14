@@ -11,19 +11,21 @@ package com.funrun.view.components {
 		private const LOBBY:String = "lobby";
 		private const GAME:String = "game";
 		
-		private var _views:Object;
-		private var _popups:PopupsView;
+		private var _screenViews:Object;
+		private var _popupsView:PopupsView;
+		private var _loadingView:LoadingView;
 		
 		public function MainView( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0 ) {
 			super( parent, x, y );
 		}
 
 		public function init():void {
-			_views = {};
-			_views[ MAIN ] = new MainMenuView( this );
-			_views[ LOBBY ] = new LobbyView( this );
-			_views[ GAME ] = new GameView( this );
-			_popups = new PopupsView( this );
+			_screenViews = {};
+			_screenViews[ MAIN ] = new MainMenuView( this );
+			_screenViews[ LOBBY ] = new LobbyView( this );
+			_screenViews[ GAME ] = new GameView( this );
+			_popupsView = new PopupsView( this );
+			_loadingView = new LoadingView( this );
 		}
 		
 		public function hideAll():void {
@@ -43,8 +45,8 @@ package com.funrun.view.components {
 		}
 		
 		private function show( id:String ):void {
-			for ( var key:String in _views ) {
-				( _views[ key ] as Sprite ).visible = ( key == id );
+			for ( var key:String in _screenViews ) {
+				( _screenViews[ key ] as Sprite ).visible = ( key == id );
 			}
 		}
 	}

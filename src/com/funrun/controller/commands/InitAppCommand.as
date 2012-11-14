@@ -1,9 +1,7 @@
 package com.funrun.controller.commands {
 
 	import com.funrun.controller.signals.CompleteAppRequest;
-	import com.funrun.controller.signals.EnableMainMenuRequest;
 	
-	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.macrobot.ParallelCommand;
 
 	public class InitAppCommand extends ParallelCommand {

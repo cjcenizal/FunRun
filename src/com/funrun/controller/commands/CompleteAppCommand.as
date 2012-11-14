@@ -1,6 +1,6 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.EnableMainMenuRequest;
+	import com.funrun.controller.signals.HideLoadingRequest;
 	import com.funrun.controller.signals.SelectCharacterRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.PlayerProperties;
@@ -23,14 +23,14 @@ package com.funrun.controller.commands {
 		public var selectCharacterRequest:SelectCharacterRequest;
 		
 		[Inject]
-		public var enableMainMenuRequest:EnableMainMenuRequest;
+		public var hideLoadingRequest:HideLoadingRequest;
 		
 		override public function execute():void {
 			// Build player.
 			selectCharacterRequest.dispatch( playerModel.properties[ PlayerProperties.CHARACTER ] );
 			
 			// Enable main menu.
-			enableMainMenuRequest.dispatch( true );
+			hideLoadingRequest.dispatch();
 			
 			// Respond to keyboard input.
 			commandMap.mapEvent( KeyboardEvent.KEY_UP, KeyUpCommand, KeyboardEvent );
