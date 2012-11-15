@@ -3,11 +3,10 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.DrawReadyListRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
-	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
-	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
+	import com.funrun.controller.signals.ShowLoadingRequest;
 	import com.funrun.controller.signals.StartCountdownRequest;
+	import com.funrun.controller.signals.UpdateLoadingRequest;
 	import com.funrun.controller.signals.vo.LogMessageVo;
-	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.model.CompetitorsModel;
 	import com.funrun.model.constants.Messages;
 	import com.funrun.model.constants.Rooms;
@@ -42,10 +41,10 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var showFindingGamePopupRequest:ShowFindingGamePopupRequest;
+		public var showLoadingRequest:ShowLoadingRequest;
 		
 		[Inject]
-		public var showPlayerioErrorPopupRequest:ShowPlayerioErrorPopupRequest;
+		public var updateLoadingRequest:UpdateLoadingRequest;
 		
 		[Inject]
 		public var startCountdownRequest:StartCountdownRequest;
@@ -61,7 +60,7 @@ package com.funrun.controller.commands {
 		
 		override public function execute():void {
 			// Hide view and block interaction.
-			showFindingGamePopupRequest.dispatch();
+			showLoadingRequest.dispatch( "Finding other players..." );
 			// First we need to get matched up with other players.
 			matchmakingService.onErrorSignal.add( onError );
 			matchmakingService.onConnectedSignal.add( onConnected );
@@ -82,8 +81,8 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onError():void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Error connecting to matchmaking service." ) );
-			showPlayerioErrorPopupRequest.dispatch( new PlayerioErrorVo( matchmakingService.error ) );
+			logMessageRequest.dispatch( new LogMessageVo( this, "Error connecting to matchmaking service!" ) );
+			updateLoadingRequest.dispatch( matchmakingService.error );
 		}
 		
 		private function onJoinGame( message:Message ):void {

@@ -6,9 +6,8 @@ package com.funrun.controller.commands {
 	import com.funrun.controller.signals.HandleGameInitRequest;
 	import com.funrun.controller.signals.HandleGameUpdateRequest;
 	import com.funrun.controller.signals.LogMessageRequest;
-	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
+	import com.funrun.controller.signals.ShowLoadingRequest;
 	import com.funrun.controller.signals.vo.LogMessageVo;
-	import com.funrun.controller.signals.vo.PlayerioErrorVo;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
@@ -46,7 +45,7 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var showPlayerioErrorPopupRequest:ShowPlayerioErrorPopupRequest;
+		public var showLoadingRequest:ShowLoadingRequest;
 		
 		[Inject]
 		public var handleGameInitRequest:HandleGameInitRequest;
@@ -93,8 +92,8 @@ package com.funrun.controller.commands {
 		}
 		
 		private function onError():void {
-			logMessageRequest.dispatch( new LogMessageVo( this, "Error connecting to game." ) );
-			showPlayerioErrorPopupRequest.dispatch( PlayerioErrorVo( gameService.error ) );
+			logMessageRequest.dispatch( new LogMessageVo( this, "Error connecting to game!" ) );
+			showLoadingRequest.dispatch( gameService.error );
 		}
 		
 		private function onInit( message:Message ):void {

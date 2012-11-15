@@ -1,8 +1,7 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.JoinLobbyRequest;
-	import com.funrun.controller.signals.JoinMainMenuRequest;
-	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
+	import com.funrun.controller.signals.EnterLobbyRequest;
+	import com.funrun.controller.signals.EnterMainMenuRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
@@ -47,10 +46,10 @@ package com.funrun.controller.commands {
 		public var removeResultsPopupRequest:RemoveResultsPopupRequest;
 		
 		[Inject]
-		public var joinLobbyRequest:JoinLobbyRequest;
+		public var enterLobbyRequest:EnterLobbyRequest;
 		
 		[Inject]
-		public var joinMainMenuRequest:JoinMainMenuRequest;
+		public var enterMainMenuRequest:EnterMainMenuRequest;
 
 		override public function execute():void {
 			// Remove delayed commands.
@@ -66,9 +65,9 @@ package com.funrun.controller.commands {
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
 			if ( gameModel.isMultiplayer ) {
-				joinLobbyRequest.dispatch();
+				enterLobbyRequest.dispatch();
 			} else {
-				joinMainMenuRequest.dispatch();
+				enterMainMenuRequest.dispatch();
 			}
 		}
 	}

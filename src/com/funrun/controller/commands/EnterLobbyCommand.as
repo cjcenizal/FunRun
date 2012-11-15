@@ -1,15 +1,14 @@
 package com.funrun.controller.commands
 {
-	import com.funrun.controller.signals.LeaveLobbyAndEnterGameRequest;
 	import com.funrun.controller.signals.HandleLobbyChatRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerJoinedRequest;
 	import com.funrun.controller.signals.HandleLobbyPlayerLeftRequest;
 	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
-	import com.funrun.controller.signals.RemoveJoiningLobbyPopupRequest;
-	import com.funrun.controller.signals.ShowJoiningLobbyPopupRequest;
-	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
+	import com.funrun.controller.signals.HideLoadingRequest;
+	import com.funrun.controller.signals.LeaveLobbyAndEnterGameRequest;
+	import com.funrun.controller.signals.ShowLoadingRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
-	import com.funrun.controller.signals.vo.PlayerioErrorVo;
+	import com.funrun.controller.signals.UpdateLoadingRequest;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.constants.Messages;
@@ -25,7 +24,7 @@ package com.funrun.controller.commands
 	/**
 	 * Connect to lobby service.
 	 */
-	public class JoinLobbyCommand extends Command
+	public class EnterLobbyCommand extends Command
 	{
 		
 		// State.
@@ -52,10 +51,10 @@ package com.funrun.controller.commands
 		public var clickStartGameRequest:LeaveLobbyAndEnterGameRequest;
 		
 		[Inject]
-		public var showJoiningLobbyPopupRequest:ShowJoiningLobbyPopupRequest;
+		public var showLoadingRequest:ShowLoadingRequest;
 		
 		[Inject]
-		public var showPlayerioErrorPopupRequest:ShowPlayerioErrorPopupRequest;
+		public var updateLoadingRequest:UpdateLoadingRequest;
 		
 		[Inject]
 		public var handleLobbyChatRequest:HandleLobbyChatRequest;
@@ -70,7 +69,7 @@ package com.funrun.controller.commands
 		public var handleLobbyWelcomeRequest:HandleLobbyWelcomeRequest;
 		
 		[Inject]
-		public var removeJoiningLobbyPopupRequest:RemoveJoiningLobbyPopupRequest;
+		public var hideLoadingRequest:HideLoadingRequest;
 		
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
@@ -79,7 +78,7 @@ package com.funrun.controller.commands
 		{
 			if ( gameModel.isOnline && !gameModel.isExploration ) {
 				// Hide view and block interaction.
-				showJoiningLobbyPopupRequest.dispatch();
+				showLoadingRequest.dispatch( "Joining lobby..." );
 				// Join the lobby.
 				lobbyService.onErrorSignal.add( onError );
 				lobbyService.onConnectedSignal.add( onConnected );
@@ -101,7 +100,7 @@ package com.funrun.controller.commands
 			lobbyService.addMessageHandler( Messages.LEAVE, onLeave );
 			lobbyService.addMessageHandler( Messages.WELCOME, onWelcome );
 			// Show lobby.
-			removeJoiningLobbyPopupRequest.dispatch();
+			hideLoadingRequest.dispatch();
 			showScreenRequest.dispatch( Screen.LOBBY );
 		}
 		
@@ -110,7 +109,7 @@ package com.funrun.controller.commands
 		}
 		
 		private function onError():void {
-			showPlayerioErrorPopupRequest.dispatch( new PlayerioErrorVo( lobbyService.error ) );
+			updateLoadingRequest.dispatch( lobbyService.error );
 		}
 		
 		private function onChat( message:Message ):void {

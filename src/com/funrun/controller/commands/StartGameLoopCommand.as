@@ -1,13 +1,13 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
+	import com.funrun.controller.signals.HideLoadingRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StartGameLoopRequest;
 	import com.funrun.model.PlayerModel;
 	import com.funrun.model.View3dModel;
-	import com.funrun.model.events.TimeEvent;
 	import com.funrun.model.constants.Camera;
 	import com.funrun.model.constants.Screen;
+	import com.funrun.model.events.TimeEvent;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -27,7 +27,7 @@ package com.funrun.controller.commands {
 		public var startGameLoopRequest:StartGameLoopRequest;
 		
 		[Inject]
-		public var removeFindingGamePopupRequest:RemoveFindingGamePopupRequest;
+		public var hideLoadingRequest:HideLoadingRequest;
 		
 		[Inject]
 		public var showScreenRequest:ShowScreenRequest;
@@ -46,7 +46,7 @@ package com.funrun.controller.commands {
 			view3dModel.update( true );
 			
 			// Show game screen.
-			removeFindingGamePopupRequest.dispatch();
+			hideLoadingRequest.dispatch();
 			showScreenRequest.dispatch( Screen.MULTIPLAYER_GAME );
 		}
 	}

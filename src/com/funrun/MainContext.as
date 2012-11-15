@@ -15,6 +15,8 @@ package com.funrun {
 	import com.funrun.controller.commands.CullTrackCommand;
 	import com.funrun.controller.commands.DrawReadyListCommand;
 	import com.funrun.controller.commands.EndRoundCommand;
+	import com.funrun.controller.commands.EnterLobbyCommand;
+	import com.funrun.controller.commands.EnterMainMenuCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorDiedCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorJoinedCommand;
@@ -27,8 +29,6 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleLobbyWelcomeCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
-	import com.funrun.controller.commands.JoinLobbyCommand;
-	import com.funrun.controller.commands.JoinMainMenuCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.JoinSinglePlayerGameCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
@@ -51,9 +51,6 @@ package com.funrun {
 	import com.funrun.controller.commands.SendLobbyChatCommand;
 	import com.funrun.controller.commands.SendMatchmakingReadyCommand;
 	import com.funrun.controller.commands.ShakeCameraCommand;
-	import com.funrun.controller.commands.ShowFindingGamePopupCommand;
-	import com.funrun.controller.commands.ShowJoiningLobbyPopupCommand;
-	import com.funrun.controller.commands.ShowPlayerioErrorPopupCommand;
 	import com.funrun.controller.commands.ShowStoreCommand;
 	import com.funrun.controller.commands.StartCountdownCommand;
 	import com.funrun.controller.commands.StartGameLoopCommand;
@@ -97,6 +94,8 @@ package com.funrun {
 	import com.funrun.controller.signals.DrawReadyListRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
+	import com.funrun.controller.signals.EnterLobbyRequest;
+	import com.funrun.controller.signals.EnterMainMenuRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorDiedRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorJoinedRequest;
@@ -109,8 +108,6 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
 	import com.funrun.controller.signals.HideLoadingRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
-	import com.funrun.controller.signals.JoinLobbyRequest;
-	import com.funrun.controller.signals.JoinMainMenuRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.JoinSinglePlayerGameRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -121,8 +118,6 @@ package com.funrun {
 	import com.funrun.controller.signals.LogMessageRequest;
 	import com.funrun.controller.signals.PlaySoundRequest;
 	import com.funrun.controller.signals.RemoveCompetitorRequest;
-	import com.funrun.controller.signals.RemoveFindingGamePopupRequest;
-	import com.funrun.controller.signals.RemoveJoiningLobbyPopupRequest;
 	import com.funrun.controller.signals.RemoveNametagRequest;
 	import com.funrun.controller.signals.RemoveObjectFromSceneRequest;
 	import com.funrun.controller.signals.RemovePlaceableRequest;
@@ -138,10 +133,7 @@ package com.funrun {
 	import com.funrun.controller.signals.SendLobbyChatRequest;
 	import com.funrun.controller.signals.SendMatchmakingReadyRequest;
 	import com.funrun.controller.signals.ShakeCameraRequest;
-	import com.funrun.controller.signals.ShowFindingGamePopupRequest;
-	import com.funrun.controller.signals.ShowJoiningLobbyPopupRequest;
 	import com.funrun.controller.signals.ShowLoadingRequest;
-	import com.funrun.controller.signals.ShowPlayerioErrorPopupRequest;
 	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.ShowStatsRequest;
 	import com.funrun.controller.signals.ShowStoreRequest;
@@ -202,30 +194,24 @@ package com.funrun {
 	import com.funrun.services.PlayerioPlayerObjectService;
 	import com.funrun.services.WhitelistOpenService;
 	import com.funrun.services.WhitelistService;
-	import com.funrun.view.components.FindingGamePopup;
 	import com.funrun.view.components.GameUIView;
 	import com.funrun.view.components.GameView;
-	import com.funrun.view.components.JoiningLobbyPopup;
 	import com.funrun.view.components.LoadingView;
 	import com.funrun.view.components.LobbyView;
 	import com.funrun.view.components.MainMenuView;
 	import com.funrun.view.components.MainView;
 	import com.funrun.view.components.NametagsView;
-	import com.funrun.view.components.PlayerioErrorPopupView;
 	import com.funrun.view.components.PopupsView;
 	import com.funrun.view.components.ResultsPopup;
 	import com.funrun.view.components.TrackView;
 	import com.funrun.view.mediators.AppMediator;
-	import com.funrun.view.mediators.FindingGamePopupMediator;
 	import com.funrun.view.mediators.GameMediator;
 	import com.funrun.view.mediators.GameUIMediator;
-	import com.funrun.view.mediators.JoiningLobbyPopupMediator;
 	import com.funrun.view.mediators.LoadingMediator;
 	import com.funrun.view.mediators.LobbyMediator;
 	import com.funrun.view.mediators.MainMediator;
 	import com.funrun.view.mediators.MainMenuMediator;
 	import com.funrun.view.mediators.NametagsMediator;
-	import com.funrun.view.mediators.PlayerioErrorPopupMediator;
 	import com.funrun.view.mediators.PopupsMediator;
 	import com.funrun.view.mediators.ResultPopupMediator;
 	import com.funrun.view.mediators.TrackMediator;
@@ -314,8 +300,6 @@ package com.funrun {
 			injector.mapSingleton( DrawPointsRequest );
 			injector.mapSingleton( DrawSpeedRequest );
 			injector.mapSingleton( HideLoadingRequest );
-			injector.mapSingleton( RemoveFindingGamePopupRequest );
-			injector.mapSingleton( RemoveJoiningLobbyPopupRequest );
 			injector.mapSingleton( RemovePopupRequest );
 			injector.mapSingleton( RemoveResultsPopupRequest );
 			injector.mapSingleton( RemoveNametagRequest );
@@ -335,12 +319,13 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( AddSegmentRequest,						AddSegmentCommand );
 			signalCommandMap.mapSignalClass( AddObstaclesRequest,					AddObstaclesCommand );
 			signalCommandMap.mapSignalClass( AddPlaceableRequest,					AddPlaceableCommand );
-			signalCommandMap.mapSignalClass( JoinLobbyRequest,						JoinLobbyCommand );
 			signalCommandMap.mapSignalClass( CollectPointRequest,					CollectPointCommand );
 			signalCommandMap.mapSignalClass( CompleteAppRequest,					CompleteAppCommand );
 			signalCommandMap.mapSignalClass( CullTrackRequest,						CullTrackCommand );
 			signalCommandMap.mapSignalClass( DrawReadyListRequest,					DrawReadyListCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
+			signalCommandMap.mapSignalClass( EnterLobbyRequest,						EnterLobbyCommand );
+			signalCommandMap.mapSignalClass( EnterMainMenuRequest,					EnterMainMenuCommand );
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleGameInitRequest,					HandleGameInitCommand );
 			signalCommandMap.mapSignalClass( HandleGameCompetitorJoinedRequest,		HandleGameCompetitorJoinedCommand );
@@ -352,7 +337,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleLobbyPlayerLeftRequest,			HandleLobbyPlayerLeftCommand );
 			signalCommandMap.mapSignalClass( HandleLobbyWelcomeRequest,				HandleLobbyWelcomeCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
-			signalCommandMap.mapSignalClass( JoinMainMenuRequest,					JoinMainMenuCommand );
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinSinglePlayerGameRequest,			JoinSinglePlayerGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );
@@ -375,9 +359,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( SendGameDeathRequest,					SendGameDeathCommand );
 			signalCommandMap.mapSignalClass( SendGameUpdateRequest,					SendGameUpdateCommand );
 			signalCommandMap.mapSignalClass( ShakeCameraRequest,					ShakeCameraCommand );
-			signalCommandMap.mapSignalClass( ShowFindingGamePopupRequest,			ShowFindingGamePopupCommand );
-			signalCommandMap.mapSignalClass( ShowJoiningLobbyPopupRequest,			ShowJoiningLobbyPopupCommand );
-			signalCommandMap.mapSignalClass( ShowPlayerioErrorPopupRequest,			ShowPlayerioErrorPopupCommand );
 			signalCommandMap.mapSignalClass( ShowStoreRequest,						ShowStoreCommand );
 			signalCommandMap.mapSignalClass( StartCountdownRequest,					StartCountdownCommand );
 			signalCommandMap.mapSignalClass( StartGameLoopRequest,					StartGameLoopCommand );
@@ -400,16 +381,13 @@ package com.funrun {
 			injector.mapSingleton( Console );
 			
 			// Map views to mediators.
-			mediatorMap.mapView( FindingGamePopup,			FindingGamePopupMediator );
 			mediatorMap.mapView( GameUIView,				GameUIMediator );
 			mediatorMap.mapView( GameView,					GameMediator );
-			mediatorMap.mapView( JoiningLobbyPopup,			JoiningLobbyPopupMediator );
 			mediatorMap.mapView( LoadingView, 				LoadingMediator );
 			mediatorMap.mapView( LobbyView, 				LobbyMediator );
 			mediatorMap.mapView( MainView, 					MainMediator );
 			mediatorMap.mapView( MainMenuView,				MainMenuMediator );
 			mediatorMap.mapView( NametagsView,				NametagsMediator );
-			mediatorMap.mapView( PlayerioErrorPopupView,	PlayerioErrorPopupMediator );
 			mediatorMap.mapView( PopupsView,				PopupsMediator );
 			mediatorMap.mapView( ResultsPopup,				ResultPopupMediator );
 			mediatorMap.mapView( TrackView, 				TrackMediator );

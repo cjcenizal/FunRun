@@ -4,7 +4,7 @@ package com.funrun.controller.commands
 	import com.funrun.model.constants.Screen;
 	import org.robotlegs.mvcs.Command;
 	
-	public class JoinMainMenuCommand extends Command
+	public class EnterMainMenuCommand extends Command
 	{
 		
 		// Commands.

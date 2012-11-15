@@ -1,6 +1,6 @@
 package com.funrun.view.mediators {
 
-	import com.funrun.controller.signals.JoinLobbyRequest;
+	import com.funrun.controller.signals.EnterLobbyRequest;
 	import com.funrun.controller.signals.JoinSinglePlayerGameRequest;
 	import com.funrun.view.components.MainMenuView;
 	
@@ -17,7 +17,7 @@ package com.funrun.view.mediators {
 		// Commands.
 		
 		[Inject]
-		public var joinLobbyRequest:JoinLobbyRequest;
+		public var enterLobbyRequest:EnterLobbyRequest;
 		
 		[Inject]
 		public var joinSinglePlayerGameRequest:JoinSinglePlayerGameRequest;
@@ -32,7 +32,7 @@ package com.funrun.view.mediators {
 		}
 		
 		private function onMultiplayerClicked():void {
-			joinLobbyRequest.dispatch();
+			enterLobbyRequest.dispatch();
 		}
 		
 		private function onSinglePlayerClicked():void {

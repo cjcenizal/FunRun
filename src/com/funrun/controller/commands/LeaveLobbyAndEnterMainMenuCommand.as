@@ -1,7 +1,7 @@
 
 package com.funrun.controller.commands
 {
-	import com.funrun.controller.signals.JoinMainMenuRequest;
+	import com.funrun.controller.signals.EnterMainMenuRequest;
 	import com.funrun.services.LobbyService;
 	
 	import org.robotlegs.mvcs.Command;
@@ -17,12 +17,12 @@ package com.funrun.controller.commands
 		// Commands.
 		
 		[Inject]
-		public var joinMainMenuRequest:JoinMainMenuRequest;
+		public var enterMainMenuRequest:EnterMainMenuRequest;
 		
 		override public function execute():void {
 			// Disconnect from lobby.
 			lobbyService.disconnectAndReset();
-			joinMainMenuRequest.dispatch();
+			enterMainMenuRequest.dispatch();
 		}
 	}
 }
