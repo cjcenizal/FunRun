@@ -2,9 +2,9 @@ package com.funrun.controller.signals
 {
 	import org.osflash.signals.Signal;
 	
-	public class EnterLobbyRequest extends Signal
+	public class JoinLobbyRequest extends Signal
 	{
-		public function EnterLobbyRequest()
+		public function JoinLobbyRequest()
 		{
 			super();
 		}

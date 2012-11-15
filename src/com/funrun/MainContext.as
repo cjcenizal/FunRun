@@ -15,8 +15,6 @@ package com.funrun {
 	import com.funrun.controller.commands.CullTrackCommand;
 	import com.funrun.controller.commands.DrawReadyListCommand;
 	import com.funrun.controller.commands.EndRoundCommand;
-	import com.funrun.controller.commands.EnterLobbyCommand;
-	import com.funrun.controller.commands.EnterMainMenuCommand;
 	import com.funrun.controller.commands.FollowNewCompetitorCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorDiedCommand;
 	import com.funrun.controller.commands.HandleGameCompetitorJoinedCommand;
@@ -29,6 +27,7 @@ package com.funrun {
 	import com.funrun.controller.commands.HandleLobbyWelcomeCommand;
 	import com.funrun.controller.commands.InitAppCommand;
 	import com.funrun.controller.commands.JoinGameCommand;
+	import com.funrun.controller.commands.JoinLobbyCommand;
 	import com.funrun.controller.commands.JoinMatchmakingCommand;
 	import com.funrun.controller.commands.JoinSinglePlayerGameCommand;
 	import com.funrun.controller.commands.KillPlayerCommand;
@@ -94,8 +93,6 @@ package com.funrun {
 	import com.funrun.controller.signals.DrawReadyListRequest;
 	import com.funrun.controller.signals.DrawSpeedRequest;
 	import com.funrun.controller.signals.EndRoundRequest;
-	import com.funrun.controller.signals.EnterLobbyRequest;
-	import com.funrun.controller.signals.EnterMainMenuRequest;
 	import com.funrun.controller.signals.FollowNewCompetitorRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorDiedRequest;
 	import com.funrun.controller.signals.HandleGameCompetitorJoinedRequest;
@@ -108,6 +105,7 @@ package com.funrun {
 	import com.funrun.controller.signals.HandleLobbyWelcomeRequest;
 	import com.funrun.controller.signals.HideLoadingRequest;
 	import com.funrun.controller.signals.JoinGameRequest;
+	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.JoinMatchmakingRequest;
 	import com.funrun.controller.signals.JoinSinglePlayerGameRequest;
 	import com.funrun.controller.signals.KillPlayerRequest;
@@ -324,8 +322,6 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( CullTrackRequest,						CullTrackCommand );
 			signalCommandMap.mapSignalClass( DrawReadyListRequest,					DrawReadyListCommand );
 			signalCommandMap.mapSignalClass( EndRoundRequest,						EndRoundCommand );
-			signalCommandMap.mapSignalClass( EnterLobbyRequest,						EnterLobbyCommand );
-			signalCommandMap.mapSignalClass( EnterMainMenuRequest,					EnterMainMenuCommand );
 			signalCommandMap.mapSignalClass( FollowNewCompetitorRequest,			FollowNewCompetitorCommand );
 			signalCommandMap.mapSignalClass( HandleGameInitRequest,					HandleGameInitCommand );
 			signalCommandMap.mapSignalClass( HandleGameCompetitorJoinedRequest,		HandleGameCompetitorJoinedCommand );
@@ -337,6 +333,7 @@ package com.funrun {
 			signalCommandMap.mapSignalClass( HandleLobbyPlayerLeftRequest,			HandleLobbyPlayerLeftCommand );
 			signalCommandMap.mapSignalClass( HandleLobbyWelcomeRequest,				HandleLobbyWelcomeCommand );
 			signalCommandMap.mapSignalClass( JoinGameRequest,						JoinGameCommand );
+			signalCommandMap.mapSignalClass( JoinLobbyRequest,						JoinLobbyCommand );
 			signalCommandMap.mapSignalClass( JoinMatchmakingRequest,				JoinMatchmakingCommand );
 			signalCommandMap.mapSignalClass( JoinSinglePlayerGameRequest,			JoinSinglePlayerGameCommand );
 			signalCommandMap.mapSignalClass( KillPlayerRequest,						KillPlayerCommand );

@@ -1,13 +1,14 @@
 package com.funrun.controller.commands {
 
-	import com.funrun.controller.signals.EnterLobbyRequest;
-	import com.funrun.controller.signals.EnterMainMenuRequest;
+	import com.funrun.controller.signals.JoinLobbyRequest;
 	import com.funrun.controller.signals.RemoveResultsPopupRequest;
+	import com.funrun.controller.signals.ShowScreenRequest;
 	import com.funrun.controller.signals.StopGameLoopRequest;
 	import com.funrun.controller.signals.StopObserverLoopRequest;
 	import com.funrun.model.DelayedCommandsModel;
 	import com.funrun.model.GameModel;
 	import com.funrun.model.PlayerModel;
+	import com.funrun.model.constants.Screen;
 	import com.funrun.services.GameService;
 	import com.funrun.services.MatchmakingService;
 	
@@ -46,11 +47,11 @@ package com.funrun.controller.commands {
 		public var removeResultsPopupRequest:RemoveResultsPopupRequest;
 		
 		[Inject]
-		public var enterLobbyRequest:EnterLobbyRequest;
-		
-		[Inject]
-		public var enterMainMenuRequest:EnterMainMenuRequest;
+		public var joinLobbyRequest:JoinLobbyRequest;
 
+		[Inject]
+		public var showScreenRequest:ShowScreenRequest;
+		
 		override public function execute():void {
 			// Remove delayed commands.
 			delayedCommandsModel.removeAll();
@@ -65,9 +66,10 @@ package com.funrun.controller.commands {
 			// Update screen.
 			removeResultsPopupRequest.dispatch();
 			if ( gameModel.isMultiplayer ) {
-				enterLobbyRequest.dispatch();
+				joinLobbyRequest.dispatch();
 			} else {
-				enterMainMenuRequest.dispatch();
+				// Show main menu.
+				showScreenRequest.dispatch( Screen.MAIN_MENU );
 			}
 		}
 	}

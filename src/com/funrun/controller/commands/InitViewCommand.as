@@ -1,7 +1,8 @@
 package com.funrun.controller.commands {
 	
-	import com.funrun.controller.signals.EnterMainMenuRequest;
 	import com.funrun.controller.signals.ShowLoadingRequest;
+	import com.funrun.controller.signals.ShowScreenRequest;
+	import com.funrun.model.constants.Screen;
 	
 	import org.robotlegs.mvcs.Command;
 
@@ -10,14 +11,14 @@ package com.funrun.controller.commands {
 		// Commands.
 		
 		[Inject]
-		public var enterMainMenuRequest:EnterMainMenuRequest;
+		public var showScreenRequest:ShowScreenRequest;
 		
 		[Inject]
 		public var showLoadingRequest:ShowLoadingRequest;
 		
 		override public function execute():void {
 			// Show main menu, but disable it.
-			enterMainMenuRequest.dispatch();
+			showScreenRequest.dispatch( Screen.MAIN_MENU );
 			showLoadingRequest.dispatch( "Sup, player!" );
 		}
 	}

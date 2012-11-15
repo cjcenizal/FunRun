@@ -24,7 +24,7 @@ package com.funrun.controller.commands
 	/**
 	 * Connect to lobby service.
 	 */
-	public class EnterLobbyCommand extends Command
+	public class JoinLobbyCommand extends Command
 	{
 		
 		// State.
