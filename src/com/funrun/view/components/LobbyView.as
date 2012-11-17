@@ -6,7 +6,9 @@ package com.funrun.view.components {
 	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.ui.DummyButton;
 	import com.cenizal.utils.Center;
+	import com.funrun.view.components.ui.FunButton;
 	
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.events.Event;
@@ -18,17 +20,27 @@ package com.funrun.view.components {
 	
 	public class LobbyView extends AbstractComponent {
 		
+		[Embed (source="embed/home_bg.jpg" )]
+		private var Background:Class;
+
+		[Embed (source="embed/join_game_button.jpg" )]
+		private var JoinGameButton:Class;
+		
+		[Embed (source="embed/join_game_button_hover.jpg" )]
+		private var JoinGameButtonHover:Class;
+		
 		// Data.
 		
 		private var _people:Object = {};
 		
 		// UI.
 		
+		private var _bg:Bitmap;
 		private var _title:AbstractLabel;
 		private var _chatList:List;
 		private var _peopleList:List;
 		private var _input:InputText;
-		private var _joinGameButton:DummyButton;
+		private var _joinGameButton:FunButton;
 		private var _leaveLobbyButton:DummyButton;
 		
 		// Signals.
@@ -53,10 +65,8 @@ package com.funrun.view.components {
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			
 			// Background.
-			var g:Graphics = this.graphics;
-			g.beginFill( 0xffffff );
-			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
-			g.endFill();
+			_bg = new Background();
+			addChild( _bg );
 			
 			// Title.
 			_title = new AbstractLabel( this, 0, 0, "Lobby", 18 );
@@ -94,9 +104,9 @@ package com.funrun.view.components {
 			_input.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			
 			// Start game button.
-			_joinGameButton = new DummyButton( this, 0, _input.y + _input.height + 40, onClickJoinGame, "Find a game!", 0xaaaaaa );
-			_joinGameButton.draw();
-			Center.horizontal( _joinGameButton, stage );
+			_joinGameButton = new FunButton( this, 350, 310, onClickJoinGame );
+			_joinGameButton.setImages( new JoinGameButton(), new JoinGameButtonHover() );
+			_joinGameButton.rotation = .3;
 			
 		}
 		

@@ -28,9 +28,13 @@ package com.funrun.view.components {
 		[Embed (source="embed/play_single_button_hover.jpg" )]
 		private var SingleButtonHover:Class;
 		
+		// UI.
+		
 		private var _bg:Bitmap;
 		private var _multiplayerButton:FunButton;
 		private var _singlePlayerButton:FunButton;
+		
+		// Signals.
 		
 		public var onMultiplayerClickSignal:Signal;
 		public var onSinglePlayerClickSignal:Signal;
@@ -49,12 +53,6 @@ package com.funrun.view.components {
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			
 			// Background.
-			var g:Graphics = this.graphics;
-			g.beginFill( 0xffffff );
-			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
-			g.endFill();
-			
-			// Logo.
 			_bg = new Background();
 			addChild( _bg );
 			
