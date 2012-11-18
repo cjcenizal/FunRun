@@ -6,6 +6,7 @@ package com.funrun.view.components {
 	import com.cenizal.ui.AbstractLabel;
 	import com.cenizal.ui.DummyButton;
 	import com.cenizal.utils.Center;
+	import com.funrun.view.components.ui.ChatList;
 	import com.funrun.view.components.ui.FunButton;
 	
 	import flash.display.Bitmap;
@@ -37,7 +38,7 @@ package com.funrun.view.components {
 		
 		private var _bg:Bitmap;
 		private var _title:AbstractLabel;
-		private var _chatList:List;
+		private var _chatList:ChatList;
 		private var _peopleList:List;
 		private var _input:InputText;
 		private var _joinGameButton:FunButton;
@@ -81,7 +82,7 @@ package com.funrun.view.components {
 			// Lists.
 			var peopleListWidth:Number = 140;
 			var listHeight:Number = 400;
-			_chatList = new List( this, 0, 0 );
+			_chatList = new ChatList( this, 0, 0 );
 			_chatList.width = stage.stageWidth - peopleListWidth;
 			_chatList.height = listHeight;
 			_chatList.draw();

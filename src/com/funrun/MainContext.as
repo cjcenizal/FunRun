@@ -229,7 +229,7 @@ package com.funrun {
 			// Switches.
 			var useWhitelist:Boolean 				= false;
 			var isProduction:Boolean				= false;
-			var isOnline:Boolean					= true;
+			var isOnline:Boolean					= false;
 			var showBounds:Boolean					= false;
 			var gameModel:GameModel = new GameModel( isProduction, isOnline, showBounds );
 			gameModel.showStats 					= false;
