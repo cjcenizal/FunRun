@@ -2,6 +2,7 @@ package com.funrun.view.components.ui
 {
 	import com.cenizal.ui.AbstractComponent;
 	
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -13,6 +14,8 @@ package com.funrun.view.components.ui
 		
 		[Embed (source="embed/lobby_chat_bg.png" )]
 		private var Background:Class;
+		
+		private var _bg:Bitmap;
 		
 		protected var _items:Array;
 		protected var _itemHolder:Sprite;
@@ -35,16 +38,16 @@ package com.funrun.view.components.ui
 				_items = new Array();
 			}
 			
-			setSize(100, 100);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			addEventListener(Event.RESIZE, onResize);
 			makeListItems();
 			fillItems();
 			
-		//	_panel = new Panel(this, 0, 0);
-		//	_panel.color = _defaultColor;
+			// Background.
+			_bg = new Background();
+			addChild( _bg );
+			
 			_itemHolder = new Sprite();
-		//	_panel.content.addChild(_itemHolder);
 			_scrollbar = new VerticalScrollBar(this, 0, 0, onScroll);
 			_scrollbar.setSliderParams(0, 0, 0);
 	

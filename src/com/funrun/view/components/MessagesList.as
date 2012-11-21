@@ -1,4 +1,4 @@
-package com.funrun.view.components {
+ package com.funrun.view.components {
 
 	import com.cenizal.ui.AbstractComponent;
 	import com.cenizal.ui.AbstractLabel;

@@ -83,8 +83,6 @@ package com.funrun.view.components {
 			var peopleListWidth:Number = 140;
 			var listHeight:Number = 400;
 			_chatList = new ChatList( this, 0, 0 );
-			_chatList.width = stage.stageWidth - peopleListWidth;
-			_chatList.height = listHeight;
 			_chatList.draw();
 			
 			_peopleList = new List( this, 0, 0 );
