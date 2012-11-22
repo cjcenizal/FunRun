@@ -313,6 +313,8 @@ class ScrollSlider extends Slider
 	public function ScrollSlider(orientation:String, parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, defaultHandler:Function = null)
 	{
 		super(orientation, parent, xpos, ypos);
+		_width = 10;
+		_height = 200;
 		if(defaultHandler != null)
 		{
 			addEventListener(Event.CHANGE, defaultHandler);
@@ -334,7 +336,7 @@ class ScrollSlider extends Slider
 	 */
 	override protected function drawHandle() : void
 	{
-		var size:Number;
+		var size:Number = 10;
 		_handle.graphics.clear();
 		if(_orientation == HORIZONTAL)
 		{

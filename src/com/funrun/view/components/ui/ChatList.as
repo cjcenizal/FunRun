@@ -38,11 +38,6 @@ package com.funrun.view.components.ui
 				_items = new Array();
 			}
 			
-			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			addEventListener(Event.RESIZE, onResize);
-			makeListItems();
-			fillItems();
-			
 			// Background.
 			_bg = new Background();
 			addChild( _bg );
@@ -50,6 +45,11 @@ package com.funrun.view.components.ui
 			_itemHolder = new Sprite();
 			_scrollbar = new VerticalScrollBar(this, 0, 0, onScroll);
 			_scrollbar.setSliderParams(0, 0, 0);
+			
+			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+			addEventListener(Event.RESIZE, onResize);
+			makeListItems();
+			fillItems();
 	
 			super(parent, xpos, ypos);
 		}
