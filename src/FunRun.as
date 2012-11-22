@@ -62,8 +62,6 @@ package {
 		- Design a decent UI
 			- Main menu
 					- Show account info (points, personal best distance)
-			- Fix useHandCursor issue
-			- Make Loading mouse-disabled once it's outro-ing so we can click through it
 			- Game UI
 				- Add instructions to beginning of gameplay
 				- Results should look great

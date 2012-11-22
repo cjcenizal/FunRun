@@ -2,21 +2,21 @@ package com.funrun.view.components.ui
 {
 	import com.bit101.components.VScrollBar;
 	import com.cenizal.ui.AbstractComponent;
+	import com.cenizal.ui.AbstractLabel;
+	import com.funrun.view.components.LobbyPerson;
 	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	[Event(name="select", type="flash.events.Event")]
-	public class ChatList extends AbstractComponent
+	public class PeopleList extends AbstractComponent
 	{
-		
-		[Embed (source="embed/lobby_chat_bg.png" )]
-		private var Background:Class;
-		
-		private var _bg:Bitmap;
+		private var _title:AbstractLabel;
+		private var _count:AbstractLabel;
 		protected var _items:Array;
 		protected var _itemHolder:Sprite;
 		private var _mask:Sprite;
@@ -29,7 +29,7 @@ package com.funrun.view.components.ui
 		 * @param ypos The y position to place this component.
 		 * @param items An array of items to display in the list. Either strings or objects with label property.
 		 */
-		public function ChatList(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, items:Array=null)
+		public function PeopleList(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, items:Array=null)
 		{
 			if(items != null)
 			{
@@ -41,29 +41,37 @@ package com.funrun.view.components.ui
 			}
 			super(parent, xpos, ypos);
 			
-			_bg = new Background();
-			_bg.y = -18;
-			addChild( _bg );
-	
+			_width = 243;
+			_height = 448;
+			
+			_title = new AbstractLabel( this, 0, 0, "Lobby", 22, 0xffdf2c );
+			_count = new AbstractLabel( this, 0, 0, "Peeps", 16, 0xffdf2c );
+			var g:Graphics = this.graphics;
+			g.lineStyle( 1, 0xffdf2c );
+			g.moveTo( 0, 30 );
+			g.lineTo( _width, 30 );
+			g.endFill();
+			
 			_itemHolder = new Sprite();
 			addChild(_itemHolder);
 			
 			_mask = new Sprite();
 			addChild(_mask);
+			_itemHolder.y = _mask.y = 40;
 			_mask.graphics.clear();
 			_mask.graphics.beginFill( 0xff0000, .5 );
-			_mask.graphics.drawRect( 0, 0, _bg.width, 448 );
+			_mask.graphics.drawRect( 0, 0, 300, _height - _mask.y );
 			_mask.graphics.endFill();
 			_itemHolder.mask = _mask;
 			
 			_scrollbar = new VScrollBar(this, 0, 0, onScroll);
 			_scrollbar.setSliderParams(0, 0, 0);
+			_scrollbar.y = _mask.y;
 			
-			setSize( 456, 495 );
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			
-			for ( var i:int = 0; i < 100; i++ ) {
-				addChat("test");
+			for ( var i:int = 0; i < 30; i++ ) {
+				addPerson(new LobbyPerson(i.toString(), "test"));
 			}
 		}
 		
@@ -78,8 +86,17 @@ package com.funrun.view.components.ui
 		{
 			super.draw();
 			
+			if ( _items.length > 1 ) {
+				_count.text = _items.length + " peeps";
+			} else {
+				_count.text = "No one's here.";
+			}
+			_count.draw();
+			_count.x = _width - _count.width;
+			_count.y = 6;
+			
 			// scrollbar
-			_scrollbar.x = 499;
+			_scrollbar.x = _width - 10;
 			var contentHeight:Number = _items.length * _listItemHeight;
 			_scrollbar.setThumbPercent(_height / contentHeight); 
 			var pageSize:Number = Math.floor(_height / _listItemHeight);
@@ -93,14 +110,18 @@ package com.funrun.view.components.ui
 		 * Adds an item to the list.
 		 * @param item The item to add. Can be a string or an object containing a string property named label.
 		 */
-		public function addChat(message:String):void
+		public function addPerson(person:LobbyPerson):void
 		{
 			var yPos:Number = ( _items.length > 0 ) ? _items[ _items.length - 1 ].y + _items[ _items.length - 1 ].height + 10 : 0;
-			var item:ChatListItem = new ChatListItem( _itemHolder, 10, yPos, message, width - 50 );
+			var item:PeopleListItem = new PeopleListItem( _itemHolder, 0, yPos, person.name, width - 50 );
 			item.setSize(width - 40, _listItemHeight);
 			item.draw();
 			_items.push(item);
 			invalidate();
+		}
+		
+		public function removePerson(person:LobbyPerson):void {
+			
 		}
 		
 		/**
@@ -125,7 +146,7 @@ package com.funrun.view.components.ui
 		protected function onScroll(event:Event):void
 		{
 			var pct:Number = _scrollbar.value / ( _scrollbar.maximum - _scrollbar.minimum );
-			_itemHolder.y = pct * ( _mask.height - _itemHolder.height );
+			_itemHolder.y = pct * ( _mask.height - _itemHolder.height ) + _mask.y;
 		}
 		
 		/**

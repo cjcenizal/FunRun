@@ -5,6 +5,7 @@ package com.funrun.view.components {
 	import com.cenizal.ui.AbstractComponent;
 	import com.funrun.view.components.ui.ChatList;
 	import com.funrun.view.components.ui.FunButton;
+	import com.funrun.view.components.ui.PeopleList;
 	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
@@ -40,7 +41,7 @@ package com.funrun.view.components {
 		
 		private var _bg:Bitmap;
 		private var _chatList:ChatList;
-		private var _peopleList:List;
+		private var _peopleList:PeopleList;
 		private var _input:InputText;
 		private var _leaveLobbyButton:FunButton;
 		private var _joinGameButton:FunButton;
@@ -78,11 +79,7 @@ package com.funrun.view.components {
 			_chatList = new ChatList( this, 0, 63 );
 			_chatList.draw();
 			
-			_peopleList = new List( this, 0, 0 );
-			_peopleList.width = 243;
-			_peopleList.height = 448;
-			_peopleList.x = 531;
-			_peopleList.y = 63;
+			_peopleList = new PeopleList( this, 531, 63 );
 			
 			// Input.
 			_input = new InputText( this, 53, 539 );
@@ -119,13 +116,13 @@ package com.funrun.view.components {
 		public function addPerson( id:String, name:String ):void {
 			if ( !_people[ id ] ) {
 				_people[ id ] = new LobbyPerson( id, name );
-				_peopleList.addItem( _people[ id ] );
+				_peopleList.addPerson( _people[ id ] );
 			}
 		}
 		
 		public function removePerson( id:String ):void {
 			if ( _people[ id ] ) {
-				_peopleList.removeItem( _people[ id ] );
+				_peopleList.removePerson( _people[ id ] );
 				delete _people[ id ];
 			}
 		}

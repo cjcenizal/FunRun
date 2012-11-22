@@ -48,12 +48,14 @@ package com.funrun.view.components
 			TweenMax.to( _spinner, .8, { y: stage.stageHeight * .5, ease: Back.easeOut } );
 			TweenMax.to( _message, .8, { y: stage.stageHeight * .5, ease: Back.easeOut, delay: .1 } );
 			stage.addEventListener( Event.ENTER_FRAME, onEnterFrame );
+			mouseEnabled = true;
 		}
 		
 		public function hide():void {
 			TweenMax.to( _blackout, 1, { alpha: 0, onComplete: function():void { _blackout.visible = false; stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame ); } } );
 			TweenMax.to( _spinner, .8, { y: -200, ease: Back.easeIn } );
 			TweenMax.to( _message, .8, { y: -200, ease: Back.easeIn, delay: .1 } );
+			mouseEnabled = false;
 		}
 		
 		private function onEnterFrame( e:Event ):void {
