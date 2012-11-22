@@ -69,10 +69,6 @@ package com.funrun.view.components.ui
 			_scrollbar.y = _mask.y;
 			
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			
-			for ( var i:int = 0; i < 30; i++ ) {
-				addPerson(new LobbyPerson(i.toString(), "test"));
-			}
 		}
 		
 		///////////////////////////////////
@@ -113,7 +109,7 @@ package com.funrun.view.components.ui
 		public function addPerson(person:LobbyPerson):void
 		{
 			var yPos:Number = ( _items.length > 0 ) ? _items[ _items.length - 1 ].y + _items[ _items.length - 1 ].height + 10 : 0;
-			var item:PeopleListItem = new PeopleListItem( _itemHolder, 0, yPos, person.name, width - 50 );
+			var item:PeopleListItem = new PeopleListItem( _itemHolder, 0, yPos, person, width - 50 );
 			item.setSize(width - 40, _listItemHeight);
 			item.draw();
 			_items.push(item);
@@ -121,7 +117,17 @@ package com.funrun.view.components.ui
 		}
 		
 		public function removePerson(person:LobbyPerson):void {
-			
+			for ( var i:int = 0; i < _items.length; i++ ) {
+				if ( _items[ i ].person.id == person.id ) {
+					_itemHolder.removeChild( _items[ i ] );
+					_items.splice( i, 1 );
+					var prev:PeopleListItem = ( i > 0 ) ? _items[ i - 1 ] : null;
+					for ( var j:int = i; j < _items.length; j++ ) {
+						_items[ j ].y = ( prev ) ? prev.y + prev.height + 10 : 0;
+					}
+					return;
+				}
+			}
 		}
 		
 		/**

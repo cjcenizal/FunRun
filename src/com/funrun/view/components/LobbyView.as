@@ -92,7 +92,6 @@ package com.funrun.view.components {
 			_joinGameButton = new FunButton( this, 655, 560, onClickJoinGame );
 			_joinGameButton.setImages( new JoinGameButton(), new JoinGameButtonHover() );
 			_joinGameButton.rotation = -.6;
-			
 		}
 		
 		private function onClickLeave( e:MouseEvent ):void {
