@@ -21,13 +21,19 @@ package com.funrun.view.components {
 	
 	public class LobbyView extends AbstractComponent {
 		
-		[Embed (source="embed/home_bg.jpg" )]
+		[Embed (source="embed/lobby_bg.jpg" )]
 		private var Background:Class;
-
-		[Embed (source="embed/join_game_button.jpg" )]
+		
+		[Embed (source="embed/leave_lobby_button.jpg" )]
+		private var LeaveLobbyButton:Class;
+		
+		[Embed (source="embed/leave_lobby_button_hover.jpg" )]
+		private var LeaveLobbyButtonHover:Class;
+		
+		[Embed (source="embed/join_game_lobby_button.jpg" )]
 		private var JoinGameButton:Class;
 		
-		[Embed (source="embed/join_game_button_hover.jpg" )]
+		[Embed (source="embed/join_game_lobby_button_hover.jpg" )]
 		private var JoinGameButtonHover:Class;
 		
 		// Data.
@@ -41,8 +47,8 @@ package com.funrun.view.components {
 		private var _chatList:ChatList;
 		private var _peopleList:List;
 		private var _input:InputText;
+		private var _leaveLobbyButton:FunButton;
 		private var _joinGameButton:FunButton;
-		private var _leaveLobbyButton:DummyButton;
 		
 		// Signals.
 		
@@ -75,23 +81,20 @@ package com.funrun.view.components {
 			Center.horizontal( _title, stage );
 			
 			// Leave button.
-			_leaveLobbyButton = new DummyButton( this, 0, 0, onClickLeave, "Main menu", 0x0000ff, 12 );
-			_leaveLobbyButton.draw();
-			_leaveLobbyButton.x = stage.stageWidth - _leaveLobbyButton.width - 10;
+			_leaveLobbyButton = new FunButton( this, 95, 25, onClickLeave );
+			_leaveLobbyButton.setImages( new LeaveLobbyButton(), new LeaveLobbyButtonHover() );
 			
 			// Lists.
 			var peopleListWidth:Number = 140;
 			var listHeight:Number = 400;
-			_chatList = new ChatList( this, 0, 0 );
+			_chatList = new ChatList( this, 0, 63 );
 			_chatList.draw();
 			
 			_peopleList = new List( this, 0, 0 );
 			_peopleList.width = peopleListWidth;
 			_peopleList.height = listHeight;
-			_peopleList.x = _chatList.x + _chatList.width;
-			
-			_chatList.y = _peopleList.y = 40;
-			_chatList.draw();
+			_peopleList.x = 500;
+			_peopleList.y = 40;
 			
 			// Input.
 			_input = new InputText( this, 0, _chatList.y + _chatList.height + 10 );
@@ -103,9 +106,9 @@ package com.funrun.view.components {
 			_input.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			
 			// Start game button.
-			_joinGameButton = new FunButton( this, 350, 310, onClickJoinGame );
+			_joinGameButton = new FunButton( this, 655, 550, onClickJoinGame );
 			_joinGameButton.setImages( new JoinGameButton(), new JoinGameButtonHover() );
-			_joinGameButton.rotation = .3;
+			_joinGameButton.rotation = -.6;
 			
 		}
 		
@@ -124,7 +127,7 @@ package com.funrun.view.components {
 		}
 		
 		public function addChat( source:String, message:String ):void {
-			_chatList.addItem( source + ": " + message );
+			_chatList.addChat( source + ": " + message );
 		}
 		
 		public function addPerson( id:String, name:String ):void {

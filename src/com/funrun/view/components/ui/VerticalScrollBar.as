@@ -313,12 +313,12 @@ class ScrollSlider extends Slider
 	public function ScrollSlider(orientation:String, parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, defaultHandler:Function = null)
 	{
 		super(orientation, parent, xpos, ypos);
-		_width = 10;
-		_height = 200;
 		if(defaultHandler != null)
 		{
 			addEventListener(Event.CHANGE, defaultHandler);
 		}
+		_width = 20;
+		_height = 400;
 	}
 	
 	/**
@@ -336,28 +336,12 @@ class ScrollSlider extends Slider
 	 */
 	override protected function drawHandle() : void
 	{
-		var size:Number = 10;
 		_handle.graphics.clear();
-		if(_orientation == HORIZONTAL)
-		{
-			size = Math.round(_width * _thumbPercent);
-			size = Math.max(_height, size);
-			_handle.graphics.beginFill(0, 0);
-			_handle.graphics.drawRect(0, 0, size, _height);
-			_handle.graphics.endFill();
-			_handle.graphics.beginFill(Style.BUTTON_FACE);
-			_handle.graphics.drawRect(1, 1, size - 2, _height - 2);
-		}
-		else
-		{
-			size = Math.round(_height * _thumbPercent);
-			size = Math.max(_width, size);
-			_handle.graphics.beginFill(0, 0);
-			_handle.graphics.drawRect(0, 0, _width  - 2, size);
-			_handle.graphics.endFill();
-			_handle.graphics.beginFill(Style.BUTTON_FACE);
-			_handle.graphics.drawRect(1, 1, _width - 2, size - 2);
-		}
+		
+		_handle.graphics.beginFill(0, 0);
+		_handle.graphics.drawRect(0, 0, _width, _height );
+		_handle.graphics.endFill();
+		
 		_handle.graphics.endFill();
 		positionHandle();
 	}
@@ -369,16 +353,8 @@ class ScrollSlider extends Slider
 	protected override function positionHandle():void
 	{
 		var range:Number;
-		if(_orientation == HORIZONTAL)
-		{
-			range = width - _handle.width;
-			_handle.x = (_value - _min) / (_max - _min) * range;
-		}
-		else
-		{
-			range = height - _handle.height;
-			_handle.y = (_value - _min) / (_max - _min) * range;
-		}
+		range = height - _handle.height;
+		_handle.y = (_value - _min) / (_max - _min) * range;
 	}
 	
 	

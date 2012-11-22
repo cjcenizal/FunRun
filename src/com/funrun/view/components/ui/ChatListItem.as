@@ -1,5 +1,6 @@
 package com.funrun.view.components.ui
 {
+	import com.bit101.components.Label;
 	import com.cenizal.ui.AbstractComponent;
 	import com.cenizal.ui.AbstractLabel;
 	
@@ -8,13 +9,8 @@ package com.funrun.view.components.ui
 	
 	public class ChatListItem extends AbstractComponent
 	{
-		protected var _data:Object;
+		protected var _message:String;
 		protected var _label:AbstractLabel;
-		protected var _defaultColor:uint = 0xffffff;
-		protected var _selectedColor:uint = 0xdddddd;
-		protected var _rolloverColor:uint = 0xeeeeee;
-		protected var _selected:Boolean;
-		protected var _mouseOver:Boolean = false;
 		
 		/**
 		 * Constructor
@@ -23,17 +19,14 @@ package com.funrun.view.components.ui
 		 * @param ypos The y position to place this component.
 		 * @param data The string to display as a label or object with a label property.
 		 */
-		public function ChatListItem(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, data:Object = null)
+		public function ChatListItem(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, message:String = null, itemWidth:int = 100)
 		{
-			_data = data;
-		
-			addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			setSize(100, 20);
-
-			_label = new AbstractLabel(this, 5, 0);
-			_label.draw();
-			
+			_message = message;
 			super(parent, xpos, ypos);
+			
+			_label = new AbstractLabel(this, 0, 0, null, 12, 0xffffff );
+			_label.wordWrap = true;
+			_label.maxWidth = itemWidth - 40;
 		}
 		
 		///////////////////////////////////
@@ -43,70 +36,12 @@ package com.funrun.view.components.ui
 		/**
 		 * Draws the visual ui of the component.
 		 */
-		public override function draw() : void
-		{
+		public override function draw():void {
 			super.draw();
-			graphics.clear();
-			
-			if(_selected)
-			{
-				graphics.beginFill(_selectedColor);
-			}
-			else if(_mouseOver)
-			{
-				graphics.beginFill(_rolloverColor);
-			}
-			else
-			{
-				graphics.beginFill(_defaultColor);
-			}
-			graphics.drawRect(0, 0, width, height);
-			graphics.endFill();
-			
-			if(_data == null) return;
-			
-			if(_data is String)
-			{
-				_label.text = _data as String;
-			}
-			else if(_data.hasOwnProperty("label") && _data.label is String)
-			{
-				_label.text = _data.label;
-			}
-			else
-			{
-				_label.text = _data.toString();
-			}
+			_label.text = _message;
+			_label.draw();
+			_height = _label.y + _label.height;
 		}
-		
-		
-		
-		
-		///////////////////////////////////
-		// event handlers
-		///////////////////////////////////
-		
-		/**
-		 * Called when the user rolls the mouse over the item. Changes the background color.
-		 */
-		protected function onMouseOver(event:MouseEvent):void
-		{
-			addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			_mouseOver = true;
-			invalidate();
-		}
-		
-		/**
-		 * Called when the user rolls the mouse off the item. Changes the background color.
-		 */
-		protected function onMouseOut(event:MouseEvent):void
-		{
-			removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			_mouseOver = false;
-			invalidate();
-		}
-		
-		
 		
 		///////////////////////////////////
 		// getter/setters
@@ -115,67 +50,14 @@ package com.funrun.view.components.ui
 		/**
 		 * Sets/gets the string that appears in this item.
 		 */
-		public function set data(value:Object):void
+		public function set message(value:String):void
 		{
-			_data = value;
+			_message = value;
 			invalidate();
 		}
-		public function get data():Object
+		public function get message():String
 		{
-			return _data;
+			return _message;
 		}
-		
-		/**
-		 * Sets/gets whether or not this item is selected.
-		 */
-		public function set selected(value:Boolean):void
-		{
-			_selected = value;
-			invalidate();
-		}
-		public function get selected():Boolean
-		{
-			return _selected;
-		}
-		
-		/**
-		 * Sets/gets the default background color of list items.
-		 */
-		public function set defaultColor(value:uint):void
-		{
-			_defaultColor = value;
-			invalidate();
-		}
-		public function get defaultColor():uint
-		{
-			return _defaultColor;
-		}
-		
-		/**
-		 * Sets/gets the selected background color of list items.
-		 */
-		public function set selectedColor(value:uint):void
-		{
-			_selectedColor = value;
-			invalidate();
-		}
-		public function get selectedColor():uint
-		{
-			return _selectedColor;
-		}
-		
-		/**
-		 * Sets/gets the rollover background color of list items.
-		 */
-		public function set rolloverColor(value:uint):void
-		{
-			_rolloverColor = value;
-			invalidate();
-		}
-		public function get rolloverColor():uint
-		{
-			return _rolloverColor;
-		}
-		
 	}
 }

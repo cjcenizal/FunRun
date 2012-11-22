@@ -19,6 +19,7 @@ package com.cenizal.ui {
 		protected var _isInput:Boolean = false;
 		protected var _alignment:String = TextFieldAutoSize.LEFT;
 		protected var _tf:TextField;
+		public var maxWidth:Number = 100;
 
 		public function AbstractLabel( parent:DisplayObjectContainer = null, x:Number = 0, y:Number = 0, text:String = null, fontSize:Number = 12, fontColor:uint = 0 ) {
 			super( parent, x, y );
@@ -53,17 +54,18 @@ package com.cenizal.ui {
 		override public function draw():void {
 			if ( _wordWrap ) {
 				_tf.autoSize = _alignment;
-				_tf.wordWrap = true;
-				_tf.width = width;
 				_tf.htmlText = _text;
-				_height = _tf.height;
+				if ( _tf.width > maxWidth ) {
+					_tf.width = maxWidth;
+					_tf.wordWrap = true;
+				}
 			} else {
 				_tf.autoSize = _alignment;
 				_tf.wordWrap = false;
 				_tf.htmlText = _text;
-				_width = _tf.width;
-				_height = _tf.height;
 			}
+			_width = _tf.width;
+			_height = _tf.height;
 			if ( _alignment == TextFieldAutoSize.RIGHT ) {
 				_tf.x = -_tf.width;
 			} else {
