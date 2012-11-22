@@ -3,6 +3,7 @@ package com.funrun.view.components {
 	import com.bit101.components.InputText;
 	import com.bit101.components.List;
 	import com.cenizal.ui.AbstractComponent;
+	import com.funrun.view.components.ui.ChatInput;
 	import com.funrun.view.components.ui.ChatList;
 	import com.funrun.view.components.ui.FunButton;
 	import com.funrun.view.components.ui.PeopleList;
@@ -42,7 +43,7 @@ package com.funrun.view.components {
 		private var _bg:Bitmap;
 		private var _chatList:ChatList;
 		private var _peopleList:PeopleList;
-		private var _input:InputText;
+		private var _input:ChatInput;
 		private var _leaveLobbyButton:FunButton;
 		private var _joinGameButton:FunButton;
 		
@@ -82,16 +83,18 @@ package com.funrun.view.components {
 			_peopleList = new PeopleList( this, 531, 63 );
 			
 			// Input.
-			_input = new InputText( this, 53, 539 );
+			_input = new ChatInput( this, 39, 539 );
 			_input.maxChars = 80;
-			_input.width = 400;
-			_input.height = 30;
-			_input.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+			_input.onSendChatSignal.add( onSendChat );
 			
 			// Start game button.
 			_joinGameButton = new FunButton( this, 655, 560, onClickJoinGame );
 			_joinGameButton.setImages( new JoinGameButton(), new JoinGameButtonHover() );
 			_joinGameButton.rotation = -.6;
+		}
+		
+		private function onSendChat():void {
+			onSendChatSignal.dispatch();
 		}
 		
 		private function onClickLeave( e:MouseEvent ):void {

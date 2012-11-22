@@ -62,6 +62,8 @@ package {
 		- Design a decent UI
 			- Main menu
 					- Show account info (points, personal best distance)
+			- Lobby
+				- Scroll chat as you talk
 			- Game UI
 				- Add instructions to beginning of gameplay
 				- Results should look great

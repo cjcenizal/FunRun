@@ -44,6 +44,9 @@ package com.funrun.view.components
 		
 		public function show():void {
 			_blackout.visible = true;
+			TweenMax.killTweensOf( _blackout );
+			TweenMax.killTweensOf( _spinner );
+			TweenMax.killTweensOf( _message );
 			TweenMax.to( _blackout, 1, { alpha: 1 } );
 			TweenMax.to( _spinner, .8, { y: stage.stageHeight * .5, ease: Back.easeOut } );
 			TweenMax.to( _message, .8, { y: stage.stageHeight * .5, ease: Back.easeOut, delay: .1 } );
@@ -52,6 +55,9 @@ package com.funrun.view.components
 		}
 		
 		public function hide():void {
+			TweenMax.killTweensOf( _blackout );
+			TweenMax.killTweensOf( _spinner );
+			TweenMax.killTweensOf( _message );
 			TweenMax.to( _blackout, 1, { alpha: 0, onComplete: function():void { _blackout.visible = false; stage.removeEventListener( Event.ENTER_FRAME, onEnterFrame ); } } );
 			TweenMax.to( _spinner, .8, { y: -200, ease: Back.easeIn } );
 			TweenMax.to( _message, .8, { y: -200, ease: Back.easeIn, delay: .1 } );
