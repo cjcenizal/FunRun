@@ -3,15 +3,11 @@ package com.funrun.view.components {
 	import com.bit101.components.InputText;
 	import com.bit101.components.List;
 	import com.cenizal.ui.AbstractComponent;
-	import com.cenizal.ui.AbstractLabel;
-	import com.cenizal.ui.DummyButton;
-	import com.cenizal.utils.Center;
 	import com.funrun.view.components.ui.ChatList;
 	import com.funrun.view.components.ui.FunButton;
 	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -43,7 +39,6 @@ package com.funrun.view.components {
 		// UI.
 		
 		private var _bg:Bitmap;
-		private var _title:AbstractLabel;
 		private var _chatList:ChatList;
 		private var _peopleList:List;
 		private var _input:InputText;
@@ -75,38 +70,29 @@ package com.funrun.view.components {
 			_bg = new Background();
 			addChild( _bg );
 			
-			// Title.
-			_title = new AbstractLabel( this, 0, 0, "Lobby", 18 );
-			_title.draw();
-			Center.horizontal( _title, stage );
-			
 			// Leave button.
-			_leaveLobbyButton = new FunButton( this, 95, 25, onClickLeave );
+			_leaveLobbyButton = new FunButton( this, 95, 34, onClickLeave );
 			_leaveLobbyButton.setImages( new LeaveLobbyButton(), new LeaveLobbyButtonHover() );
 			
 			// Lists.
-			var peopleListWidth:Number = 140;
-			var listHeight:Number = 400;
 			_chatList = new ChatList( this, 0, 63 );
 			_chatList.draw();
 			
 			_peopleList = new List( this, 0, 0 );
-			_peopleList.width = peopleListWidth;
-			_peopleList.height = listHeight;
-			_peopleList.x = 500;
-			_peopleList.y = 40;
+			_peopleList.width = 243;
+			_peopleList.height = 448;
+			_peopleList.x = 531;
+			_peopleList.y = 63;
 			
 			// Input.
-			_input = new InputText( this, 0, _chatList.y + _chatList.height + 10 );
+			_input = new InputText( this, 53, 539 );
 			_input.maxChars = 80;
 			_input.width = 400;
 			_input.height = 30;
-			_input.draw();
-			Center.horizontal( _input, stage );
 			_input.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			
 			// Start game button.
-			_joinGameButton = new FunButton( this, 655, 550, onClickJoinGame );
+			_joinGameButton = new FunButton( this, 655, 560, onClickJoinGame );
 			_joinGameButton.setImages( new JoinGameButton(), new JoinGameButtonHover() );
 			_joinGameButton.rotation = -.6;
 			

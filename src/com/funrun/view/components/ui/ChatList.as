@@ -19,6 +19,7 @@ package com.funrun.view.components.ui
 		private var _bg:Bitmap;
 		protected var _items:Array;
 		protected var _itemHolder:Sprite;
+		private var _mask:Sprite;
 		protected var _listItemHeight:Number = 42;
 		protected var _scrollbar:VScrollBar;
 		/**
@@ -41,16 +42,29 @@ package com.funrun.view.components.ui
 			super(parent, xpos, ypos);
 			
 			_bg = new Background();
-			_bg.y = -25;
+			_bg.y = -18;
 			addChild( _bg );
 	
 			_itemHolder = new Sprite();
 			addChild(_itemHolder);
+			
+			_mask = new Sprite();
+			addChild(_mask);
+			_mask.graphics.clear();
+			_mask.graphics.beginFill( 0xff0000, .5 );
+			_mask.graphics.drawRect( 0, 0, _bg.width, 448 );
+			_mask.graphics.endFill();
+			_itemHolder.mask = _mask;
+			
 			_scrollbar = new VScrollBar(this, 0, 0, onScroll);
 			_scrollbar.setSliderParams(0, 0, 0);
 			
 			setSize( 456, 495 );
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+			
+			for ( var i:int = 0; i < 30; i++ ) {
+				addChat("test");
+			}
 		}
 		
 		///////////////////////////////////
@@ -65,13 +79,13 @@ package com.funrun.view.components.ui
 			super.draw();
 			
 			// scrollbar
-			_scrollbar.x = _width - 10;
+			_scrollbar.x = 499;
 			var contentHeight:Number = _items.length * _listItemHeight;
 			_scrollbar.setThumbPercent(_height / contentHeight); 
 			var pageSize:Number = Math.floor(_height / _listItemHeight);
 			_scrollbar.maximum = Math.max(0, _items.length - pageSize);
 			_scrollbar.pageSize = pageSize;
-			_scrollbar.height = _height;
+			_scrollbar.height = _mask.height;
 			_scrollbar.draw();
 		}
 		
@@ -110,7 +124,8 @@ package com.funrun.view.components.ui
 		 */
 		protected function onScroll(event:Event):void
 		{
-			//fillItems();
+			var pct:Number = _scrollbar.value / ( _scrollbar.maximum - _scrollbar.minimum );
+			_itemHolder.y = pct * ( _mask.height - _itemHolder.height );
 		}
 		
 		/**
@@ -119,7 +134,6 @@ package com.funrun.view.components.ui
 		protected function onMouseWheel(event:MouseEvent):void
 		{
 			_scrollbar.value -= event.delta;
-			//fillItems();
 		}
 		
 		///////////////////////////////////
