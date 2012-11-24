@@ -60,10 +60,6 @@ package com.funrun.view.components.ui
 			
 			setSize( 456, 495 );
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			
-			for ( var i:int = 0; i < 100; i++ ) {
-				addChat("test");
-			}
 		}
 		
 		///////////////////////////////////
@@ -73,18 +69,11 @@ package com.funrun.view.components.ui
 		/**
 		 * Draws the visual ui of the component.
 		 */
-		public override function draw() : void
-		{
+		public override function draw() : void {
 			super.draw();
-			
-			// scrollbar
 			_scrollbar.x = 495;
 			var contentHeight:Number = _items.length * _listItemHeight;
-			_scrollbar.sliderPct = _height / contentHeight; 
-			var pageSize:Number = Math.floor(_height / _listItemHeight);
-		//	_scrollbar.maximum = Math.max(0, _items.length - pageSize);
-		//	_scrollbar.pageSize = pageSize;
-			_scrollbar.draw();
+			_scrollbar.sliderPct = _mask.height / _itemHolder.height; 
 		}
 		
 		/**

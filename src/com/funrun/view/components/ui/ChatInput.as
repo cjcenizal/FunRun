@@ -7,6 +7,7 @@ package com.funrun.view.components.ui
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
@@ -31,6 +32,7 @@ package com.funrun.view.components.ui
 		private var _button:Sprite;
 		protected var _text:String = "";
 		protected var _tf:TextField;
+		private var _hasFocus:Boolean = false;
 		public var onSendChatSignal:Signal;
 		
 		/**
@@ -77,6 +79,8 @@ package com.funrun.view.components.ui
 			_tf.defaultTextFormat = new TextFormat( DEFAULT_FONT, 16, 0xffffff );
 			addChild(_tf);
 			_tf.addEventListener(Event.CHANGE, onChange);
+			_tf.addEventListener( FocusEvent.FOCUS_OUT, onLoseFocus );
+			_tf.addEventListener( FocusEvent.FOCUS_IN, onGainFocus );
 			
 			var g:Graphics = this.graphics;
 			g.lineStyle( 1, 0xfda315 );
@@ -87,6 +91,7 @@ package com.funrun.view.components.ui
 			this.alpha = .5;
 			this.addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			this.addEventListener( MouseEvent.MOUSE_OUT, onOut );
+			this.addEventListener( MouseEvent.CLICK, onClick );
 			this.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			
 			onSendChatSignal = new Signal();
@@ -97,7 +102,21 @@ package com.funrun.view.components.ui
 		}
 		
 		private function onOut( e:MouseEvent ):void {
-			this.alpha = .5;
+			if ( !_hasFocus ) this.alpha = .5;
+		}
+		
+		private function onClick( e:MouseEvent ):void {
+			stage.focus = _tf;
+		}
+		
+		private function onLoseFocus( e:FocusEvent ):void {
+			_hasFocus = false;
+			alpha = .5;
+		}
+		
+		private function onGainFocus( e:FocusEvent ):void {
+			_hasFocus = true;
+			this.alpha = 1;
 		}
 		
 		private function onButtonOver( e:MouseEvent ):void {

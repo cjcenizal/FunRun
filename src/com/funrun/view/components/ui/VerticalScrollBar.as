@@ -25,6 +25,7 @@ package com.funrun.view.components.ui
 		protected var _downButton:ImageButton;
 		private var _bg:Sprite;
 		private var _sliderBar:Sprite;
+		private var _sliderPct:Number = 0;
 		private var _sliderHeight:Number = 10;
 		private var _pct:Number = 0;
 		
@@ -75,17 +76,21 @@ package com.funrun.view.components.ui
 		
 		override public function draw():void {
 			super.draw();
-			var g:Graphics = _sliderBar.graphics;
-			g.clear();
-			g.lineStyle( 1, 0xffe657 );
-			g.beginFill( 0xffa424 );
-			g.drawRect( 0, _pct * ( _height - _sliderHeight ), _width, _sliderHeight );
-			g.endFill();
+			var g:Graphics;
 			
 			g = _bg.graphics;
 			g.clear();
 			g.beginFill( 0, .5 );
 			g.drawRect( 0, 0, _width, _height - _bg.y - _downButton.height );
+			g.endFill();
+			
+			_sliderHeight = _sliderPct * _bg.height;
+			
+			g = _sliderBar.graphics;
+			g.clear();
+			g.lineStyle( 1, 0xffe657 );
+			g.beginFill( 0xffa424 );
+			g.drawRect( 0, 0, _width, _sliderHeight );
 			g.endFill();
 			
 			_downButton.y = _height - _downButton.height;
@@ -143,9 +148,10 @@ package com.funrun.view.components.ui
 		}
 		
 		public function set sliderPct( pct:Number ):void {
-			if ( pct < 0 ) pct = 0;
-			if ( pct > 1 ) pct = 1;
-			_sliderHeight = pct * _height;
+			if ( pct == Infinity ) pct = 1;
+			else if ( pct < 0 ) pct = 0;
+			else if ( pct > 1 ) pct = 1;
+			_sliderPct = pct;
 			draw();
 		}
 		

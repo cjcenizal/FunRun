@@ -89,15 +89,9 @@ package com.funrun.view.components.ui
 			_count.x = _width - _count.width;
 			_count.y = 6;
 			
-			// scrollbar
 			_scrollbar.x = _width - 10;
 			var contentHeight:Number = _items.length * _listItemHeight;
 			_scrollbar.sliderPct = _height / contentHeight;
-			var pageSize:Number = Math.floor(_height / _listItemHeight);
-	//		_scrollbar.maximum = Math.max(0, _items.length - pageSize);
-	//		_scrollbar.pageSize = pageSize;
-			_scrollbar.height = _mask.height;
-			_scrollbar.draw();
 		}
 		
 		/**
