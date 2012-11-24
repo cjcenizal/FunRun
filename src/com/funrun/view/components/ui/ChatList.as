@@ -1,6 +1,5 @@
 package com.funrun.view.components.ui
 {
-	import com.bit101.components.VScrollBar;
 	import com.cenizal.ui.AbstractComponent;
 	
 	import flash.display.Bitmap;
@@ -21,7 +20,7 @@ package com.funrun.view.components.ui
 		protected var _itemHolder:Sprite;
 		private var _mask:Sprite;
 		protected var _listItemHeight:Number = 42;
-		protected var _scrollbar:VScrollBar;
+		protected var _scrollbar:VerticalScrollBar;
 		/**
 		 * Constructor
 		 * @param parent The parent DisplayObjectContainer on which to add this List.
@@ -56,8 +55,8 @@ package com.funrun.view.components.ui
 			_mask.graphics.endFill();
 			_itemHolder.mask = _mask;
 			
-			_scrollbar = new VScrollBar(this, 0, 0, onScroll);
-			_scrollbar.setSliderParams(0, 0, 0);
+			_scrollbar = new VerticalScrollBar(this, 0, 0, onScroll);
+			_scrollbar.setSize( 15, _mask.height );
 			
 			setSize( 456, 495 );
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
@@ -79,13 +78,12 @@ package com.funrun.view.components.ui
 			super.draw();
 			
 			// scrollbar
-			_scrollbar.x = 499;
+			_scrollbar.x = 495;
 			var contentHeight:Number = _items.length * _listItemHeight;
-			_scrollbar.setThumbPercent(_height / contentHeight); 
+			_scrollbar.sliderPct = _height / contentHeight; 
 			var pageSize:Number = Math.floor(_height / _listItemHeight);
-			_scrollbar.maximum = Math.max(0, _items.length - pageSize);
-			_scrollbar.pageSize = pageSize;
-			_scrollbar.height = _mask.height;
+		//	_scrollbar.maximum = Math.max(0, _items.length - pageSize);
+		//	_scrollbar.pageSize = pageSize;
 			_scrollbar.draw();
 		}
 		
@@ -124,8 +122,7 @@ package com.funrun.view.components.ui
 		 */
 		protected function onScroll(event:Event):void
 		{
-			var pct:Number = _scrollbar.value / ( _scrollbar.maximum - _scrollbar.minimum );
-			_itemHolder.y = pct * ( _mask.height - _itemHolder.height );
+			_itemHolder.y = _scrollbar.percent * ( _mask.height - _itemHolder.height );
 		}
 		
 		/**
@@ -133,25 +130,7 @@ package com.funrun.view.components.ui
 		 */
 		protected function onMouseWheel(event:MouseEvent):void
 		{
-			_scrollbar.value -= event.delta;
+			//_scrollbar.value -= event.delta;
 		}
-		
-		///////////////////////////////////
-		// getter/setters
-		///////////////////////////////////
-		
-		
-		/**
-		 * Sets / gets whether the scrollbar will auto hide when there is nothing to scroll.
-		 */
-		public function set autoHideScrollBar(value:Boolean):void
-		{
-			_scrollbar.autoHide = value;
-		}
-		public function get autoHideScrollBar():Boolean
-		{
-			return _scrollbar.autoHide;
-		}
-		
 	}
 }

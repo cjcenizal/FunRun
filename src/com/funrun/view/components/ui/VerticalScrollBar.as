@@ -1,33 +1,32 @@
 package com.funrun.view.components.ui
 {
-	import com.bit101.components.PushButton;
 	import com.cenizal.ui.AbstractComponent;
+	import com.cenizal.ui.ImageButton;
 	
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Shape;
+	import flash.display.Graphics;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
+	import flash.geom.Rectangle;
 	
 	[Event(name="change", type="flash.events.Event")]
 	public class VerticalScrollBar extends AbstractComponent
 	{
-		protected const DELAY_TIME:int = 500;
-		protected const REPEAT_TIME:int = 100; 
-		protected const UP:String = "up";
-		protected const DOWN:String = "down";
 		
-		protected var _autoHide:Boolean = false;
-		protected var _upButton:PushButton;
-		protected var _downButton:PushButton;
-		protected var _scrollSlider:ScrollSlider;
-		protected var _orientation:String;
-		protected var _lineSize:int = 1;
-		protected var _delayTimer:Timer;
-		protected var _repeatTimer:Timer;
-		protected var _direction:String;
-		protected var _shouldRepeat:Boolean = false;
+		[Embed (source="embed/arrow_button.jpg" )]
+		private var ArrowButton:Class;
+		
+		[Embed (source="embed/arrow_button_hover.jpg" )]
+		private var ArrowButtonHover:Class;
+		
+		protected var _upButton:ImageButton;
+		protected var _downButton:ImageButton;
+		private var _bg:Sprite;
+		private var _sliderBar:Sprite;
+		private var _sliderHeight:Number = 10;
+		private var _pct:Number = 0;
 		
 		/**
 		 * Constructor
@@ -44,453 +43,114 @@ package com.funrun.view.components.ui
 			{
 				addEventListener(Event.CHANGE, defaultHandler);
 			}
-	
-			_scrollSlider = new ScrollSlider(_orientation, this, 0, 10, onChange);
-			_upButton = new PushButton(this, 0, 0, "");
-			_upButton.addEventListener(MouseEvent.MOUSE_DOWN, onUpClick);
-			_upButton.setSize(10, 10); 
-			var upArrow:Shape = new Shape();
-			_upButton.addChild(upArrow);
 			
-			_downButton = new PushButton(this, 0, 0, "");
-			_downButton.addEventListener(MouseEvent.MOUSE_DOWN, onDownClick);
-			_downButton.setSize(10, 10);
-			var downArrow:Shape = new Shape();
-			_downButton.addChild(downArrow);
-
-			upArrow.graphics.beginFill(0xff0000, 0.5);
-			upArrow.graphics.moveTo(5, 3);
-			upArrow.graphics.lineTo(7, 6);
-			upArrow.graphics.lineTo(3, 6);
-			upArrow.graphics.endFill();
+			_bg = new Sprite();
+			addChild( _bg );
+			_bg.addEventListener( MouseEvent.MOUSE_DOWN, onBgMouseDown );
+			_bg.addEventListener( MouseEvent.MOUSE_UP, onBgMouseUp );
 			
-			downArrow.graphics.beginFill(0xff0000, 0.5);
-			downArrow.graphics.moveTo(5, 7);
-			downArrow.graphics.lineTo(7, 4);
-			downArrow.graphics.lineTo(3, 4);
-			downArrow.graphics.endFill();
+			var upArrowButton:Bitmap = new ArrowButton();
+			var upArrowButtonHover:Bitmap = new ArrowButtonHover();
 			
-			_delayTimer = new Timer(DELAY_TIME, 1);
-			_delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayComplete);
-			_repeatTimer = new Timer(REPEAT_TIME);
-			_repeatTimer.addEventListener(TimerEvent.TIMER, onRepeat);
+			_upButton = new ImageButton(this, 0, 0, onUpClick );
+			_upButton.setImages( upArrowButton, upArrowButtonHover, false );
+			
+			var downArrowButton:Bitmap = new ArrowButton();
+			var downArrowButtonHover:Bitmap = new ArrowButtonHover();
+			downArrowButton.scaleY = downArrowButtonHover.scaleY = -1;
+			
+			_downButton = new ImageButton(this, 0, 0, onDownClick);
+			_downButton.setImages( downArrowButton, downArrowButtonHover, false );
+			
+			_sliderBar = new Sprite();
+			addChild( _sliderBar );
+			_sliderBar.y = _upButton.height;
+			_sliderBar.addEventListener( MouseEvent.MOUSE_DOWN, onSliderMouseDown );
+			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
+			
+			_bg.y = _upButton.y + _upButton.height;
+			
+			setSize( 15, 300 );
 		}
 		
-		
-		
-		///////////////////////////////////
-		// public methods
-		///////////////////////////////////
-		
-		/**
-		 * Convenience method to set the three main parameters in one shot.
-		 * @param min The minimum value of the slider.
-		 * @param max The maximum value of the slider.
-		 * @param value The value of the slider.
-		 */
-		public function setSliderParams(min:Number, max:Number, value:Number):void
-		{
-			_scrollSlider.setSliderParams(min, max, value);
-		}
-		
-		/**
-		 * Sets the percentage of the size of the thumb button.
-		 */
-		public function setThumbPercent(value:Number):void
-		{
-			_scrollSlider.setThumbPercent(value);
-		}
-		
-		/**
-		 * Draws the visual ui of the component.
-		 */
-		override public function draw():void
-		{
+		override public function draw():void {
 			super.draw();
+			var g:Graphics = _sliderBar.graphics;
+			g.clear();
+			g.lineStyle( 1, 0xffe657 );
+			g.beginFill( 0xffa424 );
+			g.drawRect( 0, _pct * ( _height - _sliderHeight ), _width, _sliderHeight );
+			g.endFill();
 			
-			_scrollSlider.x = 0;
-			_scrollSlider.y = 10;
-			_scrollSlider.width = 10;
-			_scrollSlider.height = _height - 20;
-			_downButton.x = 0;
-			_downButton.y = _height - 10;
+			g = _bg.graphics;
+			g.clear();
+			g.beginFill( 0, .5 );
+			g.drawRect( 0, 0, _width, _height - _bg.y - _downButton.height );
+			g.endFill();
 			
-			_scrollSlider.draw();
-			if(_autoHide)
-			{
-				visible = _scrollSlider.thumbPercent < 1.0;
-			}
-			else
-			{
-				visible = true;
-			}
+			_downButton.y = _height - _downButton.height;
 		}
 		
-		
-		
-		
-		
-		///////////////////////////////////
-		// getter/setters
-		///////////////////////////////////
-		
-		/**
-		 * Sets / gets whether the scrollbar will auto hide when there is nothing to scroll.
-		 */
-		public function set autoHide(value:Boolean):void
-		{
-			_autoHide = value;
-			invalidate();
-		}
-		public function get autoHide():Boolean
-		{
-			return _autoHide;
+		private function onUpClick( e:MouseEvent ):void {
+			pageUp();
 		}
 		
-		/**
-		 * Sets / gets the current value of this scroll bar.
-		 */
-		public function set value(v:Number):void
-		{
-			_scrollSlider.value = v;
-		}
-		public function get value():Number
-		{
-			return _scrollSlider.value;
+		private function onDownClick( e:MouseEvent ):void {
+			pageDown();
 		}
 		
-		/**
-		 * Sets / gets the minimum value of this scroll bar.
-		 */
-		public function set minimum(v:Number):void
-		{
-			_scrollSlider.minimum = v;
-		}
-		public function get minimum():Number
-		{
-			return _scrollSlider.minimum;
+		private function onSliderMouseDown( e:MouseEvent ):void {
+			_sliderBar.startDrag( false, new Rectangle( 0, _bg.y, 0, _bg.height - _sliderBar.height ) );
+			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 		}
 		
-		/**
-		 * Sets / gets the maximum value of this scroll bar.
-		 */
-		public function set maximum(v:Number):void
-		{
-			_scrollSlider.maximum = v;
-		}
-		public function get maximum():Number
-		{
-			return _scrollSlider.maximum;
+		private function onMouseUp( e:MouseEvent ):void {
+			_sliderBar.stopDrag();
+			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
 		}
 		
-		/**
-		 * Sets / gets the amount the value will change when up or down buttons are pressed.
-		 */
-		public function set lineSize(value:int):void
-		{
-			_lineSize = value;
-		}
-		public function get lineSize():int
-		{
-			return _lineSize;
+		private function onMove( e:MouseEvent ):void {
+			updateSlider();
 		}
 		
-		/**
-		 * Sets / gets the amount the value will change when the back is clicked.
-		 */
-		public function set pageSize(value:int):void
-		{
-			_scrollSlider.pageSize = value;
-			invalidate();
-		}
-		public function get pageSize():int
-		{
-			return _scrollSlider.pageSize;
-		}
-		
-		
-		
-		
-		
-		
-		///////////////////////////////////
-		// event handlers
-		///////////////////////////////////
-		
-		protected function onUpClick(event:MouseEvent):void
-		{
-			goUp();
-			_shouldRepeat = true;
-			_direction = UP;
-			_delayTimer.start();
-			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseGoUp);
-		}
-		
-		protected function goUp():void
-		{
-			_scrollSlider.value -= _lineSize;
-			dispatchEvent(new Event(Event.CHANGE));
-		}
-		
-		protected function onDownClick(event:MouseEvent):void
-		{
-			goDown();
-			_shouldRepeat = true;
-			_direction = DOWN;
-			_delayTimer.start();
-			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseGoUp);
-		}
-		
-		protected function goDown():void
-		{
-			_scrollSlider.value += _lineSize;
-			dispatchEvent(new Event(Event.CHANGE));
-		}
-		
-		protected function onMouseGoUp(event:MouseEvent):void
-		{
-			_delayTimer.stop();
-			_repeatTimer.stop();
-			_shouldRepeat = false;
-		}
-		
-		protected function onChange(event:Event):void
-		{
-			dispatchEvent(event);
-		}
-		
-		protected function onDelayComplete(event:TimerEvent):void
-		{
-			if(_shouldRepeat)
-			{
-				_repeatTimer.start();
+		private function onBgMouseDown( e:MouseEvent ):void {
+			if ( _bg.mouseY < _sliderBar.y - _bg.y ) {
+				pageUp();
+			} else if ( _bg.mouseY > _sliderBar.y - _bg.y + _sliderBar.height ) {
+				pageDown();
 			}
 		}
 		
-		protected function onRepeat(event:TimerEvent):void
-		{
-			if(_direction == UP)
-			{
-				goUp();
-			}
-			else
-			{
-				goDown();
-			}
+		private function onBgMouseUp( e:MouseEvent ):void {
+			
 		}
 		
+		private function pageUp():void {
+			_sliderBar.y -= 10;
+			updateSlider();
+		}
 		
+		private function pageDown():void {
+			_sliderBar.y += 10;
+			updateSlider();
+		}
 		
+		private function updateSlider():void {
+			if ( _sliderBar.y < _bg.y ) _sliderBar.y = _bg.y;
+			else if ( _sliderBar.y > _bg.y + _bg.height - _sliderBar.height ) _sliderBar.y = _bg.y + _bg.height - _sliderBar.height;
+			_pct = ( _sliderBar.y - _bg.y ) / ( _bg.height - _sliderBar.height );
+			dispatchEvent( new Event( Event.CHANGE ) );
+		}
 		
-	}
-}
-
-
-
-import flash.display.DisplayObjectContainer;
-import flash.events.Event;
-import flash.events.MouseEvent;
-import flash.geom.Rectangle;
-import com.bit101.components.Slider;
-import com.bit101.components.Style;
-
-/**
- * Helper class for the slider portion of the scroll bar.
- */
-class ScrollSlider extends Slider
-{
-	protected var _thumbPercent:Number = 1.0;
-	protected var _pageSize:int = 1;
-	
-	/**
-	 * Constructor
-	 * @param orientation Whether this is a vertical or horizontal slider.
-	 * @param parent The parent DisplayObjectContainer on which to add this Slider.
-	 * @param xpos The x position to place this component.
-	 * @param ypos The y position to place this component.
-	 * @param defaultHandler The event handling function to handle the default event for this component (change in this case).
-	 */
-	public function ScrollSlider(orientation:String, parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0, defaultHandler:Function = null)
-	{
-		super(orientation, parent, xpos, ypos);
-		if(defaultHandler != null)
-		{
-			addEventListener(Event.CHANGE, defaultHandler);
+		public function set sliderPct( pct:Number ):void {
+			if ( pct < 0 ) pct = 0;
+			if ( pct > 1 ) pct = 1;
+			_sliderHeight = pct * _height;
+			draw();
 		}
-		_width = 20;
-		_height = 400;
-	}
-	
-	/**
-	 * Initializes the component.
-	 */
-	protected override function init():void
-	{
-		super.init();
-		setSliderParams(1, 1, 0);
-		backClick = true;
-	}
-	
-	/**
-	 * Draws the handle of the slider.
-	 */
-	override protected function drawHandle() : void
-	{
-		_handle.graphics.clear();
 		
-		_handle.graphics.beginFill(0, 0);
-		_handle.graphics.drawRect(0, 0, _width, _height );
-		_handle.graphics.endFill();
-		
-		_handle.graphics.endFill();
-		positionHandle();
-	}
-	
-	/**
-	 * Adjusts position of handle when value, maximum or minimum have changed.
-	 * TODO: Should also be called when slider is resized.
-	 */
-	protected override function positionHandle():void
-	{
-		var range:Number;
-		range = height - _handle.height;
-		_handle.y = (_value - _min) / (_max - _min) * range;
-	}
-	
-	
-	
-	///////////////////////////////////
-	// public methods
-	///////////////////////////////////
-	
-	/**
-	 * Sets the percentage of the size of the thumb button.
-	 */
-	public function setThumbPercent(value:Number):void
-	{
-		_thumbPercent = Math.min(value, 1.0);
-		invalidate();
-	}
-	
-	
-	
-	
-	
-	///////////////////////////////////
-	// event handlers
-	///////////////////////////////////
-	
-	/**
-	 * Handler called when user clicks the background of the slider, causing the handle to move to that point. Only active if backClick is true.
-	 * @param event The MouseEvent passed by the system.
-	 */
-	protected override function onBackClick(event:MouseEvent):void
-	{
-		if(mouseY < _handle.y)
-		{
-			if(_max > _min)
-			{
-				_value -= _pageSize;
-			}
-			else
-			{
-				_value += _pageSize;
-			}
-			correctValue();
+		public function get percent():Number {
+			return _pct;
 		}
-		else
-		{
-			if(_max > _min)
-			{
-				_value += _pageSize;
-			}
-			else
-			{
-				_value -= _pageSize;
-			}
-			correctValue();
-		}
-		positionHandle();
-		
-		dispatchEvent(new Event(Event.CHANGE));
-	}
-	
-	/**
-	 * Internal mouseDown handler. Starts dragging the handle.
-	 * @param event The MouseEvent passed by the system.
-	 */
-	protected override function onDrag(event:MouseEvent):void
-	{
-		stage.addEventListener(MouseEvent.MOUSE_UP, onDrop);
-		stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
-		if(_orientation == HORIZONTAL)
-		{
-			_handle.startDrag(false, new Rectangle(0, 0, _width - _handle.width, 0));
-		}
-		else
-		{
-			_handle.startDrag(false, new Rectangle(0, 0, 0, _height - _handle.height));
-		}
-	}
-	
-	/**
-	 * Internal mouseMove handler for when the handle is being moved.
-	 * @param event The MouseEvent passed by the system.
-	 */
-	protected override function onSlide(event:MouseEvent):void
-	{
-		var oldValue:Number = _value;
-		if(_orientation == HORIZONTAL)
-		{
-			if(_width == _handle.width)
-			{
-				_value = _min;
-			}
-			else
-			{
-				_value = _handle.x / (_width - _handle.width) * (_max - _min) + _min;
-			}
-		}
-		else
-		{
-			if(_height == _handle.height)
-			{
-				_value = _min;
-			}
-			else
-			{
-				_value = _handle.y / (_height - _handle.height) * (_max - _min) + _min;
-			}
-		}
-		if(_value != oldValue)
-		{
-			dispatchEvent(new Event(Event.CHANGE));
-		}
-	}
-	
-	
-	
-	
-	
-	///////////////////////////////////
-	// getter/setters
-	///////////////////////////////////
-	
-	/**
-	 * Sets / gets the amount the value will change when the back is clicked.
-	 */
-	public function set pageSize(value:int):void
-	{
-		_pageSize = value;
-		invalidate();
-	}
-	public function get pageSize():int
-	{
-		return _pageSize;
-	}
-	
-	public function get thumbPercent():Number
-	{
-		return _thumbPercent;
 	}
 }

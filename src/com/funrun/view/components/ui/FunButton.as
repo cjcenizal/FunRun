@@ -19,8 +19,8 @@ package com.funrun.view.components.ui
 			super(parent, x, y, clickHandler);
 		}
 		
-		override public function setImages( normal:Bitmap, hover:Bitmap ):void {
-			super.setImages( normal, hover );
+		override public function setImages( normal:Bitmap, hover:Bitmap, center:Boolean = true ):void {
+			super.setImages( normal, hover, center );
 			this.scaleX = this.scaleY = this.scaleZ = _normalScale;
 		}
 		

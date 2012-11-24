@@ -18,16 +18,23 @@ package com.cenizal.ui
 			this.useHandCursor = this.mouseEnabled = true;
 		}
 		
-		public function setImages( normal:Bitmap, hover:Bitmap ):void {
+		public function setImages( normal:Bitmap, hover:Bitmap, center:Boolean = true ):void {
 			_normalImage = normal;
 			_hoverImage = hover;
 			addChild( _normalImage );
 			addChild( _hoverImage );
-			_normalImage.x = _normalImage.width * -.5;
-			_normalImage.y = _normalImage.height * -.5;
-			_hoverImage.x = _hoverImage.width * -.5;
-			_hoverImage.y = _hoverImage.height * -.5;
+			if ( center ) {
+				_normalImage.x = _normalImage.width * -.5;
+				_normalImage.y = _normalImage.height * -.5;
+				_hoverImage.x = _hoverImage.width * -.5;
+				_hoverImage.y = _hoverImage.height * -.5;
+			} else {
+				if ( _normalImage.scaleY == -1 ) _normalImage.y = _normalImage.height;
+				if ( _hoverImage.scaleY == -1 ) _hoverImage.y = _hoverImage.height;
+			}
 			_hoverImage.alpha = 0;
+			_width = normal.width;
+			_height = normal.height;
 		}
 		
 		override protected function onMouseOver( e:MouseEvent ):void {
