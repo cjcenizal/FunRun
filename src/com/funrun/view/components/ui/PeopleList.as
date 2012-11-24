@@ -40,7 +40,7 @@ package com.funrun.view.components.ui
 			super(parent, xpos, ypos);
 			
 			_width = 243;
-			_height = 448;
+			_height = 408;
 			
 			_title = new AbstractLabel( this, 0, 0, "Lobby", 22, 0xffdf2c );
 			_count = new AbstractLabel( this, 0, 0, "Peeps", 16, 0xffdf2c );

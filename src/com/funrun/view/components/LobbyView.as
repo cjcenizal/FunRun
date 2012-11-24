@@ -73,7 +73,7 @@ package com.funrun.view.components {
 			addChild( _bg );
 			
 			// Leave button.
-			_leaveLobbyButton = new FunButton( this, 95, 34, onClickLeave );
+			_leaveLobbyButton = new FunButton( this, 95, 28, onClickLeave );
 			_leaveLobbyButton.setImages( new LeaveLobbyButton(), new LeaveLobbyButtonHover() );
 			
 			// Lists.
@@ -88,7 +88,7 @@ package com.funrun.view.components {
 			_input.onSendChatSignal.add( onSendChat );
 			
 			// Start game button.
-			_joinGameButton = new FunButton( this, 655, 560, onClickJoinGame );
+			_joinGameButton = new FunButton( this, 655, 555, onClickJoinGame );
 			_joinGameButton.setImages( new JoinGameButton(), new JoinGameButtonHover() );
 			_joinGameButton.rotation = -.6;
 		}
