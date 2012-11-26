@@ -2,6 +2,7 @@
   "doc" : "These are the obstacles constructed from blocks.",
   "author" : "CJ Cenizal",
   "list" : [
-      "hill.json"
+      "hill.json",
+      "curvy.json"
     ]
 }

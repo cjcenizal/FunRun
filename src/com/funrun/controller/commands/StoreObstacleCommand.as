@@ -72,6 +72,7 @@ package com.funrun.controller.commands
 				for ( var i:int = 0; i < len; i++ ) {
 					// Get position and mesh data for particular block.
 					blockData = obstacleData.getAt( i );
+					trace(blockData)
 					blockType = blockTypesModel.getWithId( blockData.id );
 					if ( !( blockType.id == "point" && !gameModel.usePoints ) ) {
 						if ( blockType.id == "point" ) {
