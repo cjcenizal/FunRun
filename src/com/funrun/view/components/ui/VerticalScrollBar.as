@@ -150,7 +150,7 @@ package com.funrun.view.components.ui
 		public function set sliderPct( pct:Number ):void {
 			if ( pct == Infinity ) pct = 0;
 			else if ( pct < 0 ) pct = 0;
-			else if ( pct > 1 ) pct = 1;
+			else if ( pct >= 1 ) pct = 0;
 			_sliderPct = pct;
 			draw();
 		}
