@@ -5,6 +5,8 @@ package com.funrun.services.parsers {
 	public class ObstacleParser {
 		
 		private const ID:String = "id";
+		private const TYPE:String = "type";
+		private const POS:String = "pos";
 		private const X:String = "x";
 		private const Y:String = "y";
 		private const Z:String = "z";
@@ -18,7 +20,8 @@ package com.funrun.services.parsers {
 			for ( var i:int = 0; i < len; i++ ) {
 				block = objects[ i ];
 				_blocks.push( new ObstacleBlockVo(
-						block[ ID ],
+						block[ ID ][ TYPE ],
+						block[ ID ][ POS ],
 						block[ X ],
 						block[ Y ],
 						block[ Z ]

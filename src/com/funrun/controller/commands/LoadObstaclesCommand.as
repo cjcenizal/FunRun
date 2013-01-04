@@ -66,9 +66,9 @@ package com.funrun.controller.commands {
 			var storeObstacleRequest:Signal = this.storeObstacleRequest;
 			return function( e:Event ):void {
 				var data:String = ( e.target as URLLoader ).data;
-				var json:Object = new JsonService().readString( data );
+				var blocks:Array = new JsonService().readString( data ) as Array;
 				// Construct and store obstacle.
-				storeObstacleRequest.dispatch( new StoreObstacleVo( filename, json ) );
+				storeObstacleRequest.dispatch( new StoreObstacleVo( filename, blocks ) );
 				// Increment complete count and check if we're done.
 				_countLoaded++;
 				if ( _countLoaded == _countTotal ) {
