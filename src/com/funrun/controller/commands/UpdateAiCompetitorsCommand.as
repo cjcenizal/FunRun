@@ -2,6 +2,7 @@ package com.funrun.controller.commands {
 	
 	import com.funrun.controller.signals.DrawGameMessageRequest;
 	import com.funrun.model.CompetitorsModel;
+	import com.funrun.model.GameModel;
 	import com.funrun.model.InterpolationModel;
 	import com.funrun.model.StateModel;
 	import com.funrun.model.TimeModel;
@@ -15,6 +16,9 @@ package com.funrun.controller.commands {
 	public class UpdateAiCompetitorsCommand extends Command {
 		
 		// Models.
+		
+		[Inject]
+		public var gameModel:GameModel;
 		
 		[Inject]
 		public var stateModel:StateModel;
@@ -40,7 +44,7 @@ package com.funrun.controller.commands {
 				for ( var i:int = 0; i < competitorsModel.numCompetitors; i++ ) {
 					competitor = competitorsModel.getAt( i );
 					if ( !competitor.isDead ) {
-						if ( !killed && timeModel.ticks > ( 30 * 4 ) && timeModel.ticks % 200 == 0 ) {
+						if ( !killed && timeModel.ticks > ( 30 * 4 ) && timeModel.ticks % gameModel.killAiTicksInterval == 0 ) {
 							competitorsModel.kill( competitor.id );
 							displayMessageRequest.dispatch( competitor.name + " just died!" );
 							killed = true;

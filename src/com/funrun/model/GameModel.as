@@ -8,6 +8,7 @@ package com.funrun.model {
 		public var showBounds:Boolean;
 		public var isMultiplayer:Boolean;
 		public var usePoints:Boolean = true;
+		public var killAiTicksInterval:Number = 200;
 		
 		private var _showStats:Boolean = false;
 		private var _isExploration:Boolean = false;
