@@ -3,24 +3,30 @@
   "author" : "CJ Cenizal",
   "list" : [
       {
-        "id" : "default",
-        "blocks" : {
-            "floor" : [ "floor.obj" ],
-            "basic" : [ "basic.obj" ],
-            "launcher" : [ "launcher.obj" ],
-            "stairs" : [ "stairs.obj" ],
-            "point" : [ "point.obj" ]
-          }
+          "id" : "default",
+          "files" : {
+              "floor" : [ "floor.obj" ],
+              "basic" : [ "basic.obj" ],
+              "launcher" : [ "launcher.obj" ],
+              "stairs" : [ "stairs.obj" ],
+              "point" : [ "point.obj" ]
+            },
+          "offsets" : {
+            }
         },
       {
-        "id" : "grass",
-        "blocks" : {
-            "floor" : [ "floor1.obj", "floor2.obj", "floor3.obj" ],
-            "basic" : [ "basic.obj" ],
-            "launcher" : [ "launcher.obj" ],
-            "stairs" : [ "stairs.obj" ],
-            "point" : [ "point.obj" ]
-          }
+          "id" : "grass",
+          "files" : {
+              "floor" : [ "floor1.obj", "floor2.obj", "floor3.obj" ],
+              "basic" : [ "basic.obj" ],
+              "launcher" : [ "launcher.obj" ],
+              "stairs" : [ "stairs.obj" ],
+              "point" : [ "point.obj" ]
+            },
+          "offsets" : {
+              "floor" : 20,
+              "basic" : 20
+            }
         }
     ]
 }

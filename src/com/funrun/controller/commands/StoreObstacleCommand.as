@@ -56,6 +56,7 @@ package com.funrun.controller.commands
 				var blockData:ObstacleBlockVo;
 				var blockType:BlockTypeVo;
 				var blockMesh:Mesh;
+				var positionOffset:Number;
 				var obstacleMesh:Mesh = new Mesh( new Geometry() );
 				var merge:Merge = new Merge( true );
 				var boundingBoxes:Array = [];
@@ -73,6 +74,7 @@ package com.funrun.controller.commands
 					// Get position and mesh data for particular block.
 					blockData = obstacleData.getAt( i );
 					blockType = blockTypesModel.getWithId( blockData.type );
+					positionOffset = style.getOffsetFor( blockType.id );
 					if ( !( blockType.id == "point" && !gameModel.usePoints ) ) {
 						if ( blockType.id == "point" ) {
 							// Store points internally.
@@ -80,9 +82,9 @@ package com.funrun.controller.commands
 						} else {
 							// Create and position a mesh from data.
 							blockMesh = blockStylesModel.getMeshCloneForBlock( blockType.id );
-							blockMesh.x = blockData.x * Block.SIZE;
-							blockMesh.y = blockData.y * Block.SIZE;
-							blockMesh.z = blockData.z * Block.SIZE;
+							blockMesh.x = blockData.x * Block.SIZE + Math.random() * positionOffset - positionOffset * .5;
+							blockMesh.y = blockData.y * Block.SIZE + Math.random() * positionOffset - positionOffset * .5;
+							blockMesh.z = blockData.z * Block.SIZE + Math.random() * positionOffset - positionOffset * .5;
 							// Merge the block mesh into the obstacle mesh.
 							merge.apply( obstacleMesh, blockMesh );
 						}

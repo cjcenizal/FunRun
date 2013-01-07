@@ -8,15 +8,17 @@ package com.funrun.services.parsers {
 	
 	public class BlockStyleParser {
 		
-		private const BLOCKS:String = "blocks";
+		private const FILES:String = "files";
+		private const OFFSETS:String = "offsets";
 		
 		public function BlockStyleParser() {
 		}
 		
 		public function parse( data:Object ):BlockStyleVo {
 			var id:String = new IdParser( data ).id;
-			var meshes:Object = data[ BLOCKS ] || {};
-			return new BlockStyleVo( id, meshes );
+			var files:Object = data[ FILES ] || {};
+			var offsets:Object = data[ OFFSETS ] || {};
+			return new BlockStyleVo( id, files, offsets );
 		}
 	}
 }

@@ -36,6 +36,9 @@ package com.funrun.controller.commands
 		public var gameModel:GameModel;
 		
 		override public function execute():void {
+			var id:String = "floor";
+			var positionOffset:Number;
+			
 			for ( var i:int = 0; i < blockStylesModel.numStyles; i++ ) {
 				var style:BlockStyleVo = blockStylesModel.getStyleAt( i );
 				blockStylesModel.currentStyle = style;
@@ -45,16 +48,18 @@ package com.funrun.controller.commands
 				var boundingBoxes:Array = [];
 				var floorBlockMesh:Mesh;
 				var posX:Number, posZ:Number;
+				positionOffset = style.getOffsetFor( id );
+				
 				for ( var x:int = 0; x < Segment.WIDTH_BLOCKS; x++ ) {
 					posX = x;
 					for ( var z:int = 0; z < Segment.DEPTH_BLOCKS; z++ ) {
 						posZ = z;
 						// Put floor blocks everywhere.
 						// Create a floor block mesh in the appropriate place.
-						floorBlockMesh = blockStylesModel.getMeshCloneForBlock( "floor" );
-						floorBlockMesh.x = posX * Block.SIZE + .5 * Block.SIZE;
-						floorBlockMesh.y = -1 * Block.SIZE;
-						floorBlockMesh.z = posZ * Block.SIZE + .5 * Block.SIZE;
+						floorBlockMesh = blockStylesModel.getMeshCloneForBlock( id );
+						floorBlockMesh.x = posX * Block.SIZE + .5 * Block.SIZE + Math.random() * positionOffset - positionOffset * .5;
+						floorBlockMesh.y = -1 * Block.SIZE + Math.random() * positionOffset - positionOffset * .5;
+						floorBlockMesh.z = posZ * Block.SIZE + .5 * Block.SIZE + Math.random() * positionOffset - positionOffset * .5;
 						// Merge it into the obstacle.
 						merge.apply( floorMesh, floorBlockMesh );
 						// Add a bounding box so we can collide with the floor.

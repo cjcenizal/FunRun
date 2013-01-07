@@ -10,15 +10,17 @@ package com.funrun.model.vo
 		public var id:String;
 		public var index:int;
 		private var _files:Object;
+		private var _offsets:Object;
 		private var _meshes:Object;
 		private var _meshesArr:Array;
 		private var _keys:Array;
 		private var _bitmaps:Object;
 		
-		public function BlockStyleVo( id:String, files:Object )
+		public function BlockStyleVo( id:String, files:Object, offsets:Object )
 		{
 			this.id = id;
 			_files = files;
+			_offsets = offsets;
 			_meshes = {};
 			_meshesArr = [];
 			_keys = [];
@@ -47,6 +49,10 @@ package com.funrun.model.vo
 		
 		public function getFilenames( id:String ):Array {
 			return _files[ id ];
+		}
+		
+		public function getOffsetFor( id:String ):Number {
+			return _offsets[ id ] || 0;
 		}
 		
 		public function getKeys():Array {
